@@ -9,6 +9,9 @@
 
     } */
 
+    .font-size-mobile {
+        font-size: 12px;
+    }
 
     table-responsive>.navy {
         border-collapse: collapse;
@@ -190,12 +193,12 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="table-responsive">
-                    <?php $this->load->view('dashboard/product/_filter_products'); ?>
 
-                    <table class="ewa table table-striped table-products" role="grid">
+                <?php $this->load->view('dashboard/product/_filter_products'); ?>
+                <div class="row new-view">
+                    <table class="even table table-striped table-products" role="grid">
                         <thead>
-                            <tr class="rock">
+                            <tr>
                                 <th width="20"><?php echo trans('id'); ?></th>
                                 <th><?php echo trans('product'); ?></th>
                                 <th><?php echo trans('sku'); ?></th>
@@ -207,7 +210,7 @@
                                 <th><?php echo trans('stock'); ?></th>
                                 <th><?php echo trans('page_views'); ?></th>
                                 <th><?php echo trans('date'); ?></th>
-                                <th class="max-width-120"><?php echo trans('options'); ?></th>
+                                <th><?php echo trans('options'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -253,12 +256,12 @@
                                             <?php if ($item->product_type == "digital" && $item->add_meet == "Made to stock") : ?>
                                                 <span class="text-success"><?php echo trans("in_stock"); ?></span>
                                             <?php elseif ($item->add_meet == "Made to order") : ?>
-                                                <span class="text-success">Available in <?php echo $item->lead_days; ?> Days <?php echo $item->lead_time; ?> Hours </span>
+                                                <span class="text-success font-size-mobile">Available in <?php echo $item->lead_days; ?> Days <?php echo $item->lead_time; ?> Hours </span>
                                                 <?php else :
                                                 if ($item->stock < 1) : ?>
-                                                    <span class="text-danger"><?= $item->listing_type == 'ordinary_listing' ? trans("sold") : trans("out_of_stock"); ?></span>
+                                                    <span class="text-danger font-size-mobile"><?= $item->listing_type == 'ordinary_listing' ? trans("sold") : trans("out_of_stock"); ?></span>
                                                 <?php else : ?>
-                                                    <span class="text-success"><?php echo trans("in_stock"); ?>&nbsp;<?= $item->listing_type != 'ordinary_listing' ? "(" . $item->stock . ")" : ''; ?></span>
+                                                    <span class="text-success font-size-mobile"><?php echo trans("in_stock"); ?>&nbsp;<?= $item->listing_type != 'ordinary_listing' ? "(" . $item->stock . ")" : ''; ?></span>
                                                 <?php endif; ?>
 
 
@@ -267,7 +270,7 @@
                                         <td><?php echo $item->pageviews; ?></td>
                                         <td><?php echo formatted_date($item->created_at); ?></td>
                                         <td>
-                                            <div class="dropdown">
+                                            <div>
                                                 <button class="btn  dropdown-toggle btn-select-option btn-custom" type="button" data-toggle="dropdown"><?php echo trans('select_option'); ?>
                                                     <span class="caret"></span>
                                                 </button>

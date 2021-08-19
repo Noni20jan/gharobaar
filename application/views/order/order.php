@@ -232,23 +232,21 @@
         font-size: 18px;
         padding: 10px;
     }
-
-
-
-    
 </style>
 
 
 <!-- Wrapper -->
 <div id="wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="alert-message-lg">
+                <!-- include message block -->
+                <?php $this->load->view('dashboard/includes/_messages'); ?>
+            </div>
+        </div>
+    </div>
     <div class="row webOrderView">
         <div class="col-sm-12">
-            <div class="row">
-                <div class="col-12">
-                    <!-- include message block -->
-                    <?php $this->load->view('product/_messages'); ?>
-                </div>
-            </div>
             <div class="">
                 <div class="order-head" style="margin-left:12px;">
                     <h2 class="title"><?php echo trans("order"); ?>:&nbsp;#<?php echo $order->order_number; ?></h2>
@@ -509,7 +507,7 @@
                                                                     </div>
                                                                 </li>
                                                                 <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller") : ?>
-                                                                    <li class="progress-step" id="cancelled_<?php echo $item->id; ?>">
+                                                                    <li class="progress-step is-active" id="cancelled_<?php echo $item->id; ?>">
                                                                         <div class="progress-marker">
 
                                                                         </div>
@@ -518,19 +516,22 @@
                                                                         </div>
                                                                     </li>
                                                                 <?php else : ?>
-                                                                    <li class="progress-step" id="processing_<?php echo $item->id; ?>">
+                                                                    <li class="progress-step <?php if (in_array($item->order_status, array("processing", "shipped", "completed",))) : echo "is-active";
+                                                                                                endif; ?>" id="processing_<?php echo $item->id; ?>">
                                                                         <div class="progress-marker"></div>
                                                                         <div class="progress-text">
                                                                             <h6 class="progress-title">Processing</h6>
                                                                         </div>
                                                                     </li>
-                                                                    <li class="progress-step" id="shipped_<?php echo $item->id; ?>">
+                                                                    <li class="progress-step <?php if (in_array($item->order_status, array("shipped", "completed",))) : echo "is-active";
+                                                                                                endif; ?>" id="shipped_<?php echo $item->id; ?>">
                                                                         <div class="progress-marker"></div>
                                                                         <div class="progress-text">
                                                                             <h6 class="progress-title">Shipped</h6>
                                                                         </div>
                                                                     </li>
-                                                                    <li class="progress-step" id="delivered_<?php echo $item->id; ?>">
+                                                                    <li class="progress-step <?php if (in_array($item->order_status, array("completed",))) : echo "is-active";
+                                                                                                endif; ?>" id="delivered_<?php echo $item->id; ?>">
                                                                         <div class="progress-marker"></div>
                                                                         <div class="progress-text">
                                                                             <h6 class="progress-title">Delivered</h6>
@@ -669,17 +670,7 @@
     </div>
     <div class="container mobileOrderView">
         <div class="row">
-            <div class="col-12">
-            </div>
-        </div>
-        <div class="row">
             <div class="col-sm-12">
-                <div class="row">
-                    <div class="col-12">
-                        <!-- include message block -->
-                        <?php $this->load->view('product/_messages'); ?>
-                    </div>
-                </div>
                 <div class="order-details-container">
                     <div class="order-head">
                         <h2 class="title" style="text-align: center;"><?php echo trans("order"); ?>:&nbsp;#<?php echo $order->order_number; ?></h2>
@@ -911,41 +902,56 @@
                                                     <strong class="font-600"><?php echo time_ago($item->updated_at); ?></strong>
                                                 </div>
                                             </div>
-                                            <?php if ($item->order_status == "payment_received" || $item->order_status == "awaiting_payment" || $item->order_status == "processing" || $item->order_status == "waiting") : ?>
-                                                <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
-                                                    <button type="submit" id="approve" class="btn btn-sm btn-custom" style="background-color:green;" onclick="approve_order_product('<?php echo $item->id; ?>','<?php echo trans("confirm_approve_order"); ?>');">Confirm Order</button>
+                                            <div class="row" style="text-align:center;">
+                                                <?php if ($item->order_status == "payment_received" || $item->order_status == "awaiting_payment" || $item->order_status == "processing" || $item->order_status == "waiting") : ?>
+                                                    <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
+                                                        <button class="btn btn-sm btn-custom" id="cancel" style="border-color:green;background-color:#fff;" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
+                                                    <?php elseif (get_product($item->product_id)->add_meet == "Made to order" && $item->order_status == "waiting") : ?>
+                                                        <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
+                                                    <?php else : ?>
+                                                        <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_made_to_order"><?php echo trans("cancel_item"); ?></button>
+                                                    <?php endif; ?>
 
-                                                    <button class="btn btn-sm btn-custom" id="cancel" style="border-color:green;background-color:#fff;" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
-                                                <?php elseif (get_product($item->product_id)->add_meet == "Made to order" && $item->order_status == "waiting") : ?>
-                                                    <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
-                                                <?php else : ?>
-                                                    <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_made_to_order"><?php echo trans("cancel_item"); ?></button>
-                                                <?php endif; ?>
-
-                                                <!-- <a data-toggle="modal" data-id="<?php echo $item->id; ?>" class="open-RejectReasonDialog btn btn-md btn-block btn-danger" data-target="#rejection_reason_model"><?php echo trans("cancel_item"); ?></a> -->
-                                            <?php elseif ($item->order_status == "shipped" || $item->order_status = "out_for_delivery" || $item->order_status = "completed") : ?>
-                                                <button type="submit" class="btn btn-sm btn-custom confirm-new-ui" onclick="approve_order_product('<?php echo $item->id; ?>','<?php echo trans("confirm_approve_order"); ?>');"><?php echo trans("confirm_order_received"); ?></button>
-                                            <?php elseif ($item->order_status == "completed") : ?>
-                                                <?php if ($item->product_type == 'digital') :
-                                                    $digital_sale = get_digital_sale_by_order_id($item->buyer_id, $item->product_id, $item->order_id);
-                                                    if (!empty($digital_sale)) : ?>
+                                                    <!-- <a data-toggle="modal" data-id="<?php echo $item->id; ?>" class="open-RejectReasonDialog btn btn-md btn-block btn-danger" data-target="#rejection_reason_model"><?php echo trans("cancel_item"); ?></a> -->
+                                                <?php elseif ($item->order_status == "shipped" || $item->order_status == "out_for_delivery") : ?>
+                                                    <button type="submit" class="btn btn-sm btn-custom confirm-new-ui" onclick="approve_order_product('<?php echo $item->id; ?>','<?php echo trans("confirm_approve_order"); ?>');"><?php echo trans("confirm_order_received"); ?></button>
+                                                <?php elseif ($item->order_status == "completed") : ?>
+                                                    <?php if ($item->product_type == 'digital') :
+                                                        $digital_sale = get_digital_sale_by_order_id($item->buyer_id, $item->product_id, $item->order_id);
+                                                        if (!empty($digital_sale)) : ?>
+                                                            <div class="row-custom">
+                                                                <?php echo form_open('download-purchased-digital-file-post'); ?>
+                                                                <input type="hidden" name="sale_id" value="<?php echo $digital_sale->id; ?>">
+                                                                <div class="btn-group btn-group-download m-b-15">
+                                                                    <button type="button" class="btn btn-md btn-custom dropdown-toggle" data-toggle="dropdown">
+                                                                        <i class="icon-download-solid"></i><?php echo trans("download"); ?>&nbsp;&nbsp;<i class="icon-arrow-down m-0"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu">
+                                                                        <button name="submit" value="main_files" class="dropdown-item"><?php echo trans("main_files"); ?></button>
+                                                                        <button name="submit" value="license_certificate" class="dropdown-item"><?php echo trans("license_certificate"); ?></button>
+                                                                    </div>
+                                                                </div>
+                                                                <?php echo form_close(); ?>
+                                                            </div>
+                                                    <?php endif;
+                                                    endif; ?>
+                                                    <?php if ($this->general_settings->reviews == 1 && $item->seller_id != $item->buyer_id) : ?>
                                                         <div class="row-custom">
-                                                            <?php echo form_open('download-purchased-digital-file-post'); ?>
-                                                            <input type="hidden" name="sale_id" value="<?php echo $digital_sale->id; ?>">
-                                                            <div class="btn-group btn-group-download m-b-15">
-                                                                <button type="button" class="btn btn-md btn-custom dropdown-toggle" data-toggle="dropdown">
-                                                                    <i class="icon-download-solid"></i><?php echo trans("download"); ?>&nbsp;&nbsp;<i class="icon-arrow-down m-0"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu">
-                                                                    <button name="submit" value="main_files" class="dropdown-item"><?php echo trans("main_files"); ?></button>
-                                                                    <button name="submit" value="license_certificate" class="dropdown-item"><?php echo trans("license_certificate"); ?></button>
+                                                            <div class="rate-product">
+                                                                <p class="p-rate-product"><?php echo trans("rate_this_product"); ?></p>
+                                                                <div class="rating-stars">
+                                                                    <?php $review = get_review($item->product_id, $this->auth_user->id); ?>
+                                                                    <label class="label-star label-star-open-modal" data-star="5" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 5) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                                    <label class="label-star label-star-open-modal" data-star="4" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 4) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                                    <label class="label-star label-star-open-modal" data-star="3" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 3) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                                    <label class="label-star label-star-open-modal" data-star="2" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 2) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                                    <label class="label-star label-star-open-modal" data-star="1" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 1) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
                                                                 </div>
                                                             </div>
-                                                            <?php echo form_close(); ?>
                                                         </div>
-                                                <?php endif;
-                                                endif; ?>
-                                            <?php endif; ?>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            </div>
                                             <div class="fullwidth">
 
                                                 <div class="container separator">
@@ -960,26 +966,29 @@
                                                             </div>
                                                         </li>
                                                         <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller") : ?>
-                                                            <li class="progress-step" id="cancelled_<?php echo $item->id; ?>">
+                                                            <li class="progress-step is-active" id="cancelled_<?php echo $item->id; ?>">
                                                                 <div class="progress-marker"></div>
                                                                 <div class="progress-text">
                                                                     <h6 class="progress-title">Cancelled</h6>
                                                                 </div>
                                                             </li>
                                                         <?php else : ?>
-                                                            <li class="progress-step" id="processing_<?php echo $item->id; ?>">
+                                                            <li class="progress-step <?php if (in_array($item->order_status, array("processing", "shipped", "completed",))) : echo "is-active";
+                                                                                        endif; ?>" id="processing_<?php echo $item->id; ?>">
                                                                 <div class="progress-marker"></div>
                                                                 <div class="progress-text">
                                                                     <h6 class="progress-title">Processing</h6>
                                                                 </div>
                                                             </li>
-                                                            <li class="progress-step" id="shipped_<?php echo $item->id; ?>">
+                                                            <li class="progress-step <?php if (in_array($item->order_status, array("shipped", "completed",))) : echo "is-active";
+                                                                                        endif; ?>" id="shipped_<?php echo $item->id; ?>">
                                                                 <div class="progress-marker"></div>
                                                                 <div class="progress-text">
                                                                     <h6 class="progress-title">Shipped</h6>
                                                                 </div>
                                                             </li>
-                                                            <li class="progress-step" id="delivered_<?php echo $item->id; ?>">
+                                                            <li class="progress-step <?php if (in_array($item->order_status, array("completed",))) : echo "is-active";
+                                                                                        endif; ?>" id="delivered_<?php echo $item->id; ?>">
                                                                 <div class="progress-marker"></div>
                                                                 <div class="progress-text">
                                                                     <h6 class="progress-title">Delivered</h6>

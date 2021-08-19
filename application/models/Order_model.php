@@ -644,7 +644,10 @@ class Order_model extends CI_Model
             'txMsg' => $data_transaction["txMsg"],
             'txTime' => $data_transaction["txTime"],
             'signature' => $data_transaction["cashfree_signature"],
-            'cashfree_order_id' => $data_transaction["cashfree_order_id"]
+            'cashfree_order_id' => $data_transaction["cashfree_order_id"],
+            'paymentOption' => $data_transaction["paymentOption"],
+            'paymentCode' => $data_transaction["paymentCode"],
+            'paymentModes' => $data_transaction["paymentModes"]
         );
         if ($this->auth_check) {
             $data["user_id"] = $this->auth_user->id;
@@ -657,10 +660,18 @@ class Order_model extends CI_Model
         if ($this->db->insert('transactions', $data)) {
             //add invoice
             $this->add_invoice($order_id);
+            $this->update_net_seller_payable($data_transaction["cashfree_order_id"]);
         }
     }
 
-
+    public function update_net_seller_payable($cashfree_order_id)
+    {
+        $data = array(
+            'is_completed' => "1"
+        );
+        $this->db->where('cashfree_order_id', $cashfree_order_id);
+        $this->db->update('cashfree_seller_payable', $data);
+    }
 
     //add payment transaction in case of failure
     public function add_payment_transaction_fail($data_transaction, $order_id = NULL)
@@ -1053,7 +1064,7 @@ class Order_model extends CI_Model
                                 'subject' => "Your order has been cancelled by Supplier",
                                 'email_content' => "Dear " . ucfirst(get_user($order_product->buyer_id)->first_name) . ", 
                              <br> We apologise for the cancellation made by the seller for the Order. <br> 
-                             This is an exception and has happened because the seller did not update the available stock details on the platform. We have taken up the issue with the seller, and would try our best to improve your experience on Gharobaar. We shall process the refund within 7 business days, also would like to offer you a small token of our appreciation, for your faith in Gharobaar - Coupon FGHT of INR EEE. You may redeem this in your next purchase on the platform. We once again express our regret for the incovenience caused.
+                             This is an exception and has happened because the seller did not update the available stock details on the platform. We have taken up the issue with the seller, and would try our best to improve your experience on Gharobaar. We shall process the refund within 7 business days. We once again express our regret for the incovenience caused.
                              <br>
                              <b>Order Details</b>
                              <b>order number</b> : #" . get_order($order_product->order_id)->order_number . " <br>
@@ -2357,9 +2368,9 @@ class Order_model extends CI_Model
                         "cod_tax_charges" => 0,
                         "shipping_cod_gst_rate" => $psd->seller_gst_rate
                     );
-                    // if ($psd->seller_gst_rate == 0) {
-                    //     $suppqq["Supplier_Shipping_cost"] = intval($suppqq["Supplier_Shipping_cost"] + ($suppqq["Supplier_Shipping_cost"] * 18 / 100));
-                    // }
+                    if ($psd->seller_gst_rate == 0) {
+                        $suppqq["Supplier_Shipping_cost"] = intval($suppqq["Supplier_Shipping_cost"] + ($suppqq["Supplier_Shipping_cost"] * 18 / 100));
+                    }
                     if (!in_array($suppqq, $supp_data_array_copy)) {
                         array_push($supp_data_array_copy, $suppqq);
                     }
@@ -2421,9 +2432,9 @@ class Order_model extends CI_Model
                         "shipping_cod_gst_rate" => $psd->seller_gst_rate
                     );
 
-                    // if ($psd->seller_gst_rate == 0) {
-                    //     $suppqq["Supplier_Shipping_cost"] = intval($suppqq["Supplier_Shipping_cost"] + ($suppqq["Supplier_Shipping_cost"] * 18 / 100));
-                    // }
+                    if ($psd->seller_gst_rate == 0) {
+                        $suppqq["Supplier_Shipping_cost"] = intval($suppqq["Supplier_Shipping_cost"] + ($suppqq["Supplier_Shipping_cost"] * 18 / 100));
+                    }
 
                     if (!in_array($suppqq, $supp_data_array_copy)) {
                         array_push($supp_data_array_copy, $suppqq);
@@ -2957,5 +2968,17 @@ class Order_model extends CI_Model
             $this->db->where('id', $order_id);
             $this->db->update('orders', $data);
         endif;
+    }
+    public function get_commission_rate_nb_wallet($payment_mode, $code)
+    {
+        $this->db->where('gateway_code', $payment_mode);
+        $this->db->where('option_code', $code);
+        $this->db->where('enabled_flag', '1');
+        $query = $this->db->get('payment_method_options');
+        return $query->row();
+    }
+    public function save_cashfree_seller_payable($data)
+    {
+        $this->db->insert('cashfree_seller_payable', $data);
     }
 }

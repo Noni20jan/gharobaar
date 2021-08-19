@@ -351,7 +351,7 @@
                                                             <div class="list-item">
 
                                                                 <label><?php echo trans("total"); ?>:</label>
-                                                                <strong class="lbl-price-new">
+                                                                <strong class="lbl-price-new" id="total_<?php echo $cart_item->cart_item_id; ?>">
                                                                     <?php echo price_formatted($cart_item->unit_price * $cart_item->quantity, $cart_total->currency); ?>
                                                                 </strong>
                                                             </div>

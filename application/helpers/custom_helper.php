@@ -620,6 +620,36 @@ if (!function_exists('get_payment_status')) {
         }
     }
 }
+
+
+
+//get payment mode
+if (!function_exists('get_payment_modes')) {
+    function get_payment_modes()
+    {
+        $ci = &get_instance();
+        return $ci->cart_model->get_payment_modes();
+    }
+}
+//get net banking banks
+if (!function_exists('get_nb_banks')) {
+    function get_nb_banks()
+    {
+        $ci = &get_instance();
+        return $ci->cart_model->get_nb_banks();
+    }
+}
+//get wallets
+if (!function_exists('get_wallets')) {
+    function get_wallets()
+    {
+        $ci = &get_instance();
+        return $ci->cart_model->get_wallets();
+    }
+}
+
+
+
 //generate category url
 if (!function_exists('generate_category_url')) {
     function generate_category_url($category)

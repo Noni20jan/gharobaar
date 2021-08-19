@@ -140,11 +140,9 @@ foreach ($languages as $language) {
         $route[$key . getr('products', $rts)]['GET'] = 'home_controller/products';
         $route[$key . getr('member_products', $rts)]['GET'] = 'home_controller/member_products';
         $route[$key . getr('top_picks_products', $rts)]['GET'] = 'home_controller/top_pick_products';
-        $route[$key . getr('shop_by_concern', $rts) . '/(:any)']['GET'] = 'home_controller/products_shop_by_concern/$1';
-        $route[$key . getr('shop_by_occasion', $rts) . '/(:any)']['GET'] = 'home_controller/products_shop_by_occassion/$1';
         $route[$key . getr('shop_by_random', $rts) . '/(:any)']['GET'] = 'home_controller/products_shop_by_random/$1';
         $route[$key . getr('downloads', $rts)]['GET'] = 'profile_controller/downloads';
-        $route[$key . getr('shop_by_concern_type', $rts) . '/(:any)']['GET'] = 'home_controller/products_shop_by_concern/$1';
+        $route[$key . getr('shop_by_concern', $rts) . '/(:any)']['GET'] = 'home_controller/products_shop_by_concern/$1';
 
         $route[$key . getr('shop-by-concern', $rts)]['GET'] = 'home_controller/shop_by_concern';
         //for shop by seller
@@ -254,7 +252,7 @@ foreach ($languages as $language) {
         $route[$key . getr('return_and_exchange', $rts)]['GET'] = 'home_controller/return_and_exchange';
         /*shop_by_occasion*/
         $route[$key . getr('shop-by-occasion', $rts)]['GET'] = 'home_controller/shop_by_occasion';
-        $route[$key . getr('shop_by_occasion_type', $rts) . '/(:any)']['GET'] = 'home_controller/products_shop_by_occassion/$1';
+        $route[$key . getr('shop_by_occasion', $rts) . '/(:any)']['GET'] = 'home_controller/products_shop_by_occassion/$1';
         // last product get route
 
         $route[$key . getr('last_product', $rts)]['GET'] = 'product_controller/last_product_id';

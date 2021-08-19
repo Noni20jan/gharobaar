@@ -75,8 +75,9 @@
     }
 
     .founders {
-        font-family: Lucida Bright;
-        font-style: italic;
+        font-weight: 500;
+    /* line-height: 1.2; */
+    font-family: "Montserrat", sans-serif;
         margin-bottom: 50px;
 
     }

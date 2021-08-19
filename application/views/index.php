@@ -4,8 +4,8 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-between;
-        padding: 0px;
+        justify-content: center;
+        /* padding: 0px; */
     }
 
     .shop-by-occasion {
@@ -107,7 +107,7 @@
 
     .top-centered {
         position: absolute;
-        top: 18px;
+        top: 4%;
         left: 13%;
         color: white;
         font-size: 18px;
@@ -115,8 +115,8 @@
 
     .top-centered-2 {
         position: absolute;
-        top: 18px;
-        left: 6%;
+        top: 3%;
+        left: 11%;
         color: white;
         font-size: 18px;
     }
@@ -124,24 +124,24 @@
 
     .top-centered-3 {
         position: absolute;
-        top: 11px;
-        left: 12%;
+        top: 3%;
+        left: 18%;
         color: white;
         font-size: 18px;
     }
 
     .bottom-centered {
         position: absolute;
-        top: 280px;
-        left: 13%;
+        bottom: 6%;
+        left: 18%;
         color: white;
         font-size: 18px;
     }
 
     .bottom-centered-2 {
         position: absolute;
-        top: 278px;
-        right: 34%;
+        bottom: 6%;
+        right: 29%;
         color: white;
         font-size: 18px;
     }
@@ -556,7 +556,7 @@
                     </p>
                 </a>
             </div>
-            <div class="col-sm-2 for-space-between-imgs">
+            <div class="col-sm-2">
                 <a href="<?php echo lang_base_url() . 'shop-by-seller'; ?>">
                     <img class="top-picks-new-ui" src="assets/img/landing-page-img/new-ui-img-2.png">
                     <p>
@@ -564,7 +564,7 @@
                     </p>
                 </a>
             </div>
-            <div class="col-sm-2 for-space-between-imgs">
+            <div class="col-sm-2">
                 <a href="<?php echo lang_base_url() . 'shop-by-occasion'; ?>">
                     <img class="top-picks-new-ui" src="assets/img/landing-page-img/new-ui-img-3.png">
                     <p>
@@ -572,7 +572,7 @@
                     </p>
                 </a>
             </div>
-            <div class="col-sm-2 for-space-between-imgs">
+            <div class="col-sm-2 scroller">
                 <a href="#top_picks">
                     <img class="top-picks-new-ui" src="assets/img/landing-page-img/new-ui-img-4.png">
                     <p>
@@ -580,7 +580,7 @@
                     </p>
                 </a>
             </div>
-            <div class="col-sm-2 for-space-between-imgs">
+            <div class="col-sm-2 scroller">
                 <a href="#top_discounts">
                     <img class="top-picks-new-ui" src="assets/img/landing-page-img/new-ui-img-5.png">
                     <p>
@@ -681,6 +681,11 @@
     endif; ?>
 </div>
 
+
+
+
+
+
 <div class="index-wrapper" id="wrapper">
     <div class="container">
         <h1 class="index-title"><?php echo html_escape($this->settings->site_title); ?></h1>
@@ -774,24 +779,19 @@
             <?php foreach ($shop_occasion as $occasion) : ?>
                 <a href="<?= generate_url("shop_by_occasion_type") . '/' . strtolower($occasion->lookup_code); ?>">
                     <p class="new-by-occasion"><?php echo $occasion->meaning ?></p>
-                    <!-- <p class="new-by-occasion">Birthday</p>
-                <p class="new-by-occasion">House Warming</p>
-                <p class="new-by-occasion">Baby Shower</p>
-                <p class="new-by-occasion">Wedding </p>
-                <p class="new-by-occasion">Date Night </p>
-                <p class="new-by-occasion">Kid’s Birthday</p> -->
-                <?php endforeach; ?>
+                </a>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>
-
-
 
 <div class="section-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
         $this->load->view("partials/_main_slider_occasion_new", ["second_slider_items" => $occassion_slider_items]);
     endif; ?>
 </div>
+
+
 <div class="col-12 sides-gap-equal">
     <h3 class="find-your-seller" style="margin-top: 20px;padding: 0px 15px;">Shop By Concern</h3>
 </div>
@@ -855,4 +855,21 @@
         <?php endif; ?>
     </div>
 </div>
+<script>
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ? true : false;
+
+    $('.scroller > a').click(function() {
+        if (!isMobile) {
+            $('html, body').animate({
+                scrollTop: $($(this).attr('href')).offset().top - 2 * $("#myHeader").height()
+            }, 1000);
+            return false;
+        } else {
+            $('html, body').animate({
+                scrollTop: $($(this).attr('href')).offset().top - 2 * $("#myMobileHeader").height()
+            }, 1000);
+            return false;
+        }
+    });
+</script>
 <!-- Wrapper End-->

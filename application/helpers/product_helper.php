@@ -577,6 +577,26 @@ if (!function_exists('calculate_commission_rate_seller')) {
     }
 }
 
+
+//get gst number by seller id
+if (!function_exists('get_gst_number_by_sellerid')) {
+    function get_gst_number_by_sellerid($seller_id)
+    {
+        $ci = &get_instance();
+        return $ci->cart_model->get_gst_number_by_sellerid($seller_id);
+    }
+}
+
+//get pan number by seller id
+if (!function_exists('get_pan_number_by_sellerid')) {
+    function get_pan_number_by_sellerid($seller_id)
+    {
+        $ci = &get_instance();
+        return $ci->cart_model->get_pan_number_by_sellerid($seller_id);
+    }
+}
+
+
 //price formatted
 if (!function_exists('price_formatted')) {
     function price_formatted($price, $currency, $format = null)

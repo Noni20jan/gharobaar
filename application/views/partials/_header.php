@@ -348,7 +348,17 @@
         position: fixed !important;
         top: 0;
         width: 100%;
+        -webkit-transform: translateZ(0);
     }
+    @media(max-width:700px){
+    .sticky {
+        position: fixed !important;
+        top: 0;
+        width: 100%;
+        -webkit-transform: translateZ(0);
+        overflow: hidden;
+    }
+}
 
     /* .mustang img {
         width: 220px;
@@ -3843,7 +3853,7 @@
                     <div class="padding_1 nav-top">
                         <div class="container">
                             <div class="row align-items-center">
-                                <div class="top_logo_margin col-md-8 nav-top-left">
+                                <div class="top_logo_margin col-md-7 nav-top-left">
                                     <div class="row-align-items-center">
                                         <div class="top_logo_adjust logo">
                                             <a href="<?php echo lang_base_url(); ?>"><img src="<?php echo get_logo($this->general_settings); ?>" alt="logo" class="logo_size"></a>
@@ -3893,7 +3903,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 nav-top-right">
+                                <div class="col-md-5 nav-top-right">
                                     <ul class="nav align-items-center">
                                         <li class="nav-item li-main-nav-right">
 
@@ -3901,9 +3911,7 @@
                                             <div id="myModal" class="modal fade">
                                                 <div class="modal_content">
                                                     <span class="close_pincode">&times;</span>
-                                                    <div style="position: relative;
-    top: 27px;
-    left: 11px;">
+                                                    <div style="position: relative;top: 27px;left: 11px;">
                                                         <?php echo form_open(generate_url('search_pincode'), ['id' => 'form_validate_pincode_search', 'class' => 'form_search_main form-inline', 'method' => 'get']); ?>
                                                         <span class="clearable">
                                                             <p id="check_available">Check availability of products for this pincode</p>&nbsp;
@@ -3915,27 +3923,24 @@
                                                         <button id="check_pin">Go!</button>
 
                                                         <div id="response_pincode_search_results" class="search-results-ajax"></div>
-
                                                         <?php echo form_close(); ?>
                                                     </div>
                                                 </div>
-
                                             </div>
-
                                         </li>
                                         <?php if ($this->auth_check) : ?>
                                             <?php if (is_multi_vendor_active()) : ?>
                                                 <?php if (!is_user_vendor()) : ?>
                                                     <?php if (!is_user_applied_for_shop()) : ?>
-                                                        <li class="nav-item m-r-0" style="margin-right: 0px;"><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
+                                                        <li class="nav-item m-r-0"><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
                                                     <?php else : ?>
-                                                        <li class="nav-item m-r-0" style="margin-right: 0px;"><a href="<?php echo generate_url("start-selling"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
+                                                        <li class="nav-item m-r-0"><a href="<?php echo generate_url("start-selling"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
                                                     <?php endif; ?>
                                                 <?php else : ?>
                                                     <?php if ($this->auth_user->supplier_type == "Goods") { ?>
-                                                        <li class="nav-item m-r-0"><a href="<?php echo generate_dash_url("add_product"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
+                                                        <li class="nav-item m-r-0" style="margin-right:0px;"><a href="<?php echo generate_dash_url("add_product"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
                                                     <?php } else { ?>
-                                                        <li class="nav-item m-r-0"><a href="<?php echo generate_dash_url("add_service"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
+                                                        <li class="nav-item m-r-0" style="margin-right:0px;"><a href="<?php echo generate_dash_url("add_service"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
                                                     <?php } ?>
                                                 <?php endif; ?>
                                             <?php endif; ?>
@@ -4131,7 +4136,7 @@
                             <div>
                                 <span id="show_tim"><i class='fas fa-map-marker-alt'></i></span>
 
-                                <div id="myModal1" class="modal">
+                                <div id="myModal1" class="modal fade">
                                     <div class="mobile_content">
                                         <span class="close_pin">&times;</span>
                                         <div id="close_open">

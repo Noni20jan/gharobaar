@@ -101,7 +101,7 @@
             <?php foreach ($shop_occasion as $occasion) : ?>
                 <div class="col-2 two-for-mobile">
                     <?php $img_url = get_lookup_image_url($occasion->lookup_code); ?>
-                    <a href="<?= generate_url("shop_by_occasion_type") . '/' . strtolower($occasion->lookup_code); ?>">
+                    <a href="<?= generate_url("shop_by_occasion") . '/' . strtolower($occasion->lookup_code); ?>">
                         <img class="shop_by_seller_imgs" src="<?php echo base_url() . $img_url; ?>" alt="Avatar">
                     </a>
                     <!-- <p>Date Night</p> -->
@@ -137,7 +137,7 @@
         </div>
         <div class="row categories-for-mobile" style="padding-bottom: 12px;">
             <?php foreach ($shop_occasion as $occasion) : ?>
-                <a href="<?= generate_url("shop_by_occasion_type") . '/' . strtolower($occasion->lookup_code); ?>">
+                <a href="<?= generate_url("shop_by_occasion") . '/' . strtolower($occasion->lookup_code); ?>">
                     <p class="all-in-categoty"><?php echo $occasion->meaning ?></p>
                 </a>
             <?php endforeach; ?>

@@ -4,8 +4,8 @@
     <div class="row">
         <div class="slider-container" <?= $this->rtl == true ? 'dir="rtl"' : ''; ?>>
             <div id="main-slider" class="main-slider">
-                <?php if (!empty($slider_items)):
-                    foreach ($slider_items as $item): ?>
+                <?php if (!empty($slider_items)) :
+                    foreach ($slider_items as $item) : ?>
                         <div class="item lazyload" data-bg="<?php echo base_url() . $item->image; ?>" data-bg-mobile="<?php echo base_url() . $item->image_mobile; ?>">
                             <a href="javascript:void(0);">
                                 <div class="container">
@@ -24,10 +24,10 @@
                                                                                                                                                                                                     ($item->title); ?></h2>
                                                     <?php endif; ?>
                                                 <?php endif;
-                                                if (!empty($item->description)): ?>
+                                                if (!empty($item->description)) : ?>
                                                     <p class="description" data-animation="<?php echo $item->animation_description; ?>" data-delay="0.5s" style="color: <?php echo $item->text_color; ?>"><?php echo html_escape($item->description); ?></p>
                                                 <?php endif;
-                                                if (!empty($item->button_text)): ?>
+                                                if (!empty($item->button_text)) : ?>
                                                     <button class="btn btn-slider" data-animation="<?php echo $item->animation_button; ?>" data-delay="0.9s" style="background-color: <?php echo $item->button_color; ?>;border-color: <?php echo $item->button_color; ?>;color: <?php echo $item->button_text_color; ?>"><?php echo html_escape($item->button_text); ?></button>
                                                 <?php endif; ?>
                                             </div>
@@ -36,7 +36,7 @@
                                 </div>
                             </a>
                         </div>
-                    <?php endforeach;
+                <?php endforeach;
                 endif; ?>
             </div>
             <div id="main-slider-nav" class="main-slider-nav">
@@ -50,8 +50,8 @@
     <div class="row">
         <div class="slider-container" <?= $this->rtl == true ? 'dir="rtl"' : ''; ?>>
             <div id="main-mobile-slider" class="main-slider">
-                <?php if (!empty($slider_items)):
-                    foreach ($slider_items as $item):
+                <?php if (!empty($slider_items)) :
+                    foreach ($slider_items as $item) :
                         $image = $item->image_mobile;
                         if (empty($image)) {
                             $image = $item->image;
@@ -62,13 +62,22 @@
                                     <div class="row row-slider-caption align-items-center">
                                         <div class="col-12">
                                             <div class="caption">
-                                                <?php if (!empty($item->title)): ?>
-                                                    <h2 class="title" data-animation="<?php echo $item->animation_title; ?>" data-delay="0.1s" style="color: <?php echo $item->text_color; ?>"><?php echo html_escape($item->title); ?></h2>
+                                                <?php if (!empty($item->title)) : ?>
+                                                    <?php if ($item->title == "#Gharobaar") : ?>
+                                                        <h2 class="title" data-animation="<?php echo $item->animation_title; ?>" data-delay="0.1s" style="color: <?php echo $item->text_color; ?>"><?php echo html_escape($item->title); ?></h2>
+                                                    <?php elseif ($item->title == "HOME-PRENUERS") : ?>
+                                                        <?php $x = strtolower($item->title); ?>
+                                                        <h2 class="title" data-animation="<?php echo $item->animation_title; ?>" data-delay="0.1s" style="color: <?php echo $item->text_color; ?>"><?php echo ucwords($x, "-"); ?></h2>
+
+                                                    <?php else : ?>
+                                                        <h2 class="title" data-animation="<?php echo $item->animation_title; ?>" data-delay="0.1s" style="color: <?php echo $item->text_color; ?>"><?php echo ucwords(strtolower($item->title));
+                                                                                                                                                                                                    ($item->title); ?></h2>
+                                                    <?php endif; ?>
                                                 <?php endif;
-                                                if (!empty($item->description)): ?>
+                                                if (!empty($item->description)) : ?>
                                                     <p class="description" data-animation="<?php echo $item->animation_description; ?>" data-delay="0.5s" style="color: <?php echo $item->text_color; ?>"><?php echo html_escape($item->description); ?></p>
                                                 <?php endif;
-                                                if (!empty($item->button_text)): ?>
+                                                if (!empty($item->button_text)) : ?>
                                                     <button class="btn btn-slider" data-animation="<?php echo $item->animation_button; ?>" data-delay="0.9s" style="background-color: <?php echo $item->button_color; ?>;border-color: <?php echo $item->button_color; ?>;color: <?php echo $item->button_text_color; ?>"><?php echo html_escape($item->button_text); ?></button>
                                                 <?php endif; ?>
                                             </div>
@@ -77,7 +86,7 @@
                                 </div>
                             </a>
                         </div>
-                    <?php endforeach;
+                <?php endforeach;
                 endif; ?>
             </div>
             <div id="main-mobile-slider-nav" class="main-slider-nav">

@@ -9,6 +9,11 @@
         text-align: start;
     }
 
+    .block-title2 {
+        margin-top: 5px;
+        text-align: start;
+    }
+
     p {
         margin: 5px;
     }
@@ -107,11 +112,11 @@
                 <p><?php echo $address->shipping_area ?></p>
                 <p><?php echo $address->shipping_landmark ?></p>
                 <p><?php echo $address->shipping_city . "," . $address->shipping_state . " -" . $address->shipping_zip_code ?>
-                <div id="phone_number"> <label>Phone:</label><span>
-                        <?php echo $address->shipping_phone_number ?>
-                    </span>
-                    </label>
-                </div>
+                    <div id="phone_number"> <label>Phone:</label><span>
+                            <?php echo $address->shipping_phone_number ?>
+                        </span>
+                        </label>
+                    </div>
 
 
             </div>
@@ -129,12 +134,12 @@
                     <p><?php echo $address->billing_landmark ?></p>
 
                     <p><?php echo $address->billing_city . "," . $address->billing_state . " -" . $address->billing_zip_code ?>
-                    <div id="phone_number"> <label>Phone:</label><span>
-                            <?php echo $address->billing_phone_number ?>
-                        </span>
-                        </label>
+                        <div id="phone_number"> <label>Phone:</label><span>
+                                <?php echo $address->billing_phone_number ?>
+                            </span>
+                            </label>
 
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -159,6 +164,64 @@
 
     </div>
     <div class="row">
+        <div class="col-sm-12">
+            <?php $modes = get_payment_modes(); ?>
+            <!-- <div class="cash_method"> -->
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="block-title" id="payment"><?php echo trans("payment_mode") ?></h6>
+                </div>
+                <div class="col-md-6 method_name">
+                    <select name="payment_mode" id="payment_mode" class="form-control custom-select2" onchange='check_mode(this.value);' required>
+                        <option value="" disabled selected>Select Mode</option>
+                        <?php foreach ($modes as $mode) : ?>
+                            <option value="<?php echo html_escape($mode->gateway_code); ?>" myTag="<?php $mode->meaning ?>"><?php echo $mode->meaning ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+            <!-- </div> -->
+
+        </div>
+    </div>
+    <div class="row" id="nb_banks" style="display: none;">
+        <div class="col-sm-12">
+            <?php $nb_banks = get_nb_banks(); ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="block-title" id="payment"><?php echo trans("select_bank") ?></h6>
+                </div>
+                <div class="col-md-6 method_name">
+                    <select name="bank_select" id="bank_select" class="form-control custom-select2">
+                        <option value="" disabled selected>Select Bank</option>
+                        <?php foreach ($nb_banks as $bank) : ?>
+                            <option value="<?php echo html_escape($bank->option_code); ?>" myTag="<?php $bank->meaning ?>"><?php echo $bank->meaning ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="wallets" style="display: none;">
+        <div class="col-sm-12">
+            <?php $wallets = get_wallets(); ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="block-title" id="payment"><?php echo trans("select_wallet") ?></h6>
+                </div>
+                <div class="col-md-6 method_name">
+                    <select name="wallet_select" id="wallet_select" class="form-control custom-select2">
+                        <option value="" disabled selected>Select Wallet</option>
+                        <?php foreach ($wallets as $wallet) : ?>
+                            <option value="<?php echo html_escape($wallet->option_code); ?>" myTag="<?php $wallet->meaning ?>"><?php echo $wallet->meaning ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 3%;">
         <div class="col-sm-6">
             <a class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>'><?php echo trans("change_pay_method") ?></a>
         </div>
@@ -168,3 +231,26 @@
     </div>
 </div>
 <?php echo form_close(); ?>
+<script>
+    function check_mode(val) {
+        var element = $("#nb_banks");
+        var element2 = $("#wallets");
+        if (val == 'nb') {
+            // element.show();
+            $("#nb_banks").css("display", "block");
+            element2.hide();
+            document.getElementById('bank_select').required = true;
+            document.getElementById('wallet_select').required = false;
+        } else if (val == 'wallet') {
+            element2.show();
+            element.hide();
+            document.getElementById('wallet_select').required = true;
+            document.getElementById('bank_select').required = false;
+        } else {
+            element.hide();
+            document.getElementById('bank_select').required = false;
+            document.getElementById('bank_select').required = false;
+            element2.hide();
+        }
+    }
+</script>

@@ -401,6 +401,22 @@ class Cart_model extends CI_Model
         return $this->db->update('cart', $data);
     }
 
+    //get gst number by seller id
+    public function get_gst_number_by_sellerid($user_id)
+    {
+        $this->db->where('id', $user_id);
+        $query = $this->db->get('users');
+        return $query->row()->gst_number;
+    }
+
+    //get pan number by seller id
+    public function get_pan_number_by_sellerid($user_id)
+    {
+        $this->db->where('id', $user_id);
+        $query = $this->db->get('users');
+        return $query->row()->pan_number;
+    }
+
     //get selected variations
     public function get_selected_variations($product_id)
     {
@@ -1485,5 +1501,28 @@ class Cart_model extends CI_Model
         // var_dump($_SESSION["mds_shopping_cart"]);
         // die();
         // return $new_cart;
+    }
+
+    public function get_payment_modes()
+    {
+        $this->db->order_by("meaning", "asc");
+        $query = $this->db->get('payment_methods');
+        return $query->result();
+    }
+    public function get_nb_banks()
+    {
+        $this->db->where('gateway_code', 'nb');
+        $this->db->where('enabled_flag', '1');
+        $this->db->order_by("meaning", "asc");
+        $query = $this->db->get('payment_method_options');
+        return $query->result();
+    }
+    public function get_wallets()
+    {
+        $this->db->where('gateway_code', 'wallet');
+        $this->db->where('enabled_flag', '1');
+        $this->db->order_by("meaning", "asc");
+        $query = $this->db->get('payment_method_options');
+        return $query->result();
     }
 }

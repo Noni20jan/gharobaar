@@ -98,7 +98,7 @@
             <?php $shop_concern = get_lookup_values_by_type("SHOP_BY_CONCERN"); ?>
             <?php foreach ($shop_concern as $concern) : ?>
                 <div class="col-2 two-for-mobile">
-                    <a href="<?= generate_url("shop_by_concern_type") . '/' . strtolower($concern->lookup_code); ?>">
+                    <a href="<?= generate_url("shop_by_concern") . '/' . strtolower($concern->lookup_code); ?>">
                         <?php $img_url = get_lookup_image_url($concern->lookup_code); ?>
                         <img class="shop_by_seller_imgs" src="<?php echo base_url() . $img_url; ?>">
                         <strong id="shop_category_style">
@@ -114,7 +114,7 @@
         </div>
         <div class="row categories-for-mobile" style="padding-bottom: 12px;">
             <?php foreach ($shop_concern as $concern) : ?>
-                <a href="<?= generate_url("shop_by_concern_type") . '/' . strtolower($concern->lookup_code); ?>">
+                <a href="<?= generate_url("shop_by_concern") . '/' . strtolower($concern->lookup_code); ?>">
                     <p class="all-in-categoty"><?php echo $concern->meaning ?></p>
                 </a>
             <?php endforeach; ?>

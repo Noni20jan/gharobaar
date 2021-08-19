@@ -34,24 +34,6 @@
         margin-left: 10px;
     }
 
-    #pin_text {
-        outline: none;
-        border: none;
-        border-radius: 20px;
-        padding: 6px;
-        margin-left: 11px;
-    }
-
-
-
-    /* @media only screen and (max-width: 700px) {
-        #pin_text {
-            width: 72%; */
-    /* padding-left: 9%; */
-    /* margin-left: -20%;
-        }
-    } */
-
     .check_for_pincode {
         background-color: #DF911E;
         color: #fff;
@@ -319,7 +301,7 @@
                 <div class="col-12 col-lg-6 mb-2">
                     <label class="label-product-variation mb-3" style="font-weight:600;">Enter PIN Code To Check Delivery</label>
                     <div class="input-group">
-                        <input type="text" name="pin_text" class="form-control text-center input-product-pincode" autocomplete="off" maxlength=6 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        <input type="text" name="pin_text" id="pin_text" class="form-control text-center input-product-pincode" autocomplete="off" maxlength=6 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                         <button type="button" class="btn btn-md" id="check-button">Go!</button>
                     </div>
                     <p id="check_pincode_text"></p>

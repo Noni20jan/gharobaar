@@ -267,11 +267,21 @@ class Cart_controller extends Home_Core_Controller
         $quantity = $this->input->post('quantity', true);
         $this->cart_model->update_cart_product_quantity($product_id, $cart_item_id, $quantity);
         $this->cart_model->calculate_cart_total();
+        $carts = $this->cart_model->get_sess_cart_items();
+        foreach ($carts as $cart) {
+            if ($cart_item_id === $cart->cart_item_id) {
+                $product_details = array(
+                    "total_price_product" => $cart->total_price
+                );
+            }
+        }
         $response = array(
+            "product_details" => ($product_details["total_price_product"])/100,
             "total_mrp" => ($_SESSION["mds_shopping_cart_total"]->subtotal) / 100,
             "discount" => $_SESSION["mds_shopping_cart_total"]->discount,
             "total" => ($_SESSION["mds_shopping_cart_total"]->total_price) / 100
         );
+        // var_dump($_SESSION);die();
         echo json_encode($response);
     }
     /**
@@ -1177,17 +1187,279 @@ class Cart_controller extends Home_Core_Controller
 
         $returnUrl = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"];
 
+        //easy-split start
+
+        $cart_items = $this->cart_model->get_sess_cart_items();
+        $cart_total = $this->cart_model->get_sess_cart_total();
+        $shipping_detail = json_decode($this->order_model->get_shipping_cost($cart_total));
+        $total_amount = $cart_total->total_price;
+
+        $seller_array = array();
+        $amount_array = array();
+        $product_seller_details = array();
+
+
+        // 
+        $payment_mode = $this->input->post("payment_mode", true);
+
+        // 
+
+        foreach ($cart_items as $cart_item) {
+            $object = new stdClass();
+            $product_details = get_active_product($cart_item->product_id);
+
+            $object->seller_id = $product_details->user_id;
+            $object->seller_commission_rate = calculate_commission_rate_seller($object->seller_id);
+            $new = true;
+            foreach ($product_seller_details as $psd) {
+                if ($psd->seller_id == $object->seller_id) {
+                    $object_product = new stdClass();
+                    $object_product->product_id = $cart_item->product_id;
+                    $object_product->gst_rate = $product_details->gst_rate;
+                    $object_product->product_total_price = $cart_item->total_price;
+
+                    // $commission_rate = $this->general_settings->commission_rate;
+
+
+                    $gst_cal = 1 + ($object_product->gst_rate / 100);
+                    $product_price_excluding_gst = round($object_product->product_total_price / $gst_cal, 0);
+                    $amount = $product_price_excluding_gst / 100;
+                    $commission = ($object->seller_commission_rate) / 100;
+                    $commission_amount_without_round = $amount * $commission;
+                    $commission_amount = round($commission_amount_without_round, 2);
+
+                    $object_product->product_price_excluding_gst = $product_price_excluding_gst;
+
+                    $gst_on_commission_amount = $commission_amount * 0.18;
+                    $commission_amount_with_gst = $commission_amount + $gst_on_commission_amount;
+                    // 
+
+                    $object_product->product_commission_amount = $commission_amount;
+                    $object_product->product_gst_on_commission_amount = round($gst_on_commission_amount, 2);
+                    $object_product->product_commission_amount_with_gst = round($commission_amount_with_gst, 2);
+
+                    // $object_product->commission_amount = $commission_amount;
+                    $psd->total_commission_amount += $object_product->product_commission_amount_with_gst;
+                    $psd->total_price += $object_product->product_total_price;
+                    $psd->total_price_without_gst += $object_product->product_price_excluding_gst;
+                    $psd->seller_earned = ($psd->total_price / 100) - $psd->total_commission_amount;
+                    array_push($psd->products, $object_product);
+
+                    var_dump($psd->total_price_without_gst);
+                    die();
+                    $new = false;
+                }
+            }
+            if ($new) :
+                $object->products = array();
+                $object_product = new stdClass();
+                $object_product->product_id = $cart_item->product_id;
+                $object_product->gst_rate = $product_details->gst_rate;
+                $object_product->product_total_price = $cart_item->total_price;
+
+
+
+                $gst_cal = 1 + ($object_product->gst_rate / 100);
+                $product_price_excluding_gst = round($object_product->product_total_price / $gst_cal, 0);
+                $amount = $product_price_excluding_gst / 100;
+                $commission = $object->seller_commission_rate / 100;
+                $commission_amount_without_round = $amount * $commission;
+                $commission_amount = round($commission_amount_without_round, 2);
+
+
+                $object_product->product_price_excluding_gst = $product_price_excluding_gst;
+
+                $gst_on_commission_amount = $commission_amount * 0.18;
+                $commission_amount_with_gst = $commission_amount + $gst_on_commission_amount;
+
+                $object_product->product_commission_amount = $commission_amount;
+                $object_product->product_gst_on_commission_amount = round($gst_on_commission_amount, 2);
+                $object_product->product_commission_amount_with_gst = round($commission_amount_with_gst, 2);
+
+                // $object_product->commission_amount = $commission_amount;
+                $object->total_commission_amount = $object_product->product_commission_amount_with_gst;
+                $object->total_price = $object_product->product_total_price;
+                $object->total_price_without_gst = $object_product->product_price_excluding_gst;
+
+                $object->seller_earned = ($object->total_price / 100) - $object->total_commission_amount;
+                // var_dump($object->total_price_without_gst);
+                // die();
+                array_push($object->products, $object_product);
+                array_push($product_seller_details, $object);
+            endif;
+            // var_dump($cart_item);
+        }
+        //var_dump($product_seller_details);
+
+
+        $seller_settlement = array();
+        $total_amount_paid = 0;
+        foreach ($product_seller_details as $psd) {
+            $object = new stdClass();
+            $object->vendorId = $psd->seller_id;
+
+
+            $gst_number = get_gst_number_by_sellerid($object->vendorId);
+
+
+
+            $pan_number = get_pan_number_by_sellerid($object->vendorId);
+
+
+            $pan_forth_char = str_split($pan_number);
+            // var_dump($pan_number);
+            // var_dump($pan_forth_char[3]);
+            // die();
+
+
+
+
+
+
+            $object->total_amount_with_gst = $psd->total_price;
+            $object->total_amount_without_gst = $psd->total_price_without_gst;
+            $object->commission_rate = $psd->seller_commission_rate;
+            $object->commission_amount = round($object->total_amount_without_gst * ($object->commission_rate / 100));
+            $object->commission_amount_gst = round($object->commission_amount * 0.18);
+            $object->commission_amount_with_gst = round($object->commission_amount_gst + $object->commission_amount);
+
+
+            $object->amount = $psd->seller_earned;
+
+
+
+            if ($payment_mode == 'nb') {
+                $bank_code = $this->input->post("bank_select", true);
+                $com = $this->order_model->get_commission_rate_nb_wallet($payment_mode, $bank_code);
+                $gateway_charge = $com->gateway_charge;
+            } elseif ($payment_mode == 'wallet') {
+                $wallet_code = $this->input->post("wallet_select", true);
+                $com = $this->order_model->get_commission_rate_nb_wallet($payment_mode, $wallet_code);
+                $gateway_charge = $com->gateway_charge;
+            } elseif ($payment_mode == 'cc') {
+                // $com = $this->order_model->get_commission_rate_dc_cc_wallet($payment_mode);
+                $gateway_charge = 0.95;
+            } elseif ($payment_mode == 'upi') {
+                $gateway_charge = 0.15;
+            } elseif ($payment_mode == 'dc') {
+                $payment_amount = $psd->total_price;
+                if ($payment_amount < 200000) {
+                    $gateway_charge = 0.45;
+                } elseif ($payment_amount >= 200000) {
+                    $gateway_charge = 0.95;
+                }
+            }
+            $object->gateway_charge = $gateway_charge;
+
+            foreach ($shipping_detail as $ship_detail) {
+                if ($psd->seller_id == $ship_detail->SupplierId) {
+                    $object->shipping = ($ship_detail->Supplier_Shipping_cost);
+                    $object->shipping_tax_charge = ($ship_detail->shipping_tax_charges);
+                    $object->shipping_charge_with_gst = ($object->shipping) + ($object->shipping_tax_charge);
+                    $object->shipping_charge_to_gharobaar = $object->shipping + $object->shipping * 0.18;
+                }
+            }
+
+
+
+
+            if (!empty($pan_number)) {
+                if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                    $object->tds_amount = 0;
+                } else {
+                    $object->tds_amount = 0.01 * ($psd->total_price_without_gst);
+                }
+            } else {
+                $object->tds_amount = 0.05 * ($psd->total_price_without_gst);
+            }
+
+
+
+
+
+            if (!empty($gst_number)) {
+                $object->tcs_amount = round(($object->total_amount_without_gst + $object->shipping) * 0.01);
+            } else {
+                $object->tcs_amount = 0;
+            }
+            $object->gateway_amount = round(($object->shipping_charge_with_gst + $object->total_amount_with_gst) * ($object->gateway_charge / 100));
+            $object->gateway_amount_gst = round($object->gateway_amount * 0.18);
+            $object->gateway_amount_with_gst = round($object->gateway_amount + $object->gateway_amount_gst);
+            $object->total_deduction = round($object->gateway_amount_with_gst + $object->shipping_charge_to_gharobaar + $object->tcs_amount + $object->commission_amount_with_gst + $object->tds_amount);
+            $object->net_seller_payable = round($object->total_amount_with_gst + $object->shipping_charge_with_gst - $object->total_deduction);
+
+
+            $total_amount_paid += $object->net_seller_payable;
+
+            $object->payment_mode = $payment_mode;
+            $object->cashfree_order_id = $this->input->post("orderid", true);
+            if ($payment_mode == 'nb') {
+                $object->bank_code = $this->input->post("bank_select", true);;
+            } elseif ($payment_mode == 'wallet') {
+                $object->wallet_code = $this->input->post("wallet_select", true);
+            }
+            array_push($seller_settlement, $object);
+        }
+
+        $object = new stdClass();
+        $object->vendorId = "Gharobaar";
+        $object->cashfree_order_id = $this->input->post("orderid", true);
+        $object->net_seller_payable =  $total_amount - $total_amount_paid;
+        // var_dump($object);die();
+        array_push($seller_settlement, $object);
+
+
+        // var_dump(json_encode($seller_settlement));die();
+
+        $new_seller_settlement = array();
+
+        foreach ($seller_settlement as $ss) {
+            $object = new stdClass();
+            $object->vendorId = $ss->vendorId;
+            $object->amount =  $ss->net_seller_payable / 100;
+            array_push($new_seller_settlement, $object);
+        }
+        // var_dump(json_encode($new_seller_settlement));
+
+
+
+
+        $settelment_json = json_encode($new_seller_settlement);
+        $settelment_json_base64 = base64_encode($settelment_json);
+        $this->session->set_userdata('settelment_json_base64', $settelment_json_base64);
+        $easysplit = $_SESSION['settelment_json_base64'];
+
+        // easy-split end
+
+
         $data = array(
-            // "appId" => "64888619c9e52db5313c7ec6888846",
             "appId" => $this->general_settings->cashfree_app_id,
             "orderId" => $this->input->post("orderid", true),
             "orderAmount" => $this->input->post("orderamount", true),
+            // "paymentSplits" => $this->input->post("paymentsplits", true),
+            "paymentSplits" => $easysplit,
             "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
             "customerPhone" => $this->auth_user->phone_number,
             "customerEmail" => $this->auth_user->email,
             "returnUrl" => $returnUrl
         );
+        if (($this->input->post("payment_mode", true)) == "nb") {
+            $data["paymentOption"] = $this->input->post("payment_mode", true);
+            $data["paymentCode"] = $this->input->post("bank_select", true);
+            $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentOption=" . $data["paymentOption"] . "&paymentCode=" . $data["paymentCode"];
+        } elseif (($this->input->post("payment_mode", true)) == "wallet") {
+            $data["paymentOption"] = $this->input->post("payment_mode", true);
+            $data["paymentCode"] = $this->input->post("wallet_select", true);
+            $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentOption=" . $data["paymentOption"] . "&paymentCode=" . $data["paymentCode"];
+        } elseif (($this->input->post("payment_mode", true)) == "cc" || ($this->input->post("payment_mode", true)) == "dc" || ($this->input->post("payment_mode", true)) == "upi") {
+            $data["paymentModes"] = $this->input->post("payment_mode", true);
+            $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentModes=" . $data["paymentModes"];
+        }
         $data["signature"] = $this->cashfree_gen_signature($data);
+        $save_payment = $seller_settlement;
+        foreach ($save_payment as $sp) {
+            $this->order_model->save_cashfree_seller_payable($sp);
+        }
         $this->load->view('cart/cashfree_form', $data);
     }
 
@@ -1212,6 +1484,9 @@ class Cart_controller extends Home_Core_Controller
     {
 
         $sess_unique_id = trim($this->input->get('session_id', TRUE));
+        $paymentOption = $this->input->get('paymentOption', TRUE);
+        $paymentCode = $this->input->get('paymentCode', TRUE);
+        $paymentModes = $this->input->get('paymentModes', TRUE);
         $user_details = $this->auth_model->get_user_detail_by_unique_sess_id($sess_unique_id);
         // var_dump($_SESSION);
         if (!empty($_SESSION["modesy_sess_unique_id"])) {
@@ -1279,6 +1554,9 @@ class Cart_controller extends Home_Core_Controller
             'payment_amount' => $this->input->post('orderAmount', true),
             'payment_status' => $this->input->post('txStatus', true),
             'session_id' => $sess_unique_id,
+            'paymentOption' => $paymentOption,
+            'paymentCode' => $paymentCode,
+            'paymentModes' => $paymentModes
         );
 
 
