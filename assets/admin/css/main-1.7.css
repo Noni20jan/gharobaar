@@ -548,6 +548,14 @@ label {
     top: 10px;
     z-index: 10;
 }
+@media(max-width:768px){
+    .td-product label {
+        position: absolute;
+        top: 5px !important;
+        left: 77% !important;
+        z-index: 10;
+    }
+}
 
 .img-table {
     float: left;

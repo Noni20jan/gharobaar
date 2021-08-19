@@ -12048,6 +12048,18 @@ img {
   background-size: 10px 10px;
 }
 
+.custom-select2 {
+  margin-bottom: 5px;
+  height: 42px;
+  font-size: 14px;
+  border-radius: 2px;
+  box-shadow: none !important;
+  /* background-image: url("data:image/svg+xml;charset=utf8,%3Csvg width='1em' height='1em' viewBox='0 0 16 16' fill='%23444' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E"); */
+  background-repeat: no-repeat;
+  background-size: 10px 10px
+}
+
+
 .form-textarea {
   min-height: 80px;
   border-radius: 0.1875rem;
@@ -21059,7 +21071,7 @@ form select.error {
   }
 
   .order-summary-container {
-    margin-top: 0px;
+    margin-top: 10px
   }
 
   .shopping-cart {
