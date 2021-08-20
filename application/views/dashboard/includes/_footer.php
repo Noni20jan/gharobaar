@@ -33,7 +33,6 @@
 <script src="<?php echo base_url(); ?>assets/admin/js/main-1.7.js"></script>
 <script src="<?php echo base_url(); ?>assets/admin/js/dashboard-1.7.js"></script>
 
-<script src="<?php echo base_url(); ?>assets/js/script-1.7.min.js"></script>
 
 <!--tinyMCE-->
 <script src="<?php echo base_url(); ?>assets/vendor/tinymce/jquery.tinymce.min.js"></script>

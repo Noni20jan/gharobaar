@@ -162,7 +162,7 @@
         }
     }
 
-    #myModal {
+    #loggedinModal {
         display: none;
         position: fixed;
         z-index: 1;
@@ -263,7 +263,12 @@
         text-shadow: 0 1px 0 #fff;
         opacity: 0.5;
     }
-
+    .close_pin:hover,
+    .close_pin:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
     #enter_pin {
         position: relative;
         width: 68%;
@@ -3908,7 +3913,7 @@
                                         <li class="nav-item li-main-nav-right">
 
                                             <span id="show_time"><i class='fas fa-map-marker-alt'></i></span>
-                                            <div id="myModal" class="modal fade">
+                                            <div id="loggedinModal" class="modal fade">
                                                 <div class="modal_content">
                                                     <span class="close_pincode">&times;</span>
                                                     <div style="position: relative;top: 27px;left: 11px;">
@@ -4136,7 +4141,7 @@
                             <div>
                                 <span id="show_tim"><i class='fas fa-map-marker-alt'></i></span>
 
-                                <div id="myModal1" class="modal fade">
+                                <div id="myModal1" class="modal">
                                     <div class="mobile_content">
                                         <span class="close_pin">&times;</span>
                                         <div id="close_open">
@@ -4972,7 +4977,7 @@
         })
     </script>
     <script>
-        var modal = document.getElementById("myModal");
+        var modal = document.getElementById("loggedinModal");
         var modal1 = document.getElementById("myModal1");
 
 

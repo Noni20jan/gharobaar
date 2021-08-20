@@ -270,7 +270,7 @@
                                         <td><?php echo $item->pageviews; ?></td>
                                         <td><?php echo formatted_date($item->created_at); ?></td>
                                         <td>
-                                            <div>
+                                            <div class="dropdown" style="float:none;">
                                                 <button class="btn  dropdown-toggle btn-select-option btn-custom" type="button" data-toggle="dropdown"><?php echo trans('select_option'); ?>
                                                     <span class="caret"></span>
                                                 </button>

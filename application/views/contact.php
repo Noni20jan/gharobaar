@@ -1,34 +1,10 @@
 <style>
-    .image1 {
-        width: 72%;
-        margin-left: 20%;
-        margin-top: -15%;
-    }
-
-
     .page-title {
 
         text-align: center;
         font-weight: bolder;
         font-size: xx-large;
 
-    }
-
-    #contact-name {
-        margin-bottom: 5%;
-        margin-top: 8%;
-    }
-
-    #contact-email {
-        margin-bottom: 5%;
-    }
-
-    #contact-number {
-        margin-bottom: 5%;
-    }
-
-    #contact-query {
-        margin-bottom: 5%;
     }
 </style>
 
@@ -75,19 +51,19 @@
                                 <!-- form start -->
                                 <?php echo form_open('contact-post'); ?>
                                 <div class="form-group">
-                                    <input id="contact-name" type="text" class="form-control form-input" name="name" placeholder="<?php echo trans("name"); ?>" maxlength="199" minlength="1" pattern=".*\S+.*" value="<?php echo old('name'); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> required>
+                                    <input id="contact-name" type="text" class="form-control auth-form-input" name="name" placeholder="<?php echo trans("name"); ?>" maxlength="199" minlength="1" pattern=".*\S+.*" value="<?php echo old('name'); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> required>
                                 </div>
                                 <div class="form-group">
-                                    <input id="contact-email" type="email" class="form-control form-input" name="email" maxlength="199" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-zA-Z.]$" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old('email'); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> required>
+                                    <input id="contact-email" type="email" class="form-control auth-form-input" name="email" maxlength="199" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-zA-Z.]$" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old('email'); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> required>
                                 </div>
                                 <div class="form-group">
                                     <input id="contact-number" type="tel" name="phone_number" onKeyPress="if(this.value.length==12) return false; return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control auth-form-input" placeholder="Mobile Number" value="" minlength="10" maxlength="10" required="">
                                 </div>
                                 <div class="form-group">
-                                    <textarea id="contact-query" class="form-control form-input form-textarea" name="message" placeholder="<?php echo trans("message"); ?>" maxlength="4970" minlength="5" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> required><?php echo old('message'); ?></textarea>
+                                    <textarea id="contact-query" class="form-control auth-form-input form-textarea" name="message" placeholder="<?php echo trans("message"); ?>" maxlength="4970" minlength="5" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> required><?php echo old('message'); ?></textarea>
                                 </div>
                                 <div class="form-group" style="text-align:center;">
-                                    <button type="submit" class="btn btn-md btn-custom" style="width:60%;">
+                                    <button type="submit" class="btn btn-md btn-custom">
                                         <?php echo trans("submit"); ?>
                                     </button>
                                 </div>
@@ -96,8 +72,6 @@
                             </div>
 
                             <div class="col-md-6 col-12 order-0 order-lg-1 contact-right">
-
-                                <!-- <img id="ABOUT_LOGO" src="assets/img/contact.png" class="img-responsive image1"> -->
 
                                 <?php if ($this->settings->contact_phone) : ?>
                                     <div class="col-12 contact-item">

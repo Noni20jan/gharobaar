@@ -1503,43 +1503,40 @@ class Product_model extends Core_Model
         return $this->db->count_all_results('products');
     }
 
-    public function get_paginated_filtered_products_count_category_feature($query_string_array = null, $category_id = null, $type_code)
+    public function get_paginated_filtered_products_count_category_feature($query_string_array = null, $category_id = null, $type)
     {
-
-        $type_row = $this->lookup_model->get_lookup_values_by_code($type_code);
-        if (!empty($type_row)) :
-            $type = $type_row->id;
-            $this->filter_products($query_string_array, $category_id);
-            $this->db->order_by('products.is_promoted', 'DESC');
-            $this->db->join('category_feature', 'products.category_id=category_feature.category_id');
-            if (!empty($type)) {
-                $tags = "SELECT tag_id FROM category_feature WHERE feature_id=$type AND tag_id is not null";
-                $query = $this->db->query($tags)->result();
-                if (!empty($query)) {
-                    $this->db->group_start();
-                    $this->db->where('category_feature.feature_id', $type);
-                    foreach ($query as $tag) {
-                        $tag_name = $this->get_category_name_from_tag($tag->tag_id);
-                        if ($tag_name->lookup_code == 'DESSERTS') {
-                            $this->db->or_where('products.is_appetisers_main_course_beverages_desserts', 'Desserts');
-                        } else if ($tag_name->lookup_code == 'SUSTAINABLE') {
-                            $this->db->or_where('products.is_sustainable', 'Y');
-                        } else if ($tag_name->lookup_code == 'ORGANIC') {
-                            $this->db->or_where('products.is_organic', 'Y');
-                        } else if ($tag_name->lookup_code == 'GLUTEN_FREE') {
-                            $this->db->or_where('products.is_gluten_Free', 'Y');
-                        } else if ($tag_name->lookup_code == 'VEGAN') {
-                            $this->db->or_where('products.is_vegan', 'Y');
-                        }
+        
+        $this->filter_products($query_string_array, $category_id);
+        $this->db->order_by('products.is_promoted', 'DESC');
+        $this->db->join('category_feature', 'products.category_id=category_feature.category_id');
+        if (!empty($type)) {
+            $tags = "SELECT tag_id FROM category_feature WHERE feature_id=$type AND tag_id is not null";
+            $query = $this->db->query($tags)->result();
+            if (!empty($query)) {
+                $this->db->group_start();
+                $this->db->where('category_feature.feature_id', $type);
+                foreach ($query as $tag) {
+                    $tag_name = $this->get_category_name_from_tag($tag->tag_id);
+                    if ($tag_name->lookup_code == 'DESSERTS') {
+                        $this->db->or_where('products.is_appetisers_main_course_beverages_desserts', 'Desserts');
+                    } else if ($tag_name->lookup_code == 'SUSTAINABLE') {
+                        $this->db->or_where('products.is_sustainable', 'Y');
+                    } else if ($tag_name->lookup_code == 'ORGANIC') {
+                        $this->db->or_where('products.is_organic', 'Y');
+                    } else if ($tag_name->lookup_code == 'GLUTEN_FREE') {
+                        $this->db->or_where('products.is_gluten_Free', 'Y');
+                    } else if ($tag_name->lookup_code == 'VEGAN') {
+                        $this->db->or_where('products.is_vegan', 'Y');
                     }
-                    $this->db->group_end();
-                } else {
-                    $this->db->where('category_feature.feature_id', $type);
                 }
+                $this->db->group_end();
             }
-            $this->db->distinct();
-            return $this->db->get('products')->num_rows();
-        endif;
+            else {
+                $this->db->where('category_feature.feature_id', $type);
+            }
+        }
+        $this->db->distinct();
+        return $this->db->get('products')->num_rows();
     }
 
     //get products count by category

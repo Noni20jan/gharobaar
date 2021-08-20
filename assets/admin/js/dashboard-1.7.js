@@ -5,7 +5,7 @@ function delete_product(product_id, message) {
         icon: "warning",
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 "id": product_id
@@ -15,7 +15,8 @@ function delete_product(product_id, message) {
                 method: "POST",
                 url: base_url + "dashboard_controller/delete_product",
                 data: data,
-                success: function(response) {;
+                success: function (response) {
+                    ;
 
                     location.reload();
                 }
@@ -34,7 +35,7 @@ function delete_quote_request(id, message) {
         icon: "warning",
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 "id": id
@@ -44,7 +45,8 @@ function delete_quote_request(id, message) {
                 type: "POST",
                 url: base_url + "bidding_controller/delete_quote_request",
                 data: data,
-                success: function(response) {;
+                success: function (response) {
+                    ;
                     location.reload();
                 }
             });
@@ -58,7 +60,7 @@ function delete_barter_request(id, message) {
         icon: "warning",
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 "id": id
@@ -68,7 +70,8 @@ function delete_barter_request(id, message) {
                 type: "POST",
                 url: base_url + "bidding_controller/delete_barter_request",
                 data: data,
-                success: function(response) {;
+                success: function (response) {
+                    ;
                     location.reload();
                 }
             });
@@ -82,7 +85,7 @@ function reject_barter_request(id, message) {
         icon: "warning",
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 "id": id
@@ -92,7 +95,8 @@ function reject_barter_request(id, message) {
                 type: "POST",
                 url: base_url + "bidding_controller/reject_barter",
                 data: data,
-                success: function(response) {;
+                success: function (response) {
+                    ;
                     location.reload();
                 }
             });
@@ -106,7 +110,7 @@ function accept_barter_request(id, message) {
         icon: "warning",
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 "id": id
@@ -116,7 +120,8 @@ function accept_barter_request(id, message) {
                 type: "POST",
                 url: base_url + "bidding_controller/accept_barter",
                 data: data,
-                success: function(response) {;
+                success: function (response) {
+                    ;
                     location.reload();
                 }
             });
@@ -138,7 +143,7 @@ function get_states(val, map) {
         type: "POST",
         url: base_url + "ajax_controller/get_states",
         data: data,
-        success: function(response) {
+        success: function (response) {
             var obj = JSON.parse(response);
             if (obj.result == 1) {
                 document.getElementById("select_states").innerHTML = obj.content;
@@ -165,7 +170,7 @@ function get_cities(val, map) {
         type: "POST",
         url: base_url + "ajax_controller/get_cities",
         data: data,
-        success: function(response) {
+        success: function (response) {
             var obj = JSON.parse(response);
             if (obj.result == 1) {
                 document.getElementById("select_cities").innerHTML = obj.content;
@@ -196,7 +201,7 @@ function get_states_1(val, map) {
         type: "POST",
         url: base_url + "ajax_controller/get_states",
         data: data,
-        success: function(response) {
+        success: function (response) {
             var obj = JSON.parse(response);
             if (obj.result == 1) {
                 document.getElementById("select_states_1").innerHTML = obj.content;
@@ -223,7 +228,7 @@ function get_cities_1(val, map) {
         type: "POST",
         url: base_url + "ajax_controller/get_cities",
         data: data,
-        success: function(response) {
+        success: function (response) {
             var obj = JSON.parse(response);
             if (obj.result == 1) {
                 document.getElementById("select_cities_1").innerHTML = obj.content;
@@ -241,7 +246,7 @@ function get_cities_1(val, map) {
 //end
 
 //set main image session
-$(document).on('click', '.btn-set-image-main-session', function() {
+$(document).on('click', '.btn-set-image-main-session', function () {
     var file_id = $(this).attr('data-file-id');
     var data = {
         "file_id": file_id,
@@ -256,12 +261,12 @@ $(document).on('click', '.btn-set-image-main-session', function() {
         type: "POST",
         url: base_url + "file_controller/set_image_main_session",
         data: data,
-        success: function(response) {}
+        success: function (response) { }
     });
 });
 
 //set main image
-$(document).on('click', '.btn-set-image-main', function() {
+$(document).on('click', '.btn-set-image-main', function () {
     var image_id = $(this).attr('data-image-id');
     var product_id = $(this).attr('data-product-id');
     var data = {
@@ -278,12 +283,12 @@ $(document).on('click', '.btn-set-image-main', function() {
         type: "POST",
         url: base_url + "file_controller/set_image_main",
         data: data,
-        success: function(response) {}
+        success: function (response) { }
     });
 });
 
 //delete product image session
-$(document).on('click', '.btn-delete-product-img-session', function() {
+$(document).on('click', '.btn-delete-product-img-session', function () {
     var file_id = $(this).attr('data-file-id');
     var data = {
         "file_id": file_id,
@@ -294,7 +299,7 @@ $(document).on('click', '.btn-delete-product-img-session', function() {
         type: "POST",
         url: base_url + "file_controller/delete_image_session",
         data: data,
-        success: function() {
+        success: function () {
             $('#uploaderFile' + file_id).remove();
         }
     });
@@ -302,7 +307,7 @@ $(document).on('click', '.btn-delete-product-img-session', function() {
 
 
 //delete product image session size chart
-$(document).on('click', '.btn-delete-product-img-session-sizeChart', function() {
+$(document).on('click', '.btn-delete-product-img-session-sizeChart', function () {
     var file_id = $(this).attr('data-file-id');
     var data = {
         "file_id": file_id,
@@ -313,7 +318,7 @@ $(document).on('click', '.btn-delete-product-img-session-sizeChart', function() 
         type: "POST",
         url: base_url + "file_controller/delete_image_session",
         data: data,
-        success: function() {
+        success: function () {
             $('#uploaderFile' + file_id).remove();
             $("#hideShow-sizechart").show();
         }
@@ -321,7 +326,7 @@ $(document).on('click', '.btn-delete-product-img-session-sizeChart', function() 
 });
 
 //delete product image
-$(document).on('click', '.btn-delete-product-img', function() {
+$(document).on('click', '.btn-delete-product-img', function () {
     var file_id = $(this).attr('data-file-id');
     var data = {
         "file_id": file_id,
@@ -332,14 +337,14 @@ $(document).on('click', '.btn-delete-product-img', function() {
         type: "POST",
         url: base_url + "file_controller/delete_image",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
 });
 
 //delete size chart image
-$(document).on('click', '.btn-delete-sizechart-img', function() {
+$(document).on('click', '.btn-delete-sizechart-img', function () {
     var file_id = $(this).attr('data-file-id');
     var data = {
         "file_id": file_id,
@@ -350,7 +355,7 @@ $(document).on('click', '.btn-delete-sizechart-img', function() {
         type: "POST",
         url: base_url + "file_controller/delete_sizechart",
         data: data,
-        success: function(response) {
+        success: function (response) {
             // location.reload();
             $('#uploaderFile' + file_id).remove();
             $("#hide1").show();
@@ -360,7 +365,7 @@ $(document).on('click', '.btn-delete-sizechart-img', function() {
 });
 
 //delete story image
-$(document).on('click', '.btn-delete-story-img', function() {
+$(document).on('click', '.btn-delete-story-img', function () {
     var file_id = $(this).attr('data-file-id');
     var data = {
         "file_id": file_id,
@@ -371,7 +376,7 @@ $(document).on('click', '.btn-delete-story-img', function() {
         type: "POST",
         url: base_url + "file_controller/delete_story_image",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
@@ -384,7 +389,7 @@ function delete_user_video_preview(user_id, message) {
         icon: "warning",
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 "user_id": user_id,
@@ -395,7 +400,7 @@ function delete_user_video_preview(user_id, message) {
                 url: base_url + "file_controller/delete_story_video",
                 type: "post",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     document.getElementById("video_upload_result").innerHTML = response;
                     location.reload();
                 }
@@ -425,7 +430,7 @@ function update_product_map() {
         type: "POST",
         url: base_url + "dashboard_controller/show_address_on_map",
         data: data,
-        success: function(response) {
+        success: function (response) {
             document.getElementById("map-result").innerHTML = response;
         }
     });
@@ -438,7 +443,7 @@ function delete_product_video_preview(product_id, message) {
         icon: "warning",
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 "product_id": product_id,
@@ -449,7 +454,7 @@ function delete_product_video_preview(product_id, message) {
                 url: base_url + "file_controller/delete_video",
                 type: "post",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     document.getElementById("video_upload_result").innerHTML = response;
                 }
             });
@@ -464,7 +469,7 @@ function delete_product_audio_preview(product_id, message) {
         icon: "warning",
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 "product_id": product_id,
@@ -475,7 +480,7 @@ function delete_product_audio_preview(product_id, message) {
                 url: base_url + "file_controller/delete_audio",
                 type: "post",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     document.getElementById("audio_upload_result").innerHTML = response;
                 }
             });
@@ -484,7 +489,7 @@ function delete_product_audio_preview(product_id, message) {
 }
 
 
-$('#select_shipping_cost').on('change', function() {
+$('#select_shipping_cost').on('change', function () {
     if ($(this).find(':selected').attr('data-shipping-cost') == 1) {
         $('.shipping-cost-container').show();
         $(".price-input").prop('required', true);
@@ -530,7 +535,7 @@ function generateUniqueProductCode(element, button) {
     var count = 0;
     var last_product_id = 0;
 
-    $("select[name='" + element[0].name + "'").each(function() {
+    $("select[name='" + element[0].name + "'").each(function () {
         count++;
         test += paddding($(this).val(), 3);
         if (count >= 2) {
@@ -541,7 +546,7 @@ function generateUniqueProductCode(element, button) {
         url: base_url + "dashboard/last_product",
         async: true,
         type: "get",
-        success: function(res) {
+        success: function (res) {
             var obj = JSON.parse(res);
             last_product_id = parseInt(obj.last_record[0].id);
             test += uniqueProductCode(parseInt((parseInt(last_product_id) + 1) / 1000000));
@@ -571,7 +576,7 @@ function generateUniqueProductVariationCode(button, product_id, sku) {
         async: true,
         type: "post",
         data: data,
-        success: function(res) {
+        success: function (res) {
             var obj = JSON.parse(res);
             console.log(obj);
             $("#input_sku_option").val(obj.sku_option);
@@ -591,7 +596,7 @@ function generateUniqueProductOptionCode(element, button) {
     var count = 0;
     var last_product_id = 0;
 
-    $("select[name='" + element[0].name + "'").each(function() {
+    $("select[name='" + element[0].name + "'").each(function () {
         count++;
         test += paddding($(this).val(), 3);
         if (count >= 2) {
@@ -602,7 +607,7 @@ function generateUniqueProductOptionCode(element, button) {
         url: base_url + "dashboard/last_product",
         async: true,
         type: "get",
-        success: function(res) {
+        success: function (res) {
             var obj = JSON.parse(res);
             last_product_id = parseInt(obj.last_record[0].id);
             test += uniqueProductCode(parseInt((parseInt(last_product_id) + 1) / 1000000));
@@ -617,7 +622,7 @@ function generateUniqueProductOptionCode(element, button) {
 }
 
 
-$('input[type=radio][name=product_type]').change(function() {
+$('input[type=radio][name=product_type]').change(function () {
     $('input[name=listing_type]').prop('checked', false);
     if (this.value == 'digital') {
         $('.listing_ordinary_listing').hide();
@@ -636,7 +641,7 @@ function delete_product_digital_file(product_id, message) {
         icon: "warning",
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 "product_id": product_id,
@@ -647,7 +652,7 @@ function delete_product_digital_file(product_id, message) {
                 url: base_url + "file_controller/delete_digital_file",
                 type: "post",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     var obj = JSON.parse(response);
                     if (obj.result == 1) {
                         document.getElementById("digital_files_upload_result").innerHTML = obj.html_content;
@@ -677,7 +682,7 @@ function add_license_keys(product_id) {
         type: "POST",
         url: base_url + "dashboard_controller/add_license_keys",
         data: data,
-        success: function(response) {
+        success: function (response) {
             var obj = JSON.parse(response);
             if (obj.result == 1) {
                 document.getElementById("result-add-license-keys").innerHTML = obj.success_message;
@@ -699,14 +704,14 @@ function delete_license_key(id, product_id) {
         type: "POST",
         url: base_url + "dashboard_controller/delete_license_key",
         data: data,
-        success: function(response) {
+        success: function (response) {
             $('#tr_license_key_' + id).remove();
         }
     });
 }
 
 //update license code list on modal open
-$("#viewLicenseKeysModal").on('show.bs.modal', function() {
+$("#viewLicenseKeysModal").on('show.bs.modal', function () {
     var product_id = $('#license_key_list_product_id').val();
     var data = {
         'product_id': product_id,
@@ -717,7 +722,7 @@ $("#viewLicenseKeysModal").on('show.bs.modal', function() {
         type: "POST",
         url: base_url + "dashboard_controller/refresh_license_keys_list",
         data: data,
-        success: function(response) {
+        success: function (response) {
             document.getElementById("response_license_key").innerHTML = response;
         }
     });
@@ -734,7 +739,7 @@ function get_filter_subcategories_dashboard(val) {
         type: "POST",
         url: base_url + "dashboard_controller/get_subcategories",
         data: data,
-        success: function(response) {
+        success: function (response) {
             $('#subcategories').children('option:not(:first)').remove();
             $("#subcategories").append(response);
         }
@@ -742,7 +747,7 @@ function get_filter_subcategories_dashboard(val) {
 }
 
 //on modal close 
-$(document).on('hidden.bs.modal', function(event) {
+$(document).on('hidden.bs.modal', function (event) {
     if ($('.modal:visible').length) {
         $('body').addClass('modal-open');
     }
@@ -757,10 +762,10 @@ function product_in_stock(user_id) {
         method: "POST",
         url: base_url + "home_controller/products_in_stock/" + user_id,
         data: data,
-        beforeSend: function() {
+        beforeSend: function () {
             $('#cover-spin').show();
         },
-        success: function(response) {
+        success: function (response) {
             $("#product_div_seller")[0].innerHTML = response;
             $("#cover-spin").hide();
             $('#in_stock').css("background-color", "white");
@@ -778,10 +783,10 @@ function highest_discount(user_id, str) {
         method: "POST",
         url: base_url + "home_controller/highest_discount_products/" + user_id,
         data: data,
-        beforeSend: function() {
+        beforeSend: function () {
             $('#cover-spin').show();
         },
-        success: function(response) {
+        success: function (response) {
             $("#product_div_seller")[0].innerHTML = response;
             $("#selected_tag")[0].innerHTML = str;
             $("#whats_new")[0].style.backgroundColor = "white";
@@ -804,10 +809,10 @@ function priceLow(user_id, str) {
         method: "POST",
         url: base_url + "home_controller/price_low/" + user_id,
         data: data,
-        beforeSend: function() {
+        beforeSend: function () {
             $('#cover-spin').show();
         },
-        success: function(response) {
+        success: function (response) {
             $("#product_div_seller")[0].innerHTML = response;
             $("#selected_tag")[0].innerHTML = str;
             $("#whats_new")[0].style.backgroundColor = "white";
@@ -830,10 +835,10 @@ function priceHigh(user_id, str) {
         method: "POST",
         url: base_url + "home_controller/price_high/" + user_id,
         data: data,
-        beforeSend: function() {
+        beforeSend: function () {
             $('#cover-spin').show();
         },
-        success: function(response) {
+        success: function (response) {
             $("#product_div_seller")[0].innerHTML = response;
             $("#selected_tag")[0].innerHTML = str;
             $("#whats_new")[0].style.backgroundColor = "white";
@@ -856,10 +861,10 @@ function newProducts(user_id, str) {
         method: "POST",
         url: base_url + "home_controller/new_products/" + user_id,
         data: data,
-        beforeSend: function() {
+        beforeSend: function () {
             $('#cover-spin').show();
         },
-        success: function(response) {
+        success: function (response) {
             $("#product_div_seller")[0].innerHTML = response;
             $("#selected_tag")[0].innerHTML = str;
             $("#whats_new")[0].style.backgroundColor = "#b09d9d2e";
@@ -874,7 +879,7 @@ function newProducts(user_id, str) {
 
 
 //script for validity of input field(is-invalid)
-$(document).on("change", ".is-invalid", function() {
+$(document).on("change", ".is-invalid", function () {
     if ($(this).val().length != 0)
         $(this).removeClass('is-invalid');
 })
@@ -892,7 +897,7 @@ function check_for_mobile_register_js(phn_num) {
         async: false,
         url: base_url + "check-register-mobile",
         data: data,
-        success: function(response) {
+        success: function (response) {
             // console.log(response);
             var i = JSON.parse(response);
             res = i.result;
@@ -913,19 +918,19 @@ function send_verification_otp(phn_num, label_content) {
         type: "POST",
         url: base_url + "home_controller/send_otp_verification/" + phn_num,
         data: data,
-        beforeSend: function() {
+        beforeSend: function () {
             document.getElementById("send-otp-result").innerHTML = "";
             document.getElementById("verify_btn").style.display = "block";
             document.getElementById("resend_otp").style.display = "block";
             document.getElementById("close_btn").style.display = "none";
         },
-        success: function(response) {
+        success: function (response) {
             if (response != null) {
                 var i = JSON.parse(response);
                 console.log(i.otp);
                 console.log(i.message);
                 document.getElementById("send-otp-result").innerHTML = i.html_content1;
-                $("#cross-btn").click(function() {
+                $("#cross-btn").click(function () {
                     document.getElementById("btnsubmit_register").disabled = true;
                     document.getElementById("verify_mobile_span").innerHTML = "*You cannot register without Mobile Verification!";
                 })
@@ -974,10 +979,10 @@ function otp_verification(input_otp) {
         type: "POST",
         url: base_url + "home_controller/session_otp_verification/" + input_otp,
         data: data,
-        beforeSend: function() {
+        beforeSend: function () {
             document.getElementById("send-otp-result").innerHTML = "";
         },
-        success: function(response) {
+        success: function (response) {
             var i = JSON.parse(response);
             console.log(i.result);
             if (i.result == true) {
@@ -986,13 +991,13 @@ function otp_verification(input_otp) {
                 document.getElementById("verify_btn").style.display = "none";
                 document.getElementById("resend_otp").style.display = "none";
                 document.getElementById("close_btn").style.display = "block";
-                $("#cross-btn").click(function() {
+                $("#cross-btn").click(function () {
                     document.getElementById("btnsubmit_register").disabled = false;
                     document.getElementById("verify_mobile_span").innerHTML = "";
                 })
             } else {
                 document.getElementById("send-otp-result").innerHTML = i.html_content2;
-                $("#cross-btn").click(function() {
+                $("#cross-btn").click(function () {
                     document.getElementById("btnsubmit_register").disabled = true;
                     document.getElementById("verify_mobile_span").innerHTML = "*You cannot register without Mobile Verification!";
                 })
@@ -1013,7 +1018,7 @@ function send_verification_otp_cart(phn_num, label_content) {
         type: "POST",
         url: base_url + "home_controller/send_otp_verification/" + phn_num,
         data: data,
-        beforeSend: function() {
+        beforeSend: function () {
             document.getElementById("send-otp-result-cart").innerHTML = "";
             document.getElementById("verify_btn_cart").style.display = "block";
             document.getElementById("resend_otp_cart").style.display = "block";
@@ -1022,7 +1027,7 @@ function send_verification_otp_cart(phn_num, label_content) {
             document.getElementById("phn_number").disabled = true;
             document.getElementById("otp_field_cart").style.display = "block";
         },
-        success: function(response) {
+        success: function (response) {
             if (response != null) {
                 var i = JSON.parse(response);
                 // console.log(i.otp);
@@ -1046,10 +1051,10 @@ function otp_verification_cart(input_otp, user_id, phn_num) {
         type: "POST",
         url: base_url + "home_controller/session_otp_verification/" + input_otp,
         data: data,
-        beforeSend: function() {
+        beforeSend: function () {
             document.getElementById("send-otp-result-cart").innerHTML = "";
         },
-        success: function(response) {
+        success: function (response) {
             var i = JSON.parse(response);
             console.log(i.result);
             if (i.result == true) {
@@ -1081,10 +1086,65 @@ function update_mobile_num(phn_num, user_id) {
         async: false,
         url: base_url + "profile_controller/update_user_mobile_number",
         data: data,
-        success: function(response) {
+        success: function (response) {
             // $('#registerMobileModal').modal('hide');
             location.reload();
         }
     });
     return res;
+}
+
+// approve_order_product
+
+function approve_order_product(a, b) {
+    swal({
+        text: b,
+        icon: "warning",
+        buttons: [sweetalert_cancel, sweetalert_ok],
+        dangerMode: true,
+    }).then(function (c) {
+        if (c) {
+            var d = {
+                order_product_id: a,
+                sys_lang_id: sys_lang_id
+            };
+            d[csfr_token_name] = $.cookie(csfr_cookie_name);
+            $.ajax({
+                type: "POST",
+                url: base_url + "order_controller/approve_order_product_post",
+                data: d,
+                success: function (e) {
+                    location.reload()
+                }
+            })
+        }
+    })
+}
+
+
+// change sanyam start
+
+function cancel_order_product(a, b) {
+    swal({
+        text: b,
+        icon: "warning",
+        buttons: [sweetalert_cancel, sweetalert_ok],
+        dangerMode: true,
+    }).then(function (c) {
+        if (c) {
+            var d = {
+                order_product_id: a,
+                sys_lang_id: sys_lang_id
+            };
+            d[csfr_token_name] = $.cookie(csfr_cookie_name);
+            $.ajax({
+                type: "POST",
+                url: base_url + "order_controller/cancel_order_product_post",
+                data: d,
+                success: function (e) {
+                    location.reload()
+                }
+            })
+        }
+    })
 }

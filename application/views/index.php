@@ -777,7 +777,7 @@
         <div class="col-12 sides-gap-equal shop-by-occasion" style="padding-bottom: 12px;">
             <?php $shop_occasion = get_list_lookup_value_predefined("SHOP_BY_OCCASSION"); ?>
             <?php foreach ($shop_occasion as $occasion) : ?>
-                <a href="<?= generate_url("shop_by_occasion_type") . '/' . strtolower($occasion->lookup_code); ?>">
+                <a href="<?= generate_url("shop_by_occasion") . '/' . strtolower($occasion->lookup_code); ?>">
                     <p class="new-by-occasion"><?php echo $occasion->meaning ?></p>
                 </a>
             <?php endforeach; ?>

@@ -1244,9 +1244,6 @@ class Cart_controller extends Home_Core_Controller
                     $psd->total_price_without_gst += $object_product->product_price_excluding_gst;
                     $psd->seller_earned = ($psd->total_price / 100) - $psd->total_commission_amount;
                     array_push($psd->products, $object_product);
-
-                    var_dump($psd->total_price_without_gst);
-                    die();
                     $new = false;
                 }
             }
