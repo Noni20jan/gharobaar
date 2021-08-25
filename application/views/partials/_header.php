@@ -7,18 +7,49 @@
     .nav-main {
         margin-top: -2%;
     }
+    @media(max-width:700px){
+    .top_logo_adjust {
+    width: 185px !important;
+    height: 80px !important;
+    margin-top: -10% !important;
+}
+    }
+.locate-modal{
+    max-width: 430px
+}
+@media(max-width:700px){
+.locate-modal  .auth-box{
+background:#454545;
+}
+}
+.input-group-location {
+    position: relative;
+    width:72%;
+}
 
+.nav-item .li-main-nav-right{
+    padding-right:19px;
+}
+.nav .align-items-center .li a{
+ padding: 10px; display: block; 
+
+}
+.locate-modal-description {
+    margin-bottom: 20px;
+    color: #999;
+    text-align: center;
+    text-align: center
+}
     .check_pincode {
         position: absolute;
-        border-radius: 10px;
-        background-color: green;
-        color: #fff;
-        padding: 13px;
-        border: none;
-        bottom: 5px;
-        /* top: 51%; */
-        font-weight: bold;
-        left: 222px;
+    border-radius: 28px;
+    background-color: green;
+    color: #fff;
+    padding: 15px;
+    border: none;
+    bottom: 2px;
+    font-weight: bold;
+    left: 220px;
     }
 
     #close_open {
@@ -26,18 +57,7 @@
         top: 11px;
     }
 
-    #show_time {
-        float: left;
-        padding: 10% 43%;
-        bottom: 0px;
-        right: 0px;
-        background-color: green;
-        border-radius: 50%;
-        margin-right: 5px;
-        font-size: 18px;
-        position: relative;
-        color: #fff;
-    }
+
 
     #enter_p::placeholder {
 
@@ -106,7 +126,7 @@
         top: 1px;
     }
 
-    @media (max-width: 1025px) {
+    @media (max-width: 1066px) {
         #header-login {
             background-color: #555;
             border-color: #222222;
@@ -236,24 +256,34 @@
         border-radius: 10px;
     }
 
-    /* The Close Button */
-    .close_pincode {
-        float: right;
-        font-size: 1.5rem;
-        font-weight: 700;
-        line-height: 0;
-        color: #000;
-        text-shadow: 0 1px 0 #fff;
-        opacity: 0.5;
+    #close-pin{
+        position: absolute;
+    top: 15px;
+    right: 15px;
+    color:#000;
     }
-
-    .close_pincode:hover,
-    .close_pincode:focus {
+    @media(max-width:700px){
+    #close-pin{
+        position: absolute;
+    top: 15px;
+    right: 15px;
+    color:#fff;
+    }
+}
+    #close-pin:hover,
+    #close-pin:focus {
         color: #000;
         text-decoration: none;
         cursor: pointer;
     }
-
+    @media(max-width:700px){
+    #close-pin:hover,
+    #close-pin:focus {
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+    }
+}
     .close_pin {
         float: right;
         font-size: 1.5rem;
@@ -3832,9 +3862,15 @@
         .top_logo_adjust {
             width: 185px !important;
             height: 80px !important;
-            margin-top: -8% !important;
+            margin-top:-8% !important;
         }
-
+        @media(max-width:1024px){
+        .top_logo_adjust {
+            width: 185px !important;
+            height: 80px !important;
+            margin-top:-9% !important;
+        }
+    }
         .padding_1 {
             padding: 0px !important;
         }
@@ -3842,6 +3878,7 @@
         .logo_size {
             max-width: 186px !important;
             max-height: 80px !important;
+            /* margin-top: -9% !important; */
         }
     </style>
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/fselect.css">
@@ -3909,37 +3946,18 @@
                                     </div>
                                 </div>
                                 <div class="col-md-5 nav-top-right">
-                                    <ul class="nav align-items-center">
-                                        <li class="nav-item li-main-nav-right">
-
-                                            <span id="show_time"><i class='fas fa-map-marker-alt'></i></span>
-                                            <div id="loggedinModal" class="modal fade">
-                                                <div class="modal_content">
-                                                    <span class="close_pincode">&times;</span>
-                                                    <div style="position: relative;top: 27px;left: 11px;">
-                                                        <?php echo form_open(generate_url('search_pincode'), ['id' => 'form_validate_pincode_search', 'class' => 'form_search_main form-inline', 'method' => 'get']); ?>
-                                                        <span class="clearable">
-                                                            <p id="check_available">Check availability of products for this pincode</p>&nbsp;
-
-                                                            <input type="text" name="search_pincode" minlength="6" maxlength="6" pattern=".*\S+.*" id="enter_pin" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="Enter pincode" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" autocomplete="off">
-                                                            <input type="hidden" class="search_type_input_pincode" name="search_type_pincode" value="pincode">
-                                                            <i class="clearable__clear">&times;</i>
-                                                        </span>
-                                                        <button id="check_pin">Go!</button>
-
-                                                        <div id="response_pincode_search_results" class="search-results-ajax"></div>
-                                                        <?php echo form_close(); ?>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <ul class="nav align-items-center" style="flex-wrap:nowrap;">
+                                        <li class="nav-item li-main-nav-right" style="margin-right: -7px;">
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
+<i class="icon-map-marker"></i></a>
                                         </li>
                                         <?php if ($this->auth_check) : ?>
                                             <?php if (is_multi_vendor_active()) : ?>
                                                 <?php if (!is_user_vendor()) : ?>
                                                     <?php if (!is_user_applied_for_shop()) : ?>
-                                                        <li class="nav-item m-r-0"><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
+                                                        <li class="nav-item m-r-0"  style="margin-right:0px;"><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
                                                     <?php else : ?>
-                                                        <li class="nav-item m-r-0"><a href="<?php echo generate_url("start-selling"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
+                                                        <li class="nav-item m-r-0"  style="margin-right:0px;"><a href="<?php echo generate_url("start-selling"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
                                                     <?php endif; ?>
                                                 <?php else : ?>
                                                     <?php if ($this->auth_user->supplier_type == "Goods") { ?>
@@ -3951,11 +3969,11 @@
                                             <?php endif; ?>
                                         <?php else : ?>
                                             <?php if (is_multi_vendor_active()) : ?>
-                                                <li class="nav-item m-r-0"><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
+                                                <li class="nav-item m-r-0" style="margin-right:0px;"><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
                                             <?php endif; ?>
                                         <?php endif; ?>
                                         <?php if ($this->is_sale_active) : ?>
-                                            <li id="cart_icon_detail" class="nav-item nav-item-cart li-main-nav-right">
+                                            <li id="cart_icon_detail" class="nav-item nav-item-cart li-main-nav-right" style="margin-right:6px;">
                                                 <a class="cart_a" href="<?php echo generate_url("cart"); ?>">
                                                     <i class="icon-cart"></i>
                                                     <?php $cart_product_count = get_cart_product_count();
@@ -4137,31 +4155,14 @@
                                 <a href="javascript:void(0)" class="btn-open-mobile-nav"><i class="icon-menu"></i></a>
 
                             </div>
-
-                            <div>
-                                <span id="show_tim"><i class='fas fa-map-marker-alt'></i></span>
-
-                                <div id="myModal1" class="modal">
-                                    <div class="mobile_content">
-                                        <span class="close_pin">&times;</span>
-                                        <div id="close_open">
-                                            <?php echo form_open(generate_url('search_pincode'), ['id' => 'form_validate_pincode_search', 'class' => 'form_search_main form-inline', 'method' => 'get']); ?>
-                                            <span class="clearable">
-
-                                                <input type="text" name="search_pincode" minlength="6" maxlength="6" pattern=".*\S+.*" id="enter_p" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="Enter pincode" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" autocomplete="off">
-                                                <input type="hidden" class="search_type_input_pincode" name="search_type_pincode" value="pincode">
-                                                <i class="clearable__clear">&times;</i>
-                                            </span>
-                                            <button class="check_pincode">Go!</button>
-
-                                            <div id="response_pincode_search_results" class="search-results-ajax"></div>
-
-                                            <?php echo form_close(); ?>
-                                        </div>
-
-                                    </div>
-                                </div>
+                            <div class="mobile-map">
+                            <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal"  style=" color: green;
+        font-size: 22px;
+        position: relative;
+        top: 8px;">
+<i class="icon-map-marker"></i></a>
                             </div>
+                            
                             <div class="mobile-logo">
                                 <a href="<?php echo lang_base_url(); ?>"><img src="<?php echo get_logo($this->general_settings); ?>" alt="logo" class="logo"></a>
                             </div>
@@ -4703,7 +4704,7 @@
     </script>
 
 
-    <div class=" modal fade" id="locationModal" role="dialog">
+    <div class="modal fade" id="locationModal" role="dialog">
         <div class="modal-dialog modal-dialog-centered login-modal location-modal" role="document">
             <div class="modal-content">
                 <div class="auth-box">
@@ -4731,6 +4732,43 @@
                         <button type="button" id="btn_submit_location" class="btn btn-md btn-custom btn-block"><?php echo trans("update_location"); ?></button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div  class="modal fade" id="locateModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered login-modal locate-modal" role="document">
+            <div class="modal-content">
+                <div class="auth-box">
+                <button type="button" class="close" data-dismiss="modal"id="close-pin"><i class="icon-close"></i></button>
+                <?php echo form_open(generate_url('search_pincode'), ['id' => 'form_validate_pincode_search', 'class' => 'form_search_pincode_main form-inline', 'method' => 'get']); ?>
+<div style="position: relative;
+    left: 15px;
+    top: 33px;">
+                 <div class="form-group m-b-20">
+                        <div class="input-group input-group-location">
+                        <input type="text" name="search_pincode" class="clearable_search form-control" id="enter_p" maxlength="6" minlength="6" pattern="[0-9]+" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="Enter pincode" autocomplete="off">
+                        <input type="hidden" class="search_type_input_pincode" name="search_type_pincode" value="pincode">
+                        <button  class="check_pincode">Go!</button>
+                        <div id="response_pincode_search_results" class="search-results-ajax"></div>
+                        <?php echo form_close(); ?>
+
+                        </div>
+                        <div class="search-results-ajax">
+                            <div class="search-results-location">
+                                <div id="response_search_location"></div>
+                            </div>
+                        </div>
+                        <div id="location_id_inputs">
+                            <input type="hidden" name="country" value="<?= $this->default_location->country_id; ?>" class="input-location-filter">
+                            <input type="hidden" name="state" value="<?= $this->default_location->state_id; ?>" class="input-location-filter">
+                            <input type="hidden" name="city" value="<?= $this->default_location->city_id; ?>" class="input-location-filter">
+                        </div>
+                    </div>
+                    <div class="form-group" style="visibility:hidden;">
+                        <button type="button" id="btn_submit_location" class="btn btn-md btn-custom btn-block"><?php echo trans("update_location"); ?></button>
+                    </div>
+                </div>
+    </div>
             </div>
         </div>
     </div>
@@ -4975,48 +5013,6 @@
             var phn_num = document.getElementById("phone_number").value;
             send_verification_otp(phn_num, "mobile_otp");
         })
-    </script>
-    <script>
-        var modal = document.getElementById("loggedinModal");
-        var modal1 = document.getElementById("myModal1");
-
-
-        // Get the button that opens the modal
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close_pincode")[0];
-        var spa = document.getElementById("show_time");
-        var spana = document.getElementsByClassName("close_pin")[0];
-        var spanned = document.getElementById("show_tim");
-
-        // When the user clicks the button, open the modal 
-
-        // When the user clicks on <span> (x), close the modal
-
-        // When the user clicks the button, open the modal 
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-        spa.onclick = function() {
-            modal.style.display = "block";
-        }
-        spana.onclick = function() {
-            modal1.style.display = "none";
-        }
-        spanned.onclick = function() {
-            modal1.style.display = "block";
-        }
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-            if (event.target == modal1) {
-                modal1.style.display = "none";
-            }
-        }
     </script>
     <script>
         $(".clearable").each(function() {

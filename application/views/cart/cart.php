@@ -20,8 +20,8 @@
         border: 1px solid #e4e4e4;
         padding: .42rem .9rem;
         position: relative;
-        right: 375px;
-        top: 209px;
+        /* right: 375px;
+        top: 209px; */
 
     }
 
@@ -40,8 +40,8 @@
 
     #add_to_wishlist {
         position: relative;
-        right: 237px;
-        top: 181px;
+        left: 10px;
+        /* top: 181px; */
         padding-left: 5px;
         background-color: #e4e4e4;
     }
@@ -175,8 +175,8 @@
 
     .discount-rate-cart-new {
         position: relative;
-        bottom: 73px;
-        left: 28px;
+        bottom: 53px;
+        left: 6px;
     }
 
     @media(max-width:700px) {
@@ -194,8 +194,8 @@
         height: 44px;
         border: 1px solid #e4e4e4;
         border-radius: .1875rem;
-        bottom: 152px;
-        left: 413px;
+        /* bottom: 152px;
+        left: 413px; */
     }
 
     .m-t-15-new {
@@ -328,14 +328,11 @@
                                                                 <?php echo trans("by"); ?>&nbsp;<a href="<?php echo generate_profile_url($product->user_slug); ?>"><?php echo get_brand_name_product($product); ?></a>
                                                                 <p style="margin-bottom:16px;"></p>
                                                             </div>
-                                                            <div class="row" style="margin-left: 0%;">
-                                                                <div class="list-item">
-                                                                    <label><?php echo trans("unit_price"); ?>:</label>
-                                                                    <strong class="lbl-price-new">
-                                                                        <?php echo price_formatted($cart_item->unit_price, $cart_item->currency); ?>
-                                                                    </strong>
-
-                                                                </div>
+                                                            <div class="list-item">
+                                                                <label><?php echo trans("unit_price"); ?>:</label>
+                                                                <strong class="lbl-price-new">
+                                                                    <?php echo price_formatted($cart_item->unit_price, $cart_item->currency); ?>
+                                                                </strong>
                                                             </div>
                                                             <?php if (($cart_item->discount_rate) != 0) : ?>
                                                                 <div class="list-item">
@@ -347,47 +344,11 @@
 
                                                                 </div>
                                                             <?php endif; ?>
-
                                                             <div class="list-item">
-
                                                                 <label><?php echo trans("total"); ?>:</label>
                                                                 <strong class="lbl-price-new" id="total_<?php echo $cart_item->cart_item_id; ?>">
                                                                     <?php echo price_formatted($cart_item->unit_price * $cart_item->quantity, $cart_total->currency); ?>
                                                                 </strong>
-                                                            </div>
-                                                            <div class="list-item">
-                                                                <span id="quantity"><a href="#" class="btn qty-block" name="Qty"> <strong></strong> </a> </span>
-                                                                <div class="cart-item-quantity" style="float:left;">
-                                                                    <?php if ($cart_item->purchase_type == 'bidding') : ?>
-                                                                        <span><?php echo trans("quantity") . ": " . $cart_item->quantity; ?></span>
-                                                                    <?php else : ?>
-                                                                        <div class="number-spinner">
-                                                                            <div class="input-group">
-                                                                                <span class="input-group-btn">
-                                                                                    <button type="button" class="btn btn-default btn-spinner-minus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="dwn">-</button>
-                                                                                </span>
-                                                                                <input type="text" id="q-<?php echo $cart_item->cart_item_id; ?>" class="form-control text-center" value="<?php echo $cart_item->quantity; ?>" data-product-id="<?php echo $cart_item->product_id; ?>" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>">
-                                                                                <span class="input-group-btn">
-                                                                                    <!-- <?php var_dump($cart_item->quantity); ?> -->
-                                                                                    <?php if ((int)get_product($cart_item->product_id)->stock == 1) :
-                                                                                    ?>
-                                                                                        <button type="button" class="btn btn-default" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
-                                                                                    <?php elseif ((int)$cart_item->quantity >= (int)get_product($cart_item->product_id)->stock) :
-
-                                                                                    ?>
-                                                                                        <button type="button" class="btn btn-default" disabled data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
-                                                                                        <!-- <div> <span>
-                                                                                                <label style="color:red;">No More Stock to add</label></span>
-                                                                                        </div> -->
-                                                                                    <?php else : ?>
-                                                                                        <button type="button" class="btn btn-default btn-spinner-plus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
-                                                                                    <?php endif; ?>
-                                                                                </span>
-                                                                            </div>
-                                                                        </div>
-                                                                    <?php endif; ?>
-                                                                </div>
-
                                                             </div>
 
                                                             <?php if (!empty($cart_item->additional_info)) : ?>
@@ -398,18 +359,14 @@
                                                                     </p>
                                                                 </div>
                                                             <?php endif; ?>
-
                                                             <?php
                                                             if (!empty($cart_item->discount_rate)) : ?>
                                                                 <span class="discount-rate-cart-new">
                                                                     <?php echo discount_rate_format($cart_item->discount_rate); ?>
                                                                 </span>
                                                             <?php endif; ?>
-
-
-                                                        </div>
-
-                                                        <span><a href="javascript:void(0)" id="remove_cart" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"> <i class="icon-close"></i><?php echo trans("remove"); ?>
+                                                            <div class="list-item">
+                                                                <a href="javascript:void(0)" id="remove_cart" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"> <i class="icon-close"></i><?php echo trans("remove"); ?> </a>
                                                                 <?php
                                                                 $whislist_button_class = "";
                                                                 $whislist_button_class = (empty($product->demo_url) && $product->listing_type == 'ordinary_listing') ? "btn-wishlist-classified" : "";
@@ -417,16 +374,45 @@
                                                                 if ($this->product_model->is_product_in_wishlist($product->id) == 0) : ?>
                                                                     <a href="javascript:void(0)" id="add_to_wishlist" class="btn-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?> wishlist-all" data-product-id="<?php echo $product->id; ?>" data-reload="1" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><?php echo trans("add_to_wishlist"); ?></span></a>
 
-                                                    <?php endif; ?>
-                                                    </a></span>
+                                                                <?php endif; ?>
 
-                                                    <!-- </div> -->
-                                                    <?php if (!$product->deliverable) : ?>
-                                                        <p class="not-avail-product">
-                                                            **Product is not available at your location.**
-                                                        </p>
-                                                    <?php endif; ?>
-                                                    <!-- </div> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="cart-item-quantity" style="float:left;">
+                                                            <div class="number-spinner">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" class="btn btn-default btn-spinner-minus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="dwn">-</button>
+                                                                    </span>
+                                                                    <input type="text" id="q-<?php echo $cart_item->cart_item_id; ?>" class="form-control text-center" value="<?php echo $cart_item->quantity; ?>" data-product-id="<?php echo $cart_item->product_id; ?>" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>">
+                                                                    <span class="input-group-btn">
+                                                                        <?php if ((int)get_product($cart_item->product_id)->stock == 1) :
+                                                                        ?>
+                                                                            <button type="button" class="btn btn-default" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
+                                                                        <?php elseif ((int)$cart_item->quantity >= (int)get_product($cart_item->product_id)->stock) :
+
+                                                                        ?>
+                                                                            <button type="button" class="btn btn-default" disabled data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
+                                                                            <!-- <div> <span>
+                                                                                                <label style="color:red;">No More Stock to add</label></span>
+                                                                                        </div> -->
+                                                                        <?php else : ?>
+                                                                            <button type="button" class="btn btn-default btn-spinner-plus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
+                                                                        <?php endif; ?>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <!-- </div> -->
+                                                        <?php if (!$product->deliverable) : ?>
+                                                            <p class="not-avail-product">
+                                                                **Product is not available at your location.**
+                                                            </p>
+                                                        <?php endif; ?>
+                                                        <!-- </div> -->
 
 
                                                     </div>

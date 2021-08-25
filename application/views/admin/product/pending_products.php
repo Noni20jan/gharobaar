@@ -1,11 +1,29 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<style>
+    .scroll-for-web {
+        overflow-y: scroll;
+    }
 
+    .scroll-for-web::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    .scroll-for-web::-webkit-scrollbar {
+        width: 6px;
+        background-color: transparent;
+    }
+
+    .scroll-for-web::-webkit-scrollbar-thumb {
+        background-color: #f5f2f200;
+
+    }
+</style>
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title"><?php echo $title; ?></h3>
     </div><!-- /.box-header -->
 
-    <div class="box-body">
+    <div class="box-body scroll-for-web">
         <div class="row">
             <!-- include message block -->
             <div class="col-sm-12">

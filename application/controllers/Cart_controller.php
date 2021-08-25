@@ -1353,7 +1353,8 @@ class Cart_controller extends Home_Core_Controller
                     $object->shipping = ($ship_detail->Supplier_Shipping_cost);
                     $object->shipping_tax_charge = ($ship_detail->shipping_tax_charges);
                     $object->shipping_charge_with_gst = ($object->shipping) + ($object->shipping_tax_charge);
-                    $object->shipping_charge_to_gharobaar = $object->shipping + $object->shipping * 0.18;
+                    // $object->shipping_charge_to_gharobaar = $object->shipping + $object->shipping * 0.18;
+                    $object->shipping_charge_to_gharobaar = $object->shipping;
                 }
             }
 

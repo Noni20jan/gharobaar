@@ -118,6 +118,14 @@ class Order_model extends CI_Model
         // }
 
         $cart_total = $this->cart_model->get_sess_cart_total();
+
+        // $Supp_ship_data = json_decode($this->get_shipping_cost($cart_total));
+        // var_dump($Supp_ship_data);
+
+        // $this->add_seller_wise_details(1, $cart_total);
+        // die();
+
+
         if (!empty($cart_total)) {
             $data = array(
                 'order_number' => uniqid(),
@@ -159,6 +167,9 @@ class Order_model extends CI_Model
 
 
                 $this->update_shipping_cost($order_id, $cart_total);
+
+
+                $this->add_seller_wise_details($order_id, $cart_total);
 
 
                 //set bidding quotes as completed
@@ -478,10 +489,10 @@ class Order_model extends CI_Model
     {
         $cart_items = $this->cart_model->get_sess_cart_items();
         $cart_total = $this->cart_model->get_sess_cart_total();
-        var_dump($cart_total);
-        var_dump($cart_items);
-        die();
-        $Supp_ship_data = json_decode($this->get_shipping_cost($cart_total));
+
+        $Supp_ship_data = json_decode($this->get_seller_wise_data_bifurcation($cart_total));
+        // var_dump($Supp_ship_data);
+        // die();
         if (!empty($cart_items)) {
             foreach ($cart_items as $cart_item) {
                 $product = get_active_product($cart_item->product_id);
@@ -2094,6 +2105,89 @@ class Order_model extends CI_Model
         }
     }
 
+    public function add_seller_wise_details($order_id, $cart_total)
+    {
+
+        $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
+
+        $Supp_ship_data = json_decode($this->get_seller_wise_data_bifurcation($cart_total));
+
+
+        // var_dump($Supp_ship_data);
+        // die();
+
+
+        if ($Supp_ship_data) {
+            foreach ($Supp_ship_data as $sup) {
+                $seller_address = get_user($sup->SupplierId);
+
+                $data = array(
+                    'order_id' => $order_id,
+                    'seller_id' => $sup->SupplierId,
+                    'review_type' => "CUSTOM REVIEW",
+
+                    "sup_shipping_cost" => $sup->Supplier_Shipping_cost,
+                    "Sup_cod_cost" => $sup->cod_charges,
+                    "shipping_cod_gst_rate" => $sup->shipping_cod_gst_rate,
+
+                    'sup_subtotal' => intval($sup->total_product_price_without_gst),
+                    'Sup_subtotal_prd_gst' => intval($sup->total_product_gst),
+                    'Sup_total_prd' => $sup->total_product_price,
+
+                    'Sup_Shipping_gst' => $sup->shipping_tax_charges,
+                    'Sup_cod_gst' => $sup->cod_tax_charges,
+
+
+                    // 'total_discount' => $product->user_id,
+                    // 'sup_commission_cost' => $product->user_id,
+
+                    'created_by' => 1,
+                    'updated_by' => 1
+                );
+
+                if ($seller_address->supplier_state == $shipping_address->shipping_state) {
+
+                    $data['shipping_igst'] = 0;
+                    $data['shipping_cgst'] = $sup->shipping_tax_charges / 2;
+                    $data['shipping_sgst'] = $sup->shipping_tax_charges / 2;
+
+                    $data['Sup_subtotal_prd_igst'] = 0;
+                    $data['Sup_subtotal_prd_cgst'] = intval($sup->total_product_gst / 2);
+                    $data['Sup_subtotal_prd_sgst'] = intval($sup->total_product_gst / 2);
+
+                    $data['sup_cod_igst'] = 0;
+                    $data['sup_cod_cgst'] = $sup->cod_tax_charges / 2;
+                    $data['sup_cod_sgst'] = $sup->cod_tax_charges / 2;
+                } else {
+                    $data['shipping_igst'] = $sup->shipping_tax_charges;
+                    $data['shipping_cgst'] = 0;
+                    $data['shipping_sgst'] = 0;
+
+                    $data['Sup_subtotal_prd_igst'] = intval($sup->total_product_gst);
+                    $data['Sup_subtotal_prd_cgst'] = 0;
+                    $data['Sup_subtotal_prd_sgst'] = 0;
+
+                    $data['sup_cod_igst'] = $sup->cod_tax_charges;
+                    $data['sup_cod_cgst'] = 0;
+                    $data['sup_cod_sgst'] = 0;
+                }
+
+                $data["total_shipping_cost"] = $data["sup_shipping_cost"] + $data['Sup_Shipping_gst'];
+
+                $data["total_cod_cost"] = $data["Sup_cod_cost"] + $data['Sup_cod_gst'];
+
+                $data['grand_total_amount'] = $data["Sup_total_prd"] + $data["total_shipping_cost"] + $data["total_cod_cost"];
+
+
+                // var_dump($data);
+                // die();
+
+                $this->db->insert('order_supplier', $data);
+            }
+            // die();
+        }
+    }
+
     public function get_shipping_cost($cart_total = null)
     {
 
@@ -2114,6 +2208,27 @@ class Order_model extends CI_Model
 
         return  false;
     }
+
+    public function get_seller_wise_data_bifurcation($cart_total = null)
+    {
+        $cart_product_count = get_cart_product_count();
+        $cart_items = $this->cart_model->get_sess_cart_items();
+
+        $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
+        if (empty($shipping_address)) {
+            return false;
+        }
+        $sellers_row = $this->order_model->get_supplier();
+        $sellers_col = $sellers_row;
+
+        if (!empty($shipping_address->shipping_zip_code)) {
+            $Supp_ship_data = $this->calc_total_shipping_charges_by_seller($sellers_row, $sellers_col, $cart_product_count);
+            return  $Supp_ship_data;
+        }
+
+        return  false;
+    }
+
     public function get_shipping_charges($cart_total)
     {
 
@@ -2309,6 +2424,8 @@ class Order_model extends CI_Model
             // var_dump($cart_item);
         }
 
+        // var_dump($product_seller_details);
+
 
         $payments = $this->cart_model->get_sess_cart_payment_method();
 
@@ -2484,7 +2601,333 @@ class Order_model extends CI_Model
         }
 
         $ship_data_copy = json_encode($supp_data_array_copy);
+        // echo ($ship_data_copy);
+        return $ship_data_copy;
+    }
 
+    // FUNCTION: Calc_total_shipping_charges 
+    public function calc_total_shipping_charges_by_seller($s_row, $s_col, $cp_count)
+    {
+        $cart_items = $this->cart_model->get_sess_cart_items();
+        if (empty($cart_items)) {
+            return false;
+        }
+        $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
+        $Suppliers = array();
+        $product = array();
+
+        $i = 0;
+
+        //==================================== New calculation for shipping =====================================
+        $product_seller_details = array();
+        foreach ($cart_items as $cart_item) {
+            $object = new stdClass();
+            $object->seller_id = get_active_product($cart_item->product_id)->user_id;
+            $new = true;
+            foreach ($product_seller_details as $psd) {
+                if ($psd->seller_id == $object->seller_id && $psd->product_pickup_code == $cart_item->product_pincode) {
+                    $object_product = new stdClass();
+                    $object_product->product_id = $cart_item->product_id;
+                    $object_product->parent_category_id = $cart_item->parent_category_id;
+                    $object_product->product_pickup_code = $cart_item->product_pincode;
+                    $object_product->product_deliverable = $cart_item->product_deliverable;
+                    $object_product->product_gst_rate = $cart_item->product_gst_rate;
+                    $object_product->delivery_partner = $cart_item->delivery_partner;
+                    if (!empty($cart_item->delivery_distance))
+                        $object_product->delivery_distance = $cart_item->delivery_distance;
+                    if (get_active_product($cart_item->product_id)->shipping_cost_type == "shipping_buyer_pays") {
+                        $object_product->free_shipping = 0;
+                    } else {
+                        $object_product->free_shipping = 1;
+                    }
+                    $object_product->product_quantity = $cart_item->quantity;
+                    $object_product->product_unit_price = $cart_item->unit_price;
+                    $object_product->product_total_price = $cart_item->total_price;
+                    if (empty($cart_item->options_array) || empty($cart_item->variation_option))
+                        $object_product->product_unit_packaged_weight = (int)$cart_item->weight;
+                    else
+                        $object_product->product_unit_packaged_weight = (int)$cart_item->variation_option->package_weight;
+                    $object_product->product_total_packaged_weight = $object_product->product_unit_packaged_weight * $object_product->product_quantity;
+
+                    if (count($psd->products) > 0) {
+                        foreach ($psd->products as $prod) {
+                            if (floatval($object_product->product_gst_rate) > floatval($prod->product_gst_rate)) {
+                                $psd->seller_gst_rate = $object_product->product_gst_rate;
+                            }
+                        }
+                    }
+
+                    array_push($psd->products, $object_product);
+
+                    if (!$object_product->product_deliverable)
+                        $psd->total_order_deliverable = $object_product->product_deliverable;
+
+                    if ($object_product->free_shipping)
+                        $psd->total_weight += 0;
+                    else
+                        $psd->total_weight += $object_product->product_total_packaged_weight;
+
+                    $psd->total_price += $object_product->product_total_price;
+
+                    $new = false;
+                }
+            }
+            if ($new) :
+                $object->products = array();
+                $object_product = new stdClass();
+                $object_product->product_id = $cart_item->product_id;
+                $object_product->parent_category_id = $cart_item->parent_category_id;
+                $object_product->product_quantity = $cart_item->quantity;
+                $object_product->product_deliverable = $cart_item->product_deliverable;
+                $object_product->product_gst_rate = $cart_item->product_gst_rate;
+                $object_product->delivery_partner = $cart_item->delivery_partner;
+                if (!empty($cart_item->delivery_distance))
+                    $object_product->delivery_distance = $cart_item->delivery_distance;
+                $object_product->product_pickup_code = $cart_item->product_pincode;
+                if (get_active_product($cart_item->product_id)->shipping_cost_type == "shipping_buyer_pays") {
+                    $object_product->free_shipping = 0;
+                } else {
+                    $object_product->free_shipping = 1;
+                }
+                $object_product->product_unit_price = $cart_item->unit_price;
+                $object_product->product_total_price = $cart_item->total_price;
+                // var_dump($cart_item->options_array);
+                if (empty($cart_item->options_array) || empty($cart_item->variation_option))
+                    $object_product->product_unit_packaged_weight = (int)$cart_item->weight;
+                else
+                    $object_product->product_unit_packaged_weight = (int)$cart_item->variation_option->package_weight;
+                $object_product->product_total_packaged_weight = $object_product->product_unit_packaged_weight * $object_product->product_quantity;
+                array_push($object->products, $object_product);
+
+                $object->product_pickup_code = $cart_item->product_pincode;
+                $object->delivery_code = $shipping_address->shipping_zip_code;
+                $object->total_order_deliverable = $object_product->product_deliverable;
+                $object->seller_gst_rate = $object_product->product_gst_rate;
+
+                if ($object_product->free_shipping)
+                    $object->total_weight = 0;
+                else
+                    $object->total_weight = $object_product->product_total_packaged_weight;
+                $object->total_price = $object_product->product_total_price;
+
+                array_push($product_seller_details, $object);
+            endif;
+            // var_dump($cart_item);
+        }
+
+        // var_dump($product_seller_details);
+
+
+        $payments = $this->cart_model->get_sess_cart_payment_method();
+
+        $cod = (string)0;
+        $check_cod = $this->order_model->check_cod($cart_items, $cp_count);
+        if ($check_cod) :
+
+            if (!empty($payments)) {
+                $payment = (string)($payments->payment_option);
+                if ($payment === 'cash_on_delivery') {
+                    $cod = (string)1;
+                }
+            }
+        endif;
+
+        //==================================== New calculation for shipping=====================================
+        $whole_order_deliverable = 1;
+        foreach ($product_seller_details as $psd) {
+            if (!$psd->total_order_deliverable) {
+                $whole_order_deliverable = 0;
+                break;
+            }
+        }
+        if (!$whole_order_deliverable) {
+            return false;
+        }
+
+        $supp_data_array_copy = array();
+        foreach ($product_seller_details as $psd) {
+            $actual_shipping_charges = 0;
+            foreach ($psd->products as $prod_details) {
+
+                if ($prod_details->delivery_partner == "NOW-BIKES") {
+                    if (!$prod_details->free_shipping) :
+                        $dist = $prod_details->delivery_distance->value;
+
+                        $dist = ceil($dist / 1000);
+                        if ($dist <= 4) {
+                            $actual_shipping_charges = 55;
+                        } else {
+                            $actual_shipping_charges = 55 + (($dist - 4) * 7);
+                        }
+                    else :
+                        $actual_shipping_charges = 0;
+                    endif;
+
+
+                    //$actual_shipping_charges = ($actual_shipping_charges / (1 + (18 / 100)));
+
+                    $suppqq = array(
+                        "SupplierId" => $psd->seller_id,
+                        "delivery_partner" => "NOW-BIKES",
+                        "Supplier_Shipping_cost" => intval($actual_shipping_charges * 100),
+                        "cod_charges" => 0,
+                        "tax_charges" => intval(($actual_shipping_charges * (floatval($psd->seller_gst_rate) / 100)) * 100),
+                        "shipping_tax_charges" => intval(($actual_shipping_charges * (floatval($psd->seller_gst_rate) / 100)) * 100),
+                        "cod_tax_charges" => 0,
+                        "shipping_cod_gst_rate" => $psd->seller_gst_rate,
+                        "total_product_price" => 0,
+                        "total_product_price_without_gst" => 0,
+                        "total_product_gst" => 0
+                    );
+
+                    //product wise calculation price and gst
+                    $suppqq["total_product_price"] += $prod_details->product_total_price;
+                    $suppqq["total_product_price_without_gst"] += $prod_details->product_total_price / (1 + ($prod_details->product_gst_rate / 100));
+                    $suppqq["total_product_gst"] += ($prod_details->product_total_price) - ($prod_details->product_total_price / (1 + ($prod_details->product_gst_rate / 100)));
+
+
+                    if ($psd->seller_gst_rate == 0) {
+                        $suppqq["Supplier_Shipping_cost"] = intval($suppqq["Supplier_Shipping_cost"] + ($suppqq["Supplier_Shipping_cost"] * 18 / 100));
+                    }
+                } else if ($prod_details->delivery_partner == "SHIPROCKET") {
+
+                    if (!$prod_details->free_shipping) :
+                        if ($psd->total_price >= 200000) {
+                            $actual_shipping_charges = array(
+                                "freight_charges" => 0
+                            );
+                            if (!$cod) {
+                                $actual_shipping_charges["cod_charges"] = 0;
+                            } else {
+                                $actual_shipping_charges["cod_charges"] = (50) * 100;
+                            }
+                            $tax_charges = intval((($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100)));
+                            $actual_shipping_charges["tax_charges"] = $tax_charges;
+                        } elseif ($psd->total_price >= 50000 && $psd->total_price < 200000) {
+                            $actual_shipping_charges = array(
+                                "freight_charges" => 10000
+                            );
+                            if (!$cod) {
+                                $actual_shipping_charges["cod_charges"] = 0;
+                            } else {
+                                $actual_shipping_charges["cod_charges"] = (50) * 100;
+                            }
+                            $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                            $actual_shipping_charges["tax_charges"] = $tax_charges;
+                        } else {
+                            $actual_shipping_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
+                            $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                            $actual_shipping_charges["tax_charges"] = $tax_charges;
+                        }
+                    else :
+                        $actual_shipping_charges = array(
+                            "freight_charges" => 0,
+                            "cod_charges" => (!$cod) ? 0 : 50 * 100
+                        );
+                        $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                        $actual_shipping_charges["tax_charges"] = $tax_charges;
+
+                    endif;
+
+                    $shipping_tax_charges = (($actual_shipping_charges["freight_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                    $actual_shipping_charges["shipping_tax_charges"] = $shipping_tax_charges;
+
+
+                    $cod_tax_charges = (($actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                    $actual_shipping_charges["cod_tax_charges"] = $cod_tax_charges;
+
+                    $suppqq = array(
+                        "SupplierId" => $psd->seller_id,
+                        "delivery_partner" => "SHIPROCKET",
+                        "Supplier_Shipping_cost" => intval($actual_shipping_charges["freight_charges"]),
+                        "cod_charges" => intval($actual_shipping_charges["cod_charges"]),
+                        "tax_charges" => intval($actual_shipping_charges["tax_charges"]),
+                        "shipping_tax_charges" => intval($actual_shipping_charges["shipping_tax_charges"]),
+                        "cod_tax_charges" => intval($actual_shipping_charges["cod_tax_charges"]),
+                        "shipping_cod_gst_rate" => $psd->seller_gst_rate,
+                        "total_product_price" => 0,
+                        "total_product_price_without_gst" => 0,
+                        "total_product_gst" => 0
+                    );
+
+                    //product wise calculation price and gst
+                    $suppqq["total_product_price"] += $prod_details->product_total_price;
+                    $suppqq["total_product_price_without_gst"] += $prod_details->product_total_price / (1 + ($prod_details->product_gst_rate / 100));
+                    $suppqq["total_product_gst"] += ($prod_details->product_total_price) - ($prod_details->product_total_price / (1 + ($prod_details->product_gst_rate / 100)));
+
+
+                    if ($psd->seller_gst_rate == 0) {
+                        $suppqq["Supplier_Shipping_cost"] = intval($suppqq["Supplier_Shipping_cost"] + ($suppqq["Supplier_Shipping_cost"] * 18 / 100));
+                    }
+                } else if ($prod_details->delivery_partner == "SELF") {
+                    $actual_shipping_charges = array(
+                        "freight_charges" => 0,
+                        "cod_charges" => (!$cod) ? 0 : 50 * 100
+                    );
+                    if (!$prod_details->free_shipping) :
+                        $seller_shipping_details = get_user_shipping_type($psd->seller_id);
+
+                        $shipping_threshold = get_user_shipping_threshold($seller_shipping_details->id);
+                        foreach ($shipping_threshold as $s_th) {
+                            if ($psd->total_price > intval($s_th->min_value) && $psd->total_price < intval($s_th->max_value)) {
+                                $actual_shipping_charges["freight_charges"] = $s_th->shipping_charges * 100;
+                            }
+                        }
+                    else :
+                        $actual_shipping_charges["freight_charges"] = 0;
+                    endif;
+                    $suppqq = array(
+                        "SupplierId" => $psd->seller_id,
+                        "delivery_partner" => "SELF",
+                        "Supplier_Shipping_cost" => intval($actual_shipping_charges["freight_charges"]),
+                        "cod_charges" => intval($actual_shipping_charges["cod_charges"]),
+                        "tax_charges" => 0,
+                        "shipping_tax_charges" => 0,
+                        "cod_tax_charges" => 0,
+                        "shipping_cod_gst_rate" => $psd->seller_gst_rate,
+                        "total_product_price" => 0,
+                        "total_product_price_without_gst" => 0,
+                        "total_product_gst" => 0
+
+                    );
+
+
+                    //product wise calculation price and gst
+                    $suppqq["total_product_price"] += $prod_details->product_total_price;
+                    $suppqq["total_product_price_without_gst"] += $prod_details->product_total_price / (1 + ($prod_details->product_gst_rate / 100));
+                    $suppqq["total_product_gst"] += ($prod_details->product_total_price) - ($prod_details->product_total_price / (1 + ($prod_details->product_gst_rate / 100)));
+
+
+
+                    $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                    $suppqq["tax_charges"] = intval($tax_charges);
+
+                    $shipping_tax_charges = (($actual_shipping_charges["freight_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                    $suppqq["shipping_tax_charges"] = intval($shipping_tax_charges);
+
+                    $cod_tax_charges = (($actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                    $suppqq["cod_tax_charges"] = intval($cod_tax_charges);
+                }
+                $exist = 0;
+                $duplicate_key = 0;
+                foreach ($supp_data_array_copy as $key => $sda) {
+                    if ($sda["SupplierId"] == $suppqq["SupplierId"]) {
+                        $exist = 1;
+                        $duplicate_key = $key;
+                    }
+                }
+
+                if ($exist) {
+                    unset($supp_data_array_copy[$duplicate_key]);
+                    array_push($supp_data_array_copy, $suppqq);
+                } else {
+                    array_push($supp_data_array_copy, $suppqq);
+                }
+            }
+        }
+
+        $ship_data_copy = json_encode($supp_data_array_copy);
+        // echo ($ship_data_copy);
         return $ship_data_copy;
     }
 
