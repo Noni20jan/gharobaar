@@ -78,7 +78,7 @@ a:active {
 .nav-top .nav-top-right .nav li a:hover,
 .nav-top .nav-top-right .nav li a:focus,
 .nav-top .nav-top-right .nav li a:active {
-    color: #222
+    color: #fff;
 }
 
 .nav-top .nav-top-right .nav li .btn-sell-now {

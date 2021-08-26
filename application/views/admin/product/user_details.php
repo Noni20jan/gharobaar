@@ -689,6 +689,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php echo form_close(); ?>
 
                     <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#exampleModal_<?php echo $user->id; ?>">
                         <i class="fa fa-check option-icon"></i><?php echo trans('approve'); ?>
@@ -703,8 +704,11 @@
                     </button>
 
                     <div id="reject-modal" class="modal fade" role="dialog">
+
                         <div class="modal-dialog">
                             <div class="modal-content">
+                                <?php echo form_open('membership_controller/decline_shop_opening_request'); ?>
+                                <input type="hidden" name="id" value="<?php echo $user->id; ?>">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
                                     <h3>Reasons for rejection</h3>
@@ -728,12 +732,12 @@
 
                                     <button type="submit" name="submit" value="0" class="btn btn-success">Send Email</button>
                                 </div>
-
+                                <?php echo form_close(); ?>
                             </div>
                         </div>
                     </div>
                     <a href="<?php echo $this->agent->referrer(); ?>" class="btn btn-danger pull-right m-r-5"><?php echo trans('back'); ?></a>
-                    <?php echo form_close(); ?>
+
                 <?php } else { ?>
                     <a href="<?php echo $this->agent->referrer(); ?>" class="btn btn-danger pull-right m-r-5"><?php echo trans('back'); ?></a>
                 <?php  } ?>

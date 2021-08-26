@@ -990,11 +990,17 @@ function otp_verification(input_otp) {
                 document.getElementById("send-otp-result").innerHTML = i.html_content2;
                 document.getElementById("verify_btn").style.display = "none";
                 document.getElementById("resend_otp").style.display = "none";
-                document.getElementById("close_btn").style.display = "block";
+                document.getElementById("close_btn").style.display = "none";
                 $("#cross-btn").click(function () {
                     document.getElementById("btnsubmit_register").disabled = false;
-                    document.getElementById("verify_mobile_span").innerHTML = "";
-                })
+                    document.getElementById("verify_mobile_span").innerHTML = "Mobile Number Verified Successfully !";
+                    document.getElementById("verify_mobile_span").style.color = "green";
+                });
+
+                document.getElementById("close_btn").click();
+
+                setTimeout(function () {
+                }, 400);
             } else {
                 document.getElementById("send-otp-result").innerHTML = i.html_content2;
                 $("#cross-btn").click(function () {

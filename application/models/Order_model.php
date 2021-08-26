@@ -3424,4 +3424,13 @@ class Order_model extends CI_Model
     {
         $this->db->insert('cashfree_seller_payable', $data);
     }
+
+    // get cod charges by order id and seller id
+    public function get_charges_seller_wise($sellerid, $order_id)
+    {
+        $this->db->where('order_id', $order_id);
+        $this->db->where('seller_id', $sellerid);
+        $query = $this->db->get('order_supplier');
+        return $query->row();
+    }
 }

@@ -372,6 +372,24 @@
         font-weight: bold;
 
     }
+
+    .overflow-text {
+        overflow-y: scroll;
+        max-height: 70px;
+    }
+
+    .overflow-text::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    .overflow-text::-webkit-scrollbar {
+        width: 6px;
+        background-color: transparent;
+    }
+
+    .overflow-text::-webkit-scrollbar-thumb {
+        background-color: #f5f2f200;
+    }
 </style>
 <!-- Wrapper -->
 <div id="wrapper">
@@ -527,7 +545,7 @@
                                     ?>
 
                                     <?php if (!($product->allergance == 'NULL' or $product->allergance == '')) : ?>
-                                        <div class="col-6 product-details-text" id="for-mobile-allergen">
+                                        <div class="col-6 product-details-text overflow-text" id="for-mobile-allergen">
                                             <p>Allergens&nbsp;:&nbsp;<?php echo $product->allergance ?></p>
                                         </div>
                                     <?php endif; ?>

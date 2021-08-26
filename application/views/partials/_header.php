@@ -7,49 +7,92 @@
     .nav-main {
         margin-top: -2%;
     }
-    @media(max-width:700px){
+
     .top_logo_adjust {
-    width: 185px !important;
-    height: 80px !important;
-    margin-top: -10% !important;
-}
+        width: 185px !important;
+        height: 161px !important;
+        margin-top: -8% !important;
     }
-.locate-modal{
-    max-width: 430px
-}
-@media(max-width:700px){
-.locate-modal  .auth-box{
-background:#454545;
-}
-}
-.input-group-location {
-    position: relative;
-    width:72%;
-}
 
-.nav-item .li-main-nav-right{
-    padding-right:19px;
-}
-.nav .align-items-center .li a{
- padding: 10px; display: block; 
+    @media(max-width:700px) {
+        .top_logo_adjust {
+            width: 185px !important;
+            height: 80px !important;
+            margin-top: -10% !important;
+        }
+    }
 
-}
-.locate-modal-description {
-    margin-bottom: 20px;
-    color: #999;
-    text-align: center;
-    text-align: center
-}
+    .locate-modal {
+        max-width: 430px
+    }
+
+    @media(max-width:700px) {
+        .locate-modal .auth-box {
+            background: #454545;
+        }
+    }
+
+    #location {
+        position: relative;
+        left: 15px;
+        top: 33px;
+    }
+
+    @media(max-width:700px) {
+        #location {
+            position: relative;
+            left: 15px;
+            top: 33px;
+        }
+    }
+
+    .input-group-location {
+        position: relative;
+        width: 72%;
+    }
+
+    .nav-item .li-main-nav-right {
+        padding-right: 19px;
+    }
+
+    .nav .align-items-center .li a {
+        padding: 10px;
+        display: block;
+
+    }
+
+    .locate-modal-description {
+        margin-bottom: 20px;
+        color: #999;
+        text-align: center;
+        text-align: center
+    }
+
     .check_pincode {
         position: absolute;
-    border-radius: 28px;
-    background-color: green;
-    color: #fff;
-    padding: 15px;
-    border: none;
-    bottom: 2px;
-    font-weight: bold;
-    left: 220px;
+        border-radius: 28px;
+        background-color: green;
+        color: #fff;
+        padding: 15px;
+        border: none;
+        bottom: 2px;
+        font-weight: bold;
+        left: 220px;
+    }
+
+    @media(max-width:700px) {
+        .check_pincode {
+            position: relative;
+            border-radius: 28px;
+            background-color: green;
+            color: #fff;
+            padding: 15px;
+            border: none;
+            bottom: 7px;
+            float: right;
+            font-weight: bold;
+            left: 0px;
+        }
     }
 
     #close_open {
@@ -132,7 +175,6 @@ background:#454545;
             border-color: #222222;
             color: #fff;
             padding: 0.35rem 0.43rem;
-
             text-align: center;
             display: inline-block;
             border-radius: 20px;
@@ -256,34 +298,39 @@ background:#454545;
         border-radius: 10px;
     }
 
-    #close-pin{
+    #close-pin {
         position: absolute;
-    top: 15px;
-    right: 15px;
-    color:#000;
+        top: 15px;
+        right: 15px;
+        color: #000;
     }
-    @media(max-width:700px){
-    #close-pin{
-        position: absolute;
-    top: 15px;
-    right: 15px;
-    color:#fff;
+
+    @media(max-width:700px) {
+        #close-pin {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #fff;
+        }
     }
-}
+
     #close-pin:hover,
     #close-pin:focus {
         color: #000;
         text-decoration: none;
         cursor: pointer;
     }
-    @media(max-width:700px){
-    #close-pin:hover,
-    #close-pin:focus {
-        color: #fff;
-        text-decoration: none;
-        cursor: pointer;
+
+    @media(max-width:700px) {
+
+        #close-pin:hover,
+        #close-pin:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
     }
-}
+
     .close_pin {
         float: right;
         font-size: 1.5rem;
@@ -293,12 +340,14 @@ background:#454545;
         text-shadow: 0 1px 0 #fff;
         opacity: 0.5;
     }
+
     .close_pin:hover,
     .close_pin:focus {
         color: #000;
         text-decoration: none;
         cursor: pointer;
     }
+
     #enter_pin {
         position: relative;
         width: 68%;
@@ -385,15 +434,16 @@ background:#454545;
         width: 100%;
         -webkit-transform: translateZ(0);
     }
-    @media(max-width:700px){
-    .sticky {
-        position: fixed !important;
-        top: 0;
-        width: 100%;
-        -webkit-transform: translateZ(0);
-        overflow: hidden;
+
+    @media(max-width:700px) {
+        .sticky {
+            position: fixed !important;
+            top: 0;
+            width: 100%;
+            -webkit-transform: translateZ(0);
+            overflow: hidden;
+        }
     }
-}
 
     /* .mustang img {
         width: 220px;
@@ -3861,16 +3911,18 @@ background:#454545;
 
         .top_logo_adjust {
             width: 185px !important;
-            height: 80px !important;
-            margin-top:-8% !important;
+            height: 161px !important;
+            margin-top: -8% !important;
         }
-        @media(max-width:1024px){
-        .top_logo_adjust {
-            width: 185px !important;
-            height: 80px !important;
-            margin-top:-9% !important;
+
+        @media(max-width:1024px) {
+            .top_logo_adjust {
+                width: 185px !important;
+                height: 80px !important;
+                margin-top: -9% !important;
+            }
         }
-    }
+
         .padding_1 {
             padding: 0px !important;
         }
@@ -3879,6 +3931,13 @@ background:#454545;
             max-width: 186px !important;
             max-height: 80px !important;
             /* margin-top: -9% !important; */
+        }
+        .icon-bg{
+            background-color: green;
+    border-radius: 50%;
+    color:white;
+    font-size:15px;
+    line-height:0px;
         }
     </style>
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/fselect.css">
@@ -3946,34 +4005,34 @@ background:#454545;
                                     </div>
                                 </div>
                                 <div class="col-md-5 nav-top-right">
-                                    <ul class="nav align-items-center" style="flex-wrap:nowrap;">
-                                        <li class="nav-item li-main-nav-right" style="margin-right: -7px;">
-                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
-<i class="icon-map-marker"></i></a>
-                                        </li>
-                                        <?php if ($this->auth_check) : ?>
+                                    <ul class="nav align-items-center" style="flex-wrap:nowrap; justify-content:space-evenly; float:none !important;">
+                                    <li class="icon-bg">
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
+                                                <i class="icon-map-marker"></i></a> 
+                                    </li>
+                                    <?php if ($this->auth_check) : ?>
                                             <?php if (is_multi_vendor_active()) : ?>
                                                 <?php if (!is_user_vendor()) : ?>
                                                     <?php if (!is_user_applied_for_shop()) : ?>
-                                                        <li class="nav-item m-r-0"  style="margin-right:0px;"><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
+                                                        <li><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
                                                     <?php else : ?>
-                                                        <li class="nav-item m-r-0"  style="margin-right:0px;"><a href="<?php echo generate_url("start-selling"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
+                                                        <li><a href="<?php echo generate_url("start-selling"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
                                                     <?php endif; ?>
                                                 <?php else : ?>
                                                     <?php if ($this->auth_user->supplier_type == "Goods") { ?>
-                                                        <li class="nav-item m-r-0" style="margin-right:0px;"><a href="<?php echo generate_dash_url("add_product"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
+                                                        <li><a href="<?php echo generate_dash_url("add_product"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
                                                     <?php } else { ?>
-                                                        <li class="nav-item m-r-0" style="margin-right:0px;"><a href="<?php echo generate_dash_url("add_service"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
+                                                        <li><a href="<?php echo generate_dash_url("add_service"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
                                                     <?php } ?>
                                                 <?php endif; ?>
                                             <?php endif; ?>
-                                        <?php else : ?>
+                                            <?php else : ?>
                                             <?php if (is_multi_vendor_active()) : ?>
-                                                <li class="nav-item m-r-0" style="margin-right:0px;"><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0"><?= trans("sell_now"); ?></a></li>
+                                                <li><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
                                             <?php endif; ?>
                                         <?php endif; ?>
                                         <?php if ($this->is_sale_active) : ?>
-                                            <li id="cart_icon_detail" class="nav-item nav-item-cart li-main-nav-right" style="margin-right:6px;">
+                                            <li class="icon-bg cart-icon-number">
                                                 <a class="cart_a" href="<?php echo generate_url("cart"); ?>">
                                                     <i class="icon-cart"></i>
                                                     <?php $cart_product_count = get_cart_product_count();
@@ -3983,15 +4042,14 @@ background:#454545;
                                                 </a>
                                             </li>
                                         <?php endif; ?>
-
                                         <?php if ($this->auth_check) : ?>
-                                            <li class="nav-item li-main-nav-right" style="margin-right:0px;">
+                                            <li class="icon-bg">
                                                 <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
                                                     <i class="icon-heart-o"></i>
                                                 </a>
                                             </li>
                                         <?php else : ?>
-                                            <li class="nav-item li-main-nav-right" style="margin-right:0px;">
+                                            <li class="icon-bg">
                                                 <a href="<?php echo generate_url("wishlist"); ?>">
                                                     <i class="icon-heart-o"></i>
                                                 </a>
@@ -4093,7 +4151,7 @@ background:#454545;
                                         <span class="span-message-count"><?php echo $unread_message_count; ?></span>
                                     <?php endif; ?>
                                     </a>
-                                </li> -->
+                                            </li> -->
 
                                                     <?php if ($this->auth_user->role == "vendor") { ?>
                                                         <!-- <li>
@@ -4118,6 +4176,15 @@ background:#454545;
                                                             </a>
                                                         </li>
                                                     <?php endif; ?>
+                                                    <?php if ($this->auth_check && $this->auth_user->is_active_shop_request == 1) : ?>
+                                                        <?php if ($this->auth_user->gst_issue == 1 || $this->auth_user->pan_issue == 1 || $this->auth_user->adhaar_issue == 1) : ?>
+                                                            <li>
+                                                                <a href="<?php echo generate_url("settings", "update_settings"); ?>">
+                                                                    Update Seller Info
+                                                                </a>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
                                                     <li>
                                                         <a href="<?php echo base_url(); ?>logout" class="logout">
                                                             <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/logout.ico" alt="" style="width: 20px; height: 20px;" /> -->
@@ -4127,13 +4194,13 @@ background:#454545;
                                                 </ul>
                                             </li>
                                         <?php else : ?>
-                                            <li class="nav-item li-main-nav-right">
+                                            <li>
                                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal" id="header-login">Sign in</a>
                                             </li>
 
                                         <?php endif; ?>
-                                    </ul>
-                                </div>
+                                            </ul>
+                                            </div>
                             </div>
                         </div>
                     </div>
@@ -4156,13 +4223,13 @@ background:#454545;
 
                             </div>
                             <div class="mobile-map">
-                            <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal"  style=" color: green;
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" style=" color: green;
         font-size: 22px;
         position: relative;
         top: 8px;">
-<i class="icon-map-marker"></i></a>
+                                    <i class="icon-map-marker"></i></a>
                             </div>
-                            
+
                             <div class="mobile-logo">
                                 <a href="<?php echo lang_base_url(); ?>"><img src="<?php echo get_logo($this->general_settings); ?>" alt="logo" class="logo"></a>
                             </div>
@@ -4735,40 +4802,38 @@ background:#454545;
             </div>
         </div>
     </div>
-    <div  class="modal fade" id="locateModal" role="dialog">
+    <div class="modal fade" id="locateModal" role="dialog">
         <div class="modal-dialog modal-dialog-centered login-modal locate-modal" role="document">
             <div class="modal-content">
                 <div class="auth-box">
-                <button type="button" class="close" data-dismiss="modal"id="close-pin"><i class="icon-close"></i></button>
-                <?php echo form_open(generate_url('search_pincode'), ['id' => 'form_validate_pincode_search', 'class' => 'form_search_pincode_main form-inline', 'method' => 'get']); ?>
-<div style="position: relative;
-    left: 15px;
-    top: 33px;">
-                 <div class="form-group m-b-20">
-                        <div class="input-group input-group-location">
-                        <input type="text" name="search_pincode" class="clearable_search form-control" id="enter_p" maxlength="6" minlength="6" pattern="[0-9]+" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="Enter pincode" autocomplete="off">
-                        <input type="hidden" class="search_type_input_pincode" name="search_type_pincode" value="pincode">
-                        <button  class="check_pincode">Go!</button>
-                        <div id="response_pincode_search_results" class="search-results-ajax"></div>
-                        <?php echo form_close(); ?>
+                    <button type="button" class="close" data-dismiss="modal" id="close-pin"><i class="icon-close"></i></button>
+                    <?php echo form_open(generate_url('search_pincode'), ['id' => 'form_validate_pincode_search', 'class' => 'form_search_pincode_main form-inline', 'method' => 'get']); ?>
+                    <div id="location">
+                        <div class="form-group m-b-20">
+                            <div class="input-group input-group-location">
+                                <input type="text" name="search_pincode" class="clearable_search form-control" id="enter_p" maxlength="6" minlength="6" pattern="[0-9]+" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="Enter pincode" autocomplete="off">
+                                <input type="hidden" class="search_type_input_pincode" name="search_type_pincode" value="pincode">
+                                <button class="check_pincode">Go!</button>
+                                <div id="response_pincode_search_results" class="search-results-ajax"></div>
+                                <?php echo form_close(); ?>
 
-                        </div>
-                        <div class="search-results-ajax">
-                            <div class="search-results-location">
-                                <div id="response_search_location"></div>
+                            </div>
+                            <div class="search-results-ajax">
+                                <div class="search-results-location">
+                                    <div id="response_search_location"></div>
+                                </div>
+                            </div>
+                            <div id="location_id_inputs">
+                                <input type="hidden" name="country" value="<?= $this->default_location->country_id; ?>" class="input-location-filter">
+                                <input type="hidden" name="state" value="<?= $this->default_location->state_id; ?>" class="input-location-filter">
+                                <input type="hidden" name="city" value="<?= $this->default_location->city_id; ?>" class="input-location-filter">
                             </div>
                         </div>
-                        <div id="location_id_inputs">
-                            <input type="hidden" name="country" value="<?= $this->default_location->country_id; ?>" class="input-location-filter">
-                            <input type="hidden" name="state" value="<?= $this->default_location->state_id; ?>" class="input-location-filter">
-                            <input type="hidden" name="city" value="<?= $this->default_location->city_id; ?>" class="input-location-filter">
+                        <div class="form-group" style="visibility:hidden;">
+                            <button type="button" id="btn_submit_location" class="btn btn-md btn-custom btn-block"><?php echo trans("update_location"); ?></button>
                         </div>
                     </div>
-                    <div class="form-group" style="visibility:hidden;">
-                        <button type="button" id="btn_submit_location" class="btn btn-md btn-custom btn-block"><?php echo trans("update_location"); ?></button>
-                    </div>
                 </div>
-    </div>
             </div>
         </div>
     </div>
@@ -4932,6 +4997,8 @@ background:#454545;
         $("#close_btn").click(function() {
             $('#verifyMobileModal').modal('hide');
             document.getElementById("btnsubmit_register").disabled = false;
+            document.getElementById("verify_mobile_span").innerHTML = "Mobile Number Verified Successfully !";
+            document.getElementById("verify_mobile_span").style.color = "green";
 
         })
 

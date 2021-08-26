@@ -173,11 +173,11 @@
     }
 
 
-    .discount-rate-cart-new {
+    /* .discount-rate-cart-new {
         position: relative;
         bottom: 53px;
         left: 6px;
-    }
+    } */
 
     @media(max-width:700px) {
         .discount-rate-cart-new {
@@ -341,7 +341,11 @@
                                                                     <del class="discount-original-price-new">
                                                                         <?php echo price_formatted($cart_item->listing_price, $product->currency); ?>
                                                                     </del>
-
+                                                                    <?php if (!empty($cart_item->discount_rate)) : ?>
+                                                                        <span class="discount-rate-cart-new">
+                                                                            <?php echo discount_rate_format($cart_item->discount_rate); ?>
+                                                                        </span>
+                                                                    <?php endif; ?>
                                                                 </div>
                                                             <?php endif; ?>
                                                             <div class="list-item">
@@ -359,12 +363,8 @@
                                                                     </p>
                                                                 </div>
                                                             <?php endif; ?>
-                                                            <?php
-                                                            if (!empty($cart_item->discount_rate)) : ?>
-                                                                <span class="discount-rate-cart-new">
-                                                                    <?php echo discount_rate_format($cart_item->discount_rate); ?>
-                                                                </span>
-                                                            <?php endif; ?>
+
+
                                                             <div class="list-item">
                                                                 <a href="javascript:void(0)" id="remove_cart" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"> <i class="icon-close"></i><?php echo trans("remove"); ?> </a>
                                                                 <?php
