@@ -441,7 +441,7 @@
             top: 0;
             width: 100%;
             -webkit-transform: translateZ(0);
-            overflow: hidden;
+            /* overflow: hidden; */
         }
     }
 
@@ -3932,12 +3932,13 @@
             max-height: 80px !important;
             /* margin-top: -9% !important; */
         }
-        .icon-bg{
+
+        .icon-bg {
             background-color: green;
-    border-radius: 50%;
-    color:white;
-    font-size:15px;
-    line-height:0px;
+            border-radius: 50%;
+            color: white;
+            font-size: 15px;
+            line-height: 0px;
         }
     </style>
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/fselect.css">
@@ -4006,11 +4007,11 @@
                                 </div>
                                 <div class="col-md-5 nav-top-right">
                                     <ul class="nav align-items-center" style="flex-wrap:nowrap; justify-content:space-evenly; float:none !important;">
-                                    <li class="icon-bg">
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
-                                                <i class="icon-map-marker"></i></a> 
-                                    </li>
-                                    <?php if ($this->auth_check) : ?>
+                                        <li class="icon-bg">
+                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
+                                                <i class="icon-map-marker"></i></a>
+                                        </li>
+                                        <?php if ($this->auth_check) : ?>
                                             <?php if (is_multi_vendor_active()) : ?>
                                                 <?php if (!is_user_vendor()) : ?>
                                                     <?php if (!is_user_applied_for_shop()) : ?>
@@ -4026,7 +4027,7 @@
                                                     <?php } ?>
                                                 <?php endif; ?>
                                             <?php endif; ?>
-                                            <?php else : ?>
+                                        <?php else : ?>
                                             <?php if (is_multi_vendor_active()) : ?>
                                                 <li><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
                                             <?php endif; ?>
@@ -4199,8 +4200,8 @@
                                             </li>
 
                                         <?php endif; ?>
-                                            </ul>
-                                            </div>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

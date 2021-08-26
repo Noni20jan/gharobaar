@@ -42,7 +42,7 @@
         position: relative;
         left: 10px;
         /* top: 181px; */
-        padding-left: 5px;
+        padding: 0px 5px;
         background-color: #e4e4e4;
     }
 

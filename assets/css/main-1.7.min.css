@@ -12898,9 +12898,9 @@ img {
   display: block;
   color: #ffffff;
 }
-@media(max-width:1025px){
-.nav-top .nav-top-right .nav > li > a {
-  font-size:11px;
+@media (max-width: 1025px) {
+  .nav-top .nav-top-right .nav > li > a {
+    font-size: 11px;
     padding: 11px;
     display: block;
     color: #fff;
@@ -18021,15 +18021,13 @@ img {
 
 .input-group-location {
   position: relative;
-  width:72%;
-
+  width: 72%;
 }
-@media(max-width:800px){
-.input-group-location {
-  position: relative;
-  width:73%;
-
-}
+@media (max-width: 800px) {
+  .input-group-location {
+    position: relative;
+    width: 73%;
+  }
 }
 
 .input-group-location .icon-map-marker {
