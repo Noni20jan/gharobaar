@@ -1,5 +1,10 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
+<?php
+$seller_wise_data = get_shipping_cod_changes_seller_wise($this->auth_user->id, $order->id);
+$seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_data->total_cod_cost) / 100;
+?>
+
 <style>
     .ajax-loader {
         visibility: hidden;
@@ -1173,7 +1178,8 @@ endforeach; ?>
                                 }],
 
                                 "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-                                "sub_total": (product.product.price / 100) * <?php echo $order_products[0]->product_quantity ?>,
+                                "shipping_charges": <?php echo $seller_shipping_cod ?>,
+                                "sub_total": <?php echo ($seller_wise_data->grand_total_amount) / 100 ?>,
                                 "length": parseInt(product.product.packed_product_length),
                                 "breadth": parseInt(product.product.packed_product_width),
                                 "height": parseInt(product.product.packed_product_height),

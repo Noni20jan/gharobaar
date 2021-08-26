@@ -1,4 +1,17 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<style>
+    .zoom {
+        transition: transform .2s;
+    }
+
+    .zoom:hover {
+        -ms-transform: scale(1.25);
+        /* IE 9 */
+        -webkit-transform: scale(1.25);
+        /* Safari 3-8 */
+        transform: scale(1.25);
+    }
+</style>
 
 <div class="product-item">
     <div class="row-custom<?php echo (!empty($product->image_second)) ? ' product-multiple-image' : ''; ?>">
@@ -27,13 +40,13 @@
                 </div> -->
             <?php else : ?>
                 <div class="cart-top">
-                    <a href="javascript:void(0)" class="item-options btn-add-to-cart" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
-                        <i class="icon-cart"></i>
+                    <a href="javascript:void(0)" class="item-options btn-add-to-cart zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
+                        <i class="icon-cart "></i>
                     </a>
                 </div>
             <?php endif; ?>
             <div class="product-item-options">
-                <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
+                <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
                     <?php if (is_product_in_wishlist($product) == 1) : ?>
                         <i class="icon-heart"></i>
                     <?php else : ?>

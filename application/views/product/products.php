@@ -183,7 +183,13 @@ foreach ($sellers as $seller) {
                 <?php if (!empty($category)) : ?>
                     <h1 class="page-title product-list-title"><?php echo category_name($category); ?></h1>
                 <?php else : ?>
-                    <h1 class="page-title product-list-title"><?php echo trans("products"); ?></h1>
+                    <?php if (!empty($products_under)) : ?>
+                        <h1 class="page-title product-list-title">Products Under <?php echo $breadcrumbs[1] ?></h1>
+                    <?php elseif (!empty($occasion_under)) : ?>
+                        <h1 class="page-title product-list-title">Products Under <?php echo $breadcrumbs[1] ?></h1>
+                    <?php else : ?>
+                        <h1 class="page-title product-list-title"><?php echo trans("products") ?></h1>
+                    <?php endif; ?>
                 <?php endif; ?>
 
 
@@ -214,7 +220,7 @@ foreach ($sellers as $seller) {
                             </a>
 
                         <?php elseif (isset($parent_category)) : ?>
-                            <?php if ($parent_category->id == 15) : ?>
+                            <?php if ($parent_category->id == 2) : ?>
                                 <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg
                                 </a>
                                 <a type="button" id="non_veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'non_Veg') ? "active_non-veg" : "non-active_non-veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>">Non Veg
@@ -336,12 +342,12 @@ foreach ($sellers as $seller) {
                             </div>
                         <?php endif; ?>
                     <?php endif; ?>
-                    <div>
-
-                        <input type="checkbox" class="check-box-size" id="category" value="category" name="filter_checkbox[]" onclick="show_category(this)">
-                        <label for="category" style="margin: 10px;"><b>Category</b></label>
-                    </div>
                     <?php if (!empty($categories)) : ?>
+                        <div>
+                            <input type="checkbox" class="check-box-size" id="category" value="category" name="filter_checkbox[]" onclick="show_category(this)">
+                            <label for="category" style="margin: 10px;"><b>Category</b></label>
+                        </div>
+
                         <div class="filter-item" id="category_filter" style="display: none">
 
                             <?php if (!empty($category)) :
@@ -376,7 +382,6 @@ foreach ($sellers as $seller) {
                             </div>
                         </div>
                     <?php endif; ?>
-
 
                     <?php if (!empty($parent_categories)) :
                         $all_cat_filter = get_catg_filter(); ?>

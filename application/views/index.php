@@ -819,12 +819,12 @@
                     <?php endforeach; ?>
                 </div>
 
-                <!-- <div class="text-center" style="margin-bottom:8%;">
-                        <div class="index_btn_text index_btn btn btn-md btn-custom m-t-15">
-                            <a href="<?= generate_url("clothing-and-accessories") . '?sort=' . 'top_discount'; ?>">
-                                View More Products</a>
-                        </div>
-                    </div> -->
+                <div class="text-center" style="margin-bottom:8%;">
+                    <div class="index_btn_text index_btn btn btn-md btn-custom m-t-15">
+                        <a href="<?= generate_url("products") . '?sort=' . 'top_discount'; ?>">
+                            View More Products</a>
+                    </div>
+                </div>
                 <div id="top-discounts-container_nav" class="index-products-slider-nav">
                     <button class="prev"><i class="icon-arrow-left"></i></button>
                     <button class="next"><i class="icon-arrow-right"></i></button>

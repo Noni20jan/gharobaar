@@ -2978,6 +2978,16 @@ if (!function_exists('get_fssai_action')) {
     }
 }
 
+//get cod changes and shipping changes seller wise
+if (!function_exists('get_shipping_cod_changes_seller_wise')) {
+    function get_shipping_cod_changes_seller_wise($sellerid, $order_id)
+    {
+        $ci = &get_instance();
+        return $ci->order_model->get_charges_seller_wise($sellerid, $order_id);
+        // return "sanyam";
+    }
+}
+
 //Formulize a breadcrumb
 
 if (!function_exists('breadcrumbs')) {

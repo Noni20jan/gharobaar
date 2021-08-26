@@ -282,7 +282,7 @@
 
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/jquery.tagger.css">
 </head>
-<div id="wrapper">
+<div id="wrapper" style="min-height: 60vh;">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -297,7 +297,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row m-b-20">
             <div class="col-sm-12 col-md-3">
                 <div class="row-custom">
                     <!-- load profile nav -->

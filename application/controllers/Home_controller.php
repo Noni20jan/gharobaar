@@ -993,6 +993,7 @@ class Home_controller extends Home_Core_Controller
         $data["query_string_object_array"] = convert_query_string_to_object_array($data["query_string_array"]);
         $data["query_string_object_array"] = convert_query_string_to_object_array($data["query_string_array"]);
         $data["lookup"] = $this->product_model->get_lookup_code(strtoupper($concern_code));
+        $data["products_under"] = $data["lookup"]->meaning;
         $type_id = $data["lookup"]->id;
         //get paginated posts
         $pagination = $this->paginate(generate_url("shop_by_concern") . '/' . $concern_code, $this->product_model->get_paginated_filtered_products_count_category_feature($data["query_string_array"], null, $type_id), $this->product_per_page);
@@ -2388,6 +2389,7 @@ class Home_controller extends Home_Core_Controller
         $data["query_string_object_array"] = convert_query_string_to_object_array($data["query_string_array"]);
         $data["lookup"] = $this->product_model->get_lookup_code(strtoupper($occassion_code));
         $type_id = $data["lookup"]->id;
+        $data["occasion_under"] = $data["lookup"]->meaning;
         //get paginated posts
         $pagination = $this->paginate(generate_url("shop_by_occasion") . '/' . $occassion_code, $this->product_model->get_paginated_filtered_products_count_category_feature($data["query_string_array"], null, $type_id), $this->product_per_page);
         $data['products'] = $this->product_model->get_products_shop_by_concern($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id);

@@ -513,9 +513,9 @@
                                     </div>
                                 </div>
 
-                                <?php 
+                                <?php
                                 // if ($parent_categories_array[0]->id == 10 || $parent_categories_array[0]->id == 5 || $parent_categories_array[0]->id == 12 || $parent_categories_array[0]->id == 4 || $parent_categories_array[0]->id == 3 || $parent_categories_array[0]->id == 14 || $parent_categories_array[0]->id == 309 || $parent_categories_array[0]->id == 7 || $parent_categories_array[0]->id == 8 || $parent_categories_array[0]->id == 11) :
-                                    if ($parent_categories_array[0]->id == 1  && ($parent_categories_array[1]->id == 13 || $parent_categories_array[1]->id == 12 || $parent_categories_array[1]->id == 14 || $parent_categories_array[1]->id == 9 || $parent_categories_array[1]->id == 10) || $parent_categories_array[0]->id == 7 ||$parent_categories_array[0]->id == 8 || $parent_categories_array[0]->id == 4 ||$parent_categories_array[0]->id == 6 &&($parent_categories_array[1]->id != 45)|| $parent_categories_array[0]->id == 5) :
+                                if ($parent_categories_array[0]->id == 1  && ($parent_categories_array[1]->id == 13 || $parent_categories_array[1]->id == 12 || $parent_categories_array[1]->id == 14 || $parent_categories_array[1]->id == 9 || $parent_categories_array[1]->id == 10) || $parent_categories_array[0]->id == 7 || $parent_categories_array[0]->id == 8 || $parent_categories_array[0]->id == 4 || $parent_categories_array[0]->id == 6 && ($parent_categories_array[1]->id != 45) || $parent_categories_array[0]->id == 5) :
                                 ?>
                                     <label class="barting tooltip-product-other-info">Is it a handicraft?<span class="Validation_error"> *</span>&nbsp;<i class="fa fa-info-circle"></i><span class="tooltiptext-product"> Created with hands, without the use of any mechanised production process</span></label>
                                     <div class=" row">
@@ -543,7 +543,7 @@
                                 <?php endif; ?>
                                 <?php
                                 //  if ($parent_categories_array[0]->id == 10 || $parent_categories_array[0]->id == 5 || $parent_categories_array[0]->id == 13 || $parent_categories_array[0]->id == 12 || $parent_categories_array[0]->id == 9 || $parent_categories_array[0]->id == 1 || $parent_categories_array[0]->id == 4 || $parent_categories_array[0]->id == 2 || $parent_categories_array[0]->id == 3 || $parent_categories_array[0]->id == 14 || $parent_categories_array[0]->id == 309 || $parent_categories_array[0]->id == 7 || $parent_categories_array[0]->id == 8 || $parent_categories_array[0]->id == 11) : 
-                                    if ($parent_categories_array[0]->id == 1 ||$parent_categories_array[0]->id == 7 || $parent_categories_array[0]->id == 8 || $parent_categories_array[0]->id == 4  ||$parent_categories_array[0]->id == 6 &&($parent_categories_array[1]->id != 45)|| $parent_categories_array[0]->id == 5):
+                                if ($parent_categories_array[0]->id == 1 || $parent_categories_array[0]->id == 7 || $parent_categories_array[0]->id == 8 || $parent_categories_array[0]->id == 4  || $parent_categories_array[0]->id == 6 && ($parent_categories_array[1]->id != 45) || $parent_categories_array[0]->id == 5) :
                                 ?>
                                     <label class="barting tooltip-product-other-info">Is the product sustainable?<span class="Validation_error"> *</span>&nbsp;<i class="fa fa-info-circle"></i><span class="tooltiptext-product">Products that are environment-friendly over their whole life cycle - from raw material extraction to the time they are disposed</span> </label>
                                     <div class="row">
@@ -570,9 +570,9 @@
 
                                     </div>
                                 <?php endif; ?>
-                                <?php 
+                                <?php
                                 // if ($parent_categories_array[0]->id == 13 || $parent_categories_array[0]->id == 12 || $parent_categories_array[0]->id == 9 || $parent_categories_array[0]->id == 1 || $parent_categories_array[0]->id == 4 || $parent_categories_array[0]->id == 2 || $parent_categories_array[0]->id == 14 || $parent_categories_array[0]->id == 309 || $parent_categories_array[0]->id == 8) :
-                                    if ($parent_categories_array[0]->id == 1  && ($parent_categories_array[1]->id == 9 || $parent_categories_array[1]->id == 10)||$parent_categories_array[0]->id == 3 ||$parent_categories_array[0]->id == 2 ||$parent_categories_array[0]->id == 6 &&($parent_categories_array[1]->id == 41 ||$parent_categories_array[0]->id == 42||$parent_categories_array[0]->id == 38||$parent_categories_array[0]->id == 45) || $parent_categories_array[0]->id == 5) :
+                                if ($parent_categories_array[0]->id == 1  && ($parent_categories_array[1]->id == 9 || $parent_categories_array[1]->id == 10) || $parent_categories_array[0]->id == 3 || $parent_categories_array[0]->id == 2 || $parent_categories_array[0]->id == 6 && ($parent_categories_array[1]->id == 41 || $parent_categories_array[0]->id == 42 || $parent_categories_array[0]->id == 38 || $parent_categories_array[0]->id == 45) || $parent_categories_array[0]->id == 5) :
                                 ?>
                                     <label class="barting tooltip-product-other-info">Is the product organic?<span class="Validation_error"> *</span>&nbsp;<i class="fa fa-info-circle" title=""></i> <span class="tooltiptext-product">Made frommaterials produced by protecting natiral resources and conserving biodiversity</span></label>
                                     <div class="row">
@@ -601,7 +601,7 @@
                                 <?php endif; ?>
                                 <?php
                                 // if ($parent_categories_array[0]->id == 9 || $parent_categories_array[0]->id == 1 || $parent_categories_array[0]->id == 2 || ($parent_categories_array[0]->id == 8 && $parent_categories_array[1]->id == 336) || ($parent_categories_array[0]->id == 309 && $parent_categories_array[1]->id == 316) || ($parent_categories_array[0]->id == 14 && $parent_categories_array[1]->id == 424)) :
-                                    if ($parent_categories_array[0]->id == 3 || $parent_categories_array[0]->id == 2 ||$parent_categories_array[0]->id == 6 &&($parent_categories_array[1]->id == 45)) :
+                                if ($parent_categories_array[0]->id == 3 || $parent_categories_array[0]->id == 2 || $parent_categories_array[0]->id == 6 && ($parent_categories_array[1]->id == 45)) :
                                 ?>
                                     <label class="barting tooltip-product-other-info">Is this product Gluten Free?<span class="Validation_error"> *</span>&nbsp;<i class="fa fa-info-circle"></i><span class="tooltiptext-product">Products without proteins found in wheat, barley, rye and oats</span> </label>
                                     <div class="row">
@@ -628,9 +628,9 @@
 
                                     </div>
                                 <?php endif; ?>
-                                <?php 
+                                <?php
                                 // if ($parent_categories_array[0]->id == 9 || $parent_categories_array[0]->id == 1 || $parent_categories_array[0]->id == 2 || ($parent_categories_array[0]->id == 8 && $parent_categories_array[1]->id == 336) || ($parent_categories_array[0]->id == 309 && $parent_categories_array[1]->id == 316) || ($parent_categories_array[0]->id == 14 && $parent_categories_array[1]->id == 424)) : 
-                                    if ($parent_categories_array[0]->id == 3 || $parent_categories_array[0]->id == 2 ||$parent_categories_array[0]->id == 6 &&($parent_categories_array[1]->id == 45)) :
+                                if ($parent_categories_array[0]->id == 3 || $parent_categories_array[0]->id == 2 || $parent_categories_array[0]->id == 6 && ($parent_categories_array[1]->id == 45)) :
                                 ?>
                                     <label class="barting tooltip-product-other-info">Is this product Vegan?<span class="Validation_error"> *</span>&nbsp;<i class="fa fa-info-circle"></i> <span class="tooltiptext-product">Products that do not contain any animal ingredients or animal-derived ingredients</span></label>
                                     <div class="row">
@@ -657,9 +657,9 @@
 
                                     </div>
                                 <?php endif; ?>
-                                <?php 
+                                <?php
                                 // if ($parent_categories_array[0]->id == 9 || $parent_categories_array[0]->id == 1 || $parent_categories_array[0]->id == 2 || ($parent_categories_array[0]->id == 8 && $parent_categories_array[1]->id == 336) || ($parent_categories_array[0]->id == 309 && $parent_categories_array[1]->id == 316) || ($parent_categories_array[0]->id == 14 && $parent_categories_array[1]->id == 424)) :
-                                    if ($parent_categories_array[0]->id == 3  || $parent_categories_array[0]->id == 2) :
+                                if ($parent_categories_array[0]->id == 3  || $parent_categories_array[0]->id == 2) :
                                 ?>
                                     <label class="barting tooltip-product-other-info">Is this product Keto-Friendly?<span class="Validation_error"> *</span>&nbsp;<i class="fa fa-info-circle"></i> <span class="tooltiptext-product">High-fat, adequate protein and low-carb products</span></label>
                                     <div class="row">
@@ -702,9 +702,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <?php 
+                                <?php
                                 // if ($parent_categories_array[0]->id == 13 || $parent_categories_array[0]->id == 9 || $parent_categories_array[0]->id == 1 || $parent_categories_array[0]->id == 2 || ($parent_categories_array[0]->id == 8 && $parent_categories_array[1]->id == 336) || ($parent_categories_array[0]->id == 309 && $parent_categories_array[1]->id == 316) || ($parent_categories_array[0]->id == 14 && $parent_categories_array[1]->id == 424)) : 
-                                    if ($parent_categories_array[0]->id == 3  || $parent_categories_array[0]->id == 2 ||$parent_categories_array[0]->id == 6 &&($parent_categories_array[1]->id == 45)) : 
+                                if ($parent_categories_array[0]->id == 3  || $parent_categories_array[0]->id == 2 || $parent_categories_array[0]->id == 6 && ($parent_categories_array[1]->id == 45)) :
                                 ?>
                                     <label class="barting tooltip-product-other-info">Does the product/item contain any allergen?<span class="Validation_error"> *</span><i class="fa fa-info-circle" style="margin-left: 0.5%;"></i><span class="tooltiptext-product">A harmless substance that can trigger an allergic reaction in some people</span> </label>
                                     <div class="row">
@@ -745,9 +745,9 @@
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                                <?php 
+                                <?php
                                 // if ($parent_categories_array[0]->id == 9 || $parent_categories_array[0]->id == 2 || ($parent_categories_array[0]->id == 14 && $parent_categories_array[1]->id == 424)) : 
-                                    if ($parent_categories_array[0]->id == 2 && $parent_categories_array[1]->id == 15 && ($parent_categories_array[2]->id == 105 || $parent_categories_array[2]->id == 106 || $parent_categories_array[2]->id == 109 || $parent_categories_array[2]->id == 104 || $parent_categories_array[2]->id == 107)) : 
+                                if ($parent_categories_array[0]->id == 2 && $parent_categories_array[1]->id == 15 && ($parent_categories_array[2]->id == 105 || $parent_categories_array[2]->id == 106 || $parent_categories_array[2]->id == 109 || $parent_categories_array[2]->id == 104 || $parent_categories_array[2]->id == 107)) :
                                 ?>
                                     <label class="myradio">Meal Type<span class="Validation_error"> *</span> &nbsp;</label>
                                     <div class="row">
@@ -793,9 +793,9 @@
 
                                     </div>
                                 <?php endif; ?>
-                                <?php 
+                                <?php
                                 // if ($parent_categories_array[0]->id == 3 || ($parent_categories_array[0]->id == 14 && $parent_categories_array[1]->id == 419)) :
-                                    if ($parent_categories_array[0]->id == 1 && $parent_categories_array[1]->id == 11 &&($parent_categories_array[2]->id == 81|| $parent_categories_array[2]->id == 79 ||$parent_categories_array[2]->id == 80 || $parent_categories_array[2]->id == 78 || $parent_categories_array[2]->id == 84 )) :
+                                if ($parent_categories_array[0]->id == 1 && $parent_categories_array[1]->id == 11 && ($parent_categories_array[2]->id == 81 || $parent_categories_array[2]->id == 79 || $parent_categories_array[2]->id == 80 || $parent_categories_array[2]->id == 78 || $parent_categories_array[2]->id == 84)) :
                                 ?>
                                     <label class="myradio">Jewellery Type<span class="Validation_error"> *</span> &nbsp;</label>
                                     <div class="row">
@@ -851,9 +851,9 @@
 
                                     </div>
                                 <?php endif; ?>
-                                <?php 
+                                <?php
                                 // if ($parent_categories_array[0]->id == 2 || $parent_categories_array[0]->id == 9 || $parent_categories_array[0]->id == 1 || ($parent_categories_array[0]->id == 8 && $parent_categories_array[1]->id == 336) || ($parent_categories_array[0]->id == 309 && $parent_categories_array[1]->id == 316) || ($parent_categories_array[0]->id == 14 && $parent_categories_array[1]->id == 424)) :
-                                    if ($parent_categories_array[0]->id == 2) :
+                                if ($parent_categories_array[0]->id == 2) :
                                 ?>
                                     <label class="myradio">Food Type<span class="Validation_error"> *</span> &nbsp;</label>
                                     <div class="row">
@@ -1305,7 +1305,7 @@
                 <?php if ($product->is_draft == 1) : ?>
                     <button type="button" id="button_to_submit" class="btn btn-lg btn-success btn-form-product-details pull-right"><?php echo trans("submit"); ?></button>
                     <button type="button" id="button_to_open_modal" class="btn btn-primary hideMe" data-toggle="modal" data-target="#confirmModal"><?php echo trans("save_as_draft"); ?></button>
-                    <!-- <button type="submit" id="button_with_submit" name="submit" value="save_as_draft" class="btn btn-lg btn-secondary btn-form-product-details m-r-10 pull-right"><?php echo trans("save_as_draft"); ?></button> -->
+                    <button type="submit" id="button_with_submit" name="submit" value="save_as_draft" class="btn btn-lg btn-secondary btn-form-product-details m-r-10 pull-right"><?php echo trans("save_as_draft"); ?></button>
                 <?php else : ?>
                     <?php if ($user->id == $this->auth_user->id && $product->status == 1) : ?>
                         <a class="btn btn-lg btn-info btn-form-product-details pull-right" style="margin-left:10px;" href="<?= generate_dash_url("products"); ?>"><?php echo trans("close"); ?></a>
