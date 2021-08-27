@@ -22,6 +22,15 @@
         margin-top: -11px;
     }
 
+    @media(max-width:700px) {
+        .number-spinner {
+            width: 100px;
+            height: 44px;
+            border: 1px solid #e4e4e4;
+            background: #fff;
+        }
+    }
+
     .rating-review {
         margin-left: 80%;
         margin-top: -7%;
@@ -118,6 +127,14 @@
         height: auto;
         bottom: 100%;
         left: 100%;
+    }
+
+    .for-height {
+        height: calc(1.5em + 0.75rem + 2px);
+    }
+
+    .number-spinner {
+        background-color: #ffffff;
     }
 
     /* .quantity_margin{
@@ -275,8 +292,61 @@
                     <label id="no_stock_id" style="color:red;"> </label>
                 </span>
             </div>
-
             <div class="row">
+                <div class="col-12 col-lg-6 mb-2">
+                    <?php if (!empty($variation)) : ?>
+                        <?php if ($product->listing_type != 'ordinary_listing' && $product->product_type != 'digital' && $product->is_service != '1') : ?>
+                            <div style="margin-top:20px;">
+                                <label class="label-product-variation mb-3" style="font-weight:600;">Quantity</label>
+                                <div class="cart-item-quantity">
+                                    <div class="number-spinner for-height">
+
+                                        <div class="input-group">
+                                            <span class="input-group-btn for-height">
+                                                <button type="button" class="btn btn-default btn-spinner-minus " id="minus-btn" data-dir="dwn">-</button>
+                                            </span>
+                                            <input type="text" class="form-control text-center" id="product_quantity" name="product_quantity" value="1" max="3" readonly="" style="background-color:white; height: calc(1.5em + 0.75rem + 0px);">
+
+                                            <span class="input-group-btn for-height">
+                                                <button type="button" class="btn btn-default btn-spinner-plus " id="plus-btn" data-dir="up">+</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+                    <?php if (empty($variation)) : ?>
+                        <div style="margin-top:20px;">
+                            <label class="label-product-variation mb-3" style="font-weight:600;">Quantity</label>
+                            <div class="cart-item-quantity">
+                                <div class="number-spinner for-height">
+                                    <div class="input-group ">
+                                        <span class="input-group-btn for-height">
+                                            <button type="button" class="btn btn-default btn-spinner-minus" id="minus-btn" style=" padding: 6px 8px;" data-dir="dwn">-</button>
+                                        </span>
+                                        <input type="text" class="form-control text-center" id="product_quantity" name="product_quantity" value="1" max="3" readonly="" style="background-color:white; height: calc(1.5em + 0.75rem + 0px);">
+
+                                        <span class="input-group-btn for-height">
+                                            <button type="button" class="btn btn-default btn-spinner-plus" id="plus-btn" style=" padding: 6px 8px;" data-dir="up">+</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="col-12 col-lg-6 mb-2">
+                    <label class="label-product-variation mb-3" style="font-weight:600;">Enter PIN Code To Check Delivery</label>
+                    <div class="input-group">
+                        <input type="text" name="pin_text" id="pin_text" class="form-control text-center input-product-pincode" autocomplete="off" maxlength=6 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        <button type="button" class="btn btn-md" id="check-button">Go!</button>
+                    </div>
+                    <p id="check_pincode_text"></p>
+                </div>
+            </div>
+            <!-- <div class="row">
                 <div class="col-12 col-lg-6 mb-2">
                     <?php if (!empty($variation)) : ?>
                         <?php if ($product->listing_type != 'ordinary_listing' && $product->product_type != 'digital' && $product->is_service != '1') : ?>
@@ -306,7 +376,7 @@
                     </div>
                     <p id="check_pincode_text"></p>
                 </div>
-            </div>
+            </div> -->
             <?php if ($product->add_meet == "Made to order") :
                 if ($parent_categories_tree[0]->id == 2) :
                     $this->load->view('product/details/_expected_date_time', ['product' => $product]);
