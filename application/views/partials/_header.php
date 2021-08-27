@@ -22,9 +22,10 @@
         }
     }
 
+    
     .locate-modal {
         max-width: 430px
-    }
+    }    
 
     @media(max-width:700px) {
         .locate-modal .auth-box {
@@ -48,7 +49,7 @@
 
     .input-group-location {
         position: relative;
-        width: 72%;
+        width: 81%;
     }
 
     .nav-item .li-main-nav-right {
@@ -64,10 +65,22 @@
     .locate-modal-description {
         margin-bottom: 20px;
         color: #999;
+        font-size:13px;
         text-align: center;
         text-align: center
     }
-
+    @media(max-width:800px){
+    .locate-modal-description {
+        margin-bottom: 20px;
+        color: #999;
+        visibility: hidden;
+        text-align: center;
+        text-align: center
+    }
+}
+.login-modal .locate-modal{
+    max-width:392px;
+}
     .check_pincode {
         position: absolute;
         border-radius: 28px;
@@ -77,7 +90,7 @@
         border: none;
         bottom: 2px;
         font-weight: bold;
-        left: 220px;
+        left: 221px;
     }
 
     @media(max-width:700px) {
@@ -4809,15 +4822,19 @@
                 <div class="auth-box">
                     <button type="button" class="close" data-dismiss="modal" id="close-pin"><i class="icon-close"></i></button>
                     <?php echo form_open(generate_url('search_pincode'), ['id' => 'form_validate_pincode_search', 'class' => 'form_search_pincode_main form-inline', 'method' => 'get']); ?>
+
                     <div id="location">
+                     <p class="locate-modal-description">Enter pincode to check availability in your area</p>
+
                         <div class="form-group m-b-20">
                             <div class="input-group input-group-location">
                                 <input type="text" name="search_pincode" class="clearable_search form-control" id="enter_p" maxlength="6" minlength="6" pattern="[0-9]+" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="Enter pincode" autocomplete="off">
                                 <input type="hidden" class="search_type_input_pincode" name="search_type_pincode" value="pincode">
                                 <button class="check_pincode">Go!</button>
-                                <div id="response_pincode_search_results" class="search-results-ajax"></div>
+                                <div id="response_pincode_search_results" class="search-results-ajax">
+                                </div>
+                                
                                 <?php echo form_close(); ?>
-
                             </div>
                             <div class="search-results-ajax">
                                 <div class="search-results-location">

@@ -16206,7 +16206,7 @@ img {
 .number-spinner input {
   height: 42px;
   line-height: 18px;
-  padding: 12px 8px;
+  padding:0px 0px;
   border: 0 !important;
 }
 

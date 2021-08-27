@@ -182,9 +182,7 @@
     @media(max-width:700px) {
         .discount-rate-cart-new {
             position: relative;
-            bottom: 72px;
-            /* left: -18px; */
-            left: 10px;
+            
         }
     }
 
