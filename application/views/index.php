@@ -589,13 +589,22 @@
                 </a>
             </div>
         </div>
-        <?php if ($this->general_settings->index_promoted_products == 1 && $this->general_settings->promoted_products == 1 && !empty($promoted_products)) : ?>
-            <div class="col-12 sides-gap-equal section section-promoted">
+        <?php if (!empty($promoted_products)) : ?>
+            <?php if ($this->general_settings->index_promoted_products == 1 && $this->general_settings->promoted_products == 1 && !empty($promoted_products)) : ?>
+                <div class="col-12 sides-gap-equal section section-promoted">
+                    <!-- promoted products -->
+                    <?php $this->load->view("product/_featured_products"); ?>
+                </div>
+            <?php endif; ?>
+        <?php else : ?>
+            <?php if ($this->general_settings->index_promoted_products == 1 && $this->general_settings->promoted_products == 1 && !empty($promoted_products)) : ?>
+                <!-- <div class="col-12 sides-gap-equal section section-promoted"> -->
                 <!-- promoted products -->
-                <?php $this->load->view("product/_featured_products"); ?>
-            </div>
+                <? //php $this->load->view("product/_featured_products"); 
+                ?>
+                <!-- </div> -->
+            <?php endif; ?>
         <?php endif; ?>
-
         <?php $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); ?>
 
 
