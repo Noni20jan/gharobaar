@@ -2179,12 +2179,8 @@ class Order_model extends CI_Model
                 $data['grand_total_amount'] = $data["Sup_total_prd"] + $data["total_shipping_cost"] + $data["total_cod_cost"];
 
 
-                // var_dump($data);
-                // die();
-
                 $this->db->insert('order_supplier', $data);
             }
-            // die();
         }
     }
 
