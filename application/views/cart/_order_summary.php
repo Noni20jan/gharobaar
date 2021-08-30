@@ -68,6 +68,7 @@
                                 <?php if (!$cart_item->product_deliverable) : ?>
                                     <div class="list-item" style="color:red;font-weight:bold;font-size:small;">
                                         This item is not deliverable to your address.
+                                        <a href="javascript:void(0)" id="remove_cart" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"> <i class="icon-close"></i><?php echo trans("remove"); ?> </a>
                                     </div>
                                 <?php endif; ?>
                                 <div class="list-item seller">
