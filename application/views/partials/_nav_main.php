@@ -45,7 +45,7 @@ if ($this->general_settings->selected_navigation == 1) : ?>
                                             <div class="col-8 menu-subcategories col-category-links">
                                                 <div class="card-columns">
                                                     <?php foreach ($subcategories as $subcategory) :
-                                                        $array_image_categories = array();
+                                                        // $array_image_categories = array();
                                                         if (!empty($subcategory->image) && $subcategory->show_image_on_navigation == 1) {
                                                             array_push($array_image_categories, $subcategory);
                                                         } ?>
