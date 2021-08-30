@@ -22,9 +22,10 @@
         }
     }
 
+    
     .locate-modal {
         max-width: 430px
-    }
+    }    
 
     @media(max-width:700px) {
         .locate-modal .auth-box {
@@ -48,7 +49,7 @@
 
     .input-group-location {
         position: relative;
-        width: 72%;
+        width: 81%;
     }
 
     .nav-item .li-main-nav-right {
@@ -64,10 +65,22 @@
     .locate-modal-description {
         margin-bottom: 20px;
         color: #999;
+        font-size:13px;
         text-align: center;
         text-align: center
     }
-
+    @media(max-width:800px){
+    .locate-modal-description {
+        margin-bottom: 20px;
+        color: #999;
+        visibility: hidden;
+        text-align: center;
+        text-align: center
+    }
+}
+.login-modal .locate-modal{
+    max-width:392px;
+}
     .check_pincode {
         position: absolute;
         border-radius: 28px;
@@ -77,7 +90,7 @@
         border: none;
         bottom: 2px;
         font-weight: bold;
-        left: 220px;
+        left: 221px;
     }
 
     @media(max-width:700px) {
@@ -441,7 +454,7 @@
             top: 0;
             width: 100%;
             -webkit-transform: translateZ(0);
-            overflow: hidden;
+            /* overflow: hidden; */
         }
     }
 
@@ -3932,12 +3945,13 @@
             max-height: 80px !important;
             /* margin-top: -9% !important; */
         }
-        .icon-bg{
+
+        .icon-bg {
             background-color: green;
-    border-radius: 50%;
-    color:white;
-    font-size:15px;
-    line-height:0px;
+            border-radius: 50%;
+            color: white;
+            font-size: 15px;
+            line-height: 0px;
         }
     </style>
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/fselect.css">
@@ -4006,11 +4020,11 @@
                                 </div>
                                 <div class="col-md-5 nav-top-right">
                                     <ul class="nav align-items-center" style="flex-wrap:nowrap; justify-content:space-evenly; float:none !important;">
-                                    <li class="icon-bg">
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
-                                                <i class="icon-map-marker"></i></a> 
-                                    </li>
-                                    <?php if ($this->auth_check) : ?>
+                                        <li class="icon-bg">
+                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
+                                                <i class="icon-map-marker"></i></a>
+                                        </li>
+                                        <?php if ($this->auth_check) : ?>
                                             <?php if (is_multi_vendor_active()) : ?>
                                                 <?php if (!is_user_vendor()) : ?>
                                                     <?php if (!is_user_applied_for_shop()) : ?>
@@ -4026,7 +4040,7 @@
                                                     <?php } ?>
                                                 <?php endif; ?>
                                             <?php endif; ?>
-                                            <?php else : ?>
+                                        <?php else : ?>
                                             <?php if (is_multi_vendor_active()) : ?>
                                                 <li><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
                                             <?php endif; ?>
@@ -4199,8 +4213,8 @@
                                             </li>
 
                                         <?php endif; ?>
-                                            </ul>
-                                            </div>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -4808,15 +4822,19 @@
                 <div class="auth-box">
                     <button type="button" class="close" data-dismiss="modal" id="close-pin"><i class="icon-close"></i></button>
                     <?php echo form_open(generate_url('search_pincode'), ['id' => 'form_validate_pincode_search', 'class' => 'form_search_pincode_main form-inline', 'method' => 'get']); ?>
+
                     <div id="location">
+                     <p class="locate-modal-description">Enter pincode to check availability in your area</p>
+
                         <div class="form-group m-b-20">
                             <div class="input-group input-group-location">
                                 <input type="text" name="search_pincode" class="clearable_search form-control" id="enter_p" maxlength="6" minlength="6" pattern="[0-9]+" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="Enter pincode" autocomplete="off">
                                 <input type="hidden" class="search_type_input_pincode" name="search_type_pincode" value="pincode">
                                 <button class="check_pincode">Go!</button>
-                                <div id="response_pincode_search_results" class="search-results-ajax"></div>
+                                <div id="response_pincode_search_results" class="search-results-ajax">
+                                </div>
+                                
                                 <?php echo form_close(); ?>
-
                             </div>
                             <div class="search-results-ajax">
                                 <div class="search-results-location">

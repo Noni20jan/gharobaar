@@ -170,7 +170,7 @@ foreach ($languages as $language) {
         // home cooks
         $route[getr('home_cooks', $rts)] = 'home_controller/home_cooks';
         // fashion
-        $route[getr('fashion', $rts)] = 'home_controller/fashion';
+        $route[getr('fashion_all', $rts)] = 'home_controller/fashion';
         // kids corner
         $route[getr('kids_corner', $rts)] = 'home_controller/kids_corner';
         // categories_for_mobile

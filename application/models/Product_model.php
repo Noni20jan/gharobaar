@@ -1053,11 +1053,11 @@ class Product_model extends Core_Model
         if (!empty($gender)) {
             $this->db->reset_query();
             if ($gender == "Men") {
-                $categories_1 = $this->category_model->get_subcategories_tree(385, false);
+                $categories_1 = $this->category_model->get_subcategories_tree(9, false);
                 $category_ids_1 = get_ids_from_array($categories_1);
                 $this->db->where_in("products.category_id", $category_ids_1);
             } else if ($gender == "Women") {
-                $categories_2 = $this->category_model->get_subcategories_tree(386, false);
+                $categories_2 = $this->category_model->get_subcategories_tree(10, false);
                 $category_ids_2 = get_ids_from_array($categories_2);
                 $this->db->where_in("products.category_id", $category_ids_2);
             } else if ($gender == "Kids_Boys") {
@@ -1505,7 +1505,7 @@ class Product_model extends Core_Model
 
     public function get_paginated_filtered_products_count_category_feature($query_string_array = null, $category_id = null, $type)
     {
-        
+
         $this->filter_products($query_string_array, $category_id);
         $this->db->order_by('products.is_promoted', 'DESC');
         $this->db->join('category_feature', 'products.category_id=category_feature.category_id');
@@ -1530,8 +1530,7 @@ class Product_model extends Core_Model
                     }
                 }
                 $this->db->group_end();
-            }
-            else {
+            } else {
                 $this->db->where('category_feature.feature_id', $type);
             }
         }

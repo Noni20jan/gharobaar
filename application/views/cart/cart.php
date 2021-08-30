@@ -42,7 +42,7 @@
         position: relative;
         left: 10px;
         /* top: 181px; */
-        padding-left: 5px;
+        padding: 0px 5px;
         background-color: #e4e4e4;
     }
 
@@ -182,9 +182,7 @@
     @media(max-width:700px) {
         .discount-rate-cart-new {
             position: relative;
-            bottom: 72px;
-            /* left: -18px; */
-            left: 10px;
+            
         }
     }
 

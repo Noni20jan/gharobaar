@@ -184,9 +184,9 @@ foreach ($sellers as $seller) {
                     <h1 class="page-title product-list-title"><?php echo category_name($category); ?></h1>
                 <?php else : ?>
                     <?php if (!empty($products_under)) : ?>
-                        <h1 class="page-title product-list-title">Products Under <?php echo $breadcrumbs[1] ?></h1>
+                        <h1 class="page-title product-list-title"> <?php echo $breadcrumbs[1] ?></h1>
                     <?php elseif (!empty($occasion_under)) : ?>
-                        <h1 class="page-title product-list-title">Products Under <?php echo $breadcrumbs[1] ?></h1>
+                        <h1 class="page-title product-list-title"> <?php echo $breadcrumbs[1] ?></h1>
                     <?php else : ?>
                         <h1 class="page-title product-list-title"><?php echo trans("products") ?></h1>
                     <?php endif; ?>
@@ -213,10 +213,8 @@ foreach ($sellers as $seller) {
 
 
                             <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg
-
                             </a>
                             <a type="button" id="non_veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'non_Veg') ? "active_non-veg" : "non-active_non-veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>">Non Veg
-
                             </a>
 
                         <?php elseif (isset($parent_category)) : ?>
@@ -260,13 +258,13 @@ foreach ($sellers as $seller) {
                     endif;
                     ?>
                     <br>
-                    <div>
 
+                    <!-- filter code for stock options -->
+                    <div>
                         <input type="checkbox" class="check-box-size" id="product_type" value="product_type" name="filter_checkbox[]" onclick="show_product_stock(this)">
                         <label for="product_type" style="margin: 10px;"><b><?php echo trans("product_stock_option"); ?></b></label>
                     </div>
                     <div class="filter-item" id="product_stock_option" style="display: none">
-
                         <div class="filter-list-container">
                             <ul class="filter-list">
                                 <li>
@@ -288,6 +286,9 @@ foreach ($sellers as $seller) {
                             </ul>
                         </div>
                     </div>
+                    <!-- end of stock filter -->
+
+                    <!-- commented code for state filter -->
                     <?php if (false) : ?>
                         <?php if (!empty($parent_categories)) : ?>
                             <?php if ($parent_categories[0]->id != 15) : ?>
@@ -342,6 +343,8 @@ foreach ($sellers as $seller) {
                             </div>
                         <?php endif; ?>
                     <?php endif; ?>
+                    <!-- end of state filter -->
+
                     <?php if (!empty($categories)) : ?>
                         <div>
                             <input type="checkbox" class="check-box-size" id="category" value="category" name="filter_checkbox[]" onclick="show_category(this)">
@@ -457,35 +460,40 @@ foreach ($sellers as $seller) {
                             <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                    <div>
-                        <input type="checkbox" class="check-box-size" id="availability" value="availability" name="filter_checkbox[]" onclick="show_availability(this)">
-                        <label for="availability" style="margin: 10px;"><b>Availability</b></label>
-                    </div>
-                    <div class="filter-item" id="availability_filter" style="display: none">
 
-                        <div class="filter-list-container">
-                            <ul class="filter-list">
-                                <li>
+                    <?php if (!empty($parent_categories)) : ?>
+                        <?php if ($parent_categories[0]->id != 2) : ?>
+                            <div>
+                                <input type="checkbox" class="check-box-size" id="availability" value="availability" name="filter_checkbox[]" onclick="show_availability(this)">
+                                <label for="availability" style="margin: 10px;"><b>Availability</b></label>
+                            </div>
+                            <div class="filter-item" id="availability_filter" style="display: none">
+
+                                <div class="filter-list-container">
+                                    <ul class="filter-list">
+                                        <!-- <li>
                                     <a href="<?= current_url() . generate_filter_url($query_string_array, 'available', 'in_stock'); ?>">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'available', 'in_stock') ? 'checked' : ''; ?>>
                                             <label class="custom-control-label">In Stock</label>
                                         </div>
                                     </a>
-                                </li>
-                                <li>
-                                    <a href="<?= current_url() . generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'cash_on_delivery', 'Y') ? 'checked' : ''; ?>>
-                                            <label class="custom-control-label">Cash on Delivery</label>
-                                        </div>
-                                    </a>
-                                </li>
+                                </li> -->
+                                        <li>
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'cash_on_delivery', 'Y') ? 'checked' : ''; ?>>
+                                                    <label class="custom-control-label">Cash on Delivery</label>
+                                                </div>
+                                            </a>
+                                        </li>
 
 
-                            </ul>
-                        </div>
-                    </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endif; ?>
 
                     <div>
                         <input type="checkbox" class="check-box-size" id="price" value="price" name="filter_checkbox[]" onclick="show_price(this)">
@@ -801,9 +809,7 @@ foreach ($sellers as $seller) {
 
 
                     <?php if (!empty($parent_categories)) : ?>
-
-
-                        <?php if ($parent_categories[0]->id == 12) : ?>
+                        <?php if ($parent_categories[0]->id == 1 && false) : ?>
                             <div>
 
                                 <input type="checkbox" class="check-box-size" id="gender" value="gender" name="filter_checkbox[]" onclick="show_gender(this)">
@@ -829,7 +835,7 @@ foreach ($sellers as $seller) {
                                                 </div>
                                             </a>
                                         </li>
-                                        <li>
+                                        <!-- <li>
                                             <a href="<?= current_url() . generate_filter_url($query_string_array, 'gender', 'Kids_Boys'); ?>">
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'gender', 'Kids_Boys') ? 'checked' : ''; ?>>
@@ -844,14 +850,14 @@ foreach ($sellers as $seller) {
                                                     <label class="custom-control-label">Kids(Girls)</label>
                                                 </div>
                                             </a>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                 </div>
                             </div>
 
                         <?php endif; ?>
-                        <?php if (!empty($parent_categories[4])) : ?>
-                            <?php if ($parent_categories[0]->id == 12 || $parent_categories[4]->id == 1389) : ?>
+                        <?php if (!empty($parent_categories[2])) : ?>
+                            <?php if ($parent_categories[0]->id == 1 && $parent_categories[1]->id == 10 && $parent_categories[2]->id == 71) : ?>
                                 <div>
 
                                     <input type="checkbox" id="blouse_detail" value="blouse_detail" name="filter_checkbox[]" onclick="show_blouse_detail(this)">
@@ -893,153 +899,150 @@ foreach ($sellers as $seller) {
 
                             <?php endif; ?>
                         <?php endif; ?>
+                        <?php if (!empty($parent_categories[1])) : ?>
+                            <?php if ($parent_categories[0]->id == 5 && $parent_categories[1]->id == 37) : ?>
+                                <div>
 
-
-                        <?php if ($parent_categories[0]->id == 309) : ?>
-                            <div>
-
-                                <input type="checkbox" id="pet_age" value="pet_age" name="filter_checkbox[]" onclick="show_pet_age(this)">
-                                <label for="pet_age" style="margin: 10px;"><b>Pet Age</b></label>
-                            </div>
-                            <div class="filter-item" id="pet_age_filter" style="display: none">
-
-                                <div class="filter-list-container">
-                                    <ul class="filter-list">
-                                        <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Young_Adult'); ?>">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Young_Adult') ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label">Young Adult</label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'All_Life_Stages'); ?>">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'All_Life_Stages') ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label">All Life Stages</label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Senior'); ?>">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Senior') ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label">Senior</label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Adolescent'); ?>">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Adolescent') ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label">Adolescent</label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Adult'); ?>">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Adult') ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label">Adult</label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Baby'); ?>">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Baby') ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label">Baby</label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Puppy'); ?>">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Puppy') ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label">Puppy</label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Kitten'); ?>">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Kitten') ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label">Kitten</label>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                    </ul>
+                                    <input type="checkbox" id="pet_age" value="pet_age" name="filter_checkbox[]" onclick="show_pet_age(this)">
+                                    <label for="pet_age" style="margin: 10px;"><b>Pet Age</b></label>
                                 </div>
-                            </div>
-                        <?php endif; ?>
+                                <div class="filter-item" id="pet_age_filter" style="display: none">
 
-                        <?php if ($parent_categories[0]->id == 3) : ?>
-                            <div>
+                                    <div class="filter-list-container">
+                                        <ul class="filter-list">
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Young_Adult'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Young_Adult') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Young Adult</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'All_Life_Stages'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'All_Life_Stages') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">All Life Stages</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Senior'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Senior') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Senior</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Adolescent'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Adolescent') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Adolescent</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Adult'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Adult') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Adult</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Baby'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Baby') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Baby</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Puppy'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Puppy') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Puppy</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'pet_age', 'Kitten'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'pet_age', 'Kitten') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Kitten</label>
+                                                    </div>
+                                                </a>
+                                            </li>
 
-                                <input type="checkbox" id="jewellery_type" value="jewellery_type" name="filter_checkbox[]" onclick="show_jeweller_type(this)">
-                                <label for="jewellery_type" style="margin: 10px;"><b>Jewellery Type</b></label>
-                            </div>
-                            <div class="filter-item" id="jewellery_type_filter" style="display: none">
-
-                                <div class="filter-list-container">
-                                    <ul class="filter-list">
-                                        <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'jewellery_type', 'Gold'); ?>">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'jewellery_type', 'Gold') ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label">
-                                                        Gold
-                                                    </label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'jewellery_type', 'silver'); ?>">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'jewellery_type', 'silver') ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label">
-                                                        Silver
-                                                    </label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'jewellery_type', 'Precious_Stones'); ?>">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'jewellery_type', 'Precious_Stones') ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label">
-                                                        Precious Stones
-                                                    </label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'jewellery_type', 'Semi_Precious'); ?>">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'jewellery_type', 'Semi_Precious') ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label">
-                                                        Semi Precious
-                                                    </label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'jewellery_type', 'Artificial'); ?>">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'jewellery_type', 'Artificial') ? 'checked' : ''; ?>>
-                                                    <label class="custom-control-label">
-                                                        Artificial
-                                                    </label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
+                            <?php if ($parent_categories[0]->id == 1 && $parent_categories[1]->id == 11) : ?>
+                                <div>
+                                    <input type="checkbox" id="jewellery_type" value="jewellery_type" name="filter_checkbox[]" onclick="show_jeweller_type(this)">
+                                    <label for="jewellery_type" style="margin: 10px;"><b>Jewellery Type</b></label>
+                                </div>
+                                <div class="filter-item" id="jewellery_type_filter" style="display: none">
+                                    <div class="filter-list-container">
+                                        <ul class="filter-list">
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'jewellery_type', 'Gold'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'jewellery_type', 'Gold') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">
+                                                            Gold
+                                                        </label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'jewellery_type', 'silver'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'jewellery_type', 'silver') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">
+                                                            Silver
+                                                        </label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'jewellery_type', 'Precious_Stones'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'jewellery_type', 'Precious_Stones') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">
+                                                            Precious Stones
+                                                        </label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'jewellery_type', 'Semi_Precious'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'jewellery_type', 'Semi_Precious') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">
+                                                            Semi Precious
+                                                        </label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'jewellery_type', 'Artificial'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'jewellery_type', 'Artificial') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">
+                                                            Artificial
+                                                        </label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                         <?php endif; ?>
-                        <?php if ($parent_categories[0]->id == 15) : ?>
+                        <?php if ($parent_categories[0]->id == 2) : ?>
                             <div>
 
                                 <input type="checkbox" id="type_meal" value="type_meal" name="filter_checkbox[]" onclick="show_food(this)">
@@ -1504,10 +1507,10 @@ foreach ($sellers as $seller) {
             document.getElementById("pet_age_filter").style.display = "none";
         }
 
-        if ($('#jeweller_type').is(":checked")) {
-            document.getElementById("jeweller_type_filter").style.display = "block";
-        } else if ($('#jeweller_type').is(":not(:checked)")) {
-            document.getElementById("jeweller_type_filter").style.display = "none";
+        if ($('#jewellery_type').is(":checked")) {
+            document.getElementById("jewellery_type_filter").style.display = "block";
+        } else if ($('#jewellery_type').is(":not(:checked)")) {
+            document.getElementById("jewellery_type_filter").style.display = "none";
         }
         if ($('#origin_of_product').is(":checked")) {
             document.getElementById("origin_of_product_filter").style.display = "block";
@@ -1587,7 +1590,7 @@ foreach ($sellers as $seller) {
     }
 
     function show_jeweller_type(check) {
-        var dvPassport = document.getElementById("jeweller_type_filter");
+        var dvPassport = document.getElementById("jewellery_type_filter");
         dvPassport.style.display = check.checked ? "block" : "none";
     }
 
