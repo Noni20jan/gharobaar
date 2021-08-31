@@ -1,4 +1,5 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<script src="../assets/js/script-1.7.min.js"></script>
 <div class="modal fade" id="rateProductModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom">
@@ -17,13 +18,12 @@
                             <div class="rate-product">
                                 <span><?php echo trans("your_rating"); ?></span>
                                 <div class="rating-stars">
-                                    <label class="label-star" data-star="5" for="star5"><i class="icon-star-o"></i></label>
-                                    <label class="label-star" data-star="4" for="star4"><i class="icon-star-o"></i></label>
-                                    <label class="label-star" data-star="3" for="star3"><i class="icon-star-o"></i></label>
-                                    <label class="label-star" data-star="2" for="star2"><i class="icon-star-o"></i></label>
                                     <label class="label-star" data-star="1" for="star1"><i class="icon-star-o"></i></label>
+                                    <label class="label-star" data-star="2" for="star2"><i class="icon-star-o"></i></label>
+                                    <label class="label-star" data-star="3" for="star3"><i class="icon-star-o"></i></label>
+                                    <label class="label-star" data-star="4" for="star4"><i class="icon-star-o"></i></label>
+                                    <label class="label-star" data-star="5" for="star5"><i class="icon-star-o"></i></label>
                                 </div>
-
                             </div>
                         </div>
                         <div class="form-group">
@@ -38,7 +38,8 @@
                 <button type="button" class="btn btn-md btn-red" data-dismiss="modal"><?php echo trans("close"); ?></button>
                 <button type="submit" class="btn btn-md btn-custom"><?php echo trans("submit"); ?></button>
             </div>
-            <?php echo form_close(); ?><!-- form end -->
+            <?php echo form_close(); ?>
+            <!-- form end -->
         </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Order_admin_controller extends Admin_Core_Controller
 {
@@ -22,7 +22,7 @@ class Order_admin_controller extends Admin_Core_Controller
 
 		$pagination = $this->paginate(admin_url() . 'orders', $this->order_admin_model->get_orders_count());
 		$data['orders'] = $this->order_admin_model->get_paginated_orders($pagination['per_page'], $pagination['offset']);
-        $data["session"] = get_user_session();
+		$data["session"] = get_user_session();
 
 		$this->load->view('admin/includes/_header', $data);
 		$this->load->view('admin/order/orders', $data);
@@ -41,7 +41,7 @@ class Order_admin_controller extends Admin_Core_Controller
 			redirect(admin_url() . "orders");
 		}
 		$data['order_products'] = $this->order_admin_model->get_order_products($id);
-        $data["session"] = get_user_session();
+		$data["session"] = get_user_session();
 
 		$this->load->view('admin/includes/_header', $data);
 		$this->load->view('admin/order/order_details', $data);
@@ -57,7 +57,7 @@ class Order_admin_controller extends Admin_Core_Controller
 			redirect(admin_url() . "orders");
 		}
 		$data['order_products'] = $this->order_admin_model->get_order_products($id);
-        $data["session"] = get_user_session();
+		$data["session"] = get_user_session();
 
 		$this->load->view('admin/includes/_header', $data);
 		$this->load->view('admin/order/order_details', $data);
@@ -159,7 +159,7 @@ class Order_admin_controller extends Admin_Core_Controller
 
 		$pagination = $this->paginate(admin_url() . 'transactions', $this->transaction_model->get_transactions_count());
 		$data['transactions'] = $this->transaction_model->get_paginated_transactions($pagination['per_page'], $pagination['offset']);
-        $data["session"] = get_user_session();
+		$data["session"] = get_user_session();
 
 		$this->load->view('admin/includes/_header', $data);
 		$this->load->view('admin/order/transactions', $data);
@@ -189,7 +189,7 @@ class Order_admin_controller extends Admin_Core_Controller
 
 		$pagination = $this->paginate(admin_url() . 'order-bank-transfers', $this->order_admin_model->get_bank_transfers_count());
 		$data['bank_transfers'] = $this->order_admin_model->get_paginated_bank_transfers($pagination['per_page'], $pagination['offset']);
-        $data["session"] = get_user_session();
+		$data["session"] = get_user_session();
 
 		$this->load->view('admin/includes/_header', $data);
 		$this->load->view('admin/order/bank_transfers', $data);
@@ -247,21 +247,21 @@ class Order_admin_controller extends Admin_Core_Controller
 		}
 	}
 
-    /**
-     * Invoices
-     */
-    public function invoices()
-    {
-        $data['title'] = trans("invoices");
-        $data['form_action'] = admin_url() . "invoices";
-        $data["session"] = get_user_session();
-        $pagination = $this->paginate(admin_url() . 'invoices', $this->order_admin_model->get_invoices_count());
-        $data['invoices'] = $this->order_admin_model->get_paginated_invoices($pagination['per_page'], $pagination['offset']);
+	/**
+	 * Invoices
+	 */
+	public function invoices()
+	{
+		$data['title'] = trans("invoices");
+		$data['form_action'] = admin_url() . "invoices";
+		$data["session"] = get_user_session();
+		$pagination = $this->paginate(admin_url() . 'invoices', $this->order_admin_model->get_invoices_count());
+		$data['invoices'] = $this->order_admin_model->get_paginated_invoices($pagination['per_page'], $pagination['offset']);
 
-        $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/order/invoices', $data);
-        $this->load->view('admin/includes/_footer');
-    }
+		$this->load->view('admin/includes/_header', $data);
+		$this->load->view('admin/order/invoices', $data);
+		$this->load->view('admin/includes/_footer');
+	}
 
 	/**
 	 * Digital Sales
@@ -270,7 +270,7 @@ class Order_admin_controller extends Admin_Core_Controller
 	{
 		$data['title'] = trans("digital_sales");
 		$data['form_action'] = admin_url() . "digital-sales";
-        $data["session"] = get_user_session();
+		$data["session"] = get_user_session();
 		$pagination = $this->paginate(admin_url() . 'digital-sales', $this->order_admin_model->get_digital_sales_count());
 		$data['digital_sales'] = $this->order_admin_model->get_digital_sales($pagination['per_page'], $pagination['offset']);
 
@@ -292,7 +292,7 @@ class Order_admin_controller extends Admin_Core_Controller
 		}
 	}
 
-/**
+	/**
 	 * Fetch All refunds
 	 */
 	public function refunds()
@@ -303,7 +303,7 @@ class Order_admin_controller extends Admin_Core_Controller
 		$this->load->view('admin/order/refunds', $data);
 		$this->load->view('admin/includes/_footer');
 	}
-/**
+	/**
 	 * Initiate refunds
 	 */
 	public function initiate_refund()
@@ -314,50 +314,48 @@ class Order_admin_controller extends Admin_Core_Controller
 		$product_id = $order_product->product_id;
 		$payment_refrence_id = $this->input->post('payment_refrence_id', true);
 		$order_total_amount = $this->input->post('order_amount', true);
-		$order_total_amount_for_db = $order_total_amount*100;
+		$order_total_amount_for_db = $order_total_amount * 100;
 		$product_price = $this->input->post('product_price', true);
 		$refund_amount = $this->input->post('refund_amount', true);
-		$cashfree_refundurl = $this->general_settings->cashfree_api_base_url .'api/v1/order/refund';
+		$cashfree_refundurl = $this->general_settings->cashfree_api_base_url . 'api/v1/order/refund';
 		$data = array(
-            "order_id" => $order_id,
-            "refund_amount" => $refund_amount,
-            "payment_refrence_id" => $payment_refrence_id,
+			"order_id" => $order_id,
+			"refund_amount" => $refund_amount,
+			"payment_refrence_id" => $payment_refrence_id,
 			"order_product_id" => $product_id,
 			"order_product_table_id" => $order_product_id,
-            "order_total_amount" => $order_total_amount_for_db
-        );
+			"order_total_amount" => $order_total_amount_for_db
+		);
 		$refund_data = $data;
 		$curl = curl_init();
-        curl_setopt_array($curl, array(
-            // CURLOPT_URL => '%7B%7BBase%20URL%7D%7D/api/v1/order/refund',
-            CURLOPT_URL => $cashfree_refundurl,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'appId' => $this->general_settings->cashfree_app_id,
-                'secretKey' => $this->general_settings->cashfree_secret_key,
-                'referenceId' => $payment_refrence_id,
-                'refundAmount' => $refund_amount,
-                'refundNote' => 'Refund initiated by admin',
-            ),
-        ));
-        $response = curl_exec($curl);
-        curl_close($curl);
-        $responded_data = json_decode($response);
-        $refund_data["status"] = $responded_data->status;
-        $refund_data["message"] = $responded_data->message;
-        $refund_data["refund_id"] = $responded_data->refundId;
+		curl_setopt_array($curl, array(
+			// CURLOPT_URL => '%7B%7BBase%20URL%7D%7D/api/v1/order/refund',
+			CURLOPT_URL => $cashfree_refundurl,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => '',
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => 'POST',
+			CURLOPT_POSTFIELDS => array(
+				'appId' => $this->general_settings->cashfree_app_id,
+				'secretKey' => $this->general_settings->cashfree_secret_key,
+				'referenceId' => $payment_refrence_id,
+				'refundAmount' => $refund_amount,
+				'refundNote' => 'Refund initiated by admin',
+			),
+		));
+		$response = curl_exec($curl);
+		curl_close($curl);
+		$responded_data = json_decode($response);
+		$refund_data["status"] = $responded_data->status;
+		$refund_data["message"] = $responded_data->message;
+		$refund_data["refund_id"] = $responded_data->refundId;
 		$refund_data["refund_note"] = 'Refund initiated by admin';
 		$refund_data["created_by"] = $this->auth_user->id;
 		$this->order_model->save_refund_detail($refund_data);
-		
+
 		redirect($this->agent->referrer());
 	}
-
-
 }
