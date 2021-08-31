@@ -36,8 +36,6 @@ if ($this->general_settings->selected_navigation == 1) : ?>
                         if ($count <= $limit) : ?>
                             <li class="nav-item dropdown" data-category-id="<?php echo $category->id; ?>">
                                 <a id="nav_main_category_<?= $category->id; ?>" href="<?php echo base_url() . "top-categories/" . $category->slug; ?>" class="nav-link dropdown-toggle nav-main-category" data-id="<?= $category->id; ?>" data-parent-id="<?= $category->parent_id; ?>" data-has-sb="<?= !empty($category->has_subcategory) ? '1' : '0'; ?>"><?php echo category_name($category); ?></a>
-
-
                                 <?php $subcategories = get_subcategories($category->id);
                                 if (!empty($subcategories)) : ?>
                                     <div id="mega_menu_content_<?php echo $category->id; ?>" class="dropdown-menu">
