@@ -264,7 +264,7 @@
                                     <div class="delivery-date-container">
                                         <div class="col-sm-12"><b> Delivery Date </b></div>
                                     </div>
-                                    <h1 class="cart-section-title">
+                                    <h1 id="total_products" class="cart-section-title">
 
 
                                         <input type="checkbox" name="checkbox1" id="checkbox1" checked="true" readonly>
@@ -379,11 +379,11 @@
                                                         <div class="cart-item-quantity" style="float:left;">
                                                             <div class="number-spinner">
                                                                 <div class="input-group">
-                                                                    <?php if ($cart_item->quantity == 1) : ?>
-                                                                        <span class="input-group-btn">
-                                                                            <button type="button" class="btn btn-default btn-spinner-minus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');" data-dir="dwn">-</button>
-                                                                        </span>
-                                                                    <?php endif; ?>
+
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" class="btn btn-default btn-spinner-minus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="dwn">-</button>
+                                                                    </span>
+
                                                                     <input type="text" id="q-<?php echo $cart_item->cart_item_id; ?>" class="form-control text-center" value="<?php echo $cart_item->quantity; ?>" data-product-id="<?php echo $cart_item->product_id; ?>" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>">
                                                                     <span class="input-group-btn">
                                                                         <?php if ((int)get_product($cart_item->product_id)->stock == 1) :
