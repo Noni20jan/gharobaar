@@ -18,6 +18,7 @@ class Home_controller extends Home_Core_Controller
     {
         $label_content = $this->input->post("label_content", true);
         $order_no = $this->input->post("order_no", true);
+        $email = $this->input->post("email_address", true);
         // Authorisation details.
         $username = "chirag.raut@austere.co.in";
         $hash = "495947f08983f416aa4556991fb67b2f2642e45e";
@@ -52,6 +53,9 @@ class Home_controller extends Home_Core_Controller
         }
 
         $message = strtr($msg_content, $varMap);
+
+
+
         $data = "username=" . ($username) . "&hash=" . ($hash) . "&message=" . $message . "&sender=" . $sender . "&numbers=" . $numbers . "&test=" . $test;
 
         $ch = curl_init('http://api.textlocal.in/send/?');
@@ -60,6 +64,9 @@ class Home_controller extends Home_Core_Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch); // This is the result from the API
         curl_close($ch);
+
+        $this->send_email_otp("email_otp", $email, $message, $otp, "3 mins");
+
         if ($label_content == "mobile_otp") {
             $data = array(
                 'html_content1' => "",
@@ -77,6 +84,31 @@ class Home_controller extends Home_Core_Controller
             );
         }
         echo json_encode($data);
+    }
+    public function send_email_otp($label_content, $email, $message, $otp, $otp_time)
+    {
+        $label_content = $label_content;
+        $email = $email;
+        $msg_content = get_content($label_content);
+
+        //replace template var with value
+        if ($label_content == "email_otp") {
+            $token = array(
+                'message' => $message,
+                'otp' => $otp,
+                'otp_time' => $otp_time
+            );
+        }
+        $pattern = '[%s]';
+        foreach ($token as $key => $val) {
+            $varMap[sprintf($pattern, $key)] = $val;
+        }
+
+        $message = strtr($msg_content, $varMap);
+
+        $this->load->model("email_model");
+
+        $this->email_model->email_verify_otp($email, $message);
     }
 
     public function session_otp_verification($input_otp)

@@ -5072,6 +5072,7 @@
         $("#verify_otp").click(function() {
             document.getElementById("verify_mobile_span").innerHTML = "";
             var phn_num = document.getElementById("phone_number").value;
+            var email_address = document.getElementById("email_new").value;
             if (phn_num == '') {
                 document.getElementById("verify_mobile_span").innerHTML = "*Please enter mobile number !";
             } else if (phn_num != '' && phn_num.length == 10) {
@@ -5082,7 +5083,7 @@
                 // console.log(register_phn);
                 if (register_phn == true) {
                     $('#verifyMobileModal').modal('show');
-                    send_verification_otp(phn_num, "mobile_otp");
+                    send_verification_otp(phn_num, "mobile_otp", email_address);
                 } else if (register_phn == false) {
                     document.getElementById("verify_mobile_span").innerHTML = "*Mobile number is already registered!";
                 }
@@ -5145,7 +5146,8 @@
     <script>
         $("#resend_otp").click(function() {
             var phn_num = document.getElementById("phone_number").value;
-            send_verification_otp(phn_num, "mobile_otp");
+            var email_address = document.getElementById("email_new").value;
+            send_verification_otp(phn_num, "mobile_otp", email_address);
         })
     </script>
     <script>
