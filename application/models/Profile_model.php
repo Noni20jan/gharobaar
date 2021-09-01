@@ -596,11 +596,16 @@ class Profile_model extends CI_Model
         $role = "vendor";
         $this->db->where('users.role', $role);
         $this->db->where('users.is_promoted', 1);
-        $this->db->limit(5);
         $query = $this->db->get('users');
         return $query->result();
     }
+    public function get_vendor($id)
+    {
 
+        $this->db->where('users.id', $id);
+        $query = $this->db->get('users');
+        return $query->result();
+    }
     //check for delivery possible or not
     public function product_deliverale_or_not($origin, $destination)
     {

@@ -97,7 +97,14 @@ if (!function_exists('get_vendor_products')) {
         return $ci->product_model->get_user_products_by_user_id_pageview($user_id);
     }
 }
-
+if (!function_exists('get_vendor_shop_status')) {
+    function get_vendor_shop_status($user_id)
+    {
+        $ci = &get_instance();
+        $name=$ci->profile_model->get_vendor($user_id);
+        return $name[0]->is_shop_open;
+    }
+}
 //get product category tags from 
 if (!function_exists('get_products_tags')) {
     function get_products_tags($type)

@@ -3,7 +3,25 @@
     .zoom {
         transition: transform .2s;
     }
-
+#cvl{
+    position: absolute;
+   
+     left: 114px;
+    float: right;
+    color: #fff;
+    background-color: red;
+}
+@media(max-width:700px)
+{
+    #cvl{
+    position: absolute;
+   
+     left: 57px;
+    float: right;
+    color: #fff;
+    background-color: red;
+}
+}
     .zoom:hover {
         -ms-transform: scale(1.25);
         /* IE 9 */
@@ -45,6 +63,16 @@
                     </a>
                 </div>
             <?php endif; ?>
+                <?php if(get_vendor_shop_status($product->user_id)==0):?>
+                   
+            <span class="badge badge-dark badge-promoted" id="cvl">Shop Closed</span>
+                    <?php else:?>
+                       
+               
+               <span class="badge badge-dark badge-promoted" style="display:none"></span>
+                    <?php endif;?>
+                  
+
             <div class="product-item-options">
                 <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
                     <?php if (is_product_in_wishlist($product) == 1) : ?>
