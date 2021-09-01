@@ -374,13 +374,24 @@ foreach ($sellers as $seller) {
                                     <?php endif; ?>
                                     <?php foreach ($categories as $item) :
                                         if ($item->actionable_status) :
+                                            if (empty($all_category_selected)) :
                                     ?>
-                                            <li<?= !empty($category->has_subcategory) ? ' class="li-sub"' : ''; ?>>
-                                                <a href="<?= generate_category_url($item) . generate_filter_url($query_string_array, '', ''); ?>" <?= !empty($category) && $category->id == $item->id ? 'class="active"' : ''; ?>><?= category_name($item); ?></a>
-                                                </li>
-                                        <?php
-                                        endif;
-                                    endforeach; ?>
+                                                <li<?= !empty($category->has_subcategory) ? ' class="li-sub"' : ''; ?>>
+                                                    <a href="<?= generate_category_url($item) . generate_filter_url($query_string_array, '', ''); ?>" <?= !empty($category) && $category->id == $item->id ? 'class="active"' : ''; ?>><?= category_name($item); ?></a>
+                                                    </li>
+                                                    <?php
+                                                else :
+                                                    if (in_array($item->id, $all_category_selected)) :
+                                                    ?>
+
+                                                        <li<?= !empty($category->has_subcategory) ? ' class="li-sub"' : ''; ?>>
+                                                            <a href="<?= generate_category_url($item) . generate_filter_url($query_string_array, '', ''); ?>" <?= !empty($category) && $category->id == $item->id ? 'class="active"' : ''; ?>><?= category_name($item); ?></a>
+                                                            </li>
+                                            <?php
+                                                    endif;
+                                                endif;
+                                            endif;
+                                        endforeach; ?>
                                 </ul>
                             </div>
                         </div>

@@ -22,10 +22,10 @@
         }
     }
 
-    
+
     .locate-modal {
         max-width: 430px
-    }    
+    }
 
     @media(max-width:700px) {
         .locate-modal .auth-box {
@@ -65,22 +65,25 @@
     .locate-modal-description {
         margin-bottom: 20px;
         color: #999;
-        font-size:13px;
+        font-size: 13px;
         text-align: center;
         text-align: center
     }
-    @media(max-width:800px){
-    .locate-modal-description {
-        margin-bottom: 20px;
-        color: #999;
-        visibility: hidden;
-        text-align: center;
-        text-align: center
+
+    @media(max-width:800px) {
+        .locate-modal-description {
+            margin-bottom: 20px;
+            color: #999;
+            visibility: hidden;
+            text-align: center;
+            text-align: center
+        }
     }
-}
-.login-modal .locate-modal{
-    max-width:392px;
-}
+
+    .login-modal .locate-modal {
+        max-width: 392px;
+    }
+
     .check_pincode {
         position: absolute;
         border-radius: 28px;
@@ -4005,6 +4008,7 @@
                                                 <div class="right">
 
                                                     <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_exp"); ?>" required autocomplete="off">
+                                                    <input type="hidden" class="search_type_input" name="search_type" value="product">
                                                     <button class="btn btn-default btn-search"><i class="icon-search"></i></button>
                                                     <div id="response_search_results" class="search-results-ajax"></div>
                                                 </div>
@@ -4824,7 +4828,7 @@
                     <?php echo form_open(generate_url('search_pincode'), ['id' => 'form_validate_pincode_search', 'class' => 'form_search_pincode_main form-inline', 'method' => 'get']); ?>
 
                     <div id="location">
-                     <p class="locate-modal-description">Enter pincode to check availability in your area</p>
+                        <p class="locate-modal-description">Enter pincode to check availability in your area</p>
 
                         <div class="form-group m-b-20">
                             <div class="input-group input-group-location">
@@ -4833,7 +4837,7 @@
                                 <button class="check_pincode">Go!</button>
                                 <div id="response_pincode_search_results" class="search-results-ajax">
                                 </div>
-                                
+
                                 <?php echo form_close(); ?>
                             </div>
                             <div class="search-results-ajax">

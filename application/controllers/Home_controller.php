@@ -532,7 +532,7 @@ class Home_controller extends Home_Core_Controller
         $data['products'] = $this->product_model->get_paginated_filtered_products($data["query_string_array"], null, $pagination['per_page'], $pagination['offset']);
         $data['product_count'] = $this->product_model->get_paginated_filtered_products_count($data["query_string_array"]);
         $data["categories"] = $this->parent_categories;
-
+        $data["all_category_selected"] = $this->product_model->get_category_selected_filters($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], true);
         $this->load->view('partials/_header', $data);
         $this->load->view('product/products', $data);
         $this->load->view('partials/_footer');
