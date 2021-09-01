@@ -2285,6 +2285,7 @@ class Order_model extends CI_Model
         // );
 
         $shipping_data = array(
+            'actual_shipping_charges_with_gst'=>intval((json_decode($response)->data->available_courier_companies[0]->rate) * 100),
             'actual_shipping_charges' => intval((json_decode($response)->data->available_courier_companies[0]->rate / (1 + (18 / 100))) * 100),
             'cod_charges' => intval((json_decode($response)->data->available_courier_companies[0]->cod_charges  / (1 + (18 / 100))) * 100),
             'freight_charges' => intval((json_decode($response)->data->available_courier_companies[0]->freight_charge  / (1 + (18 / 100))) * 100),
@@ -2368,7 +2369,7 @@ class Order_model extends CI_Model
                         $psd->total_order_deliverable = $object_product->product_deliverable;
 
                     if ($object_product->free_shipping)
-                        $psd->total_weight += 0;
+                    $psd->total_weight += $object_product->product_total_packaged_weight;
                     else
                         $psd->total_weight += $object_product->product_total_packaged_weight;
 
@@ -2410,7 +2411,7 @@ class Order_model extends CI_Model
                 $object->seller_gst_rate = $object_product->product_gst_rate;
 
                 if ($object_product->free_shipping)
-                    $object->total_weight = 0;
+                $object->total_weight = $object_product->product_total_packaged_weight;
                 else
                     $object->total_weight = $object_product->product_total_packaged_weight;
                 $object->total_price = $object_product->product_total_price;
@@ -2484,10 +2485,14 @@ class Order_model extends CI_Model
                     if ($psd->seller_gst_rate == 0) {
                         $suppqq["Supplier_Shipping_cost"] = intval($suppqq["Supplier_Shipping_cost"] + ($suppqq["Supplier_Shipping_cost"] * 18 / 100));
                     }
+                    $suppqq["Supplier_Shipping_cost_with_gst"] = $suppqq["Supplier_Shipping_cost"] + $suppqq["shipping_tax_charges"];
                     if (!in_array($suppqq, $supp_data_array_copy)) {
                         array_push($supp_data_array_copy, $suppqq);
                     }
                 } else if ($prod_details->delivery_partner == "SHIPROCKET") {
+
+                    $shiprocket_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
+                    $Supplier_Shipping_cost_with_gst = intval($shiprocket_charges["freight_charges"] + ($shiprocket_charges["freight_charges"] * 18 / 100));
 
                     if (!$prod_details->free_shipping) :
                         if ($psd->total_price >= 200000) {
@@ -2548,6 +2553,7 @@ class Order_model extends CI_Model
                     if ($psd->seller_gst_rate == 0) {
                         $suppqq["Supplier_Shipping_cost"] = intval($suppqq["Supplier_Shipping_cost"] + ($suppqq["Supplier_Shipping_cost"] * 18 / 100));
                     }
+                    $suppqq["Supplier_Shipping_cost_with_gst"] = $Supplier_Shipping_cost_with_gst;
 
                     if (!in_array($suppqq, $supp_data_array_copy)) {
                         array_push($supp_data_array_copy, $suppqq);
@@ -2589,6 +2595,8 @@ class Order_model extends CI_Model
                     $cod_tax_charges = (($actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
                     $suppqq["cod_tax_charges"] = intval($cod_tax_charges);
 
+                    $suppqq["Supplier_Shipping_cost_with_gst"] = $suppqq["Supplier_Shipping_cost"] + $suppqq["shipping_tax_charges"];
+
                     if (!in_array($suppqq, $supp_data_array_copy)) {
                         array_push($supp_data_array_copy, $suppqq);
                     }
@@ -2598,6 +2606,7 @@ class Order_model extends CI_Model
 
         $ship_data_copy = json_encode($supp_data_array_copy);
         // echo ($ship_data_copy);
+        // echo $ship_data_copy;
         return $ship_data_copy;
     }
 

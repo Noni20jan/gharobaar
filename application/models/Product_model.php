@@ -601,7 +601,7 @@ class Product_model extends Core_Model
     }
 
     //build sql query string
-    public function build_query($type = "active", $compile_query = false)
+    public function build_query($type = "active", $compile_query = false, $only_category = false)
     {
 
         $select = "products.*,
@@ -619,10 +619,17 @@ class Product_model extends Core_Model
             $select .= ", 0 AS is_in_wishlist";
         }
 
+        if ($only_category) {
+            $select = "products.category_id as cat_id";
+        }
+
         $status = ($type == 'draft' || $type == 'pending') ? 0 : 1;
         $visibility = ($type == 'hidden') ? 0 : 1;
         $is_draft = ($type == 'draft') ? 1 : 0;
 
+        if ($only_category) {
+            $this->db->distinct();
+        }
         $this->db->select($select);
         if ($compile_query == true) {
             $this->db->from('products');
@@ -761,7 +768,7 @@ class Product_model extends Core_Model
         }
     }
     //filter products
-    public function filter_products($query_string_array = null, $category_id = null)
+    public function filter_products($query_string_array = null, $category_id = null, $only_category = false)
     {
         $category_id = clean_number($category_id);
         $p_min = clean_number($this->input->get("p_min", true));
@@ -851,8 +858,12 @@ class Product_model extends Core_Model
                 $this->db->reset_query();
             }
             if (!empty($array_queries)) {
+                if (!$only_category) :
+                    $this->build_query();
+                else :
+                    $this->build_query("active", false, true);
+                endif;
 
-                $this->build_query();
 
                 foreach ($array_queries as $query) {
 
@@ -861,7 +872,11 @@ class Product_model extends Core_Model
                 }
             }
         } else {
-            $this->build_query();
+            if (!$only_category) :
+                $this->build_query();
+            else :
+                $this->build_query("active", false, true);
+            endif;
         }
 
 
@@ -1070,7 +1085,11 @@ class Product_model extends Core_Model
                 $category_ids_4 = get_ids_from_array($categories_4);
                 $this->db->where_in("products.category_id", $category_ids_4);
             }
-            $this->build_query();
+            if (!$only_category) :
+                $this->build_query();
+            else :
+                $this->build_query("active", false, true);
+            endif;
         }
 
 
@@ -1356,12 +1375,15 @@ class Product_model extends Core_Model
     }
 
     //get paginated filtered products
-    public function get_paginated_filtered_products($query_string_array = null, $category_id = null, $per_page, $offset)
+    public function get_paginated_filtered_products($query_string_array = null, $category_id = null, $per_page, $offset, $only_category = false)
     {
-        $this->filter_products($query_string_array, $category_id);
-        $this->db->limit(clean_number($per_page), clean_number($offset));
-
-        return $this->db->get('products')->result();
+        $this->filter_products($query_string_array, $category_id, $only_category);
+        if (!$only_category) :
+            $this->db->limit(clean_number($per_page), clean_number($offset));
+            return $this->db->get('products')->result();
+        else :
+            return $this->db->get('products')->result_array();
+        endif;
     }
 
     //get paginated filtered products by seller
@@ -2645,5 +2667,18 @@ class Product_model extends Core_Model
             array_push($categories, $row['child_id']);
         }
         return $categories;
+    }
+
+    public function get_category_selected_filters($query_string_array = null, $category_id = null, $per_page, $offset, $only_category = false)
+    {
+        $categories = $this->get_paginated_filtered_products($query_string_array, $category_id, $per_page, $offset, $only_category);
+        $parent_cat_array = array();
+        foreach ($categories as $category) {
+            $id = $this->category_model->get_parent_categories_tree($category["cat_id"])[0]->id;
+            if (!in_array($id, $parent_cat_array)) {
+                array_push($parent_cat_array, $id);
+            }
+        }
+        return $parent_cat_array;
     }
 }

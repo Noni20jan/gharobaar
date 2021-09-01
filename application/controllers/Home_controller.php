@@ -532,7 +532,7 @@ class Home_controller extends Home_Core_Controller
         $data['products'] = $this->product_model->get_paginated_filtered_products($data["query_string_array"], null, $pagination['per_page'], $pagination['offset']);
         $data['product_count'] = $this->product_model->get_paginated_filtered_products_count($data["query_string_array"]);
         $data["categories"] = $this->parent_categories;
-
+        $data["all_category_selected"] = $this->product_model->get_category_selected_filters($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], true);
         $this->load->view('partials/_header', $data);
         $this->load->view('product/products', $data);
         $this->load->view('partials/_footer');
@@ -1014,6 +1014,7 @@ class Home_controller extends Home_Core_Controller
      */
     public function seller_products($type_id)
     {
+        
         get_method();
         $data['title'] = trans("products");
         $data['description'] = trans("products") . " - " . $this->app_name;
@@ -1024,6 +1025,7 @@ class Home_controller extends Home_Core_Controller
         $data["query_string_object_array"] = convert_query_string_to_object_array($data["query_string_array"]);
         $type = $type_id;
         //get paginated posts
+        $data['user_categories'] = $this->product_model->get_categories_array_with_products($type_id);
         $pagination = $this->paginate(generate_url("seller_products") . '/' . $type_id, $this->product_model->get_paginated_filtered_products_by_seller($data["query_string_array"], null, $type_id), $this->product_per_page);
         $data['products'] = $this->product_model->get_products_by_seller($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type);
         $data['product_count'] = $this->product_model->get_paginated_filtered_products_by_seller($data["query_string_array"], null, $type_id);

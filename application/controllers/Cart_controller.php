@@ -245,6 +245,7 @@ class Cart_controller extends Home_Core_Controller
         $this->cart_model->remove_from_cart($cart_item_id);
         $this->cart_model->calculate_cart_total();
         $cart_items = $this->cart_model->get_sess_cart_items();
+        $cart_total = $this->cart_model->get_sess_cart_total();
         $cart_view_html = $this->load->view("cart/_cart_product_response", ['cart_items' => $cart_items, 'cart_total' => $this->cart_model->get_sess_cart_total(), 'cart_has_physical_product' => $this->cart_model->check_cart_has_physical_product()], true);
         $response = array(
             "cart_item_id" => $cart_item_id,
@@ -252,6 +253,9 @@ class Cart_controller extends Home_Core_Controller
             "total_mrp" => ($_SESSION["mds_shopping_cart_total"]->subtotal) / 100,
             "discount" => $_SESSION["mds_shopping_cart_total"]->discount,
             "total" => ($_SESSION["mds_shopping_cart_total"]->total_price) / 100,
+            "subtotal" => ($cart_total->total)/100,
+            "shipping_cost" => ($cart_total->shipping_cost)/100,
+            "order_total" => ($cart_total->order_total)/100,
             "cart_view" => $cart_view_html
         );
         echo json_encode($response);
@@ -276,7 +280,7 @@ class Cart_controller extends Home_Core_Controller
             }
         }
         $response = array(
-            "product_details" => ($product_details["total_price_product"])/100,
+            "product_details" => ($product_details["total_price_product"]) / 100,
             "total_mrp" => ($_SESSION["mds_shopping_cart_total"]->subtotal) / 100,
             "discount" => $_SESSION["mds_shopping_cart_total"]->discount,
             "total" => ($_SESSION["mds_shopping_cart_total"]->total_price) / 100
@@ -1209,6 +1213,10 @@ class Cart_controller extends Home_Core_Controller
             $product_details = get_active_product($cart_item->product_id);
 
             $object->seller_id = $product_details->user_id;
+
+            $pan_number = get_pan_number_by_sellerid($object->seller_id);
+            $pan_forth_char = str_split($pan_number);
+
             $object->seller_commission_rate = calculate_commission_rate_seller($object->seller_id);
             $new = true;
             foreach ($product_seller_details as $psd) {
@@ -1243,6 +1251,62 @@ class Cart_controller extends Home_Core_Controller
                     $psd->total_price += $object_product->product_total_price;
                     $psd->total_price_without_gst += $object_product->product_price_excluding_gst;
                     $psd->seller_earned = ($psd->total_price / 100) - $psd->total_commission_amount;
+
+
+                    // if ($object_product->gst_rate == 0 || $object_product->gst_rate == null) {
+                    //     $psd->tcs_amount_product += 0;
+
+
+                    //     if (!empty($pan_number)) {
+                    //         if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                    //             $psd->tds_amount_product += 0;
+                    //         } else {
+                    //             $psd->tds_amount_product += 0.01 * ($psd->total_price);
+                    //         }
+                    //     } else {
+                    //         $psd->tds_amount_product += 0.05 * ($psd->total_price);
+                    //     }
+                    // } elseif ($object_product->gst_rate != 0) {
+                    //     $psd->tcs_amount_product += $psd->total_price_without_gst * 0.01;
+
+
+                    //     if (!empty($pan_number)) {
+                    //         if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                    //             $psd->tds_amount_product += 0;
+                    //         } else {
+                    //             $psd->tds_amount_product += 0.01 * ($psd->total_price_without_gst);
+                    //         }
+                    //     } else {
+                    //         $psd->tds_amount_product += 0.05 * ($psd->total_price_without_gst);
+                    //     }
+                    // }
+                    if ($object_product->gst_rate == 0 || $object_product->gst_rate == null) {
+                        $object_product->tcs_amount_product = 0;
+
+                        if (!empty($pan_number)) {
+                            if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                                $object_product->tds_amount_product = 0;
+                            } else {
+                                $object_product->tds_amount_product = 0.01 * ($object->total_price);
+                            }
+                        } else {
+                            $object_product->tds_amount_product = 0.05 * ($object->total_price);
+                        }
+                    } elseif ($object_product->gst_rate != 0) {
+                        $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
+                        if (!empty($pan_number)) {
+                            if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                                $object_product->tds_amount_product = 0;
+                            } else {
+                                $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
+                            }
+                        } else {
+                            $object_product->tds_amount_product = 0.05 * ($object_product->product_price_excluding_gst);
+                        }
+                    }
+
+                    $psd->total_tcs_amount_product += $object_product->tcs_amount_product;
+                    $psd->total_tds_amount_product += $object_product->tds_amount_product;
                     array_push($psd->products, $object_product);
                     $new = false;
                 }
@@ -1278,6 +1342,34 @@ class Cart_controller extends Home_Core_Controller
                 $object->total_price = $object_product->product_total_price;
                 $object->total_price_without_gst = $object_product->product_price_excluding_gst;
 
+                if ($object_product->gst_rate == 0 || $object_product->gst_rate == null) {
+                    $object_product->tcs_amount_product = 0;
+
+                    if (!empty($pan_number)) {
+                        if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                            $object_product->tds_amount_product = 0;
+                        } else {
+                            $object_product->tds_amount_product = 0.01 * ($object->total_price);
+                        }
+                    } else {
+                        $object_product->tds_amount_product = 0.05 * ($object->total_price);
+                    }
+                } elseif ($object_product->gst_rate != 0) {
+                    $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
+                    if (!empty($pan_number)) {
+                        if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                            $object_product->tds_amount_product = 0;
+                        } else {
+                            $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
+                        }
+                    } else {
+                        $object_product->tds_amount_product = 0.05 * ($object_product->product_price_excluding_gst);
+                    }
+                }
+
+                $object->total_tcs_amount_product = $object_product->tcs_amount_product;
+                $object->total_tds_amount_product = $object_product->tds_amount_product;
+
                 $object->seller_earned = ($object->total_price / 100) - $object->total_commission_amount;
                 // var_dump($object->total_price_without_gst);
                 // die();
@@ -1286,7 +1378,9 @@ class Cart_controller extends Home_Core_Controller
             endif;
             // var_dump($cart_item);
         }
-        //var_dump($product_seller_details);
+        // var_dump($product_seller_details);
+        // echo "<br>";
+        //die();
 
 
         $seller_settlement = array();
@@ -1298,19 +1392,8 @@ class Cart_controller extends Home_Core_Controller
 
             $gst_number = get_gst_number_by_sellerid($object->vendorId);
 
-
-
-            $pan_number = get_pan_number_by_sellerid($object->vendorId);
-
-
-            $pan_forth_char = str_split($pan_number);
-            // var_dump($pan_number);
-            // var_dump($pan_forth_char[3]);
-            // die();
-
-
-
-
+            $object->total_tcs_amount_product = $psd->total_tcs_amount_product;
+            $object->total_tds_amount_product = $psd->total_tds_amount_product;
 
 
             $object->total_amount_with_gst = $psd->total_price;
@@ -1353,33 +1436,57 @@ class Cart_controller extends Home_Core_Controller
                     $object->shipping = ($ship_detail->Supplier_Shipping_cost);
                     $object->shipping_tax_charge = ($ship_detail->shipping_tax_charges);
                     $object->shipping_charge_with_gst = ($object->shipping) + ($object->shipping_tax_charge);
-                    // $object->shipping_charge_to_gharobaar = $object->shipping + $object->shipping * 0.18;
-                    $object->shipping_charge_to_gharobaar = $object->shipping;
+
+
+                    $object->supplier_shipping_cost_with_gst = ($ship_detail->Supplier_Shipping_cost_with_gst);
+
+                    $object->shipping_charge_to_gharobaar = $object->supplier_shipping_cost_with_gst;
                 }
             }
 
 
+            // condition for shipping slabs
+            $slab = true;
+            if ($slab == true) {
+                if ($object->total_amount_with_gst >= 50000) {
+                    $object->shipping_charge_to_gharobaar = $object->shipping;
+                } else if ($object->total_amount_with_gst >= 200000) {
+                    $object->shipping_charge_to_gharobaar = 0;
+                }
+            }
+            // condition end
 
 
             if (!empty($pan_number)) {
                 if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
-                    $object->tds_amount = 0;
+                    // $object->tds_amount = 0;
+                    $object->tds_amount_shipping = 0;
                 } else {
-                    $object->tds_amount = 0.01 * ($psd->total_price_without_gst);
+                    // $object->tds_amount = 0.01 * ($psd->total_price_without_gst);
+                    $object->tds_amount_shipping = 0.01 * ($object->shipping);
                 }
             } else {
-                $object->tds_amount = 0.05 * ($psd->total_price_without_gst);
+                // $object->tds_amount = 0.05 * ($psd->total_price_without_gst);
+                $object->tds_amount_shipping = 0.05 * ($object->shipping);
             }
 
 
-
-
-
-            if (!empty($gst_number)) {
-                $object->tcs_amount = round(($object->total_amount_without_gst + $object->shipping) * 0.01);
-            } else {
-                $object->tcs_amount = 0;
+            if ($object->total_tcs_amount_product == 0) {
+                $object->total_tcs_shipping = 0;
+            } elseif ($object->total_tcs_amount_product != 0) {
+                $object->total_tcs_shipping = ($object->shipping) * 0.01;
             }
+
+            $object->tcs_amount = $object->total_tcs_amount_product + $object->total_tcs_shipping;
+
+
+            $object->tds_amount = $object->total_tds_amount_product + $object->tds_amount_shipping;
+
+            // if (!empty($gst_number)) {
+            //     $object->tcs_amount = round(($object->total_amount_without_gst + $object->shipping) * 0.01);
+            // } else {
+            //     $object->tcs_amount = 0;
+            // }
             $object->gateway_amount = round(($object->shipping_charge_with_gst + $object->total_amount_with_gst) * ($object->gateway_charge / 100));
             $object->gateway_amount_gst = round($object->gateway_amount * 0.18);
             $object->gateway_amount_with_gst = round($object->gateway_amount + $object->gateway_amount_gst);
@@ -1398,7 +1505,8 @@ class Cart_controller extends Home_Core_Controller
             }
             array_push($seller_settlement, $object);
         }
-
+        // var_dump($seller_settlement);
+        // die();
         $object = new stdClass();
         $object->vendorId = "Gharobaar";
         $object->cashfree_order_id = $this->input->post("orderid", true);

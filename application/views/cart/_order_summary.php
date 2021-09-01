@@ -4,8 +4,8 @@
         margin-top: 70px !important;
     }
 </style>
-<div class="col-sm-12 col-lg-5 order-summary-container">
-    <h2 class="cart-section-title"><?php echo trans("order_summary"); ?> (<?php echo get_cart_product_count(); ?>)</h2>
+<div id="cart" class="col-sm-12 col-lg-5 order-summary-container">
+    <h2 class="cart-section-title" id="cart_quantity"><?php echo trans("order_summary"); ?> (<?php echo get_cart_product_count(); ?>)</h2>
     <!-- <a href="<?php echo generate_url("cart"); ?>">
         <button type="button" class="btn btn-sm btn-custom" style="margin:1rem;"> <i class="icon-cart"></i> EDIT CART</button>
     </a> -->
@@ -37,7 +37,7 @@
                         if ($product->product_type == 'physical') {
                             $is_physical = true;
                         } ?>
-                        <div class="item">
+                        <div class="item" id="<?php echo $cart_item->cart_item_id; ?>">
                             <div class="item-left">
                                 <div class="img-cart-product">
                                     <?php if (empty($cart_item->variation_option)) : ?>
@@ -68,7 +68,7 @@
                                 <?php if (!$cart_item->product_deliverable) : ?>
                                     <div class="list-item" style="color:red;font-weight:bold;font-size:small;">
                                         This item is not deliverable to your address.
-                                        <!-- <a href="javascript:void(0)" id="remove_cart" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"> <i class="icon-close"></i><?php echo trans("remove"); ?> </a> -->
+                                        <a href="javascript:void(0)" id="remove_cart" onclick="remove_from_cart_checkout('<?php echo $cart_item->cart_item_id; ?>');"> <i class="icon-close"></i><?php echo trans("remove"); ?> </a>
                                     </div>
                                 <?php endif; ?>
                                 <div class="list-item seller">
@@ -120,7 +120,7 @@
 
         </div>
         <p class="m-t-30">
-            <strong><?php echo trans("subtotal"); ?><span class="float-right"><?php echo price_formatted_without_round($cart_total->total, $this->payment_settings->default_currency); ?>/-</span></strong>
+            <strong><?php echo trans("subtotal"); ?><span class="float-right" id="sub_total"><?php echo price_formatted_without_round($cart_total->total, $this->payment_settings->default_currency); ?>/-</span></strong>
         </p>
         <!-- <?php if (!empty($cart_total->gst)) : ?>
             <p>
@@ -149,7 +149,7 @@
         <?php if ($is_physical && $this->form_settings->shipping == 1) : ?>
             <?php if (!is_null($address)) : ?>
                 <p>
-                    <strong><?php echo trans("shipping"); ?><span class="float-right"><?php echo price_formatted_without_round($cart_total->shipping_cost, $this->payment_settings->default_currency); ?>/-</span></strong>
+                    <strong><?php echo trans("shipping"); ?><span id="shipping_cost" class="float-right"><?php echo price_formatted_without_round($cart_total->shipping_cost, $this->payment_settings->default_currency); ?>/-</span></strong>
                 </p>
             <?php else : ?>
                 <p>
@@ -200,7 +200,7 @@
             </p>
         <?php else : ?>
             <p>
-                <strong><?php echo trans("total"); ?><span class="float-right"><?php echo price_formatted_without_round($cart_total->total_price, $this->payment_settings->default_currency); ?>/-</span></strong>
+                <strong><?php echo trans("total"); ?><span id="order_total" class="float-right"><?php echo price_formatted_without_round($cart_total->total_price, $this->payment_settings->default_currency); ?>/-</span></strong>
             </p>
         <?php endif; ?>
 

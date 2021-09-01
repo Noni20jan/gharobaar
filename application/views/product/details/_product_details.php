@@ -296,19 +296,18 @@
                 <div class="col-12 col-lg-6 mb-2">
                     <?php if (!empty($variation)) : ?>
                         <?php if ($product->listing_type != 'ordinary_listing' && $product->product_type != 'digital' && $product->is_service != '1') : ?>
-                            <div style="margin-top:20px;">
+                            <div>
                                 <label class="label-product-variation mb-3" style="font-weight:600;">Quantity</label>
                                 <div class="cart-item-quantity">
                                     <div class="number-spinner for-height">
-
                                         <div class="input-group">
                                             <span class="input-group-btn for-height">
-                                                <button type="button" class="btn btn-default btn-spinner-minus " id="minus-btn" data-dir="dwn">-</button>
+                                                <button type="button" class="btn btn-default btn-spinner-minus" id="minus-btn" style=" padding: 6px 8px;" data-dir="dwn">-</button>
                                             </span>
                                             <input type="text" class="form-control text-center" id="product_quantity" name="product_quantity" value="1" max="3" readonly="" style="background-color:white; height: calc(1.5em + 0.75rem + 0px);">
 
                                             <span class="input-group-btn for-height">
-                                                <button type="button" class="btn btn-default btn-spinner-plus " id="plus-btn" data-dir="up">+</button>
+                                                <button type="button" class="btn btn-default btn-spinner-plus" id="plus-btn" style=" padding: 6px 8px;" data-dir="up">+</button>
                                             </span>
                                         </div>
                                     </div>
@@ -318,7 +317,7 @@
                     <?php endif; ?>
 
                     <?php if (empty($variation)) : ?>
-                        <div style="margin-top:20px;">
+                        <div>
                             <label class="label-product-variation mb-3" style="font-weight:600;">Quantity</label>
                             <div class="cart-item-quantity">
                                 <div class="number-spinner for-height">
@@ -338,7 +337,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="col-12 col-lg-6 mb-2">
-                    <label class="label-product-variation mb-3" style="font-weight:600;">Enter PIN Code To Check Delivery</label>
+                    <label class="label-product-variation mb-3" style="font-weight:600; white-space:nowrap;">Enter PIN Code To Check Delivery</label>
                     <div class="input-group">
                         <input type="text" name="pin_text" id="pin_text" class="form-control text-center input-product-pincode" autocomplete="off" maxlength=6 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                         <button type="button" class="btn btn-md" id="check-button">Go!</button>
