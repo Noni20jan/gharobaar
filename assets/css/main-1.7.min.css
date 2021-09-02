@@ -16206,7 +16206,7 @@ img {
 .number-spinner input {
   height: 42px;
   line-height: 18px;
-  padding:0px 0px;
+  padding: 0px 0px;
   border: 0 !important;
 }
 
@@ -18067,14 +18067,7 @@ img {
 }
 
 .product-list-pagination {
-  display: block;
-  float: left;
-  width: 100%;
-  max-width: 75%;
-  position: relative;
-  margin-top: 60px;
-  margin-bottom: 20px;
-  left: 26%;
+  justify-content: center !important;
 }
 
 .product-list-pagination .pagination {
@@ -20895,6 +20888,7 @@ form select.error {
 
   #footer .footer-top {
     padding: 30px 0;
+    margin-bottom: 71px;
   }
 
   #footer .nav-footer {

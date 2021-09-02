@@ -174,6 +174,27 @@
         }
 
     }
+
+    .app-bar-content {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 16px 19px;
+        text-align: center;
+        margin-bottom: 0px;
+        font-size: 11px;
+    }
+
+    .aap_bar_text {
+        margin-bottom: 0;
+    }
+
+    .app-bar-container {
+        background-color: white;
+        position: fixed;
+        top: calc(100vh - 71px);
+    }
 </style>
 <footer id="footer">
     <div class="container">
@@ -383,9 +404,44 @@
 
                 </div>
             </div>
-
+            <div class="mobile-nav-container app-bar-container">
+                <ul class="app-bar-content">
+                    <li>
+                        <a href="<?php echo lang_base_url(); ?>"><img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_home.png">
+                            <p class="aap_bar_text">Home</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#category-app-bar"><img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_categories.png">
+                            <p class="aap_bar_text">Categories</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo generate_url("cart"); ?>"><img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_cart.png">
+                            <p class="aap_bar_text">Cart</p>
+                        </a>
+                    </li>
+                    <li>
+                        <?php if ($this->auth_check) : ?>
+                            <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_whishlist.png">
+                                <p class="aap_bar_text">Wishlist</p>
+                            </a>
+                        <?php else : ?>
+                            <a href="<?php echo generate_url("wishlist"); ?>">
+                                <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_whishlist.png">
+                                <p class="aap_bar_text">Wishlist</p>
+                            </a>
+                        <?php endif; ?>
+                    </li>
+                    <li>
+                        <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_profile.png">
+                        <p class="aap_bar_text">Profile</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-
 </footer>
 <?php if (!isset($_COOKIE["modesy_cookies_warning"]) && $this->settings->cookies_warning) : ?>
     <div class="cookies-warning">
@@ -423,7 +479,25 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
         });
     </script>
 <?php endif; ?>
+<script>
+    window.onscroll = function() {
+        keepTheHeaderOntop()
+    };
 
+    var fullheader = document.getElementById("header");
+    var header = document.getElementById("myHeader");
+    var mobileHeader = document.getElementById("myappbar");
+    var stickyHeader = mobileHeader.offsetTop;
+    var sticky = fullheader.offsetTop;
+
+    function keepTheHeaderOntop() {
+        if (window.pageYOffset > sticky) {
+            fullheader.classList.add("sticky");
+        } else {
+            fullheader.classList.remove("sticky");
+        }
+    }
+</script>
 <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/popper.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/plugins-1.7.js"></script>
@@ -563,7 +637,7 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
                     dataType: 'json',
                     async: false,
                     success: function(response) {
-                   
+
                         $('#demo')[0].innerText = response.message;
                         if (response.status == '1') {
                             $('#form_validate_newsletter')[0].reset();
