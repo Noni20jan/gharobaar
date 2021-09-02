@@ -100,10 +100,10 @@ if (!empty($product_images)) {
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <?php if (item_count($product_images) > 7) : ?>
+                    <?php if (item_count($product_images) > 4) : ?>
                         <div id="product-thumbnails-slider-nav" class="product-thumbnails-slider-nav">
-                            <button class="prev"><i class="icon-arrow-up"></i></button>
-                            <button class="next"><i class="icon-arrow-down"></i></button>
+                            <button style="display: block; color:black; margin: 4px 2px;  background-color: #fff;border-radius: 50%;margin-left: 47px;" class="prev"><i class="icon-arrow-up"></i></button>
+                            <button style="display: block; color:black; margin: 4px 2px;  background-color: #fff;border-radius: 50%;margin-left: 47px;" class=" next"><i class="icon-arrow-down"></i></button>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -212,10 +212,11 @@ if (!empty($product_images)) {
     });
 </script>
 
-<?php if (item_count($product_images) <= 7) : ?>
+<?php if (item_count($product_images) > 10) : ?>
     <style>
         .product-thumbnails-slider .slick-track {
             transform: none !important;
+            display: block;
         }
     </style>
 <?php endif; ?>
