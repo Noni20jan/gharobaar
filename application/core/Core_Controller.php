@@ -31,10 +31,10 @@ class Core_Controller extends CI_Controller
         $lang_segment = $this->uri->segment(1);
         foreach ($this->languages as $lang) {
             if ($lang_segment == $lang->short_form) {
-                if ($this->general_settings->multilingual_system == 1):
+                if ($this->general_settings->multilingual_system == 1) :
                     $this->selected_lang = $lang;
                     $this->lang_segment = $lang->short_form;
-                else:
+                else :
                     redirect(base_url());
                 endif;
             }
@@ -223,7 +223,7 @@ class Home_Core_Controller extends Core_Controller
             $page = $page - 1;
         }
 
-        $config['num_links'] = 4;
+        $config['num_links'] = 2;
         $config['base_url'] = $url;
         $config['total_rows'] = $total_rows;
         $config['per_page'] = $per_page;
@@ -242,7 +242,6 @@ class Admin_Core_Controller extends Core_Controller
     public function __construct()
     {
         parent::__construct();
-
     }
 
     public function paginate($url, $total_rows)
@@ -262,7 +261,7 @@ class Admin_Core_Controller extends Core_Controller
         if (empty($per_page)) {
             $per_page = 15;
         }
-        $config['num_links'] = 4;
+        $config['num_links'] = 2;
         $config['base_url'] = $url;
         $config['total_rows'] = $total_rows;
         $config['per_page'] = $per_page;
@@ -272,4 +271,3 @@ class Admin_Core_Controller extends Core_Controller
         return array('per_page' => $per_page, 'offset' => $page * $per_page);
     }
 }
-

@@ -18021,12 +18021,12 @@ img {
 
 .input-group-location {
   position: relative;
-  width: 72%;
+  width: 98%;
 }
 @media (max-width: 800px) {
   .input-group-location {
     position: relative;
-    width: 73%;
+    width: 97%;
   }
 }
 

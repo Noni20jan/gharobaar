@@ -907,10 +907,11 @@ function check_for_mobile_register_js(phn_num) {
 }
 
 //function to send verification otp
-function send_verification_otp(phn_num, label_content) {
+function send_verification_otp(phn_num, label_content, email) {
     var data = {
         'sys_lang_id': sys_lang_id,
         'phn_num': phn_num,
+        'email_address': email,
         'label_content': label_content
     };
     data[csfr_token_name] = $.cookie(csfr_cookie_name);
@@ -939,6 +940,40 @@ function send_verification_otp(phn_num, label_content) {
     });
 }
 
+function send_email_otp(email, label_content) {
+    console.log(email);
+    var data = {
+        'sys_lang_id': sys_lang_id,
+        'email': email,
+        'label_content': label_content
+    };
+    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+    $.ajax({
+        type: "POST",
+        url: base_url + "home_controller/send_email_otp",
+        data: data,
+        beforeSend: function () {
+            document.getElementById("send-otp-result").innerHTML = "";
+            document.getElementById("verify_btn").style.display = "block";
+            document.getElementById("resend_otp").style.display = "block";
+            document.getElementById("close_btn").style.display = "none";
+        },
+        success: function (response) {
+            if (response != null) {
+                var i = JSON.parse(response);
+                console.log(i);
+                console.log(i.otp);
+                console.log(i.email);
+                console.log(i.message);
+                document.getElementById("send-otp-result").innerHTML = i.html_content1;
+                $("#cross-btn").click(function () {
+                    document.getElementById("btnsubmit_register").disabled = true;
+                    document.getElementById("verify_mobile_span").innerHTML = "*You cannot register without Mobile Verification!";
+                })
+            }
+        }
+    });
+}
 //function to send verification otp
 // function send_order_text(phn_num, label_content, order_no) {
 //     var data = {

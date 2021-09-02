@@ -14,6 +14,24 @@
         margin-top: -8% !important;
     }
 
+    .mobile-map a {
+        color: green;
+        font-size: 22px;
+        position: relative;
+        top: 8px;
+    }
+
+    .mobile-map a:active {
+        color: red;
+        font-size: 22px;
+        position: relative;
+        top: 8px;
+    }
+
+    .mobile-map a .pincode_text {
+        display: none;
+    }
+
     @media(max-width:700px) {
         .top_logo_adjust {
             width: 185px !important;
@@ -67,16 +85,17 @@
         color: #999;
         font-size: 13px;
         text-align: center;
-        text-align: center
     }
 
     @media(max-width:800px) {
         .locate-modal-description {
-            margin-bottom: 20px;
-            color: #999;
-            visibility: hidden;
-            text-align: center;
-            text-align: center
+            margin-bottom: 17px;
+            color: #fff;
+            visibility: visible;
+            font-size: 12px;
+
+
+
         }
     }
 
@@ -85,15 +104,16 @@
     }
 
     .check_pincode {
-        position: absolute;
+        position: relative;
         border-radius: 28px;
         background-color: green;
         color: #fff;
         padding: 15px;
         border: none;
-        bottom: 2px;
+        bottom: 5px;
         font-weight: bold;
-        left: 221px;
+        float: right;
+        left: 4px;
     }
 
     @media(max-width:700px) {
@@ -4006,11 +4026,18 @@
                                                     <?php endif; ?>
                                                 </div> -->
                                                 <div class="right">
+                                                    <div class="pincode" style="text-align:center;font-weight:bold;">
+                                                        <?php if (!empty($_SESSION["modesy_sess_user_location"])) : ?>
+                                                            Showing results for products deliverable at pincode <?php echo $_SESSION["modesy_sess_user_location"]; ?>
 
-                                                    <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_exp"); ?>" required autocomplete="off">
-                                                    <input type="hidden" class="search_type_input" name="search_type" value="product">
-                                                    <button class="btn btn-default btn-search"><i class="icon-search"></i></button>
-                                                    <div id="response_search_results" class="search-results-ajax"></div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <div>
+                                                        <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_exp"); ?>" required autocomplete="off">
+                                                        <input type="hidden" class="search_type_input" name="search_type" value="product">
+                                                        <button class="btn btn-default btn-search" style="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? 'top:17px' : ''; ?>"><i class="icon-search"></i></button>
+                                                        <div id="response_search_results" class="search-results-ajax"></div>
+                                                    </div>
                                                 </div>
                                             <?php else : ?>
                                                 <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_products"); ?>" required autocomplete="off">
@@ -4024,10 +4051,21 @@
                                 </div>
                                 <div class="col-md-5 nav-top-right">
                                     <ul class="nav align-items-center" style="flex-wrap:nowrap; justify-content:space-evenly; float:none !important;">
-                                        <li class="icon-bg">
-                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
-                                                <i class="icon-map-marker"></i></a>
-                                        </li>
+                                        <?php if (!empty($_SESSION["modesy_sess_user_location"])) : ?>
+                                            <li class="icon-bg" style="background-color:red;">
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
+
+                                                    <i class="icon-map-marker"></i></a>
+
+                                            </li>
+                                        <?php else : ?>
+                                            <li class="icon-bg">
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
+
+                                                    <i class="icon-map-marker"></i></a>
+
+                                            </li>
+                                        <?php endif; ?>
                                         <?php if ($this->auth_check) : ?>
                                             <?php if (is_multi_vendor_active()) : ?>
                                                 <?php if (!is_user_vendor()) : ?>
@@ -4241,11 +4279,18 @@
 
                             </div>
                             <div class="mobile-map">
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" style=" color: green;
-        font-size: 22px;
-        position: relative;
-        top: 8px;">
-                                    <i class="icon-map-marker"></i></a>
+                                <?php if (!empty($_SESSION["modesy_sess_user_location"])) : ?>
+
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" style="color:red;">
+                                        <span class="pincode_text"> Showing results for products deliverable at pincode <?php echo $_SESSION["modesy_sess_user_location"]; ?>
+                                        </span>
+                                    <?php else : ?>
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal">
+
+
+                                        <?php endif; ?>
+                                        <i class="icon-map-marker"></i></a>
+
                             </div>
 
                             <div class="mobile-logo">
@@ -5027,6 +5072,7 @@
         $("#verify_otp").click(function() {
             document.getElementById("verify_mobile_span").innerHTML = "";
             var phn_num = document.getElementById("phone_number").value;
+            var email_address = document.getElementById("email_new").value;
             if (phn_num == '') {
                 document.getElementById("verify_mobile_span").innerHTML = "*Please enter mobile number !";
             } else if (phn_num != '' && phn_num.length == 10) {
@@ -5037,7 +5083,7 @@
                 // console.log(register_phn);
                 if (register_phn == true) {
                     $('#verifyMobileModal').modal('show');
-                    send_verification_otp(phn_num, "mobile_otp");
+                    send_verification_otp(phn_num, "mobile_otp", email_address);
                 } else if (register_phn == false) {
                     document.getElementById("verify_mobile_span").innerHTML = "*Mobile number is already registered!";
                 }
@@ -5100,7 +5146,8 @@
     <script>
         $("#resend_otp").click(function() {
             var phn_num = document.getElementById("phone_number").value;
-            send_verification_otp(phn_num, "mobile_otp");
+            var email_address = document.getElementById("email_new").value;
+            send_verification_otp(phn_num, "mobile_otp", email_address);
         })
     </script>
     <script>

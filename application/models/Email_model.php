@@ -80,6 +80,23 @@ class Email_model extends CI_Model
         }
     }
 
+    //send email verifiction otp
+    public function email_verify_otp($email, $message)
+    {
+        $subject = "OTP Verification for registration";
+        $message = $message;
+        if (!empty($email)) {
+            $data = array(
+                'subject' => $subject,
+                'message' => $message,
+                'to' => $email,
+                'template_path' => "email/email_newsletter",
+                'subscriber' => "",
+            );
+            return $this->send_email($data);
+        }
+    }
+
     //open shop Email to supplier.
     public function send_open_shopmail($email, $name)
     {
