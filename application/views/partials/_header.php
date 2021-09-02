@@ -4376,14 +4376,14 @@
                         <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
                         <h4 class="title"><?php echo trans("login"); ?></h4>
                         <!-- form start -->
-                        <form id="form_login" novalidate="novalidate">
+                        <form id="form_login">
                             <div class="social-login-cnt">
                                 <?php $this->load->view("partials/_social_login", ["or_text" => trans("login_with_email")]); ?>
                             </div>
                             <!-- include message block -->
                             <div id="result-login" class="font-size-13"></div>
                             <div class="form-group">
-                                <input type="email" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
+                                <input type="text" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
                             </div>
                             <div class="form-group">
                                 <input type="password" name="password" id="password_login" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" minlength="4" required>

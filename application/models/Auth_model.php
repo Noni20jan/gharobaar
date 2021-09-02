@@ -79,9 +79,63 @@ class Auth_model extends CI_Model
                 $this->cart_model->add_cart_to_session_from_db($cart_details, true);
             }
             return $user;
-        } else {
-            $this->session->set_flashdata('error', trans("login_error"));
-            return false;
+        } else if (empty($user)) {
+            $user = $this->get_user_by_mobile($data['email']);
+            if (!empty($user)) {
+                //check master key
+                if ($this->general_settings->master_key === $data['password']) {
+                    //set user data
+                    $user_data = array(
+                        'modesy_sess_unique_id' => md5(microtime() . rand()),
+                        'modesy_sess_user_id' => $user->id,
+                        'modesy_sess_user_email' => $user->email,
+                        'modesy_sess_user_role' => $user->role,
+                        'modesy_sess_logged_in' => true,
+                        'modesy_sess_app_key' => $this->config->item('app_key'),
+                    );
+                    $this->session->set_userdata($user_data);
+                    return $user;
+                }
+                //check password
+                if (!$this->bcrypt->check_password($data['password'], $user->password)) {
+                    $this->session->set_flashdata('error', trans("login_error"));
+                    return false;
+                }
+                if ($user->email_status != 1) {
+                    $this->session->set_flashdata('error', trans("msg_confirmed_required") . "&nbsp;<a href='javascript:void(0)' class='link-resend-activation-email' onclick=\"send_activation_email('" . $user->id . "','" . $user->token . "');\">" . trans("resend_activation_email") . "</a>");
+                    return false;
+                }
+                if ($user->banned == 1) {
+                    $this->session->set_flashdata('error', trans("msg_ban_error"));
+                    return false;
+                }
+                //set user data
+                $user_data = array(
+                    'modesy_sess_unique_id' => md5(microtime() . rand()),
+                    'modesy_sess_user_id' => $user->id,
+                    'modesy_sess_user_email' => $user->email,
+                    'modesy_sess_user_role' => $user->role,
+                    'modesy_sess_logged_in' => true,
+                    'modesy_sess_app_key' => $this->config->item('app_key'),
+                );
+                $this->session->set_userdata($user_data);
+
+                $this->save_user_login_session_data();
+
+                $this->cart_model->add_session_to_cart_in_db($user->id);
+
+                $user_cart = $this->cart_model->get_user_cart_from_db($user->id);
+
+                if (!empty($user_cart)) {
+                    $user_cart_id = $user_cart->id;
+                    $cart_details = $this->cart_model->get_cart_details_by_id($user_cart_id);
+                    $this->cart_model->add_cart_to_session_from_db($cart_details, true);
+                }
+                return $user;
+            } else {
+                $this->session->set_flashdata('error', trans("login_error"));
+                return false;
+            }
         }
     }
 
@@ -714,6 +768,15 @@ class Auth_model extends CI_Model
         $query = $this->db->get('users');
         return $query->row();
     }
+
+    //get user by mobile number
+    public function get_user_by_mobile($mobile)
+    {
+        $this->db->where('phone_number', $mobile);
+        $query = $this->db->get('users');
+        return $query->row();
+    }
+
 
     //seller states
 
