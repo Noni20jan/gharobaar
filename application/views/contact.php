@@ -76,14 +76,15 @@
                                 <?php if ($this->settings->contact_phone) : ?>
                                     <div class="col-12 contact-item">
                                         <i class="icon-phone" aria-hidden="true"></i>
-                                        <?php echo html_escape($this->settings->contact_phone); ?>
+                                        <a href="tel:<?php echo html_escape($this->settings->contact_phone); ?>"><?php echo html_escape($this->settings->contact_phone); ?></a>
                                     </div>
                                 <?php endif; ?>
 
                                 <?php if ($this->settings->contact_email) : ?>
                                     <div class="col-12 contact-item">
                                         <i class="icon-envelope" aria-hidden="true"></i>
-                                        <?php echo html_escape($this->settings->contact_email); ?>
+                                        <a href="mailto:contact@gharobaar.com"> <?php echo html_escape($this->settings->contact_email); ?>
+                                </a>
                                     </div>
                                 <?php endif; ?>
 

@@ -4,9 +4,6 @@
     <?php if (!empty($this->settings->facebook_url)): ?>
         <li><a href="<?php echo html_escape($this->settings->facebook_url); ?>" class="facebook"><i class="icon-facebook"></i></a></li>
     <?php endif; ?>
-    <?php if (!empty($this->settings->twitter_url)): ?>
-        <li><a href="<?php echo html_escape($this->settings->twitter_url); ?>" class="twitter"><i class="icon-twitter"></i></a></li>
-    <?php endif; ?>
     <?php if (!empty($this->settings->instagram_url)): ?>
         <li><a href="<?php echo html_escape($this->settings->instagram_url); ?>" class="instagram"><i class="icon-instagram"></i></a></li>
     <?php endif; ?>
