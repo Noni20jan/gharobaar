@@ -435,8 +435,17 @@
                         <?php endif; ?>
                     </li>
                     <li>
-                        <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_profile.png">
-                        <p class="aap_bar_text">Profile</p>
+                        <?php if ($this->auth_check) : ?>
+                            <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
+                                <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_profile.png">
+                                <p class="aap_bar_text">Profile</p>
+                            </a>
+                        <?php else : ?>
+                            <a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal">
+                                <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_profile.png">
+                                <p class="aap_bar_text">Profile</p>
+                            </a>
+                        <?php endif; ?>
                     </li>
                 </ul>
             </div>
