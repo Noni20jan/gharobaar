@@ -1478,7 +1478,7 @@ foreach ($sellers as $seller) {
                     </div>
                 </div>
 
-                <div class="product-list-pagination">
+                <div class="row product-list-pagination">
                     <div class="float-left">
                         <?php echo $this->pagination->create_links(); ?>
                     </div>
