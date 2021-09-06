@@ -263,6 +263,7 @@ $seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_da
         <div class="row">
             <div class="pull-right">
                 <button class="btn btn-md btn-block btn-info btn-table-delete" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
+             
             </div>
         </div>
         <div class="row">
@@ -1042,7 +1043,7 @@ $seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_da
             </div>
             <div id="cover-spin2"></div>
         </div>
-
+<?php endif;?>
         <div class="modal fade" id="Now_Bike_modal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content modal-custom">
@@ -1087,7 +1088,7 @@ $seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_da
         </div>
 
 
-<?php endif;
+<?php 
 endforeach; ?>
 <?php //var_dump($seller); 
 ?>
@@ -1359,7 +1360,7 @@ endforeach; ?>
                     "address_2": products_array[0].landmark.concat(", ", products_array[0].product_area),
                     "city": products_array[0].product_city,
                     "state": products_array[0].product_state,
-                    "country": "India",
+                     "country": "India",
                     "pin_code": parseInt(products_array[0].product_pincode),
                     "pickup_location": uniqid
                 }
@@ -1443,15 +1444,28 @@ endforeach; ?>
             data: data,
             success: function(response) {
                 $('#cover-spin').hide();
-                //alert(response);
+                console.log(response);
                 var obj = JSON.parse(response);
+                console.log(obj);
+                console.log(obj.vars.order_items.length);
+                if(obj.vars.order_items.length==1){
                 if (obj.result == 1) {
+                    document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
+
+                    wrapper_multiple_product(obj.vars.products, obj.vars.order_items);
+                }
+                     
+                    }
+                    if(obj.vars.order_items.length>1){
+
+                    if (obj.result == 1) {
                     document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
                 }
                 setTimeout(
                     function() {
                         $("#schedule_multiple_products").modal('show');
                     }, 200);
+            }  
             }
         });
 
