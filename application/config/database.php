@@ -84,7 +84,7 @@ $db['default'] = array(
     'hostname' => 'qanew.cz5snxflsj5z.ap-south-1.rds.amazonaws.com',
     'username' => 'educationdoctor',
     'password' => 'PnHJM7VnasplnewqamCkAsr2v',
-    'database' => 'local_gharobaar',
+    'database' => 'gharobaar_test',
 
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
