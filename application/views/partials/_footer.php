@@ -163,6 +163,15 @@
         .mobile-view-links-padding {
             margin-bottom: 0px;
             padding: 0px 3px;
+            /* border-right: 1px solid #989595; */
+        }
+
+        .dott-between a:after {
+            content: '\00a0\00b7\00a0';
+            /* display: none; */
+            text-align: center;
+            vertical-align: middle;
+            width: 20px;
         }
 
         #social-links-for-mobile {
@@ -180,7 +189,7 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
-        padding: 16px 19px;
+        padding: 9px 19px;
         text-align: center;
         margin-bottom: 0px;
         font-size: 11px;
@@ -193,7 +202,9 @@
     .app-bar-container {
         background-color: white;
         position: fixed;
-        top: calc(100vh - 71px);
+        bottom: 0;
+        left: 0;
+        right: 0;
     }
 </style>
 <footer id="footer">
@@ -307,10 +318,10 @@
                             <div class="nav-footer">
                                 <div class="row-custom">
                                     <div class="row support-links-mobile-view">
-                                        <p class="mobile-view-links-padding"><a href="<?php echo lang_base_url() . 'privacy'; ?>"><?php echo trans("privacy") ?></a></p>
-                                        <p class="mobile-view-links-padding"><a href="<?php echo lang_base_url() . 'terms-conditions'; ?>"><?php echo trans("terms_conditions") ?></a></p>
-                                        <p class="mobile-view-links-padding"><a href="<?php echo lang_base_url() . 'shipping_policy' ?>"><?php echo trans("shipping_policy") ?></a></p>
-                                        <p class="mobile-view-links-padding" style="padding: 0px 5px;"><a href="<?php echo lang_base_url() . 'user_blog' ?>"><?php echo trans("blog") ?></a></p>
+                                        <p class="mobile-view-links-padding dott-between"><a href="<?php echo lang_base_url() . 'privacy'; ?>"><?php echo trans("privacy") ?></a></p>
+                                        <p class="mobile-view-links-padding dott-between"><a href="<?php echo lang_base_url() . 'terms-conditions'; ?>"><?php echo trans("terms_conditions") ?></a></p>
+                                        <p class="mobile-view-links-padding dott-between"><a href="<?php echo lang_base_url() . 'shipping_policy' ?>"><?php echo trans("shipping_policy") ?></a></p>
+                                        <p class="mobile-view-links-padding dott-between" style="padding: 0px 5px;"><a href="<?php echo lang_base_url() . 'user_blog' ?>"><?php echo trans("blog") ?></a></p>
                                         <p class="nav-item mobile-view-links-padding" style="padding: 0px 5px;"><a href="<?php echo lang_base_url() . 'return_and_exchange'; ?>"><?php echo trans("return_and_exchange"); ?></a></p>
 
 
