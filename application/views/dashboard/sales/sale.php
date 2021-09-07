@@ -1449,7 +1449,9 @@ endforeach; ?>
                 var obj = JSON.parse(response);
                 console.log(obj);
                 console.log(obj.vars.order_items.length);
-                if (obj.vars.order_items.length == 1) {
+                var a="<?php echo sizeof($order_products);?>"
+                console.log(a);
+                if (a == 1) {
                     if (obj.result == 1) {
                         document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
 
@@ -1457,7 +1459,7 @@ endforeach; ?>
                     }
 
                 }
-                if (obj.vars.order_items.length > 1) {
+                if (a > 1) {
 
                     if (obj.result == 1) {
                         document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
