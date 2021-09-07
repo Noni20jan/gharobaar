@@ -2,7 +2,9 @@
 
 <?php
 $seller_wise_data = get_shipping_cod_changes_seller_wise($this->auth_user->id, $order->id);
-$seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_data->total_cod_cost) / 100;
+if (!empty($seller_wise_data)) :
+    $seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_data->total_cod_cost) / 100;
+endif;
 ?>
 
 <style>
@@ -1179,8 +1181,8 @@ endforeach; ?>
                                 }],
 
                                 "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-                                "shipping_charges": <?php echo $seller_shipping_cod ?>,
-                                "sub_total": <?php echo ($seller_wise_data->grand_total_amount) / 100 ?>,
+                                "shipping_charges": <?php echo !empty($seller_shipping_cod) ? $seller_shipping_cod : 0 ?>,
+                                "sub_total": <?php echo !empty($seller_wise_data) ? ($seller_wise_data->grand_total_amount) / 100 : $total_quantity_price ?>,
                                 "length": parseInt(product.product.packed_product_length),
                                 "breadth": parseInt(product.product.packed_product_width),
                                 "height": parseInt(product.product.packed_product_height),
