@@ -288,6 +288,7 @@ class Product_model extends Core_Model
             if ($product->lead_days != $data["lead_days"] || $product->product_pincode != $data["product_pincode"] || $product->product_area != $data["product_area"] || $product->product_state != $data["product_state"] || $product->product_city != $data["product_city"] || $product->product_address != $data["product_address"] || $product->landmark != $data["landmark"]) {
                 if (empty($data["status"])) {
                     $data["status"] = 0;
+                    $data['created_at'] = date('Y-m-d H:i:s');
                 }
             } else {
                 if (empty($data["status"])) {
