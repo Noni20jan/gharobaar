@@ -12,20 +12,7 @@
                 </nav>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="profile-page-top">
-                    <!-- load profile details -->
-                    <?php if ($user->role == 'vendor') {
-                        $this->load->view("profile/_profile_user_info");
-                    }
-                    if ($user->role == 'member') {
-                        $this->load->view("profile/_profile_user_info_user");
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
+
 
         <div class="row">
             <div class="col-sm-12 col-md-3">
@@ -41,22 +28,22 @@
                             <div class="col-12">
                                 <div class="review-total">
                                     <label class="label-review"><?php echo trans("reviews"); ?>&nbsp;(<?php echo $user_rating->count; ?>)</label>
-                                    <?php if (!empty($reviews)):
+                                    <?php if (!empty($reviews)) :
                                         $this->load->view('partials/_review_stars', ['review' => $user_rating->rating]);
                                     endif; ?>
                                 </div>
-                                <?php if (empty($reviews)): ?>
+                                <?php if (empty($reviews)) : ?>
                                     <p class="no-comments-found"><?php echo trans("no_reviews_found"); ?></p>
-                                <?php else: ?>
+                                <?php else : ?>
                                     <ul class="list-unstyled list-reviews">
-                                        <?php foreach ($reviews as $review): ?>
+                                        <?php foreach ($reviews as $review) : ?>
                                             <li class="media">
                                                 <a href="<?php echo generate_profile_url($review->user_slug); ?>">
                                                     <img src="<?php echo get_user_avatar_by_id($review->user_id); ?>" alt="<?php echo get_shop_name_by_user_id($review->user_id); ?>">
                                                 </a>
                                                 <div class="media-body">
                                                     <?php $review_product = get_active_product($review->product_id);
-                                                    if (!empty($review_product)):?>
+                                                    if (!empty($review_product)) : ?>
                                                         <div class="row-custom m-b-10">
                                                             <a href="<?php echo generate_product_url_by_slug($review_product->slug); ?>"><strong><?php echo trans("product"); ?>:&nbsp;</strong><?php echo get_product_title($review_product); ?></a>
                                                         </div>
@@ -105,4 +92,3 @@
 
 <!-- include send message modal -->
 <?php $this->load->view("partials/_modal_send_message", ["subject" => null]); ?>
-

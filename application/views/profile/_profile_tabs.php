@@ -2,7 +2,7 @@
 <!--profile page tabs-->
 <div class="profile-tabs">
     <ul class="nav">
-        <?php if (is_multi_vendor_active()) :
+        <?php if (is_multi_vendor_active() && 0) :
             if ($user->role == 'admin' || $user->role == 'vendor') : ?>
                 <?php if ($user->supplier_type == "Goods") { ?>
                     <li class="nav-item <?php echo ($active_tab == 'products') ? 'active' : ''; ?>">
@@ -11,12 +11,12 @@
                             <span class="count">(<?php echo get_user_products_count($user->id); ?>)</span>
                         </a>
                     </li>
-		     <li class="nav-item <?php echo ($active_tab == 'barter_product') ? 'active' : ''; ?>">
-                    <a class="nav-link" href="<?php echo generate_url("barter_product") . "/" . $user->slug; ?>">
-                        <span>Products available for Barter</span>
-                        <span class="count">(<?php echo get_user_barter_products_count($user->id); ?>)</span>
-                    </a>
-                </li>
+                    <li class="nav-item <?php echo ($active_tab == 'barter_product') ? 'active' : ''; ?>">
+                        <a class="nav-link" href="<?php echo generate_url("barter_product") . "/" . $user->slug; ?>">
+                            <span>Products available for Barter</span>
+                            <span class="count">(<?php echo get_user_barter_products_count($user->id); ?>)</span>
+                        </a>
+                    </li>
                 <?php } else if ($user->supplier_type == "Services") { ?>
                     <li class="nav-item <?php echo ($active_tab == 'products') ? 'active' : ''; ?>">
                         <a class="nav-link" href="<?php echo generate_profile_url($user->slug); ?>">
@@ -24,12 +24,12 @@
                             <span class="count">(<?php echo get_user_products_count($user->id); ?>)</span>
                         </a>
                     </li>
-		     <li class="nav-item <?php echo ($active_tab == 'barter_product') ? 'active' : ''; ?>">
-                    <a class="nav-link" href="<?php echo generate_url("barter_product") . "/" . $user->slug; ?>">
-                        <span>Products available for Barter</span>
-                        <span class="count">(<?php echo get_user_barter_products_count($user->id); ?>)</span>
-                    </a>
-                </li>
+                    <li class="nav-item <?php echo ($active_tab == 'barter_product') ? 'active' : ''; ?>">
+                        <a class="nav-link" href="<?php echo generate_url("barter_product") . "/" . $user->slug; ?>">
+                            <span>Products available for Barter</span>
+                            <span class="count">(<?php echo get_user_barter_products_count($user->id); ?>)</span>
+                        </a>
+                    </li>
                 <?php } ?>
         <?php endif;
         endif; ?>

@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- Wrapper -->
 <div id="wrapper">
 	<div class="container">
@@ -12,20 +12,7 @@
 				</nav>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-12">
-				<div class="profile-page-top">
-					<!-- load profile details -->
-					<?php if ($user->role == 'vendor') {
-                        $this->load->view("profile/_profile_user_info");
-                    }
-                    if ($user->role == 'member') {
-                        $this->load->view("profile/_profile_user_info_user");
-                    }
-                    ?>
-				</div>
-			</div>
-		</div>
+
 
 		<div class="row">
 			<div class="col-sm-12 col-md-3">
@@ -36,7 +23,7 @@
 			<div class="col-sm-12 col-md-9">
 				<div class="profile-tab-content">
 					<div class="row">
-						<?php foreach ($following_users as $item): ?>
+						<?php foreach ($following_users as $item) : ?>
 							<div class="col-4 col-sm-2">
 								<div class="follower-item">
 									<a href="<?php echo generate_profile_url($item->slug); ?>">
@@ -63,4 +50,3 @@
 
 <!-- include send message modal -->
 <?php $this->load->view("partials/_modal_send_message", ["subject" => null]); ?>
-
