@@ -4562,7 +4562,7 @@
                                     </div> -->
                                     <div class="col-12 col-sm-12 m-b-15">
                                         <input type="email" name="email" id="email_new" class="form-control auth-form-input" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old("email"); ?>" required>
-                                        <!-- <span id="email_span_error" style="color:red;"></span> -->
+                                        <span id="email_span_error" style="color:red;"></span>
                                     </div>
                                 </div>
                             </div>
@@ -5000,6 +5000,7 @@
             }
         });
     </script>
+
     <script>
         $(function() {
             $("#btnsubmit_register").click(function() {
@@ -5069,7 +5070,7 @@
 
         })
 
-        $("#verify_otp").click(function() {
+        $("#verify_otp").click(function(e) {
             document.getElementById("verify_mobile_span").innerHTML = "";
             var phn_num = document.getElementById("phone_number").value;
             var email_address = document.getElementById("email_new").value;
@@ -5082,8 +5083,32 @@
                 var register_phn = check_for_mobile_register_js(phn_num);
                 // console.log(register_phn);
                 if (register_phn == true) {
-                    $('#verifyMobileModal').modal('show');
-                    send_verification_otp(phn_num, "mobile_otp", email_address);
+                    var emailcheck = "<?php echo $this->general_settings->check_email_validation; ?>";
+                    if (emailcheck === "1") {
+                        var data = {
+                            'email': email_address
+                        }
+                        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                        $.ajax({
+                            type: "POST",
+                            url: base_url + "api/email/verifyemail",
+                            data: data,
+                            success: function(response) {
+                                var resp = $.parseJSON(response);
+                                if (resp.status == 200) {
+                                    $('#verifyMobileModal').modal('show');
+                                    send_verification_otp(phn_num, "mobile_otp", email_address);
+                                } else if (resp.status == 303) {
+                                    $('#email_span_error').html(resp.message);
+                                } else if (resp.status == 304) {
+                                    $('#email_span_error').html(resp.message);
+                                }
+                            }
+                        });
+                    } else {
+                        $('#verifyMobileModal').modal('show');
+                        send_verification_otp(phn_num, "mobile_otp", email_address);
+                    }
                 } else if (register_phn == false) {
                     document.getElementById("verify_mobile_span").innerHTML = "*Mobile number is already registered!";
                 }
