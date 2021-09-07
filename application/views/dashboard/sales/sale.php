@@ -1181,7 +1181,6 @@ endforeach; ?>
                                 }],
 
                                 "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-                                "shipping_charges": <?php echo !empty($seller_shipping_cod) ? $seller_shipping_cod : 0 ?>,
                                 "sub_total": <?php echo !empty($seller_wise_data) ? ($seller_wise_data->grand_total_amount) / 100 : $total_quantity_price ?>,
                                 "length": parseInt(product.product.packed_product_length),
                                 "breadth": parseInt(product.product.packed_product_width),
@@ -1347,7 +1346,6 @@ endforeach; ?>
                 "order_items": order_items,
 
                 "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-                "shipping_charges": <?php echo !empty($seller_shipping_cod) ? $seller_shipping_cod : 0 ?>,
                 "sub_total": <?php echo !empty($seller_wise_data) ? ($seller_wise_data->grand_total_amount) / 100 : $total_quantity_price ?>,
                 "length": document.getElementById("total_length").value,
                 "breadth": document.getElementById("total_width").value,
