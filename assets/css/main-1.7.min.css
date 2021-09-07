@@ -19538,7 +19538,7 @@ img {
   display: block;
   position: relative;
   float: left;
-  right: 210px;
+  right: 249px;
   bottom: 45px;
 }
 @media only screen and (max-width: 1200px) {
@@ -19569,14 +19569,14 @@ img {
 
 #footer .footer-social-links-mobile ul li {
   float: left;
-  margin: 0px 20px;
+  margin: 0px 34px;
   margin-bottom: 10px;
   list-style: none;
 }
 
 #footer .footer-social-links-mobile ul li {
   float: left;
-  margin: 0px 20px;
+  margin: 0px 34px;
   margin-bottom: 10px;
   list-style: none;
 }

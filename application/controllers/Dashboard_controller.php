@@ -552,7 +552,8 @@ class Dashboard_controller extends Home_Core_Controller
         $html_content = $this->load->view('dashboard/schedule_shipment_view', $vars, true);
         $data = array(
             'result' => 1,
-            'html_content' => $html_content,
+             'html_content' => $html_content,
+            'vars'=>$vars
         );
         echo json_encode($data);
     }

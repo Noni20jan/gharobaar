@@ -263,6 +263,7 @@
         <div class="row">
             <div class="pull-right">
                 <button class="btn btn-md btn-block btn-info btn-table-delete" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
+
             </div>
         </div>
         <div class="row">
@@ -1042,52 +1043,52 @@
             </div>
             <div id="cover-spin2"></div>
         </div>
-
-        <div class="modal fade" id="Now_Bike_modal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content modal-custom">
-                    <!-- form start -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Shipment Details</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <table border="0" width="100%">
-                            <tbody>
-                                <tr>
-                                    <td>OrderId : </td>
-                                    <td id="now_order_id"></td>
-                                </tr>
-                                <tr>
-                                    <td>Status : </td>
-                                    <td id="now_status"></td>
-                                </tr>
-                                <tr>
-                                    <td>Rider Name : </td>
-                                    <td id="now_rider_name">-</td>
-                                </tr>
-                                <tr>
-                                    <td>Rider Phone Number : </td>
-                                    <td id="now_rider_phone">-</td>
-                                </tr>
-                                <tr>
-                                    <td>Cancellation Reason : </td>
-                                    <td id="now_cancellation_reason">-</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-
-
+    <?php endif; ?>
+    <div class="modal fade" id="Now_Bike_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-custom">
+                <!-- form start -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Shipment Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
+                <div class="modal-body">
+                    <table border="0" width="100%">
+                        <tbody>
+                            <tr>
+                                <td>OrderId : </td>
+                                <td id="now_order_id"></td>
+                            </tr>
+                            <tr>
+                                <td>Status : </td>
+                                <td id="now_status"></td>
+                            </tr>
+                            <tr>
+                                <td>Rider Name : </td>
+                                <td id="now_rider_name">-</td>
+                            </tr>
+                            <tr>
+                                <td>Rider Phone Number : </td>
+                                <td id="now_rider_phone">-</td>
+                            </tr>
+                            <tr>
+                                <td>Cancellation Reason : </td>
+                                <td id="now_cancellation_reason">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+
             </div>
         </div>
+    </div>
 
 
-<?php endif;
+<?php
 endforeach; ?>
 <?php //var_dump($seller); 
 ?>
@@ -1442,15 +1443,28 @@ endforeach; ?>
             data: data,
             success: function(response) {
                 $('#cover-spin').hide();
-                //alert(response);
+                console.log(response);
                 var obj = JSON.parse(response);
-                if (obj.result == 1) {
-                    document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
+                console.log(obj);
+                console.log(obj.vars.order_items.length);
+                if (obj.vars.order_items.length == 1) {
+                    if (obj.result == 1) {
+                        document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
+
+                        wrapper_multiple_product(obj.vars.products, obj.vars.order_items);
+                    }
+
                 }
-                setTimeout(
-                    function() {
-                        $("#schedule_multiple_products").modal('show');
-                    }, 200);
+                if (obj.vars.order_items.length > 1) {
+
+                    if (obj.result == 1) {
+                        document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
+                    }
+                    setTimeout(
+                        function() {
+                            $("#schedule_multiple_products").modal('show');
+                        }, 200);
+                }
             }
         });
 

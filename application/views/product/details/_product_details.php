@@ -71,6 +71,11 @@
             margin-top: -7%;
             color: gray;
         }
+
+        .spinner-width {
+            width: 84% !important;
+            left: 0 !important;
+        }
     }
 
     @media(max-width:1073px) {
@@ -135,6 +140,10 @@
 
     .number-spinner {
         background-color: #ffffff;
+    }
+
+    .spinner-width {
+        width: 100%;
     }
 
     /* .quantity_margin{
@@ -299,7 +308,7 @@
                             <div>
                                 <label class="label-product-variation mb-3" style="font-weight:600;">Quantity</label>
                                 <div class="cart-item-quantity">
-                                    <div class="number-spinner for-height">
+                                    <div class="number-spinner for-height spinner-width">
                                         <div class="input-group">
                                             <span class="input-group-btn for-height">
                                                 <button type="button" class="btn btn-default btn-spinner-minus" id="minus-btn" style=" padding: 6px 8px;" data-dir="dwn">-</button>
