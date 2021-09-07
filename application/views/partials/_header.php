@@ -4383,7 +4383,7 @@
                             <!-- include message block -->
                             <div id="result-login" class="font-size-13"></div>
                             <div class="form-group">
-                                <input type="text" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
+                                <input type="text" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("email_mobile"); ?>" required>
                             </div>
                             <div class="form-group">
                                 <input type="password" name="password" id="password_login" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" minlength="4" required>
