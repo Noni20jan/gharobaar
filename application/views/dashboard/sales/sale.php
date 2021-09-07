@@ -1,8 +1,10 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
 <?php
-// $seller_wise_data = get_shipping_cod_changes_seller_wise($this->auth_user->id, $order->id);
-// $seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_data->total_cod_cost) / 100;
+$seller_wise_data = get_shipping_cod_changes_seller_wise($this->auth_user->id, $order->id);
+if (!empty($seller_wise_data)) :
+    $seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_data->total_cod_cost) / 100;
+endif;
 ?>
 
 <style>
@@ -1179,7 +1181,8 @@ endforeach; ?>
                                 }],
 
                                 "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-                                "sub_total": <?php echo ($seller_wise_data->grand_total_amount) / 100 ?>,
+                                "shipping_charges": <?php echo !empty($seller_shipping_cod) ? $seller_shipping_cod : 0 ?>,
+                                "sub_total": <?php echo !empty($seller_wise_data) ? ($seller_wise_data->grand_total_amount) / 100 : $total_quantity_price ?>,
                                 "length": parseInt(product.product.packed_product_length),
                                 "breadth": parseInt(product.product.packed_product_width),
                                 "height": parseInt(product.product.packed_product_height),
@@ -1344,7 +1347,8 @@ endforeach; ?>
                 "order_items": order_items,
 
                 "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-                "sub_total": total_quantity_price,
+                "shipping_charges": <?php echo !empty($seller_shipping_cod) ? $seller_shipping_cod : 0 ?>,
+                "sub_total": <?php echo !empty($seller_wise_data) ? ($seller_wise_data->grand_total_amount) / 100 : $total_quantity_price ?>,
                 "length": document.getElementById("total_length").value,
                 "breadth": document.getElementById("total_width").value,
                 "height": document.getElementById("total_height").value,

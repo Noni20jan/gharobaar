@@ -77,6 +77,8 @@ class Order_model extends CI_Model
                 //update shipping cost per product of seller
                 $this->update_shipping_cost($order_id, $cart_total);
 
+                $this->add_seller_wise_details($order_id, $cart_total);
+
                 //add digital sales
                 $this->add_digital_sales($order_id);
 
@@ -2285,7 +2287,7 @@ class Order_model extends CI_Model
         // );
 
         $shipping_data = array(
-            'actual_shipping_charges_with_gst'=>intval((json_decode($response)->data->available_courier_companies[0]->rate) * 100),
+            'actual_shipping_charges_with_gst' => intval((json_decode($response)->data->available_courier_companies[0]->rate) * 100),
             'actual_shipping_charges' => intval((json_decode($response)->data->available_courier_companies[0]->rate / (1 + (18 / 100))) * 100),
             'cod_charges' => intval((json_decode($response)->data->available_courier_companies[0]->cod_charges  / (1 + (18 / 100))) * 100),
             'freight_charges' => intval((json_decode($response)->data->available_courier_companies[0]->freight_charge  / (1 + (18 / 100))) * 100),
@@ -2369,7 +2371,7 @@ class Order_model extends CI_Model
                         $psd->total_order_deliverable = $object_product->product_deliverable;
 
                     if ($object_product->free_shipping)
-                    $psd->total_weight += $object_product->product_total_packaged_weight;
+                        $psd->total_weight += $object_product->product_total_packaged_weight;
                     else
                         $psd->total_weight += $object_product->product_total_packaged_weight;
 
@@ -2411,7 +2413,7 @@ class Order_model extends CI_Model
                 $object->seller_gst_rate = $object_product->product_gst_rate;
 
                 if ($object_product->free_shipping)
-                $object->total_weight = $object_product->product_total_packaged_weight;
+                    $object->total_weight = $object_product->product_total_packaged_weight;
                 else
                     $object->total_weight = $object_product->product_total_packaged_weight;
                 $object->total_price = $object_product->product_total_price;
