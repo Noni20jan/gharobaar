@@ -299,7 +299,7 @@ endif;
                                     $sale_subtotal += $item->product_unit_price * $item->product_quantity;
                                     $sale_gst += $item->product_gst;
                                     $sale_shipping = $item->product_shipping_cost;
-                                    $sale_discount += $item->product_discount_amount;
+                                    $sale_discount += $item->product_discount_amount * $item->product_quantity;
                                     $sale_total += $item->product_total_price;
                                     $product_details = get_product($item->product_id);
                                     // var_dump(json_encode($product_details));
@@ -308,7 +308,7 @@ endif;
                                     <tr>
                                         <td><input type="checkbox" <?php if ($item->order_status != "processing") {
                                                                         echo "disabled";
-                                                                    } ?> name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>"></td>
+                                                                    } ?> name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>" checked style="display: none;"></td>
                                         <td style="width: 50%">
                                             <div class="table-item-product">
                                                 <div class="left">
@@ -1427,7 +1427,7 @@ endforeach; ?>
 <script>
     function Schedule_Multiple_shipment() {
         var product_ids = [];
-        $("input[name='checkbox-table']:checked").each(function() {
+        $("input[name='checkbox-table']").each(function() {
             product_ids.push(this.value);
         });
         console.log(product_ids);
@@ -1449,7 +1449,7 @@ endforeach; ?>
                 var obj = JSON.parse(response);
                 console.log(obj);
                 console.log(obj.vars.order_items.length);
-                var a="<?php echo sizeof($order_products);?>"
+                var a = "<?php echo sizeof($order_products); ?>"
                 console.log(a);
                 if (a == 1) {
                     if (obj.result == 1) {
