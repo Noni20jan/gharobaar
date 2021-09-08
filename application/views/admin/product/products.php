@@ -14,7 +14,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="table-responsive">
+                <div class="table-responsive" style="overflow-x:scroll !important;">
                     <table class="table table-bordered table-striped" role="grid">
                         <?php $this->load->view('admin/product/_filter_products'); ?>
                         <thead>

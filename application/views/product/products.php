@@ -144,7 +144,9 @@ foreach ($sellers as $seller) {
 <link rel="stylesheet" href="<?= base_url(); ?>assets/css/custom.css">
 <div id="wrapper">
     <div class="container">
-
+        <div class="row categories-for-mobile" id="only-for-mobile">
+            <?php $this->load->view("partials/categories_for_mobile"); ?>
+        </div>
         <div class="row">
             <div class="col-12">
                 <nav class="nav-breadcrumb" aria-label="breadcrumb">
@@ -1657,6 +1659,23 @@ foreach ($sellers as $seller) {
         var dvPassport = document.getElementById("dynamic_filter2");
         dvPassport.style.display = check.checked ? "block" : "none";
     }
+</script>
+<script>
+    $(document).ready(function() {
+
+        $(window).scroll(function() {
+
+            console.log($(window).scrollTop());
+
+            if ($(window).scrollTop() > 550) {
+                $('#nav_bar').addClass('navbar-fixed-top');
+            }
+
+            if ($(window).scrollTop() < 551) {
+                $('#nav_bar').removeClass('navbar-fixed-top');
+            }
+        });
+    });
 </script>
 <script type="text/javascript">
     //localstorage to keep checkboxes check after refresh

@@ -329,7 +329,7 @@
                         <div>
                             <label class="label-product-variation mb-3" style="font-weight:600;">Quantity</label>
                             <div class="cart-item-quantity">
-                                <div class="number-spinner for-height">
+                                <div class="number-spinner for-height spinner-width">
                                     <div class="input-group ">
                                         <span class="input-group-btn for-height">
                                             <button type="button" class="btn btn-default btn-spinner-minus" id="minus-btn" style=" padding: 6px 8px;" data-dir="dwn">-</button>

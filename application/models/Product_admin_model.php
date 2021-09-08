@@ -178,11 +178,13 @@ class Product_admin_model extends CI_Model
         }
         if (!empty($q)) {
             $this->db->join('product_details', 'product_details.product_id = products.id');
+            $this->db->join('users', 'products.user_id = users.id');
             $this->db->where('product_details.lang_id', $this->selected_lang->id);
             $this->db->group_start();
             $this->db->like('product_details.title', $q);
             $this->db->or_like('products.sku', $q);
             $this->db->or_like('products.promote_plan', $q);
+            $this->db->or_like('users.shop_name', $q);
             $this->db->group_end();
         }
         if ($product_type == "physical" || $product_type == "digital") {
@@ -533,7 +535,7 @@ class Product_admin_model extends CI_Model
         $this->db->where('products.id', clean_number($id));
         return $this->db->get('products')->row();
     }
-    
+
 
     //approve product
     public function approve_product($id)
@@ -633,7 +635,7 @@ class Product_admin_model extends CI_Model
     {
         $address = $this->get_address($id);
         if (!empty($address)) {
-            
+
             $this->db->where('id', $address->id);
             return $this->db->delete('shipping_info');
         }
