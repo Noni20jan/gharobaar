@@ -76,8 +76,8 @@
 
     .founders {
         font-weight: 500;
-    /* line-height: 1.2; */
-    font-family: "Montserrat", sans-serif;
+        /* line-height: 1.2; */
+        font-family: "Montserrat", sans-serif;
         margin-bottom: 50px;
 
     }
@@ -257,7 +257,7 @@
         <div class="row" style="place-content:center; padding:0 15px;">
             <div class="aboutus-content">
                 <h4 style="text-align: center;">About Us</h4>
-                <p class="aboutus-journey">The journey of Gharobaar started over a get together post Diwali. We were discussing life during pandemic, pursuance <br>of hobbies and discovering our hidden talents. From cooking variety of cuisines to creating innovative craft for our kids<br>birthdays, we were excited about our creations and joked about approaching an e-commerce platform to showcase our<br> products. Over the next couple of weeks we came across many inspirational stories of homepreneurs (businesses run <br>from home), how they've not been bocked down by the adversity and instead created opportunities of becoming self<br> reliant. These homepreneurs chose to follow their passion, demonstrate their grit, rise from the ashes, and earn bread<br> for their families with their heads held high. We decided to become part of these exceptional journeys, by creating a <br>platform to facilitate their reach to a wider buyer community. Gharobaar is not only a marketplace; it's an attempt to<br> connect your home to others' and make you experience the warmth, love, care, tradition and uniqueness of each home. </p>
+                <p class="aboutus-journey">The journey of Gharobaar started over a get together post Diwali. We were discussing life during pandemic, pursuance <br>of hobbies and discovering our hidden talents. From cooking variety of cuisines to creating innovative craft for our kids<br>birthdays, we were excited about our creations and joked about approaching an e-commerce platform to showcase our<br> products. Over the next couple of weeks we came across many inspirational stories of homepreneurs (businesses run <br>from home), how they've not been bogged down by the adversity and instead created opportunities of becoming self<br> reliant. These homepreneurs chose to follow their passion, demonstrate their grit, rise from the ashes, and earn bread<br> for their families with their heads held high. We decided to become part of these exceptional journeys, by creating a <br>platform to facilitate their reach to a wider buyer community. Gharobaar is not only a marketplace; it's an attempt to<br> connect your home to others' and make you experience the warmth, love, care, tradition and uniqueness of each home. </p>
             </div>
         </div>
         <!-- <div class="rowbutton">

@@ -14891,6 +14891,9 @@ img {
   padding: 0 !important;
 }
 
+    
+
+
 .product-thumbnails-slider .slick-current {
   opacity: 1;
 }
@@ -16846,12 +16849,42 @@ img {
   margin-bottom: 30px;
 }
 
+.user-profile-follower {
+  text-align: center;
+}
+
+.user-profile-img {
+  border-radius: 50%;
+  border: 10px solid #0808082e;
+
+}
+
 .follower-item .img-profile {
   display: block;
   width: 100%;
   float: left;
   position: relative;
   border-radius: 100%;
+}
+.user-profile-follower .followers {
+  display: block;
+  width: 100%;
+  float: left;
+  position: relative;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 50px;
+  font-size: 20px;
+}
+.user-profile-follower .username {
+  display: block;
+  width: 100%;
+  float: left;
+  position: relative;
+  text-align: center;
+  font-weight: 800;
+  margin-top: 15px;
+  font-size: 25px;
 }
 
 .follower-item .username {
@@ -16861,7 +16894,9 @@ img {
   position: relative;
   text-align: center;
   font-weight: 600;
-  margin-top: 5px;
+  margin-top: 15px;
+  margin-bottom: 50px;
+ 
 }
 
 .form-avatar {

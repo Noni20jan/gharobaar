@@ -4143,7 +4143,13 @@
                                                                 Buyer Panel
                                                             </a>
                                                         </li>
+                                                        <li>
 
+                                                            <a href="<?php echo generate_url("followers") . "/" . $this->auth_user->slug; ?>">
+                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                Followers
+                                                            </a>
+                                                        </li>
                                                     <?php endif; ?>
                                                     <?php if ($this->auth_user->role == "member") { ?>
                                                         <li>
@@ -4157,6 +4163,12 @@
                                                             <a href="<?php echo dashboard_url(); ?>">
                                                                 <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
                                                                 Buyer Panel
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="<?php echo generate_url("following") . "/" . $this->auth_user->slug; ?>">
+                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                Following
                                                             </a>
                                                         </li>
                                                     <?php } ?>
