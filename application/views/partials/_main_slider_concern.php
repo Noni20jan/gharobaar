@@ -47,7 +47,7 @@
                 <?php if (!empty($concern_slider_items)) :
                     foreach ($concern_slider_items as $item) :
                         if ($item->category_feature == "SHOP_BY_CONCERN") : ?>
-                            <div class="item lazyload height-auto" data-bg="<?php echo base_url() . $item->image; ?>" data-bg-mobile="<?php echo base_url() . $item->image_mobile; ?>">
+                            <div class="item lazyload height-auto" data-bg="<?php echo other_base_url() . $item->image; ?>" data-bg-mobile="<?php echo base_url() . $item->image_mobile; ?>">
                                 <a href="<?php echo html_escape($item->link); ?>">
                                     <?php if (($item->item_order % 2) != 0) : ?>
                                         <div class="container" style="text-align:center;">
@@ -132,7 +132,7 @@
                             if (empty($image)) {
                                 $image = $item->image;
                             } ?>
-                            <div class="item lazyload height-auto" data-bg="<?php echo base_url() . $image; ?>">
+                            <div class="item lazyload height-auto" data-bg="<?php echo other_base_url() . $image; ?>">
                                 <a href="<?php echo html_escape($item->link); ?>">
                                     <?php if (($item->item_order % 2) != 0) : ?>
                                         <div class="container height-auto" style="text-align:center;">
