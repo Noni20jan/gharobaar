@@ -4406,7 +4406,54 @@
                 </div>
             </div>
         </div>
-        </div>
+
+
+        <!-- Guest Login Modal -->
+        <div class="modal fade" id="guestLoginModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
+                <div class="modal-content">
+                    <div class="auth-box">
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                        <h4 class="title"><?php echo trans("guest_login"); ?></h4>
+                        <!-- form start -->
+                        <form id="form_guest_login">
+                            <!-- include message block -->
+                            <div id="result-login" class="font-size-13"></div>
+                            <div class="form-group">
+                                <input type="text" name="email" id="guest_email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="phone_number" id="guest_phone_number" class="form-control auth-form-input" placeholder="Mobile Number" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
+                            </div>
+
+
+                            <p class="p-social-media m-0 m-t-5 hide_after_response"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>
+
+
+                            <div class="form-group show_after_response hideMe">
+                                <hr>
+                                <input type="text" name="guest_otp" id="guest_otp" class="form-control auth-form-input" placeholder="Enter OTP" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="6" maxlength="6">
+
+                                <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" onclick="guest_resend_otp($('#guest_phone_number'),$('#guest_email'))"><?php echo trans("resend_otp"); ?></a></p>
+
+                            </div>
+                            <div id="email_phn_exist_msg">
+                            </div>
+                            <div class="form-group hide_after_response" style="text-align:center;">
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("continue"); ?></button>
+                            </div>
+                            <div class="form-group show_after_response hideMe" style="text-align:center;">
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("confirm_otp"); ?></button>
+                            </div>
+                        </form>
+                        <!-- form end -->
+
+
+                    </div>
+
+                </div>
+            </div>
         </div>
 
 
@@ -5174,6 +5221,14 @@
             var email_address = document.getElementById("email_new").value;
             send_verification_otp(phn_num, "mobile_otp", email_address);
         })
+    </script>
+    <script>
+        function guest_resend_otp(ele_mobile, ele_email) {
+            document.getElementById("email_phn_exist_msg").innerHTML = "";
+            var phn_num = ele_mobile.val();
+            var email_address = ele_email.val();
+            send_verification_otp(phn_num, "mobile_otp", email_address);
+        }
     </script>
     <script>
         $(".clearable").each(function() {

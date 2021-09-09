@@ -564,6 +564,77 @@ class Auth_controller extends Home_Core_Controller
         //     $this->session->set_flashdata('error', trans("msg_error"));
         // }
     }
+
+    /**
+     * Guest Register Post
+     */
+    public function guest_register_post()
+    {
+        //check if logged in
+        // if ($this->auth_check) {
+        //     redirect(lang_base_url());
+        // }
+
+        // if ($this->recaptcha_status == true) {
+        //     if (!$this->recaptcha_verify_request()) {
+        //         $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+        //         $this->session->set_flashdata('error', trans("msg_recaptcha"));
+        //         redirect($this->agent->referrer());
+        //         exit();
+        //     }
+        // }
+
+        $email = $this->input->post('email', true);
+        $phone_number = $this->input->post('phone_number', true);
+
+        //is email unique
+        if (!$this->auth_model->is_unique_email($email)) {
+            $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+            $this->session->set_flashdata('error', trans("msg_email_unique_error"));
+            $data = array(
+                'result' => 0,
+                'error_message' => $this->load->view('partials/_messages', '', true)
+            );
+            echo json_encode($data);
+        } else if (!$this->auth_model->is_unique_phone($phone_number)) {
+            $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+            $this->session->set_flashdata('error', trans("msg_phone_unique_error"));
+            $data = array(
+                'result' => 0,
+                'error_message' => $this->load->view('partials/_messages', '', true)
+            );
+            echo json_encode($data);
+        } else {
+            //guest register
+            $user_id = $this->auth_model->guest_register();
+            if ($user_id) {
+                $user = get_user($user_id);
+                if (!empty($user)) {
+                    //update slug
+                    $this->auth_model->update_slug($user->id);
+                    if ($this->general_settings->email_verification != 1) {
+                        $this->auth_model->login_direct($user);
+                        $this->session->set_flashdata('success', trans("msg_register_success"));
+                        // redirect(generate_url(""));
+                    }
+                }
+                $data = array(
+                    'result' => 1,
+                    'user' => $user
+                );
+                echo json_encode($data);
+            } else {
+                //error
+                $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+                $this->session->set_flashdata('error', trans("msg_error"));
+                $data = array(
+                    'result' => 0,
+                    'error_message' => $this->load->view('partials/_messages', '', true)
+                );
+                echo json_encode($data);
+            }
+        }
+    }
     /**
      * Confirm Email
      */
@@ -747,5 +818,86 @@ class Auth_controller extends Home_Core_Controller
         $pickup = $this->input->post("pickup");
         $data = $this->profile_model->product_deliverale_or_not($pickup, $delivery);
         echo json_encode($data);
+    }
+
+    public function send_otp_verification()
+    {
+        $label_content = "mobile_otp";
+        $email = $this->input->post("email", true);
+        $phn_num = $this->input->post("phone_number", true);
+
+        if (!$this->auth_model->is_unique_email($email)) {
+            $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+            $this->session->set_flashdata('error', trans("msg_email_unique_error"));
+            $data = array(
+                'result' => 0,
+                'error_message' => $this->load->view('partials/_messages', '', true)
+            );
+            echo json_encode($data);
+        } else if (!$this->auth_model->is_unique_phone($phn_num)) {
+            $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+            $this->session->set_flashdata('error', trans("msg_phone_unique_error"));
+            $data = array(
+                'result' => 0,
+                'error_message' => $this->load->view('partials/_messages', '', true)
+            );
+            echo json_encode($data);
+        } else {
+            // Authorisation details.
+            $username = "chirag.raut@austere.co.in";
+            $hash = "495947f08983f416aa4556991fb67b2f2642e45e";
+
+            // Config variables. Consult http://api.textlocal.in/docs for more info.
+            $test = "0";
+
+            // Data for text message. This is the text message data.
+            $sender = "GHRBAR"; // This is who the message appears to be from.
+            $numbers = "$phn_num"; // A single number or a comma-seperated list of numbers
+            $otp = rand(100000, 999999);
+
+            $_SESSION['LAST_ACTIVITY'] = time();
+            $_SESSION['session_otp'] = $otp;
+
+            $msg_content = get_content($label_content);
+
+            //replace template var with value
+            if ($label_content == "mobile_otp") {
+                $token = array(
+                    'otp'  => $otp,
+                    'otp_time' => '3 mins'
+                );
+            }
+            $pattern = '[%s]';
+            foreach ($token as $key => $val) {
+                $varMap[sprintf($pattern, $key)] = $val;
+            }
+
+            $message = strtr($msg_content, $varMap);
+
+            $data = "username=" . ($username) . "&hash=" . ($hash) . "&message=" . $message . "&sender=" . $sender . "&numbers=" . $numbers . "&test=" . $test;
+
+            $ch = curl_init('http://api.textlocal.in/send/?');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $result = curl_exec($ch); // This is the result from the API
+            curl_close($ch);
+
+            // $this->send_email_otp("email_otp", $email, $message, $otp, "3 mins");
+
+            if ($label_content == "mobile_otp") {
+                $data = array(
+                    'html_content1' => "",
+                    'otp' => $_SESSION['session_otp'],
+                    'message' => $message,
+                    'api' => "SENT_OTP",
+                    'result' => 1
+                );
+                $this->session->set_flashdata('success', "OTP Sent Successfully !");
+                $data["html_content1"] = $this->load->view('partials/_messages', null, true);
+                reset_flash_data();
+            }
+            echo json_encode($data);
+        }
     }
 }

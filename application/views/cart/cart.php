@@ -533,19 +533,25 @@
                                                                 </a>
                                                             <?php endif; ?>
                                                         <?php endif; ?>
-                                                <?php endif;
-                                                endif; ?>
-                                            <?php endif; ?>
-                                        <?php endif; ?>
-                                    </p>
+                                                    <?php endif;
+                                                elseif ($this->general_settings->guest_checkout == 1) : ?>
+                                                    <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo "Login to Continue"; ?> </strong></a>
+                                    <div class="text-center m-b-15"><strong>OR</strong></div>
 
-                                    <div class="payment-icons">
-                                        <img src="<?php echo base_url(); ?>assets/img/payment/visa.svg" alt="visa">
-                                        <img src="<?php echo base_url(); ?>assets/img/payment/mastercard.svg" alt="mastercard">
-                                        <img src="<?php echo base_url(); ?>assets/img/payment/maestro.svg" alt="maestro">
-                                        <img src="<?php echo base_url(); ?>assets/img/payment/amex.svg" alt="amex">
-                                        <img src="<?php echo base_url(); ?>assets/img/payment/discover.svg" alt="discover">
-                                    </div>
+                                    <a href="#" class="btn btn-block" data-toggle="modal" data-target="#guestLoginModal"> <strong><?php echo "Continue Checkout as Guest"; ?> </strong></a>
+
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        </p>
+
+                        <div class="payment-icons">
+                            <img src="<?php echo base_url(); ?>assets/img/payment/visa.svg" alt="visa">
+                            <img src="<?php echo base_url(); ?>assets/img/payment/mastercard.svg" alt="mastercard">
+                            <img src="<?php echo base_url(); ?>assets/img/payment/maestro.svg" alt="maestro">
+                            <img src="<?php echo base_url(); ?>assets/img/payment/amex.svg" alt="amex">
+                            <img src="<?php echo base_url(); ?>assets/img/payment/discover.svg" alt="discover">
+                        </div>
                                 </div>
                             </div>
                         </div>
@@ -904,7 +910,7 @@
 
     $("#verify_btn_cart").click(function() {
         var input_otp = document.getElementById("otp_field_cart").value;
-        var user_id = '<?php echo $this->auth_user->id; ?>';
+        var user_id = '<?php echo isset($this->auth_user->id) ? $this->auth_user->id : "0"; ?>';
         var phn_num = document.getElementById("phn_number").value;
         if (input_otp == '') {
             document.getElementById("otp_field_span_cart").innerHTML = "*Please Enter OTP";

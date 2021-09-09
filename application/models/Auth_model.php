@@ -41,6 +41,19 @@ class Auth_model extends CI_Model
                     'modesy_sess_app_key' => $this->config->item('app_key'),
                 );
                 $this->session->set_userdata($user_data);
+
+                $this->save_user_login_session_data();
+
+                $this->cart_model->add_session_to_cart_in_db($user->id);
+
+                $user_cart = $this->cart_model->get_user_cart_from_db($user->id);
+
+                if (!empty($user_cart)) {
+                    $user_cart_id = $user_cart->id;
+                    $cart_details = $this->cart_model->get_cart_details_by_id($user_cart_id);
+                    $this->cart_model->add_cart_to_session_from_db($cart_details, true);
+                }
+
                 return $user;
             }
             //check password
@@ -399,6 +412,93 @@ class Auth_model extends CI_Model
                 if (!empty($user)) {
                     $this->session->set_flashdata('success', trans("msg_register_success") . " " . trans("msg_send_confirmation_email") . "&nbsp;<a href='javascript:void(0)' class='link-resend-activation-email' onclick=\"send_activation_email_register('" . $user->id . "','" . $user->token . "');\">" . trans("resend_activation_email") . "</a>");
                     $this->send_email_activation_ajax($user->id, $user->token);
+                }
+            } else {
+                $user = $this->get_user($last_id);
+
+                $user_data = array(
+                    'modesy_sess_unique_id' => md5(microtime() . rand()),
+                    'modesy_sess_user_id' => $user->id,
+                    'modesy_sess_user_email' => $user->email,
+                    'modesy_sess_user_role' => $user->role,
+                    'modesy_sess_logged_in' => true,
+                    'modesy_sess_app_key' => $this->config->item('app_key'),
+                );
+                $this->session->set_userdata($user_data);
+
+                $this->save_user_login_session_data();
+
+                $this->cart_model->add_session_to_cart_in_db($user->id);
+
+                $user_cart = $this->cart_model->get_user_cart_from_db($user->id);
+
+                if (!empty($user_cart)) {
+                    $user_cart_id = $user_cart->id;
+                    $cart_details = $this->cart_model->get_cart_details_by_id($user_cart_id);
+                    $this->cart_model->add_cart_to_session_from_db($cart_details, true);
+                }
+            }
+            return $last_id;
+        } else {
+            return false;
+        }
+    }
+
+
+    //guest register
+    public function guest_register()
+    {
+        $this->load->library('bcrypt');
+
+        $data = $this->auth_model->input_values();
+        $data['username'] = remove_special_characters("G-" . $data['phone_number']);
+        //secure password
+        $data['password'] = $this->bcrypt->hash_password("12345678");
+        $data['role'] = "member";
+        $data['user_type'] = "registered";
+        $data["slug"] = $this->generate_uniqe_slug($data["username"]);
+        $data['banned'] = 0;
+        $data['last_seen'] = date('Y-m-d H:i:s');
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $data['token'] = generate_token();
+        $data['email_status'] = 1;
+        if ($this->general_settings->email_verification == 1) {
+            $data['email_status'] = 0;
+        }
+        if ($this->general_settings->vendor_verification_system != 1) {
+            $data['role'] = "vendor";
+        }
+        if ($this->db->insert('users', $data)) {
+            $last_id = $this->db->insert_id();
+            if ($this->general_settings->email_verification == 1) {
+                $user = $this->get_user($last_id);
+                if (!empty($user)) {
+                    $this->session->set_flashdata('success', trans("msg_register_success") . " " . trans("msg_send_confirmation_email") . "&nbsp;<a href='javascript:void(0)' class='link-resend-activation-email' onclick=\"send_activation_email_register('" . $user->id . "','" . $user->token . "');\">" . trans("resend_activation_email") . "</a>");
+                    $this->send_email_activation_ajax($user->id, $user->token);
+                }
+            } else {
+                $user = $this->get_user($last_id);
+
+                $user_data = array(
+                    'modesy_sess_unique_id' => md5(microtime() . rand()),
+                    'modesy_sess_user_id' => $user->id,
+                    'modesy_sess_user_email' => $user->email,
+                    'modesy_sess_user_role' => $user->role,
+                    'modesy_sess_logged_in' => true,
+                    'modesy_sess_app_key' => $this->config->item('app_key'),
+                );
+                $this->session->set_userdata($user_data);
+
+                $this->save_user_login_session_data();
+
+                $this->cart_model->add_session_to_cart_in_db($user->id);
+
+                $user_cart = $this->cart_model->get_user_cart_from_db($user->id);
+
+                if (!empty($user_cart)) {
+                    $user_cart_id = $user_cart->id;
+                    $cart_details = $this->cart_model->get_cart_details_by_id($user_cart_id);
+                    $this->cart_model->add_cart_to_session_from_db($cart_details, true);
                 }
             }
             return $last_id;

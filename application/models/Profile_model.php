@@ -428,6 +428,8 @@ class Profile_model extends CI_Model
         $std->shipping_state = "";
         $std->shipping_city = "";
         $std->shipping_zip_code = "";
+        $std->shipping_area = "";
+        $std->shipping_landmark = "";
 
         if (empty($user_id)) {
             return $std;
