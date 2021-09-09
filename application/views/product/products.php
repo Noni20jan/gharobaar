@@ -139,6 +139,12 @@ foreach ($sellers as $seller) {
             top: 9px;
         }
     }
+
+    #collapseFilters {
+        /* width: 100px;
+        height: 500px; */
+        float: left;
+    }
 </style>
 
 <link rel="stylesheet" href="<?= base_url(); ?>assets/css/custom.css">
@@ -260,15 +266,12 @@ foreach ($sellers as $seller) {
         <div class="row">
             <?php $array_option_names = array(); ?>
             <div class="col-12 col-md-3 col-sidebar-products">
-                <div>
-                    <!-- <div style="float:left;">
+
+                <!-- <div style="float:left;">
                         <img src="<?php echo base_url(); ?>assets/img/landing-page-img/filter.png" style="height: 30px;width: 30px;" />
                     </div> -->
-                    <div id="product_filter">
-                        <h6 class="title">Filter By </h6>
-                    </div>
-                </div>
                 <div id="collapseFilters" class="product-filters">
+                    <h6 class="title">Filter By </h6>
                     <?php
                     $categories = $this->parent_categories;
                     if (!empty($category)) :
@@ -1512,7 +1515,85 @@ foreach ($sellers as $seller) {
     </div>
 </div>
 <!-- Wrapper End-->
+<script>
+    // function sticky_relocate() {
+    //     var window_top = $(window).scrollTop();
+    //     var footer_top = $("#footer").offset().top;
+    //     var div_top = $('#product_filter').offset().top;
+    //     var div_height = $("#collapseFilters").height();
 
+    //     var padding = 20; // tweak here or get from margins etc
+
+    //     if (window_top + div_height > footer_top - padding)
+    //         $('#collapseFilters').css({
+    //             top: (window_top + div_height - footer_top + padding) * -1
+    //         })
+    //     else if (window_top > div_top) {
+    //         $('#collapseFilters').addClass('stick');
+    //         $('#collapseFilters').css({
+    //             top: 0
+    //         })
+    //     } else {
+    //         $('#collapseFilters').removeClass('stick');
+    //     }
+    // }
+
+    // $(function() {
+    //     $(window).scroll(sticky_relocate);
+    //     sticky_relocate();
+    // });
+
+    $(document).ready(function() {
+        $(window).scroll(function() {
+
+            if ($(window).scrollTop() > 200) {
+                $('#collapseFilters').css('position', 'fixed');
+                $('#collapseFilters').css('top', 'auto');
+            } else if ($(window).scrollTop() <= 200) {
+                $('#collapseFilters').css('position', '');
+                $('#collapseFilters').css('top', '');
+            }
+            if ($('#collapseFilters').offset().top + $("#collapseFilters").height() > $("#footer").offset().top) {
+                $('#collapseFilters').css('top', -($("#collapseFilters").offset().top + $("#collapseFilters").height() - $("#footer").offset().top));
+            }
+        });
+    });
+
+    // var length = $('#product_filter').height() - $('#collapseFilters').height() + $('#product_filter').offset().top;
+    // console.log(length);
+
+    // $(window).scroll(function() {
+
+    //     var scroll = $(this).scrollTop();
+
+    //     var height = $('#collapseFilters').height() + 'px';
+
+    //     if (scroll < $('#product_filter').offset().top) {
+
+    //         $('#collapseFilters').css({
+    //             'position': 'static',
+    //             'top': '0',
+    //             'bottom': 'auto'
+    //         });
+
+    //     } else if (scroll > length) {
+
+    //         $('#collapseFilters').css({
+    //             'position': 'fixed',
+    //             // 'bottom': '0',
+    //             'top': 'auto'
+    //         });
+
+    //     } else {
+
+    //         $('#collapseFilters').css({
+    //             'position': 'relative',
+    //             'top': 'auto',
+    //             'bottom': 'auto',
+    //         });
+    //     }
+    // });
+</script>
 <script type="text/javascript">
     $(document).ready(function() {
         if ($('#product_type').is(":checked")) {
