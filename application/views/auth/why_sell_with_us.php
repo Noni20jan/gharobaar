@@ -452,15 +452,15 @@
 
 
 
-    <div class="row1 seller-storeis-heading">
+    <!-- <div class="row1 seller-storeis-heading">
         <h2 class="not-complaint-yet">Seller Stories</h2>
-    </div>
+    </div> -->
 
 
-    <div class="row1 nowrap-for-mobile-view for-seller-stories">
+    <!-- <div class="row1 nowrap-for-mobile-view for-seller-stories">
         <div class="col-md-6" id="img-for-mobile">
             <div class="left-about-icons">
-                <img id="seller-image" src="<?php echo base_url() . "uploads/profile/boy.jpg"; ?>" width="150" height="150">
+                <img id="seller-image" src="<//?php echo base_url() . "uploads/profile/boy.jpg"; ?>" width="150" height="150">
                 <div class="seller-name">Mr. Test Singh</div>
             </div>
         </div>
@@ -469,12 +469,12 @@
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent volutpat dui felis, ut mattis urna interdum sed. Integer fringilla scelerisque sed.
             </h5>
         </div>
-    </div>
+    </div> -->
     <!-- <div class="row1">
             <div class="col-12 col-sm-12 col-md-1"></div>
             <div class="col-12 col-sm-12 col-md-2">
                 <div class="left-about-icons">
-                    <img id="seller-image" src="<?php echo base_url() . "uploads/profile/girl.jpg"; ?>" width="150" height="150">
+                    <img id="seller-image" src="<//?php echo base_url() . "uploads/profile/girl.jpg"; ?>" width="150" height="150">
                     <div class="seller-name">Ms. Test Singh</div>
                 </div>
             </div>
@@ -495,7 +495,7 @@
             <div class="col-12 col-sm-12 col-md-1"></div>
             <div class="col-12 col-sm-12 col-md-2">
                 <div class="left-about-icons">
-                    <img id="seller-image" src="<?php echo base_url() . "uploads/profile/girl.jpg"; ?>" width="150" height="150">
+                    <img id="seller-image" src="<//?php echo base_url() . "uploads/profile/girl.jpg"; ?>" width="150" height="150">
                     <div class="seller-name">Ms. Test Singh</div>
                 </div>
             </div>
@@ -516,20 +516,20 @@
 
 
 
-    <div class="text-auto" style="padding-top: 25px;">
+    <!-- <div class="text-auto" style="padding-top: 25px;">
         <div class="aura">
 
             <?php if ($this->auth_check) : ?>
-                <center><a href="<?php echo generate_url("start_selling"); ?>" class="buttons-new ">See more seller stories!</a></center>
+                <center><a href="<//?php echo generate_url("start_selling"); ?>" class="buttons-new ">See more seller stories!</a></center>
             <?php else : ?>
                 <center><a href="javascript:void(0)" data-toggle="modal" data-id="1" data-target="#registerModal" class="buttons-new open-via-sellnow">See more seller stories!</a></center>
 
             <?php endif; ?>
-        </div>
+        </div> -->
 
-        <!-- <div class="row1-text-auto"> -->
+    <!-- <div class="row1-text-auto"> -->
 
-    </div>
+
 
 
     <div class="row1 text-auto" style="padding-top: 25px;">
