@@ -253,9 +253,9 @@ class Cart_controller extends Home_Core_Controller
             "total_mrp" => ($_SESSION["mds_shopping_cart_total"]->subtotal) / 100,
             "discount" => $_SESSION["mds_shopping_cart_total"]->discount,
             "total" => ($_SESSION["mds_shopping_cart_total"]->total_price) / 100,
-            "subtotal" => ($cart_total->total)/100,
-            "shipping_cost" => ($cart_total->shipping_cost)/100,
-            "order_total" => ($cart_total->order_total)/100,
+            "subtotal" => ($cart_total->total) / 100,
+            "shipping_cost" => ($cart_total->shipping_cost) / 100,
+            "order_total" => ($cart_total->order_total) / 100,
             "cart_view" => $cart_view_html
         );
         echo json_encode($response);
@@ -341,7 +341,9 @@ class Cart_controller extends Home_Core_Controller
 
         $data["shipping_address"] = $this->cart_model->get_sess_cart_shipping_address();
 
-        $data["get_address"] = $this->cart_model->get_shipping_details($this->auth_user->id);
+        if (!empty($this->auth_check)) :
+            $data["get_address"] = $this->cart_model->get_shipping_details($this->auth_user->id);
+        endif;
 
 
         $this->load->view('partials/_header', $data);
@@ -1189,13 +1191,22 @@ class Cart_controller extends Home_Core_Controller
     public function payment_cashfree()
     {
 
-        $returnUrl = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"];
+        if (!empty($_SESSION["modesy_sess_unique_id"])) :
+            $returnUrl = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"];
+        else :
+            $returnUrl = base_url() . "cashfree-return?session_id=''";
+        endif;
+
+
 
         //easy-split start
 
         $cart_items = $this->cart_model->get_sess_cart_items();
         $cart_total = $this->cart_model->get_sess_cart_total();
         $shipping_detail = json_decode($this->order_model->get_shipping_cost($cart_total));
+
+        $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
+
         $total_amount = $cart_total->total_price;
 
         $seller_array = array();
@@ -1537,18 +1548,31 @@ class Cart_controller extends Home_Core_Controller
 
         // easy-split end
 
-
-        $data = array(
-            "appId" => $this->general_settings->cashfree_app_id,
-            "orderId" => $this->input->post("orderid", true),
-            "orderAmount" => $this->input->post("orderamount", true),
-            // "paymentSplits" => $this->input->post("paymentsplits", true),
-            "paymentSplits" => $easysplit,
-            "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
-            "customerPhone" => $this->auth_user->phone_number,
-            "customerEmail" => $this->auth_user->email,
-            "returnUrl" => $returnUrl
-        );
+        if (auth_check()) :
+            $data = array(
+                "appId" => $this->general_settings->cashfree_app_id,
+                "orderId" => $this->input->post("orderid", true),
+                "orderAmount" => $this->input->post("orderamount", true),
+                // "paymentSplits" => $this->input->post("paymentsplits", true),
+                "paymentSplits" => $easysplit,
+                "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
+                "customerPhone" => $this->auth_user->phone_number,
+                "customerEmail" => $this->auth_user->email,
+                "returnUrl" => $returnUrl
+            );
+        else :
+            $data = array(
+                "appId" => $this->general_settings->cashfree_app_id,
+                "orderId" => $this->input->post("orderid", true),
+                "orderAmount" => $this->input->post("orderamount", true),
+                // "paymentSplits" => $this->input->post("paymentsplits", true),
+                "paymentSplits" => $easysplit,
+                "customerName" => $shipping_address->shipping_first_name . " " . $shipping_address->shipping_last_name,
+                "customerPhone" => $shipping_address->shipping_phone_number,
+                "customerEmail" => $shipping_address->shipping_email,
+                "returnUrl" => $returnUrl
+            );
+        endif;
         if (($this->input->post("payment_mode", true)) == "nb") {
             $data["paymentOption"] = $this->input->post("payment_mode", true);
             $data["paymentCode"] = $this->input->post("bank_select", true);

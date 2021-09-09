@@ -43,13 +43,13 @@ $("#checkAll").click(function() {
 });
 
 //show hide delete button
-$('.checkbox-table').click(function() {
-    if ($(".checkbox-table").is(':checked')) {
-        $(".btn-table-delete").show();
-    } else {
-        $(".btn-table-delete").hide();
-    }
-});
+// $('.checkbox-table').click(function() {
+//     if ($(".checkbox-table").is(':checked')) {
+//         $(".btn-table-delete").show();
+//     } else {
+//         $(".btn-table-delete").hide();
+//     }
+// });
 
 //get blog categories
 function get_blog_categories_by_lang(val) {

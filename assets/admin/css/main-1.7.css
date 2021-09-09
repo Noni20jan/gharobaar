@@ -523,9 +523,9 @@ label {
     min-width: 300px;
 }
 
-.btn-table-delete {
+/* .btn-table-delete {
     display: none;
-}
+} */
 
 .sidebar-menu>li>a>.fa,
 .sidebar-menu>li>a>.glyphicon,

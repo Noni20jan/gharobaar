@@ -117,7 +117,8 @@ class Home_controller extends Home_Core_Controller
             'html_content2' => "",
             'otp' => $_SESSION['session_otp'],
             'input_otp' => $input_otp,
-            'result' => false
+            'result' => false,
+            'api' => "CONFIRM_OTP"
         );
         if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 180)) {
             unset($_SESSION['session_otp']);
@@ -1046,7 +1047,7 @@ class Home_controller extends Home_Core_Controller
      */
     public function seller_products($type_id)
     {
-        
+
         get_method();
         $data['title'] = trans("products");
         $data['description'] = trans("products") . " - " . $this->app_name;

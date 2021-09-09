@@ -588,8 +588,7 @@
                     </p>
                 </a>
             </div>
-        </div>
-        <?php if (!empty($promoted_products)) : ?>
+        </div> <?php if (!empty($promoted_products)) : ?>
             <?php if ($this->general_settings->index_promoted_products == 1 && $this->general_settings->promoted_products == 1 && !empty($promoted_products)) : ?>
                 <div class="col-12 sides-gap-equal section section-promoted">
                     <!-- promoted products -->
@@ -731,7 +730,7 @@
         <!-- end of web collage -->
 
         <!-- collage-for-mobile -->
-        <div class="row-collage hidden-for-web justified-collage">
+        <div class="row-collage hidden-for-web justified-collage" id="category-app-bar">
             <div class="column-mobile-collage">
                 <a href="<?php echo base_url() . "top-categories/fashion"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-1.png"; ?>" style="width:100%"></a>
                 <a href="<?php echo base_url() . "top-categories/grocery"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-3.png"; ?>" style="width:100%"></a>

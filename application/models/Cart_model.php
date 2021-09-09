@@ -670,6 +670,19 @@ class Cart_model extends CI_Model
                     endforeach;
                     $this->add_shipping_cost_to_cart_by_seller($Supplier_ship_data);
                 endif;
+            elseif ($this->general_settings->guest_checkout == 1) :
+                $Supplier_ship_data = array();
+                $Supplier_ship_data = json_decode($this->order_model->get_shipping_cost($cart_total));
+                if ($Supplier_ship_data) :
+                    foreach ($Supplier_ship_data as $supp) :
+                        $cart_total->actual_shipping_charges = $supp->Supplier_Shipping_cost;
+                        $cart_total->shipping_cost += $cart_total->actual_shipping_charges;
+                        $cart_total->cod_charges = $supp->cod_charges;
+                        $cart_total->total_cod_charges += $cart_total->cod_charges;
+                        $cart_total->tax_charges = $supp->tax_charges;
+                        $cart_total->total_tax_charges += $cart_total->tax_charges;
+                    endforeach;
+                endif;
             else :
                 $cart_total->shipping_cost = 0;
                 $cart_total->actual_shipping_charges = 0;

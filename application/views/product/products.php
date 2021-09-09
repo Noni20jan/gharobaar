@@ -139,12 +139,20 @@ foreach ($sellers as $seller) {
             top: 9px;
         }
     }
+
+    #collapseFilters {
+        /* width: 100px;
+        height: 500px; */
+        float: left;
+    }
 </style>
 
 <link rel="stylesheet" href="<?= base_url(); ?>assets/css/custom.css">
 <div id="wrapper">
     <div class="container">
-
+        <div class="row categories-for-mobile" id="only-for-mobile">
+            <?php $this->load->view("partials/categories_for_mobile"); ?>
+        </div>
         <div class="row">
             <div class="col-12">
                 <nav class="nav-breadcrumb" aria-label="breadcrumb">
@@ -212,17 +220,14 @@ foreach ($sellers as $seller) {
                         <?php if ($category->id == 2) : ?>
 
 
-                            <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg
-                            </a>
-                            <a type="button" id="non_veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'non_Veg') ? "active_non-veg" : "non-active_non-veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>">Non Veg
-                            </a>
+                            <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only                       </a>
+
 
                         <?php elseif (isset($parent_category)) : ?>
                             <?php if ($parent_category->id == 2) : ?>
-                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg
+                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only
                                 </a>
-                                <a type="button" id="non_veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'non_Veg') ? "active_non-veg" : "non-active_non-veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>">Non Veg
-                                </a>
+                               
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>
@@ -238,17 +243,13 @@ foreach ($sellers as $seller) {
                         if ($category->id == 2) : ?>
 
 
-                            <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg
-                            </a>
-                            <a type="button" id="non_veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'non_Veg') ? "active_non-veg" : "non-active_non-veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>">Non Veg
-                            </a>
+                            <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only                      </a>
+
 
                         <?php elseif (isset($parent_category)) : ?>
                             <?php if ($parent_category->id == 2) : ?>
-                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg
-                                </a>
-                                <a type="button" id="non_veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'non_Veg') ? "active_non-veg" : "non-active_non-veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>">Non Veg
-                                </a>
+                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only </a>
+                
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>
@@ -265,15 +266,12 @@ foreach ($sellers as $seller) {
         <div class="row">
             <?php $array_option_names = array(); ?>
             <div class="col-12 col-md-3 col-sidebar-products">
-                <div>
-                    <!-- <div style="float:left;">
+
+                <!-- <div style="float:left;">
                         <img src="<?php echo base_url(); ?>assets/img/landing-page-img/filter.png" style="height: 30px;width: 30px;" />
                     </div> -->
-                    <div id="product_filter">
-                        <h6 class="title">Filter By </h6>
-                    </div>
-                </div>
                 <div id="collapseFilters" class="product-filters">
+                    <h6 class="title">Filter By </h6>
                     <?php
                     $categories = $this->parent_categories;
                     if (!empty($category)) :
@@ -1315,6 +1313,29 @@ foreach ($sellers as $seller) {
                                         </div>
                                     </div>
                                 <?php elseif ($filter->key == "food_type") : ?>
+
+                                    <?php if ($filter->value == "non_Veg") : ?>
+
+                                    <div class="filter-reset-tag">
+                                        <div class="left">
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                        </div>
+                                        <div class="right">
+                                            <span class="reset-tag-title">Food Type</span>
+                                            <span>Non Veg</span>
+                                        </div>
+                                    </div> 
+                                    <?php elseif($filter->value == "non_Veg") : ?>
+                                        <div class="filter-reset-tag" style="display:none;">
+                                        <div class="left">
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                        </div>
+                                        <div class="right" style="display:none;">
+                                            <span class="reset-tag-title">Food Type</span>
+                                            <span>Veg</span>
+                                        </div>
+                                    </div>
+                                    <?php else : ?>
                                     <div class="filter-reset-tag">
                                         <div class="left">
                                             <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
@@ -1324,6 +1345,7 @@ foreach ($sellers as $seller) {
                                             <span><?= html_escape($filter->value); ?></span>
                                         </div>
                                     </div>
+                                    <?php endif;?>
                                 <?php elseif ($filter->key == "discount") : ?>
                                     <div class="filter-reset-tag">
                                         <div class="left">
@@ -1493,7 +1515,85 @@ foreach ($sellers as $seller) {
     </div>
 </div>
 <!-- Wrapper End-->
+<script>
+    // function sticky_relocate() {
+    //     var window_top = $(window).scrollTop();
+    //     var footer_top = $("#footer").offset().top;
+    //     var div_top = $('#product_filter').offset().top;
+    //     var div_height = $("#collapseFilters").height();
 
+    //     var padding = 20; // tweak here or get from margins etc
+
+    //     if (window_top + div_height > footer_top - padding)
+    //         $('#collapseFilters').css({
+    //             top: (window_top + div_height - footer_top + padding) * -1
+    //         })
+    //     else if (window_top > div_top) {
+    //         $('#collapseFilters').addClass('stick');
+    //         $('#collapseFilters').css({
+    //             top: 0
+    //         })
+    //     } else {
+    //         $('#collapseFilters').removeClass('stick');
+    //     }
+    // }
+
+    // $(function() {
+    //     $(window).scroll(sticky_relocate);
+    //     sticky_relocate();
+    // });
+
+    $(document).ready(function() {
+        $(window).scroll(function() {
+
+            if ($(window).scrollTop() > 200) {
+                $('#collapseFilters').css('position', 'fixed');
+                $('#collapseFilters').css('top', 'auto');
+            } else if ($(window).scrollTop() <= 200) {
+                $('#collapseFilters').css('position', '');
+                $('#collapseFilters').css('top', '');
+            }
+            if ($('#collapseFilters').offset().top + $("#collapseFilters").height() > $("#footer").offset().top) {
+                $('#collapseFilters').css('top', -($("#collapseFilters").offset().top + $("#collapseFilters").height() - $("#footer").offset().top));
+            }
+        });
+    });
+
+    // var length = $('#product_filter').height() - $('#collapseFilters').height() + $('#product_filter').offset().top;
+    // console.log(length);
+
+    // $(window).scroll(function() {
+
+    //     var scroll = $(this).scrollTop();
+
+    //     var height = $('#collapseFilters').height() + 'px';
+
+    //     if (scroll < $('#product_filter').offset().top) {
+
+    //         $('#collapseFilters').css({
+    //             'position': 'static',
+    //             'top': '0',
+    //             'bottom': 'auto'
+    //         });
+
+    //     } else if (scroll > length) {
+
+    //         $('#collapseFilters').css({
+    //             'position': 'fixed',
+    //             // 'bottom': '0',
+    //             'top': 'auto'
+    //         });
+
+    //     } else {
+
+    //         $('#collapseFilters').css({
+    //             'position': 'relative',
+    //             'top': 'auto',
+    //             'bottom': 'auto',
+    //         });
+    //     }
+    // });
+</script>
 <script type="text/javascript">
     $(document).ready(function() {
         if ($('#product_type').is(":checked")) {
@@ -1657,6 +1757,23 @@ foreach ($sellers as $seller) {
         var dvPassport = document.getElementById("dynamic_filter2");
         dvPassport.style.display = check.checked ? "block" : "none";
     }
+</script>
+<script>
+    $(document).ready(function() {
+
+        $(window).scroll(function() {
+
+            console.log($(window).scrollTop());
+
+            if ($(window).scrollTop() > 550) {
+                $('#nav_bar').addClass('navbar-fixed-top');
+            }
+
+            if ($(window).scrollTop() < 551) {
+                $('#nav_bar').removeClass('navbar-fixed-top');
+            }
+        });
+    });
 </script>
 <script type="text/javascript">
     //localstorage to keep checkboxes check after refresh

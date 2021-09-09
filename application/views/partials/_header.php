@@ -4383,7 +4383,7 @@
                             <!-- include message block -->
                             <div id="result-login" class="font-size-13"></div>
                             <div class="form-group">
-                                <input type="text" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
+                                <input type="text" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("email_mobile"); ?>" required>
                             </div>
                             <div class="form-group">
                                 <input type="password" name="password" id="password_login" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" minlength="4" required>
@@ -4406,7 +4406,54 @@
                 </div>
             </div>
         </div>
-        </div>
+
+
+        <!-- Guest Login Modal -->
+        <div class="modal fade" id="guestLoginModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
+                <div class="modal-content">
+                    <div class="auth-box">
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                        <h4 class="title"><?php echo trans("guest_login"); ?></h4>
+                        <!-- form start -->
+                        <form id="form_guest_login">
+                            <!-- include message block -->
+                            <div id="result-login" class="font-size-13"></div>
+                            <div class="form-group">
+                                <input type="text" name="email" id="guest_email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="phone_number" id="guest_phone_number" class="form-control auth-form-input" placeholder="Mobile Number" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
+                            </div>
+
+
+                            <p class="p-social-media m-0 m-t-5 hide_after_response"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>
+
+
+                            <div class="form-group show_after_response hideMe">
+                                <hr>
+                                <input type="text" name="guest_otp" id="guest_otp" class="form-control auth-form-input" placeholder="Enter OTP" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="6" maxlength="6">
+
+                                <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" onclick="guest_resend_otp($('#guest_phone_number'),$('#guest_email'))"><?php echo trans("resend_otp"); ?></a></p>
+
+                            </div>
+                            <div id="email_phn_exist_msg">
+                            </div>
+                            <div class="form-group hide_after_response" style="text-align:center;">
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("continue"); ?></button>
+                            </div>
+                            <div class="form-group show_after_response hideMe" style="text-align:center;">
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("confirm_otp"); ?></button>
+                            </div>
+                        </form>
+                        <!-- form end -->
+
+
+                    </div>
+
+                </div>
+            </div>
         </div>
 
 
@@ -4562,7 +4609,7 @@
                                     </div> -->
                                     <div class="col-12 col-sm-12 m-b-15">
                                         <input type="email" name="email" id="email_new" class="form-control auth-form-input" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old("email"); ?>" required>
-                                        <!-- <span id="email_span_error" style="color:red;"></span> -->
+                                        <span id="email_span_error" style="color:red;"></span>
                                     </div>
                                 </div>
                             </div>
@@ -5000,6 +5047,7 @@
             }
         });
     </script>
+
     <script>
         $(function() {
             $("#btnsubmit_register").click(function() {
@@ -5069,7 +5117,7 @@
 
         })
 
-        $("#verify_otp").click(function() {
+        $("#verify_otp").click(function(e) {
             document.getElementById("verify_mobile_span").innerHTML = "";
             var phn_num = document.getElementById("phone_number").value;
             var email_address = document.getElementById("email_new").value;
@@ -5082,8 +5130,32 @@
                 var register_phn = check_for_mobile_register_js(phn_num);
                 // console.log(register_phn);
                 if (register_phn == true) {
-                    $('#verifyMobileModal').modal('show');
-                    send_verification_otp(phn_num, "mobile_otp", email_address);
+                    var emailcheck = "<?php echo $this->general_settings->check_email_validation; ?>";
+                    if (emailcheck === "1") {
+                        var data = {
+                            'email': email_address
+                        }
+                        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                        $.ajax({
+                            type: "POST",
+                            url: base_url + "api/email/verifyemail",
+                            data: data,
+                            success: function(response) {
+                                var resp = $.parseJSON(response);
+                                if (resp.status == 200) {
+                                    $('#verifyMobileModal').modal('show');
+                                    send_verification_otp(phn_num, "mobile_otp", email_address);
+                                } else if (resp.status == 303) {
+                                    $('#email_span_error').html(resp.message);
+                                } else if (resp.status == 304) {
+                                    $('#email_span_error').html(resp.message);
+                                }
+                            }
+                        });
+                    } else {
+                        $('#verifyMobileModal').modal('show');
+                        send_verification_otp(phn_num, "mobile_otp", email_address);
+                    }
                 } else if (register_phn == false) {
                     document.getElementById("verify_mobile_span").innerHTML = "*Mobile number is already registered!";
                 }
@@ -5149,6 +5221,14 @@
             var email_address = document.getElementById("email_new").value;
             send_verification_otp(phn_num, "mobile_otp", email_address);
         })
+    </script>
+    <script>
+        function guest_resend_otp(ele_mobile, ele_email) {
+            document.getElementById("email_phn_exist_msg").innerHTML = "";
+            var phn_num = ele_mobile.val();
+            var email_address = ele_email.val();
+            send_verification_otp(phn_num, "mobile_otp", email_address);
+        }
     </script>
     <script>
         $(".clearable").each(function() {
