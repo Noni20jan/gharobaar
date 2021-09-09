@@ -214,17 +214,14 @@ foreach ($sellers as $seller) {
                         <?php if ($category->id == 2) : ?>
 
 
-                            <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg
-                            </a>
-                            <a type="button" id="non_veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'non_Veg') ? "active_non-veg" : "non-active_non-veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>">Non Veg
-                            </a>
+                            <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only                       </a>
+
 
                         <?php elseif (isset($parent_category)) : ?>
                             <?php if ($parent_category->id == 2) : ?>
-                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg
+                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only
                                 </a>
-                                <a type="button" id="non_veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'non_Veg') ? "active_non-veg" : "non-active_non-veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>">Non Veg
-                                </a>
+                               
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>
@@ -240,17 +237,13 @@ foreach ($sellers as $seller) {
                         if ($category->id == 2) : ?>
 
 
-                            <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg
-                            </a>
-                            <a type="button" id="non_veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'non_Veg') ? "active_non-veg" : "non-active_non-veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>">Non Veg
-                            </a>
+                            <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only                      </a>
+
 
                         <?php elseif (isset($parent_category)) : ?>
                             <?php if ($parent_category->id == 2) : ?>
-                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg
-                                </a>
-                                <a type="button" id="non_veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'non_Veg') ? "active_non-veg" : "non-active_non-veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>">Non Veg
-                                </a>
+                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only </a>
+                
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>
@@ -1317,6 +1310,29 @@ foreach ($sellers as $seller) {
                                         </div>
                                     </div>
                                 <?php elseif ($filter->key == "food_type") : ?>
+
+                                    <?php if ($filter->value == "non_Veg") : ?>
+
+                                    <div class="filter-reset-tag">
+                                        <div class="left">
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                        </div>
+                                        <div class="right">
+                                            <span class="reset-tag-title">Food Type</span>
+                                            <span>Non Veg</span>
+                                        </div>
+                                    </div> 
+                                    <?php elseif($filter->value == "non_Veg") : ?>
+                                        <div class="filter-reset-tag" style="display:none;">
+                                        <div class="left">
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                        </div>
+                                        <div class="right" style="display:none;">
+                                            <span class="reset-tag-title">Food Type</span>
+                                            <span>Veg</span>
+                                        </div>
+                                    </div>
+                                    <?php else : ?>
                                     <div class="filter-reset-tag">
                                         <div class="left">
                                             <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
@@ -1326,6 +1342,7 @@ foreach ($sellers as $seller) {
                                             <span><?= html_escape($filter->value); ?></span>
                                         </div>
                                     </div>
+                                    <?php endif;?>
                                 <?php elseif ($filter->key == "discount") : ?>
                                     <div class="filter-reset-tag">
                                         <div class="left">
