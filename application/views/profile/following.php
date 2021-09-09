@@ -12,8 +12,6 @@
 				</nav>
 			</div>
 		</div>
-
-
 		<div class="row">
 			<div class="col-sm-12 col-md-3">
 				<!-- load profile nav -->
@@ -22,6 +20,15 @@
 
 			<div class="col-sm-12 col-md-9">
 				<div class="profile-tab-content">
+					<div class="user-profile-follower">
+						<img src="<?php echo get_user_avatar($this->auth_user); ?>" alt="<?php echo get_shop_name($this->auth_user); ?>" class="img-fluid img-profile lazyload user-profile-img">
+						<p class="username">
+							<?php echo get_shop_name($this->auth_user); ?>
+						</p>
+						<p class="followers">
+							<?php echo "(Following " . get_following_users_count($user->id) . ")"; ?>
+						</p>
+					</div>
 					<div class="row">
 						<?php foreach ($following_users as $item) : ?>
 							<div class="col-4 col-sm-2">
