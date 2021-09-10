@@ -5153,14 +5153,26 @@
                             url: base_url + "api/email/verifyemail",
                             data: data,
                             success: function(response) {
+                                var email = email_address;
+                                var name = email.substring(0, email.lastIndexOf("@"));
+                                var domain = email.substring(email.lastIndexOf("@") + 1);
                                 var resp = $.parseJSON(response);
-                                if (resp.status == 200) {
-                                    $('#verifyMobileModal').modal('show');
-                                    send_verification_otp(phn_num, "mobile_otp", email_address);
-                                } else if (resp.status == 303) {
-                                    $('#email_span_error').html(resp.message);
-                                } else if (resp.status == 304) {
-                                    $('#email_span_error').html(resp.message);
+                                if (domain == "gmail.com") {
+                                    if (resp.status == 200) {
+                                        $('#verifyMobileModal').modal('show');
+                                        send_verification_otp(phn_num, "mobile_otp", email_address);
+                                    } else if (resp.status == 303) {
+                                        $('#email_span_error').html(resp.message);
+                                    } else if (resp.status == 304) {
+                                        $('#email_span_error').html(resp.message);
+                                    }
+                                } else {
+                                    if (resp.status == 303) {
+                                        $('#verifyMobileModal').modal('show');
+                                        send_verification_otp(phn_num, "mobile_otp", email_address);
+                                    } else if (resp.status == 304) {
+                                        $('#email_span_error').html(resp.message);
+                                    }
                                 }
                             }
                         });
