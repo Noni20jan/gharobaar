@@ -499,25 +499,6 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
         });
     </script>
 <?php endif; ?>
-<script>
-    window.onscroll = function() {
-        keepTheHeaderOntop()
-    };
-
-    var fullheader = document.getElementById("header");
-    var header = document.getElementById("myHeader");
-    var mobileHeader = document.getElementById("myappbar");
-    var stickyHeader = mobileHeader.offsetTop;
-    var sticky = fullheader.offsetTop;
-
-    function keepTheHeaderOntop() {
-        if (window.pageYOffset > sticky) {
-            fullheader.classList.add("sticky");
-        } else {
-            fullheader.classList.remove("sticky");
-        }
-    }
-</script>
 <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/popper.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/plugins-1.7.js"></script>

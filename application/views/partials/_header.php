@@ -4,6 +4,33 @@
 <!DOCTYPE html>
 <html lang="<?php echo $this->selected_lang->short_form ?>">
 <style>
+    .clearable_search {
+        background: #fff url("assets/img/cross_icon_red.svg") no-repeat right -20px center;
+        border: 1px solid #999;
+        padding: 3px 18px 3px 4px;
+        /* Use the same right padding (18) in jQ! */
+        border-radius: 3px;
+        transition: background 0.4s;
+    }
+
+    .clearable_search.x {
+        background-position: right 5px center;
+    }
+
+    /* (jQ) Show icon */
+    .clearable_search.onX {
+        cursor: pointer;
+    }
+
+    /* (jQ) hover cursor style */
+    .clearable_search::-ms-clear {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+
+    /* Remove IE default X */
+
     .nav-main {
         margin-top: -2%;
     }
@@ -138,13 +165,13 @@
 
 
 
-    #enter_p::placeholder {
+    .enter_p::placeholder {
 
         /* Firefox, Chrome, Opera */
         text-align: center;
     }
 
-    #enter_p {
+    .enter_p {
         text-align: center;
 
     }
@@ -392,7 +419,7 @@
         left: 328px;
     }
 
-    #enter_p {
+    .enter_p {
         padding: 23px;
         position: relative;
         bottom: 4px;
@@ -3984,7 +4011,8 @@
 
 <body>
     <header id="header">
-        <?php $this->load->view("partials/_top_bar"); ?>
+        <?php //$this->load->view("partials/_top_bar"); 
+        ?>
         <div class="main-menu" id="myHeader">
             <div class="container-fluid">
                 <div class="row">
@@ -4936,7 +4964,7 @@
 
                         <div class="form-group m-b-20">
                             <div class="input-group input-group-location">
-                                <input type="text" name="search_pincode" class="clearable_search form-control" id="enter_p" maxlength="6" minlength="6" pattern="[0-9]+" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="Enter pincode" autocomplete="off">
+                                <input type="text" name="search_pincode" class="form-control enter_p clearable_search" id="pincodeSearchField" maxlength="6" minlength="6" pattern="[0-9]+" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="Enter pincode" autocomplete="off">
                                 <input type="hidden" class="search_type_input_pincode" name="search_type_pincode" value="pincode">
                                 <button class="check_pincode">Go!</button>
                                 <div id="response_pincode_search_results" class="search-results-ajax">
@@ -5002,6 +5030,29 @@
             </script>
         <?php endif; ?>
     <?php endif; ?>
+
+    <!-- <style>
+        #pageloader {
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            height: 100%;
+            position: fixed;
+            width: 100%;
+            z-index: 9999;
+        }
+
+        #pageloader img {
+            left: 50%;
+            margin-left: -32px;
+            margin-top: -32px;
+            position: absolute;
+            top: 50%;
+        }
+    </style> -->
+
+    <!-- <div id="pageloader">
+        <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif" alt="processing..." />
+    </div> -->
 
     <div id="menu-overlay"></div>
     <script>
@@ -5272,21 +5323,25 @@
         });
     </script>
     <script>
+        $('#pincodeSearchField').keypress(function(e) {
+
+            var charCode = (e.which) ? e.which : event.keyCode;
+            console.log(pincodeSearchField);
+
+            if (String.fromCharCode(charCode).match(/[^0-9]/g))
+                return false;
+
+        });
         $(document).ready(function() {
-
-            $('#search_pincode').keypress(function(e) {
-
-                var charCode = (e.which) ? e.which : event.keyCode
-
-                if (String.fromCharCode(charCode).match(/[^0-9]/g))
-
-                    return false;
-
-            });
-            if ($('#search_pincode').val()) {
-                $('#search_pincode')[tog($('#search_pincode').val())]("x");
+            if ($('#pincodeSearchField').val()) {
+                $('#pincodeSearchField')[tog($('#pincodeSearchField').val())]("x");
             }
 
+
+
+            // $("#form_validate_pincode_search").on("submit", function() {
+            //     $("#pageloader").fadeIn();
+            // }); //submit
         });
 
         function tog(v) {
