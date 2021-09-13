@@ -3276,9 +3276,6 @@ class Order_model extends CI_Model
         return $query->result();
     }
 
-
-
-
     public function get_product_detail($product_id)
     {
         $this->db->where('id', $product_id);
