@@ -523,7 +523,7 @@
         /* Opera 11.10+ */
         background: -ms-linear-gradient(top, #00000096, #ffffff52 100%);
         /* IE10+ */
-        background: linear-gradient(to top, #00000096, #ffffff52 100%);
+        background: linear-gradient(to top, #00000096, #ffffff00 100%);
         /* W3C */
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=' #00000096', endColorstr='#ffffff52', GradientType=0);
         /* IE6-9 */
