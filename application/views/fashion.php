@@ -62,13 +62,13 @@
             case 2: ?>
                 <div class="row shop-by-center">
                     <div class="col-2 two-for-mobile">
-                        <a href="<?php echo generate_url("home-cooks/fresh-home-food"); ?>">
+                        <a href="<?php echo generate_url("home-cooks/fresh-baked-items"); ?>">
                             <img class="shop_by_seller_imgs" src="<?php echo base_url(); ?>assets/img/home_cooks_imgs/home_cooks_1.png">
                             <p class="category_page_title">Fresh Baked Items</p>
                         </a>
                     </div>
                     <div class="col-2 two-for-mobile">
-                        <a href="<?php echo generate_url("home-cooks/fresh-baked-items"); ?>">
+                        <a href="<?php echo generate_url("home-cooks//fresh-home-food"); ?>">
                             <img class="shop_by_seller_imgs" src="<?php echo base_url(); ?>assets/img/home_cooks_imgs/home_cooks_2.png">
                             <p class="category_page_title">Fresh Home Food</p>
                         </a>
