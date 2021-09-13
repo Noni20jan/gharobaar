@@ -6,7 +6,9 @@
     #footer .footer-top {
         padding: 30px 0;
     }
-
+#subscribe{
+    visibility: hidden;
+}
 
     @media only screen and (max-width: 1024px) {
         #footer .newsletter .footer-title {
@@ -21,8 +23,18 @@
             left: 10px;
             display: none;
         }
+        .newsletter-inner{
+            width: 89%;
+    margin: 0px auto;
+}
     }
-
+#textEmail{
+    border-radius: 20px;
+    background-color: transparent;
+    border: 0;
+    position: relative;
+    right: 16px;
+}
     footer .newsletter .newsletter-inner button {
         /* border-radius: 10px 10px 0px 0; */
         /* border-radius: 10px 10px 0px 0; */
@@ -37,6 +49,31 @@
         left: 34px;
         top: 83px;
     }
+    #footer .newsletter .newsletter-inner input {
+    border-bottom: 1px solid #e0e0e2;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    background: transparent;
+    min-height: 40px;
+    font-size: 0.8125rem;
+}
+    #subscribe{
+    border-radius: 20px;
+        min-height: 40px;
+        min-width: 40px;
+        background-color: green;
+        /* background-color: #c582b5; */
+        color: #fff;
+        white-space: nowrap;
+        position: absolute;
+        /* left: 0px; */
+        /* top: 0px; */
+        float: right;
+        visibility: visible;
+        right:0px;
+}
+
 
     @media only screen and (max-width: 700px) {
         #footer .newsletter .newsletter-inner button {
@@ -315,6 +352,35 @@
 
 
                         <div class="col-12 col-sm-2 footer-widget" id="support-footer-view">
+                        <form id="form_validate_newsletter">
+                      
+                                    <div class="newsletter-inner">
+                                    <h4 class="footer-title"><?php echo trans("newsletter"); ?></h4>
+                                        <div class="d-table-cell">
+                                            <input type="text" id="textEmail" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("type_email");?>">
+                                            <p id="demo"></p>
+                                        </div>
+
+
+
+                                        <div class="d-table-cell">
+                                            <!-- <button class="btn btn-default" type="submit" onclick="validateEmail()"><?php echo trans("subscribe"); ?> -->
+                                            <button type="button" class="btn btn-default" id="subscribe"><?php echo trans("subscribe"); ?></button>
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                    <p id="demo" style="color: red;display:inline-block"></p>
+                                </form>
+
+                                <div id="newsletter" class="m-t-5">
+                                    <?php if ($this->session->flashdata('news_error')) :
+                                        echo '<span class="text-danger">' . $this->session->flashdata('news_error') . '</span>';
+                                    endif;
+                                    if ($this->session->flashdata('news_success')) :
+                                        echo '<span class="text-success">' . $this->session->flashdata('news_success') . '</span>';
+                                    endif; ?>
+                                </div>
                             <div class="nav-footer">
                                 <div class="row-custom">
                                     <div class="row support-links-mobile-view">
