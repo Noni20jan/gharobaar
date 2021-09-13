@@ -4385,6 +4385,7 @@
                                     <?php endif; ?>
                                 </div> -->
                                 <div class="search_bar">
+                                    <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="product">
                                     <input type="text" id="input_search_mobile" name="search" maxlength="300" pattern=".*\S+.*" class="form-control input-search" style="width: 100%;" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search"); ?>" required>
                                     <button class="btn btn-default btn-search"><i class="icon-search"></i></button>
                                     <div id="response_search_results_mobile" class="search-results-ajax"></div>
