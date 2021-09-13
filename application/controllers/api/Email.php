@@ -15,7 +15,7 @@ class Email extends Verify_email
         // Set the timeout value on stream
         $mail->setStreamTimeoutWait(1);
         // Set email address for SMTP request
-        $mail->setEmailFrom('harshitgoyal20jan@gmail.com');
+        $mail->setEmailFrom('gharobaar.gsgt@gmail.com');
         // Check if email is valid and exist
         if ($mail->check($email)) {
             echo json_encode(['status' => 200, 'message' => 'Email is exist']);

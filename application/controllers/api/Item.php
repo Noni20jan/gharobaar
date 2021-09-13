@@ -62,12 +62,29 @@ class Item extends REST_Controller
             $data = array();
 
             switch ($new_input['order_status']) {
+                case "DELIVERED":
+                    $data["order_status"] = "completed";
+                    break;
                 case "Delivered":
                     $data["order_status"] = "completed";
+                    break;
+                case "SHIPPED":
+                    $data["order_status"] = "shipped";
                     break;
                 case "Shipped":
                     $data["order_status"] = "shipped";
                     break;
+                case "Pickup Exception":
+                    $data["order_status"] = "shipped";
+                    break;
+                case "ORDER SHIPPED":
+                    $data["order_status"] = "shipped";
+                    break;
+                case "PICKED UP":
+                    $data["order_status"] = "shipped";
+                    break;
+                default:
+                    $data["order_status"] = $new_input['order_status'];
             }
             // $data["order_status"] = $new_input['order_status'];
 
