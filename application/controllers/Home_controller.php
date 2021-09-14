@@ -42,6 +42,11 @@ class Home_controller extends Home_Core_Controller
                 'otp'  => $otp,
                 'otp_time' => '3 mins'
             );
+        } else if ($label_content == "mobile_otp_login") {
+            $token = array(
+                'otp'  => $otp,
+                'otp_time' => '3 mins'
+            );
         } else {
             $token = array(
                 'order_no' => $order_no
@@ -68,6 +73,15 @@ class Home_controller extends Home_Core_Controller
         $this->send_email_otp("email_otp", $email, $message, $otp, "3 mins");
 
         if ($label_content == "mobile_otp") {
+            $data = array(
+                'html_content1' => "",
+                'otp' => $_SESSION['session_otp'],
+                'message' => $message
+            );
+            $this->session->set_flashdata('success', "OTP Sent Successfully !");
+            $data["html_content1"] = $this->load->view('partials/_messages', null, true);
+            reset_flash_data();
+        } else if ($label_content == "mobile_otp_login") {
             $data = array(
                 'html_content1' => "",
                 'otp' => $_SESSION['session_otp'],
