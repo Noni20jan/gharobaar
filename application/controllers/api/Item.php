@@ -68,6 +68,9 @@ class Item extends REST_Controller
                 case "Delivered":
                     $data["order_status"] = "completed";
                     break;
+                case "ORDER DELIVERED":
+                    $data["order_status"] = "completed";
+                    break;
                 case "SHIPPED":
                     $data["order_status"] = "shipped";
                     break;

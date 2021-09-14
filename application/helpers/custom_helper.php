@@ -101,7 +101,7 @@ if (!function_exists('get_vendor_shop_status')) {
     function get_vendor_shop_status($user_id)
     {
         $ci = &get_instance();
-        $name=$ci->profile_model->get_vendor($user_id);
+        $name = $ci->profile_model->get_vendor($user_id);
         return $name[0]->is_shop_open;
     }
 }
@@ -1337,7 +1337,7 @@ if (!function_exists('get_product_image_url')) {
             $ci = &get_instance();
             return $ci->aws_base_url . "uploads/images/" . $image->$size_name;
         } else {
-            return base_url() . "uploads/images/" . $image->$size_name;
+            return other_base_url() . "uploads/images/" . $image->$size_name;
         }
     }
 }
