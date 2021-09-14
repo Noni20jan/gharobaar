@@ -1036,6 +1036,9 @@ class Home_controller extends Home_Core_Controller
         $data['product_count'] = $this->product_model->get_paginated_filtered_products_count_category_feature($data["query_string_array"], null, $type_id);
         $data["categories"] = $this->parent_categories;
 
+        $data["all_category_selected"] = $this->product_model->get_category_selected_concerned_occasion($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id, true);
+
+
         $this->load->view('partials/_header', $data);
         $this->load->view('product/products', $data);
         $this->load->view('partials/_footer');
@@ -2356,6 +2359,9 @@ class Home_controller extends Home_Core_Controller
 
         $response = curl_exec($curl);
 
+        $status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+        // var_dump($status);
+
         curl_close($curl);
 
         $user_data = array(
@@ -2431,6 +2437,9 @@ class Home_controller extends Home_Core_Controller
         $data['product_count'] = $this->product_model->get_paginated_filtered_products_count_category_feature($data["query_string_array"], null, $type_id);
         $data["categories"] = $this->parent_categories;
 
+        $data["all_category_selected"] = $this->product_model->get_category_selected_concerned_occasion($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id, true);
+
+
         $this->load->view('partials/_header', $data);
         $this->load->view('product/products', $data);
         $this->load->view('partials/_footer');
@@ -2452,6 +2461,9 @@ class Home_controller extends Home_Core_Controller
         $data['products'] = $this->product_model->get_products_shop_by_concern($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id);
         $data['product_count'] = $this->product_model->get_paginated_filtered_products_count_category_feature($data["query_string_array"], null, $type_id);
         $data["categories"] = $this->parent_categories;
+
+        $data["all_category_selected"] = $this->product_model->get_category_selected_concerned_occasion($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id, true);
+
 
         $this->load->view('partials/_header', $data);
         $this->load->view('product/products', $data);

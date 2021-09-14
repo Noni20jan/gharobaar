@@ -14891,9 +14891,6 @@ img {
   padding: 0 !important;
 }
 
-    
-
-
 .product-thumbnails-slider .slick-current {
   opacity: 1;
 }
@@ -16856,7 +16853,6 @@ img {
 .user-profile-img {
   border-radius: 50%;
   border: 10px solid #0808082e;
-
 }
 
 .follower-item .img-profile {
@@ -16896,7 +16892,6 @@ img {
   font-weight: 600;
   margin-top: 15px;
   margin-bottom: 50px;
- 
 }
 
 .form-avatar {
@@ -18102,11 +18097,11 @@ img {
 }
 
 .product-list-pagination {
-  justify-content: center !important;
+  /* justify-content: center !important; */
 }
 
 .product-list-pagination .pagination {
-  text-align: right !important;
+  /* text-align: right !important; */
 }
 
 .filter-reset-tag-container {

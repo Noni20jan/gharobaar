@@ -3,25 +3,27 @@
     .zoom {
         transition: transform .2s;
     }
-#cvl{
-    position: absolute;
-   
-     left: 114px;
-    float: right;
-    color: #fff;
-    background-color: red;
-}
-@media(max-width:700px)
-{
-    #cvl{
-    position: absolute;
-   
-     left: 57px;
-    float: right;
-    color: #fff;
-    background-color: red;
-}
-}
+
+    #cvl {
+        position: absolute;
+
+        left: 114px;
+        float: right;
+        color: #fff;
+        background-color: red;
+    }
+
+    @media(max-width:700px) {
+        #cvl {
+            position: absolute;
+
+            left: 57px;
+            float: right;
+            color: #fff;
+            background-color: red;
+        }
+    }
+
     .zoom:hover {
         -ms-transform: scale(1.25);
         /* IE 9 */
@@ -37,16 +39,16 @@
         <div class="img-product-container">
             <?php if (!empty($is_slider)) : ?>
                 <a href="<?php echo generate_product_url($product); ?>">
-                    <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-lazy="<?php echo get_product_item_image($product); ?>" alt="<?php echo get_product_title($product); ?>" class="img-fluid img-product">
+                    <img src="<?php echo other_base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-lazy="<?php echo get_product_item_image($product); ?>" alt="<?php echo get_product_title($product); ?>" class="img-fluid img-product">
                     <?php if (!empty($product->image_second)) : ?>
-                        <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-lazy="<?php echo get_product_item_image($product, true); ?>" alt="<?php echo get_product_title($product); ?>" class="img-fluid img-product img-second">
+                        <img src="<?php echo other_base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-lazy="<?php echo get_product_item_image($product, true); ?>" alt="<?php echo get_product_title($product); ?>" class="img-fluid img-product img-second">
                     <?php endif; ?>
                 </a>
             <?php else : ?>
                 <a href="<?php echo generate_product_url($product); ?>">
-                    <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_item_image($product); ?>" alt="<?php echo get_product_title($product); ?>" class="lazyload img-fluid img-product">
+                    <img src="<?php echo other_base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_item_image($product); ?>" alt="<?php echo get_product_title($product); ?>" class="lazyload img-fluid img-product">
                     <?php if (!empty($product->image_second)) : ?>
-                        <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_item_image($product, true); ?>" alt="<?php echo get_product_title($product); ?>" class="lazyload img-fluid img-product img-second">
+                        <img src="<?php echo other_base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_item_image($product, true); ?>" alt="<?php echo get_product_title($product); ?>" class="lazyload img-fluid img-product img-second">
                     <?php endif; ?>
                 </a>
             <?php endif; ?>
@@ -63,15 +65,15 @@
                     </a>
                 </div>
             <?php endif; ?>
-                <?php if(get_vendor_shop_status($product->user_id)==0):?>
-                   
-            <span class="badge badge-dark badge-promoted" id="cvl">Shop Closed</span>
-                    <?php else:?>
-                       
-               
-               <span class="badge badge-dark badge-promoted" style="display:none"></span>
-                    <?php endif;?>
-                  
+            <?php if (get_vendor_shop_status($product->user_id) == 0) : ?>
+
+                <span class="badge badge-dark badge-promoted" id="cvl">Shop Closed</span>
+            <?php else : ?>
+
+
+                <span class="badge badge-dark badge-promoted" style="display:none"></span>
+            <?php endif; ?>
+
 
             <div class="product-item-options">
                 <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">

@@ -1413,9 +1413,13 @@ class Product_model extends Core_Model
     }
 
     //get paginated filtered products by concern
-    public function get_products_shop_by_concern($query_string_array = null, $category_id = null, $per_page, $offset, $type)
+    public function get_products_shop_by_concern($query_string_array = null, $category_id = null, $per_page, $offset, $type, $only_category = false)
     {
-        $this->filter_products($query_string_array, $category_id);
+        if (!$only_category) :
+            $this->filter_products($query_string_array, $category_id);
+        else :
+            $this->filter_products($query_string_array, $category_id, $only_category);
+        endif;
 
         $this->db->limit(clean_number($per_page), clean_number($offset));
         $this->db->join('category_feature', 'products.category_id=category_feature.category_id');
@@ -1453,17 +1457,13 @@ class Product_model extends Core_Model
                 $this->db->where('category_feature.feature_id', $type);
             }
         }
-        // $this->db->distinct();
-        // $this->db->get('products');
-        // var_dump($this->db->last_query());
-        // $res = $this->db->get('products')->result();
-        // var_dump($res);
-        // die();
-        // $this->db->order_by('rand()');
-        // var_dump($this->db->get('products')->result());
-        // die();
         $this->db->distinct();
-        return $this->db->get('products')->result();
+
+        if (!$only_category) :
+            return $this->db->get('products')->result();
+        else :
+            return $this->db->get('products')->result_array();
+        endif;
     }
 
     //get top picks products
@@ -2673,6 +2673,19 @@ class Product_model extends Core_Model
     public function get_category_selected_filters($query_string_array = null, $category_id = null, $per_page, $offset, $only_category = false)
     {
         $categories = $this->get_paginated_filtered_products($query_string_array, $category_id, $per_page, $offset, $only_category);
+        $parent_cat_array = array();
+        foreach ($categories as $category) {
+            $id = $this->category_model->get_parent_categories_tree($category["cat_id"])[0]->id;
+            if (!in_array($id, $parent_cat_array)) {
+                array_push($parent_cat_array, $id);
+            }
+        }
+        return $parent_cat_array;
+    }
+
+    public function get_category_selected_concerned_occasion($query_string_array = null, $category_id = null, $per_page, $offset, $type, $only_category = false)
+    {
+        $categories = $this->get_products_shop_by_concern($query_string_array, $category_id, $per_page, $offset, $type, $only_category);
         $parent_cat_array = array();
         foreach ($categories as $category) {
             $id = $this->category_model->get_parent_categories_tree($category["cat_id"])[0]->id;
