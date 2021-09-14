@@ -452,7 +452,7 @@
                                 <form id="form_validate_newsletter">
                                     <div class="newsletter-inner">
                                         <div class="d-table-cell">
-                                            <input type="text" id="textEmail" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>">
+                                            <input type="text" id="textEmail" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("type_email"); ?>">
                                             <p id="demo"></p>
                                         </div><br />
 
