@@ -316,7 +316,7 @@ if (!function_exists('get_product_item_image')) {
                     if ($image_array[0] == "aws_s3") {
                         return $ci->aws_base_url . "uploads/images/" . $image_array[1];
                     } else {
-                        return base_url() . "uploads/images/" . $image_array[1];
+                        return other_base_url() . "uploads/images/" . $image_array[1];
                     }
                 }
             }
