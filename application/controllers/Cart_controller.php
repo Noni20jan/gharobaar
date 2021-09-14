@@ -1737,4 +1737,136 @@ class Cart_controller extends Home_Core_Controller
             return false;
         }
     }
+
+    // cashfree payouts authentication token API
+    public function init_pay_auth()
+    {
+        $data_cal = $this->input->post('data_cal', true);
+        $data_pay = json_encode($data_cal);
+
+
+        $transfer_auth_url = ($this->general_settings->payout_batch_transfer_url) . "payout/v1/authorize";
+        $transfer_id = $this->general_settings->payout_batch_transfer_id;
+        $transfer_key = $this->general_settings->payout_batch_transfer_key;
+
+        // $header_keys = array(
+        //     "X-Client-Id" => $transfer_id,
+        //     "X-Client-Secret" => $transfer_key
+        // );
+        // var_dump(json_encode($header_keys)) ;die();
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            // CURLOPT_URL => 'https://payout-gamma.cashfree.com/payout/v1/authorize',
+            CURLOPT_URL => $transfer_auth_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => array(
+                'X-Client-Id: ' . $transfer_id,
+                'X-Client-Secret: ' . $transfer_key
+            ),
+            // CURLOPT_HTTPHEADER => json_encode($header_keys),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+
+        $token = json_decode($response)->data->token;
+        if (json_decode($response)->status == "SUCCESS") {
+            $this->init_payout($data_pay, $token);
+        } else {
+            echo '<script>alert("Invalid/Expired Token")</script>';
+        }
+    }
+
+    // Cashfree payouts initiate API
+    public function init_payout($data_pay, $token)
+    {
+        $header2 = array(
+            'Content-Type : application/json',
+            'Authorization: Bearer ' . $token
+        );
+
+        $sing_arr = array();
+        $transfer_url = ($this->general_settings->payout_batch_transfer_url) . "payout/v1/requestBatchTransfer";
+        // $length=count($data_pay);
+        $timestamp = date('Y-m-d H:i:s');
+        $six_digit_random_number = random_int(100000, 999999);
+
+        $data_pay_array = json_decode($data_pay);
+        $length = count($data_pay_array);
+        for ($i = 0; $i < $length; $i++) {
+            $obj = new stdClass();
+            $obj->amount = ($data_pay_array[$i]->seller_pay)/100;
+            $obj->transferId = $data_pay_array[$i]->seller_id . "-" . $timestamp;
+            $obj->remarks = "Transfer with Id" . $obj->transferId;
+
+            $obj->name = $data_pay_array[$i]->acc_name;
+            $obj->email = $data_pay_array[$i]->email;
+            $obj->phone = $data_pay_array[$i]->phone;
+            $obj->bankAccount = $data_pay_array[$i]->acc_no;
+            $obj->ifsc = $data_pay_array[$i]->ifsc;
+            array_push($sing_arr, $obj);
+        }
+
+        $new_data = $sing_arr;
+        $post_fields = array(
+
+            "batchTransferId" => "GB" . "-".$six_digit_random_number,
+            "batchFormat" => "BANK_ACCOUNT",
+            "batch" => $new_data
+
+        );
+
+        // var_dump($post_fields["batchTransferId"]);die();
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            // CURLOPT_URL => 'https://payout-gamma.cashfree.com/payout/v1/requestBatchTransfer',
+            CURLOPT_URL => $transfer_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($post_fields),
+            CURLOPT_HTTPHEADER => $header2,
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        // echo $response;
+        // die();
+
+        $status_code = json_decode($response)->subCode;
+        $refrence_id=json_decode($response)->data->referenceId;
+        $message = json_decode($response)->message;
+        $status = json_decode($response)->status;
+        $batch_id=$post_fields["batchTransferId"];
+
+        if ($status_code == "200") {
+
+            for ($i = 0; $i < $length; $i++) {
+                $obj = new stdClass();
+
+
+                $obj->seller_id = $data_pay_array[$i]->seller_id;
+                $obj->order_id = $data_pay_array[$i]->order_id;
+                $this->order_model->update_status_payouts($obj->seller_id, $obj->order_id, $status_code,$refrence_id,$message,$status,$batch_id);
+            }
+            echo $status_code;
+        } else {
+            echo  $status_code;
+        }
+    }
 }

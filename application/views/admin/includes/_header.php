@@ -263,9 +263,10 @@
                         </a>
                         <ul class="treeview-menu">
                             <li class="nav-add-payout"><a href="<?php echo admin_url(); ?>add-payout"> <?php echo trans("add_payout"); ?></a></li>
-                            <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>payout-requests"> <?php echo trans("payout_requests"); ?></a></li>
-                            <li class="nav-completed-payouts"><a href="<?php echo admin_url(); ?>completed-payouts"> <?php echo trans("completed_payouts"); ?></a></li>
-                            <li class="nav-payout-settings"><a href="<?php echo admin_url(); ?>payout-settings"> <?php echo trans("payout_settings"); ?></a></li>
+                            <!-- <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>payout-requests"> <?php echo trans("payout_requests"); ?></a></li> -->
+                            <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>initiate-payout"> <?php echo trans("payout_requests"); ?></a></li>
+                            <!-- <li class="nav-completed-payouts"><a href="<?php echo admin_url(); ?>completed-payouts"> <?php echo trans("completed_payouts"); ?></a></li>
+                            <li class="nav-payout-settings"><a href="<?php echo admin_url(); ?>payout-settings"> <?php echo trans("payout_settings"); ?></a></li> -->
                         </ul>
                     </li>
                     <li class="header"><?php echo trans("products"); ?></li>

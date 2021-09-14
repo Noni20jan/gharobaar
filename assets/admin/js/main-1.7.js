@@ -1,15 +1,15 @@
 //update token
-$("form").submit(function() {
+$("form").submit(function () {
     $("input[name='" + csfr_token_name + "']").val($.cookie(csfr_cookie_name));
 });
 
 //custom scrollbar
-$(function() {
+$(function () {
     $('.sidebar-scrollbar').overlayScrollbars({});
 });
 
 //datatable
-$(document).ready(function() {
+$(document).ready(function () {
     $('#cs_datatable').DataTable({
         "order": [
             [0, "desc"]
@@ -32,13 +32,13 @@ $('input[type="checkbox"].square-purple, input[type="radio"].square-purple').iCh
     increaseArea: '20%' // optional
 });
 
-$(function() {
+$(function () {
     $('#tags_1').tagsInput({ width: 'auto' });
 });
 
 
 //check all checkboxes
-$("#checkAll").click(function() {
+$("#checkAll").click(function () {
     $('input:checkbox').not(this).prop('checked', this.checked);
 });
 
@@ -62,7 +62,7 @@ function get_blog_categories_by_lang(val) {
         type: "POST",
         url: base_url + "blog_controller/get_categories_by_lang",
         data: data,
-        success: function(response) {
+        success: function (response) {
             $('#categories').children('option:not(:first)').remove();
             $("#categories").append(response);
         }
@@ -77,10 +77,10 @@ function delete_selected_products(message) {
         buttons: true,
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var product_ids = [];
-            $("input[name='checkbox-table']:checked").each(function() {
+            $("input[name='checkbox-table']:checked").each(function () {
                 product_ids.push(this.value);
             });
             var data = {
@@ -91,7 +91,7 @@ function delete_selected_products(message) {
                 type: "POST",
                 url: base_url + "product_controller/delete_selected_products",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     location.reload();
                 }
             });
@@ -107,10 +107,10 @@ function delete_selected_products_permanently(message) {
         buttons: true,
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var product_ids = [];
-            $("input[name='checkbox-table']:checked").each(function() {
+            $("input[name='checkbox-table']:checked").each(function () {
                 product_ids.push(this.value);
             });
             var data = {
@@ -121,7 +121,7 @@ function delete_selected_products_permanently(message) {
                 type: "POST",
                 url: base_url + "product_controller/delete_selected_products_permanently",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     location.reload();
                 }
             });
@@ -140,14 +140,14 @@ function remove_from_featured(val) {
         type: "POST",
         url: base_url + "product_controller/add_remove_featured_products",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
 }
 
 //remove from featured for seller
-function remove_from_featured_sellers(a,val) {
+function remove_from_featured_sellers(a, val) {
     swal({
         text: a,
         icon: "warning",
@@ -163,7 +163,7 @@ function remove_from_featured_sellers(a,val) {
                 type: "POST",
                 url: base_url + "admin_controller/add_remove_featured_sellers",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     location.reload();
                 }
             });
@@ -181,7 +181,7 @@ function add_remove_special_offers(val) {
         type: "POST",
         url: base_url + "product_controller/add_remove_special_offers",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
@@ -197,14 +197,14 @@ function edit_address(address_id) {
         url: base_url + "edit-address",
         type: "post",
         data: data,
-        success: function(response) {
+        success: function (response) {
             //alert(response);
             var obj = JSON.parse(response);
             if (obj.result == 1) {
                 document.getElementById("response_edit_address").innerHTML = obj.html_content;
             }
             setTimeout(
-                function() {
+                function () {
                     $("#editaddress-modal").modal('show');
                 }, 200);
         }
@@ -221,14 +221,14 @@ function edit_card(card_id) {
         url: base_url + "edit-card",
         type: "post",
         data: data,
-        success: function(response) {
+        success: function (response) {
             //alert(response);
             var obj = JSON.parse(response);
             if (obj.result == 1) {
                 document.getElementById("response_edit_card").innerHTML = obj.html_content;
             }
             setTimeout(
-                function() {
+                function () {
                     $("#editcard-modal").modal('show');
                 }, 200);
         }
@@ -243,7 +243,7 @@ function delete_item(url, id, message) {
         buttons: true,
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 'id': id,
@@ -253,7 +253,7 @@ function delete_item(url, id, message) {
                 type: "POST",
                 url: base_url + url,
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     location.reload();
                 }
             });
@@ -273,7 +273,7 @@ function confirm_user_email(id) {
         type: "POST",
         url: base_url + "membership_controller/confirm_user_email",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
@@ -289,7 +289,7 @@ function ban_remove_ban_user(id) {
         type: "POST",
         url: base_url + "membership_controller/ban_remove_ban_user",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
@@ -306,7 +306,7 @@ function get_states_by_country(val) {
         type: "POST",
         url: base_url + "admin_controller/get_states_by_country",
         data: data,
-        success: function(response) {
+        success: function (response) {
             $('#select_states option').remove();
             $("#select_states").append(response);
         }
@@ -323,7 +323,7 @@ function activate_inactivate_countries(action) {
         type: "POST",
         url: base_url + "admin_controller/activate_inactivate_countries",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
@@ -338,7 +338,7 @@ function open_close_user_shop(id, message) {
             buttons: true,
             buttons: [sweetalert_cancel, sweetalert_ok],
             dangerMode: true,
-        }).then(function(approve) {
+        }).then(function (approve) {
             if (approve) {
                 var data = {
                     "id": id
@@ -348,7 +348,7 @@ function open_close_user_shop(id, message) {
                     type: "POST",
                     url: base_url + "membership_controller/open_close_user_shop",
                     data: data,
-                    success: function(response) {
+                    success: function (response) {
                         location.reload();
                     }
                 });
@@ -363,7 +363,7 @@ function open_close_user_shop(id, message) {
             type: "POST",
             url: base_url + "membership_controller/open_close_user_shop",
             data: data,
-            success: function(response) {
+            success: function (response) {
                 location.reload();
             }
         });
@@ -380,7 +380,7 @@ function approve_product(id) {
         type: "POST",
         url: base_url + "product_controller/approve_product",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
@@ -395,7 +395,7 @@ function approve_service(id) {
         type: "POST",
         url: base_url + "product_controller/approve_service",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
@@ -411,7 +411,7 @@ function restore_product(id) {
         type: "POST",
         url: base_url + "product_controller/restore_product",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
@@ -428,7 +428,7 @@ function get_filter_subcategories(val) {
         type: "POST",
         url: base_url + "category_controller/get_subcategories",
         data: data,
-        success: function(response) {
+        success: function (response) {
             $('#subcategories').children('option:not(:first)').remove();
             $("#subcategories").append(response);
         }
@@ -436,16 +436,16 @@ function get_filter_subcategories(val) {
 }
 
 //upload product image update page
-$(document).on('change', '#Multifileupload', function() {
+$(document).on('change', '#Multifileupload', function () {
     var MultifileUpload = document.getElementById("Multifileupload");
-    if (typeof(FileReader) != "undefined") {
+    if (typeof (FileReader) != "undefined") {
         var MultidvPreview = document.getElementById("MultidvPreview");
         MultidvPreview.innerHTML = "";
         var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
         for (var i = 0; i < MultifileUpload.files.length; i++) {
             var file = MultifileUpload.files[i];
             var reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 var img = document.createElement("IMG");
                 img.height = "100";
                 img.width = "100";
@@ -465,7 +465,7 @@ function show_preview_image(input) {
     var name = $(input).attr('name');
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             $('#img_preview_' + name).attr('src', e.target.result);
         }
         reader.readAsDataURL(input.files[0]);
@@ -479,7 +479,7 @@ function delete_item(url, id, message) {
         buttons: true,
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 'id': id,
@@ -489,7 +489,7 @@ function delete_item(url, id, message) {
                 type: "POST",
                 url: base_url + url,
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     location.reload();
                 }
             });
@@ -504,11 +504,11 @@ function delete_selected_reviews(message) {
         buttons: true,
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
 
             var review_ids = [];
-            $("input[name='checkbox-table']:checked").each(function() {
+            $("input[name='checkbox-table']:checked").each(function () {
                 review_ids.push(this.value);
             });
             var data = {
@@ -519,7 +519,7 @@ function delete_selected_reviews(message) {
                 type: "POST",
                 url: base_url + "product_controller/delete_selected_reviews",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     location.reload();
                 }
             });
@@ -536,11 +536,11 @@ function delete_selected_user_reviews(message) {
         buttons: true,
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
 
             var review_ids = [];
-            $("input[name='checkbox-table']:checked").each(function() {
+            $("input[name='checkbox-table']:checked").each(function () {
                 review_ids.push(this.value);
             });
             var data = {
@@ -551,7 +551,7 @@ function delete_selected_user_reviews(message) {
                 type: "POST",
                 url: base_url + "admin_controller/delete_selected_user_reviews",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     location.reload();
                 }
             });
@@ -563,7 +563,7 @@ function delete_selected_user_reviews(message) {
 //approve selected comments
 function approve_selected_comments() {
     var comment_ids = [];
-    $("input[name='checkbox-table']:checked").each(function() {
+    $("input[name='checkbox-table']:checked").each(function () {
         comment_ids.push(this.value);
     });
     var data = {
@@ -574,7 +574,7 @@ function approve_selected_comments() {
         type: "POST",
         url: base_url + "product_controller/approve_selected_comments",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
@@ -589,11 +589,11 @@ function delete_selected_comments(message) {
         buttons: true,
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
 
             var comment_ids = [];
-            $("input[name='checkbox-table']:checked").each(function() {
+            $("input[name='checkbox-table']:checked").each(function () {
                 comment_ids.push(this.value);
             });
             var data = {
@@ -604,7 +604,7 @@ function delete_selected_comments(message) {
                 type: "POST",
                 url: base_url + "product_controller/delete_selected_comments",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     location.reload();
                 }
             });
@@ -616,7 +616,7 @@ function delete_selected_comments(message) {
 //approve selected comments
 function approve_selected_blog_comments() {
     var comment_ids = [];
-    $("input[name='checkbox-table']:checked").each(function() {
+    $("input[name='checkbox-table']:checked").each(function () {
         comment_ids.push(this.value);
     });
     var data = {
@@ -627,7 +627,7 @@ function approve_selected_blog_comments() {
         type: "POST",
         url: base_url + "blog_controller/approve_selected_comments",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
@@ -641,11 +641,11 @@ function delete_selected_blog_comments(message) {
         buttons: true,
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
 
             var comment_ids = [];
-            $("input[name='checkbox-table']:checked").each(function() {
+            $("input[name='checkbox-table']:checked").each(function () {
                 comment_ids.push(this.value);
             });
             var data = {
@@ -656,7 +656,7 @@ function delete_selected_blog_comments(message) {
                 type: "POST",
                 url: base_url + "blog_controller/delete_selected_comments",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     location.reload();
                 }
             });
@@ -673,7 +673,7 @@ function delete_custom_field_option(message, id) {
         buttons: true,
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 "id": id
@@ -683,7 +683,7 @@ function delete_custom_field_option(message, id) {
                 type: "POST",
                 url: base_url + "category_controller/delete_custom_field_option",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     location.reload();
                 }
             });
@@ -699,7 +699,7 @@ function delete_custom_field_category(message, field_id, category_id) {
         buttons: true,
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 "field_id": field_id,
@@ -710,7 +710,7 @@ function delete_custom_field_category(message, field_id, category_id) {
                 type: "POST",
                 url: base_url + "category_controller/delete_custom_field_category",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     location.reload();
                 }
             });
@@ -726,7 +726,7 @@ function approve_bank_transfer(id, order_id, message) {
         buttons: true,
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             var data = {
                 'id': id,
@@ -738,7 +738,7 @@ function approve_bank_transfer(id, order_id, message) {
                 type: "POST",
                 url: base_url + "order_admin_controller/bank_transfer_options_post",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     location.reload();
                 }
             });
@@ -758,14 +758,14 @@ function remove_by_homepage_manager(category_id, submit) {
         type: "POST",
         url: base_url + "admin_controller/homepage_manager_post",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
 };
 
 //update featured category order
-$(document).on("input", ".input-featured-categories-order", function() {
+$(document).on("input", ".input-featured-categories-order", function () {
     var val = $(this).val();
     var category_id = $(this).attr("data-category-id");
     var data = {
@@ -781,7 +781,7 @@ $(document).on("input", ".input-featured-categories-order", function() {
 });
 
 //update homepage category order
-$(document).on("input", ".input-index-categories-order", function() {
+$(document).on("input", ".input-index-categories-order", function () {
     var val = $(this).val();
     var category_id = $(this).attr("data-category-id");
     var data = {
@@ -796,30 +796,30 @@ $(document).on("input", ".input-index-categories-order", function() {
     });
 });
 
-$('.increase-count').each(function() {
+$('.increase-count').each(function () {
     $(this).prop('Counter', 0).animate({
         Counter: $(this).text()
     }, {
         duration: 1000,
         easing: 'swing',
-        step: function(now) {
+        step: function (now) {
             $(this).text(Math.ceil(now));
         }
     });
 });
 
-$('#selected_system_marketplace').on('ifChecked', function() {
+$('#selected_system_marketplace').on('ifChecked', function () {
     $('.system-currency-select').show();
 });
-$('#selected_system_classified_ads').on('ifChecked', function() {
+$('#selected_system_classified_ads').on('ifChecked', function () {
     $('.system-currency-select').hide();
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('.magnific-image-popup').magnificPopup({ type: 'image' });
 });
 
-$(document).on("input keyup paste change", ".validate_price .price-input", function() {
+$(document).on("input keyup paste change", ".validate_price .price-input", function () {
     var val = $(this).val();
     val = val.replace(',', '.');
     if ($.isNumeric(val) && val != 0) {
@@ -829,9 +829,9 @@ $(document).on("input keyup paste change", ".validate_price .price-input", funct
     }
 });
 
-$(document).ready(function() {
-    $('.validate_price').submit(function(e) {
-        $('.validate_price .validate-price-input').each(function() {
+$(document).ready(function () {
+    $('.validate_price').submit(function (e) {
+        $('.validate_price .validate-price-input').each(function () {
             var val = $(this).val();
             val = val.replace(',', '.');
             if ($.isNumeric(val) && val != 0) {
@@ -845,7 +845,7 @@ $(document).ready(function() {
     });
 });
 
-$('.price-input').keypress(function(event) {
+$('.price-input').keypress(function (event) {
     if (typeof thousands_separator == 'undefined') {
         thousands_separator = '.';
     }
@@ -891,7 +891,7 @@ function delete_category_image(category_id) {
         type: "POST",
         url: base_url + "category_controller/delete_category_image_post",
         data: data,
-        success: function(response) {
+        success: function (response) {
             $(".img-category").remove();
             $(".btn-delete-category-img").hide();
         }
@@ -908,14 +908,14 @@ function delete_category_watermark(category_id) {
         type: "POST",
         url: base_url + "admin_controller/delete_category_watermark_post",
         data: data,
-        success: function(response) {
+        success: function (response) {
             location.reload();
         }
     });
 };
 
 //update translation
-$(document).on("input keyup paste change", ".input_translation", function() {
+$(document).on("input keyup paste change", ".input_translation", function () {
     var data = {
         "lang_id": $(this).attr("data-lang"),
         "label": $(this).attr("data-label"),
@@ -926,10 +926,10 @@ $(document).on("input keyup paste change", ".input_translation", function() {
         type: "POST",
         url: base_url + "language_controller/update_translation_post",
         data: data,
-        success: function(response) {}
+        success: function (response) { }
     });
 });
-$(document).on('input keyup paste', '.number-spinner input', function() {
+$(document).on('input keyup paste', '.number-spinner input', function () {
     var val = $(this).val();
     val = parseInt(val);
     if (val < 1) {
@@ -937,7 +937,7 @@ $(document).on('input keyup paste', '.number-spinner input', function() {
     }
     $(this).val(val);
 });
-$(document).ajaxStop(function() {
+$(document).ajaxStop(function () {
 
     $('input[type="checkbox"].square-purple, input[type="radio"].square-purple').iCheck({
         checkboxClass: 'icheckbox_square-purple',
@@ -955,11 +955,41 @@ function delete_selected_item(element, id, input_id, message) {
         buttons: true,
         buttons: [sweetalert_cancel, sweetalert_ok],
         dangerMode: true,
-    }).then(function(willDelete) {
+    }).then(function (willDelete) {
         if (willDelete) {
             $("#" + input_id).val("");
             $("#" + id)[0].src = base_url + "/assets/img/upload.jpg ";
             element.hide();
+        }
+    });
+};
+
+
+function init_pay(data_cal) {
+
+    var data = {
+        "data_cal": data_cal,
+        "sys_lang_id": sys_lang_id
+        // "supplier_id": user_id
+    };
+    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+    $.ajax({
+        method: "POST",
+        url: base_url + "cart_controller/init_pay_auth",
+        data: data,
+        success: function (response) {
+            // alert(response);
+            // var res=response;
+            console.log(response);
+            if(response==200){
+                alert("Payout Initiated");
+                location.reload();
+            }
+            else if(response!=200){
+                alert("ERROR/Batch TransferId already exists. Please try again");
+                location.reload();
+            }
+            
         }
     });
 };
