@@ -102,7 +102,7 @@ if (!function_exists('other_base_url')) {
 	 */
 	function other_base_url($uri = '', $protocol = NULL)
 	{
-		return "https://gharobaar.s3.ap-south-1.amazonaws.com/";
+		return "https://live-gharobaar.s3.ap-south-1.amazonaws.com/";
 	}
 }
 // ------------------------------------------------------------------------
