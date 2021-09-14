@@ -1798,14 +1798,16 @@ class Cart_controller extends Home_Core_Controller
         $transfer_url = ($this->general_settings->payout_batch_transfer_url) . "payout/v1/requestBatchTransfer";
         // $length=count($data_pay);
         $timestamp = date('Y-m-d H:i:s');
+        $transfer_id = random_int(10000, 99999);
         $six_digit_random_number = random_int(100000, 999999);
 
         $data_pay_array = json_decode($data_pay);
         $length = count($data_pay_array);
         for ($i = 0; $i < $length; $i++) {
             $obj = new stdClass();
-            $obj->amount = ($data_pay_array[$i]->seller_pay)/100;
-            $obj->transferId = $data_pay_array[$i]->seller_id . "-" . $timestamp;
+            $obj->amount = ($data_pay_array[$i]->seller_pay) / 100;
+            // $obj->transferId = $data_pay_array[$i]->seller_id . "-" . $timestamp;
+            $obj->transferId = $transfer_id;
             $obj->remarks = "Transfer with Id" . $obj->transferId;
 
             $obj->name = $data_pay_array[$i]->acc_name;
@@ -1819,7 +1821,7 @@ class Cart_controller extends Home_Core_Controller
         $new_data = $sing_arr;
         $post_fields = array(
 
-            "batchTransferId" => "GB" . "-".$six_digit_random_number,
+            "batchTransferId" => "GB" . "-" . $six_digit_random_number,
             "batchFormat" => "BANK_ACCOUNT",
             "batch" => $new_data
 
@@ -1849,10 +1851,10 @@ class Cart_controller extends Home_Core_Controller
         // die();
 
         $status_code = json_decode($response)->subCode;
-        $refrence_id=json_decode($response)->data->referenceId;
+        $refrence_id = json_decode($response)->data->referenceId;
         $message = json_decode($response)->message;
         $status = json_decode($response)->status;
-        $batch_id=$post_fields["batchTransferId"];
+        $batch_id = $post_fields["batchTransferId"];
 
         if ($status_code == "200") {
 
@@ -1862,7 +1864,7 @@ class Cart_controller extends Home_Core_Controller
 
                 $obj->seller_id = $data_pay_array[$i]->seller_id;
                 $obj->order_id = $data_pay_array[$i]->order_id;
-                $this->order_model->update_status_payouts($obj->seller_id, $obj->order_id, $status_code,$refrence_id,$message,$status,$batch_id);
+                $this->order_model->update_status_payouts($obj->seller_id, $obj->order_id, $status_code, $refrence_id, $message, $status, $batch_id);
             }
             echo $status_code;
         } else {
