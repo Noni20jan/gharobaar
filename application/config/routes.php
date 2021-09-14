@@ -504,6 +504,8 @@ $route[getr('admin', $rts) . '/update-currency/(:num)'] = 'admin_controller/upda
 //newsletter
 $route[getr('admin', $rts) . '/send-email-subscribers'] = 'admin_controller/send_email_subscribers';
 $route[getr('admin', $rts) . '/subscribers'] = 'admin_controller/subscribers';
+$route[getr('admin', $rts) . '/send-email-members'] = 'admin_controller/send_email_members';
+
 
 $route[getr('admin', $rts) . '/contact-messages'] = 'admin_controller/contact_messages';
 $route[getr('admin', $rts) . '/preferences'] = 'admin_controller/preferences';

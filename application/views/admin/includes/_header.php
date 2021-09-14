@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/font-awesome/css/font-awesome.min.css">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Bootstrap select css -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/bootstrap-select.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/icheck/square/purple.css">
     <link rel="stylesheet" href="<?= base_url(); ?>assets/admin/vendor/icheck/square/blue.css">
@@ -489,6 +491,17 @@
                             </li>
                             <li class="nav-subscribers">
                                 <a href="<?php echo admin_url(); ?>subscribers"><?php echo trans("subscribers"); ?></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview<?php is_admin_nav_active(['send-email-members', 'members']); ?>">
+                        <a href="#">
+                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/news.png" alt="" style="width: 20px; height: 20px;" />
+                            <span><?php echo trans("newsletter"); ?></span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="nav-send-email-subscribers">
+                                <a href="<?php echo admin_url(); ?>send-email-members"><?php echo trans("send_email_members"); ?></a>
                             </li>
                         </ul>
                     </li>

@@ -384,6 +384,17 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/newsletter/send_email', $data);
         $this->load->view('admin/includes/_footer');
     }
+    /**
+     * Send Email to members
+     */
+    public function send_email_members()
+    {
+        $data['title'] = trans("send_email_members");
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/newsletter/send_email_members', $data);
+        $this->load->view('admin/includes/_footer');
+    }
 
     /**
      * Newsletter Send Email Post
@@ -414,7 +425,55 @@ class Admin_controller extends Admin_Core_Controller
         }
         redirect($this->agent->referrer());
     }
-
+    /**
+     * Newsletter Send Email Members Post
+     */
+    public function send_email_members_post()
+    {
+        $this->load->model("email_model");
+        $emailto = $this->input->post('emailto', true);
+        $subject = $this->input->post('subject', true);
+        $message = $this->input->post('message', true);
+        foreach ($emailto as $emailto) {
+            if ($emailto == "all") {
+                $data['email'] = $this->newsletter_model->get_members();
+                $result = false;
+                if (!empty($data['email'])) {
+                    $result = true;
+                    foreach ($data['email'] as $emailtoall) {
+                        //send email
+                        if (!$this->email_model->send_email_members_newsletter($emailto, $emailtoall, $subject, $message)) {
+                            $result = false;
+                        } else {
+                            $result = true;
+                        }
+                    }
+                }
+            } else {
+                //$data['email'] = $this->newsletter_model->get_members();
+                // $result = false;
+                // if (!empty($data['email'])) {
+                //$result = true;
+                // foreach ($data['email'] as $emailto) {
+                //send email
+                $emailtoall = $emailto;
+                $emailto = "members";
+                if (!$this->email_model->send_email_members_newsletter($emailto, $emailtoall, $subject, $message)) {
+                    $result = false;
+                } else {
+                    $result = true;
+                }
+                // }
+                //}
+            }
+        }
+        if ($result == true) {
+            $this->session->set_flashdata('success', trans("msg_email_sent"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+        redirect($this->agent->referrer());
+    }
 
     /**
      * Subscribers

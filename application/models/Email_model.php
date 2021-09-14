@@ -386,6 +386,44 @@ class Email_model extends CI_Model
             return $this->send_email($data);
         }
     }
+    //send email newsletter members
+    public function send_email_members_newsletter($emailto, $emailtoall, $subject, $message)
+    {
+        if ($emailto == "members") {
+            if (!empty($emailtoall)) {
+                if (empty($emailto->token)) {
+                    $this->newsletter_model->update_subscriber_token($emailtoall->email);
+                    $subscriber = $this->newsletter_model->get_subscriber($emailtoall->email);
+                }
+
+                $data = array(
+                    'subject' => $subject,
+                    'message' => $message,
+                    'to' => $emailtoall,
+                    'template_path' => "email/email_newsletter",
+                    // 'subscriber' => $subscriber,
+                );
+                return $this->send_email($data);
+            }
+        }
+        if ($emailto == "all") {
+            if (!empty($emailtoall)) {
+                if (empty($emailto->token)) {
+                    $this->newsletter_model->update_subscriber_token($emailtoall->email);
+                    $subscriber = $this->newsletter_model->get_subscriber($emailtoall->email);
+                }
+
+                $data = array(
+                    'subject' => $subject,
+                    'message' => $message,
+                    'to' => $emailtoall->email,
+                    'template_path' => "email/email_newsletter",
+                    // 'subscriber' => $subscriber,
+                );
+                return $this->send_email($data);
+            }
+        }
+    }
 
     //send email
     public function send_email($data)
