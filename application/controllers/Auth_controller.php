@@ -66,6 +66,25 @@ class Auth_controller extends Home_Core_Controller
         }
     }
 
+    public function set_user_session_data()
+    {
+        $mobile_number = $this->input->post('number');
+        $user = $this->auth_model->set_user_session_data($mobile_number);
+        if (!empty($user)) {
+            $data = array(
+                'result' => 1,
+                'user' => $user
+            );
+            echo json_encode($data);
+        } else {
+            $data = array(
+                'result' => 0,
+                'error_message' => $this->load->view('partials/_messages', '', true)
+            );
+            echo json_encode($data);
+        }
+    }
+
     public function shiprocket()
     {
         $curl = curl_init();

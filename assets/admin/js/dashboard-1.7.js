@@ -928,8 +928,8 @@ function send_verification_otp(phn_num, label_content, email) {
         success: function (response) {
             if (response != null) {
                 var i = JSON.parse(response);
-                console.log(i.otp);
-                console.log(i.message);
+                // console.log(i.otp);
+                // console.log(i.message);
                 document.getElementById("send-otp-result").innerHTML = i.html_content1;
                 $("#cross-btn").click(function () {
                     document.getElementById("btnsubmit_register").disabled = true;
@@ -961,10 +961,10 @@ function send_email_otp(email, label_content) {
         success: function (response) {
             if (response != null) {
                 var i = JSON.parse(response);
-                console.log(i);
-                console.log(i.otp);
-                console.log(i.email);
-                console.log(i.message);
+                // console.log(i);
+                // console.log(i.otp);
+                // console.log(i.email);
+                // console.log(i.message);
                 document.getElementById("send-otp-result").innerHTML = i.html_content1;
                 $("#cross-btn").click(function () {
                     document.getElementById("btnsubmit_register").disabled = true;
@@ -1019,7 +1019,7 @@ function otp_verification(input_otp) {
         },
         success: function (response) {
             var i = JSON.parse(response);
-            console.log(i.result);
+            // console.log(i.result);
             if (i.result == true) {
                 document.getElementById("otp_field").value = "";
                 document.getElementById("send-otp-result").innerHTML = i.html_content2;

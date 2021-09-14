@@ -163,7 +163,11 @@
         top: 11px;
     }
 
-
+    .OtpSendMsg {
+        margin-bottom: 10px;
+        text-align: center;
+        color: green;
+    }
 
     .enter_p::placeholder {
 
@@ -4433,6 +4437,9 @@
                             <div class="form-group text-right">
                                 <a href="<?php echo generate_url("forgot_password"); ?>" class="link-forgot-password"><?php echo trans("forgot_password"); ?></a>
                             </div>
+                            <div style="text-align:center;  margin-bottom:5px">
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class="logintoOtp">Login using OTP</a>
+                            </div>
                             <div class="form-group" style="text-align:center;">
                                 <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login"); ?></button>
                             </div>
@@ -4496,6 +4503,52 @@
                 </div>
             </div>
         </div>
+
+        <!-- login with OTP model start -->
+        <div class="modal fade" id="OtploginModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
+                <div class="modal-content">
+                    <div class="auth-box" style="width: 370px;">
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                        <h4 class="title"><?php echo trans("login"); ?></h4>
+                        <!-- form start -->
+                        <form id="form_login_otp">
+                            <div class="social-login-cnt">
+                                <?php $this->load->view("partials/_social_login", ["or_text" => trans("login_with_email")]); ?>
+                            </div>
+                            <!-- include message block -->
+                            <div id="result-login" class="font-size-13"></div>
+                            <div class="OtpSendMsg">
+                                <span id="OtpSendMsg"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="registeredNumber" class="form-control auth-form-input" placeholder="<?php echo trans("register_mobile"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
+                                <span id="login_otp_check"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="loginOtp" id="loginOtp" class="form-control auth-form-input" placeholder="Enter Otp" required maxlength="6">
+                                <span id="login_otp_span"></span>
+                            </div>
+
+                            <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" id="resend_login_otp" class="link">Resend OTP</a></p>
+
+                            <div class="form-group" style="text-align:center;">
+                                <button type="button" id="sendLoginOtp" class="btn btn-md btn-custom btn-block-new-ui">Send OTP</button>
+                            </div>
+                            <div class="form-group" style="text-align:center;">
+                                <button type="button" id="verify_login_otp" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login"); ?></button>
+                            </div>
+                        </form>
+                        <!-- form end -->
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- login using OTP model end  -->
 
 
         <script>
@@ -5110,6 +5163,13 @@
                 $('body').addClass('modal-open');
             }
         });
+        $(document).on("click", ".logintoOtp", function() {
+            console.log("click")
+            $('#loginModal').modal('hide');
+            setTimeout(function() {
+                $('#OtploginModal').modal('show');
+            }, 500);
+        });
     </script>
 
     <script>
@@ -5172,6 +5232,38 @@
                 otp_verification(input_otp);
             }
         })
+
+        $("#sendLoginOtp").click(function() {
+            document.getElementById("login_otp_check").innerHTML = "";
+            var phn_number = $("input[name = registeredNumber] ").val();
+            if (phn_number == '') {
+                document.getElementById("login_otp_check").innerHTML = "*Please enter registered mobile number !";
+            } else if (phn_number != '' && phn_number.length <= 10) {
+                if (phn_number.length == 10) {
+                    var register_phn = check_for_mobile_register_js(phn_number);
+                    if (register_phn == false) {
+                        send_verification_otp(phn_number, "mobile_otp_login");
+                        document.getElementById("OtpSendMsg").innerHTML = "OTP Send Successfully !";
+                        $("#loginOtp").show();
+                        $("#verify_login_otp").show();
+                        $("input[name=registeredNumber]").attr('disabled', true);
+                        $("#submit_otp").show();
+                        $("#sendLoginOtp").hide();
+                    } else if (register_phn == true) {
+                        document.getElementById("login_otp_check").innerHTML = "*Mobile number is not registered!";
+                    }
+                } else {
+                    document.getElementById("login_otp_check").innerHTML = "Enter valid mobile number !";
+                }
+
+            }
+        })
+
+        $(document).ready(function() {
+            $("#submit_otp").hide();
+            $("#loginOtp").hide();
+            $("#verify_login_otp").hide();
+        });
 
         $("#close_btn").click(function() {
             $('#verifyMobileModal').modal('hide');
@@ -5296,6 +5388,11 @@
             var phn_num = document.getElementById("phone_number").value;
             var email_address = document.getElementById("email_new").value;
             send_verification_otp(phn_num, "mobile_otp", email_address);
+        })
+
+        $("#resend_login_otp").click(function() {
+            var phn_num = $("input[name = registeredNumber] ").val();
+            send_verification_otp(phn_num, "mobile_otp");
         })
     </script>
     <script>
