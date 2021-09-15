@@ -4509,7 +4509,7 @@
             <div class="modal-dialog modal-dialog-centered login-modal" role="document">
                 <div class="modal-content">
                     <div class="auth-box" style="width: 370px;">
-                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close" onclick="reloadPage()"></i></button>
                         <h4 class="title"><?php echo trans("login"); ?></h4>
                         <!-- form start -->
                         <form id="form_login_otp">
@@ -4541,8 +4541,6 @@
                             </div>
                         </form>
                         <!-- form end -->
-
-
                     </div>
 
                 </div>
@@ -5259,6 +5257,10 @@
 
             }
         })
+
+        function reloadPage() {
+            location.reload()
+        }
 
         $(document).ready(function() {
             $("#submit_otp").hide();
