@@ -3889,7 +3889,7 @@
     <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
     <!-- chat systems  -->
 
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         var Tawk_API = Tawk_API || {},
             Tawk_LoadStart = new Date();
         (function() {
@@ -3901,7 +3901,7 @@
             s1.setAttribute('crossorigin', '*');
             s0.parentNode.insertBefore(s1, s0);
         })();
-    </script>
+    </script> -->
     <!-- chat system end -->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -4523,12 +4523,12 @@
                             </div>
                             <div class="form-group">
                                 <input type="text" name="registeredNumber" class="form-control auth-form-input" placeholder="<?php echo trans("register_mobile"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
-                                <span id="login_otp_check"></span>
+                                <span id="login_otp_check" style="color: red;"></span>
                             </div>
 
                             <div class="form-group">
                                 <input type="text" name="loginOtp" id="loginOtp" class="form-control auth-form-input" placeholder="Enter Otp" required maxlength="6">
-                                <span id="login_otp_span"></span>
+                                <span id="login_otp_span" style="color: red;"></span>
                             </div>
 
                             <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" id="resend_login_otp" class="link">Resend OTP</a></p>
@@ -5249,6 +5249,7 @@
                         $("input[name=registeredNumber]").attr('disabled', true);
                         $("#submit_otp").show();
                         $("#sendLoginOtp").hide();
+                        $("#resend_login_otp").show();
                     } else if (register_phn == true) {
                         document.getElementById("login_otp_check").innerHTML = "*Mobile number is not registered!";
                     }
@@ -5263,6 +5264,7 @@
             $("#submit_otp").hide();
             $("#loginOtp").hide();
             $("#verify_login_otp").hide();
+            $("#resend_login_otp").hide();
         });
 
         $("#close_btn").click(function() {
