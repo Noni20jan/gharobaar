@@ -491,6 +491,12 @@ $route[getr('admin', $rts) . '/edit-plan/(:num)'] = 'membership_controller/edit_
 
 $route[getr('admin', $rts) . '/cache-system'] = 'admin_controller/cache_system';
 $route[getr('admin', $rts) . '/storage'] = 'admin_controller/storage';
+
+
+/*offers routes*/
+$route[getr('admin', $rts) . '/offers'] = 'offer_controller/offers';
+
+
 /*languages routes*/
 $route[getr('admin', $rts) . '/languages'] = 'language_controller/languages';
 $route[getr('admin', $rts) . '/update-language/(:num)'] = 'language_controller/update_language/$1';
