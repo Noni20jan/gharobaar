@@ -4531,7 +4531,7 @@
                                 <span id="login_otp_span" style="color: red;"></span>
                             </div>
 
-                            <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" id="resend_login_otp" class="link">Resend OTP</a></p>
+                            <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" id="resend_login_otp" class="link" style="text-decoration: underline; color:blue !important">Resend OTP</a></p>
 
                             <div class="form-group" style="text-align:center;">
                                 <button type="button" id="sendLoginOtp" class="btn btn-md btn-custom btn-block-new-ui">Send OTP</button>
@@ -5394,7 +5394,7 @@
 
         $("#resend_login_otp").click(function() {
             var phn_num = $("input[name = registeredNumber] ").val();
-            send_verification_otp(phn_num, "mobile_otp");
+            send_verification_otp(phn_num, "mobile_otp_login");
         })
     </script>
     <script>
