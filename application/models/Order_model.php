@@ -3801,7 +3801,7 @@ class Order_model extends CI_Model
     }
 
 
-    public function update_status_payouts($seller_id, $order_id, $status_code, $refrence_id, $message, $status,$batchid)
+    public function update_status_payouts($seller_id, $order_id, $status_code, $refrence_id, $message, $status,$batchid,$payout_charge)
     {
         $data = array(
             'payout_initiated' => 1,
@@ -3811,6 +3811,7 @@ class Order_model extends CI_Model
             'subCode' => $status_code,
             'updated_at' => date('Y-m-d H:i:s'),
             'batch_transfer_id'=>$batchid,
+            'payout_charge'=>$payout_charge,
         );
 
         $this->db->where('order_id', $order_id);
