@@ -1805,7 +1805,17 @@ class Cart_controller extends Home_Core_Controller
         $length = count($data_pay_array);
         for ($i = 0; $i < $length; $i++) {
             $obj = new stdClass();
-            $obj->amount = ($data_pay_array[$i]->seller_pay) / 100;
+
+
+            if ((($data_pay_array[$i]->seller_pay) / 100) < 1000) {
+                $obj->amount = (($data_pay_array[$i]->seller_pay) / 100) - 2.50;
+            } else if ((($data_pay_array[$i]->seller_pay) / 100) >= 1000 && (($data_pay_array[$i]->seller_pay) / 100) < 10000) {
+                $obj->amount = (($data_pay_array[$i]->seller_pay) / 100) - 5.00;
+            } else if ((($data_pay_array[$i]->seller_pay) / 100) >= 10000) {
+                $obj->amount = (($data_pay_array[$i]->seller_pay) / 100) - 10.00;
+            }
+            // $obj->amount = ($data_pay_array[$i]->seller_pay) / 100;
+
             // $obj->transferId = $data_pay_array[$i]->seller_id . "-" . $timestamp;
             $obj->transferId = $transfer_id;
             $obj->remarks = "Transfer with Id" . $obj->transferId;
@@ -1862,9 +1872,23 @@ class Cart_controller extends Home_Core_Controller
                 $obj = new stdClass();
 
 
+
+
+
+                if ((($data_pay_array[$i]->seller_pay) / 100) < 1000) {
+                    $obj->payout_charge =  2.50;
+                } else if ((($data_pay_array[$i]->seller_pay) / 100) >= 1000 && (($data_pay_array[$i]->seller_pay) / 100) < 10000) {
+                    $obj->payout_charge =  5.00;
+                } else if ((($data_pay_array[$i]->seller_pay) / 100) >= 10000) {
+                    $obj->payout_charge =  10.00;
+                }
+
+
+
+
                 $obj->seller_id = $data_pay_array[$i]->seller_id;
                 $obj->order_id = $data_pay_array[$i]->order_id;
-                $this->order_model->update_status_payouts($obj->seller_id, $obj->order_id, $status_code, $refrence_id, $message, $status, $batch_id);
+                $this->order_model->update_status_payouts($obj->seller_id, $obj->order_id, $status_code, $refrence_id, $message, $status, $batch_id,$obj->payout_charge);
             }
             echo $status_code;
         } else {
