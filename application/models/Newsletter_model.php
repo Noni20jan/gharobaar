@@ -50,6 +50,12 @@ class Newsletter_model extends CI_Model
         $query = $this->db->get('users');
         return $query->result();
     }
+    public function get_members1()
+    {
+        $this->db->where('email_status', 1);
+        $query = $this->db->get('users');
+        return $query->result();
+    }
 
     //get subscriber
     public function get_subscriber($email)

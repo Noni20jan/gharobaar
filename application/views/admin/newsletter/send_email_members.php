@@ -17,9 +17,9 @@
                 <!-- include message block -->
                 <?php $this->load->view('admin/includes/_messages'); ?>
                 <div class="form-group">
-                    <label><?php echo trans('To'); ?></label>
+                    <label><?php echo trans('emailto'); ?></label>
                     <select name="emailto[]" id="user_selection" class="selectpicker" data-live-search="true" multiple>
-                        <?php $data['email'] = $this->newsletter_model->get_members(); ?>
+                        <?php $data['email'] = $this->newsletter_model->get_members1(); ?>
                         <option value="all">All</option>
                         <?php foreach ($data['email'] as $email) { ?>
                             <option value="<?php echo $email->email; ?>"><?php echo $email->email; ?></option>

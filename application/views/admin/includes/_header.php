@@ -498,7 +498,7 @@
                     <li class="treeview<?php is_admin_nav_active(['send-email-members', 'members']); ?>">
                         <a href="#">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/news.png" alt="" style="width: 20px; height: 20px;" />
-                            <span><?php echo trans("newsletter"); ?></span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            <span><?php echo trans("Members"); ?></span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
                             <li class="nav-send-email-subscribers">

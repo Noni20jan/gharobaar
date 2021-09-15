@@ -391,35 +391,42 @@ class Email_model extends CI_Model
     {
         if ($emailto == "members") {
             if (!empty($emailtoall)) {
-                if (empty($emailto->token)) {
-                    $this->newsletter_model->update_subscriber_token($emailtoall->email);
-                    $subscriber = $this->newsletter_model->get_subscriber($emailtoall->email);
-                }
+                // if (empty($emailto->token)) {
+                //     $this->newsletter_model->update_subscriber_token($emailtoall->email);
+                //     $subscriber = $this->newsletter_model->get_subscriber($emailtoall->email);
+                // }
 
                 $data = array(
                     'subject' => $subject,
                     'message' => $message,
-                    'to' => $emailtoall,
+                    'to' =>  $this->general_settings->mail_username,
                     'template_path' => "email/email_newsletter",
                     // 'subscriber' => $subscriber,
+                    'bcc' => $emailtoall,
                 );
                 return $this->send_email($data);
             }
         }
         if ($emailto == "all") {
             if (!empty($emailtoall)) {
-                if (empty($emailto->token)) {
-                    $this->newsletter_model->update_subscriber_token($emailtoall->email);
-                    $subscriber = $this->newsletter_model->get_subscriber($emailtoall->email);
-                }
+                // var_dump($emailtoall);
+                // die();
+                // if (empty($emailto->token)) {
+                //     $this->newsletter_model->update_subscriber_token($emailtoall->email);
+                //     $subscriber = $this->newsletter_model->get_subscriber($emailtoall->email);
+                // }
 
                 $data = array(
                     'subject' => $subject,
                     'message' => $message,
-                    'to' => $emailtoall->email,
+                    'to' => $this->general_settings->mail_username,
                     'template_path' => "email/email_newsletter",
+                    // 'bcc' => "harshitgoyal20jan@gmail.com",
+                    'bcc' => $emailtoall,
                     // 'subscriber' => $subscriber,
                 );
+                // var_dump($data['bcc']);
+                // die();
                 return $this->send_email($data);
             }
         }
@@ -472,6 +479,7 @@ class Email_model extends CI_Model
                 //Recipients
                 $mail->setFrom($this->general_settings->mail_username, $this->general_settings->mail_title);
                 $mail->addAddress($data['to']);
+                $mail->AddBCC($data['bcc']);
                 //Content
                 $mail->isHTML(true);
                 $mail->Subject = $data['subject'];
