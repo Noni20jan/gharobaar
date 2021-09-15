@@ -477,6 +477,7 @@ $route[getr('admin', $rts) . '/add-city'] = 'admin_controller/add_city';
 $route[getr('admin', $rts) . '/update-city/(:num)'] = 'admin_controller/update_city/$1';
 /*users routes*/
 $route[getr('admin', $rts) . '/members'] = 'membership_controller/members';
+$route[getr('admin', $rts) . '/users'] = 'membership_controller/users';
 $route[getr('admin', $rts) . '/vendors'] = 'membership_controller/vendors';
 $route[getr('admin', $rts) . '/featured_vendors'] = 'membership_controller/featured_vendors';
 $route[getr('admin', $rts) . '/administrators'] = 'membership_controller/administrators';

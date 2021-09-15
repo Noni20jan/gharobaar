@@ -659,6 +659,18 @@ class Membership_controller extends Admin_Core_Controller
         $this->session->set_flashdata('success', trans("msg_updated"));
         redirect($this->agent->referrer());
     }
+    public function users()
+    {
+        $data['title'] = trans("users");
+        $data['page_url'] = admin_url() . "users";
+
+        $pagination = $this->paginate($data['page_url'], $this->auth_model->get_users_count_by_role('member'));
+        $data['users'] = $this->auth_model->get_paginated_filtered_users('member', $pagination['per_page'], $pagination['offset']);
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/membership/users_coupons');
+        $this->load->view('admin/includes/_footer');
+    }
 
     /**
      * Delete Transactions Post
