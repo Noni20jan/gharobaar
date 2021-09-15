@@ -499,6 +499,8 @@ $route[getr('admin', $rts) . '/search-phrases'] = 'language_controller/search_ph
 $route[getr('admin', $rts) . '/payment-settings'] = 'settings_controller/payment_settings';
 $route[getr('admin', $rts) . '/visual-settings'] = 'admin_controller/visual_settings';
 $route[getr('admin', $rts) . '/system-settings'] = 'admin_controller/system_settings';
+// offers routes
+$route[getr('admin', $rts) . '/create-offers'] = 'admin_controller/create_offers';
 /*currency*/
 $route[getr('admin', $rts) . '/currency-settings'] = 'admin_controller/currency_settings';
 $route[getr('admin', $rts) . '/update-currency/(:num)'] = 'admin_controller/update_currency/$1';

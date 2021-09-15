@@ -1028,6 +1028,14 @@ class Admin_controller extends Admin_Core_Controller
     }
 
 
+    public function create_offers()
+    {
+        $data['title'] = trans("");
+        $data['main_settings'] = get_main_settings();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/create-offers', $data);
+        $this->load->view('admin/includes/_footer');
+    }
     /**
      * Storage Post
      */

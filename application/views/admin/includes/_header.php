@@ -579,6 +579,16 @@
                         </ul>
                     </li>
 
+                    <li class="treeview<?php is_admin_nav_active(['system-settings', 'route-settings']); ?>">
+                        <a href="#">
+                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/offers.png" alt="" style="width: 20px; height: 20px;" />
+                            <span><?php echo trans(""); ?>Offers</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>create-offers"> <?php echo trans(""); ?>Offers Creation</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </section>
             <!-- /.sidebar -->
