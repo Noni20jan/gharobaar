@@ -19,13 +19,12 @@ class Coupon_controller extends Admin_Core_Controller
     public function offers()
     {
         $data['title'] = trans("offers");
-        $data['page_url'] = admin_url() . "members";
+        $data['page_url'] = admin_url() . "offers-dashboard";
 
-        $pagination = $this->paginate($data['page_url'], $this->auth_model->get_users_count_by_role('member'));
-        $data['users'] = $this->auth_model->get_paginated_filtered_products('member', $pagination['per_page'], $pagination['offset']);
+        $data['offers'] = $this->offer_model->get_all_offers();
 
         $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/membership/members');
+        $this->load->view('admin/offers/dashboard');
         $this->load->view('admin/includes/_footer');
     }
 }
