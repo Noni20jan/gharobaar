@@ -391,43 +391,34 @@ class Email_model extends CI_Model
     {
         if ($emailto == "members") {
             if (!empty($emailtoall)) {
-                // if (empty($emailto->token)) {
-                //     $this->newsletter_model->update_subscriber_token($emailtoall->email);
-                //     $subscriber = $this->newsletter_model->get_subscriber($emailtoall->email);
-                // }
-
                 $data = array(
                     'subject' => $subject,
                     'message' => $message,
                     'to' =>  $this->general_settings->mail_username,
                     'template_path' => "email/email_newsletter",
-                    // 'subscriber' => $subscriber,
-                    'bcc' => $emailtoall,
+
+
                 );
-                return $this->send_email($data);
+                $bcc = array();
+                foreach ($emailtoall as $emailtoall) {
+                    array_push($bcc, $emailtoall);
+                }
+                return $this->send_email_members($data, $bcc);
             }
         }
         if ($emailto == "all") {
             if (!empty($emailtoall)) {
-                // var_dump($emailtoall);
-                // die();
-                // if (empty($emailto->token)) {
-                //     $this->newsletter_model->update_subscriber_token($emailtoall->email);
-                //     $subscriber = $this->newsletter_model->get_subscriber($emailtoall->email);
-                // }
-
                 $data = array(
                     'subject' => $subject,
                     'message' => $message,
                     'to' => $this->general_settings->mail_username,
                     'template_path' => "email/email_newsletter",
-                    // 'bcc' => "harshitgoyal20jan@gmail.com",
-                    'bcc' => $emailtoall,
-                    // 'subscriber' => $subscriber,
                 );
-                // var_dump($data['bcc']);
-                // die();
-                return $this->send_email($data);
+                $bcc = array();
+                foreach ($emailtoall as $emailtoall) {
+                    array_push($bcc, $emailtoall);
+                }
+                return $this->send_email_members($data, $bcc);
             }
         }
     }
@@ -479,7 +470,113 @@ class Email_model extends CI_Model
                 //Recipients
                 $mail->setFrom($this->general_settings->mail_username, $this->general_settings->mail_title);
                 $mail->addAddress($data['to']);
-                $mail->AddBCC($data['bcc']);
+                //Content
+                $mail->isHTML(true);
+                $mail->Subject = $data['subject'];
+                $mail->Body = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
+                $mail->send();
+                return true;
+            } catch (Exception $e) {
+                $this->session->set_flashdata('error', $mail->ErrorInfo);
+                return false;
+            }
+        } else {
+            $this->load->library('email');
+
+            $settings = $this->settings_model->get_general_settings();
+            $from = $settings->mail_username;
+            if (strpos($from, '@') == false) {
+                $from = "noreply@" . $_SERVER["HTTP_HOST"];
+            }
+
+            $config = array(
+                'protocol' => 'mail',
+                'smtp_host' => $settings->mail_host,
+                'smtp_port' => $settings->mail_port,
+                'smtp_user' => $settings->mail_username,
+                'smtp_pass' => $settings->mail_password,
+                'smtp_timeout' => 30,
+                'mailtype' => 'html',
+                'charset' => 'utf-8',
+                'wordwrap' => TRUE
+            );
+            if ($settings->mail_protocol == "sendmail") {
+                $config['protocol'] = 'sendmail';
+            }
+            if ($settings->mail_protocol == "smtp") {
+                $config['protocol'] = 'smtp';
+            }
+
+            //initialize
+            $this->email->initialize($config);
+
+            //send email
+            $message = $this->load->view($data['template_path'], $data, TRUE);
+            $this->email->from($from, $settings->mail_title);
+            $this->email->to($data['to']);
+            $this->email->subject($data['subject']);
+            $this->email->message($message);
+
+            $this->email->set_newline("\r\n");
+
+            if ($this->email->send()) {
+                return true;
+            } else {
+                $this->session->set_flashdata('error', $this->email->print_debugger(array('headers')));
+                return false;
+            }
+        }
+    }
+
+    public function send_email_members($data, $bcc)
+    {
+        if ($this->general_settings->mail_library == "swift") {
+            try {
+                // Create the Transport
+                $transport = (new Swift_SmtpTransport($this->general_settings->mail_host, $this->general_settings->mail_port, 'tls'))
+                    ->setUsername($this->general_settings->mail_username)
+                    ->setPassword($this->general_settings->mail_password);
+
+                // Create the Mailer using your created Transport
+                $mailer = new Swift_Mailer($transport);
+
+                // Create a message
+                $message = (new Swift_Message($this->general_settings->mail_title))
+                    ->setFrom(array($this->general_settings->mail_username => $this->general_settings->mail_title))
+                    ->setTo([$data['to'] => ''])
+                    ->setSubject($data['subject'])
+                    ->setBody($this->load->view($data['template_path'], $data, TRUE), 'text/html');
+
+                //Send the message
+                $result = $mailer->send($message);
+                if ($result) {
+                    return true;
+                }
+            } catch (\Swift_TransportException $Ste) {
+                $this->session->set_flashdata('error', $Ste->getMessage());
+                return false;
+            } catch (\Swift_RfcComplianceException $Ste) {
+                $this->session->set_flashdata('error', $Ste->getMessage());
+                return false;
+            }
+        } elseif ($this->general_settings->mail_library == "php") {
+            $mail = new PHPMailer(true);
+            try {
+                //Server settings
+                $mail->isSMTP();
+                $mail->Host = $this->general_settings->mail_host;
+                $mail->SMTPAuth = true;
+                $mail->Username = $this->general_settings->mail_username;
+                $mail->Password = $this->general_settings->mail_password;
+                $mail->SMTPSecure = 'tls';
+                $mail->CharSet = 'UTF-8';
+                $mail->Port = $this->general_settings->mail_port;
+                //Recipients
+                $mail->setFrom($this->general_settings->mail_username, $this->general_settings->mail_title);
+                $mail->addAddress($data['to']);
+                foreach ($bcc as $bcc) {
+                    $mail->AddBCC($bcc);
+                }
                 //Content
                 $mail->isHTML(true);
                 $mail->Subject = $data['subject'];

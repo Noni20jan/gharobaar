@@ -18,9 +18,14 @@
                 <?php $this->load->view('admin/includes/_messages'); ?>
                 <div class="form-group">
                     <label><?php echo trans('emailto'); ?></label>
+                    <input type="radio" class="selectBox" name="emailall" id="baby" onclick="emailtoall();" value="all" />
+                    <label for="all">All</label><br>
+                    <input type="radio" class="selectBox" id="baby1" name="emailall" onclick="indviduals();" value="individual" />
+                    <label for="individual">Select Email ID</label><br>
+                </div>
+                <div class="form-group" id="indvidual_selection">
                     <select name="emailto[]" id="user_selection" class="selectpicker" data-live-search="true" multiple>
                         <?php $data['email'] = $this->newsletter_model->get_members1(); ?>
-                        <option value="all">All</option>
                         <?php foreach ($data['email'] as $email) { ?>
                             <option value="<?php echo $email->email; ?>"><?php echo $email->email; ?></option>
                         <?php } ?>
@@ -56,6 +61,7 @@
 <script>
     $(document).ready(
         function() {
+            $('#indvidual_selection').hide();
             $('#user_selection').selectpicker({
                 multipleSeparator: ','
             });
@@ -80,6 +86,23 @@
                     'filemanager': '/responsivefilemanager/filemanager/plugin.min.js'
                 }
             });
+
         });
+</script>
+<script>
+    function emailtoall() {
+        var email = document.getElementById('baby').value;
+        $('#indvidual_selection').hide();
+        document.getElementById('user_selection').value = "";
+        // }
+    }
+</script>
+<script>
+    function indviduals() {
+        var email = document.getElementById('baby1').value;
+        $('#indvidual_selection').show();
+        document.getElementById('baby').val = "";
+        // }
+    }
 </script>
 <?php $this->load->view('admin/includes/_image_file_manager'); ?>

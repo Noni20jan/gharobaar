@@ -433,64 +433,38 @@ class Admin_controller extends Admin_Core_Controller
 
         $this->load->model("email_model");
         $emailto = $this->input->post('emailto', true);
+        $emailall = $this->input->post('emailall', true);
         $subject = $this->input->post('subject', true);
         $message = $this->input->post('message', true);
-        foreach ($emailto as $emailto) {
-            if ($emailto == "all") {
-                break;
-            }
-        }
-
-
-        if ($emailto == "all") {
+        if ($emailall == "all") {
             $data['email'] = $this->newsletter_model->get_members();
             $result = false;
             if (!empty($data['email'])) {
                 $result = true;
-                // $emailtoall1 = $data['email'];
-                $emailtoall1 = "";
-                // var_dump($data['email']->email);
-                // die();
+                $emailtoall1 = array();
                 foreach ($data['email'] as $emailwe) {
-                    // implode(" ", $emailtoall);
-                    // $emailer = $emailwe->email;
                     if ($emailwe->email_status == 1) {
-                        $emailtoall1 = $emailtoall1 . $emailwe->email . ",";
+                        array_push($emailtoall1, $emailwe->email);
                     }
                 }
-                // $List = implode($emailtoall1);
-                // var_dump($emailtoall1);
-                // die();
                 //send email
-                if (!$this->email_model->send_email_members_newsletter($emailto, $emailtoall1, $subject, $message)) {
+                if (!$this->email_model->send_email_members_newsletter($emailall, $emailtoall1, $subject, $message)) {
                     $result = false;
                 } else {
                     $result = true;
                 }
             }
-        } else {
-            //$data['email'] = $this->newsletter_model->get_members();
-            // $result = false;
-            // if (!empty($data['email'])) {
-            //$result = true;
-            // foreach ($data['email'] as $emailto) {
-            //send email
-
-            foreach ($emailto as $emailto) {
-                $emailtoall1 = array();
-                foreach ($emailto as $emailtoall) {
-                    $emailtoall1 = $emailtoall1 . "," . $emailto;
-                }
-                $emailtoall1 = $emailto;
-                $emailto = "members";
-                if (!$this->email_model->send_email_members_newsletter($emailto, $emailtoall1, $subject, $message)) {
-                    $result = false;
-                } else {
-                    $result = true;
-                }
-                // }
-                //}
-
+        }
+        if (isset($emailto)) {
+            $emailtoall1 = array();
+            foreach ($emailto as $emailtoall) {
+                array_push($emailtoall1, $emailtoall);
+            }
+            $emailtoc = "members";
+            if (!$this->email_model->send_email_members_newsletter($emailtoc, $emailtoall1, $subject, $message)) {
+                $result = false;
+            } else {
+                $result = true;
             }
         }
         if ($result == true) {
@@ -513,7 +487,6 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/newsletter/subscribers', $data);
         $this->load->view('admin/includes/_footer');
     }
-
     /**
      * Delete Subscriber Post
      */
