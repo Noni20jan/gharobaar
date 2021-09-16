@@ -1,22 +1,10 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css">
-</link>
-<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.9/css/fixedHeader.dataTables.min.css">
-</link>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/fixedheader/3.1.9/js/dataTables.fixedHeader.min.js"></script>
-
 <style>
     thead input {
         width: 100%;
     }
 </style>
-
-
-
-
 
 <table id="example" class="display" style="width:100%">
     <thead>

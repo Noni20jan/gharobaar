@@ -23,6 +23,9 @@
     <!-- Datatables -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/datatables/dataTables.bootstrap.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/datatables/jquery.dataTables_themeroller.css">
+    <!-- New Datatables -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/newdatatables/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/newdatatables/css/fixedHeader.dataTables.min.css">
     <!-- Tags Input -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/tagsinput/jquery.tagsinput.min.css">
 
@@ -48,6 +51,12 @@
     <?php endif; ?>
     <!-- jQuery 3 -->
     <script src="<?php echo base_url(); ?>assets/admin/js/jquery.min.js"></script>
+
+    <!-- New Datatables Js -->
+
+    <script src="<?php echo base_url(); ?>assets/admin/vendor/newdatatables/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/admin/vendor/newdatatables/js/dataTables.fixedHeader.min.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
