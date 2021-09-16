@@ -494,7 +494,7 @@ $route[getr('admin', $rts) . '/storage'] = 'admin_controller/storage';
 
 
 /*offers routes*/
-$route[getr('admin', $rts) . '/coupons-dashboard'] = 'admin_controller/coupon_dashboard';
+$route[getr('admin', $rts) . '/coupons-dashboard'] = 'coupon_controller/coupon_dashboard';
 $route[getr('admin', $rts) . '/offers-dashboard'] = 'coupon_controller/offers';
 
 

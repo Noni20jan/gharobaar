@@ -27,4 +27,16 @@ class Coupon_controller extends Admin_Core_Controller
         $this->load->view('admin/offers/dashboard');
         $this->load->view('admin/includes/_footer');
     }
+
+    public function coupon_dashboard()
+    {
+        $data['title'] = trans("coupons_dashboard");
+        $data['main_settings'] = get_main_settings();
+
+        $data['offers'] = $this->offer_model->get_all_coupons();
+        
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/offers/coupons_dashboard');
+        $this->load->view('admin/includes/_footer');
+    }
 }

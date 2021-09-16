@@ -6,7 +6,7 @@
     }
 </style>
 
-<table id="example" class="display" style="width:100%">
+<table id="offer_dashboard" class="display" style="width:100%">
     <thead>
         <tr>
             <th>Coupon Name</th>
@@ -21,28 +21,19 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>Tiger Nixon</td>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>61</td>
-            <td>61</td>
-        </tr>
-        <tr>
-            <td>Garrett Winters</td>
-            <td>Accountant</td>
-            <td>Tokyo</td>
-            <td>63</td>
-            <td>2011/07/25</td>
-            <td>$170,750</td>
-            <td>61</td>
-            <td>61</td>
-            <td>61</td>
-        </tr>
+        <?php foreach ($offers as $offer) : ?>
+            <tr>
+                <td><?php echo $offer->name; ?></td>
+                <td><?php echo $offer->offer_code; ?></td>
+                <td><?php echo $offer->creation_date; ?></td>
+                <td><?php echo $offer->end_date; ?></td>
+                <td><?php echo $offer->status; ?></td>
+                <td><?php echo $offer->type; ?></td>
+                <td><?php echo $offer->discount_amt; ?></td>
+                <td><?php echo $offer->discount_percentage; ?></td>
+                <td><a href="<?php echo admin_url(); ?>order-details/<?php echo html_escape($offer->id); ?>"><input id="<?php echo html_escape($offer->id); ?>" class="favorite styled" type="button" value="Edit"></a></td>
+            </tr>
+        <?php endforeach; ?>
     </tbody>
     <tfoot>
         <tr>
@@ -64,12 +55,12 @@
 <script>
     $(document).ready(function() {
         // Setup - add a text input to each footer cell
-        $('#example thead tr')
+        $('#offer_dashboard thead tr')
             .clone(true)
             .addClass('filters')
-            .appendTo('#example thead');
+            .appendTo('#offer_dashboard thead');
 
-        var table = $('#example').DataTable({
+        var table = $('#offer_dashboard').DataTable({
             orderCellsTop: true,
             fixedHeader: true,
             initComplete: function() {

@@ -9,4 +9,11 @@ class Offer_model extends CI_Model
         $query = $this->db->get('cms_offers');
         return $query->result();
     }
+
+    public function get_all_coupons()
+    {
+        $this->db->where('method', 'coupons');
+        $query = $this->db->get('cms_offers');
+        return $query->result();
+    }
 }

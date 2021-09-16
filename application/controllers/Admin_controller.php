@@ -1532,14 +1532,7 @@ class Admin_controller extends Admin_Core_Controller
         }
     }
 
-    public function coupon_dashboard()
-    {
-        $data['title'] = trans("coupons_dashboard");
-        $data['main_settings'] = get_main_settings();
-        $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/offers/coupons_dashboard', $data);
-        $this->load->view('admin/includes/_footer');
-    }
+    
 
     /**
      * Delete City Post
