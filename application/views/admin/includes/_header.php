@@ -578,7 +578,7 @@
                             <li class="nav-route-settings"><a href="<?php echo admin_url(); ?>route-settings"> <?php echo trans("route_settings"); ?></a></li>
                         </ul>
                     </li>
-
+                    <li class="header text-uppercase"><?php echo trans("offer_management"); ?></li>
                     <li class="treeview<?php is_admin_nav_active(['system-settings', 'route-settings']); ?>">
                         <a href="#">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/offers.png" alt="" style="width: 20px; height: 20px;" />
@@ -589,6 +589,22 @@
                             <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>create-offers"> <?php echo trans(""); ?>Offers Creation</a></li>
                         </ul>
                     </li>
+
+
+
+
+                    <li class="treeview<?php is_admin_nav_active(['system-settings', 'route-settings']); ?>">
+                        <a href="#">
+                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/dashboard.png" alt="" style="width: 20px; height: 20px;" />
+                            <span><?php echo trans("dashboard"); ?></span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>coupons-dashboard"> <?php echo trans("coupons_dashboard"); ?></a></li>
+                        </ul>
+                    </li>
+
+
                 </ul>
             </section>
             <!-- /.sidebar -->

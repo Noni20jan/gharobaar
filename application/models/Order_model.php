@@ -417,7 +417,7 @@ class Order_model extends CI_Model
             $slab = true;
             if ($slab == true) {
                 if ($object->total_amount_with_gst >= 50000) {
-                    $object->shipping_charge_to_gharobaar = $object->shipping;
+                    $object->shipping_charge_to_gharobaar = ($object->shipping)+(0.18*$object->shipping);
                 } else if ($object->total_amount_with_gst >= 200000) {
                     $object->shipping_charge_to_gharobaar = 0;
                 }
