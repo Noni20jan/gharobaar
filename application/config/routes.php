@@ -414,6 +414,8 @@ $route[getr('admin', $rts) . '/service-details/(:num)'] = 'product_controller/se
 /*special-offers*/
 $route[getr('admin', $rts) . '/special-offers'] = 'product_controller/special_offers';
 $route[getr('admin', $rts) . '/edit-coupon-details/(:num)'] = 'coupon_controller/edit_offer_details/$1';
+$route[getr('admin', $rts) . '/edit-voucher-details/(:num)'] = 'coupon_controller/edit_voucher_details/$1';
+
 
 /*bidding system*/
 $route[getr('admin', $rts) . '/quote-requests'] = 'admin_controller/quote_requests';

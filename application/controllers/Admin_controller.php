@@ -1064,6 +1064,7 @@ class Admin_controller extends Admin_Core_Controller
             'no_off_voucher_req' => $this->input->post('vouchers_required', true),
             'terms_and_conditions' => $this->input->post('t_&_c', true),
             'max_total_usage' => $this->input->post('max_usage', true),
+            'description' => $this->input->post('description', true),
         );
 
         $this->product_admin_model->coupons_vouchers($offer_);
@@ -1566,7 +1567,7 @@ class Admin_controller extends Admin_Core_Controller
         }
     }
 
-    
+
 
     /**
      * Delete City Post

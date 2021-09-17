@@ -31,7 +31,7 @@
                 <td><?php echo $offer->type; ?></td>
                 <td><?php echo $offer->discount_amt; ?></td>
                 <td><?php echo $offer->discount_percentage; ?></td>
-                <td><a href="<?php echo admin_url(); ?>edit-coupon-details/<?php echo html_escape($offer->id); ?>"><input id="<?php echo html_escape($offer->id); ?>" class="favorite styled" type="button" value="Edit"></a></td>
+                <td><a href="<?php echo admin_url(); ?>edit-voucher-details/<?php echo html_escape($offer->id); ?>"><input id="<?php echo html_escape($offer->id); ?>" class="favorite styled" type="button" value="Edit"></a></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

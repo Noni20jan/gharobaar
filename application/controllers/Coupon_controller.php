@@ -74,6 +74,29 @@ class Coupon_controller extends Admin_Core_Controller
         $this->load->view('admin/edit_coupon_details', $data);
         $this->load->view('admin/includes/_footer');
     }
+
+    public function edit_voucher_details($id)
+    {
+        // $this->load->model("Offer_model");
+        $data['title'] = trans("order");
+
+        $data['offer'] = $this->offer_model->get_coupon_details($id);
+        //$offers_data = $this->offer_model->get_coupon_details($id);
+        // if (empty($data['order'])) {
+        //     redirect(admin_url() . "orders");
+        // }
+        // var_dump($offers_data);
+        // die();
+        // $data['order_products'] = $this->order_admin_model->get_order_products($id);
+        // $data["session"] = get_user_session();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/edit_voucher_details', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+
+
+
     public function edit_details_coupon()
     {
         $this->load->model("Offer_model");
