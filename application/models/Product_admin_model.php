@@ -162,7 +162,33 @@ class Product_admin_model extends CI_Model
     }
 
 
-
+    public function coupons_vouchers($offer_)
+    {
+        //     $offer_ = array(
+        //         'name' => $this->input->post('offer_name', true),
+        //         'type' => $this->input->post('method_type', true),
+        //         'method' => $this->input->post('coup_vou', true),
+        //         'start_date' =>  $this->input->post('start_date', true),
+        //         'end_date' => $this->input->post('end_date', true),
+        //         'discount_amt' => $this->input->post('discount_amt', true),
+        //         'discount_percentage' => $this->input->post('discount_per', true),
+        //         'allowed_max_discount' => $this->input->post('max_discount', true),
+        //         'min_amt_in_cart' => $this->input->post('min_discount', true),
+        //         'max_total_usage' => $this->input->post('max_usage', true),
+        //         // 'offer_code' => 0,
+        //         // 'msg_to_be_displayed' => $this->input->post('order_capacity', true),
+        //         // 'max_usage_per_user' => "",
+        //         // 'no_off_voucher_req' => 0,
+        //         // 'terms_and_conditions' => 1,
+        //         // 'status' => 0,
+        //         // 'created_by' => 0,
+        //         // 'creation_date' => 0,
+        //         // 'last_updated_by' => 0,
+        //         // 'last_update_date' => 0,
+        //         // 'last_update_login' => "",
+        //     );
+        return $this->db->insert('cms_offers', $offer_);
+    }
 
 
 

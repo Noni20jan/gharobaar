@@ -413,6 +413,8 @@ $route[getr('admin', $rts) . '/service-details/(:num)'] = 'product_controller/se
 
 /*special-offers*/
 $route[getr('admin', $rts) . '/special-offers'] = 'product_controller/special_offers';
+$route[getr('admin', $rts) . '/edit-coupon-details/(:num)'] = 'coupon_controller/edit_offer_details/$1';
+
 /*bidding system*/
 $route[getr('admin', $rts) . '/quote-requests'] = 'admin_controller/quote_requests';
 
@@ -495,10 +497,8 @@ $route[getr('admin', $rts) . '/storage'] = 'admin_controller/storage';
 
 /*offers routes*/
 $route[getr('admin', $rts) . '/coupons-dashboard'] = 'coupon_controller/coupon_dashboard';
+$route[getr('admin', $rts) . '/vouchers-dashboard'] = 'coupon_controller/voucher_dashboard';
 $route[getr('admin', $rts) . '/offers-dashboard'] = 'coupon_controller/offers';
-
-
-
 
 /*languages routes*/
 $route[getr('admin', $rts) . '/languages'] = 'language_controller/languages';

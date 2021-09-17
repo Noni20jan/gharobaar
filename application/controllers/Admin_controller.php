@@ -1031,10 +1031,44 @@ class Admin_controller extends Admin_Core_Controller
     {
         $data['title'] = trans("");
         $data['main_settings'] = get_main_settings();
+
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/create-offers', $data);
         $this->load->view('admin/includes/_footer');
     }
+
+    public function save_created_offers()
+    {
+        // $name = $this->input->post('offer_name', true);
+        // $type = $this->input->post('method_type', true);
+        // $method = $this->input->post('coup_vou', true);
+        // $start_date =  $this->input->post('start_date', true);
+        // $end_date = $this->input->post('end_date', true);
+        // $discount_amt = $this->input->post('discount_amt', true);
+        // $discount_percentage = $this->input->post('discount_per', true);
+        // $allowed_max_discount = $this->input->post('max_discount', true);
+        // $min_amt_in_cart = $this->input->post('min_discount', true);
+        // $max_total_usage = $this->input->post('max_usage', true);
+        $offer_ = array(
+            'name' => $this->input->post('offer_name', true),
+            'type' => $this->input->post('method_type', true),
+            'method' => $this->input->post('coup_vou', true),
+            'start_date' =>  $this->input->post('start_date', true),
+            'end_date' => $this->input->post('end_date', true),
+            'discount_amt' => $this->input->post('discount_amt', true),
+            'discount_percentage' => $this->input->post('discount_per', true),
+            'allowed_max_discount' => $this->input->post('max_discount', true),
+            'min_amt_in_cart' => $this->input->post('min_discount', true),
+            'offer_code' => $this->input->post('coupon_code', true),
+            'msg_to_be_displayed' => $this->input->post('msg_displayed', true),
+            'no_off_voucher_req' => $this->input->post('vouchers_required', true),
+            'terms_and_conditions' => $this->input->post('t_&_c', true),
+            'max_total_usage' => $this->input->post('max_usage', true),
+        );
+
+        $this->product_admin_model->coupons_vouchers($offer_);
+    }
+
     /**
      * Storage Post
      */

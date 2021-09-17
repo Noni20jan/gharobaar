@@ -598,8 +598,8 @@
                         <ul class="treeview-menu">
                             <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>offers-dashboard"> <?php echo trans("offers_dashboard"); ?></a></li>
                             <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>coupons-dashboard"> <?php echo trans("coupons_dashboard"); ?></a></li>
+                            <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>vouchers-dashboard"> <?php echo trans("voucher_dashboard"); ?></a></li>
                         </ul>
-
                     </li>
 
                     <li class="treeview<?php is_admin_nav_active(['system-settings', 'route-settings']); ?>">
