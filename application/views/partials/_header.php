@@ -4438,7 +4438,7 @@
                                 <a href="<?php echo generate_url("forgot_password"); ?>" class="link-forgot-password"><?php echo trans("forgot_password"); ?></a>
                             </div>
                             <div style="text-align:center;  margin-bottom:5px">
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class="logintoOtp">Login using OTP</a>
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class="logintoOtp" style="text-decoration: underline; color:blue !important">Login using OTP</a>
                             </div>
                             <div class="form-group" style="text-align:center;">
                                 <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login"); ?></button>
