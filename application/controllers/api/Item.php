@@ -86,8 +86,6 @@ class Item extends REST_Controller
                 case "PICKED UP":
                     $data["order_status"] = "shipped";
                     break;
-                default:
-                    $data["order_status"] = $new_input['order_status'];
             }
             // $data["order_status"] = $new_input['order_status'];
 
