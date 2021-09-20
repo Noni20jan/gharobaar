@@ -9,11 +9,11 @@
 <table id="offer_dashboard" class="display" style="width:100%">
     <thead>
         <tr>
-            <th>Coupon Name</th>
+            <th>Offer Name</th>
             <th>Code</th>
             <th>Date Generated</th>
             <th>Expiry Date</th>
-            <th>Status</th>
+            <!-- <th>Status</th> -->
             <th>Offer Type</th>
             <th>Amount</th>
             <th>%</th>
@@ -27,21 +27,39 @@
                 <td><?php echo $offer->offer_code; ?></td>
                 <td><?php echo $offer->creation_date; ?></td>
                 <td><?php echo $offer->end_date; ?></td>
-                <td><?php echo $offer->status; ?></td>
+                <!-- <td><?php echo $offer->status; ?></td> -->
                 <td><?php echo $offer->type; ?></td>
-                <td><?php echo $offer->discount_amt; ?></td>
-                <td><?php echo $offer->discount_percentage; ?></td>
-                <td><?php echo $offer->status ?></td>
+                <td class="text-center">
+                    <?php
+                    if (!empty($offer->discount_amt)) :
+                        echo $offer->discount_amt;
+                    else : ?>
+                        -
+                    <?php endif; ?></td>
+                <td class="text-center">
+                    <?php
+                    if (!empty($offer->discount_percentage)) :
+                        echo $offer->discount_percentage;
+                    else : ?>
+                        -
+                    <?php endif; ?></td>
+                <td class="text-center">
+                    <?php if ($offer->method == "coupons") : ?>
+                        <a href="<?php echo admin_url(); ?>edit-coupon-details/<?php echo html_escape($offer->id); ?>"><input id="<?php echo html_escape($offer->id); ?>" class="favorite styled" type="button" value="Edit"></a>
+                    <?php elseif ($offer->method == "vouchers") : ?>
+                        <a href="<?php echo admin_url(); ?>edit-voucher-details/<?php echo html_escape($offer->id); ?>"><input id="<?php echo html_escape($offer->id); ?>" class="favorite styled" type="button" value="Edit"></a>
+                    <?php endif; ?>
+                </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
     <tfoot>
         <tr>
-            <th>Coupon Name</th>
+            <th>Offer Name</th>
             <th>Code</th>
             <th>Date Generated</th>
             <th>Expiry Date</th>
-            <th>Status</th>
+            <!-- <th>Status</th> -->
             <th>Offer Type</th>
             <th>Amount</th>
             <th>%</th>
