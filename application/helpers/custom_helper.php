@@ -1337,7 +1337,7 @@ if (!function_exists('get_product_image_url')) {
             $ci = &get_instance();
             return $ci->aws_base_url . "uploads/images/" . $image->$size_name;
         } else {
-            return other_base_url() . "uploads/images/" . $image->$size_name;
+            return base_url() . "uploads/images/" . $image->$size_name;
         }
     }
 }

@@ -394,7 +394,7 @@ class Order_model extends CI_Model
             $cod_charges_shiprocket = $cod_charges_without_product_gst + (0.18 * $cod_charges_without_product_gst);
             $cod_inc_gst_in_invoice = $cod_charges_without_product_gst + (($shipping_cod_gst_rate / 100) * $cod_charges_without_product_gst);
 
-           
+
             $object->cod_charge = $cod_charges_shiprocket;
             $object->cod_charges_without_gst = $cod_charges_without_product_gst;
 
@@ -417,7 +417,7 @@ class Order_model extends CI_Model
             $slab = true;
             if ($slab == true) {
                 if ($object->total_amount_with_gst >= 50000) {
-                    $object->shipping_charge_to_gharobaar = ($object->shipping)+(0.18*$object->shipping);
+                    $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
                 } else if ($object->total_amount_with_gst >= 200000) {
                     $object->shipping_charge_to_gharobaar = 0;
                 }
@@ -790,60 +790,10 @@ class Order_model extends CI_Model
 
                     $this->db->insert('order_products', $data);
                 }
-                // $this->add_orders_data_seller_wise($order_id);
             }
         }
     }
 
-    //insert data into order_spplier table
-
-    public function add_orders_data_seller_wise($order_id)
-    {
-        $cart_items = $this->cart_model->get_sess_cart_items();
-        $cart_total = $this->cart_model->get_sess_cart_total();
-
-        $Supp_ship_data = json_decode($this->get_seller_wise_data_bifurcation($cart_total));
-        // var_dump($Supp_ship_data);
-        // die();
-        if (!empty($cart_items)) {
-            foreach ($cart_items as $cart_item) {
-                $product = get_active_product($cart_item->product_id);
-                $seller_address = get_seller($product->user_id);
-                if (!empty($product)) {
-                    $data = array(
-                        'order_id' => $order_id,
-                        'seller_id' => $product->user_id,
-                        'review_type' => "CUSTOM REVIEW",
-                        'sup_subtotal' => $product->user_id,
-                        'Sup_subtotal_prd_gst' => $product->user_id,
-                        'Sup_subtotal_prd_cgst' => $product->user_id,
-                        'Sup_subtotal_prd_sgst' => $product->user_id,
-                        'Sup_subtotal_prd_igst' => $product->user_id,
-                        'Sup_total_prd' => $product->user_id,
-                        'sup_shipping_cost' => $product->user_id,
-                        'Sup_Shipping_gst' => $product->user_id,
-                        'shipping_cgst' => $product->user_id,
-                        'shipping_sgst' => $product->user_id,
-                        'shipping_igst' => $product->user_id,
-                        'total_shipping_cost' => $product->user_id,
-                        'Sup_cod_cost' => $product->user_id,
-                        'Sup_cod_gst' => $product->user_id,
-                        'sup_cod_cgst' => $product->user_id,
-                        'sup_cod_sgst' => $product->user_id,
-                        'sup_cod_igst' => $product->user_id,
-                        'total_cod_cost' => $product->user_id,
-                        'shipping_cod_gst_rate' => $product->user_id,
-                        'total_discount' => $product->user_id,
-                        'grand_total_amount' => $product->user_id,
-                        'sup_commission_cost' => $product->user_id,
-                        'created_by' => $product->user_id,
-                        'updated_by' => $product->user_id
-                    );
-                    $this->db->insert('order_supplier', $data);
-                }
-            }
-        }
-    }
 
 
     //returns total lead time in seconds for home cook products
@@ -2419,54 +2369,33 @@ class Order_model extends CI_Model
 
     public function add_seller_wise_details($order_id, $cart_total)
     {
-
         $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
-
         $Supp_ship_data = json_decode($this->get_seller_wise_data_bifurcation($cart_total));
-
-
-        // var_dump($Supp_ship_data);
-        // die();
-
 
         if ($Supp_ship_data) {
             foreach ($Supp_ship_data as $sup) {
                 $seller_address = get_user($sup->SupplierId);
-
                 $data = array(
                     'order_id' => $order_id,
                     'seller_id' => $sup->SupplierId,
-                    'review_type' => "CUSTOM REVIEW",
-
                     "sup_shipping_cost" => $sup->Supplier_Shipping_cost,
                     "Sup_cod_cost" => $sup->cod_charges,
                     "shipping_cod_gst_rate" => $sup->shipping_cod_gst_rate,
-
                     'sup_subtotal' => intval($sup->total_product_price_without_gst),
                     'Sup_subtotal_prd_gst' => intval($sup->total_product_gst),
                     'Sup_total_prd' => $sup->total_product_price,
-
                     'Sup_Shipping_gst' => $sup->shipping_tax_charges,
                     'Sup_cod_gst' => $sup->cod_tax_charges,
-
-
-                    // 'total_discount' => $product->user_id,
-                    // 'sup_commission_cost' => $product->user_id,
-
                     'created_by' => 1,
                     'updated_by' => 1
                 );
-
                 if ($seller_address->supplier_state == $shipping_address->shipping_state) {
-
                     $data['shipping_igst'] = 0;
                     $data['shipping_cgst'] = $sup->shipping_tax_charges / 2;
                     $data['shipping_sgst'] = $sup->shipping_tax_charges / 2;
-
                     $data['Sup_subtotal_prd_igst'] = 0;
                     $data['Sup_subtotal_prd_cgst'] = intval($sup->total_product_gst / 2);
                     $data['Sup_subtotal_prd_sgst'] = intval($sup->total_product_gst / 2);
-
                     $data['sup_cod_igst'] = 0;
                     $data['sup_cod_cgst'] = $sup->cod_tax_charges / 2;
                     $data['sup_cod_sgst'] = $sup->cod_tax_charges / 2;
@@ -2474,29 +2403,18 @@ class Order_model extends CI_Model
                     $data['shipping_igst'] = $sup->shipping_tax_charges;
                     $data['shipping_cgst'] = 0;
                     $data['shipping_sgst'] = 0;
-
                     $data['Sup_subtotal_prd_igst'] = intval($sup->total_product_gst);
                     $data['Sup_subtotal_prd_cgst'] = 0;
                     $data['Sup_subtotal_prd_sgst'] = 0;
-
                     $data['sup_cod_igst'] = $sup->cod_tax_charges;
                     $data['sup_cod_cgst'] = 0;
                     $data['sup_cod_sgst'] = 0;
                 }
-
                 $data["total_shipping_cost"] = $data["sup_shipping_cost"] + $data['Sup_Shipping_gst'];
-
                 $data["total_cod_cost"] = $data["Sup_cod_cost"] + $data['Sup_cod_gst'];
-
                 $data['grand_total_amount'] = $data["Sup_total_prd"] + $data["total_shipping_cost"] + $data["total_cod_cost"];
-
-
-                // var_dump($data);
-                // die();
-
                 $this->db->insert('order_supplier', $data);
             }
-            // die();
         }
     }
 
@@ -2989,6 +2907,8 @@ class Order_model extends CI_Model
                         $psd->total_weight += $object_product->product_total_packaged_weight;
 
                     $psd->total_price += $object_product->product_total_price;
+                    $psd->product_total_price_without_gst += $object_product->product_total_price / (1 + ($object_product->product_gst_rate / 100));
+                    $psd->total_product_gst += $object_product->product_total_price - $object_product->product_total_price / (1 + ($object_product->product_gst_rate / 100));
 
                     $new = false;
                 }
@@ -3030,7 +2950,8 @@ class Order_model extends CI_Model
                 else
                     $object->total_weight = $object_product->product_total_packaged_weight;
                 $object->total_price = $object_product->product_total_price;
-
+                $object->product_total_price_without_gst = $object_product->product_total_price / (1 + ($object_product->product_gst_rate / 100));
+                $object->total_product_gst = $object_product->product_total_price - $object_product->product_total_price / (1 + ($object_product->product_gst_rate / 100));
                 array_push($product_seller_details, $object);
             endif;
             // var_dump($cart_item);
@@ -3102,9 +3023,9 @@ class Order_model extends CI_Model
                     );
 
                     //product wise calculation price and gst
-                    $suppqq["total_product_price"] += $prod_details->product_total_price;
-                    $suppqq["total_product_price_without_gst"] += $prod_details->product_total_price / (1 + ($prod_details->product_gst_rate / 100));
-                    $suppqq["total_product_gst"] += ($prod_details->product_total_price) - ($prod_details->product_total_price / (1 + ($prod_details->product_gst_rate / 100)));
+                    $suppqq["total_product_price"] = $psd->total_price;
+                    $suppqq["total_product_price_without_gst"] = $psd->product_total_price_without_gst;
+                    $suppqq["total_product_gst"] = $psd->total_product_gst;
 
 
                     if ($psd->seller_gst_rate == 0) {
@@ -3172,10 +3093,10 @@ class Order_model extends CI_Model
                     );
 
                     //product wise calculation price and gst
-                    $suppqq["total_product_price"] += $prod_details->product_total_price;
-                    $suppqq["total_product_price_without_gst"] += $prod_details->product_total_price / (1 + ($prod_details->product_gst_rate / 100));
-                    $suppqq["total_product_gst"] += ($prod_details->product_total_price) - ($prod_details->product_total_price / (1 + ($prod_details->product_gst_rate / 100)));
 
+                    $suppqq["total_product_price"] = $psd->total_price;
+                    $suppqq["total_product_price_without_gst"] = $psd->product_total_price_without_gst;
+                    $suppqq["total_product_gst"] = $psd->total_product_gst;
 
                     if ($psd->seller_gst_rate == 0) {
                         $suppqq["Supplier_Shipping_cost"] = intval($suppqq["Supplier_Shipping_cost"] + ($suppqq["Supplier_Shipping_cost"] * 18 / 100));
@@ -3214,10 +3135,10 @@ class Order_model extends CI_Model
 
 
                     //product wise calculation price and gst
-                    $suppqq["total_product_price"] += $prod_details->product_total_price;
-                    $suppqq["total_product_price_without_gst"] += $prod_details->product_total_price / (1 + ($prod_details->product_gst_rate / 100));
-                    $suppqq["total_product_gst"] += ($prod_details->product_total_price) - ($prod_details->product_total_price / (1 + ($prod_details->product_gst_rate / 100)));
 
+                    $suppqq["total_product_price"] = $psd->total_price;
+                    $suppqq["total_product_price_without_gst"] = $psd->product_total_price_without_gst;
+                    $suppqq["total_product_gst"] = $psd->total_product_gst;
 
 
                     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
@@ -3801,7 +3722,7 @@ class Order_model extends CI_Model
     }
 
 
-    public function update_status_payouts($seller_id, $order_id, $status_code, $refrence_id, $message, $status,$batchid,$payout_charge)
+    public function update_status_payouts($seller_id, $order_id, $status_code, $refrence_id, $message, $status, $batchid, $payout_charge)
     {
         $data = array(
             'payout_initiated' => 1,
@@ -3810,8 +3731,8 @@ class Order_model extends CI_Model
             'status' => $status,
             'subCode' => $status_code,
             'updated_at' => date('Y-m-d H:i:s'),
-            'batch_transfer_id'=>$batchid,
-            'payout_charge'=>$payout_charge,
+            'batch_transfer_id' => $batchid,
+            'payout_charge' => $payout_charge,
         );
 
         $this->db->where('order_id', $order_id);
