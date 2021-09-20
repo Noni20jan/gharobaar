@@ -501,6 +501,7 @@ $route[getr('admin', $rts) . '/storage'] = 'admin_controller/storage';
 $route[getr('admin', $rts) . '/coupons-dashboard'] = 'coupon_controller/coupon_dashboard';
 $route[getr('admin', $rts) . '/vouchers-dashboard'] = 'coupon_controller/voucher_dashboard';
 $route[getr('admin', $rts) . '/offers-dashboard'] = 'coupon_controller/offers';
+$route[getr('admin', $rts) . '/category-coupon'] = 'coupon_controller/category_coupon_select';
 
 /*languages routes*/
 $route[getr('admin', $rts) . '/languages'] = 'language_controller/languages';

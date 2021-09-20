@@ -40,6 +40,19 @@ class Coupon_controller extends Admin_Core_Controller
         $this->load->view('admin/includes/_footer');
     }
 
+    //category selections for coupons
+    public function category_coupon_select()
+    {
+        $data['title'] = trans("coupons_dashboard");
+        $data['main_settings'] = get_main_settings();
+
+        // $data['offers'] = $this->offer_model->get_all_coupons();
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/offers/category_coupon');
+        $this->load->view('admin/includes/_footer');
+    }
+
 
 
     public function voucher_dashboard()
