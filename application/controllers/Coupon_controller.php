@@ -67,7 +67,18 @@ class Coupon_controller extends Admin_Core_Controller
         $this->load->view('admin/includes/_footer');
     }
 
-    
+    public function vouchers_users()
+    {
+        $data['title'] = trans("users");
+        $data['page_url'] = admin_url() . "vouchers-users";
+        $pagination = $this->paginate($data['page_url'], $this->auth_model->get_users_count_by_role('member'));
+         $data["users"] = $this->auth_model->get_paginated_filtered_users('member', $pagination['per_page'], $pagination['offset']);
+        $data["offers"] = $this->offer_model->get_all_vouchers();
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/offers/vouchers_user');
+        $this->load->view('admin/includes/_footer');
+    }
     public function vouchers_data()
     {
         $source_ids = $this->input->post('source_id');
