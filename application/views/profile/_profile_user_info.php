@@ -195,20 +195,20 @@
     </div>
 
 </div>
-<?php if ($user->role == 'vendor') : ?>
-    <?php if ($user->account_number == '') : ?>
-        <div class="modal" id="bankaccount" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="ModalLongTitle">Please Add Bank Account details</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true"><i class="icon-close"></i> </span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <?php echo form_open("update-payout-account", ['id' => 'form_validate']); ?>
-                        <!-- <div class="form-group">
+
+<?php if ($this->auth_user->account_number == '' && $this->auth_user->role == 'vendor' && $this->auth_user->username == $user->username) : ?>
+    <div class="modal" id="bankaccount" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLongTitle">Please Add Bank Account details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="icon-close"></i> </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <?php echo form_open("update-payout-account", ['id' => 'form_validate']); ?>
+                    <!-- <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 m-b-sm-15">
                                         <label><?php echo trans("bank_account_holder_name"); ?>*</label>
@@ -238,63 +238,62 @@
                                 <input type="text" name="swift_bank_branch_city" class="form-control form-input" value="<?php echo html_escape($user_payout->swift_bank_branch_city); ?>" required>
 
                             </div> -->
-                        <div class="row">
-                            <div class="col-sm-12 m-b-30 groove">
-                                <label id="label1">Your Bank Details</label>
-                                <div class="form-group">
-                                    <div class="row Brand-1">
-                                        <div class="col-md-3"><label id="formlabel2">Account Holder Name<span class="Validation_error"> *</span></label></div>
-                                        <div class="col-md-9 Brand-name">
-                                            <input type='text' name="holder_name" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->acc_holder_name); ?>" required>
-                                        </div>
+                    <div class="row">
+                        <div class="col-sm-12 m-b-30 groove">
+                            <label id="label1">Your Bank Details</label>
+                            <div class="form-group">
+                                <div class="row Brand-1">
+                                    <div class="col-md-3"><label id="formlabel2">Account Holder Name<span class="Validation_error"> *</span></label></div>
+                                    <div class="col-md-9 Brand-name">
+                                        <input type='text' name="holder_name" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->acc_holder_name); ?>" required>
                                     </div>
-                                    <!-- <input type="text" name="holder_name" class="form-control form-input"  placeholder="Enter Account Holder Name"  required> -->
                                 </div>
-                                <div class="form-group">
-                                    <div class="row Brand-1" style="margin-bottom: 3%;">
-                                        <div class="col-md-3"><label id="formlabel2">Account Number<span class="Validation_error"> *</span></label></div>
-                                        <div class="col-md-9 Brand-name">
-                                            <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
+                                <!-- <input type="text" name="holder_name" class="form-control form-input"  placeholder="Enter Account Holder Name"  required> -->
+                            </div>
+                            <div class="form-group">
+                                <div class="row Brand-1" style="margin-bottom: 3%;">
+                                    <div class="col-md-3"><label id="formlabel2">Account Number<span class="Validation_error"> *</span></label></div>
+                                    <div class="col-md-9 Brand-name">
+                                        <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
 
-                                        </div>
-                                    </div>
-                                    <div class="row Brand-1">
-                                        <div class="col-md-3"><label id="formlabel2">Confirm Account Number<span class="Validation_error"> *</span></label></div>
-                                        <div class="col-md-9 Brand-name">
-                                            <input type='text' name="confirm_account_number" id="confirm_account_number" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
-                                            <span style="color: red;" id="verity_account"></span>
-                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row Brand-1">
-                                        <div class="col-md-3"><label id="formlabel2">IFSC Code<span class="Validation_error"> *</span></label></div>
-                                        <div class="col-md-9 Brand-name">
-                                            <input type='text' name="ifsc_code" id="ifsc_code" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->ifsc_code); ?>" required onchange="validate_ifsc($( '#ifsc_code').val())">
-                                        </div>
+                                <div class="row Brand-1">
+                                    <div class="col-md-3"><label id="formlabel2">Confirm Account Number<span class="Validation_error"> *</span></label></div>
+                                    <div class="col-md-9 Brand-name">
+                                        <input type='text' name="confirm_account_number" id="confirm_account_number" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
+                                        <span style="color: red;" id="verity_account"></span>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row Brand-1">
-                                        <div class="col-md-3"><label id="formlabel2">Bank Branch<span class="Validation_error"> *</span></label></div>
-                                        <div class="col-md-9 Brand-name">
-                                            <input type='text' name="bank_branch" id="bank_branch" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->bank_branch); ?>" required readonly>
-                                        </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row Brand-1">
+                                    <div class="col-md-3"><label id="formlabel2">IFSC Code<span class="Validation_error"> *</span></label></div>
+                                    <div class="col-md-9 Brand-name">
+                                        <input type='text' name="ifsc_code" id="ifsc_code" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->ifsc_code); ?>" required onchange="validate_ifsc($( '#ifsc_code').val())">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row Brand-1">
+                                    <div class="col-md-3"><label id="formlabel2">Bank Branch<span class="Validation_error"> *</span></label></div>
+                                    <div class="col-md-9 Brand-name">
+                                        <input type='text' name="bank_branch" id="bank_branch" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->bank_branch); ?>" required readonly>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <div class="form-group">
-                            <button type="submit" id="submit" value="update" class="btn btn-md btn-success"><?php echo trans("save_changes"); ?></button>
-                        </div>
-                        <?php echo form_close(); ?>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="submit" id="submit" value="update" class="btn btn-md btn-success"><?php echo trans("save_changes"); ?></button>
                     </div>
+                    <?php echo form_close(); ?>
                 </div>
             </div>
         </div>
-    <?php endif; ?>
+    </div>
 <?php endif; ?>
 
 <div class="row-custom">
