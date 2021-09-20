@@ -67,7 +67,25 @@ class Coupon_controller extends Admin_Core_Controller
         $this->load->view('admin/includes/_footer');
     }
 
+    
+    public function vouchers_data()
+    {
+        $source_ids = $this->input->post('source_id');
+        $user_data = array();
+        $offer_id=$this->input->post('offer_id');
+        
+        for ($i = 0; $i < count($source_ids); $i++) {
+            $data = array(
+                'source_type' => 'User',
+                'source_id' => $source_ids[$i],
+                'offer_id'=>$offer_id
+            );
+            array_push($user_data,$data);
+        }
 
+        // var_dump($user_data);
+        $this->db->insert_batch('offer_selection_details', $user_data);
+    }
 
     public function edit_offer_details($id)
     {

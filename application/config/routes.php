@@ -378,6 +378,8 @@ $route[getr('admin', $rts) . '/invoices'] = 'order_admin_controller/invoices';
 $route[getr('admin', $rts) . '/digital-sales'] = 'order_admin_controller/digital_sales';
 /*product routes*/
 $route[getr('admin', $rts) . '/products'] = 'product_controller/products';
+$route[getr('admin', $rts) . '/products_offers'] = 'product_controller/products_offers';
+
 $route[getr('admin', $rts) . '/services'] = 'product_controller/services';
 
 $route[getr('admin', $rts) . '/pending-products'] = 'product_controller/pending_products';
@@ -481,7 +483,7 @@ $route[getr('admin', $rts) . '/add-city'] = 'admin_controller/add_city';
 $route[getr('admin', $rts) . '/update-city/(:num)'] = 'admin_controller/update_city/$1';
 /*users routes*/
 $route[getr('admin', $rts) . '/members'] = 'membership_controller/members';
-$route[getr('admin', $rts) . '/users'] = 'membership_controller/users';
+$route[getr('admin', $rts) . '/vouchers-users'] = 'coupon_controller/vouchers_users';
 $route[getr('admin', $rts) . '/vendors'] = 'membership_controller/vendors';
 $route[getr('admin', $rts) . '/featured_vendors'] = 'membership_controller/featured_vendors';
 $route[getr('admin', $rts) . '/administrators'] = 'membership_controller/administrators';
@@ -515,6 +517,8 @@ $route[getr('admin', $rts) . '/visual-settings'] = 'admin_controller/visual_sett
 $route[getr('admin', $rts) . '/system-settings'] = 'admin_controller/system_settings';
 // offers routes
 $route[getr('admin', $rts) . '/create-offers'] = 'admin_controller/create_offers';
+$route[getr('admin', $rts) . '/selection-offers'] = 'admin_controller/vouched';
+
 /*currency*/
 $route[getr('admin', $rts) . '/currency-settings'] = 'admin_controller/currency_settings';
 $route[getr('admin', $rts) . '/update-currency/(:num)'] = 'admin_controller/update_currency/$1';
