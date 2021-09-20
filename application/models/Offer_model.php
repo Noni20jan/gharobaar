@@ -35,4 +35,24 @@ class Offer_model extends CI_Model
         $this->db->where('id', clean_number($id));
         return $this->db->update('cms_offers', $data);
     }
+    public function get_coupon_consumption()
+    {
+        $sql = "SELECT
+        `c`.`email`,
+            `d`.`name`,
+            `d`.`method`,
+            `d`.`offer_code`,
+            `d`.`creation_date`,
+            `a`.`total_discount`
+        FROM
+            `offer_redemptions` `a`
+                JOIN
+            `orders` `b` ON `b`.`id` = `a`.`order_id`
+                JOIN
+            `users` `c` ON `c`.`id` = `b`.`buyer_id`
+                JOIN
+            `cms_offers` `d` ON `d`.`id` = `a`.`offer_id`";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
 }

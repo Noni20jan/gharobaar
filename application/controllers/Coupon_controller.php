@@ -174,4 +174,17 @@ class Coupon_controller extends Admin_Core_Controller
 
         $this->Offer_model->edit_coupons_vouchers($id, $data);
     }
+
+
+    public function consumption_dashboard()
+    {
+        $data['title'] = trans("consumption_dashboard");
+        $data['main_settings'] = get_main_settings();
+
+        $data['consumptions'] = $this->offer_model->get_coupon_consumption();
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/offers/consumption_dashboard');
+        $this->load->view('admin/includes/_footer');
+    }
 }

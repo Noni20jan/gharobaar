@@ -1429,7 +1429,7 @@ class Cart_controller extends Home_Core_Controller
                 $gateway_charge = $com->gateway_charge;
             } elseif ($payment_mode == 'cc') {
                 // $com = $this->order_model->get_commission_rate_dc_cc_wallet($payment_mode);
-                $gateway_charge = 0.95;
+                $gateway_charge = 1.85;
             } elseif ($payment_mode == 'upi') {
                 $gateway_charge = 0.15;
             } elseif ($payment_mode == 'dc') {
