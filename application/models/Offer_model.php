@@ -59,12 +59,13 @@ class Offer_model extends CI_Model
     public function tag_cat_coupons_vouchers()
     {
         $data = array(
-            'offer_id' => 2,
-            'source_type' => "category",
+            'offer_id' => $this->input->post('offer_id', true),
+            'source_type' => $this->input->post('source_type', true),
             // 'source_id' => 1,
             'source_id' => trim($this->input->post('category_id', true)),
         );
 
+        $data['source_id'] = get_dropdown_category_id();
         return $this->db->insert('offer_selection_details', $data);
     }
     public function loyalty_insert_details($data)

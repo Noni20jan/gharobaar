@@ -47,6 +47,7 @@ class Coupon_controller extends Admin_Core_Controller
         $data['main_settings'] = get_main_settings();
         $data['offers'] = $this->offer_model->get_all_coupons();
         $data['parent_categories'] = $this->category_model->get_all_parent_categories();
+        $data["coupons"] = $this->offer_model->get_all_coupons();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/offers/category_coupon');
         $this->load->view('admin/includes/_footer');
@@ -115,15 +116,15 @@ class Coupon_controller extends Admin_Core_Controller
     {
         $source_ids = $this->input->post('source_id');
         $product_data = array();
-        $offer_id=$this->input->post('offer_id');
-        
+        $offer_id = $this->input->post('offer_id');
+
         for ($i = 0; $i < count($source_ids); $i++) {
             $data = array(
                 'source_type' => 'Product',
                 'source_id' => $source_ids[$i],
-                'offer_id'=>$offer_id
+                'offer_id' => $offer_id
             );
-            array_push($product_data,$data);
+            array_push($product_data, $data);
         }
 
         // var_dump($user_data);
@@ -257,6 +258,28 @@ class Coupon_controller extends Admin_Core_Controller
             redirect($this->agent->referrer());
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
+        }
+    }
+
+    //laod view for category anc products
+
+    public function load_source_view()
+    {
+        $source_type = $this->input->post('source_type', true);
+
+        if ($source_type == "products") {
+            $data['title'] = trans("products");
+            $data['form_action'] = admin_url() . "products_offers";
+            $data['list_type'] = "products";
+            //get paginated products
+            $pagination = $this->paginate(admin_url() . 'products_offers', $this->product_admin_model->get_paginated_product_count('products'));
+            $data['products'] = $this->product_admin_model->get_paginated_product($pagination['per_page'], $pagination['offset'], 'products');
+            $data['main_settings'] = get_main_settings();
+            $data["coupons"] = $this->offer_model->get_all_coupons();
+            $this->load->view('admin/offers/coupons_products', $data);
+        } else if ($source_type == "category") {
+            $data['parent_categories'] = $this->category_model->get_all_parent_categories();
+            $this->load->view('admin/offers/_category_selection', $data);
         }
     }
 }
