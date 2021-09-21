@@ -28,4 +28,17 @@ class Offer_controller extends Admin_Core_Controller
         $this->load->view('admin/membership/members');
         $this->load->view('admin/includes/_footer');
     }
+
+    // functiona for coupon category tagging 
+
+    public function tag_cat_coupons_vouchers()
+    {
+        // $id = $this->input->post('id', true);
+        if ($this->offer_model->tag_cat_coupons_vouchers()) {
+            $this->session->set_flashdata('success', trans("category tagged"));
+            redirect($this->agent->referrer());
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+    }
 }

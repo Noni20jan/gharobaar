@@ -55,4 +55,16 @@ class Offer_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
+    // tag category to coupon/voucher
+    public function tag_cat_coupons_vouchers()
+    {
+        $data = array(
+            'offer_id' => 2,
+            'source_type' => "category",
+            // 'source_id' => 1,
+            'source_id' => trim($this->input->post('category_id', true)),
+        );
+
+        return $this->db->insert('offer_selection_details', $data);
+    }
 }

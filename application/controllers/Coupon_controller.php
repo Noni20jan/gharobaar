@@ -45,9 +45,8 @@ class Coupon_controller extends Admin_Core_Controller
     {
         $data['title'] = trans("coupons_dashboard");
         $data['main_settings'] = get_main_settings();
-
-        // $data['offers'] = $this->offer_model->get_all_coupons();
-
+        $data['offers'] = $this->offer_model->get_all_coupons();
+        $data['parent_categories'] = $this->category_model->get_all_parent_categories();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/offers/category_coupon');
         $this->load->view('admin/includes/_footer');
@@ -72,7 +71,7 @@ class Coupon_controller extends Admin_Core_Controller
         $data['title'] = trans("users");
         $data['page_url'] = admin_url() . "vouchers-users";
         $pagination = $this->paginate($data['page_url'], $this->auth_model->get_users_count_by_role('member'));
-         $data["users"] = $this->auth_model->get_paginated_filtered_users('member', $pagination['per_page'], $pagination['offset']);
+        $data["users"] = $this->auth_model->get_paginated_filtered_users('member', $pagination['per_page'], $pagination['offset']);
         $data["offers"] = $this->offer_model->get_all_vouchers();
 
         $this->load->view('admin/includes/_header', $data);
@@ -83,15 +82,15 @@ class Coupon_controller extends Admin_Core_Controller
     {
         $source_ids = $this->input->post('source_id');
         $user_data = array();
-        $offer_id=$this->input->post('offer_id');
-        
+        $offer_id = $this->input->post('offer_id');
+
         for ($i = 0; $i < count($source_ids); $i++) {
             $data = array(
                 'source_type' => 'User',
                 'source_id' => $source_ids[$i],
-                'offer_id'=>$offer_id
+                'offer_id' => $offer_id
             );
-            array_push($user_data,$data);
+            array_push($user_data, $data);
         }
 
         // var_dump($user_data);
@@ -248,5 +247,16 @@ class Coupon_controller extends Admin_Core_Controller
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/offers/consumption_dashboard');
         $this->load->view('admin/includes/_footer');
+    }
+    // functiona for coupon category tagging 
+    public function tag_cat_coupons_vouchers()
+    {
+        // $id = $this->input->post('id', true);
+        if ($this->offer_model->tag_cat_coupons_vouchers()) {
+            $this->session->set_flashdata('success', trans("category tagged"));
+            redirect($this->agent->referrer());
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
     }
 }
