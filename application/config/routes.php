@@ -526,7 +526,9 @@ $route[getr('admin', $rts) . '/update-currency/(:num)'] = 'admin_controller/upda
 $route[getr('admin', $rts) . '/send-email-subscribers'] = 'admin_controller/send_email_subscribers';
 $route[getr('admin', $rts) . '/subscribers'] = 'admin_controller/subscribers';
 $route[getr('admin', $rts) . '/send-email-members'] = 'admin_controller/send_email_members';
-
+//loyalty
+$route[getr('admin', $rts) . '/loyalty-criteria'] = 'admin_controller/loyalty_criteria';
+$route[getr('admin', $rts) . '/user-loyalty-program'] = 'admin_controller/user_loyalty_program';
 
 $route[getr('admin', $rts) . '/contact-messages'] = 'admin_controller/contact_messages';
 $route[getr('admin', $rts) . '/preferences'] = 'admin_controller/preferences';

@@ -365,7 +365,59 @@ class Admin_controller extends Admin_Core_Controller
             $this->session->set_flashdata('error', trans("msg_error"));
         }
     }
+    /*
+    *-------------------------------------------------------------------------------------------------
+    * Loyalty Program
+    *-------------------------------------------------------------------------------------------------
+    */
 
+    public function loyalty_criteria()
+    {
+        $this->load->model("Offer_model");
+        $data['title'] = trans("send_email_members");
+        $data['user_type'] = $this->Offer_model->get_user_type();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/loyalty/loyalty_criteria', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+    public function loyalty_program_submit()
+    {
+        $this->load->model("Offer_model");
+        $data['name'] = $this->input->post('kpi_name', true);
+        $data['user_type'] = $this->input->post('user_type', true);
+        $data['kpi_rel_type'] = $this->input->post('kpi_type', true);
+        $parent_name = $this->input->post('parent_name', true);
+        $data['weightage'] = $this->input->post('weightage', true);
+        $data['calc_kpi'] = $this->input->post('formula', true);
+        if ($data['kpi_rel_type'] == "child") {
+            $detail['parentid'] = $this->Offer_model->get_parent_detail($parent_name);
+            $data['parent_id'] = $detail['parentid']->parent_id;
+        }
+        $this->Offer_model->loyalty_insert_details($data);
+    }
+    public function user_loyalty_program()
+    {
+        $this->load->model("Offer_model");
+        $data['title'] = trans("send_email_members");
+        $data['loyalty'] = $this->Offer_model->get_loyalty_program();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/loyalty/user_loyalty_program', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function user_loyalty_program_submit()
+    {
+        $this->load->model("Offer_model");
+        $data['name'] = $this->input->post('name', true);
+        $data['user_type'] = $this->input->post('user_type', true);
+        $data['loyalty_program'] = $this->input->post('loyalty_type', true);
+        $data['description'] = $this->input->post('description', true);
+        $data['start_date'] = $this->input->post('start_date', true);
+        $data['end_date'] = $this->input->post('end_date', true);
+        $data['status'] = "A";
+        $data['created_by'] = $this->auth_user->id;
+        $this->Offer_model->loyalty_program_insert_details($data);
+    }
 
     /*
     *-------------------------------------------------------------------------------------------------

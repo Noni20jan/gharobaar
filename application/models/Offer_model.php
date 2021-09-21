@@ -67,4 +67,30 @@ class Offer_model extends CI_Model
 
         return $this->db->insert('offer_selection_details', $data);
     }
+    public function loyalty_insert_details($data)
+    {
+        return $this->db->insert('criteria', $data);
+    }
+    public function get_parent_detail($data)
+    {
+        $this->db->where('parent_type', $data);
+        $query = $this->db->get('criteria');
+        return $query->result();
+    }
+    public function get_loyalty_program()
+    {
+        $this->db->where('lookup_type', 'lookup_program');
+        $query = $this->db->get('lookup_values');
+        return $query->result();
+    }
+    public function loyalty_program_insert_details($data)
+    {
+        return $this->db->insert('user_loyalty_programs', $data);
+    }
+    public function get_user_type()
+    {
+        $this->db->where('lookup_type', "USER_TYPE");
+        $query = $this->db->get('lookup_values');
+        return $query->result();
+    }
 }
