@@ -5283,9 +5283,17 @@
             var email_address = document.getElementById("email_new").value;
             if (phn_num == '') {
                 document.getElementById("verify_mobile_span").innerHTML = "*Please enter mobile number !";
-            } else if (phn_num != '' && phn_num.length == 10) {
+            } else if (email_address == "") {
+                document.getElementById("email_span_error").innerHTML = "";
+                document.getElementById("email_span_error").innerHTML = "Please enter email address";
+            } else if (IsEmail(email_address) == false) {
+                //invalid emailid
+            } else if (phn_num != '' && phn_num.length == 10 && email_address != "") {
                 if (phn_num.length != 10) {
                     document.getElementById("verify_mobile_span").innerHTML = "";
+                }
+                if (email_address != "") {
+                    document.getElementById("email_span_error").innerHTML = "";
                 }
                 var register_phn = check_for_mobile_register_js(phn_num);
                 // console.log(register_phn);
@@ -5337,6 +5345,16 @@
         $("#phone_number").change(function() {
             document.getElementById("btnsubmit_register").disabled = true;
         })
+    </script>
+    <script>
+        function IsEmail(email) {
+            var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if (!regex.test(email)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
     </script>
     <!-- Facebook Pixel Code -->
     <script>

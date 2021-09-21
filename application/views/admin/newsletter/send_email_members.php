@@ -17,14 +17,16 @@
                 <!-- include message block -->
                 <?php $this->load->view('admin/includes/_messages'); ?>
                 <div class="form-group">
-                    <label><?php echo trans('emailto'); ?></label>
-                    <input type="radio" class="selectBox" name="emailall" id="baby" onclick="emailtoall();" value="all" />
+
+                    <label><?php echo trans('emailto'); ?></label><br>
+
+                    <input type="radio" class="selectBox" name="emailall" id="emailall" onclick="emailtoall();" required value="all" />
                     <label for="all">All</label><br>
-                    <input type="radio" class="selectBox" id="baby1" name="emailall" onclick="indviduals();" value="individual" />
+                    <input type="radio" class="selectBox" id="select_email" name="emailall" onclick="indviduals();" required value="individual" />
                     <label for="individual">Select Email ID</label><br>
                 </div>
                 <div class="form-group" id="indvidual_selection">
-                    <select name="emailto[]" id="user_selection" class="selectpicker" data-live-search="true" multiple>
+                    <select name="emailto[]" id="user_selection" class="selectpicker" data-live-search=" true" multiple>
                         <?php $data['email'] = $this->newsletter_model->get_members1(); ?>
                         <?php foreach ($data['email'] as $email) { ?>
                             <option value="<?php echo $email->email; ?>"><?php echo $email->email; ?></option>
@@ -91,17 +93,19 @@
 </script>
 <script>
     function emailtoall() {
-        var email = document.getElementById('baby').value;
+        var email = document.getElementById('emailall').value;
         $('#indvidual_selection').hide();
         document.getElementById('user_selection').value = "";
         // }
+        $('#user_selection').prop('required', false);
     }
 </script>
 <script>
     function indviduals() {
-        var email = document.getElementById('baby1').value;
+        var email = document.getElementById('select_email').value;
         $('#indvidual_selection').show();
-        document.getElementById('baby').val = "";
+        document.getElementById('emailall').val = "";
+        $('#user_selection').prop('required', true);
         // }
     }
 </script>
