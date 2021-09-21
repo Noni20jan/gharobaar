@@ -603,6 +603,25 @@
                         </ul>
                     </li>
 
+                    <li class="header text-uppercase"><?php echo trans("loyalty_program"); ?></li>
+                    <li class="treeview<?php is_admin_nav_active(['Loyalty Program', 'program']); ?>">
+                        <a href="#">
+                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/news.png" alt="" style="width: 20px; height: 20px;" />
+                            <span><?php echo trans("loyalty_program"); ?></span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="nav-send-email-subscribers">
+                                <a href="<?php echo admin_url(); ?>user-loyalty-program"><?php echo trans("user_loyalty_program"); ?></a>
+                            </li>
+                            <li class="nav-send-email-subscribers">
+                                <a href="<?php echo admin_url(); ?>kpi-form"><?php echo trans("add_kpi"); ?></a>
+                            </li>
+                            <li class="nav-send-email-subscribers">
+                                <a href="<?php echo admin_url(); ?>loyalty-criteria"><?php echo trans("loyalty_criteria"); ?></a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="treeview<?php is_admin_nav_active(['system-settings', 'route-settings']); ?>">
                         <a href="#">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/offers.png" alt="" style="width: 20px; height: 20px;" />
