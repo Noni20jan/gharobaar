@@ -286,6 +286,14 @@ class Order_model extends CI_Model
                         }
                     }
 
+                    if (count($psd->products) > 0) {
+                        foreach ($psd->products as $prod) {
+                            if (floatval($object_product->gst_rate) > floatval($prod->gst_rate)) {
+                                $psd->seller_gst_rate = $object_product->gst_rate;
+                            }
+                        }
+                    }
+
                     $psd->total_tcs_amount_product += $object_product->tcs_amount_product;
                     $psd->total_tds_amount_product += $object_product->tds_amount_product;
                     array_push($psd->products, $object_product);
@@ -354,11 +362,14 @@ class Order_model extends CI_Model
                 $object->seller_earned = ($object->total_price / 100) - $object->total_commission_amount;
                 // var_dump($object->total_price_without_gst);
                 // die();
+                $object->seller_gst_rate = $object_product->gst_rate;
                 array_push($object->products, $object_product);
                 array_push($product_seller_details, $object);
             endif;
             // var_dump($cart_item);
         }
+
+        // var_dump($product_seller_details);die();
 
 
         $seller_settlement = array();
@@ -366,6 +377,7 @@ class Order_model extends CI_Model
         foreach ($product_seller_details as $psd) {
             $object = new stdClass();
             $object->vendorId = $psd->seller_id;
+            $object->seller_gst_rate = $psd->seller_gst_rate;
 
 
             $gst_number = get_gst_number_by_sellerid($object->vendorId);
@@ -394,10 +406,13 @@ class Order_model extends CI_Model
             $cod_charges_shiprocket = $cod_charges_without_product_gst + (0.18 * $cod_charges_without_product_gst);
             $cod_inc_gst_in_invoice = $cod_charges_without_product_gst + (($shipping_cod_gst_rate / 100) * $cod_charges_without_product_gst);
 
-
-            $object->cod_charge = $cod_charges_shiprocket;
+            
             $object->cod_charges_without_gst = $cod_charges_without_product_gst;
-
+            if ($object->seller_gst_rate == 0) {
+                $object->cod_charge = $object->cod_charges_without_gst;
+            } elseif ($object->seller_gst_rate != 0) {
+                $object->cod_charge = $cod_charges_shiprocket;
+            }
 
             foreach ($shipping_detail as $ship_detail) {
                 if ($psd->seller_id == $ship_detail->SupplierId) {
@@ -428,24 +443,29 @@ class Order_model extends CI_Model
             if (!empty($pan_number)) {
                 if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                     $object->tds_amount_shipping = 0;
+                    $object->total_tds_cod = 0;
                 } else {
                     $object->tds_amount_shipping = 0.01 * ($object->shipping);
+                    $object->total_tds_cod = 0.01 * $object->cod_charges_without_gst;
                 }
             } else {
                 $object->tds_amount_shipping = 0.05 * ($object->shipping);
+                $object->total_tds_cod = 0.05 * $object->cod_charges_without_gst;
             }
 
 
             if ($object->total_tcs_amount_product == 0) {
                 $object->total_tcs_shipping = 0;
+                $object->total_tcs_cod = 0;
             } elseif ($object->total_tcs_amount_product != 0) {
                 $object->total_tcs_shipping = ($object->shipping) * 0.01;
+                $object->total_tcs_cod = 0.01 * $object->cod_charges_without_gst;
             }
 
-            $object->tcs_amount = $object->total_tcs_amount_product + $object->total_tcs_shipping + (0.01 * $object->cod_charges_without_gst);
+            $object->tcs_amount = $object->total_tcs_amount_product + $object->total_tcs_shipping + $object->total_tcs_cod;
 
 
-            $object->tds_amount = $object->total_tds_amount_product + $object->tds_amount_shipping + (0.01 * $object->cod_charges_without_gst);
+            $object->tds_amount = $object->total_tds_amount_product + $object->tds_amount_shipping + $object->total_tds_cod;
             // var_dump($object->cod_charge);
             // echo "</br>";
             // var_dump($object->shipping_charge_to_gharobaar);
@@ -3685,7 +3705,7 @@ class Order_model extends CI_Model
     // get cod charges by order id and seller id
     public function fetch_cod_seller_payable($from_date, $to_date)
     {
-        $sql = "SELECT 
+        $sql = "SELECT distinct
         `a`.`order_id`,
         `a`.`net_seller_payable`,
         `b`.`shop_name`,
