@@ -97,6 +97,39 @@ class Coupon_controller extends Admin_Core_Controller
         // var_dump($user_data);
         $this->db->insert_batch('offer_selection_details', $user_data);
     }
+    public function coupons_products()
+    {
+        $data['title'] = trans("products");
+        $data['form_action'] = admin_url() . "products_offers";
+        $data['list_type'] = "products";
+        //get paginated products
+        $pagination = $this->paginate(admin_url() . 'products_offers', $this->product_admin_model->get_paginated_product_count('products'));
+        $data['products'] = $this->product_admin_model->get_paginated_product($pagination['per_page'], $pagination['offset'], 'products');
+        $data['main_settings'] = get_main_settings();
+        $data["coupons"] = $this->offer_model->get_all_coupons();
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/offers/coupons_products', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+    public function coupons_products_data()
+    {
+        $source_ids = $this->input->post('source_id');
+        $product_data = array();
+        $offer_id=$this->input->post('offer_id');
+        
+        for ($i = 0; $i < count($source_ids); $i++) {
+            $data = array(
+                'source_type' => 'Product',
+                'source_id' => $source_ids[$i],
+                'offer_id'=>$offer_id
+            );
+            array_push($product_data,$data);
+        }
+
+        // var_dump($user_data);
+        $this->db->insert_batch('offer_selection_details', $product_data);
+    }
 
     public function edit_offer_details($id)
     {

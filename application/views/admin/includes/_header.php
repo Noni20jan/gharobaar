@@ -611,8 +611,8 @@
                         </a>
                         <ul class="treeview-menu">
                             <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>create-offers"> <?php echo trans(""); ?>Offers Creation</a></li>
-                            <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>users"> <?php echo trans(""); ?>Voucher Assignment</a></li>
-
+                             <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>vouchers-users"> <?php echo trans(""); ?>Voucher Assignment</a></li>
+                             <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>products_offers"> <?php echo trans(""); ?>Coupon Assignment</a></li>
                         </ul>
                     </li>
 

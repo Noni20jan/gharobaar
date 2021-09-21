@@ -378,7 +378,7 @@ $route[getr('admin', $rts) . '/invoices'] = 'order_admin_controller/invoices';
 $route[getr('admin', $rts) . '/digital-sales'] = 'order_admin_controller/digital_sales';
 /*product routes*/
 $route[getr('admin', $rts) . '/products'] = 'product_controller/products';
-$route[getr('admin', $rts) . '/products_offers'] = 'product_controller/products_offers';
+$route[getr('admin', $rts) . '/products_offers'] = 'coupon_controller/coupons_products';
 
 $route[getr('admin', $rts) . '/services'] = 'product_controller/services';
 

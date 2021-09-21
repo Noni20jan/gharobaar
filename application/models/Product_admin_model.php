@@ -284,6 +284,18 @@ class Product_admin_model extends CI_Model
         $this->filter_products($list, $category_ids);
         $this->db->where('products.status', 1);
         $this->db->where('products.is_service', "0");
+        $this->db->where('products.is_service', "0");
+        return $this->db->count_all_results('products');
+    }
+    public function get_paginated_product_count($list)
+    {
+        $category_ids = $this->get_filter_category_ids();
+        $this->build_query();
+        $this->filter_products($list, $category_ids);
+        $this->db->where('products.status', 1);
+        $this->db->where('products.is_service', "0");
+        $this->db->where('products.is_service', "0");
+        $this->db->where('products.stock>','0');
         return $this->db->count_all_results('products');
     }
     public function get_paginated_services_count($list)
@@ -305,6 +317,17 @@ class Product_admin_model extends CI_Model
         $this->db->where('products.status', 1);
         $this->db->where('products.is_service', "0");
         $this->db->limit(clean_number($per_page), clean_number($offset));
+        return $this->db->get('products')->result();
+    }
+    public function get_paginated_product($per_page, $offset, $list)
+    {
+        $category_ids = $this->get_filter_category_ids();
+        $this->build_query();
+        $this->filter_products($list, $category_ids);
+        $this->db->where('products.status', 1);
+        $this->db->where('products.is_service', "0");
+        $this->db->where('products.stock>','0');
+        // $this->db->limit(clean_number($per_page), clean_number($offset));
         return $this->db->get('products')->result();
     }
     //get paginated products
