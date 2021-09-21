@@ -162,7 +162,33 @@ class Product_admin_model extends CI_Model
     }
 
 
-
+    public function coupons_vouchers($offer_)
+    {
+        //     $offer_ = array(
+        //         'name' => $this->input->post('offer_name', true),
+        //         'type' => $this->input->post('method_type', true),
+        //         'method' => $this->input->post('coup_vou', true),
+        //         'start_date' =>  $this->input->post('start_date', true),
+        //         'end_date' => $this->input->post('end_date', true),
+        //         'discount_amt' => $this->input->post('discount_amt', true),
+        //         'discount_percentage' => $this->input->post('discount_per', true),
+        //         'allowed_max_discount' => $this->input->post('max_discount', true),
+        //         'min_amt_in_cart' => $this->input->post('min_discount', true),
+        //         'max_total_usage' => $this->input->post('max_usage', true),
+        //         // 'offer_code' => 0,
+        //         // 'msg_to_be_displayed' => $this->input->post('order_capacity', true),
+        //         // 'max_usage_per_user' => "",
+        //         // 'no_off_voucher_req' => 0,
+        //         // 'terms_and_conditions' => 1,
+        //         // 'status' => 0,
+        //         // 'created_by' => 0,
+        //         // 'creation_date' => 0,
+        //         // 'last_updated_by' => 0,
+        //         // 'last_update_date' => 0,
+        //         // 'last_update_login' => "",
+        //     );
+        return $this->db->insert('cms_offers', $offer_);
+    }
 
 
 
@@ -258,6 +284,18 @@ class Product_admin_model extends CI_Model
         $this->filter_products($list, $category_ids);
         $this->db->where('products.status', 1);
         $this->db->where('products.is_service', "0");
+        $this->db->where('products.is_service', "0");
+        return $this->db->count_all_results('products');
+    }
+    public function get_paginated_product_count($list)
+    {
+        $category_ids = $this->get_filter_category_ids();
+        $this->build_query();
+        $this->filter_products($list, $category_ids);
+        $this->db->where('products.status', 1);
+        $this->db->where('products.is_service', "0");
+        $this->db->where('products.is_service', "0");
+        $this->db->where('products.stock>','0');
         return $this->db->count_all_results('products');
     }
     public function get_paginated_services_count($list)
@@ -279,6 +317,17 @@ class Product_admin_model extends CI_Model
         $this->db->where('products.status', 1);
         $this->db->where('products.is_service', "0");
         $this->db->limit(clean_number($per_page), clean_number($offset));
+        return $this->db->get('products')->result();
+    }
+    public function get_paginated_product($per_page, $offset, $list)
+    {
+        $category_ids = $this->get_filter_category_ids();
+        $this->build_query();
+        $this->filter_products($list, $category_ids);
+        $this->db->where('products.status', 1);
+        $this->db->where('products.is_service', "0");
+        $this->db->where('products.stock>','0');
+        // $this->db->limit(clean_number($per_page), clean_number($offset));
         return $this->db->get('products')->result();
     }
     //get paginated products

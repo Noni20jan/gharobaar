@@ -619,7 +619,7 @@
 
                         <?php $img_url = get_lookup_image_url($shop_seller->lookup_code); ?>
                         <div class="pickgradient">
-                            <img class="top-sellers-new-ui" src="<?php echo other_base_url() . $img_url; ?>" alt="Avatar">
+                            <img class="top-sellers-new-ui" src="<?php echo base_url() . $img_url; ?>" alt="Avatar">
                         </div>
                     </a>
                     <p style=" text-align: center;position: relative;bottom: 25px;color: white;">

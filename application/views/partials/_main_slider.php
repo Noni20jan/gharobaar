@@ -6,7 +6,7 @@
             <div id="main-slider" class="main-slider">
                 <?php if (!empty($slider_items)) :
                     foreach ($slider_items as $item) : ?>
-                        <div class="item lazyload" data-bg="<?php echo other_base_url() . $item->image; ?>">
+                        <div class="item lazyload" data-bg="<?php echo base_url() . $item->image; ?>">
                             <a href="javascript:void(0);">
                                 <div class="container">
                                     <div class="row row-slider-caption align-items-center">
@@ -56,7 +56,7 @@
                         if (empty($image)) {
                             $image = $item->image;
                         } ?>
-                        <div class="item lazyload" data-bg="<?php echo other_base_url() . $image; ?>">
+                        <div class="item lazyload" data-bg="<?php echo base_url() . $image; ?>">
                             <a href="<?php echo html_escape($item->link); ?>">
                                 <div class="container">
                                     <div class="row row-slider-caption align-items-center">

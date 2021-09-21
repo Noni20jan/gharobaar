@@ -365,7 +365,59 @@ class Admin_controller extends Admin_Core_Controller
             $this->session->set_flashdata('error', trans("msg_error"));
         }
     }
+    /*
+    *-------------------------------------------------------------------------------------------------
+    * Loyalty Program
+    *-------------------------------------------------------------------------------------------------
+    */
 
+    public function loyalty_criteria()
+    {
+        $this->load->model("Offer_model");
+        $data['title'] = trans("send_email_members");
+        $data['user_type'] = $this->Offer_model->get_user_type();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/loyalty/loyalty_criteria', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+    public function loyalty_program_submit()
+    {
+        $this->load->model("Offer_model");
+        $data['name'] = $this->input->post('kpi_name', true);
+        $data['user_type'] = $this->input->post('user_type', true);
+        $data['kpi_rel_type'] = $this->input->post('kpi_type', true);
+        $parent_name = $this->input->post('parent_name', true);
+        $data['weightage'] = $this->input->post('weightage', true);
+        $data['calc_kpi'] = $this->input->post('formula', true);
+        if ($data['kpi_rel_type'] == "child") {
+            $detail['parentid'] = $this->Offer_model->get_parent_detail($parent_name);
+            $data['parent_id'] = $detail['parentid']->parent_id;
+        }
+        $this->Offer_model->loyalty_insert_details($data);
+    }
+    public function user_loyalty_program()
+    {
+        $this->load->model("Offer_model");
+        $data['title'] = trans("send_email_members");
+        $data['loyalty'] = $this->Offer_model->get_loyalty_program();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/loyalty/user_loyalty_program', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function user_loyalty_program_submit()
+    {
+        $this->load->model("Offer_model");
+        $data['name'] = $this->input->post('name', true);
+        $data['user_type'] = $this->input->post('user_type', true);
+        $data['loyalty_program'] = $this->input->post('loyalty_type', true);
+        $data['description'] = $this->input->post('description', true);
+        $data['start_date'] = $this->input->post('start_date', true);
+        $data['end_date'] = $this->input->post('end_date', true);
+        $data['status'] = "A";
+        $data['created_by'] = $this->auth_user->id;
+        $this->Offer_model->loyalty_program_insert_details($data);
+    }
 
     /*
     *-------------------------------------------------------------------------------------------------
@@ -382,6 +434,17 @@ class Admin_controller extends Admin_Core_Controller
 
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/newsletter/send_email', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+    /**
+     * Send Email to members
+     */
+    public function send_email_members()
+    {
+        $data['title'] = trans("send_email_members");
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/newsletter/send_email_members', $data);
         $this->load->view('admin/includes/_footer');
     }
 
@@ -414,7 +477,55 @@ class Admin_controller extends Admin_Core_Controller
         }
         redirect($this->agent->referrer());
     }
+    /**
+     * Newsletter Send Email Members Post
+     */
+    public function send_email_members_post()
+    {
 
+        $this->load->model("email_model");
+        $emailto = $this->input->post('emailto', true);
+        $emailall = $this->input->post('emailall', true);
+        $subject = $this->input->post('subject', true);
+        $message = $this->input->post('message', true);
+        if ($emailall == "all") {
+            $data['email'] = $this->newsletter_model->get_members();
+            $result = false;
+            if (!empty($data['email'])) {
+                $result = true;
+                $emailtoall1 = array();
+                foreach ($data['email'] as $emailwe) {
+                    if ($emailwe->email_status == 1) {
+                        array_push($emailtoall1, $emailwe->email);
+                    }
+                }
+                //send email
+                if (!$this->email_model->send_email_members_newsletter($emailall, $emailtoall1, $subject, $message)) {
+                    $result = false;
+                } else {
+                    $result = true;
+                }
+            }
+        }
+        if (isset($emailto)) {
+            $emailtoall1 = array();
+            foreach ($emailto as $emailtoall) {
+                array_push($emailtoall1, $emailtoall);
+            }
+            $emailtoc = "members";
+            if (!$this->email_model->send_email_members_newsletter($emailtoc, $emailtoall1, $subject, $message)) {
+                $result = false;
+            } else {
+                $result = true;
+            }
+        }
+        if ($result == true) {
+            $this->session->set_flashdata('success', trans("msg_email_sent"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+        redirect($this->agent->referrer());
+    }
 
     /**
      * Subscribers
@@ -428,7 +539,6 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/newsletter/subscribers', $data);
         $this->load->view('admin/includes/_footer');
     }
-
     /**
      * Delete Subscriber Post
      */
@@ -969,6 +1079,49 @@ class Admin_controller extends Admin_Core_Controller
     }
 
 
+    public function create_offers()
+    {
+        $data['title'] = trans("");
+        $data['main_settings'] = get_main_settings();
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/create-offers', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function save_created_offers()
+    {
+        // $name = $this->input->post('offer_name', true);
+        // $type = $this->input->post('method_type', true);
+        // $method = $this->input->post('coup_vou', true);
+        // $start_date =  $this->input->post('start_date', true);
+        // $end_date = $this->input->post('end_date', true);
+        // $discount_amt = $this->input->post('discount_amt', true);
+        // $discount_percentage = $this->input->post('discount_per', true);
+        // $allowed_max_discount = $this->input->post('max_discount', true);
+        // $min_amt_in_cart = $this->input->post('min_discount', true);
+        // $max_total_usage = $this->input->post('max_usage', true);
+        $offer_ = array(
+            'name' => $this->input->post('offer_name', true),
+            'type' => $this->input->post('method_type', true),
+            'method' => $this->input->post('coup_vou', true),
+            'start_date' =>  $this->input->post('start_date', true),
+            'end_date' => $this->input->post('end_date', true),
+            'discount_amt' => $this->input->post('discount_amt', true),
+            'discount_percentage' => $this->input->post('discount_per', true),
+            'allowed_max_discount' => $this->input->post('max_discount', true),
+            'min_amt_in_cart' => $this->input->post('min_discount', true),
+            'offer_code' => $this->input->post('coupon_code', true),
+            'msg_to_be_displayed' => $this->input->post('msg_displayed', true),
+            'no_off_voucher_req' => $this->input->post('vouchers_required', true),
+            'terms_and_conditions' => $this->input->post('t_&_c', true),
+            'max_total_usage' => $this->input->post('max_usage', true),
+            'description' => $this->input->post('description', true),
+        );
+
+        $this->product_admin_model->coupons_vouchers($offer_);
+    }
+
     /**
      * Storage Post
      */
@@ -1465,6 +1618,7 @@ class Admin_controller extends Admin_Core_Controller
             }
         }
     }
+
 
 
     /**

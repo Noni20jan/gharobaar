@@ -12,7 +12,12 @@
 </div>
 <!-- ./wrapper -->
 
-<style>.item-table-filter {min-width: 110px; max-width: 160px;}</style>
+<style>
+    .item-table-filter {
+        min-width: 110px;
+        max-width: 160px;
+    }
+</style>
 <script src="<?php echo base_url(); ?>assets/admin/js/jquery-ui.min.js"></script>
 <script>
     $.widget.bridge('uibutton', $.ui.button);
@@ -23,6 +28,8 @@
 <!-- DataTables js -->
 <script src="<?php echo base_url(); ?>assets/admin/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/admin/vendor/datatables/dataTables.bootstrap.min.js"></script>
+<!-- Bootstrap select js -->
+<script src="<?php echo base_url(); ?>assets/admin/js/bootstrap-select.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url(); ?>assets/admin/js/adminlte.min.js"></script>
 <!-- iCheck js -->
@@ -72,12 +79,17 @@
         init_tinymce('.tinyMCEsmall', 300);
     }
 </script>
-<?php if (isset($lang_search_column)): ?>
+<?php if (isset($lang_search_column)) : ?>
     <script>
         var table = $('#cs_datatable_lang').DataTable({
             dom: 'l<"#table_dropdown">frtip',
-            "order": [[0, "desc"]],
-            "aLengthMenu": [[15, 30, 60, 100], [15, 30, 60, 100, "All"]]
+            "order": [
+                [0, "desc"]
+            ],
+            "aLengthMenu": [
+                [15, 30, 60, 100],
+                [15, 30, 60, 100, "All"]
+            ]
         });
         //insert a label
         $('<label class="table-label"><label/>').text('Language').appendTo('#table_dropdown');
@@ -86,26 +98,27 @@
         $select = $('<select class="form-control input-sm"><select/>').appendTo('#table_dropdown');
 
         $('<option/>').val('').text('<?php echo trans("all"); ?>').appendTo($select);
-        <?php foreach ($this->languages as $lang): ?>
-        $('<option/>').val('<?php echo $lang->name; ?>').text('<?php echo $lang->name; ?>').appendTo($select);
+        <?php foreach ($this->languages as $lang) : ?>
+            $('<option/>').val('<?php echo $lang->name; ?>').text('<?php echo $lang->name; ?>').appendTo($select);
         <?php endforeach; ?>
 
         table.column(<?php echo $lang_search_column; ?>).search('').draw();
 
-        $("#table_dropdown select").change(function () {
+        $("#table_dropdown select").change(function() {
             table.column(<?php echo $lang_search_column; ?>).search($(this).val()).draw();
         });
     </script>
 <?php endif; ?>
 <script>
-    $('#location_1').on('ifChecked', function () {
+    $('#location_1').on('ifChecked', function() {
         $("#location_countries").hide();
     });
-    $('#location_2').on('ifChecked', function () {
+    $('#location_2').on('ifChecked', function() {
         $("#location_countries").show();
     });
     var sweetalert_ok = "<?= trans("ok"); ?>";
     var sweetalert_cancel = "<?= trans("cancel"); ?>";
 </script>
 </body>
+
 </html>

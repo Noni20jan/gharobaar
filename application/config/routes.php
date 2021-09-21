@@ -378,6 +378,8 @@ $route[getr('admin', $rts) . '/invoices'] = 'order_admin_controller/invoices';
 $route[getr('admin', $rts) . '/digital-sales'] = 'order_admin_controller/digital_sales';
 /*product routes*/
 $route[getr('admin', $rts) . '/products'] = 'product_controller/products';
+$route[getr('admin', $rts) . '/products_offers'] = 'coupon_controller/coupons_products';
+
 $route[getr('admin', $rts) . '/services'] = 'product_controller/services';
 
 $route[getr('admin', $rts) . '/pending-products'] = 'product_controller/pending_products';
@@ -413,6 +415,10 @@ $route[getr('admin', $rts) . '/service-details/(:num)'] = 'product_controller/se
 
 /*special-offers*/
 $route[getr('admin', $rts) . '/special-offers'] = 'product_controller/special_offers';
+$route[getr('admin', $rts) . '/edit-coupon-details/(:num)'] = 'coupon_controller/edit_offer_details/$1';
+$route[getr('admin', $rts) . '/edit-voucher-details/(:num)'] = 'coupon_controller/edit_voucher_details/$1';
+
+
 /*bidding system*/
 $route[getr('admin', $rts) . '/quote-requests'] = 'admin_controller/quote_requests';
 
@@ -442,6 +448,7 @@ $route[getr('admin', $rts) . '/penalties'] = 'earnings_controller/penalties';
 
 $route[getr('admin', $rts) . '/completed-payouts'] = 'earnings_controller/completed_payouts';
 $route[getr('admin', $rts) . '/payout-requests'] = 'earnings_controller/payout_requests';
+$route[getr('admin', $rts) . '/initiate-payout'] = 'earnings_controller/initiate_payout';
 $route[getr('admin', $rts) . '/payout-settings'] = 'earnings_controller/payout_settings';
 $route[getr('admin', $rts) . '/add-payout'] = 'earnings_controller/add_payout';
 $route[getr('admin', $rts) . '/seller-balances'] = 'earnings_controller/seller_balances';
@@ -476,6 +483,7 @@ $route[getr('admin', $rts) . '/add-city'] = 'admin_controller/add_city';
 $route[getr('admin', $rts) . '/update-city/(:num)'] = 'admin_controller/update_city/$1';
 /*users routes*/
 $route[getr('admin', $rts) . '/members'] = 'membership_controller/members';
+$route[getr('admin', $rts) . '/vouchers-users'] = 'coupon_controller/vouchers_users';
 $route[getr('admin', $rts) . '/vendors'] = 'membership_controller/vendors';
 $route[getr('admin', $rts) . '/featured_vendors'] = 'membership_controller/featured_vendors';
 $route[getr('admin', $rts) . '/administrators'] = 'membership_controller/administrators';
@@ -489,6 +497,15 @@ $route[getr('admin', $rts) . '/edit-plan/(:num)'] = 'membership_controller/edit_
 
 $route[getr('admin', $rts) . '/cache-system'] = 'admin_controller/cache_system';
 $route[getr('admin', $rts) . '/storage'] = 'admin_controller/storage';
+
+
+/*offers routes*/
+$route[getr('admin', $rts) . '/coupons-dashboard'] = 'coupon_controller/coupon_dashboard';
+$route[getr('admin', $rts) . '/vouchers-dashboard'] = 'coupon_controller/voucher_dashboard';
+$route[getr('admin', $rts) . '/offers-dashboard'] = 'coupon_controller/offers';
+$route[getr('admin', $rts) . '/category-coupon'] = 'coupon_controller/category_coupon_select';
+$route[getr('admin', $rts) . '/consumption-dashboard'] = 'coupon_controller/consumption_dashboard';
+
 /*languages routes*/
 $route[getr('admin', $rts) . '/languages'] = 'language_controller/languages';
 $route[getr('admin', $rts) . '/update-language/(:num)'] = 'language_controller/update_language/$1';
@@ -498,12 +515,20 @@ $route[getr('admin', $rts) . '/search-phrases'] = 'language_controller/search_ph
 $route[getr('admin', $rts) . '/payment-settings'] = 'settings_controller/payment_settings';
 $route[getr('admin', $rts) . '/visual-settings'] = 'admin_controller/visual_settings';
 $route[getr('admin', $rts) . '/system-settings'] = 'admin_controller/system_settings';
+// offers routes
+$route[getr('admin', $rts) . '/create-offers'] = 'admin_controller/create_offers';
+$route[getr('admin', $rts) . '/selection-offers'] = 'admin_controller/vouched';
+
 /*currency*/
 $route[getr('admin', $rts) . '/currency-settings'] = 'admin_controller/currency_settings';
 $route[getr('admin', $rts) . '/update-currency/(:num)'] = 'admin_controller/update_currency/$1';
 //newsletter
 $route[getr('admin', $rts) . '/send-email-subscribers'] = 'admin_controller/send_email_subscribers';
 $route[getr('admin', $rts) . '/subscribers'] = 'admin_controller/subscribers';
+$route[getr('admin', $rts) . '/send-email-members'] = 'admin_controller/send_email_members';
+//loyalty
+$route[getr('admin', $rts) . '/loyalty-criteria'] = 'admin_controller/loyalty_criteria';
+$route[getr('admin', $rts) . '/user-loyalty-program'] = 'admin_controller/user_loyalty_program';
 
 $route[getr('admin', $rts) . '/contact-messages'] = 'admin_controller/contact_messages';
 $route[getr('admin', $rts) . '/preferences'] = 'admin_controller/preferences';

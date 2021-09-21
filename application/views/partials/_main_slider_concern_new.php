@@ -6,7 +6,7 @@
             <div id="main-slider-concern" class="main-slider">
                 <?php if (!empty($second_slider_items)) :
                     foreach ($second_slider_items as $item) : ?>
-                        <div class="item lazyload" data-bg="<?php echo other_base_url() . $item->image; ?>" data-bg-mobile="<?php echo other_base_url() . $item->image_mobile; ?>">
+                        <div class="item lazyload" data-bg="<?php echo base_url() . $item->image; ?>" data-bg-mobile="<?php echo base_url() . $item->image_mobile; ?>">
                             <a href="<?php echo html_escape($item->link); ?>">
                                 <div class="container">
                                     <div class="row row-slider-caption align-items-center">
@@ -47,7 +47,7 @@
                         if (empty($image)) {
                             $image = $item->image;
                         } ?>
-                        <div class="item lazyload" data-bg="<?php echo other_base_url() . $image; ?>">
+                        <div class="item lazyload" data-bg="<?php echo base_url() . $image; ?>">
                             <a href="<?php echo html_escape($item->link); ?>">
                                 <div class="container">
                                     <div class="row row-slider-caption align-items-center">

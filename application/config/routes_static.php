@@ -175,3 +175,8 @@ $route['calulate-distance']['POST'] = 'auth_controller/calculate_distance';
 $route['update-order-status-after-timer-up']['POST'] = 'order_controller/update_order_status_after_timer_up';
 
 $route['order-status-update']['POST'] = 'api/item/index_post';
+
+
+$route['add-user-coupon'] = 'coupon_controller/vouchers_data';
+$route['add-product-coupon'] = 'coupon_controller/coupons_products_data';
+$route['load-source-view-post']['POST'] = 'coupon_controller/load_source_view';

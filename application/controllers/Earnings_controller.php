@@ -154,6 +154,28 @@ class Earnings_controller extends Admin_Core_Controller
         $this->load->view('admin/includes/_footer');
     }
 
+
+
+
+    /**
+     * Initiate Payout
+     */
+    public function initiate_payout()
+    {
+        $data['title'] = trans("payout_requests");
+        $data['form_action'] = admin_url() . "payout-requests";
+        //get paginated earnings
+        $pagination = $this->paginate(admin_url() . 'payout-requests', $this->earnings_admin_model->get_payout_requests_count());
+        $data['payout_requests'] = $this->earnings_admin_model->get_paginated_payout_requests($pagination['per_page'], $pagination['offset']);
+        $data["session"] = get_user_session();
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/earnings/initiate_payout', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+
+
     /**
      * Add Payout
      */

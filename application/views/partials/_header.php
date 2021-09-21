@@ -3889,7 +3889,7 @@
     <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
     <!-- chat systems  -->
 
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         var Tawk_API = Tawk_API || {},
             Tawk_LoadStart = new Date();
         (function() {
@@ -3901,7 +3901,7 @@
             s1.setAttribute('crossorigin', '*');
             s0.parentNode.insertBefore(s1, s0);
         })();
-    </script>
+    </script> -->
     <!-- chat system end -->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -4438,7 +4438,7 @@
                                 <a href="<?php echo generate_url("forgot_password"); ?>" class="link-forgot-password"><?php echo trans("forgot_password"); ?></a>
                             </div>
                             <div style="text-align:center;  margin-bottom:5px">
-                                <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class="logintoOtp">Login using OTP</a>
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class="logintoOtp" style="text-decoration: underline; color:blue !important">Login using OTP</a>
                             </div>
                             <div class="form-group" style="text-align:center;">
                                 <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login"); ?></button>
@@ -4509,7 +4509,7 @@
             <div class="modal-dialog modal-dialog-centered login-modal" role="document">
                 <div class="modal-content">
                     <div class="auth-box" style="width: 370px;">
-                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close" onclick="reloadPage()"></i></button>
                         <h4 class="title"><?php echo trans("login"); ?></h4>
                         <!-- form start -->
                         <form id="form_login_otp">
@@ -4523,15 +4523,15 @@
                             </div>
                             <div class="form-group">
                                 <input type="text" name="registeredNumber" class="form-control auth-form-input" placeholder="<?php echo trans("register_mobile"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
-                                <span id="login_otp_check"></span>
+                                <span id="login_otp_check" style="color: red;"></span>
                             </div>
 
                             <div class="form-group">
                                 <input type="text" name="loginOtp" id="loginOtp" class="form-control auth-form-input" placeholder="Enter Otp" required maxlength="6">
-                                <span id="login_otp_span"></span>
+                                <span id="login_otp_span" style="color: red;"></span>
                             </div>
 
-                            <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" id="resend_login_otp" class="link">Resend OTP</a></p>
+                            <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" id="resend_login_otp" class="link" style="text-decoration: underline; color:blue !important">Resend OTP</a></p>
 
                             <div class="form-group" style="text-align:center;">
                                 <button type="button" id="sendLoginOtp" class="btn btn-md btn-custom btn-block-new-ui">Send OTP</button>
@@ -4541,8 +4541,6 @@
                             </div>
                         </form>
                         <!-- form end -->
-
-
                     </div>
 
                 </div>
@@ -5249,6 +5247,7 @@
                         $("input[name=registeredNumber]").attr('disabled', true);
                         $("#submit_otp").show();
                         $("#sendLoginOtp").hide();
+                        $("#resend_login_otp").show();
                     } else if (register_phn == true) {
                         document.getElementById("login_otp_check").innerHTML = "*Mobile number is not registered!";
                     }
@@ -5259,10 +5258,15 @@
             }
         })
 
+        function reloadPage() {
+            location.reload()
+        }
+
         $(document).ready(function() {
             $("#submit_otp").hide();
             $("#loginOtp").hide();
             $("#verify_login_otp").hide();
+            $("#resend_login_otp").hide();
         });
 
         $("#close_btn").click(function() {
@@ -5392,7 +5396,7 @@
 
         $("#resend_login_otp").click(function() {
             var phn_num = $("input[name = registeredNumber] ").val();
-            send_verification_otp(phn_num, "mobile_otp");
+            send_verification_otp(phn_num, "mobile_otp_login");
         })
     </script>
     <script>

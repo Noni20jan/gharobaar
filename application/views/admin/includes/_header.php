@@ -15,12 +15,17 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/font-awesome/css/font-awesome.min.css">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Bootstrap select css -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/bootstrap-select.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/icheck/square/purple.css">
     <link rel="stylesheet" href="<?= base_url(); ?>assets/admin/vendor/icheck/square/blue.css">
     <!-- Datatables -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/datatables/dataTables.bootstrap.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/datatables/jquery.dataTables_themeroller.css">
+    <!-- New Datatables -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/newdatatables/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/newdatatables/css/fixedHeader.dataTables.min.css">
     <!-- Tags Input -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/vendor/tagsinput/jquery.tagsinput.min.css">
 
@@ -46,6 +51,12 @@
     <?php endif; ?>
     <!-- jQuery 3 -->
     <script src="<?php echo base_url(); ?>assets/admin/js/jquery.min.js"></script>
+
+    <!-- New Datatables Js -->
+
+    <script src="<?php echo base_url(); ?>assets/admin/vendor/newdatatables/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/admin/vendor/newdatatables/js/dataTables.fixedHeader.min.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -261,9 +272,10 @@
                         </a>
                         <ul class="treeview-menu">
                             <li class="nav-add-payout"><a href="<?php echo admin_url(); ?>add-payout"> <?php echo trans("add_payout"); ?></a></li>
-                            <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>payout-requests"> <?php echo trans("payout_requests"); ?></a></li>
-                            <li class="nav-completed-payouts"><a href="<?php echo admin_url(); ?>completed-payouts"> <?php echo trans("completed_payouts"); ?></a></li>
-                            <li class="nav-payout-settings"><a href="<?php echo admin_url(); ?>payout-settings"> <?php echo trans("payout_settings"); ?></a></li>
+                            <!-- <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>payout-requests"> <?php echo trans("payout_requests"); ?></a></li> -->
+                            <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>initiate-payout"> <?php echo trans("payout_requests"); ?></a></li>
+                            <!-- <li class="nav-completed-payouts"><a href="<?php echo admin_url(); ?>completed-payouts"> <?php echo trans("completed_payouts"); ?></a></li>
+                            <li class="nav-payout-settings"><a href="<?php echo admin_url(); ?>payout-settings"> <?php echo trans("payout_settings"); ?></a></li> -->
                         </ul>
                     </li>
                     <li class="header"><?php echo trans("products"); ?></li>
@@ -492,6 +504,17 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="treeview<?php is_admin_nav_active(['send-email-members', 'members']); ?>">
+                        <a href="#">
+                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/news.png" alt="" style="width: 20px; height: 20px;" />
+                            <span><?php echo trans("Members"); ?></span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="nav-send-email-subscribers">
+                                <a href="<?php echo admin_url(); ?>send-email-members"><?php echo trans("send_email_members"); ?></a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="header text-uppercase"><?php echo trans("settings"); ?></li>
                     <li class="nav-preferences">
                         <a href="<?php echo admin_url(); ?>preferences">
@@ -564,6 +587,55 @@
                             <li class="nav-route-settings"><a href="<?php echo admin_url(); ?>route-settings"> <?php echo trans("route_settings"); ?></a></li>
                         </ul>
                     </li>
+                    <li class="header text-uppercase"><?php echo trans("offer_management"); ?></li>
+
+                    <li class="treeview<?php is_admin_nav_active(['system-settings', 'route-settings']); ?>">
+                        <a href="#">
+                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/dashboard.png" alt="" style="width: 20px; height: 20px;" />
+                            <span><?php echo trans("dashboard"); ?></span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>offers-dashboard"> <?php echo trans("offers_dashboard"); ?></a></li>
+                            <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>coupons-dashboard"> <?php echo trans("coupons_dashboard"); ?></a></li>
+                            <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>vouchers-dashboard"> <?php echo trans("voucher_dashboard"); ?></a></li>
+                            <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>consumption-dashboard"> <?php echo trans("consumption_dashboard"); ?></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="header text-uppercase"><?php echo trans("loyalty_program"); ?></li>
+                    <li class="treeview<?php is_admin_nav_active(['Loyalty Program', 'program']); ?>">
+                        <a href="#">
+                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/news.png" alt="" style="width: 20px; height: 20px;" />
+                            <span><?php echo trans("loyalty_program"); ?></span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="nav-send-email-subscribers">
+                                <a href="<?php echo admin_url(); ?>user-loyalty-program"><?php echo trans("user_loyalty_program"); ?></a>
+                            </li>
+                            <li class="nav-send-email-subscribers">
+                                <a href="<?php echo admin_url(); ?>kpi-form"><?php echo trans("add_kpi"); ?></a>
+                            </li>
+                            <li class="nav-send-email-subscribers">
+                                <a href="<?php echo admin_url(); ?>loyalty-criteria"><?php echo trans("loyalty_criteria"); ?></a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="treeview<?php is_admin_nav_active(['system-settings', 'route-settings']); ?>">
+                        <a href="#">
+                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/offers.png" alt="" style="width: 20px; height: 20px;" />
+                            <span><?php echo trans(""); ?>Offers</span>
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>create-offers">Offers Creation</a></li>
+                            <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>vouchers-users">Voucher Assignment</a></li>
+                            <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>category-coupon">Coupon Assignment</a></li>
+
+                        </ul>
+                    </li>
+
 
                 </ul>
             </section>

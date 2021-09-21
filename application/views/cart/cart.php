@@ -456,6 +456,10 @@
                             </div>
                             <div class="col-sm-12 col-lg-4">
                                 <div class="right">
+                                    <?php
+                                    if ($this->general_settings->coupon_functionality) :
+                                        $this->load->view("partials/_apply_coupon");
+                                    endif; ?>
                                     <p>
                                         <strong style="font-size:18px;"><?php echo ("Price Details"); ?></strong>
                                     </p>

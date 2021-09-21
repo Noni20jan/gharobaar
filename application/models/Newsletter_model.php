@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Newsletter_model extends CI_Model
 {
@@ -44,6 +44,19 @@ class Newsletter_model extends CI_Model
         return $query->result();
     }
 
+    //get user list
+    public function get_members()
+    {
+        $query = $this->db->get('users');
+        return $query->result();
+    }
+    public function get_members1()
+    {
+        $this->db->where('email_status', 1);
+        $query = $this->db->get('users');
+        return $query->result();
+    }
+
     //get subscriber
     public function get_subscriber($email)
     {
@@ -76,5 +89,4 @@ class Newsletter_model extends CI_Model
         $this->db->where('email', $email);
         $this->db->delete('subscribers');
     }
-
 }
