@@ -379,6 +379,7 @@ $route[getr('admin', $rts) . '/digital-sales'] = 'order_admin_controller/digital
 /*product routes*/
 $route[getr('admin', $rts) . '/products'] = 'product_controller/products';
 $route[getr('admin', $rts) . '/products_offers'] = 'coupon_controller/coupons_products';
+$route[getr('admin', $rts) . '/products_coupons'] = 'coupon_controller/get_coupon_data';
 
 $route[getr('admin', $rts) . '/services'] = 'product_controller/services';
 

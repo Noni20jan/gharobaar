@@ -112,6 +112,24 @@ class Coupon_controller extends Admin_Core_Controller
         $this->load->view('admin/offers/coupons_products', $data);
         $this->load->view('admin/includes/_footer');
     }
+    public function get_coupon_data()
+    {
+        $data['title'] = trans("products");
+        $data['form_action'] = admin_url() . "products_coupons";
+        $data['list_type'] = "products";
+        //get paginated products
+      
+        $data["coupons"] = $this->offer_model->show_data();
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/offers/products_coupons', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+    public function delete_coupon(){
+        $id = $this->input->post('id', true);
+        $this->offer_model->delete_data($id);
+
+    }
     public function coupons_products_data()
     {
         $source_ids = $this->input->post('source_id');
