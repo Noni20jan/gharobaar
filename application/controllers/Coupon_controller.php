@@ -7,9 +7,6 @@ class Coupon_controller extends Admin_Core_Controller
     {
         parent::__construct();
         //check user
-        if (!is_admin()) {
-            redirect(admin_url() . 'login');
-        }
         $this->_user_session = get_user_session();
     }
 
@@ -329,11 +326,45 @@ class Coupon_controller extends Admin_Core_Controller
 
         if (!empty($coupon_details)) :
 
-            $data["status"] = true;
-            $data["msg"] = trans("success_coupon");
-            $data["coupon_data"] = $coupon_details;
-        else :
+            $coupon_start_date = strtotime($coupon_details->start_date);
+            $coupon_end_date = strtotime($coupon_details->end_date);
 
+            // check for the expiration of the coupon/voucher
+            if (time() >= $coupon_start_date && time() <= $coupon_end_date) {
+
+                //check for the max. usage of the coupon/voucher
+                $max_total_usage = intval($coupon_details->max_total_usage);
+                $total_usage = intval($this->offer_model->get_total_usage_by_id($coupon_details->id));
+                if ($max_total_usage > $total_usage) :
+
+                    //check for minimum amount of cart
+
+
+                    //check for the source type of the coupon
+                    $coupon_assignment_details = $this->offer_model->get_coupon_details_by_code($coupon_details->offer_code);
+
+                    $data["coupon_assignment_data"] = $coupon_assignment_details;
+                    $data["coupon_max_usage"] = $max_total_usage;
+                    $data["coupon_total_usage"] = $total_usage;
+                    $data["status"] = true;
+                    $data["msg"] = trans("success_coupon");
+                    $data["coupon_data"] = $coupon_details;
+                else :
+                    $data["coupon_max_usage"] = $max_total_usage;
+                    $data["coupon_total_usage"] = $total_usage;
+                    $data["error"] = "Maximum Limit Reached";
+                    $data["status"] = false;
+                    $data["msg"] = trans("failure_coupon");
+                endif;
+            } else {
+
+                $data["error"] = "Coupon Expired";
+                $data["status"] = false;
+                $data["msg"] = trans("failure_coupon");
+            }
+
+        else :
+            $data["error"] = "Coupon not found";
             $data["status"] = false;
             $data["msg"] = trans("failure_coupon");
         endif;

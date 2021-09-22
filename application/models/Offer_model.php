@@ -130,4 +130,18 @@ class Offer_model extends CI_Model
         $query = $this->db->get('kpi');
         return $query->result();
     }
+    public function get_coupon_details_by_code($coupon_code)
+    {
+        $this->db->select('cms_offers.offer_code,offer_selection_details.*');
+        $this->db->join('offer_selection_details', 'cms_offers.id = offer_selection_details.offer_id');
+        $this->db->where('offer_code', $coupon_code);
+        $query = $this->db->get('cms_offers');
+        return $query->result();
+    }
+    public function get_total_usage_by_id($id)
+    {
+        $this->db->where('offer_id', $id);
+        $query = $this->db->get('offer_redemptions');
+        return $query->num_rows();
+    }
 }
