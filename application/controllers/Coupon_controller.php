@@ -7,7 +7,6 @@ class Coupon_controller extends Admin_Core_Controller
     {
         parent::__construct();
         //check user
-        $this->_user_session = get_user_session();
     }
 
     /**

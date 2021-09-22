@@ -183,3 +183,7 @@ $route['add-product-coupon'] = 'coupon_controller/coupons_products_data';
 $route['load-source-view-post']['POST'] = 'coupon_controller/load_source_view';
 
 $route['delete-coupon-post']['POST'] = 'coupon_controller/delete_coupon';
+
+// Coupon Management
+$route['load-popup-coupon']['POST'] = 'coupon_controller/load_coupon_popup';
+$route['checked-availability-coupon']['POST'] = 'coupon_controller/checked_availability_coupon';
