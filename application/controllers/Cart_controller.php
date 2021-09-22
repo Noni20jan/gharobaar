@@ -1460,7 +1460,7 @@ class Cart_controller extends Home_Core_Controller
             $slab = true;
             if ($slab == true) {
                 if ($object->total_amount_with_gst >= 50000) {
-                    $object->shipping_charge_to_gharobaar = ($object->shipping)+(0.18*$object->shipping);
+                    $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
                 } else if ($object->total_amount_with_gst >= 200000) {
                     $object->shipping_charge_to_gharobaar = 0;
                 }
@@ -1808,11 +1808,14 @@ class Cart_controller extends Home_Core_Controller
 
 
             if ((($data_pay_array[$i]->seller_pay) / 100) < 1000) {
-                $obj->amount = (($data_pay_array[$i]->seller_pay) / 100) - 2.50;
+                $payout_charge_with_gst = 2.50 + (0.18 * 2.50);
+                $obj->amount = (($data_pay_array[$i]->seller_pay) / 100) - $payout_charge_with_gst;
             } else if ((($data_pay_array[$i]->seller_pay) / 100) >= 1000 && (($data_pay_array[$i]->seller_pay) / 100) < 10000) {
-                $obj->amount = (($data_pay_array[$i]->seller_pay) / 100) - 5.00;
+                $payout_charge_with_gst = 5.00 + (0.18 * 5.00);
+                $obj->amount = (($data_pay_array[$i]->seller_pay) / 100) - $payout_charge_with_gst;
             } else if ((($data_pay_array[$i]->seller_pay) / 100) >= 10000) {
-                $obj->amount = (($data_pay_array[$i]->seller_pay) / 100) - 10.00;
+                $payout_charge_with_gst = 10.00 + (0.18 * 10.00);
+                $obj->amount = (($data_pay_array[$i]->seller_pay) / 100) - $payout_charge_with_gst;
             }
             // $obj->amount = ($data_pay_array[$i]->seller_pay) / 100;
 
@@ -1888,7 +1891,7 @@ class Cart_controller extends Home_Core_Controller
 
                 $obj->seller_id = $data_pay_array[$i]->seller_id;
                 $obj->order_id = $data_pay_array[$i]->order_id;
-                $this->order_model->update_status_payouts($obj->seller_id, $obj->order_id, $status_code, $refrence_id, $message, $status, $batch_id,$obj->payout_charge);
+                $this->order_model->update_status_payouts($obj->seller_id, $obj->order_id, $status_code, $refrence_id, $message, $status, $batch_id, $obj->payout_charge);
             }
             echo $status_code;
         } else {
