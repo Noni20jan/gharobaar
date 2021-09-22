@@ -28,12 +28,12 @@
                 <td class="source_id"><?php echo $coupon->source_id; ?></td>
                 <td><?php echo $coupon->creation_date; ?></td>
 
-                <td>                    <button type="button" id="btn_ckimg_delete" class="btn btn-sm btn-danger color-white pull-left btn-file-delete m-r-3" onclick="delete_item('coupon_controller/delete_coupon','<?php echo $coupon->id; ?>','Are you sure you want to delete the coupon');"><i class="icon-trash"></i>&nbsp;&nbsp;<?php echo trans('delete'); ?></button>
-</td>
-                        </tr>
+                <td> <button type="button" id="btn_ckimg_delete" class="btn btn-sm btn-danger color-white pull-left btn-file-delete m-r-3" onclick="delete_item('coupon_controller/delete_coupon','<?php echo $coupon->id; ?>','Are you sure you want to delete the coupon');"><i class="icon-trash"></i>&nbsp;&nbsp;<?php echo trans('delete'); ?></button>
+                </td>
+            </tr>
         <?php endforeach; ?>
     </tbody>
-    
+
 </table>
 <script>
     $(document).ready(function() {
@@ -50,20 +50,7 @@
             }],
             'order': [1, 'asc']
         });
-      
 
-
-        // Handle click on "Select all" control
-        // $('#example-select-all').on('click', function() {
-        //     // Check/uncheck all checkboxes in the table
-        //     var rows = table.rows({
-        //         'search': 'applied'
-        //     }).nodes();
-        //     $('#product_checkbox', rows).prop('checked', this.checked);
-        // });
-        
-
-        // Handle click on checkbox to set state of "Select all" control
 
     });
 </script>

@@ -612,6 +612,7 @@
                             <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>create-offers">Offers Creation</a></li>
                             <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>vouchers-users">Voucher Assignment</a></li>
                             <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>category-coupon">Coupon Assignment</a></li>
+                            <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>products_coupons">View Assigned Coupon</a></li>
 
                         </ul>
                     </li>

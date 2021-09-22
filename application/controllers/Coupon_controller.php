@@ -110,7 +110,7 @@ class Coupon_controller extends Admin_Core_Controller
 
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/offers/coupons_products', $data);
-        $this->load->view('admin/includes/_footer');
+        // $this->load->view('admin/includes/_footer');
     }
     public function get_coupon_data()
     {
@@ -125,11 +125,16 @@ class Coupon_controller extends Admin_Core_Controller
         $this->load->view('admin/offers/products_coupons', $data);
         $this->load->view('admin/includes/_footer');
     }
+
+    // functiona for deleting the assigned coupons
     public function delete_coupon()
     {
         $id = $this->input->post('id', true);
         $this->offer_model->delete_data($id);
+        redirect($this->agent->referrer());
     }
+
+
     public function coupons_products_data()
     {
         $source_ids = $this->input->post('source_id');
@@ -304,6 +309,7 @@ class Coupon_controller extends Admin_Core_Controller
     public function load_coupon_popup()
     {
         $data = array();
+        // $data["all_coupons"] = $this->offer_model->get_all_available_coupons('2021-10-20 19:30:00');
         $this->load->view('partials/_apply_coupon_modal');
     }
 

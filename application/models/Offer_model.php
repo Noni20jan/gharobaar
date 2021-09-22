@@ -114,4 +114,11 @@ class Offer_model extends CI_Model
         $query = $this->db->get('cms_offers');
         return $query->row();
     }
+
+    public function get_all_available_coupons($today)
+    {
+        $this->db->where('end_date', $today);
+        $query = $this->db->get('cms_offers');
+        return $query->row();
+    }
 }
