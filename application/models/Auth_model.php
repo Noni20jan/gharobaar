@@ -1419,6 +1419,12 @@ class Auth_model extends CI_Model
         $query = $this->db->get('users');
         return $query->row();
     }
+    public function check_user_email_register($email_address)
+    {
+        $this->db->where('email', $email_address);
+        $query = $this->db->get('users');
+        return $query->row();
+    }
 
     public function set_commission_rate($user_id, $commission_rate)
     {

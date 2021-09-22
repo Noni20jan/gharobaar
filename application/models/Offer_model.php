@@ -121,4 +121,13 @@ class Offer_model extends CI_Model
         $query = $this->db->get('cms_offers');
         return $query->row();
     }
+    public function kpi_insert_details($data)
+    {
+        return $this->db->insert('kpi', $data);
+    }
+    public function get_kpi_name()
+    {
+        $query = $this->db->get('kpi');
+        return $query->result();
+    }
 }

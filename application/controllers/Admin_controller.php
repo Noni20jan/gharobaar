@@ -376,6 +376,7 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->model("Offer_model");
         $data['title'] = trans("send_email_members");
         $data['user_type'] = $this->Offer_model->get_user_type();
+        $data['kpi'] = $this->Offer_model->get_kpi_name();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/loyalty/loyalty_criteria', $data);
         $this->load->view('admin/includes/_footer');
@@ -383,23 +384,40 @@ class Admin_controller extends Admin_Core_Controller
     public function loyalty_program_submit()
     {
         $this->load->model("Offer_model");
-        $data['name'] = $this->input->post('kpi_name', true);
+        $data['name1'] = $this->input->post('kpi_name', true);
         $data['user_type'] = $this->input->post('user_type', true);
         $data['kpi_rel_type'] = $this->input->post('kpi_type', true);
         $parent_name = $this->input->post('parent_name', true);
         $data['weightage'] = $this->input->post('weightage', true);
-        $data['calc_kpi'] = $this->input->post('formula', true);
-        if ($data['kpi_rel_type'] == "child") {
-            $detail['parentid'] = $this->Offer_model->get_parent_detail($parent_name);
-            $data['parent_id'] = $detail['parentid']->parent_id;
+        $data['name1'] = $this->input->post('kpi_name1', true);
+        $data['kpi_rel_type'] = $this->input->post('kpi_type1', true);
+        $parent_name = $this->input->post('parent_name1', true);
+        $data['weightage'] = $this->input->post('weightage1', true);
+        foreach ($data['kpi_rel_type'] as $child) {
+            if ($child == "child") {
+                $detail['parentid'] = $this->Offer_model->get_parent_detail($parent_name);
+                $data['parent_id'] = $detail['parentid']->parent_id;
+            }
         }
-        $this->Offer_model->loyalty_insert_details($data);
+        // $this->Offer_model->loyalty_insert_details($data);
+        foreach ($data['name1'] as $name) {
+            $data['name'] = $name;
+            $this->Offer_model->loyalty_insert_details($data);
+        }
+        $result = "true";
+        if ($result == true) {
+            $this->session->set_flashdata('success', trans("loyalty_criteria_submit"));
+        } else {
+            $this->session->set_flashdata('error', trans("loyalty_criteria_error"));
+        }
+        redirect($this->agent->referrer());
     }
     public function user_loyalty_program()
     {
         $this->load->model("Offer_model");
         $data['title'] = trans("send_email_members");
         $data['loyalty'] = $this->Offer_model->get_loyalty_program();
+
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/loyalty/user_loyalty_program', $data);
         $this->load->view('admin/includes/_footer');
@@ -417,6 +435,31 @@ class Admin_controller extends Admin_Core_Controller
         $data['status'] = "A";
         $data['created_by'] = $this->auth_user->id;
         $this->Offer_model->loyalty_program_insert_details($data);
+    }
+    public function kpi_form()
+    {
+        $data['title'] = trans("send_email_members");
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/loyalty/kpi_form', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+    public  function kpi_form_submit()
+    {
+        $this->load->model("Offer_model");
+        $data['name'] = $this->input->post('kpi_name', true);
+        $data['description'] = $this->input->post('description', true);
+        $data['type'] = $this->input->post('kpi_type', true);
+        $data['formula'] = $this->input->post('formula', true);
+        $data['status'] = "A";
+        $data['created_by'] = $this->auth_user->id;
+        $this->Offer_model->kpi_insert_details($data);
+        $result = "true";
+        if ($result == true) {
+            $this->session->set_flashdata('success', trans("kpi_form_submit"));
+        } else {
+            $this->session->set_flashdata('error', trans("kpi_error"));
+        }
+        redirect($this->agent->referrer());
     }
 
     /*

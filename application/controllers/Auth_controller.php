@@ -25,6 +25,22 @@ class Auth_controller extends Home_Core_Controller
         }
         echo json_encode($data);
     }
+    public function check_for_email_register()
+    {
+        $email_address = $this->input->post('email_address', true);
+        // var_dump($phone_number); die();
+        $result = $this->auth_model->check_user_email_register($email_address);
+        $data = array(
+            'result' => false,
+            'xyz' => $result
+        );
+        if ($result == null) {
+            $data["result"] = true;
+        } else {
+            $data["result"] = false;
+        }
+        echo json_encode($data);
+    }
     /**
      * Login Post
      */

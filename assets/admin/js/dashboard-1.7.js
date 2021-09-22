@@ -905,6 +905,27 @@ function check_for_mobile_register_js(phn_num) {
     });
     return res;
 }
+function check_for_email_register_js(email_address) {
+    var res;
+    var data = {
+        'sys_lang_id': sys_lang_id,
+        'email_address': email_address
+    };
+    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+    $.ajax({
+        type: "POST",
+        async: false,
+        url: base_url + "check-register-email",
+        data: data,
+        success: function (response) {
+            console.log(response);
+            var i = JSON.parse(response);
+
+            res = i.result;
+        }
+    });
+    return res;
+}
 
 //function to send verification otp
 function send_verification_otp(phn_num, label_content, email) {

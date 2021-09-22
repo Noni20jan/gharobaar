@@ -127,6 +127,7 @@ $route['get-sub-variation-options']['POST'] = 'ajax_controller/get_sub_variation
 
 //profile
 $route['check-register-mobile']['POST'] = 'auth_controller/check_for_mobile_register';
+$route['check-register-email']['POST'] = 'auth_controller/check_for_email_register';
 $route['follow-unfollow-user-post']['POST'] = 'profile_controller/follow_unfollow_user';
 $route['change-password-post']['POST'] = 'profile_controller/change_password_post';
 $route['personal-information-post']['POST'] = 'profile_controller/personal_information_post';
@@ -182,6 +183,3 @@ $route['add-product-coupon'] = 'coupon_controller/coupons_products_data';
 $route['load-source-view-post']['POST'] = 'coupon_controller/load_source_view';
 
 $route['delete-coupon-post']['POST'] = 'coupon_controller/delete_coupon';
-// Coupon Management
-$route['load-popup-coupon']['POST'] = 'coupon_controller/load_coupon_popup';
-$route['checked-availability-coupon']['POST'] = 'coupon_controller/checked_availability_coupon';

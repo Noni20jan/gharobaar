@@ -5296,48 +5296,53 @@
                     document.getElementById("email_span_error").innerHTML = "";
                 }
                 var register_phn = check_for_mobile_register_js(phn_num);
+                var register_email = check_for_email_register_js(email_address);
                 // console.log(register_phn);
-                if (register_phn == true) {
-                    var emailcheck = "<?php echo $this->general_settings->check_email_validation; ?>";
-                    if (emailcheck === "1") {
-                        var data = {
-                            'email': email_address
-                        }
-                        data[csfr_token_name] = $.cookie(csfr_cookie_name);
-                        $.ajax({
-                            type: "POST",
-                            url: base_url + "api/email/verifyemail",
-                            data: data,
-                            success: function(response) {
-                                var email = email_address;
-                                var name = email.substring(0, email.lastIndexOf("@"));
-                                var domain = email.substring(email.lastIndexOf("@") + 1);
-                                var resp = $.parseJSON(response);
-                                if (domain == "gmail.com") {
-                                    if (resp.status == 200) {
-                                        $('#verifyMobileModal').modal('show');
-                                        send_verification_otp(phn_num, "mobile_otp", email_address);
-                                    } else if (resp.status == 303) {
-                                        $('#email_span_error').html(resp.message);
-                                    } else if (resp.status == 304) {
-                                        $('#email_span_error').html(resp.message);
-                                    }
-                                } else {
-                                    if (resp.status == 303) {
-                                        $('#verifyMobileModal').modal('show');
-                                        send_verification_otp(phn_num, "mobile_otp", email_address);
-                                    } else if (resp.status == 304) {
-                                        $('#email_span_error').html(resp.message);
+                if (register_email == true) {
+                    if (register_phn == true) {
+                        var emailcheck = "<?php echo $this->general_settings->check_email_validation; ?>";
+                        if (emailcheck === "1") {
+                            var data = {
+                                'email': email_address
+                            }
+                            data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                            $.ajax({
+                                type: "POST",
+                                url: base_url + "api/email/verifyemail",
+                                data: data,
+                                success: function(response) {
+                                    var email = email_address;
+                                    var name = email.substring(0, email.lastIndexOf("@"));
+                                    var domain = email.substring(email.lastIndexOf("@") + 1);
+                                    var resp = $.parseJSON(response);
+                                    if (domain == "gmail.com") {
+                                        if (resp.status == 200) {
+                                            $('#verifyMobileModal').modal('show');
+                                            send_verification_otp(phn_num, "mobile_otp", email_address);
+                                        } else if (resp.status == 303) {
+                                            $('#email_span_error').html(resp.message);
+                                        } else if (resp.status == 304) {
+                                            $('#email_span_error').html(resp.message);
+                                        }
+                                    } else {
+                                        if (resp.status == 303) {
+                                            $('#verifyMobileModal').modal('show');
+                                            send_verification_otp(phn_num, "mobile_otp", email_address);
+                                        } else if (resp.status == 304) {
+                                            $('#email_span_error').html(resp.message);
+                                        }
                                     }
                                 }
-                            }
-                        });
-                    } else {
-                        $('#verifyMobileModal').modal('show');
-                        send_verification_otp(phn_num, "mobile_otp", email_address);
+                            });
+                        } else {
+                            $('#verifyMobileModal').modal('show');
+                            send_verification_otp(phn_num, "mobile_otp", email_address);
+                        }
+                    } else if (register_phn == false) {
+                        document.getElementById("verify_mobile_span").innerHTML = "*Mobile number is already registered!";
                     }
-                } else if (register_phn == false) {
-                    document.getElementById("verify_mobile_span").innerHTML = "*Mobile number is already registered!";
+                } else if (register_email == false) {
+                    document.getElementById("verify_mobile_span").innerHTML = "*Email id is already registered!";
                 }
             }
         })
