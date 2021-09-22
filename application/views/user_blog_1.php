@@ -15,11 +15,13 @@
         text-align: left;
     }
 
+
     .blog-heading {
         font-weight: bold;
         margin-top: 5%;
         font-size: 30px;
         padding: 0 15px;
+        text-align: center;
     }
 
     .blog-sub-heading {

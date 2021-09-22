@@ -2134,6 +2134,154 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('partials/_footer');
     }
 
+
+
+    public function user_blog_3()
+    {
+        get_method();
+        $page = $this->page_model->get_page_by_default_name('user_blog_3', $this->selected_lang->id);
+        //      
+        $data['title'] = $page->title;
+        $data['description'] = $page->description . " - " . $this->app_name;
+        $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        $data['page'] = $page;
+        $data["index_settings"] = get_index_settings();
+        $this->load->view('partials/_header', $data);
+        $this->load->view('user_blog_3', $data);
+        $this->load->view('partials/_footer');
+    }
+
+
+    public function user_blog_4()
+    {
+        get_method();
+        $page = $this->page_model->get_page_by_default_name('user_blog_4', $this->selected_lang->id);
+        $data['title'] = $page->title;
+        $data['description'] = $page->description . " - " . $this->app_name;
+        $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        $data['page'] = $page;
+        $data["index_settings"] = get_index_settings();
+        $this->load->view('partials/_header', $data);
+        $this->load->view('user_blog_4', $data);
+        $this->load->view('partials/_footer');
+    }
+
+
+    public function user_blog_5()
+    {
+        get_method();
+        $page = $this->page_model->get_page_by_default_name('user_blog_5', $this->selected_lang->id);
+        $data['title'] = $page->title;
+        $data['description'] = $page->description . " - " . $this->app_name;
+        $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        $data['page'] = $page;
+        $data["index_settings"] = get_index_settings();
+        $this->load->view('partials/_header', $data);
+        $this->load->view('user_blog_5', $data);
+        $this->load->view('partials/_footer');
+    }
+
+
+    public function user_blog_6()
+    {
+        get_method();
+        $page = $this->page_model->get_page_by_default_name('user_blog_6', $this->selected_lang->id);
+        $data['title'] = $page->title;
+        $data['description'] = $page->description . " - " . $this->app_name;
+        $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        $data['page'] = $page;
+        $data["index_settings"] = get_index_settings();
+        $this->load->view('partials/_header', $data);
+        $this->load->view('user_blog_6', $data);
+        $this->load->view('partials/_footer');
+    }
+
+    public function user_blog_7()
+    {
+        get_method();
+        $page = $this->page_model->get_page_by_default_name('user_blog_7', $this->selected_lang->id);
+        $data['title'] = $page->title;
+        $data['description'] = $page->description . " - " . $this->app_name;
+        $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        $data['page'] = $page;
+        $data["index_settings"] = get_index_settings();
+        $this->load->view('partials/_header', $data);
+        $this->load->view('user_blog_7', $data);
+        $this->load->view('partials/_footer');
+    }
+
+
+
+    public function user_blog_8()
+    {
+        get_method();
+        $page = $this->page_model->get_page_by_default_name('user_blog_8', $this->selected_lang->id);
+        $data['title'] = $page->title;
+        $data['description'] = $page->description . " - " . $this->app_name;
+        $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        $data['page'] = $page;
+        $data["index_settings"] = get_index_settings();
+        $this->load->view('partials/_header', $data);
+        $this->load->view('user_blog_8', $data);
+        $this->load->view('partials/_footer');
+    }
+    public function user_blog_9()
+    {
+        get_method();
+        $page = $this->page_model->get_page_by_default_name('user_blog_9', $this->selected_lang->id);
+        $data['title'] = $page->title;
+        $data['description'] = $page->description . " - " . $this->app_name;
+        $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        $data['page'] = $page;
+        $data["index_settings"] = get_index_settings();
+        $this->load->view('partials/_header', $data);
+        $this->load->view('user_blog_9', $data);
+        $this->load->view('partials/_footer');
+    }
+
+    public function user_blog_10()
+    {
+        get_method();
+        $page = $this->page_model->get_page_by_default_name('user_blog_10', $this->selected_lang->id);
+        $data['title'] = $page->title;
+        $data['description'] = $page->description . " - " . $this->app_name;
+        $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        $data['page'] = $page;
+        $data["index_settings"] = get_index_settings();
+        $this->load->view('partials/_header', $data);
+        $this->load->view('user_blog_10', $data);
+        $this->load->view('partials/_footer');
+    }
+
+    public function user_blog_11()
+    {
+        get_method();
+        $page = $this->page_model->get_page_by_default_name('user_blog_11', $this->selected_lang->id);
+        $data['title'] = $page->title;
+        $data['description'] = $page->description . " - " . $this->app_name;
+        $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        $data['page'] = $page;
+        $data["index_settings"] = get_index_settings();
+        $this->load->view('partials/_header', $data);
+        $this->load->view('user_blog_11', $data);
+        $this->load->view('partials/_footer');
+    }
+
+    public function user_blog_12()
+    {
+        get_method();
+        $page = $this->page_model->get_page_by_default_name('user_blog_12', $this->selected_lang->id);
+        $data['title'] = $page->title;
+        $data['description'] = $page->description . " - " . $this->app_name;
+        $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        $data['page'] = $page;
+        $data["index_settings"] = get_index_settings();
+        $this->load->view('partials/_header', $data);
+        $this->load->view('user_blog_12', $data);
+        $this->load->view('partials/_footer');
+    }
+
+
     public function privacy()
     {
         get_method();

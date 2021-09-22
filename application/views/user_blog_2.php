@@ -19,6 +19,7 @@
         font-weight: bold;
         margin-top: 5%;
         font-size: 30px;
+        text-align: center;
     }
 
     .blog-2-content {
