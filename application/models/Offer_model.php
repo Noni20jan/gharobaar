@@ -94,17 +94,24 @@ class Offer_model extends CI_Model
         $query = $this->db->get('lookup_values');
         return $query->result();
     }
-    public function show_data(){
+    public function show_data()
+    {
         $sql = "SELECT *
         FROM cms_offers INNER JOIN offer_selection_details
         WHERE offer_selection_details.offer_id = cms_offers.id && offer_selection_details.source_id!='NULL'";
-        $query=$this->db->query($sql);
+        $query = $this->db->query($sql);
         return $query->result();
     }
     public function delete_data($id)
     {
-        $sql="Delete from offer_selection_details where id=$id";
-       $query=$this->db->query($sql);
+        $sql = "Delete from offer_selection_details where id=$id";
+        $query = $this->db->query($sql);
         return $query->result();
-}
+    }
+    public function get_coupon_by_code($coupon_code)
+    {
+        $this->db->where('offer_code', $coupon_code);
+        $query = $this->db->get('cms_offers');
+        return $query->row();
+    }
 }

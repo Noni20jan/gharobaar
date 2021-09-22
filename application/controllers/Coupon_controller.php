@@ -118,17 +118,17 @@ class Coupon_controller extends Admin_Core_Controller
         $data['form_action'] = admin_url() . "products_coupons";
         $data['list_type'] = "products";
         //get paginated products
-      
+
         $data["coupons"] = $this->offer_model->show_data();
 
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/offers/products_coupons', $data);
         $this->load->view('admin/includes/_footer');
     }
-    public function delete_coupon(){
+    public function delete_coupon()
+    {
         $id = $this->input->post('id', true);
         $this->offer_model->delete_data($id);
-
     }
     public function coupons_products_data()
     {
@@ -299,5 +299,39 @@ class Coupon_controller extends Admin_Core_Controller
             $data['parent_categories'] = $this->category_model->get_all_parent_categories();
             $this->load->view('admin/offers/_category_selection', $data);
         }
+    }
+
+    public function load_coupon_popup()
+    {
+        $data = array();
+        $this->load->view('partials/_apply_coupon_modal');
+    }
+
+    public function checked_availability_coupon()
+    {
+        $data = array(
+            "status" => false,
+            "msg" => ""
+        );
+        $coupon_code =  $this->input->post("coupon_code");
+        $user = $this->input->post('user');
+
+
+        $coupon_details = $this->offer_model->get_coupon_by_code($coupon_code);
+        $data['cart_items'] = $this->cart_model->get_sess_cart_items();
+        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+
+        if (!empty($coupon_details)) :
+
+            $data["status"] = true;
+            $data["msg"] = trans("success_coupon");
+            $data["coupon_data"] = $coupon_details;
+        else :
+
+            $data["status"] = false;
+            $data["msg"] = trans("failure_coupon");
+        endif;
+
+        echo json_encode($data);
     }
 }
