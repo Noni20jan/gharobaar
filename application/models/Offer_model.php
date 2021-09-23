@@ -142,8 +142,32 @@ class Offer_model extends CI_Model
     }
     public function get_total_usage_by_id($id)
     {
+
         $this->db->where('offer_id', $id);
         $query = $this->db->get('offer_redemptions');
+        return $query->num_rows();
+    }
+    public function get_data_users($role,$offer_id,$per_page, $offset)
+    {
+
+        $sql = "SELECT  id,slug,banned,email_status, username, email, last_seen, created_at
+from users   
+where username != 'admin'  and email_status=1  and id NOT IN(
+SELECT source_id 
+from offer_selection_details,
+cms_offers
+where   offer_selection_details.offer_id=$offer_id and offer_selection_details.offer_id = cms_offers.id
+and source_type='User')
+order by created_at desc";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    public function get_data($id)
+    {
+
+        $this->db->where('offer_id', $id);
+        $query = $this->db->get('offer_selection_details');
+        var_dump($query->num_rows);
         return $query->num_rows();
     }
 }
