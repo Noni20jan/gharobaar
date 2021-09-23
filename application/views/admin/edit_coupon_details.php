@@ -48,7 +48,7 @@
             <div class="col-sm-6"><label for="cars">Method:</label></div>
             <div class="col-sm-6">
                 <!-- <select class="form-control auth-form-input" name="coup_vou" id="method" onchange="couponvoucher()" required> -->
-                <input class="form-control auth-form-input" type="text" name="coup_vou" disabled value="coupons">
+                <input class="form-control auth-form-input" value="coupons" type="text" name="coup_vou" disabled>
                 </select>
             </div>
         </div>
@@ -59,17 +59,28 @@
                 <label for="meeting-time">Start date & Time:</label>
             </div>
             <div class="col-sm-6">
-                <input type="text" value="<?php echo $offer->start_date; ?>" class="form-control" id="meeting-time" name="start_date" required>
+                <?php
+                $t = $offer->start_date;
+                $date = strtotime($t);
+                $date_time = date("Y-m-d\TH:i:s", $date);
+                ?>
+                <input type="datetime-local" value="<?php echo $date_time; ?>" class="form-control" id="meeting-time" name="start_date" required>
             </div>
         </div>
     </div>
     <div class="form-group">
         <div class="row">
             <div class="col-sm-6">
+                <?php
+                $t = $offer->end_date;
+                $date = strtotime($t);
+                $date_time = date("Y-m-d\TH:i:s", $date);
+                ?>
                 <label for="meeting-time">End date & Time:</label>
             </div>
             <div class="col-sm-6">
-                <input type="text" id="meeting-time" value="<?php echo $offer->end_date; ?>" class="form-control" name="end_date" required>
+
+                <input type="datetime-local" id="meeting-time" value="<?php echo $date_time; ?>" class="form-control" name="end_date" required>
             </div>
         </div>
     </div>
@@ -77,7 +88,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Discount Amount:</label></div>
             <div class="col-sm-6">
-                <input type='number' name="discount_amt" value="<?php echo $offer->discount_amt; ?>" class="form-control auth-form-input" id="discount_on_percent" required>
+                <input type='number' name="discount_amt" value="<?php echo $offer->discount_amt; ?>" class="form-control auth-form-input" id="discount_on_percent">
             </div>
         </div>
     </div>
@@ -110,20 +121,18 @@
         <div class="row">
             <div class="col-sm-6"><label>Maximum total usage:</label></div>
             <div class="col-sm-6">
-                <input type='number' name="max_usage" value="<?php echo $offer->max_total_usage; ?>" class=" form-control auth-form-input" required>
+                <input type='number' name="max_usage" value="<?php echo !empty($offer->max_total_usage) ? $offer->max_total_usage : "" ?>" class=" form-control auth-form-input" required>
             </div>
         </div>
     </div>
 </div>
-
-
 
 <div class="col-12 coupons-from-holder" id="for-coupons">
     <div class="form-group" id="coupon_code">
         <div class="row">
             <div class="col-sm-6"><label>Coupon Code:</label></div>
             <div class="col-sm-6">
-                <input type='text' name="coupon_code" class="form-control auth-form-input" id="code_on_coupon" required>
+                <input type='text' name="coupon_code" value="<?php echo  $offer->offer_code ?>" class="form-control auth-form-input" id="code_on_coupon" required>
             </div>
         </div>
     </div>
@@ -131,7 +140,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Message to be displayed in the website:</label></div>
             <div class="col-sm-6">
-                <input type='text' name="msg_displayed" value="<?php echo $offer->msg_to_be_displayed ?>" class="form-control auth-form-input" id="msg_on_site" required>
+                <input type='text' name="msg_displayed" value="<?php echo !empty($offer->msg_to_be_displayed) ? $offer->msg_to_be_displayed : "" ?>" class="form-control auth-form-input" id="msg_on_site" required>
             </div>
         </div>
     </div>
@@ -139,7 +148,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Max usage per user:</label></div>
             <div class="col-sm-6">
-                <input type='number' name="brand_name" value="<?php echo $offer->max_usage_per_user ?>" class="form-control auth-form-input" id="usage_per_user_coupon" required>
+                <input type='number' name="max_usage_per_user" value="<?php echo $offer->max_usage_per_user ?>" class="form-control auth-form-input" id="usage_per_user_coupon" required>
             </div>
         </div>
     </div>
@@ -147,7 +156,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Add Terms & Conditions</label></div>
             <div class="col-sm-6">
-                <input type='text' name="t_&_c" value="<?php echo $offer->terms_and_conditions ?>" class="form-control auth-form-input" id="tc_on_coupon" required>
+                <input type='text' name="t_c_c" value="<?php echo $offer->terms_and_conditions ?>" class="form-control auth-form-input" id="tc_on_coupon" required>
             </div>
         </div>
     </div>
@@ -180,7 +189,6 @@
             $("#discount_on_percent")[0].value = "";
         }
     }
-
 
 
     $(document).ready(function() {

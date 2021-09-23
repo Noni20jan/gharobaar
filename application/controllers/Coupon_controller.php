@@ -193,6 +193,21 @@ class Coupon_controller extends Admin_Core_Controller
 
     public function edit_details_coupon()
     {
+
+        if (!empty($this->input->post('t_c_c', true))) {
+            $terms_conditions = $this->input->post('t_c_c', true);
+        }
+        if (!empty($this->input->post('t_c_v', true))) {
+            $terms_conditions = $this->input->post('t_c_v', true);
+        }
+        if (!empty($this->input->post('coupon_code', true))) {
+            $offer_code = $this->input->post('coupon_code', true);
+        }
+        if (!empty($this->input->post('voucher_code', true))) {
+            $offer_code = $this->input->post('voucher_code', true);
+        }
+
+
         $this->load->model("Offer_model");
         $id = $this->input->post('id', true);
         $data['name'] = $this->input->post('offer_name', true);
@@ -204,11 +219,13 @@ class Coupon_controller extends Admin_Core_Controller
         $data['discount_percentage'] = $this->input->post('discount_per', true);
         $data['allowed_max_discount'] = $this->input->post('max_discount', true);
         $data['min_amt_in_cart'] = $this->input->post('min_discount', true);
-        $data['offer_code'] = $this->input->post('coupon_code', true);
+        $data['max_usage_per_user'] = $this->input->post('max_usage_per_user', true);
+        $data['offer_code'] = $offer_code;
         $data['msg_to_be_displayed'] = $this->input->post('msg_displayed', true);
         $data['no_off_voucher_req'] = $this->input->post('vouchers_required', true);
-        $data['terms_and_conditions'] = $this->input->post('t_&_c', true);
+        $data['terms_and_conditions'] = $terms_conditions;
         $data['max_total_usage'] = $this->input->post('max_usage', true);
+        $data['description'] = $this->input->post('description', true);
         if (empty($data["name"])) {
             $data["name"] = "";
         }
@@ -251,9 +268,16 @@ class Coupon_controller extends Admin_Core_Controller
         if (empty($data["max_total_usage"])) {
             $data["max_total_usage"] = "";
         }
+        if (empty($data["max_usage_per_user"])) {
+            $data["max_usage_per_user"] = "";
+        }
+        if (empty($data["description"])) {
+            $data["description"] = "";
+        }
 
 
         $this->Offer_model->edit_coupons_vouchers($id, $data);
+        redirect($this->agent->referrer());
     }
 
 

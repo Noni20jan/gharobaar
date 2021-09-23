@@ -187,7 +187,11 @@ class Product_admin_model extends CI_Model
         //         // 'last_update_date' => 0,
         //         // 'last_update_login' => "",
         //     );
-        return $this->db->insert('cms_offers', $offer_);
+        if ($this->db->insert('cms_offers', $offer_)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -295,7 +299,7 @@ class Product_admin_model extends CI_Model
         $this->db->where('products.status', 1);
         $this->db->where('products.is_service', "0");
         $this->db->where('products.is_service', "0");
-        $this->db->where('products.stock>','0');
+        $this->db->where('products.stock>', '0');
         return $this->db->count_all_results('products');
     }
     public function get_paginated_services_count($list)
@@ -326,7 +330,7 @@ class Product_admin_model extends CI_Model
         $this->filter_products($list, $category_ids);
         $this->db->where('products.status', 1);
         $this->db->where('products.is_service', "0");
-        $this->db->where('products.stock>','0');
+        $this->db->where('products.stock>', '0');
         // $this->db->limit(clean_number($per_page), clean_number($offset));
         return $this->db->get('products')->result();
     }

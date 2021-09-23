@@ -1144,6 +1144,18 @@ class Admin_controller extends Admin_Core_Controller
         // $allowed_max_discount = $this->input->post('max_discount', true);
         // $min_amt_in_cart = $this->input->post('min_discount', true);
         // $max_total_usage = $this->input->post('max_usage', true);
+        if (!empty($this->input->post('t_c_c', true))) {
+            $terms_conditions = $this->input->post('t_c_c', true);
+        }
+        if (!empty($this->input->post('t_c_v', true))) {
+            $terms_conditions = $this->input->post('t_c_v', true);
+        }
+        if (!empty($this->input->post('coupon_code', true))) {
+            $offer_code = $this->input->post('coupon_code', true);
+        }
+        if (!empty($this->input->post('voucher_code', true))) {
+            $offer_code = $this->input->post('voucher_code', true);
+        }
         $offer_ = array(
             'name' => $this->input->post('offer_name', true),
             'type' => $this->input->post('method_type', true),
@@ -1152,17 +1164,23 @@ class Admin_controller extends Admin_Core_Controller
             'end_date' => $this->input->post('end_date', true),
             'discount_amt' => $this->input->post('discount_amt', true),
             'discount_percentage' => $this->input->post('discount_per', true),
-            'allowed_max_discount' => $this->input->post('max_discount', true),
+            'allowed_max_discount' => $this->input->post('allowed_max_discount', true),
             'min_amt_in_cart' => $this->input->post('min_discount', true),
-            'offer_code' => $this->input->post('coupon_code', true),
+            'max_usage_per_user' => $this->input->post('max_usage_per_user', true),
+            'offer_code' => $offer_code,
             'msg_to_be_displayed' => $this->input->post('msg_displayed', true),
             'no_off_voucher_req' => $this->input->post('vouchers_required', true),
-            'terms_and_conditions' => $this->input->post('t_&_c', true),
+            'terms_and_conditions' => $terms_conditions,
             'max_total_usage' => $this->input->post('max_usage', true),
             'description' => $this->input->post('description', true),
         );
 
-        $this->product_admin_model->coupons_vouchers($offer_);
+        if ($this->product_admin_model->coupons_vouchers($offer_)) {
+            $this->session->set_flashdata('success', trans("offer_created"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+        redirect($this->agent->referrer());
     }
 
     /**
