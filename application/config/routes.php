@@ -551,6 +551,8 @@ $route[getr('admin', $rts) . '/send-email-members'] = 'admin_controller/send_ema
 $route[getr('admin', $rts) . '/loyalty-criteria'] = 'admin_controller/loyalty_criteria';
 $route[getr('admin', $rts) . '/user-loyalty-program'] = 'admin_controller/user_loyalty_program';
 $route[getr('admin', $rts) . '/kpi-form'] = 'admin_controller/kpi_form';
+$route[getr('admin', $rts) . '/qualified-user'] = 'admin_controller/qualified_user';
+
 
 $route[getr('admin', $rts) . '/contact-messages'] = 'admin_controller/contact_messages';
 $route[getr('admin', $rts) . '/preferences'] = 'admin_controller/preferences';

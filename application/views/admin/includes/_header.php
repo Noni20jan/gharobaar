@@ -635,10 +635,11 @@
                             <li class="nav-send-email-subscribers">
                                 <a href="<?php echo admin_url(); ?>qualify-criteria"><?php echo trans("qualifying_criteria"); ?></a>
                             </li>
+                            <li class="nav-send-email-subscribers">
+                                <a href="<?php echo admin_url(); ?>qualified-user"><?php echo trans("qualified_user"); ?></a>
+                            </li>
                         </ul>
                     </li>
-
-
                 </ul>
             </section>
             <!-- /.sidebar -->
