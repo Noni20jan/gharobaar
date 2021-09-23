@@ -25,7 +25,7 @@
         caret-color: #007C05;
         padding: 0;
         border: none;
-        width: 75%;
+        width: 70%;
         outline: 0;
     }
 
@@ -103,7 +103,7 @@
             <div class="modal-body">
                 <div class="couponsForm-textInputContainer">
                     <input id="coupon-input-field" class="couponsForm-base-textInput" placeholder="Enter coupon code">
-                    <div class="couponsForm-applyButton" id="couponsForm-applyButton">CHECK</div>
+                    <div class="couponsForm-applyButton" id="couponsForm-applyButton">APPLY</div>
                 </div>
                 <div class="couponsForm-errorMessage"></div>
                 <div class="col-sm-12 coupon_code_block">
@@ -127,7 +127,7 @@
 
             </div>
             <div class=" modal-footer">
-                <button type="button" class="btn btn-custom text-large">Apply</button>
+                <!-- <button type="button" class="btn btn-custom text-large">Apply</button> -->
             </div>
         </div>
     </div>

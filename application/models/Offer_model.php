@@ -68,6 +68,7 @@ class Offer_model extends CI_Model
         $data['source_id'] = get_dropdown_category_id();
         return $this->db->insert('offer_selection_details', $data);
     }
+
     public function loyalty_insert_details($data)
     {
         return $this->db->insert('criteria', $data);
@@ -83,16 +84,19 @@ class Offer_model extends CI_Model
         $query = $this->db->get('criteria');
         return $query->result();
     }
+
     public function get_loyalty_program()
     {
         $this->db->where('lookup_type', 'lookup_program');
         $query = $this->db->get('lookup_values');
         return $query->result();
     }
+
     public function loyalty_program_insert_details($data)
     {
         return $this->db->insert('user_loyalty_programs', $data);
     }
+
     public function get_user_type()
     {
         $this->db->where('lookup_type', "USER_TYPE");
@@ -113,11 +117,13 @@ class Offer_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
+
     public function delete_data($id)
     {
         $sql = "Delete from offer_selection_details where id=$id";
         $query = $this->db->query($sql);
     }
+
     public function get_coupon_by_code($coupon_code)
     {
         $this->db->where('offer_code', $coupon_code);
@@ -134,15 +140,18 @@ class Offer_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
+
     public function kpi_insert_details($data)
     {
         return $this->db->insert('kpi', $data);
     }
+
     public function get_kpi_name()
     {
         $query = $this->db->get('kpi');
         return $query->result();
     }
+
     public function get_coupon_details_by_code($coupon_code)
     {
         $this->db->select('cms_offers.offer_code,offer_selection_details.*');
@@ -151,6 +160,7 @@ class Offer_model extends CI_Model
         $query = $this->db->get('cms_offers');
         return $query->result();
     }
+
     public function get_total_usage_by_id($id)
     {
 
@@ -186,5 +196,11 @@ order by created_at desc";
         $this->db->where('type', 'free form');
         $query = $this->db->get('kpi');
         return $query->result();
+    }
+    public function remove_coupon()
+    {
+        $this->session->unset_userdata('mds_shopping_cart_coupon');
+
+        $this->cart_model->calculate_cart_total();
     }
 }

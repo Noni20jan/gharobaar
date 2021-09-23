@@ -68,18 +68,17 @@ class Coupon_controller extends Admin_Core_Controller
         $data['title'] = trans("users");
         $data['page_url'] = admin_url() . "vouchers-users";
         $pagination = $this->paginate($data['page_url'], $this->auth_model->get_users_count_by_role('member'));
-  
+
         $data["offers"] = $this->offer_model->get_all_vouchers();
-       
-            // var_dump($this->input->get(object($data["offers"]->id));
-            //  $data["users"] = $this->offer_model->get_data_users('member',20, $pagination['per_page'], $pagination['offset']);
-    
-  
-      
+
+        // var_dump($this->input->get(object($data["offers"]->id));
+        //  $data["users"] = $this->offer_model->get_data_users('member',20, $pagination['per_page'], $pagination['offset']);
+
+
+
         $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/offers/vouchers_user',$data);
+        $this->load->view('admin/offers/vouchers_user', $data);
         $this->load->view('admin/includes/_footer');
-        
     }
 
 
@@ -88,20 +87,15 @@ class Coupon_controller extends Admin_Core_Controller
         // $data['title'] = trans("users");
         $data['page_url'] = admin_url() . "vouchers-users";
         $pagination = $this->paginate($data['page_url'], $this->auth_model->get_users_count_by_role('member'));
-  
-         $data["offers"] = $this->offer_model->get_all_vouchers();
-        $offer_id=$this->input->post('offer_id');
+
+        $data["offers"] = $this->offer_model->get_all_vouchers();
+        $offer_id = $this->input->post('offer_id');
         // var_dump($offer_id);
-            // var_dump($this->input->get(object($data["offers"]->id));
-            $data["users"] = $this->offer_model->get_data_users('member',$offer_id, $pagination['per_page'], $pagination['offset']);
-    
-      
-            echo json_encode($data["users"]);
+        // var_dump($this->input->get(object($data["offers"]->id));
+        $data["users"] = $this->offer_model->get_data_users('member', $offer_id, $pagination['per_page'], $pagination['offset']);
 
-    
-  
 
-        
+        echo json_encode($data["users"]);
     }
 
 
@@ -402,29 +396,70 @@ class Coupon_controller extends Admin_Core_Controller
                         endforeach;
                         switch (strtoupper($coupon_source_type)):
                             case "ALL":
+                                $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                $data["coupon_max_usage"] = $max_total_usage;
+                                $data["coupon_total_usage"] = $total_usage;
+                                $data["status"] = true;
+                                $data["msg"] = trans("success_coupon");
+                                $data["coupon_data"] = $coupon_details;
                                 break;
                             case "USER":
+                                $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                $data["coupon_max_usage"] = $max_total_usage;
+                                $data["coupon_total_usage"] = $total_usage;
+                                $data["status"] = true;
+                                $data["msg"] = trans("success_coupon");
+                                $data["coupon_data"] = $coupon_details;
                                 break;
                             case "PRODUCT":
+                                $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                $data["coupon_max_usage"] = $max_total_usage;
+                                $data["coupon_total_usage"] = $total_usage;
+                                $data["status"] = true;
+                                $data["msg"] = trans("success_coupon");
+                                $data["coupon_data"] = $coupon_details;
                                 break;
                             case "CATEGORY":
+                                $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                $data["coupon_max_usage"] = $max_total_usage;
+                                $data["coupon_total_usage"] = $total_usage;
+                                $data["status"] = true;
+                                $data["msg"] = trans("success_coupon");
+                                $data["coupon_data"] = $coupon_details;
                                 break;
                             case "FREESHIP":
+                                $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                $data["coupon_max_usage"] = $max_total_usage;
+                                $data["coupon_total_usage"] = $total_usage;
+                                $data["status"] = true;
+                                $data["msg"] = trans("success_coupon");
+                                $data["coupon_data"] = $coupon_details;
                                 break;
                             case "EXHIBITION":
                                 $coupon = new stdClass();
                                 $coupon->offer_code = strtoupper($coupon_source_type);
+                                // setting coupon data in session
+                                if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
+                                    $this->session->unset_userdata('mds_shopping_cart_coupon');
+                                }
                                 $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
                                 $this->cart_model->calculate_cart_total();
+
+                                $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                $data["coupon_max_usage"] = $max_total_usage;
+                                $data["coupon_total_usage"] = $total_usage;
+                                $data["status"] = true;
+                                $data["msg"] = trans("success_coupon");
+                                $data["coupon_data"] = $coupon_details;
+
+                                break;
+                            default:
+                                $data["error"] = "Default case error";
+                                $data["status"] = false;
+                                $data["msg"] = trans("failure_coupon");
                                 break;
                         endswitch;
-                        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
-                        $data["coupon_assignment_data"] = $coupon_assignment_details;
-                        $data["coupon_max_usage"] = $max_total_usage;
-                        $data["coupon_total_usage"] = $total_usage;
-                        $data["status"] = true;
-                        $data["msg"] = trans("success_coupon");
-                        $data["coupon_data"] = $coupon_details;
 
                     else :
 
@@ -464,5 +499,32 @@ class Coupon_controller extends Admin_Core_Controller
 
         echo json_encode($data);
     }
-   
+
+    public function remove_coupon()
+    {
+        $data = array(
+            "status" => false,
+            "removed" => false,
+            "msg" => ""
+        );
+
+
+        if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) :
+
+            $this->offer_model->remove_coupon();
+
+            $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+            $data["status"] = true;
+            $data["removed"] = true;
+            $data["msg"] = "Sucessfully Removed";
+
+        else :
+            $data["status"] = true;
+            $data["removed"] = false;
+            $data["msg"] = "Nothing to Remove";
+
+        endif;
+
+        echo json_encode($data);
+    }
 }

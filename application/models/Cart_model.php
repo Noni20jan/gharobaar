@@ -713,6 +713,8 @@ class Cart_model extends CI_Model
             // $cart_total->total_price = round($cart_total->order_total / 100) * 100;
             $cart_total->total_price = $cart_total->order_total;
 
+
+            //coupon functionality
             $coupon_applied = $this->session->userdata('mds_shopping_cart_coupon');
             if (!empty($coupon_applied)) {
                 $cart_total->applied_coupon_code = $coupon_applied->offer_code;
@@ -735,6 +737,7 @@ class Cart_model extends CI_Model
                         endif;
                         break;
                 endswitch;
+                $cart_total->total_price = $cart_total->total_price - $cart_total->applied_coupon_discount;
             }
             $this->session->set_userdata('mds_shopping_cart_total', $cart_total);
             if ($this->auth_check) {
@@ -1333,6 +1336,14 @@ class Cart_model extends CI_Model
         }
     }
 
+    //unset cart coupon
+    public function unset_sess_cart_coupon()
+    {
+        if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
+            $this->session->unset_userdata('mds_shopping_cart_coupon');
+        }
+    }
+
     //unset cart items session
     public function unset_cart_items_from_db_after_purcahse()
     {
@@ -1409,6 +1420,7 @@ class Cart_model extends CI_Model
     public function clear_cart()
     {
         $this->unset_sess_cart_items();
+        $this->unset_sess_cart_coupon();
         $this->unset_sess_cart_payment_method();
         $this->unset_sess_cart_shipping_address();
     }
@@ -1461,6 +1473,8 @@ class Cart_model extends CI_Model
             "discount" => $cart_total->discount,
             "order_total" => $cart_total->order_total,
             "total_price" => $cart_total->total_price,
+            "applied_coupon_code" => $cart_total->applied_coupon_code,
+            "applied_coupon_discount" => $cart_total->applied_coupon_discount,
             "created_by" => $this->auth_user->id,
             "updated_by" => $this->auth_user->id
         );
