@@ -4441,7 +4441,7 @@
                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class="logintoOtp" style="text-decoration: underline; color:blue !important">Login using OTP</a>
                             </div>
                             <div class="form-group" style="text-align:center;">
-                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login"); ?></button>
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login_with_pwd"); ?></button>
                             </div>
 
                             <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>

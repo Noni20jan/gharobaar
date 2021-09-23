@@ -43,10 +43,10 @@
                                 <th><?php echo trans('sku'); ?></th>
                                 <th><?php echo trans('product_type'); ?></th>
                                 <th><?php echo trans('category'); ?></th>
-                                <th><?php echo trans('purchased_plan'); ?></th>
+                                <!-- <th><?php echo trans('purchased_plan'); ?></th> -->
                                 <th><?php echo trans('user'); ?></th>
                                 <th><?php echo trans('stock'); ?></th>
-                                <th><?php echo trans('page_views'); ?></th>
+                                <!-- <th><?php echo trans('page_views'); ?></th> -->
                                 <th><?php echo trans('date'); ?></th>
                                 <th class="max-width-120"><?php echo trans('options'); ?></th>
                             </tr>
@@ -80,11 +80,11 @@
                                             }
                                         } ?>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <?php if ($item->is_promoted == 1 && $item->promote_plan != "none") : ?>
                                             <?php echo $item->promote_plan; ?>
                                         <?php endif; ?>
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <?php $user = get_user($item->user_id);
                                         if (!empty($user)) : ?>
@@ -104,7 +104,7 @@
                                         <?php endif;
                                         endif; ?>
                                     </td>
-                                    <td><?php echo $item->pageviews; ?></td>
+                                    <!-- <td><?php echo $item->pageviews; ?></td> -->
                                     <td><?php echo formatted_date($item->created_at); ?></td>
                                     <td>
                                         <div class="dropdown">
@@ -149,9 +149,9 @@
                                 <?php echo $this->pagination->create_links(); ?>
                             </div>
                             <?php if (count($products) > 0) : ?>
-                                <div class="pull-left">
+                                <!-- <div class="pull-left">
                                     <button class="btn btn-sm btn-danger btn-table-delete" onclick="delete_selected_products('<?php echo trans("confirm_products"); ?>');"><?php echo trans('delete'); ?></button>
-                                </div>
+                                </div> -->
                             <?php endif; ?>
                         </div>
                     </div>

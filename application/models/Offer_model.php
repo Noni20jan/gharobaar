@@ -106,7 +106,6 @@ class Offer_model extends CI_Model
     {
         $sql = "Delete from offer_selection_details where id=$id";
         $query = $this->db->query($sql);
-        return $query->result();
     }
     public function get_coupon_by_code($coupon_code)
     {
