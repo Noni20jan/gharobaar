@@ -115,7 +115,7 @@ class Offer_model extends CI_Model
         return $query->row();
     }
 
-    public function get_all_available_coupons($today)
+    public function get_all_available_coupons()
     {
         $sql = "SELECT * FROM cms_offers WHERE (end_date > now() or 
                 end_date is NULL)

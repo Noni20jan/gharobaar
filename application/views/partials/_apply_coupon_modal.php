@@ -111,7 +111,7 @@
                         foreach ($all_coupons as $coupons) : ?>
                             <div class="next_coupon">
                                 <div style="margin-bottom: 10px;">
-                                    <span onclick="copy($(this))" class="coupon_code_apply copy"> <?php echo $coupons->offer_code; ?> </span>
+                                    <span onclick="copy($(this))" class="coupon_code_apply copy"><?php echo $coupons->offer_code; ?></span>
                                 </div>
                                 <!-- <div> <?php echo $coupons->discount_percentage; ?> </div>
                     <div> <?php echo $coupons->allowed_max_discount; ?> </div>
