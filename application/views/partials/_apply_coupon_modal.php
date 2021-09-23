@@ -58,6 +58,33 @@
         font-size: 12px;
         min-height: 20px;
     }
+
+    .coupon_code_apply {
+        color: #007c05;
+        border: 1px dashed #007c05;
+        border-radius: 3px;
+        padding: 8px 12px;
+        padding-right: 15px;
+        font-weight: 900;
+    }
+
+    .coupon_code_block {
+        padding: 8px 12px;
+        padding-left: 15px;
+        padding-right: 15px;
+        font-weight: 500;
+    }
+
+    .next_coupon {
+        margin-bottom: 15px;
+        border-bottom: 1px solid lightgray;
+    }
+
+    .copy {
+
+        cursor: copy;
+
+    }
 </style>
 
 <div class="modal fade" id="couponModalCenter" tabindex="-1" role="dialog" aria-labelledby="couponModalCenterTitle" aria-hidden="true">
@@ -79,8 +106,27 @@
                     <div class="couponsForm-applyButton" id="couponsForm-applyButton">CHECK</div>
                 </div>
                 <div class="couponsForm-errorMessage"></div>
+                <div class="col-sm-12 coupon_code_block">
+                    <?php if (!empty($all_coupons)) :
+                        foreach ($all_coupons as $coupons) : ?>
+                            <div class="next_coupon">
+                                <div style="margin-bottom: 10px;">
+                                    <span onclick="copy($(this))" class="coupon_code_apply copy"> <?php echo $coupons->offer_code; ?> </span>
+                                </div>
+                                <!-- <div> <?php echo $coupons->discount_percentage; ?> </div>
+                    <div> <?php echo $coupons->allowed_max_discount; ?> </div>
+                    <div> <?php echo $coupons->min_amt_in_cart; ?> </div> -->
+                                <div> <?php echo $coupons->msg_to_be_displayed; ?> </div>
+                                <div> <?php echo $coupons->description; ?> </div>
+                                <div>Expires on : <?php echo $coupons->end_date; ?> </div>
+                                <!-- <div> <?php echo $coupons->terms_and_conditions; ?> </div> -->
+                            </div>
+                    <?php endforeach;
+                    endif; ?>
+                </div>
+
             </div>
-            <div class="modal-footer">
+            <div class=" modal-footer">
                 <button type="button" class="btn btn-custom text-large">Apply</button>
             </div>
         </div>

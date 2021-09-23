@@ -117,9 +117,12 @@ class Offer_model extends CI_Model
 
     public function get_all_available_coupons($today)
     {
-        $this->db->where('end_date', $today);
-        $query = $this->db->get('cms_offers');
-        return $query->row();
+        $sql = "SELECT * FROM cms_offers WHERE (end_date > now() or 
+                end_date is NULL)
+                and start_date <= now()
+                and status = 1";
+        $query = $this->db->query($sql);
+        return $query->result();
     }
     public function kpi_insert_details($data)
     {

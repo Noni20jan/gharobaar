@@ -304,9 +304,8 @@ class Coupon_controller extends Admin_Core_Controller
 
     public function load_coupon_popup()
     {
-        $data = array();
-        // $data["all_coupons"] = $this->offer_model->get_all_available_coupons('2021-10-20 19:30:00');
-        $this->load->view('partials/_apply_coupon_modal');
+        $data['all_coupons'] = $this->offer_model->get_all_available_coupons('2021-10-20 19:30:00');
+        $this->load->view('partials/_apply_coupon_modal', $data);
     }
 
     public function checked_availability_coupon()

@@ -138,3 +138,19 @@
         });
     });
 </script>
+
+<script>
+    function copy(copyValue) {
+        var copy = copyValue;
+        for (const copied of copy) {
+            copied.addEventListener("copy", function(event) {
+                event.preventDefault();
+                if (event.clipboardData) {
+                    event.clipboardData.setData("text/plain", copied.textContent);
+                    console.log(event.clipboardData.getData("text"))
+                };
+            });
+            document.execCommand("copy");
+        };
+    }
+</script>
