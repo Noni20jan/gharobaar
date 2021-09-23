@@ -72,6 +72,11 @@ class Offer_model extends CI_Model
     {
         return $this->db->insert('criteria', $data);
     }
+    public function update_loyalty_criteria($data)
+    {
+        $this->db->where('kpi_id', $data['kpi_id']);
+        $this->db->update('criteria', $data);
+    }
     public function get_parent_detail($data)
     {
         $this->db->where('parent_type', $data);
@@ -93,6 +98,12 @@ class Offer_model extends CI_Model
         $this->db->where('lookup_type', "USER_TYPE");
         $query = $this->db->get('lookup_values');
         return $query->result();
+    }
+    public function check_kpi_id($data)
+    {
+        $this->db->where('kpi_id', $data['kpi_id']);
+        $query = $this->db->get('criteria');
+        return $query->row();
     }
     public function show_data()
     {
@@ -147,7 +158,7 @@ class Offer_model extends CI_Model
         $query = $this->db->get('offer_redemptions');
         return $query->num_rows();
     }
-    public function get_data_users($role,$offer_id,$per_page, $offset)
+    public function get_data_users($role, $offer_id, $per_page, $offset)
     {
 
         $sql = "SELECT  id,slug,banned,email_status, username, email, last_seen, created_at
@@ -169,5 +180,11 @@ order by created_at desc";
         $query = $this->db->get('offer_selection_details');
         var_dump($query->num_rows);
         return $query->num_rows();
+    }
+    public function get_parent_name()
+    {
+        $this->db->where('type', 'free form');
+        $query = $this->db->get('kpi');
+        return $query->result();
     }
 }
