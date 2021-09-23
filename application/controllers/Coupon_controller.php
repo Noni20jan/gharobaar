@@ -328,7 +328,7 @@ class Coupon_controller extends Admin_Core_Controller
             $coupon_end_date = strtotime($coupon_details->end_date);
 
             // check for the expiration of the coupon/voucher
-            if (time() >= $coupon_start_date && time() <= $coupon_end_date) {
+            if (time() >= $coupon_start_date && time() <= $coupon_end_date) :
 
                 //check for the max. usage of the coupon/voucher
                 $max_total_usage = intval($coupon_details->max_total_usage);
@@ -336,17 +336,58 @@ class Coupon_controller extends Admin_Core_Controller
                 if ($max_total_usage > $total_usage) :
 
                     //check for minimum amount of cart
+                    $total_cart_value = $data['cart_total']->total / 100;
+                    $coupon_min_cart_val = $coupon_details->min_amt_in_cart;
+                    if ($total_cart_value >= $coupon_min_cart_val) :
+                        //check for the source type of the coupon
+                        $coupon_assignment_details = $this->offer_model->get_coupon_details_by_code($coupon_details->offer_code);
+                        foreach ($coupon_assignment_details as $cad) :
+                            $coupon_source_type = $cad->source_type;
+                            break;
+                        endforeach;
+                        switch (strtoupper($coupon_source_type)):
+                            case "ALL":
+                                break;
+                            case "USER":
+                                break;
+                            case "PRODUCT":
+                                break;
+                            case "CATEGORY":
+                                break;
+                            case "FREESHIP":
+                                break;
+                            case "EXHIBITION":
+                                $coupon = new stdClass();
+                                $coupon->offer_code = strtoupper($coupon_source_type);
+                                $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
+                                $this->cart_model->calculate_cart_total();
+                                break;
+                        endswitch;
+                        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                        $data["coupon_assignment_data"] = $coupon_assignment_details;
+                        $data["coupon_max_usage"] = $max_total_usage;
+                        $data["coupon_total_usage"] = $total_usage;
+                        $data["status"] = true;
+                        $data["msg"] = trans("success_coupon");
+                        $data["coupon_data"] = $coupon_details;
 
+                    else :
 
-                    //check for the source type of the coupon
-                    $coupon_assignment_details = $this->offer_model->get_coupon_details_by_code($coupon_details->offer_code);
+                        $token = array(
+                            'amt'  => $coupon_min_cart_val
+                        );
+                        $pattern = '[%s]';
+                        foreach ($token as $key => $val) {
+                            $varMap[sprintf($pattern, $key)] = $val;
+                        }
+                        $message = strtr(trans("limit_fail_coupon"), $varMap);
 
-                    $data["coupon_assignment_data"] = $coupon_assignment_details;
-                    $data["coupon_max_usage"] = $max_total_usage;
-                    $data["coupon_total_usage"] = $total_usage;
-                    $data["status"] = true;
-                    $data["msg"] = trans("success_coupon");
-                    $data["coupon_data"] = $coupon_details;
+                        $data["coupon_max_usage"] = $max_total_usage;
+                        $data["coupon_total_usage"] = $total_usage;
+                        $data["error"] = "Minimum value reqiured";
+                        $data["status"] = false;
+                        $data["msg"] = $message;
+                    endif;
                 else :
                     $data["coupon_max_usage"] = $max_total_usage;
                     $data["coupon_total_usage"] = $total_usage;
@@ -354,12 +395,11 @@ class Coupon_controller extends Admin_Core_Controller
                     $data["status"] = false;
                     $data["msg"] = trans("failure_coupon");
                 endif;
-            } else {
-
+            else :
                 $data["error"] = "Coupon Expired";
                 $data["status"] = false;
                 $data["msg"] = trans("failure_coupon");
-            }
+            endif;
 
         else :
             $data["error"] = "Coupon not found";
