@@ -203,20 +203,20 @@
     </div>
 
 </div>
-
-<?php if ($this->auth_user->account_number == '' && $this->auth_user->role == 'vendor' && $this->auth_user->username == $user->username) : ?>
-    <div class="modal" id="bankaccount" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog new-width-bank" role="document" style="max-width:50%;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ModalLongTitle">Please Add Bank Account details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"><i class="icon-close"></i> </span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <?php echo form_open("update-payout-account", ['id' => 'form_validate']); ?>
-                    <!-- <div class="form-group">
+<?php if ($this->auth_check) : ?>
+    <?php if ($this->auth_user->account_number == '' && $this->auth_user->role == 'vendor' && $this->auth_user->username == $user->username) : ?>
+        <div class="modal" id="bankaccount" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog new-width-bank" role="document" style="max-width:50%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ModalLongTitle">Please Add Bank Account details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="icon-close"></i> </span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <?php echo form_open("update-payout-account", ['id' => 'form_validate']); ?>
+                        <!-- <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 m-b-sm-15">
                                         <label><?php echo trans("bank_account_holder_name"); ?>*</label>
@@ -247,64 +247,65 @@
 
                             </div> -->
 
-                    <!-- <div class="col-12 m-b-30"> -->
-                    <div class="row" style="justify-content:center;">
-                        <label id="label1">Your Bank Details</label>
-                    </div>
-                    <div class="form-group">
-                        <div class="row Brand-1">
-                            <div class="col-md-3"><label id="formlabel2">Account Holder Name<span class="Validation_error"> *</span></label></div>
-                            <div class="col-md-9 Brand-name">
-                                <input type='text' name="holder_name" class="form-control auth-form-input" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value="<?php echo html_escape($this->auth_user->acc_holder_name); ?>" required>
+                        <!-- <div class="col-12 m-b-30"> -->
+                        <div class="row" style="justify-content:center;">
+                            <label id="label1">Your Bank Details</label>
+                        </div>
+                        <div class="form-group">
+                            <div class="row Brand-1">
+                                <div class="col-md-3"><label id="formlabel2">Account Holder Name<span class="Validation_error"> *</span></label></div>
+                                <div class="col-md-9 Brand-name">
+                                    <input type='text' name="holder_name" class="form-control auth-form-input" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" value="<?php echo html_escape($this->auth_user->acc_holder_name); ?>" required>
+                                </div>
+                            </div>
+                            <!-- <input type="text" name="holder_name" class="form-control form-input"  placeholder="Enter Account Holder Name"  required> -->
+                        </div>
+                        <div class="form-group">
+                            <div class="row Brand-1">
+                                <div class="col-md-3"><label id="formlabel2">Account Number<span class="Validation_error"> *</span></label></div>
+                                <div class="col-md-9 Brand-name">
+                                    <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
+                                </div>
                             </div>
                         </div>
-                        <!-- <input type="text" name="holder_name" class="form-control form-input"  placeholder="Enter Account Holder Name"  required> -->
-                    </div>
-                    <div class="form-group">
-                        <div class="row Brand-1">
-                            <div class="col-md-3"><label id="formlabel2">Account Number<span class="Validation_error"> *</span></label></div>
-                            <div class="col-md-9 Brand-name">
-                                <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
+                        <div class="form-group">
+                            <div class="row Brand-1">
+                                <div class="col-md-3"><label id="formlabel2">Confirm Account Number<span class="Validation_error"> *</span></label></div>
+                                <div class="col-md-9 Brand-name">
+                                    <input type='text' name="confirm_account_number" id="confirm_account_number" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
+                                    <span style="color: red;" id="verity_account"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row Brand-1">
-                            <div class="col-md-3"><label id="formlabel2">Confirm Account Number<span class="Validation_error"> *</span></label></div>
-                            <div class="col-md-9 Brand-name">
-                                <input type='text' name="confirm_account_number" id="confirm_account_number" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
-                                <span style="color: red;" id="verity_account"></span>
+                        <div class="form-group">
+                            <div class="row Brand-1">
+                                <div class="col-md-3"><label id="formlabel2">IFSC Code<span class="Validation_error"> *</span></label></div>
+                                <div class="col-md-9 Brand-name">
+                                    <input type='text' name="ifsc_code" id="ifsc_code" maxlength="11" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->ifsc_code); ?>" required onchange="validate_ifsc($( '#ifsc_code').val())">
+                                    <span style="color: red;" id="pincode_error"></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row Brand-1">
-                            <div class="col-md-3"><label id="formlabel2">IFSC Code<span class="Validation_error"> *</span></label></div>
-                            <div class="col-md-9 Brand-name">
-                                <input type='text' name="ifsc_code" id="ifsc_code" maxlength="11" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->ifsc_code); ?>" required onchange="validate_ifsc($( '#ifsc_code').val())">
-                                <span style="color: red;" id="pincode_error"></span>
+                        <div class="form-group">
+                            <div class="row Brand-1">
+                                <div class="col-md-3"><label id="formlabel2">Bank Branch<span class="Validation_error"> *</span></label></div>
+                                <div class="col-md-9 Brand-name">
+                                    <input type='text' name="bank_branch" id="bank_branch" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->bank_branch); ?>" required readonly>
+                                </div>
                             </div>
                         </div>
+                        <!-- </div> -->
                     </div>
-                    <div class="form-group">
-                        <div class="row Brand-1">
-                            <div class="col-md-3"><label id="formlabel2">Bank Branch<span class="Validation_error"> *</span></label></div>
-                            <div class="col-md-9 Brand-name">
-                                <input type='text' name="bank_branch" id="bank_branch" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->bank_branch); ?>" required readonly>
-                            </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button type="submit" id="account_button" value="update" class="btn btn-md btn-success"><?php echo trans("save_changes"); ?></button>
                         </div>
+                        <?php echo form_close(); ?>
                     </div>
-                    <!-- </div> -->
-                </div>
-                <div class="modal-footer">
-                    <div class="form-group">
-                        <button type="submit" id="account_button" value="update" class="btn btn-md btn-success"><?php echo trans("save_changes"); ?></button>
-                    </div>
-                    <?php echo form_close(); ?>
                 </div>
             </div>
         </div>
-    </div>
+    <?php endif; ?>
 <?php endif; ?>
 
 <div class="row-custom">
