@@ -88,6 +88,24 @@
         min-width: 200px;
         max-width: 100% !important;
     }
+
+    #paynow-for-web {
+        display: flex;
+    }
+
+    #paynow-for-mobile {
+        display: none;
+    }
+
+    @media(max-width:768px) {
+        #paynow-for-web {
+            display: none !important;
+        }
+
+        #paynow-for-mobile {
+            display: block !important;
+        }
+    }
 </style>
 
 
@@ -112,11 +130,11 @@
                 <p><?php echo $address->shipping_area ?></p>
                 <p><?php echo $address->shipping_landmark ?></p>
                 <p><?php echo $address->shipping_city . "," . $address->shipping_state . " -" . $address->shipping_zip_code ?>
-                    <div id="phone_number"> <label>Phone:</label><span>
-                            <?php echo $address->shipping_phone_number ?>
-                        </span>
-                        </label>
-                    </div>
+                <div id="phone_number"> <label>Phone:</label><span>
+                        <?php echo $address->shipping_phone_number ?>
+                    </span>
+                    </label>
+                </div>
 
 
             </div>
@@ -134,12 +152,12 @@
                     <p><?php echo $address->billing_landmark ?></p>
 
                     <p><?php echo $address->billing_city . "," . $address->billing_state . " -" . $address->billing_zip_code ?>
-                        <div id="phone_number"> <label>Phone:</label><span>
-                                <?php echo $address->billing_phone_number ?>
-                            </span>
-                            </label>
+                    <div id="phone_number"> <label>Phone:</label><span>
+                            <?php echo $address->billing_phone_number ?>
+                        </span>
+                        </label>
 
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -221,12 +239,20 @@
             </div>
         </div>
     </div>
-    <div class="row" style="margin-top: 3%;">
+    <div class="row" style="margin-top: 3%;" id="paynow-for-web">
         <div class="col-sm-6">
             <a class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>'><?php echo trans("change_pay_method") ?></a>
         </div>
         <div class="col-sm-6">
             <button type="submit" id="cashfreebtn" class="cash_free_btn btn btn-lg float-right" style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 3%;" id="paynow-for-mobile">
+        <div class="col-sm-6">
+            <button type="submit" id="cashfreebtn" class="cash_free_btn btn btn-lg float-right" style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
+        </div>
+        <div class="col-sm-6">
+            <a class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>'><?php echo trans("change_pay_method") ?></a>
         </div>
     </div>
 </div>
