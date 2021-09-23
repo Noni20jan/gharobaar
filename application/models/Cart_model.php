@@ -600,6 +600,12 @@ class Cart_model extends CI_Model
         $cart_total->shipping_cost = 0;
 
         $cart_total->total = 0;
+
+        //coupon code
+        $cart_total->applied_coupon_code = 0;
+        $cart_total->applied_coupon_discount = 0;
+
+
         $cart_total->currency = $this->payment_settings->default_currency;
         $cart_total->is_stock_available = 1;
         $cart_total->discount = 0;
@@ -706,6 +712,30 @@ class Cart_model extends CI_Model
             endif;
             // $cart_total->total_price = round($cart_total->order_total / 100) * 100;
             $cart_total->total_price = $cart_total->order_total;
+
+            $coupon_applied = $this->session->userdata('mds_shopping_cart_coupon');
+            if (!empty($coupon_applied)) {
+                $cart_total->applied_coupon_code = $coupon_applied->offer_code;
+                switch ($cart_total->applied_coupon_code):
+                    case "ALL":
+                        break;
+                    case "USER":
+                        break;
+                    case "PRODUCT":
+                        break;
+                    case "CATEGORY":
+                        break;
+                    case "FREESHIP":
+                        break;
+                    case "EXHIBITION":
+                        if ($cod) :
+                            $cart_total->applied_coupon_discount = $cart_total->shipping_cost + $cart_total->total_cod_charges + $cart_total->total_tax_charges;
+                        else :
+                            $cart_total->applied_coupon_discount = $cart_total->shipping_cost + $cart_total->total_tax_charges;
+                        endif;
+                        break;
+                endswitch;
+            }
             $this->session->set_userdata('mds_shopping_cart_total', $cart_total);
             if ($this->auth_check) {
                 $user_id = $this->auth_user->id;

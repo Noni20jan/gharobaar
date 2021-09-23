@@ -59,7 +59,12 @@
                 <label for="meeting-time">Start date & Time:</label>
             </div>
             <div class="col-sm-6">
-                <input type="text" value="<?php echo $offer->start_date; ?>" class="form-control" id="meeting-time" name="start_date" required>
+                <?php
+                $t = $offer->start_date;
+                $date = strtotime($t);
+                $date_time = date("Y-m-d\TH:i:s", $date);
+                ?>
+                <input type="datetime-local" value="<?php echo $date_time; ?>" class="form-control" id="meeting-time" name="start_date" required>
             </div>
         </div>
     </div>
@@ -69,7 +74,12 @@
                 <label for="meeting-time">End date & Time:</label>
             </div>
             <div class="col-sm-6">
-                <input type="text" id="meeting-time" value="<?php echo $offer->end_date; ?>" class="form-control" name="end_date" required>
+                <?php
+                $t = $offer->end_date;
+                $date = strtotime($t);
+                $date_time = date("Y-m-d\TH:i:s", $date);
+                ?>
+                <input type="datetime-local" id="meeting-time" value="<?php echo $date_time; ?>" class="form-control" name="end_date" required>
             </div>
         </div>
     </div>
@@ -117,6 +127,14 @@
 </div>
 
 <div class="col-12 coupons-from-holder" id="for-vouchers">
+    <div class="form-group" id="voucher_code">
+        <div class="row">
+            <div class="col-sm-6"><label>Offer Code:</label></div>
+            <div class="col-sm-6">
+                <input type='text' name="voucher_code" value="<?php echo $offer->offer_code; ?>" class="form-control auth-form-input" id="code_on_voucher">
+            </div>
+        </div>
+    </div>
     <div class="form-group" id="vouchers_required">
         <div class="row">
             <div class="col-sm-6"><label>Numbers of Vouchers required:</label></div>
@@ -137,7 +155,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Add Terms & Conditions</label></div>
             <div class="col-sm-6">
-                <input type='text' name="t_&_c" value="<?php echo $offer->terms_and_conditions ?>" class="form-control auth-form-input" id="tc_on_voucher" required>
+                <input type='text' name="t_c_v" value="<?php echo $offer->terms_and_conditions ?>" class="form-control auth-form-input" id="tc_on_voucher" required>
             </div>
         </div>
     </div>

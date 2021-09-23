@@ -7,10 +7,6 @@ class Coupon_controller extends Admin_Core_Controller
     {
         parent::__construct();
         //check user
-        if (!is_admin()) {
-            redirect(admin_url() . 'login');
-        }
-        $this->_user_session = get_user_session();
     }
 
     /**
@@ -110,8 +106,31 @@ class Coupon_controller extends Admin_Core_Controller
 
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/offers/coupons_products', $data);
+        // $this->load->view('admin/includes/_footer');
+    }
+    public function get_coupon_data()
+    {
+        $data['title'] = trans("products");
+        $data['form_action'] = admin_url() . "products_coupons";
+        $data['list_type'] = "products";
+        //get paginated products
+
+        $data["coupons"] = $this->offer_model->show_data();
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/offers/products_coupons', $data);
         $this->load->view('admin/includes/_footer');
     }
+
+    // functiona for deleting the assigned coupons
+    public function delete_coupon()
+    {
+        $id = $this->input->post('id', true);
+        $this->offer_model->delete_data($id);
+        redirect($this->agent->referrer());
+    }
+
+
     public function coupons_products_data()
     {
         $source_ids = $this->input->post('source_id');
@@ -174,6 +193,21 @@ class Coupon_controller extends Admin_Core_Controller
 
     public function edit_details_coupon()
     {
+
+        if (!empty($this->input->post('t_c_c', true))) {
+            $terms_conditions = $this->input->post('t_c_c', true);
+        }
+        if (!empty($this->input->post('t_c_v', true))) {
+            $terms_conditions = $this->input->post('t_c_v', true);
+        }
+        if (!empty($this->input->post('coupon_code', true))) {
+            $offer_code = $this->input->post('coupon_code', true);
+        }
+        if (!empty($this->input->post('voucher_code', true))) {
+            $offer_code = $this->input->post('voucher_code', true);
+        }
+
+
         $this->load->model("Offer_model");
         $id = $this->input->post('id', true);
         $data['name'] = $this->input->post('offer_name', true);
@@ -185,11 +219,13 @@ class Coupon_controller extends Admin_Core_Controller
         $data['discount_percentage'] = $this->input->post('discount_per', true);
         $data['allowed_max_discount'] = $this->input->post('max_discount', true);
         $data['min_amt_in_cart'] = $this->input->post('min_discount', true);
-        $data['offer_code'] = $this->input->post('coupon_code', true);
+        $data['max_usage_per_user'] = $this->input->post('max_usage_per_user', true);
+        $data['offer_code'] = $offer_code;
         $data['msg_to_be_displayed'] = $this->input->post('msg_displayed', true);
         $data['no_off_voucher_req'] = $this->input->post('vouchers_required', true);
-        $data['terms_and_conditions'] = $this->input->post('t_&_c', true);
+        $data['terms_and_conditions'] = $terms_conditions;
         $data['max_total_usage'] = $this->input->post('max_usage', true);
+        $data['description'] = $this->input->post('description', true);
         if (empty($data["name"])) {
             $data["name"] = "";
         }
@@ -232,9 +268,16 @@ class Coupon_controller extends Admin_Core_Controller
         if (empty($data["max_total_usage"])) {
             $data["max_total_usage"] = "";
         }
+        if (empty($data["max_usage_per_user"])) {
+            $data["max_usage_per_user"] = "";
+        }
+        if (empty($data["description"])) {
+            $data["description"] = "";
+        }
 
 
         $this->Offer_model->edit_coupons_vouchers($id, $data);
+        redirect($this->agent->referrer());
     }
 
 
@@ -281,5 +324,113 @@ class Coupon_controller extends Admin_Core_Controller
             $data['parent_categories'] = $this->category_model->get_all_parent_categories();
             $this->load->view('admin/offers/_category_selection', $data);
         }
+    }
+
+    public function load_coupon_popup()
+    {
+        $data['all_coupons'] = $this->offer_model->get_all_available_coupons();
+        $this->load->view('partials/_apply_coupon_modal', $data);
+    }
+
+    public function checked_availability_coupon()
+    {
+        $data = array(
+            "status" => false,
+            "msg" => ""
+        );
+        $coupon_code =  $this->input->post("coupon_code");
+        $user = $this->input->post('user');
+
+
+        $coupon_details = $this->offer_model->get_coupon_by_code($coupon_code);
+        $data['cart_items'] = $this->cart_model->get_sess_cart_items();
+        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+
+        if (!empty($coupon_details)) :
+
+            $coupon_start_date = strtotime($coupon_details->start_date);
+            $coupon_end_date = strtotime($coupon_details->end_date);
+
+            // check for the expiration of the coupon/voucher
+            if (time() >= $coupon_start_date && time() <= $coupon_end_date) :
+
+                //check for the max. usage of the coupon/voucher
+                $max_total_usage = intval($coupon_details->max_total_usage);
+                $total_usage = intval($this->offer_model->get_total_usage_by_id($coupon_details->id));
+                if ($max_total_usage > $total_usage) :
+
+                    //check for minimum amount of cart
+                    $total_cart_value = $data['cart_total']->total / 100;
+                    $coupon_min_cart_val = $coupon_details->min_amt_in_cart;
+                    if ($total_cart_value >= $coupon_min_cart_val) :
+                        //check for the source type of the coupon
+                        $coupon_assignment_details = $this->offer_model->get_coupon_details_by_code($coupon_details->offer_code);
+                        foreach ($coupon_assignment_details as $cad) :
+                            $coupon_source_type = $cad->source_type;
+                            break;
+                        endforeach;
+                        switch (strtoupper($coupon_source_type)):
+                            case "ALL":
+                                break;
+                            case "USER":
+                                break;
+                            case "PRODUCT":
+                                break;
+                            case "CATEGORY":
+                                break;
+                            case "FREESHIP":
+                                break;
+                            case "EXHIBITION":
+                                $coupon = new stdClass();
+                                $coupon->offer_code = strtoupper($coupon_source_type);
+                                $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
+                                $this->cart_model->calculate_cart_total();
+                                break;
+                        endswitch;
+                        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                        $data["coupon_assignment_data"] = $coupon_assignment_details;
+                        $data["coupon_max_usage"] = $max_total_usage;
+                        $data["coupon_total_usage"] = $total_usage;
+                        $data["status"] = true;
+                        $data["msg"] = trans("success_coupon");
+                        $data["coupon_data"] = $coupon_details;
+
+                    else :
+
+                        $token = array(
+                            'amt'  => $coupon_min_cart_val
+                        );
+                        $pattern = '[%s]';
+                        foreach ($token as $key => $val) {
+                            $varMap[sprintf($pattern, $key)] = $val;
+                        }
+                        $message = strtr(trans("limit_fail_coupon"), $varMap);
+
+                        $data["coupon_max_usage"] = $max_total_usage;
+                        $data["coupon_total_usage"] = $total_usage;
+                        $data["error"] = "Minimum value reqiured";
+                        $data["status"] = false;
+                        $data["msg"] = $message;
+                    endif;
+                else :
+                    $data["coupon_max_usage"] = $max_total_usage;
+                    $data["coupon_total_usage"] = $total_usage;
+                    $data["error"] = "Maximum Limit Reached";
+                    $data["status"] = false;
+                    $data["msg"] = trans("failure_coupon");
+                endif;
+            else :
+                $data["error"] = "Coupon Expired";
+                $data["status"] = false;
+                $data["msg"] = trans("failure_coupon");
+            endif;
+
+        else :
+            $data["error"] = "Coupon not found";
+            $data["status"] = false;
+            $data["msg"] = trans("failure_coupon");
+        endif;
+
+        echo json_encode($data);
     }
 }

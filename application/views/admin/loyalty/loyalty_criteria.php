@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+
 <style>
     /* label {
         display: block;
@@ -29,17 +30,28 @@
         color: white;
     }
 </style>
+<?php
+function fill_unit_select_box($kpi1)
+{
+
+    foreach ($kpi1 as $kpi2) {
+        $output = '<option value="' . $kpi2->id . '">' . $kpi2->name . '</option>';
+    }
+    return $output;
+}
+?>
 <!-- form start -->
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title"><?php echo trans('send_email_members'); ?></h3>
+                <h3 class="box-title"><?php echo trans('loyalty_criteria'); ?></h3>
             </div>
             <!-- /.box-header -->
 
             <!-- form start -->
             <div class="box-body">
+                <?php $this->load->view('admin/includes/_messages'); ?>
                 <?php echo form_open('admin_controller/loyalty_program_submit'); ?>
                 <div class="col-12 coupons-from-holder">
                     <div class="form-group">
@@ -66,7 +78,11 @@
                     <div class="row form-group">
                         <div class="col-sm-3">
                             <label>NAME:</label>
-                            <input type='text' name="kpi_name" class="form-control auth-form-input" value="" placeholder="Name" required>
+                            <select name="kpi_name" required id="kpi_name" class="form-control auth-form-input">
+                                <?php foreach ($kpi as $kpi3) { ?>
+                                    <option value="<?php echo $kpi3->id; ?>"><?php echo $kpi3->name; ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                         <div class="col-sm-3">
                             <label>KPI Type:</label>
@@ -99,11 +115,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
 <?php echo form_close(); ?>
 <script>
     $(document).ready(function() {
@@ -116,10 +127,9 @@
             if (x < max_fields_limit) { //check conditions
                 x++; //counter increment
                 $('.input_fields_container1').append('<div id="row' + x + '"><div class="row form-group">' +
-                    '<div class="col-sm-3">' +
-                    '<input type="text" name="kpi_name" placeholder="Name" class="form-control auth-form-input" value="" required> </div><div class="col-sm-3"> <select class="form-control auth-form-input" name="kpi_type" id="kpi_type' + x + '" onchange="child_parent_name1(' + x + ');"> <option value="parent">Parent</option><option value="child">Child</option><option value="individual">Individual</option></select></div>' +
-                    ' <div class="col-sm-3"> <input type="text" id="parent_name' + x + '" disabled placeholder="Parent KPI" name="parent_name" class="form-control auth-form-input" value=""> </div>' +
-                    ' <div class="col-sm-2"> <input type="number" maxlength="3" name="weightage"placeholder="Weihtage" class="form-control auth-form-input" value="" required> </div>' +
+                    '<div class="col-sm-3"><select name="kpi_name" required id="kpi_name1[]" class="form-control auth-form-input"><?php echo fill_unit_select_box($kpi); ?></select> </div> <div class = "col-sm-3"><select class = "form-control auth-form-input" name = "kpi_type1[]" id = "kpi_type' + x + '"onchange = "child_parent_name1(' + x + ');"><option value = "parent"> Parent </option><option value="child">Child</option><option value = "individual"> Individual</option></select></div>' +
+                    ' <div class="col-sm-3"> <input type="text" id="parent_name' + x + '" disabled placeholder="Parent KPI" name="parent_name1[]" class="form-control auth-form-input" value=""> </div>' +
+                    ' <div class="col-sm-2"> <input type="number" maxlength="3" name="weightage1[]"placeholder="Weihtage" class="form-control auth-form-input" value="" required> </div>' +
                     '<button type="button" name="remove"" id="' + x + '" class="btn btn-danger remove_field"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d = "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />' +
                     '<path fill - rule = "evenodd" d = "M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" / ></svg><i class="bi bi-trash"></i > </button></div></div></div > ');
                 // add input field

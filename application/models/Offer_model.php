@@ -94,4 +94,56 @@ class Offer_model extends CI_Model
         $query = $this->db->get('lookup_values');
         return $query->result();
     }
+    public function show_data()
+    {
+        $sql = "SELECT *
+        FROM cms_offers INNER JOIN offer_selection_details
+        WHERE offer_selection_details.offer_id = cms_offers.id && offer_selection_details.source_id!='NULL'";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    public function delete_data($id)
+    {
+        $sql = "Delete from offer_selection_details where id=$id";
+        $query = $this->db->query($sql);
+    }
+    public function get_coupon_by_code($coupon_code)
+    {
+        $this->db->where('offer_code', $coupon_code);
+        $query = $this->db->get('cms_offers');
+        return $query->row();
+    }
+
+    public function get_all_available_coupons()
+    {
+        $sql = "SELECT * FROM cms_offers WHERE (end_date > now() or 
+                end_date is NULL)
+                and start_date <= now()
+                and status = 1";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    public function kpi_insert_details($data)
+    {
+        return $this->db->insert('kpi', $data);
+    }
+    public function get_kpi_name()
+    {
+        $query = $this->db->get('kpi');
+        return $query->result();
+    }
+    public function get_coupon_details_by_code($coupon_code)
+    {
+        $this->db->select('cms_offers.offer_code,offer_selection_details.*');
+        $this->db->join('offer_selection_details', 'cms_offers.id = offer_selection_details.offer_id');
+        $this->db->where('offer_code', $coupon_code);
+        $query = $this->db->get('cms_offers');
+        return $query->result();
+    }
+    public function get_total_usage_by_id($id)
+    {
+        $this->db->where('offer_id', $id);
+        $query = $this->db->get('offer_redemptions');
+        return $query->num_rows();
+    }
 }

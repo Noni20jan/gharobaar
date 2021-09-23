@@ -41,45 +41,29 @@
         font-size: 12px;
     }
 
-    @media (min-width: 480px) {
-        .couponsForm-textInputContainer {
-            border: 1px solid #d5d6d9;
-            padding: 11px 16px 14px;
-        }
+    #loading-coupon {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 9999;
     }
 
-    .couponsForm-textInputContainer {
-        position: relative;
-        height: 44px;
-        font-size: 14px;
-        box-sizing: border-box;
-        padding-top: 10px;
-        border-radius: 4px;
-        margin-bottom: 4px;
-    }
-
-    .couponsForm-textInputContainer .couponsForm-base-textInput {
-        caret-color: #007C05;
-        padding: 0;
-        border: none;
-        width: 75%;
-        outline: 0;
-    }
-
-    .couponsForm-textInputContainer .couponsForm-applyButton {
+    #loading-image {
         position: absolute;
-        top: 11px;
-        right: 16px;
-        font-size: 14px;
-        color: #007C0577;
-        font-weight: 600;
-        letter-spacing: 1px;
-    }
-
-    .couponsForm-textInputContainer .couponsForm-enabled {
-        color: #007C05;
+        top: 50%;
+        left: 50%;
+        z-index: 10000;
     }
 </style>
+<div id="loading-coupon">
+    <img id="loading-image" src="<?php echo base_url() . 'assets/gif/ajax-loader.gif'; ?>" alt="Loading..." />
+</div>
 <div>
     <div class="coupons-div-header">Offers &amp; Coupons</div>
     <div class="coupons-div-content">
@@ -90,32 +74,83 @@
             </g>
         </svg>
         <div class="coupons-div-label">Apply Coupons</div>
-        <div><button class="coupons-div-button" data-toggle="modal" data-target="#exampleModalCenter">APPLY</button></div>
-    </div>
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" class="modal-base-cancelIcon ">
-                                <path fill="#000" fill-rule="evenodd" d="M9.031 8l6.756-6.756a.731.731 0 0 0 0-1.031.732.732 0 0 0-1.031 0L8 6.969 1.244.213a.732.732 0 0 0-1.031 0 .731.731 0 0 0 0 1.03L6.969 8 .213 14.756a.731.731 0 0 0 0 1.031.732.732 0 0 0 1.031 0L8 9.031l6.756 6.756a.732.732 0 0 0 1.031 0 .731.731 0 0 0 0-1.03L9.031 8z"></path>
-                            </svg>
-                        </span>
-                    </button>
-                    <h5 class="modal-title" id="exampleModalLongTitle">Apply Coupons</h5>
-
-                </div>
-                <div class="modal-body">
-                    <div class="couponsForm-textInputContainer">
-                        <input id="coupon-input-field" class="couponsForm-base-textInput" placeholder="Enter coupon code">
-                        <div class="couponsForm-applyButton" id="couponsForm-applyButton">CHECK</div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-custom text-large">Apply</button>
-                </div>
-            </div>
-        </div>
+        <div><button class="coupons-div-button" id="coupons-div-button">APPLY</button></div>
+        <div id="coupon-popup-div"></div>
     </div>
 </div>
+<script>
+    $(document).on("input keyup paste change", "#coupon-input-field", function() {
+        if ($(this).val().length > 0) {
+            $("#couponsForm-applyButton").addClass("couponsForm-enabled");
+        } else {
+            $("#couponsForm-applyButton").removeClass("couponsForm-enabled");
+        }
+    });
+
+    $(document).on("click", "#coupons-div-button", function() {
+        var data = {
+            "sys_lang_id": sys_lang_id,
+        };
+        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+        $.ajax({
+            type: "POST",
+            url: base_url + "load-popup-coupon",
+            data: data,
+            beforeSend: function() {
+                $('#loading-coupon').show();
+            },
+            success: function(response) {
+                document.getElementById("coupon-popup-div").innerHTML = response;
+                setTimeout(function() {
+                    $('#loading-coupon').hide()
+                    $('#couponModalCenter').modal('show');
+                }, 200);
+            }
+        });
+    });
+
+    $(document).on("click", ".couponsForm-enabled", function() {
+        var coupon_code = $("#coupon-input-field").val();
+        var data = {
+            "sys_lang_id": sys_lang_id,
+            "coupon_code": coupon_code
+        };
+        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+        $.ajax({
+            type: "POST",
+            url: base_url + "checked-availability-coupon",
+            data: data,
+            beforeSend: function() {
+                $('#loading-coupon').show();
+            },
+            success: function(response) {
+                var res = JSON.parse(response);
+                $('#loading-coupon').hide();
+                if (res.status) {
+                    $(".couponsForm-textInputContainer").removeClass("couponsForm-textInputError");
+                    $(".couponsForm-errorMessage").html("");
+                } else {
+                    $(".couponsForm-textInputContainer").addClass("couponsForm-textInputError");
+                    $(".couponsForm-errorMessage").html(res.msg);
+                }
+
+            }
+        });
+    });
+</script>
+
+<script>
+    function copy(copyValue) {
+        var copy = copyValue;
+        for (const copied of copy) {
+            copied.addEventListener("copy", function(event) {
+                event.preventDefault();
+                if (event.clipboardData) {
+                    event.clipboardData.setData("text/plain", copied.textContent);
+                    console.log(event.clipboardData.getData("text"))
+                };
+            });
+            document.execCommand("copy");
+        };
+    }
+</script>

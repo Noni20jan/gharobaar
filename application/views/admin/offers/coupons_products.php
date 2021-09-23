@@ -3,6 +3,10 @@
         float: left !important;
     }
 
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0px;
+    }
+
     .nxt-cancel-btns {
         text-align: center;
 
