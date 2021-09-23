@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<style>
+<!-- <style>
     .user-blog-2 {
         background-color: white;
         padding: 2%;
@@ -51,7 +51,7 @@
             font-size: 20px;
         }
     }
-</style>
+</style> -->
 
 <div id="wrapper" class="index-wrapper">
     <div class="container">

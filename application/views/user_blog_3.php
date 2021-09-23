@@ -16,6 +16,12 @@
     }
 
 
+    .blog-2-headinng-content {
+        text-align: justify;
+        margin-top: 5%;
+    }
+
+
     .blog-heading {
         font-weight: bold;
         margin-top: 5%;
@@ -62,6 +68,7 @@
         <div class="row blog-text-center" style="padding:0 15px; font-weight:900;">
             <p class="blog-sub-heading">Meta description: Get the best handmade & artisanal jewellery online from India's one of the most trusted websites. Artisanal jewellery displays exquisite craftsmanship & genuineness. </p>
         </div>
+
         <div class="row" style="text-align:justify; padding:0 15px;">
             <p class="">"Beauty attracts the eye" seems to be pretty correct with the present times, where people are now validating handmade articles that are more than run-of-the-mill machinery products. Stuck amid cliches & standards, they are now getting more aesthetic-oriented, craving a change.
             </p>
