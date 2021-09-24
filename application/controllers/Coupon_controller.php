@@ -146,7 +146,19 @@ class Coupon_controller extends Admin_Core_Controller
         $this->load->view('admin/offers/products_coupons', $data);
         $this->load->view('admin/includes/_footer');
     }
+    public function get_voucher_data()
+    {
+        $data['title'] = trans("products");
+        $data['form_action'] = admin_url() . "user_vouchers";
+        $data['list_type'] = "products";
+        //get paginated products
 
+        $data["coupons"] = $this->offer_model->show_vouchers_data();
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/offers/user_vouchers', $data);
+        $this->load->view('admin/includes/_footer');
+    }
     // functiona for deleting the assigned coupons
     public function delete_coupon()
     {
