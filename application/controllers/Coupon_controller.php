@@ -300,9 +300,18 @@ class Coupon_controller extends Admin_Core_Controller
             $data["description"] = "";
         }
 
-
-        $this->Offer_model->edit_coupons_vouchers($id, $data);
-        redirect($this->agent->referrer());
+        if (!empty($this->input->post('coupon_code', true))) {
+            $offer_code = $this->input->post('coupon_code', true);
+            $this->Offer_model->edit_coupons_vouchers($id, $data);
+            // redirect($this->agent->referrer());
+            redirect(admin_url() . 'coupons-dashboard');
+        }
+        if (!empty($this->input->post('voucher_code', true))) {
+            $offer_code = $this->input->post('voucher_code', true);
+            $this->Offer_model->edit_coupons_vouchers($id, $data);
+            // redirect($this->agent->referrer());
+            redirect(admin_url() . 'vouchers-dashboard');
+        }
     }
 
 
