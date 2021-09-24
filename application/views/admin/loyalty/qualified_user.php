@@ -8,6 +8,18 @@
     .p-b-15 {
         padding-bottom: 15px !important;
     }
+
+    .p-t-24 {
+        padding-top: 24px !important;
+    }
+
+    .cross-color {
+        color: red;
+    }
+
+    .color-check {
+        color: green;
+    }
 </style>
 
 <table id="offer_dashboard" class="display" style="width:100%">
@@ -22,8 +34,8 @@
             <label for="meeting-time">To:</label>
             <input type="datetime-local" id="meeting-time" class="form-control" name="end_date" value="2000-06-12T19:30" required>
         </div>
-        <div class="col-sm-2">
-            <button><i class="fa fa-search" aria-hidden="true"></i>
+        <div class="col-sm-2 p-t-24">
+            <button class="btn bg-purple">Search <i class="fa fa-search" aria-hidden="true"></i>
             </button>
         </div>
     </div>
@@ -43,17 +55,14 @@
     <tbody>
         <? //php foreach ($offers as $offer) : 
         ?>
-        <!-- <tr>
-                <td><?php echo $offer->name; ?></td>
-                <td><?php echo $offer->offer_code; ?></td>
-                <td><?php echo $offer->creation_date; ?></td>
-                <td><?php echo $offer->end_date; ?></td>
-                <td><?php echo $offer->status; ?></td>
-                <td><?php echo $offer->type; ?></td>
-                <td><?php echo $offer->discount_amt; ?></td>
-                <td><?php echo $offer->discount_percentage; ?></td>
-                <td><a href="<?php echo admin_url(); ?>edit-coupon-details/<?php echo html_escape($offer->id); ?>"><input id="<?php echo html_escape($offer->id); ?>" class="favorite styled" type="button" value="Edit"></a></td>
-            </tr> -->
+        <tr class="text-center">
+            <td>Himanshu</td>
+            <td><i class="fa fa-times cross-color" aria-hidden="true"></i></td>
+            <td><i class="fa fa-times cross-color" aria-hidden="true"></i></td>
+            <td><i class="fa fa-times cross-color" aria-hidden="true"></i></td>
+            <td><i class="fa fa-check color-check" aria-hidden="true"></i></td>
+            <td>Details</td>
+        </tr>
         <? //php endforeach;
         ?>
     </tbody>
