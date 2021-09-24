@@ -131,6 +131,13 @@ class Offer_model extends CI_Model
         return $query->row();
     }
 
+    public function get_coupon_by_id($coupon_id)
+    {
+        $this->db->where('id', $coupon_id);
+        $query = $this->db->get('cms_offers');
+        return $query->row();
+    }
+
     public function get_all_available_coupons()
     {
         $sql = "SELECT * FROM cms_offers WHERE (end_date > now() or 

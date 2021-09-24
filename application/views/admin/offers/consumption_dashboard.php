@@ -32,7 +32,7 @@
                 <td><?php echo $consumption->method; ?></td>
                 <td><?php echo $consumption->offer_code; ?></td>
                 <td><?php echo $consumption->creation_date; ?></td>
-                <td><?php echo $consumption->total_discount; ?></td>
+                <td><?php echo price_formatted_without_round($consumption->total_discount, "INR"); ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

@@ -41,6 +41,10 @@ class Order_model extends CI_Model
                 'total_cod_charges' => $cart_total->total_cod_charges,
                 'total_tax_charges' => $cart_total->total_tax_charges,
 
+                //coupon code
+                'offer_id' => $cart_total->applied_coupon_id,
+                'coupon_discount' => $cart_total->applied_coupon_discount,
+
 
                 'status' => 0,
                 'payment_method' => $data_transaction["payment_method"],
@@ -67,6 +71,11 @@ class Order_model extends CI_Model
 
                 //update order number
                 $this->update_order_number($order_id);
+
+                //add order coupon redemption details
+                if (!empty($cart_total->applied_coupon_id)) :
+                    $this->add_coupon_redeem_details($order_id, $cart_total);
+                endif;
 
                 //add order shipping
                 $this->add_order_shipping($order_id);
@@ -144,6 +153,10 @@ class Order_model extends CI_Model
                 'total_cod_charges' => $cart_total->total_cod_charges,
                 'total_tax_charges' => $cart_total->total_tax_charges,
 
+                //coupon code
+                'offer_id' => $cart_total->applied_coupon_id,
+                'coupon_discount' => $cart_total->applied_coupon_discount,
+
                 'status' => 0,
                 'payment_method' => $payment_method,
                 'payment_status' => $payment_status,
@@ -162,6 +175,11 @@ class Order_model extends CI_Model
 
                 //update order number
                 $this->update_order_number($order_id);
+
+                //add order coupon redemption details
+                if (!empty($cart_total->applied_coupon_id)) :
+                    $this->add_coupon_redeem_details($order_id, $cart_total);
+                endif;
 
                 //add order shipping
                 $this->add_order_shipping($order_id);
@@ -406,7 +424,7 @@ class Order_model extends CI_Model
             $cod_charges_shiprocket = $cod_charges_without_product_gst + (0.18 * $cod_charges_without_product_gst);
             $cod_inc_gst_in_invoice = $cod_charges_without_product_gst + (($shipping_cod_gst_rate / 100) * $cod_charges_without_product_gst);
 
-            
+
             $object->cod_charges_without_gst = $cod_charges_without_product_gst;
             if ($object->seller_gst_rate == 0) {
                 $object->cod_charge = $object->cod_charges_without_gst;
@@ -534,6 +552,19 @@ class Order_model extends CI_Model
         );
         $this->db->where('id', $order_id);
         $this->db->update('orders', $data);
+    }
+
+    //update coupon redemption
+    public function add_coupon_redeem_details($order_id, $cart_total)
+    {
+        $order_id = clean_number($order_id);
+        $data = array(
+            'order_id' => $order_id,
+            'offer_id' => $cart_total->applied_coupon_id,
+            'total_discount' => $cart_total->applied_coupon_discount
+
+        );
+        $this->db->insert('offer_redemptions', $data);
     }
 
     public function accept_reject_order($order_id, $action)
