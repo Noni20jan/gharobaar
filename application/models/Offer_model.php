@@ -109,6 +109,12 @@ class Offer_model extends CI_Model
         $query = $this->db->get('criteria');
         return $query->row();
     }
+    public function get_membership_type()
+    {
+        $this->db->where('lookup_type', "LOYALTY_PROGRAM");
+        $query = $this->db->get('lookup_values');
+        return $query->result();
+    }
     public function show_data()
     {
         $sql = "SELECT *
@@ -217,5 +223,32 @@ order by created_at desc";
         $this->session->unset_userdata('mds_shopping_cart_coupon');
 
         $this->cart_model->calculate_cart_total();
+    }
+
+    public function fetch_kpi_data($user_type)
+    {
+        $this->db->select('kpi.name,criteria.*');
+        $this->db->join('criteria', 'kpi.id = criteria.kpi_id');
+        $this->db->where('criteria.user_type', $user_type);
+        $query = $this->db->get('kpi');
+        return $query->result();
+    }
+
+    public function save_qualify_criteria($final)
+    {
+        // var_dump($final);
+        $data_insert = array();
+        foreach($final as $d){
+            $data = array(
+                "criteria_id"=>$d->criteria_id,
+                "criteria_value_type"=>$d->criteria_value_type,
+                "min_value"=>$d->min_value,
+                "max_value"=>$d->max_value
+            );
+            array_push($data_insert,$data);
+        }
+        
+        $query = $this->db->insert_batch('qualifying_criteria', $data_insert);
+        return $query;
     }
 }

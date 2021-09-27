@@ -835,7 +835,69 @@ class Order_controller extends Home_Core_Controller
         $from_date = $this->input->post('from_date', true);
         $to_date = $this->input->post('to_date', true);
 
-        $cod_seller_payable = $this->order_model->fetch_cod_seller_payable($from_date,$to_date);
+        $cod_seller_payable = $this->order_model->fetch_cod_seller_payable($from_date, $to_date);
         echo json_encode($cod_seller_payable);
+    }
+
+    public function qualify_criteria()
+    {
+        $user_type = $this->input->post('user_type', true);
+        $loyalty_type=$this->input->post('loyalty_type',true);
+        
+        $data = $this->offer_model->fetch_kpi_data($user_type);
+        $final = array(
+            "data"=>$data,
+            "loyalty_type"=>$loyalty_type
+        );
+
+        echo json_encode($final);
+    }
+
+
+
+    public function qualify_criteria_submit()
+    {
+        $form = $this->input->post();
+
+        $type = "";
+        $oldPointer = 0;
+        $final = array();
+        $obj = new stdClass();
+
+        foreach ($form as $keyName => $value) {
+
+            // $keyNode = explode("+",$keyName);
+            // array_push($final,$keyNode[0]);
+
+            if ($keyName == "criteria_value_type") :
+                $type = $value;
+            else :
+                $keyNode = explode("+", $keyName);
+                if (!empty($keyNode[1])) :
+                    $pointer = $keyNode[1];
+                    if ($oldPointer != $pointer) :
+                        $oldPointer = $pointer;
+                        if ($pointer > 1) :
+                            array_push($final, $obj);
+                        endif;
+                        $obj = new stdClass();
+                        $obj->criteria_value_type = $type;
+                        $obj->{$keyNode[0]} = $value;
+                    else :
+
+                        $obj->{$keyNode[0]} = $value;
+                    endif;
+                endif;
+
+            // $obj["dkhf3"]=>"ljqwdn";
+            endif;
+        }
+
+        $this->offer_model->save_qualify_criteria($final);
+        // var_dump($final);
+        // die();
+
+        // // $data = $this->offer_model->fetch_kpi_data($user_type);
+        // // echo json_encode($data);
     }
 }

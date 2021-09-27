@@ -381,6 +381,20 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/loyalty/loyalty_criteria', $data);
         $this->load->view('admin/includes/_footer');
     }
+
+
+    public function qualify_criteria()
+    {
+        $this->load->model("Offer_model");
+        $data['title'] = trans("qualifying_criteria");
+        $data['user_type'] = $this->Offer_model->get_user_type();
+        $data['membership_type'] = $this->Offer_model->get_membership_type();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/loyalty/qualify_criteria', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+
     public function loyalty_program_submit()
     {
         $this->load->model("Offer_model");
