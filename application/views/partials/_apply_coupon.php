@@ -80,6 +80,12 @@
     .hide-coupon-button {
         display: none;
     }
+
+    .coupon-div-applied-label {
+        font-size: 12px;
+        color: #007C05;
+        padding: 2px 10px
+    }
 </style>
 <div id="loading-coupon">
     <img id="loading-image" src="<?php echo base_url() . 'assets/gif/ajax-loader.gif'; ?>" alt="Loading..." />
@@ -93,7 +99,13 @@
                 <circle cx="5.35" cy="5.35" r="1.35" fill="#000" fill-rule="nonzero"></circle>
             </g>
         </svg>
-        <div class="coupons-div-label" id="coupons-div-label"><?php echo (!empty($this->session->userdata('mds_shopping_cart_coupon'))) ? "1 Coupon Applied" : "Apply Coupons"; ?></div>
+        <div class="coupons-div-label" id="coupons-div-label">
+            <?php if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) :
+                $coupon_applied = $this->session->userdata('mds_shopping_cart_coupon');
+                echo "1 Coupon Applied<div class='coupon-div-applied-label'>" . strtoupper($coupon_applied->offer_code) . "</div>";
+            else : echo "Apply Coupons";
+            endif; ?>
+        </div>
         <div>
             <button class="coupons-div-button <?php echo (!empty($this->session->userdata('mds_shopping_cart_coupon'))) ? "hide-coupon-button" : ""; ?>" id="coupons-div-button-apply">APPLY</button>
             <button class="coupons-div-button-remove <?php echo (!empty($this->session->userdata('mds_shopping_cart_coupon'))) ? "" : "hide-coupon-button"; ?>" id="coupons-div-button-remove">REMOVE</button>
@@ -133,7 +145,7 @@
     });
 
     $(document).on("click", "#coupons-div-button-remove", function() {
-        remove_coupon_ajax();
+        remove_coupon_ajax(true);
     });
 
 
@@ -159,10 +171,8 @@
                     $(".couponsForm-errorMessage").html("");
                     $("#coupons-div-button-apply").addClass("hide-coupon-button");
                     $("#coupons-div-button-remove").removeClass("hide-coupon-button");
-                    $("#coupons-div-label").html("1 Coupon Applied");
+                    $("#coupons-div-label").html("1 Coupon Applied<div class='coupon-div-applied-label'>" + res.coupon_data.offer_code.toUpperCase() + "</div>");
                     $('#couponModalCenter').modal('hide');
-
-
                 } else {
                     $(".couponsForm-textInputContainer").addClass("couponsForm-textInputError");
                     $(".couponsForm-errorMessage").html(res.msg);
