@@ -1382,6 +1382,12 @@ class Order_model extends CI_Model
                     //send email
                     if (get_product($order_product->product_id)->add_meet == "Made to stock") {
                         if ($this->general_settings->send_email_order_shipped == 1) {
+                            $this->db->where('id', $order_product->product_id);
+                            $product_category = $this->db->get('products')->row();
+                            $this->db->where('id', $product_category->category_id);
+                            $sub_category_id = $this->db->get('categories')->row();
+                            $this->db->where('id', $sub_category_id->parent_id);
+                            $categoty_id = $this->db->get('categories')->row();
                             $email_data = array(
                                 'email_type' => 'email_general',
                                 'to' => get_user($order_product->buyer_id)->email,
@@ -1395,8 +1401,9 @@ class Order_model extends CI_Model
                             <b> Product</b> : " . $order_product->product_title . "<br> 
        
                              <b>Quantity</b> :" . $order_product->product_quantity . "<br>
-                             <b>Product Unit Price</b> :" . price_formatted($order_product->product_unit_price, $order_product->product_currency) . "<br><br>Team Gharobaar"
-
+                             <b>Product Unit Price</b> :" . price_formatted($order_product->product_unit_price, $order_product->product_currency) . "<br>
+                             You can view similer product by clicking <a href='" . base_url() . $categoty_id->slug . "/" . $sub_category_id->slug . "'>here</a>
+                             <br>Team Gharobaar"
                             );
                             $this->session->set_userdata('mds_send_email_data', json_encode($email_data));
 
@@ -3731,6 +3738,13 @@ class Order_model extends CI_Model
     public function save_cod_seller_payable($data)
     {
         $this->db->insert('cod_seller_payable', $data);
+    }
+    public function get_product_slug_value($product_id)
+    {
+        $this->db->select('slug');
+        $this->db->where('id', $product_id);
+        $query = $this->db->get('products');
+        return $query->row();
     }
 
     // get cod charges by order id and seller id

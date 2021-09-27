@@ -42,7 +42,7 @@ class Order_admin_model extends CI_Model
                         $this->order_model->add_digital_sale($order_product->product_id, $order_id);
                         //add seller earnings
                         $this->earnings_model->add_seller_earnings($order_product);
-                    }else{
+                    } else {
                         $data['order_status'] = 'completed';
                         //add seller earnings
                         $this->earnings_model->add_seller_earnings($order_product);
@@ -479,14 +479,14 @@ class Order_admin_model extends CI_Model
                 $data = array(
                     'is_promoted' => 0
                 );
-            }else{
+            } else {
                 $data = array(
                     'is_promoted' => 1
                 );
             }
             $this->db->where('id', $user->id);
             $result = $this->db->update('users', $data);
-            
+
             return $result;
         }
         return false;
