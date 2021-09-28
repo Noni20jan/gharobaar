@@ -53,10 +53,12 @@
                     <?php if (!empty($user->gst_number)) : ?>
                         <div class="col-xs-12 col-sm-3 m-b-sm-15">
                             <label class="font-600">HSN Code<span class="Validation_error"> *</span></label>
-                            <input type="text" name="hsn_code" class="form-control auth-form-input" placeholder="Product HSN Code" value="<?php echo $product->hsn_code; ?>" required>
+                            <input type="text" name="hsn_code" id="hsn_code" class="form-control auth-form-input" placeholder="Product HSN Code" value="<?php echo $product->hsn_code; ?>" onkeyup="hsn_valid();">
+                            <p id="demo"></p>
 
                         </div>
                     <?php endif; ?>
+
                     <?php if ($this->general_settings->gst_status == 1) : ?>
                         <div class="col-xs-12 col-sm-3">
                             <div class="row align-items-center">
@@ -402,4 +404,66 @@
             console.log(input.value);
         }
     }
+</script>
+<script>
+    function hsn_valid() {
+        var hsn_code = ($('#hsn_code').val());
+        var hsn_len = hsn_code.length;
+        var data = {
+            'hsn_code': hsn_code,
+            'hsn_len': hsn_len,
+        }
+        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+
+        if (hsn_len >= 4) {
+            $.ajax({
+                type: "POST",
+                url: base_url + "check-hsn-validity",
+                data: data,
+                success: function(data) {
+                    console.log(data);
+                    var res = JSON.parse(data);
+                    var z = res["rse"][0]["count"];
+                    var hsn_length = ($('#hsn_code').val()).length;
+                    console.log(hsn_length);
+                    console.log(z);
+                    if (hsn_length >= 4 && z > 0) {
+                        document.getElementById("demo").style.display = "none";
+                        document.getElementById("button_to_submit").disabled = false;
+                        document.getElementById("button_with_submit").disabled = false;
+
+                    }
+                    // } else if (hsn_len < 4) {
+                    //     console.log(hsn_len);
+                    //     document.getElementById("demo").style.color = "red";
+                    //     document.getElementById("demo").innerHTML = "Please enter atleast 4 characters";
+                    //     document.getElementById("demo").fontSize = "12px";
+                    //     document.getElementById("button_to_submit").disabled = "true";
+                    // } 
+                    else {
+                        document.getElementById("demo").style.color = "red";
+                        document.getElementById("demo").innerHTML = "Please enter valid hsn code";
+                        document.getElementById("button_to_submit").disabled = "true";
+                        document.getElementById("button_with_submit").disabled = "true";
+
+                    }
+                },
+                error: function() {
+                    document.getElementById("demo").style.color = "red";
+                    document.getElementById("demo").innerHTML = "Please enter valid hsn code";
+                    document.getElementById("button_to_submit").disabled = "true";
+                    document.getElementById("button_with_submit").disabled = "true";
+
+                }
+            });
+        } else if (hsn_len < 4) {
+            document.getElementById("demo").style.color = "red";
+
+            document.getElementById("demo").innerHTML = "Please enter atleast 4 characters";
+            document.getElementById("demo").style.fontSize = "12px";
+            document.getElementById("button_to_submit").disabled = "true";
+            document.getElementById("button_with_submit").disabled = "true";
+
+        }
+    };
 </script>

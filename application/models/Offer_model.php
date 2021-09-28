@@ -136,7 +136,7 @@ class Offer_model extends CI_Model
     {
         $sql = "SELECT *
         FROM cms_offers INNER JOIN offer_selection_details
-        WHERE offer_selection_details.offer_id = cms_offers.id && offer_selection_details.source_id!='NULL' and cms_offers.method='coupons'";
+        WHERE offer_selection_details.offer_id = cms_offers.id &&  cms_offers.method='coupons'";
         $query = $this->db->query($sql);
         return $query->result();
     }

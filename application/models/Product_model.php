@@ -2725,4 +2725,11 @@ class Product_model extends Core_Model
         }
         return $parent_cat_array;
     }
+
+    public function hsn_validity($hsn_code, $hsn_code_len)
+    {
+        $sql = "SELECT COUNT(*) as count from hsn_with_gst_rate where SUBSTRING(`hsn_code`,1,$hsn_code_len)=$hsn_code";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
 }
