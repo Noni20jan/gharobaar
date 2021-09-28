@@ -2215,7 +2215,36 @@ class Product_model extends Core_Model
         $this->db->group_by('products.user_id');
         return $this->db->get('products')->result();
     }
+    public function get_order_id($user_id)
+    {
 
+        $this->db->where('buyer_id', $user_id);
+        $this->db->where('order_status', 'completed');
+        $this->db->order_by('id DESC');
+        $this->db->limit(1);
+        return $this->db->get('order_products')->row();
+    }
+    public function get_order_product_id($order_id, $user_id)
+    {
+
+        $this->db->where('buyer_id', $user_id);
+        $this->db->where('order_id', $order_id);
+        $this->db->where('order_status', 'completed');
+        return $this->db->get('order_products')->result();
+    }
+    public function get_rating($product_id, $user_id)
+    {
+        $this->db->where('product_id', $product_id);
+        $this->db->where('user_id', $user_id);
+        return $this->db->get('reviews')->row();
+    }
+    public function get_not_rating_product($product_id, $user_id)
+    {
+        $sql = "SELECT order_products.id,order_products.product_id,buyer_id from order_products join reviews on order_products.product_id=reviews.product_id and order_products.buyer_id=reviews.user_id where order_products.product_id=$product_id and order_products.buyer_id=$user_id
+order by id desc LIMIT 1";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     //get related products by category for top discounts section
     public function get_products_by_discount_order()
     {

@@ -66,7 +66,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-sm-6">
-                            <label>NAME:</label>
+                            <label>Name:</label>
                         </div>
                         <div class="col-sm-6">
                             <input type='text' name="name" class="form-control auth-form-input" value="" required>

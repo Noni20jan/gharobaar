@@ -408,7 +408,7 @@ class Admin_controller extends Admin_Core_Controller
         $weightage1 = $this->input->post('weightage1', true);
         $j = 0;
         for ($i = 0; $i <= $sl; $i++) {
-            if ($kpi_rel_type1[$i] == "Parent" || $kpi_rel_type1 == "Indvidual") {
+            if ($kpi_rel_type1[$i] == "Parent" || $kpi_rel_type1[$i] == "Indvidual") {
                 $parent_id2[$i] = "";
             } else {
                 $parent_id2[$i] = $parent_id1[$j];
