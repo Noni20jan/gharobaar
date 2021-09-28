@@ -188,27 +188,42 @@
             <p style="color:#007C05;">
                 <strong><?php echo "Coupon Discount"; ?><span class="float-right"><?php echo "- " . price_formatted_without_round($cart_total->applied_coupon_discount, $this->payment_settings->default_currency); ?>/-</span></strong>
             </p>
-        <?php endif; ?>
+        <?php elseif (!empty($cart_total->applied_coupon_source_type)) : ?>
+            <p style="color:#007C05;">
+                <strong><?php echo "Coupon Discount"; ?>
+                    <span class="float-right">
+                        <?php switch ($cart_total->applied_coupon_source_type):
+                            case "FREESHIP":
+                                echo "Less Shipping";
+                                break;
+                            case "EXHIBITION":
+                                echo "Less Shipping and COD";
+                                break;
+                        endswitch;
+                        ?>
+                    </span>
+                </strong>
+            <?php endif; ?>
 
 
-        <p class="line-seperator"></p>
-        <?php if (!is_null($address) && !is_int(($cart_total->shipping_cost + $cart_total->total_tax_charges) / 100) && false) : ?>
-            <p>
-                <?php echo trans("total"); ?><span class="float-right"><?php echo price_formatted_without_round($cart_total->order_total, $cart_total->currency); ?>/-</span>
-            </p>
-            <p>
-                <?php echo ("Round off amount"); ?><span class="float-right">
-                    <?php echo price_formatted_without_round((round($cart_total->order_total / 100) - ($cart_total->order_total / 100)) * 100, $cart_total->currency); ?>/-
-                </span>
-            </p>
-            <p>
-                <strong><?php echo trans("total") . "<small><b>(after Round off)</b></small>"; ?><span class="float-right"><?php echo price_formatted($cart_total->total_price, $this->payment_settings->default_currency); ?>/-</span></strong>
-            </p>
-        <?php else : ?>
-            <p>
-                <strong><?php echo trans("total"); ?><span id="order_total" class="float-right"><?php echo price_formatted_without_round($cart_total->total_price, $this->payment_settings->default_currency); ?>/-</span></strong>
-            </p>
-        <?php endif; ?>
+            <p class="line-seperator"></p>
+            <?php if (!is_null($address) && !is_int(($cart_total->shipping_cost + $cart_total->total_tax_charges) / 100) && false) : ?>
+                <p>
+                    <?php echo trans("total"); ?><span class="float-right"><?php echo price_formatted_without_round($cart_total->order_total, $cart_total->currency); ?>/-</span>
+                </p>
+                <p>
+                    <?php echo ("Round off amount"); ?><span class="float-right">
+                        <?php echo price_formatted_without_round((round($cart_total->order_total / 100) - ($cart_total->order_total / 100)) * 100, $cart_total->currency); ?>/-
+                    </span>
+                </p>
+                <p>
+                    <strong><?php echo trans("total") . "<small><b>(after Round off)</b></small>"; ?><span class="float-right"><?php echo price_formatted($cart_total->total_price, $this->payment_settings->default_currency); ?>/-</span></strong>
+                </p>
+            <?php else : ?>
+                <p>
+                    <strong><?php echo trans("total"); ?><span id="order_total" class="float-right"><?php echo price_formatted_without_round($cart_total->total_price, $this->payment_settings->default_currency); ?>/-</span></strong>
+                </p>
+            <?php endif; ?>
 
 
     </div>

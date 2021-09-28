@@ -489,10 +489,34 @@
                                             <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span>
                                         </p>
                                     <?php endif; ?>
+                                    <p style="color:#007C05;" id="coupon-discount-tag" class="<?php echo ((!empty($this->session->userdata('mds_shopping_cart_coupon')))) ? '' : 'hide-coupon-discount' ?>">
+                                        <strong>
+                                            <?php echo "Coupon Discount"; ?>
+                                            <span class="float-right" id="coupon-discount-text">
+                                                <?php if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) :
+                                                    $coupon_applied = $this->session->userdata('mds_shopping_cart_coupon'); ?>
+                                                    <?php if ($cart_total->applied_coupon_discount > 0) : ?>
+                                                        <?php echo "- " . price_formatted_without_round($cart_total->applied_coupon_discount, $this->payment_settings->default_currency) . "/-"; ?>
+                                                    <?php elseif (!empty($cart_total->applied_coupon_source_type)) :
+                                                        switch ($cart_total->applied_coupon_source_type):
+                                                            case "FREESHIP":
+                                                                echo "Less Shipping";
+                                                                break;
+                                                            case "EXHIBITION":
+                                                                echo "Less Shipping and COD";
+                                                                break;
+                                                        endswitch;
+                                                    ?>
+
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            </span>
+                                        </strong>
+                                    </p>
                                     <p class="line-seperator"></p>
                                     <p>
                                         <!-- <?php var_dump($_SESSION["mds_shopping_cart_total"]->subtotal);  ?> -->
-                                        <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total, $cart_total->currency); ?>/-</span></strong>
+                                        <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong>
                                     </p>
                                     <p class="line-seperator"></p>
                                     <?php if (intval(secondsToTime($cart_total->min_dispatch_time)) > 1 || intval(secondsToTime($cart_total->max_dispatch_time)) > 1) :

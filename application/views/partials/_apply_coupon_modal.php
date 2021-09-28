@@ -73,6 +73,8 @@
         padding-left: 15px;
         padding-right: 15px;
         font-weight: 500;
+        max-height: 40vh;
+        overflow-y: scroll;
     }
 
     .next_coupon {

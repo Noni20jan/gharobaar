@@ -349,6 +349,13 @@ foreach ($languages as $language) {
 
 
         $route[$key . getr('dashboard', $rts) . '/' . getr('last_product', $rts)]['GET'] = 'dashboard_controller/last_product';
+
+
+
+
+        $route[$key . 'calculate-loyality-values']['GET'] = 'coupon_controller/calculate_loyality_values';
+
+
         /*any*/
         if ($general_settings->site_lang != $language->id) {
             $route[$key . '(:any)/(:any)']['GET'] = 'home_controller/subcategory/$1/$2';
@@ -400,7 +407,7 @@ $route[getr('admin', $rts) . '/digital-sales'] = 'order_admin_controller/digital
 $route[getr('admin', $rts) . '/products'] = 'product_controller/products';
 $route[getr('admin', $rts) . '/products_offers'] = 'coupon_controller/coupons_products';
 $route[getr('admin', $rts) . '/products_coupons'] = 'coupon_controller/get_coupon_data';
- $route[getr('admin', $rts) . '/user_vouchers'] = 'coupon_controller/get_voucher_data';
+$route[getr('admin', $rts) . '/user_vouchers'] = 'coupon_controller/get_voucher_data';
 $route[getr('admin', $rts) . '/services'] = 'product_controller/services';
 
 $route[getr('admin', $rts) . '/pending-products'] = 'product_controller/pending_products';
