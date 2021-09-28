@@ -398,8 +398,12 @@
                                                                         </a>
                                                                     <?php else : ?>
                                                                         <a href="<?php echo generate_product_url_by_slug($item->product_slug); ?>">
-                                                                            <img src="<?php echo get_variation_main_option_image_url($variation_option, null); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
-                                                                            <!-- <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_variation_main_option_image_url($variation_option, null); ?>" alt="<?php echo html_escape($item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>'"> -->
+                                                                            <?php if (!empty(get_variation_main_option_image_url($variation_option, null))) : ?>
+                                                                                <img src="<?php echo get_variation_main_option_image_url($variation_option, null); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
+                                                                                <!-- <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_variation_main_option_image_url($variation_option, null); ?>" alt="<?php echo html_escape($item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>'"> -->
+                                                                            <?php else : ?>
+                                                                                <img src="<?php echo get_product_image($item->product_id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
+                                                                            <?php endif; ?>
                                                                         </a>
                                                                     <?php endif;
                                                                 else : ?>
