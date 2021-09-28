@@ -1615,4 +1615,20 @@ class Cart_model extends CI_Model
         $query = $this->db->get('payment_method_options');
         return $query->result();
     }
+
+  //get last ordered products by the buyer
+  public function get_last_ordered_products($order_id)
+  {
+      $order_id = clean_number($order_id);
+      $this->db->where('order_id', $order_id);
+      $this->db->where('order_status', 'completed');
+      $this->db->order_by("updated_at", "desc"); 
+      $query = $this->db->get('order_products');
+      return $query->result();
+  }
+
+
+
+
+
 }

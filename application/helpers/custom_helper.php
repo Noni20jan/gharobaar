@@ -3043,4 +3043,16 @@ if (!function_exists('breadcrumbs')) {
         // return implode($separator, $breadcrumbs);
         return $breadcrumbs;
     }
+
+
+    if (!function_exists('get_last_ordered_products')) {
+    function get_last_ordered_products($order_id)
+    {
+        $ci = &get_instance();
+        $rate_last_order = $ci->cart_model->get_last_ordered_products($order_id);
+        return $rate_last_order;
+    }
+
+    }
+
 }
