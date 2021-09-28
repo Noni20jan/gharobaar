@@ -1320,6 +1320,7 @@ class Home_controller extends Home_Core_Controller
         }
 
         if ($search_type == 'product') {
+            $this->product_model->save_search_keyword($search);
             redirect(generate_url("products") . '?search=' . $search);
         } else {
             redirect(generate_url("member_products") . '?search=' . $search);

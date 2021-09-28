@@ -1137,6 +1137,36 @@ class Product_model extends Core_Model
     }
 
 
+
+
+    public function save_search_keyword($search)
+    {
+
+        if (!empty($search)) {
+            $array = explode(' ', $search);
+            $user_id = $this->auth_user->id;
+            if (!empty($user_id)) {
+
+                // $sql = "SELECT count(search_text) FROM search_keyword where search_text like   '$search%'   and user_id=$user_id;";
+                $sql = "SELECT COUNT(*) as count FROM search_keyword where search_text='$search';";
+                $query = $this->db->query($sql);
+                $count = $query->row();
+                // var_dump($count->count);die();
+                if ($count->count == 0) {
+                    $data = array(
+                        'user_id' => $user_id,
+                        'search_text' => $search,
+                        'created_at' => date('Y-m-d H:i:s')
+                    );
+
+                    $this->db->insert('search_keyword', $data);
+                }
+            }
+        }
+    }
+
+
+
     //search pincode (AJAX search)
     public function search_pincode($search)
     {

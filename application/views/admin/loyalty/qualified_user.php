@@ -4,53 +4,69 @@
     thead input {
         width: 100%;
     }
+
+    .p-b-15 {
+        padding-bottom: 15px !important;
+    }
+
+    .p-t-24 {
+        padding-top: 24px !important;
+    }
+
+    .cross-color {
+        color: red;
+    }
+
+    .color-check {
+        color: green;
+    }
 </style>
 
 <table id="offer_dashboard" class="display" style="width:100%">
+
+    <div class="row p-b-15">
+        <h4 class="text-center p-b-15">Select Period</h4>
+        <div class="col-sm-5">
+            <label for="meeting-time">From:</label>
+            <input type="datetime-local" class="form-control" id="meeting-time" name="start_date" value="2000-01-12T19:30" required>
+        </div>
+        <div class="col-sm-5">
+            <label for="meeting-time">To:</label>
+            <input type="datetime-local" id="meeting-time" class="form-control" name="end_date" value="2000-06-12T19:30" required>
+        </div>
+        <div class="col-sm-2 p-t-24">
+            <button class="btn bg-purple">Search <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
     <thead>
         <tr>
-            <th>Sr. No.</th>
-            <th>Email</th>
-            <th>Offer Name</th>
-            <th>Offer Type</th>
-            <th>Code</th>
-            <th>Timestamp</th>
-            <th>Total Discount</th>
+            <th>User</th>
+            <th>Bronze</th>
+            <th>Sliver</th>
+            <th>Gold</th>
+            <th>Platinum</th>
+            <th>View</th>
+            <!-- <th>%</th>
+            <th>Action</th> -->
         </tr>
     </thead>
     <tbody>
-        <?php $count = count($consumptions); ?>
-        <?php foreach ($consumptions as $consumption) : ?>
-            <tr>
-                <td>
-                    <?php for ($i = 1; $i <= $count; $i++) {
-                        echo $i;
-                    } ?>
-                </td>
-                <td><?php echo $consumption->email; ?></td>
-                <td><?php echo $consumption->name; ?></td>
-                <td><?php echo $consumption->method; ?></td>
-                <td><?php echo $consumption->offer_code; ?></td>
-                <td><?php echo $consumption->creation_date; ?></td>
-                <td><?php echo price_formatted_without_round($consumption->total_discount, "INR"); ?></td>
-            </tr>
-        <?php endforeach; ?>
-    </tbody>
-    <tfoot>
-        <tr>
-            <th>Sr. No.</th>
-            <th>Email</th>
-            <th>Offer Name</th>
-            <th>Offer Type</th>
-            <th>Code</th>
-            <th>Timestamp</th>
-            <th>Total Discount</th>
+        <? //php foreach ($offers as $offer) : 
+        ?>
+        <tr class="text-center">
+            <td>Himanshu</td>
+            <td><i class="fa fa-times cross-color" aria-hidden="true"></i></td>
+            <td><i class="fa fa-times cross-color" aria-hidden="true"></i></td>
+            <td><i class="fa fa-times cross-color" aria-hidden="true"></i></td>
+            <td><i class="fa fa-check color-check" aria-hidden="true"></i></td>
+            <td>Details</td>
         </tr>
-    </tfoot>
+        <? //php endforeach;
+        ?>
+    </tbody>
 </table>
-
-
-
 <script>
     $(document).ready(function() {
         // Setup - add a text input to each footer cell

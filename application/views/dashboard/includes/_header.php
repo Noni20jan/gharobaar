@@ -355,7 +355,7 @@ $user = get_user($this->auth_user->id);
 
                     <?php if ($this->is_sale_active) : ?>
                         <li class="header_color header"><?php echo trans("sales"); ?></li>
-                        <li class="treeview<?php is_admin_nav_active(['sales', 'completed-sales', 'sale']); ?>">
+                        <li class="treeview<?php is_admin_nav_active(['sales', 'completed-sales', 'sale', 'pending_order', 'accepted_sales', 'awaiting_pickup', 'shipped', 'rejected_sales', 'cancelled_by_user', 'cancelled_by_seller']); ?>">
                             <a href="#">
                                 <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/cart-icon.png" alt="" style="width: 20px; height: 20px;" />
                                 <span><?php echo trans("orders"); ?></span>

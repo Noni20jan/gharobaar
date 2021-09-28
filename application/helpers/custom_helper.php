@@ -1443,6 +1443,8 @@ if (!function_exists('get_variation_main_option_image_url')) {
                 if (!empty($option_image)) {
                     $image_name = $option_image->image_small;
                     $storage = $option_image->storage;
+                } else {
+                    return "";
                 }
             }
         }

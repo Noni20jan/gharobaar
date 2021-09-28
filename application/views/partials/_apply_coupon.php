@@ -41,6 +41,22 @@
         font-size: 12px;
     }
 
+    .coupons-div-button-remove {
+        float: right;
+        padding: 4px 16px;
+        position: absolute;
+        color: #f15e4f;
+        border: 1px solid #f15e4f;
+        border-radius: 3px;
+        text-transform: none;
+        cursor: pointer;
+        font-weight: 600;
+        top: 0;
+        right: 0;
+        background: #fff;
+        font-size: 12px;
+    }
+
     #loading-coupon {
         position: fixed;
         display: none;
@@ -60,6 +76,16 @@
         left: 50%;
         z-index: 10000;
     }
+
+    .hide-coupon-button {
+        display: none;
+    }
+
+    .coupon-div-applied-label {
+        font-size: 12px;
+        color: #007C05;
+        padding: 2px 10px
+    }
 </style>
 <div id="loading-coupon">
     <img id="loading-image" src="<?php echo base_url() . 'assets/gif/ajax-loader.gif'; ?>" alt="Loading..." />
@@ -73,8 +99,17 @@
                 <circle cx="5.35" cy="5.35" r="1.35" fill="#000" fill-rule="nonzero"></circle>
             </g>
         </svg>
-        <div class="coupons-div-label">Apply Coupons</div>
-        <div><button class="coupons-div-button" id="coupons-div-button">APPLY</button></div>
+        <div class="coupons-div-label" id="coupons-div-label">
+            <?php if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) :
+                $coupon_applied = $this->session->userdata('mds_shopping_cart_coupon');
+                echo "1 Coupon Applied<div class='coupon-div-applied-label'>" . strtoupper($coupon_applied->offer_code) . "</div>";
+            else : echo "Apply Coupons";
+            endif; ?>
+        </div>
+        <div>
+            <button class="coupons-div-button <?php echo (!empty($this->session->userdata('mds_shopping_cart_coupon'))) ? "hide-coupon-button" : ""; ?>" id="coupons-div-button-apply">APPLY</button>
+            <button class="coupons-div-button-remove <?php echo (!empty($this->session->userdata('mds_shopping_cart_coupon'))) ? "" : "hide-coupon-button"; ?>" id="coupons-div-button-remove">REMOVE</button>
+        </div>
         <div id="coupon-popup-div"></div>
     </div>
 </div>
@@ -87,7 +122,7 @@
         }
     });
 
-    $(document).on("click", "#coupons-div-button", function() {
+    $(document).on("click", "#coupons-div-button-apply", function() {
         var data = {
             "sys_lang_id": sys_lang_id,
         };
@@ -109,6 +144,11 @@
         });
     });
 
+    $(document).on("click", "#coupons-div-button-remove", function() {
+        remove_coupon_ajax(true);
+    });
+
+
     $(document).on("click", ".couponsForm-enabled", function() {
         var coupon_code = $("#coupon-input-field").val();
         var data = {
@@ -129,6 +169,10 @@
                 if (res.status) {
                     $(".couponsForm-textInputContainer").removeClass("couponsForm-textInputError");
                     $(".couponsForm-errorMessage").html("");
+                    $("#coupons-div-button-apply").addClass("hide-coupon-button");
+                    $("#coupons-div-button-remove").removeClass("hide-coupon-button");
+                    $("#coupons-div-label").html("1 Coupon Applied<div class='coupon-div-applied-label'>" + res.coupon_data.offer_code.toUpperCase() + "</div>");
+                    $('#couponModalCenter').modal('hide');
                 } else {
                     $(".couponsForm-textInputContainer").addClass("couponsForm-textInputError");
                     $(".couponsForm-errorMessage").html(res.msg);

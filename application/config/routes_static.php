@@ -187,3 +187,5 @@ $route['delete-coupon-post']['POST'] = 'coupon_controller/delete_coupon';
 // Coupon Management
 $route['load-popup-coupon']['POST'] = 'coupon_controller/load_coupon_popup';
 $route['checked-availability-coupon']['POST'] = 'coupon_controller/checked_availability_coupon';
+$route['get-user-coupon']['POST'] = 'coupon_controller/vouchers_users2';
+$route['remove-coupon']['POST'] = 'coupon_controller/remove_coupon';

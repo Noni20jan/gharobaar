@@ -184,6 +184,12 @@
             </p>
         <?php endif; ?>
 
+        <?php if ($cart_total->applied_coupon_discount > 0) : ?>
+            <p style="color:#007C05;">
+                <strong><?php echo "Coupon Discount"; ?><span class="float-right"><?php echo "- " . price_formatted_without_round($cart_total->applied_coupon_discount, $this->payment_settings->default_currency); ?>/-</span></strong>
+            </p>
+        <?php endif; ?>
+
 
         <p class="line-seperator"></p>
         <?php if (!is_null($address) && !is_int(($cart_total->shipping_cost + $cart_total->total_tax_charges) / 100) && false) : ?>

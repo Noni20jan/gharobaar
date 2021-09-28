@@ -48,7 +48,7 @@
             <div class="col-sm-6"><label for="cars">Method:</label></div>
             <div class="col-sm-6">
                 <!-- <select class="form-control auth-form-input" name="coup_vou" id="method" onchange="couponvoucher()" required> -->
-                <input class="form-control auth-form-input" type="text" disabled value="vouchers">
+                <input class="form-control auth-form-input" name="coup_vou" type="text" value="vouchers" readonly>
                 </select>
             </div>
         </div>

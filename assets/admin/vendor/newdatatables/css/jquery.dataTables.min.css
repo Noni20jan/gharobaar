@@ -299,22 +299,22 @@ table.dataTable td {
 }
 .dataTables_wrapper .dataTables_length select {
   border: 1px solid #aaa;
-  border-radius: 3px;
+  border-radius: 20px;
   padding: 5px;
-  background-color: transparent;
+  background-color: #fff;
   padding: 4px;
 }
 .dataTables_wrapper .dataTables_filter {
   float: right;
   text-align: right;
 }
-.dataTables_wrapper .dataTables_filter input {
+/* .dataTables_wrapper .dataTables_filter input {
   border: 1px solid #aaa;
   border-radius: 3px;
   padding: 5px;
   background-color: transparent;
   margin-left: 3px;
-}
+} */
 .dataTables_wrapper .dataTables_info {
   clear: both;
   float: left;
@@ -329,7 +329,7 @@ table.dataTable td {
   box-sizing: border-box;
   display: inline-block;
   min-width: 1.5em;
-  padding: 0.5em 1em;
+  padding: 0px;
   margin-left: 2px;
   text-align: center;
   text-decoration: none !important;

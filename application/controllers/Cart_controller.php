@@ -36,6 +36,7 @@ class Cart_controller extends Home_Core_Controller
         $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
         $data['main_settings'] = get_main_settings();
         $this->cart_model->unset_sess_cart_shipping_address();
+        $this->cart_model->unset_sess_cart_payment_method();
         $this->load->view('partials/_header', $data);
         $this->load->view('cart/cart', $data);
         $this->load->view('partials/_footer');
