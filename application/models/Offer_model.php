@@ -75,8 +75,21 @@ class Offer_model extends CI_Model
     }
     public function update_loyalty_criteria($data)
     {
-        $this->db->where('kpi_id', $data['kpi_id']);
+        $this->db->where('id', $data['id']);
+        $this->db->where('user_type', $data['user_type']);
         $this->db->update('criteria', $data);
+    }
+    public function kpi_update_details($data)
+    {
+        $this->db->where('id', $data['id']);
+        $this->db->update('kpi', $data);
+    }
+    public function get_kpi_id($data)
+    {
+        $this->db->select('id');
+        $this->db->where('name', $data['name']);
+        $query = $this->db->get('kpi');
+        return $query->row();
     }
     public function get_parent_detail($data)
     {
@@ -105,7 +118,11 @@ class Offer_model extends CI_Model
     }
     public function check_kpi_id($data)
     {
+        // var_dump($data['user_type']);
+        // die();
+        $this->db->select('id');
         $this->db->where('kpi_id', $data['kpi_id']);
+        $this->db->where('user_type', $data['user_type']);
         $query = $this->db->get('criteria');
         return $query->row();
     }

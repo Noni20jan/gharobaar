@@ -1,5 +1,4 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-
 <style>
     /* label {
         display: block;
@@ -30,16 +29,6 @@
         color: white;
     }
 </style>
-<?php
-function fill_unit_select_box($kpi1)
-{
-
-    foreach ($kpi1 as $kpi2) {
-        $output = '<option value="' . $kpi2->id . '">' . $kpi2->name . '</option>';
-    }
-    return $output;
-}
-?>
 <!-- form start -->
 <div class="row">
     <div class="col-xs-12">
@@ -56,11 +45,12 @@ function fill_unit_select_box($kpi1)
                 <div class="col-12 coupons-from-holder">
                     <div class="form-group">
                         <div class="row">
+                            <input type="hidden" value="0" name="sl">
                             <div class="col-sm-6"><label>User Type:</label></div>
                             <div class="col-sm-6">
-                                <select name="user_type" class="form-control auth-form-input" id="offer-type">
+                                <select name="user_type" class="form-control auth-form-input" id="offer-type" required>
                                     <?php foreach ($user_type as $user_type) { ?>
-                                        <option value="<?php echo $user_type->id; ?>"><?php echo $user_type->lookup_code; ?></option>
+                                        <option value="<?php echo $user_type->lookup_code; ?>"><?php echo $user_type->meaning; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -78,27 +68,33 @@ function fill_unit_select_box($kpi1)
                     <div class="row form-group">
                         <div class="col-sm-3">
                             <label>NAME:</label>
-                            <select name="kpi_name" required id="kpi_name" class="form-control auth-form-input">
-                                <?php foreach ($kpi as $kpi3) { ?>
-                                    <option value="<?php echo $kpi3->id; ?>"><?php echo $kpi3->name; ?></option>
+                            <select name="kpi_name1[]" required id="kpi_name" class="form-control auth-form-input">
+                                <?php foreach ($kpi as $kpi1) { ?>
+                                    <option value="<?php echo $kpi1->id; ?>"><?php echo $kpi1->name; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                         <div class="col-sm-3">
                             <label>KPI Type:</label>
-                            <select class="form-control auth-form-input" name="kpi_type" id="kpi_type" onchange="child_parent_name();">
-                                <option value="parent">Parent</option>
-                                <option value="child">Child</option>
-                                <option value="individual">Individual</option>
+                            <select class="form-control auth-form-input" required name="kpi_type1[]" id="kpi_type" onchange="child_parent_name();">
+                                <option value="Parent">Parent</option>
+                                <option value="Child">Child</option>
+                                <option value="Individual">Individual</option>
                             </select>
                         </div>
                         <div class="col-sm-3">
-                            <label>Parent KPI</label>
-                            <input type='text' name="parent_name" id="parent_name" placeholder="Parent KPI" class="form-control auth-form-input" value="">
+                            <label>Relationship</label>
+                            <!-- <input type='text' name="parent_name" id="parent_name" placeholder="Parent KPI" class="form-control auth-form-input" value=""> -->
+                            <select name="parent_name1[]" id="parent_name" class="form-control auth-form-input" required>
+                                <option value="" selected disabled>Parent kpi</option>
+                                <?php foreach ($parent_name as $parent_name1) { ?>
+                                    <option value="<?php echo $parent_name1->id; ?>"><?php echo $parent_name1->name; ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                         <div class="col-sm-2">
                             <label>Weightage</label>
-                            <input type="number" maxlength="3" name="weightage" placeholder="Weightage" class="form-control auth-form-input" value="" required>
+                            <input type="number" maxlength="3" step=any name="weightage1[]" placeholder="Weightage" class="form-control auth-form-input" value="" required>
                         </div>
                         <!-- <div class="col-sm-4"><label>Formula/SQL</label>
 
@@ -119,22 +115,29 @@ function fill_unit_select_box($kpi1)
 <script>
     $(document).ready(function() {
         $('#parent_name').prop('disabled', true);
+        // if ($('#parent_name').prop('disabled', true)) {
+        //     $('#parent_hidden').val = "";
+        // }
         var max_fields_limit = 10;
         // set limit  for maximum input fields
         var x = 1; //initialize counter for text box
         $('.add_more_button').click(function(e) { //click event on add more fields button having class add_more_button
             e.preventDefault();
             if (x < max_fields_limit) { //check conditions
-                x++; //counter increment
-                $('.input_fields_container1').append('<div id="row' + x + '"><div class="row form-group">' +
-                    '<div class="col-sm-3"><select name="kpi_name" required id="kpi_name1[]" class="form-control auth-form-input"><?php echo fill_unit_select_box($kpi); ?></select> </div> <div class = "col-sm-3"><select class = "form-control auth-form-input" name = "kpi_type1[]" id = "kpi_type' + x + '"onchange = "child_parent_name1(' + x + ');"><option value = "parent"> Parent </option><option value="child">Child</option><option value = "individual"> Individual</option></select></div>' +
-                    ' <div class="col-sm-3"> <input type="text" id="parent_name' + x + '" disabled placeholder="Parent KPI" name="parent_name1[]" class="form-control auth-form-input" value=""> </div>' +
-                    ' <div class="col-sm-2"> <input type="number" maxlength="3" name="weightage1[]"placeholder="Weihtage" class="form-control auth-form-input" value="" required> </div>' +
+
+                $('.input_fields_container1').append('<input type="hidden" value="' + x + '" name="sl"><div id="row' + x + '"><div class="row form-group">' +
+                    '<div class="col-sm-3">' +
+                    '<select name="kpi_name1[]" required id="kpi_name" class="form-control auth-form-input"><?php foreach ($kpi as $kpi2) { ?><option value = "<?php echo $kpi2->id; ?>"> <?php echo $kpi2->name; ?></option><?php } ?></select> </div> <div class = "col-sm-3"><select required class = "form-control auth-form-input" name = "kpi_type1[]" id = "kpi_type' + x + '"onchange = "child_parent_name1(' + x + ');"><option value = "Parent"> Parent </option><option value="Child">Child</option><option value = "Individual"> Individual</option></select></div>' +
+                    ' <div class="col-sm-3"><select  required name="parent_name1[]" id="parent_name' + x + '" class="form-control auth-form-input" required><option value=" " selected disabled>Parent kpi</option><option value="" selected disabled>Parent kpi</option><?php foreach ($parent_name as $parent_name2) { ?><option value="<?php echo $parent_name2->id; ?>"><?php echo $parent_name2->name; ?></option><?php } ?> <select ></div > ' +
+                    ' <div class="col-sm-2"> <input type="number" maxlength="3" step=any name="weightage1[]"placeholder="Weihtage" class="form-control auth-form-input" value="" required> </div>' +
                     '<button type="button" name="remove"" id="' + x + '" class="btn btn-danger remove_field"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d = "M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />' +
                     '<path fill - rule = "evenodd" d = "M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" / ></svg><i class="bi bi-trash"></i > </button></div></div></div > ');
                 // add input field
-
+                //<input type="text" id="parent_name' + x + '" disabled placeholder="Parent KPI" name="parent_name1[]" class="form-control auth-form-input" value="">
                 //<div class="col-sm-4"><input type="text" name="formula"placeholder="Formula" class="form-control auth-form-input" value="" required> 
+                $('#parent_name' + x).prop('disabled', true);
+                //counter increment
+                x++;
             }
         });
         $('.input_fields_container1').on("click", ".remove_field", function(e) {
@@ -151,7 +154,7 @@ function fill_unit_select_box($kpi1)
     function child_parent_name() {
         var kpi_type = document.getElementById('kpi_type').value;
         console.log(kpi_type);
-        if (kpi_type == "child") {
+        if (kpi_type == "Child") {
             $('#parent_name').prop('disabled', false);
         } else {
             $('#parent_name').prop('disabled', true);
@@ -162,7 +165,7 @@ function fill_unit_select_box($kpi1)
     function child_parent_name1(x) {
         var kpi_type = document.getElementById('kpi_type' + x).value;
         console.log(kpi_type + x);
-        if (kpi_type == "child") {
+        if (kpi_type == "Child") {
             $('#parent_name' + x).prop('disabled', false);
         } else {
             $('#parent_name' + x).prop('disabled', true);
