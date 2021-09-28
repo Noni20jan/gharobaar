@@ -2755,10 +2755,18 @@ order by id desc LIMIT 1";
         return $parent_cat_array;
     }
 
-    public function hsn_validity($hsn_code, $hsn_code_len)
+    public function hsn_validity($hsn_val, $hsn_code_len)
+
     {
-        $sql = "SELECT COUNT(*) as count from hsn_with_gst_rate where SUBSTRING(`hsn_code`,1,$hsn_code_len)=$hsn_code";
+
+        $sql = "SELECT COUNT(*) as count from hsn_with_gst_rate where SUBSTRING(hsn_code,1,$hsn_code_len)='$hsn_val'";
+
         $query = $this->db->query($sql);
-        return $query->result();
+
+        // $data = $this->db->last_query();
+        // return $data;
+        $data = $query->row();
+
+        return $data->count;
     }
 }

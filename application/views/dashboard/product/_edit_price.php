@@ -414,33 +414,24 @@
             'hsn_len': hsn_len,
         }
         data[csfr_token_name] = $.cookie(csfr_cookie_name);
-
         if (hsn_len >= 4) {
             $.ajax({
                 type: "POST",
                 url: base_url + "check-hsn-validity",
                 data: data,
                 success: function(data) {
-                    console.log(data);
                     var res = JSON.parse(data);
-                    var z = res["rse"][0]["count"];
+                    console.log(res);
+                    var z = res["rse"];
+                    console.log(z);
                     var hsn_length = ($('#hsn_code').val()).length;
-                    console.log(hsn_length);
                     console.log(z);
                     if (hsn_length >= 4 && z > 0) {
                         document.getElementById("demo").innerHTML = "";
                         document.getElementById("button_to_submit").disabled = false;
                         document.getElementById("button_with_submit").disabled = false;
 
-                    }
-                    // } else if (hsn_len < 4) {
-                    //     console.log(hsn_len);
-                    //     document.getElementById("demo").style.color = "red";
-                    //     document.getElementById("demo").innerHTML = "Please enter atleast 4 characters";
-                    //     document.getElementById("demo").fontSize = "12px";
-                    //     document.getElementById("button_to_submit").disabled = "true";
-                    // } 
-                    else {
+                    } else {
                         document.getElementById("demo").style.color = "red";
                         document.getElementById("demo").innerHTML = "Please enter valid hsn code";
                         document.getElementById("button_to_submit").disabled = true;
@@ -456,7 +447,7 @@
 
                 }
             });
-        } else if (hsn_len < 4) {
+        } else {
             document.getElementById("demo").style.color = "red";
 
             document.getElementById("demo").innerHTML = "Please enter atleast 4 characters";
