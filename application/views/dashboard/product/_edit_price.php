@@ -428,7 +428,7 @@
                     console.log(hsn_length);
                     console.log(z);
                     if (hsn_length >= 4 && z > 0) {
-                        document.getElementById("demo").style.display = "none";
+                        document.getElementById("demo").innerHTML = "";
                         document.getElementById("button_to_submit").disabled = false;
                         document.getElementById("button_with_submit").disabled = false;
 
@@ -443,16 +443,16 @@
                     else {
                         document.getElementById("demo").style.color = "red";
                         document.getElementById("demo").innerHTML = "Please enter valid hsn code";
-                        document.getElementById("button_to_submit").disabled = "true";
-                        document.getElementById("button_with_submit").disabled = "true";
+                        document.getElementById("button_to_submit").disabled = true;
+                        document.getElementById("button_with_submit").disabled = true;
 
                     }
                 },
                 error: function() {
                     document.getElementById("demo").style.color = "red";
                     document.getElementById("demo").innerHTML = "Please enter valid hsn code";
-                    document.getElementById("button_to_submit").disabled = "true";
-                    document.getElementById("button_with_submit").disabled = "true";
+                    document.getElementById("button_to_submit").disabled = true;
+                    document.getElementById("button_with_submit").disabled = true;
 
                 }
             });
@@ -461,8 +461,8 @@
 
             document.getElementById("demo").innerHTML = "Please enter atleast 4 characters";
             document.getElementById("demo").style.fontSize = "12px";
-            document.getElementById("button_to_submit").disabled = "true";
-            document.getElementById("button_with_submit").disabled = "true";
+            document.getElementById("button_to_submit").disabled = true;
+            document.getElementById("button_with_submit").disabled = true;
 
         }
     };
