@@ -606,6 +606,7 @@ class Cart_model extends CI_Model
         $cart_total->applied_coupon_source_type = 0;
         $cart_total->applied_coupon_code = 0;
         $cart_total->applied_coupon_discount = 0;
+        $cart_total->applied_coupon_product_ids = array();
 
 
         $cart_total->currency = $this->payment_settings->default_currency;
@@ -728,7 +729,12 @@ class Cart_model extends CI_Model
                         if (strtoupper($coupon_details->type) == "FLAT") :
                             $cart_total->applied_coupon_discount = $coupon_details->discount_amt * 100;
                         elseif (strtoupper($coupon_details->type) == "PERCENTAGE") :
-                            $cart_total->applied_coupon_discount = $cart_total->total * ($coupon_details->discount_percentage / 100);
+                            $coupon_discount = $cart_total->total * ($coupon_details->discount_percentage / 100);
+                            if ($coupon_discount / 100 > $coupon_details->allowed_max_discount) {
+                                $cart_total->applied_coupon_discount = $coupon_details->allowed_max_discount * 100;
+                            } else {
+                                $cart_total->applied_coupon_discount = $cart_total->total * ($coupon_details->discount_percentage / 100);
+                            }
                         endif;
                         break;
                     case "USER":
@@ -736,10 +742,29 @@ class Cart_model extends CI_Model
                         if (strtoupper($coupon_details->type) == "FLAT") :
                             $cart_total->applied_coupon_discount = $coupon_details->discount_amt * 100;
                         elseif (strtoupper($coupon_details->type) == "PERCENTAGE") :
-                            $cart_total->applied_coupon_discount = $cart_total->total * ($coupon_details->discount_percentage / 100);
+                            $coupon_discount = $cart_total->total * ($coupon_details->discount_percentage / 100);
+                            if ($coupon_discount / 100 > $coupon_details->allowed_max_discount) {
+                                $cart_total->applied_coupon_discount = $coupon_details->allowed_max_discount * 100;
+                            } else {
+                                $cart_total->applied_coupon_discount = $cart_total->total * ($coupon_details->discount_percentage / 100);
+                            }
                         endif;
                         break;
                     case "PRODUCT":
+                        $coupon_details = $this->offer_model->get_coupon_by_id($cart_total->applied_coupon_id);
+                        foreach ($coupon_applied->prod_ids as $prod_id) :
+                            array_push($cart_total->applied_coupon_product_ids, $prod_id);
+                            if (strtoupper($coupon_details->type) == "FLAT") :
+                                $cart_total->applied_coupon_discount += $coupon_details->discount_amt * 100;
+                            elseif (strtoupper($coupon_details->type) == "PERCENTAGE") :
+                                $coupon_discount = $cart_total->total * ($coupon_details->discount_percentage / 100);
+                                if ($coupon_discount / 100 > $coupon_details->allowed_max_discount) {
+                                    $cart_total->applied_coupon_discount += $coupon_details->allowed_max_discount * 100;
+                                } else {
+                                    $cart_total->applied_coupon_discount += $cart_total->total * ($coupon_details->discount_percentage / 100);
+                                }
+                            endif;
+                        endforeach;
                         break;
                     case "CATEGORY":
                         break;

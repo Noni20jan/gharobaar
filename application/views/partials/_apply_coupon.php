@@ -81,6 +81,10 @@
         display: none;
     }
 
+    .hide-coupon-discount {
+        display: none;
+    }
+
     .coupon-div-applied-label {
         font-size: 12px;
         color: #007C05;
@@ -173,6 +177,23 @@
                     $("#coupons-div-button-remove").removeClass("hide-coupon-button");
                     $("#coupons-div-label").html("1 Coupon Applied<div class='coupon-div-applied-label'>" + res.coupon_data.offer_code.toUpperCase() + "</div>");
                     $('#couponModalCenter').modal('hide');
+                    $('#coupon-discount-tag').removeClass('hide-coupon-discount');
+                    $('#coupon-discount-text').html("- ₹" + res.cart_total.applied_coupon_discount / 100 + " /-");
+                    $("#total_final")[0].innerText = "₹" + res.cart_total.total_price / 100 + "/-";
+                    if (parseInt(res.cart_total.applied_coupon_discount) > 0) {
+                        $("#coupon-discount-text")[0].innerText =
+                            "- ₹" + res.cart_total.applied_coupon_discount / 100 + "/-";
+                    } else {
+                        switch (res.cart_total.applied_coupon_source_type) {
+                            case "FREESHIP":
+                                $("#coupon-discount-text")[0].innerText = "Less Shipping";
+                                break;
+                            case "EXHIBITION":
+                                $("#coupon-discount-text")[0].innerText = "Less Shipping and COD";
+                                break;
+                        }
+                    }
+
                 } else {
                     $(".couponsForm-textInputContainer").addClass("couponsForm-textInputError");
                     $(".couponsForm-errorMessage").html(res.msg);
@@ -192,6 +213,7 @@
                 if (event.clipboardData) {
                     event.clipboardData.setData("text/plain", copied.textContent);
                     console.log(event.clipboardData.getData("text"))
+                    $("#coupon-input-field").val(event.clipboardData.getData("text")).change();
                 };
             });
             document.execCommand("copy");

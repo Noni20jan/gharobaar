@@ -255,17 +255,24 @@ order by created_at desc";
     {
         // var_dump($final);
         $data_insert = array();
-        foreach($final as $d){
+        foreach ($final as $d) {
             $data = array(
-                "criteria_id"=>$d->criteria_id,
-                "criteria_value_type"=>$d->criteria_value_type,
-                "min_value"=>$d->min_value,
-                "max_value"=>$d->max_value
+                "criteria_id" => $d->criteria_id,
+                "criteria_value_type" => $d->criteria_value_type,
+                "min_value" => $d->min_value,
+                "max_value" => $d->max_value
             );
-            array_push($data_insert,$data);
+            array_push($data_insert, $data);
         }
-        
+
         $query = $this->db->insert_batch('qualifying_criteria', $data_insert);
         return $query;
+    }
+
+    public function get_all_kpi_by_user_type($user_type)
+    {
+        $this->db->where('user_type', $user_type);
+        $query = $this->db->get("criteria");
+        return $query->result();
     }
 }

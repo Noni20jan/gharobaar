@@ -29,14 +29,15 @@ class Cart_controller extends Home_Core_Controller
         $data['keywords'] = trans("shopping_cart") . "," . $this->app_name;
         //set pagination
         //$data["user_products"] = $this->product_model->get_user_products_by_user_id($this->auth_user->id); 
+        $this->cart_model->unset_sess_cart_shipping_address();
+        $this->cart_model->unset_sess_cart_payment_method();
+        $this->cart_model->calculate_cart_total();
         if (!empty($this->auth_user))
             $data['products'] = $this->product_model->get_user_wishlist_products($this->auth_user->id);
         $data['cart_items'] = $this->session_cart_items;
         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
         $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
         $data['main_settings'] = get_main_settings();
-        $this->cart_model->unset_sess_cart_shipping_address();
-        $this->cart_model->unset_sess_cart_payment_method();
         $this->load->view('partials/_header', $data);
         $this->load->view('cart/cart', $data);
         $this->load->view('partials/_footer');

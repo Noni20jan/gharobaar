@@ -558,13 +558,26 @@ class Order_model extends CI_Model
     public function add_coupon_redeem_details($order_id, $cart_total)
     {
         $order_id = clean_number($order_id);
-        $data = array(
-            'order_id' => $order_id,
-            'offer_id' => $cart_total->applied_coupon_id,
-            'total_discount' => $cart_total->applied_coupon_discount
-
-        );
-        $this->db->insert('offer_redemptions', $data);
+        if (!empty($cart_total->applied_coupon_product_ids)) :
+            $final_data = array();
+            foreach ($cart_total->applied_coupon_product_ids as $prod_id) :
+                $data = array(
+                    'order_id' => $order_id,
+                    'offer_id' => $cart_total->applied_coupon_id,
+                    'total_discount' => $cart_total->applied_coupon_discount,
+                    'op_id' => $prod_id
+                );
+                array_push($final_data, $data);
+            endforeach;
+            $this->db->insert_batch('offer_redemptions', $final_data);
+        else :
+            $data = array(
+                'order_id' => $order_id,
+                'offer_id' => $cart_total->applied_coupon_id,
+                'total_discount' => $cart_total->applied_coupon_discount
+            );
+            $this->db->insert('offer_redemptions', $data);
+        endif;
     }
 
     public function accept_reject_order($order_id, $action)
