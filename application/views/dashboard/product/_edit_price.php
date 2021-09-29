@@ -423,9 +423,7 @@
                     var res = JSON.parse(data);
                     console.log(res);
                     var z = res["rse"];
-                    console.log(z);
                     var hsn_length = ($('#hsn_code').val()).length;
-                    console.log(z);
                     if (hsn_length >= 4 && z > 0) {
                         document.getElementById("demo").innerHTML = "";
                         document.getElementById("button_to_submit").disabled = false;
