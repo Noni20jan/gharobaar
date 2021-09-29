@@ -2769,4 +2769,32 @@ order by id desc LIMIT 1";
 
         return $data->count;
     }
+    public function get_top_picks_products($limit, $user_id)
+    {
+        // $user_id = $this->auth_user->id;
+
+        $sql = "SELECT search_text FROM search_keyword where user_id = $user_id order by created_at desc limit 10;";
+        $query = $this->db->query($sql);
+        $data = $query->result();
+        $this->build_query();
+
+        $this->db->join('product_details', 'product_details.product_id = products.id');
+        $this->db->where('product_details.lang_id', clean_number($this->selected_lang->id));
+        $this->db->where('is_service', "0");
+        $this->db->where('status', 1)->where('products.is_draft', 0)->where('products.is_deleted', 0);
+
+        if (!empty($data)) :
+            $this->db->group_start();
+            foreach ($data as $item) {
+
+                $this->db->or_like('title', $item->search_text);
+                // $this->db->or_like('shop_name', clean_str($item));
+                // $this->db->or_like('brand_name', $item->search_text);
+            }
+            $this->db->group_end();
+
+        endif;
+        $this->db->order_by('products.created_at', 'DESC')->limit(clean_number($limit));
+        return $this->db->get('products')->result();
+    }
 }

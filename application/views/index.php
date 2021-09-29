@@ -765,11 +765,19 @@
             <h3 class="find-your-seller" id="top_picks">Top Picks</h3>
             <div class="row row-product shop-by" id="top-picks-container">
                 <!--print products-->
-                <?php foreach ($latest_products as $product) : ?>
-                    <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                        <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
-                    </div>
-                <?php endforeach; ?>
+                <?php if ($this->auth_check) : ?>
+                    <?php foreach ($top_picks as $product) : ?>
+                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                            <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <?php foreach ($latest_products as $product) : ?>
+                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                            <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
             <div id="top-picks-container_nav" class="index-products-slider-nav">
                 <button class="prev"><i class="icon-arrow-left"></i></button>

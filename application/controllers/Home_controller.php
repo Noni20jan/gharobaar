@@ -171,6 +171,9 @@ class Home_controller extends Home_Core_Controller
         $data["user_data"] = $this->profile_model->get_vendor_data();
         $data["promoted_products"] = $this->product_model->get_promoted_products_banner();
         $data["latest_products"] = get_latest_products($this->general_settings->index_latest_products_count);
+        if ($this->auth_check) {
+        $data["top_picks"] = $this->product_model->get_top_picks_products($this->general_settings->index_latest_products_count,$this->auth_user->id);
+        }
         if (!empty($this->auth_user->id)) {
             if ($this->auth_user->gender == 'Male') {
                 $data["top_picks_products"] = $this->product_model->get_category_products('MALE');
