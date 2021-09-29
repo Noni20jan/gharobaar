@@ -539,9 +539,12 @@
                                             <?php else : ?>
                                                 <?php if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
                                                     <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                    <?php elseif (!empty($this->auth_check)) :
-                                                    if (($this->auth_user->phone_number) == '') : ?>
+                                                <?php elseif (!empty($this->auth_check)) : ?>
+                                                    <? if (($this->auth_user->phone_number) == '') : ?>
                                                         <a href="#" class="btn btn-block" data-toggle="modal" data-target="#registerMobileModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                    <?php elseif ($open_rating_modal) : ?>
+                                                        <?php $this->load->view('partials/_modal_rate_last_order'); ?>
+                                                        <a href="#" data-backdrop="static" data-keyboard="false" class="btn btn-block" data-toggle="modal" data-target="#rateProductModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
                                                         <?php else :
                                                         $is_made_to_order = false;
                                                         foreach ($cart_items as $cart_item) :
@@ -560,14 +563,6 @@
                                                                 <a href="<?php echo generate_url("cart", "payment_method"); ?>" class="btn btn-block" onclick="checkreview()"> <strong><?php echo trans("continue_to_checkout"); ?> </strong>
                                                                 </a>
                                                             <?php endif; ?>
-                                                        <?php endif; ?>
-                                                    <?php endif; ?>
-                                                    <?php if (false) : ?>
-                                                        <?php $this->load->view('partials/_modal_rate_last_order.php'); ?>
-                                                        <?php $product_rating = 1; ?>
-                                                        <?php if ($product_rating == true) : ?>
-                                                            <a href="#" class="btn btn-block" data-toggle="modal" data-target="#rateProductModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-
                                                         <?php endif; ?>
                                                     <?php endif; ?>
                                                 <?php elseif ($this->general_settings->guest_checkout == 1) : ?>
@@ -1010,12 +1005,5 @@
         } else {
             return false;
         }
-    }
-</script>
-
-<script>
-    function get_last_ordered_products(user_id) {
-        alert("ok");
-        alert(user_id);
     }
 </script>
