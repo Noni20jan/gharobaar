@@ -148,12 +148,12 @@ endif;
                 <?php endif; ?>
             </div>
 
-            <div class="line-detail">
+            <!-- <div class="line-detail">
                 <div class="left">
                     <span><?= trans("payment_status"); ?></span>
                 </div>
                 <strong class="font-600"><?= trans($order->payment_status); ?></strong>
-            </div>
+            </div> -->
             <div class="line-detail">
                 <div class="left">
                     <span><?= trans("payment_method"); ?></span>

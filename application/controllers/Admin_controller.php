@@ -513,6 +513,17 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/includes/_footer');
     }
 
+    public function qualified_user_details()
+    {
+        $this->load->model("Offer_model");
+        $data['title'] = trans("");
+        $data['user_type'] = $this->Offer_model->get_user_type();
+        $data['kpi'] = $this->Offer_model->get_kpi_name();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/loyalty/qualified_user_details', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
     /*
     *-------------------------------------------------------------------------------------------------
     * NEWSLETTER

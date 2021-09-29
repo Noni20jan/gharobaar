@@ -139,7 +139,7 @@
                                 <tr>
                                     <th scope="col"><?php echo trans("sale"); ?></th>
                                     <th scope="col"><?php echo trans("total"); ?></th>
-                                    <th scope="col"><?php echo trans("payment"); ?></th>
+                                    <!-- <th scope="col"><?php echo trans("payment"); ?></th> -->
                                     <th scope="col"><?php echo trans("status"); ?></th>
                                     <th scope="col"><?php echo trans("date"); ?></th>
                                     <th scope="col"><?php echo trans("options"); ?></th>
@@ -153,13 +153,13 @@
                                             <tr>
                                                 <td>#<?php echo $sale->order_number; ?></td>
                                                 <td><?php echo price_formatted($total, $sale->price_currency); ?>/-</td>
-                                                <td>
+                                                <!-- <td>
                                                     <?php if ($sale->payment_status == 'payment_received') :
                                                         echo trans("payment_received");
                                                     else :
                                                         echo trans("awaiting_payment");
                                                     endif; ?>
-                                                </td>
+                                                </td> -->
                                                 <td>
                                                     <?php if ($active_page == "sales") : ?>
                                                         <label class="label label-success"><?= trans("order_processing"); ?></label>

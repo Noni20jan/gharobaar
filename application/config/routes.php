@@ -559,6 +559,7 @@ $route[getr('admin', $rts) . '/loyalty-criteria'] = 'admin_controller/loyalty_cr
 $route[getr('admin', $rts) . '/user-loyalty-program'] = 'admin_controller/user_loyalty_program';
 $route[getr('admin', $rts) . '/kpi-form'] = 'admin_controller/kpi_form';
 $route[getr('admin', $rts) . '/qualified-user'] = 'admin_controller/qualified_user';
+$route[getr('admin', $rts) . '/qualified-user-details'] = 'admin_controller/qualified_user_details';
 
 $route[getr('admin', $rts) . '/qualify-criteria'] = 'admin_controller/qualify_criteria';
 
