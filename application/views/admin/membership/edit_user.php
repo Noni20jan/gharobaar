@@ -45,18 +45,18 @@
 
                 <div class="form-group">
                     <label><?php echo trans('email'); ?></label>
-                    <input type="text" class="form-control auth-form-input" id="textEmail" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="<?php echo trans('email'); ?>" required value="<?php echo html_escape($user->email); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> onkeyup="validate_email();">
+                    <input type="text" class="form-control auth-form-input" id="textEmail" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="<?php echo trans('email'); ?>" required value="<?php echo html_escape($user->email); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
                     <p id="demo"></p>
                 </div>
 
                 <div class="form-group">
                     <label><?php echo trans('username'); ?></label>
-                    <input type="text" class="form-control auth-form-input" name="username" placeholder="<?php echo trans('username'); ?>" required value="<?php echo html_escape($user->username); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                    <input type="text" class="form-control auth-form-input" name="username" pattern="[a-zA-Z ]+" placeholder="<?php echo trans('username'); ?>" required value="<?php echo html_escape($user->username); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
                 </div>
 
                 <div class="form-group">
                     <label><?php echo trans('slug'); ?></label>
-                    <input type="text" class="form-control auth-form-input" name="slug" placeholder="<?php echo trans('slug'); ?>" required value="<?php echo html_escape($user->slug); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                    <input type="text" class="form-control auth-form-input" name="slug" pattern="^[a-z](-?[a-z])*$" placeholder="<?php echo trans('slug'); ?>" required value="<?php echo html_escape($user->slug); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
                 </div>
                 <div class="form-group">
                     <label><?php echo trans('first_name'); ?></label>
