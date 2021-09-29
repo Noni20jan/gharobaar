@@ -51,7 +51,7 @@
 
                 <div class="form-group">
                     <label><?php echo trans('username'); ?></label>
-                    <input type="text" class="form-control auth-form-input" name="username" pattern="[a-zA-Z ]+" placeholder="<?php echo trans('username'); ?>" required value="<?php echo html_escape($user->username); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                    <input type="text" class="form-control auth-form-input" name="username" placeholder="<?php echo trans('username'); ?>" required value="<?php echo html_escape($user->username); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
                 </div>
 
                 <div class="form-group">
