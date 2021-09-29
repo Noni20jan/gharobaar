@@ -254,7 +254,7 @@ class Coupon_controller extends Admin_Core_Controller
         $data['end_date'] = $this->input->post('end_date', true);
         $data['discount_amt'] = $this->input->post('discount_amt', true);
         $data['discount_percentage'] = $this->input->post('discount_per', true);
-        $data['allowed_max_discount'] = $this->input->post('max_discount', true);
+        $data['allowed_max_discount'] = $this->input->post('allowed_max_discount', true);
         $data['min_amt_in_cart'] = $this->input->post('min_discount', true);
         $data['max_usage_per_user'] = $this->input->post('max_usage_per_user', true);
         $data['offer_code'] = $offer_code;

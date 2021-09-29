@@ -173,19 +173,26 @@
         if (x == "Flat") {
             document.getElementById("discount_percentage").style.display = "none";
             $('#discount_per').prop('required', false);
+
             document.getElementById("allowed_discount").style.display = "none";
             $('#allowed_max_discount').prop('required', false);
+
             document.getElementById("discount_amount").style.display = "block";
             $('#discount_on_percent').prop('required', true);
+
             $("#discount_per")[0].value = "";
             $("#allowed_max_discount")[0].value = "";
+
         } else if (x == "Percentage") {
             document.getElementById("discount_amount").style.display = "none";
-            $('#discount_amount').prop('required', false);
+            $('#discount_on_percent').prop('required', false);
+
             document.getElementById("discount_percentage").style.display = "block";
             $('#discount_per').prop('required', true);
+
             document.getElementById("allowed_discount").style.display = "block";
             $('#allowed_max_discount').prop('required', true);
+
             $("#discount_on_percent")[0].value = "";
         }
     }
