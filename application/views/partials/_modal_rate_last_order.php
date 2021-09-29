@@ -1,5 +1,4 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<script src="../assets/js/script-1.7.min.js"></script>
 <div class="modal fade" id="rateProductModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom">
@@ -16,9 +15,7 @@
                     <?php $order_id['product_id'] =  $this->product_model->get_order_id($this->auth_user->id); ?>
                     <?php $order_id = $order_id['product_id']->order_id;
                     $get_last_order = get_last_ordered_products($order_id);
-
                     ?>
-
                     <div class="col-12">
                         <?php foreach ($get_last_order as $get_last_order) : ?>
                             <div class="row-custom">

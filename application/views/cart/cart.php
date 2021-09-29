@@ -562,11 +562,13 @@
                                                             <?php endif; ?>
                                                         <?php endif; ?>
                                                     <?php endif; ?>
-                                                    <?php $this->load->view('partials/_modal_rate_last_order.php'); ?>
-                                                    <?php $product_rating = 1; ?>
-                                                    <?php if ($product_rating == true) : ?>
-                                                        <a href="#" class="btn btn-block" data-toggle="modal" data-target="#rateProductModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                    <?php if (false) : ?>
+                                                        <?php $this->load->view('partials/_modal_rate_last_order.php'); ?>
+                                                        <?php $product_rating = 1; ?>
+                                                        <?php if ($product_rating == true) : ?>
+                                                            <a href="#" class="btn btn-block" data-toggle="modal" data-target="#rateProductModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
 
+                                                        <?php endif; ?>
                                                     <?php endif; ?>
                                                 <?php elseif ($this->general_settings->guest_checkout == 1) : ?>
                                                     <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo "Login to Continue"; ?> </strong></a>

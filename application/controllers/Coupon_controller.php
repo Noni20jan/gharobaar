@@ -657,11 +657,12 @@ class Coupon_controller extends Admin_Core_Controller
     {
         $data = array();
         $data["all_user"] = $this->auth_model->get_user(181);
-        if (strtoupper($data['all_users']->role) == "MEMBER") :
+        $role = $data["all_user"]->role;
+        if (strtoupper($role) == "MEMBER") :
             $data["kpis"] = $this->offer_model->get_all_kpi_by_user_type("BUYER");
-        elseif (strtoupper($data['all_users']->role) == "VENDOR") :
+        elseif (strtoupper($role) == "VENDOR") :
             $data["kpis"] = $this->offer_model->get_all_kpi_by_user_type("SUPPLIER");
         endif;
-        print_r($data);
+        print_r($data["kpis"]);
     }
 }
