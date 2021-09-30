@@ -871,7 +871,7 @@
         <?php endif; ?>
     </div>
 </div>
-<?php if ($this->auth_check) : ?>
+<?php if ($this->auth_check && $this->general_settings->rate_previous_order) : ?>
     <?php $order_id['order_id'] =  $this->product_model->get_order_id($this->auth_user->id); ?>
     <?php if (!empty($order_id['order_id'])) : ?>
         <?php $order['product_id'] = $this->product_model->get_order_product_id($order_id['order_id']->order_id, $this->auth_user->id); ?>
