@@ -303,60 +303,76 @@
 <div id="wrapper">
   <div class="profile-tab-content">
     <?php $this->load->view('partials/_messages'); ?>
-    <?php echo form_open_multipart("update-story-post", ['id' => 'form_validate']); ?>
+    <?php echo form_open_multipart("update-supplier-profile-logo", ['id' => 'form_validate1']); ?>
     <div class="row">
-      <div class="col-sm-3 m-b-30">
-        <div class="row text-center">
-          <?php if (!isset($this->auth_user->avatar)) : ?>
-            <img id="image" class="profileImage-default" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:50%" />
-          <?php else : ?>
-            <img id="image" class="profileImage" src="<?php echo base_url() . $this->auth_user->avatar; ?>" style="border-radius:50%" />
-          <?php endif; ?>
-          <input type="file" name="profile-image" id="myfile" style="display: none;" onchange="imageShow(this,'image')" />
-          <!-- <i class=" fa fa-image fa-4x story"></i> -->
-          <script>
-            $('#image').click(function() {
-              $('#myfile').click()
-            })
-          </script>
+      <div class="col-sm-12 m-b-30 groove" style="padding-top: 2%;">
+        <div class="col-sm-3 m-b-30">
+          <div class="row text-center">
+            <?php if (!isset($this->auth_user->avatar)) : ?>
+              <img id="image" class="profileImage-default" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:50%" />
+            <?php else : ?>
+              <img id="image" class="profileImage" src="<?php echo base_url() . $this->auth_user->avatar; ?>" style="border-radius:50%" />
+            <?php endif; ?>
+            <input type="file" name="profile-image" id="myfile" style="display: none;" onchange="imageShow(this,'image')" />
+            <!-- <i class=" fa fa-image fa-4x story"></i> -->
+            <script>
+              $('#image').click(function() {
+                $('#myfile').click()
+              })
+            </script>
+          </div>
+          <div class="row text-center">
+            <label>Upload Profile Pic</label>
+          </div>
         </div>
-        <div class="row text-center">
-          <label>Upload Profile Pic</label>
+        <div class="col-sm-6 m-b-30 groove">
+          <h><label class="control-label1">Hi <?php echo ucfirst($this->auth_user->first_name); ?><?php echo "!" ?> </label></h>
+          <div><textarea class="input" name="about_me" rows="8" cols="30" style="padding:5px; background:white; border:1px solid #ced4da;" placeholder="<?php echo trans("story_placeholder"); ?>"><?php echo $this->auth_user->about_me; ?></textarea></div>
         </div>
-      </div>
-      <div class="col-sm-6 m-b-30 groove">
-        <h><label class="control-label1">Hi <?php echo ucfirst($this->auth_user->first_name); ?><?php echo "!" ?> </label></h>
-        <div><textarea class="input" name="about_me" rows="8" cols="30" style="padding:5px; background:white; border:1px solid #ced4da;" placeholder="<?php echo trans("story_placeholder"); ?>"><?php echo $this->auth_user->about_me; ?></textarea></div>
-      </div>
-      <div class="col-sm-3 m-b-30">
-        <div class="row text-center">
-          <?php if (!isset($this->auth_user->brand_logo)) : ?>
-            <img id="brand-image" class="profileImage-default" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:50%" />
-          <?php else : ?>
-            <img id="brand-image" class="profileImage" src="<?php echo base_url() . $this->auth_user->brand_logo; ?>" style="border-radius:50%" />
-          <?php endif; ?>
-          <input type="file" name="logo-image" id="brand-logo" style="display: none;" onchange="imageShow(this,'brand-image')" />
-          <!-- <i class=" fa fa-image fa-4x story"></i> -->
-          <script>
-            $('#brand-image').click(function() {
-              $('#brand-logo').click()
-            })
-          </script>
+        <div class="col-sm-3 m-b-30">
+          <div class="row text-center">
+            <?php if (!isset($this->auth_user->brand_logo)) : ?>
+              <img id="brand-image" class="profileImage-default" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:50%" />
+            <?php else : ?>
+              <img id="brand-image" class="profileImage" src="<?php echo base_url() . $this->auth_user->brand_logo; ?>" style="border-radius:50%" />
+            <?php endif; ?>
+            <input type="file" name="logo-image" id="brand-logo" style="display: none;" onchange="imageShow(this,'brand-image')" />
+            <!-- <i class=" fa fa-image fa-4x story"></i> -->
+            <script>
+              $('#brand-image').click(function() {
+                $('#brand-logo').click()
+              })
+            </script>
+          </div>
+          <div class="row text-center">
+            <label>Upload Brand Logo</label>
+          </div>
         </div>
-        <div class="row text-center">
-          <label>Upload Brand Logo</label>
-        </div>
-      </div>
-    </div>
 
-    <div class="form-group">
-      <div class="row Brand-1">
-        <div class="col-md-3" id="formlabel"><label>Your Video URL </label></div>
-        <div class="col-md-9 Brand-name">
-          <input type='text' name="story_vedio_url" id="story_vedio_url" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->supplier_story_url); ?>">
+
+        <div class="form-group">
+          <div class="row Brand-1">
+            <div class="col-md-3" id="formlabel"><label>Your Video URL </label></div>
+            <div class="col-md-9 Brand-name">
+              <input type='text' name="story_vedio_url" id="story_vedio_url" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->supplier_story_url); ?>">
+            </div>
+          </div>
+        </div>
+
+        <div>
+        <?php if ($this->auth_user->update_profile == 1) : ?>
+          <button type="submit" name="submit" value="update_profile" style="margin-bottom: 2%;" class="btn btn-lg btn-success pull-right"><?php echo trans("save_profile_brand") ?></button>
+          <?php endif; ?>
         </div>
       </div>
     </div>
+  </div>
+  <?php echo form_close(); ?>
+
+
+
+  <?php echo form_open_multipart("update-story-post", ['id' => 'form_validate']); ?>
+  <div class="profile-tab-content">
     <div class="row">
       <div class="background col-sm-6 m-b-30 groove">
         <label class="control-label"><?php echo trans("story_images"); ?> (Maximum upload file size : 30 Mb)</label>

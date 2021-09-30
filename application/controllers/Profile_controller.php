@@ -400,8 +400,8 @@ class Profile_controller extends Home_Core_Controller
             'source' => $this->input->post('source', true),
             'different_type_products' => $this->input->post('different_type_products', true),
             'testimonial' => $this->input->post('testimonial', true),
-            'about_me' => $this->input->post('about_me', true),
-            'supplier_story_url' => $this->input->post('story_vedio_url', true),
+            // 'about_me' => $this->input->post('about_me', true),
+            // 'supplier_story_url' => $this->input->post('story_vedio_url', true),
 
         );
 
@@ -430,7 +430,28 @@ class Profile_controller extends Home_Core_Controller
         }
     }
 
+    public function update_supplier_profile_logo()
+    {
 
+        if (!$this->auth_check) {
+            redirect(lang_base_url());
+        }
+
+        $user_id = $this->auth_user->id;       
+        $data = array(
+            'supplier_story_url' => $this->input->post('story_vedio_url', true),
+            'about_me' => $this->input->post('about_me', true),
+            'update_profile' => '1',
+            'avatar_image' =>$this->input->post('about_me', true),
+
+        );
+
+
+
+        $this->profile_model->update_supplier_profile_logo($data, $user_id);
+        redirect($this->agent->referrer());  
+        
+    }
 
 
 
