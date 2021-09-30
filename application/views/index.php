@@ -872,14 +872,12 @@
     </div>
 </div>
 <?php if ($this->auth_check) : ?>
-    <?php $order_id['product_id'] =  $this->product_model->get_order_id($this->auth_user->id); ?>
-    <?php if (!empty($order_id['product_id'])) : ?>
-        <?php $order['order_id'] = $this->product_model->get_order_product_id($order_id['product_id']->order_id, $this->auth_user->id); ?>
-        <?php foreach ($order['order_id'] as $order1) : ?>
-
+    <?php $order_id['order_id'] =  $this->product_model->get_order_id($this->auth_user->id); ?>
+    <?php if (!empty($order_id['order_id'])) : ?>
+        <?php $order['product_id'] = $this->product_model->get_order_product_id($order_id['order_id']->order_id, $this->auth_user->id); ?>
+        <?php foreach ($order['product_id'] as $order1) : ?>
             <?php $not_rating['exist'] = $this->product_model->get_not_rating_product($order1->product_id, $this->auth_user->id); ?>
             <?php if (empty($not_rating['exist'])) : ?>
-
                 <?php $this->load->view('partials/_modal_rate_last_order');
                 break;
                 ?>

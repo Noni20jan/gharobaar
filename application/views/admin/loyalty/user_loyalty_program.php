@@ -103,12 +103,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary pull-right"><?php echo trans('submit'); ?></button>
-                </div>
             </div>
-
-            <?php echo form_close(); ?>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary pull-right"><?php echo trans('submit'); ?></button>
+            </div>
         </div>
+
+        <?php echo form_close(); ?>
     </div>
 </div>
