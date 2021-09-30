@@ -5082,7 +5082,20 @@
             </script>
         <?php endif; ?>
     <?php endif; ?>
-
+    <?php if ($this->auth_check && $this->general_settings->rate_previous_order) : ?>
+        <?php $order_id['order_id'] =  $this->product_model->get_order_id($this->auth_user->id); ?>
+        <?php if (!empty($order_id['order_id'])) : ?>
+            <?php $order['product_id'] = $this->product_model->get_order_product_id($order_id['order_id']->order_id, $this->auth_user->id); ?>
+            <?php foreach ($order['product_id'] as $order1) : ?>
+                <?php $not_rating['exist'] = $this->product_model->get_not_rating_product($order1->product_id, $this->auth_user->id); ?>
+                <?php if (empty($not_rating['exist'])) : ?>
+                    <?php $this->load->view('partials/_modal_rate_last_order');
+                    break;
+                    ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    <?php endif; ?>
     <!-- <style>
         #pageloader {
             background: rgba(0, 0, 0, 0.8);
