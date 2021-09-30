@@ -36,6 +36,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title"><?php echo trans('user_loyalty_program'); ?></h3>
             </div>
+            <?php $this->load->view('admin/includes/_messages'); ?>
             <?php echo form_open('admin_controller/user_loyalty_program_submit'); ?>
             <div class="col-12 coupons-from-holder">
                 <div class="form-group">

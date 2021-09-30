@@ -467,6 +467,13 @@ class Admin_controller extends Admin_Core_Controller
         $data['status'] = "A";
         $data['created_by'] = $this->auth_user->id;
         $this->Offer_model->loyalty_program_insert_details($data);
+        $result = "true";
+        if ($result == true) {
+            $this->session->set_flashdata('success', trans("user_loyalty_program_submit"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+        redirect($this->agent->referrer());
     }
     public function kpi_form()
     {
