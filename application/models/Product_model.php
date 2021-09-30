@@ -1148,7 +1148,7 @@ class Product_model extends Core_Model
             if (!empty($user_id)) {
 
                 // $sql = "SELECT count(search_text) FROM search_keyword where search_text like   '$search%'   and user_id=$user_id;";
-                $sql = "SELECT COUNT(*) as count FROM search_keyword where search_text='$search';";
+                $sql = "SELECT COUNT(*) as count FROM search_keyword where search_text='$search' AND user_id='$user_id';";
                 $query = $this->db->query($sql);
                 $count = $query->row();
                 // var_dump($count->count);die();

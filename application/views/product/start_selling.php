@@ -1020,6 +1020,78 @@ $pincode = get_pincode(281204);
                                                                         </div>
                                                                     </div>
                                                                 </div>
+
+                                                                <?php if ($this->general_settings->enable_ship_selection == 1) : ?>
+
+
+
+                                                                        <div class="form-group">
+                                                                            <label class="control-label">Shippment Type ?<span class="Validation_error"> *</span></label>
+                                                                            <div class="row">
+                                                                                <div class="col-12 col-sm-4 col-custom-field">
+                                                                                    <div class="custom-control custom-radio">
+                                                                                        <input type="radio" name="ship_yes_no" id="self_ship_yes" value="gharobaar" class="custom-control-input" checked required>
+                                                                                        <label for="self_ship_yes" class="custom-control-label">Gharobaar</label>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="col-12 col-sm-4 col-custom-field">
+                                                                                    <div class="custom-control custom-radio">
+                                                                                        <input type="radio" name="ship_yes_no" id="self_ship_no" value="self_shipped" class="custom-control-input" required>
+                                                                                        <label for="self_ship_no" class="custom-control-label">Self Shipped</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group hideMe" id="selected_self">
+                                                                            <label class="control-label">Shipping Charges ?<span class="Validation_error"> *</span></label>
+                                                                            <div class="row ">
+
+                                                                                <div class="col-12 col-sm-4 col-custom-field">
+                                                                                    <div class="custom-control custom-radio">
+                                                                                        <input type="radio" name="ship_charge" id="ship_charge_yes" value="yes" class="custom-control-input">
+                                                                                        <label for="ship_charge_yes" class="custom-control-label">Yes</label>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="col-12 col-sm-4 col-custom-field">
+                                                                                    <div class="custom-control custom-radio">
+                                                                                        <input type="radio" name="ship_charge" id="ship_charge_no" value="no" class="custom-control-input" checked>
+                                                                                        <label for="ship_charge_no" class="custom-control-label">No</label>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+
+                                                                        </div>
+
+
+                                                                        <div class="form-group" id="ship_cod" style="display: none;">
+                                                                            <div class="row">
+                                                                                <div class="col-12 col-sm-4 m-b-15">
+                                                                                    <label class="control-label">Minimum Threshold<span class="Validation_error"> *</span></label>
+                                                                                    <input type="text" id="min_thresh" name="min_thresh" class="form-control auth-form-input" onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57'>
+                                                                                    <p class="Validation_error" id="min_thresh_v"></p>
+                                                                                </div>
+                                                                                <div class="col-12 col-sm-4 m-b-15">
+                                                                                    <label class="control-label">Shipping Amount<span class="Validation_error"> *</span></label>
+                                                                                    <input type="text" id="ship_amt" name="ship_amt" class="form-control auth-form-input" onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57'>
+                                                                                    <p class="Validation_error" id="ship_amt_v"></p>
+                                                                                </div>
+                                                                                <div class="col-12 col-sm-4 m-b-15">
+                                                                                    <label class="control-label">COD Charges<span class="Validation_error"> *</span></label>
+                                                                                    <input type="text" id="cod_chrg" name="cod_chrg" class="form-control auth-form-input" onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57'>
+                                                                                    <p class="Validation_error" id="cod_chrg_v"></p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+
+                                                                <?php endif; ?>
+
                                                                 <div class="col-md-12">
                                                                     <div class="col-12">
                                                                         <nav>
@@ -3550,6 +3622,42 @@ $pincode = get_pincode(281204);
             $(this).datepicker('option', {
                 maxDate: new Date()
             });
+        });
+    </script>
+
+
+
+    <script>
+        // $(document).ready(function() {
+        $('input[name="ship_yes_no"]').click(function() {
+            var ship = $('input[name="ship_yes_no"]:checked').val();
+            if (ship == "self_shipped") {
+                $("#selected_self").removeClass("hideMe");
+                $("input[name=ship_charge]")[0].required = true;
+            } else if (ship != "self_shipped") {
+                $("#selected_self").addClass("hideMe");
+                $("input[name=ship_charge]")[0].required = false;
+                document.getElementById('ship_cod').style.display = 'none';
+                $("input[name=min_thresh]")[0].required = false;
+                $("input[name=ship_amt]")[0].required = false;
+                $("input[name=cod_chrg]")[0].required = false;
+
+            }
+        });
+
+        $('input[name="ship_charge"]').click(function() {
+            var ship_charge = $('input[name="ship_charge"]:checked').val();
+            if (ship_charge == 'yes') {
+                document.getElementById('ship_cod').style.display = 'block';
+                $("input[name=min_thresh]")[0].required = true;
+                $("input[name=ship_amt]")[0].required = true;
+                $("input[name=cod_chrg]")[0].required = true;
+            } else if (ship_charge != 'yes') {
+                document.getElementById('ship_cod').style.display = 'none';
+                $("input[name=min_thresh]")[0].required = false;
+                $("input[name=ship_amt]")[0].required = false;
+                $("input[name=cod_chrg]")[0].required = false;
+            }
         });
     </script>
 

@@ -765,7 +765,7 @@
             <h3 class="find-your-seller" id="top_picks">Top Picks</h3>
             <div class="row row-product shop-by" id="top-picks-container">
                 <!--print products-->
-                <?php if ($this->auth_check) : ?>
+                <?php if (($this->auth_check) && (count($top_picks)>=5)) : ?>
                     <?php foreach ($top_picks as $product) : ?>
                         <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
                             <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
