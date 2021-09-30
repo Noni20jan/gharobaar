@@ -64,7 +64,7 @@
                 </div>
                 <div class="form-group">
                     <label><?php echo trans('last_name'); ?></label>
-                    <input type="text" class="form-control auth-form-input" name="last_name" placeholder="<?php echo trans('last_name'); ?>" required value="<?php echo html_escape($user->last_name); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                    <input type="text" class="form-control auth-form-input" name="last_name" pattern="[a-zA-Z ]+" placeholder="<?php echo trans('last_name'); ?>" required value="<?php echo html_escape($user->last_name); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
                 </div>
                 <div class="form-group">
                     <label><?php echo trans('phone_number'); ?></label>
