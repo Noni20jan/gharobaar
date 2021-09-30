@@ -540,7 +540,7 @@
                                                 <?php if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
                                                     <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
                                                 <?php elseif (!empty($this->auth_check)) : ?>
-                                                    <? if (($this->auth_user->phone_number) == '') : ?>
+                                                    <?php if (($this->auth_user->phone_number) == '') : ?>
                                                         <a href="#" class="btn btn-block" data-toggle="modal" data-target="#registerMobileModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
                                                     <?php elseif ($open_rating_modal && $this->general_settings->rate_previous_order) : ?>
                                                         <?php $this->load->view('partials/_modal_rate_last_order'); ?>
