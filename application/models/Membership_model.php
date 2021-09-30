@@ -665,4 +665,11 @@ class Membership_model extends CI_Model
         }
         return false;
     }
+
+    public function save_ship_type($data){
+        $this->db->insert('seller_shipping_provider', $data);
+    }
+    public function save_ship_charge_yes($data){
+        $this->db->insert('seller_shipping_threshold', $data);
+    }
 }

@@ -765,11 +765,19 @@
             <h3 class="find-your-seller" id="top_picks">Top Picks</h3>
             <div class="row row-product shop-by" id="top-picks-container">
                 <!--print products-->
-                <?php foreach ($latest_products as $product) : ?>
-                    <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                        <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
-                    </div>
-                <?php endforeach; ?>
+                <?php if (($this->auth_check) && (count($top_picks)>=5)) : ?>
+                    <?php foreach ($top_picks as $product) : ?>
+                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                            <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <?php foreach ($latest_products as $product) : ?>
+                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                            <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
             <div id="top-picks-container_nav" class="index-products-slider-nav">
                 <button class="prev"><i class="icon-arrow-left"></i></button>
@@ -863,6 +871,20 @@
         <?php endif; ?>
     </div>
 </div>
+<?php if ($this->auth_check && $this->general_settings->rate_previous_order) : ?>
+    <?php $order_id['order_id'] =  $this->product_model->get_order_id($this->auth_user->id); ?>
+    <?php if (!empty($order_id['order_id'])) : ?>
+        <?php $order['product_id'] = $this->product_model->get_order_product_id($order_id['order_id']->order_id, $this->auth_user->id); ?>
+        <?php foreach ($order['product_id'] as $order1) : ?>
+            <?php $not_rating['exist'] = $this->product_model->get_not_rating_product($order1->product_id, $this->auth_user->id); ?>
+            <?php if (empty($not_rating['exist'])) : ?>
+                <?php $this->load->view('partials/_modal_rate_last_order');
+                break;
+                ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+<?php endif; ?>
 <script>
     var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ? true : false;
 
@@ -878,6 +900,13 @@
             }, 1000);
             return false;
         }
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $("#rateProductModal").modal('show');
+        // var xyz = $('#xyz').val();
+        // $("#rateProductModal #review_product_id").val(xyz);
     });
 </script>
 <!-- Wrapper End-->

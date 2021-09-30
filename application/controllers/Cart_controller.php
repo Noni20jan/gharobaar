@@ -29,14 +29,28 @@ class Cart_controller extends Home_Core_Controller
         $data['keywords'] = trans("shopping_cart") . "," . $this->app_name;
         //set pagination
         //$data["user_products"] = $this->product_model->get_user_products_by_user_id($this->auth_user->id); 
+        $this->cart_model->unset_sess_cart_shipping_address();
+        $this->cart_model->unset_sess_cart_payment_method();
+        $this->cart_model->calculate_cart_total();
         if (!empty($this->auth_user))
             $data['products'] = $this->product_model->get_user_wishlist_products($this->auth_user->id);
         $data['cart_items'] = $this->session_cart_items;
         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
         $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
         $data['main_settings'] = get_main_settings();
-        $this->cart_model->unset_sess_cart_shipping_address();
-        $this->cart_model->unset_sess_cart_payment_method();
+
+        $data["open_rating_modal"] = false;
+        if (!empty($this->auth_user)) :
+            $order_id['product_id'] =  $this->product_model->get_order_id($this->auth_user->id);
+            $order['order_id'] = $this->product_model->get_order_product_id($order_id['product_id']->order_id, $this->auth_user->id);
+            foreach ($order['order_id'] as $order1) :
+                $not_rating['exist'] = $this->product_model->get_not_rating_product($order1->product_id, $this->auth_user->id);
+                if (empty($not_rating['exist'])) :
+                    $data["open_rating_modal"] = true;
+                    break;
+                endif;
+            endforeach;
+        endif;
         $this->load->view('partials/_header', $data);
         $this->load->view('cart/cart', $data);
         $this->load->view('partials/_footer');
@@ -1898,5 +1912,37 @@ class Cart_controller extends Home_Core_Controller
         } else {
             echo  $status_code;
         }
+    }
+    //add reviews of last order product
+    public function save_rate_last_order()
+    {
+        if ($this->auth_check && $this->general_settings->reviews == 1) {
+            $rating = $this->input->post('rating', true);
+            $product_id = $this->input->post('product_id', true);
+            $review_text = $this->input->post('review', true);
+            $rating2 = array();
+            foreach ($rating as $rating1) {
+
+                array_push($rating2, $rating1);
+            }
+            $review_text2 = array();
+            foreach ($review_text as $review_text1) {
+
+                array_push($review_text2, $review_text1);
+            }
+            $i = 0;
+            foreach ($product_id as $product_id1) {
+
+                $product = $this->product_model->get_product_by_id($product_id);
+                $review = $this->review_model->get_review($product_id1, $this->auth_user->id);
+                if (!empty($review)) {
+                    $this->review_model->update_review1($review->id, $rating2[$i], $product_id1, $review_text2[$i]);
+                } else {
+                    $this->review_model->add_review1($rating2[$i], $product_id1, $review_text2[$i]);
+                }
+                $i++;
+            }
+        }
+        redirect($this->agent->referrer());
     }
 }

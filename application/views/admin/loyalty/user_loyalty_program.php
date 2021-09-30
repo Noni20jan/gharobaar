@@ -36,6 +36,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title"><?php echo trans('user_loyalty_program'); ?></h3>
             </div>
+            <?php $this->load->view('admin/includes/_messages'); ?>
             <?php echo form_open('admin_controller/user_loyalty_program_submit'); ?>
             <div class="col-12 coupons-from-holder">
                 <div class="form-group">
@@ -66,7 +67,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-sm-6">
-                            <label>NAME:</label>
+                            <label>Name:</label>
                         </div>
                         <div class="col-sm-6">
                             <input type='text' name="name" class="form-control auth-form-input" value="" required>
@@ -103,12 +104,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary pull-right"><?php echo trans('submit'); ?></button>
-                </div>
             </div>
-
-            <?php echo form_close(); ?>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary pull-right"><?php echo trans('submit'); ?></button>
+            </div>
         </div>
+
+        <?php echo form_close(); ?>
     </div>
 </div>

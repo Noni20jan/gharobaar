@@ -171,6 +171,9 @@ class Home_controller extends Home_Core_Controller
         $data["user_data"] = $this->profile_model->get_vendor_data();
         $data["promoted_products"] = $this->product_model->get_promoted_products_banner();
         $data["latest_products"] = get_latest_products($this->general_settings->index_latest_products_count);
+        if ($this->auth_check) {
+            $data["top_picks"] = $this->product_model->get_top_picks_products($this->general_settings->index_latest_products_count, $this->auth_user->id);
+        }
         if (!empty($this->auth_user->id)) {
             if ($this->auth_user->gender == 'Male') {
                 $data["top_picks_products"] = $this->product_model->get_category_products('MALE');
@@ -1568,6 +1571,62 @@ class Home_controller extends Home_Core_Controller
         //     $this->session->set_flashdata('error', trans("msg_shop_name_unique_error"));
         //     redirect($this->agent->referrer());
         // }
+
+
+        $ship_type = $this->input->post('ship_yes_no', true);
+        if ($ship_type == "self_shipped") {
+            $ship = array(
+                'shipping_service_provider' => 'SELF',
+                'seller_id' => $this->auth_user->id,
+            );
+            $ship_charge = $this->input->post('ship_charge', true);
+            if ($ship_charge == "yes") {
+                // $ship_charge_arr = array();
+                $thresh = $this->input->post('min_thresh', true);
+                $ship_amount = $this->input->post('ship_amt', true);
+                $cod_amount = $this->input->post('cod_chrg', true);
+                if ($thresh == 0) {
+                    $thresh_0 = array(
+                        'seller_shipping_id' => $this->auth_user->id,
+                        'min_value' => 0,
+                        'min_oprand' => '>',
+                        'max_value' => '1000000000',
+                        'max_oprand' => '<',
+                        'method' => 'derived',
+                        'shipping_charges' => $ship_amount,
+                        'cod_charges' => $cod_amount
+                    );
+                    $this->membership_model->save_ship_charge_yes($thresh_0);
+                } else if ($thresh > 0) {
+                    $thresh_1 = array(
+                        'seller_shipping_id' => $this->auth_user->id,
+                        'min_value' => 0,
+                        'min_oprand' => '>',
+                        'max_value' => $thresh * 100,
+                        'max_oprand' => '<',
+                        'method' => 'derived',
+                        'shipping_charges' => $ship_amount,
+                        'cod_charges' => $cod_amount
+                    );
+                    $thresh_2 = array(
+                        'seller_shipping_id' => $this->auth_user->id,
+                        'min_value' => ($thresh * 100)-1,
+                        'min_oprand' => '>',
+                        'max_value' => '1000000000',
+                        'max_oprand' => '<',
+                        'method' => 'derived',
+                        'shipping_charges' => 0,
+                        'cod_charges' => $cod_amount
+                    );
+                    $this->membership_model->save_ship_charge_yes($thresh_1);
+                    $this->membership_model->save_ship_charge_yes($thresh_2);
+                }
+            }
+
+
+            $this->membership_model->save_ship_type($ship);
+        }
+
 
         if ($this->general_settings->membership_plans_system == 1) {
             $plan_id = clean_number($this->input->post('plan_id', true));

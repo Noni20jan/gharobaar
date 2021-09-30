@@ -408,7 +408,7 @@ class Admin_controller extends Admin_Core_Controller
         $weightage1 = $this->input->post('weightage1', true);
         $j = 0;
         for ($i = 0; $i <= $sl; $i++) {
-            if ($kpi_rel_type1[$i] == "Parent" || $kpi_rel_type1 == "Indvidual") {
+            if ($kpi_rel_type1[$i] == "Parent" || $kpi_rel_type1[$i] == "Indvidual") {
                 $parent_id2[$i] = "";
             } else {
                 $parent_id2[$i] = $parent_id1[$j];
@@ -467,6 +467,13 @@ class Admin_controller extends Admin_Core_Controller
         $data['status'] = "A";
         $data['created_by'] = $this->auth_user->id;
         $this->Offer_model->loyalty_program_insert_details($data);
+        $result = "true";
+        if ($result == true) {
+            $this->session->set_flashdata('success', trans("user_loyalty_program_submit"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+        redirect($this->agent->referrer());
     }
     public function kpi_form()
     {
@@ -510,6 +517,17 @@ class Admin_controller extends Admin_Core_Controller
         $data['kpi'] = $this->Offer_model->get_kpi_name();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/loyalty/qualified_user', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function qualified_user_details()
+    {
+        $this->load->model("Offer_model");
+        $data['title'] = trans("");
+        $data['user_type'] = $this->Offer_model->get_user_type();
+        $data['kpi'] = $this->Offer_model->get_kpi_name();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/loyalty/qualified_user_details', $data);
         $this->load->view('admin/includes/_footer');
     }
 

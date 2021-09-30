@@ -61,12 +61,32 @@
             <td><i class="fa fa-times cross-color" aria-hidden="true"></i></td>
             <td><i class="fa fa-times cross-color" aria-hidden="true"></i></td>
             <td><i class="fa fa-check color-check" aria-hidden="true"></i></td>
-            <td>Details</td>
+            <td><a href="javascript:void(0)" data-toggle="modal" data-target="#loyaltyDetailModel" style="text-decoration: underline; color:blue !important">Details</a></td>
         </tr>
         <? //php endforeach;
         ?>
     </tbody>
 </table>
+
+
+<!-- modal for showing details related to loyelty  -->
+<div class="modal fade" id="loyaltyDetailModel" role="dialog">
+    <div class="modal-dialog modal-dialog-centered login-modal" role="document">
+        <div class="modal-content">
+            <div class="auth-box" style="width: 370px;">
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close" onclick="reloadPage()"></i></button>
+                <h4 class="title"><?php echo trans("login"); ?></h4>
+                <!-- form start -->
+
+                <!-- form end -->
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end loyalty model  -->
+
+
 <script>
     $(document).ready(function() {
         // Setup - add a text input to each footer cell

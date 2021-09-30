@@ -489,10 +489,34 @@
                                             <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span>
                                         </p>
                                     <?php endif; ?>
+                                    <p style="color:#007C05;" id="coupon-discount-tag" class="<?php echo ((!empty($this->session->userdata('mds_shopping_cart_coupon')))) ? '' : 'hide-coupon-discount' ?>">
+                                        <strong>
+                                            <?php echo "Coupon Discount"; ?>
+                                            <span class="float-right" id="coupon-discount-text">
+                                                <?php if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) :
+                                                    $coupon_applied = $this->session->userdata('mds_shopping_cart_coupon'); ?>
+                                                    <?php if ($cart_total->applied_coupon_discount > 0) : ?>
+                                                        <?php echo "- " . price_formatted_without_round($cart_total->applied_coupon_discount, $this->payment_settings->default_currency) . "/-"; ?>
+                                                    <?php elseif (!empty($cart_total->applied_coupon_source_type)) :
+                                                        switch ($cart_total->applied_coupon_source_type):
+                                                            case "FREESHIP":
+                                                                echo "Less Shipping";
+                                                                break;
+                                                            case "EXHIBITION":
+                                                                echo "Less Shipping and COD";
+                                                                break;
+                                                        endswitch;
+                                                    ?>
+
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            </span>
+                                        </strong>
+                                    </p>
                                     <p class="line-seperator"></p>
                                     <p>
                                         <!-- <?php var_dump($_SESSION["mds_shopping_cart_total"]->subtotal);  ?> -->
-                                        <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total, $cart_total->currency); ?>/-</span></strong>
+                                        <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong>
                                     </p>
                                     <p class="line-seperator"></p>
                                     <?php if (intval(secondsToTime($cart_total->min_dispatch_time)) > 1 || intval(secondsToTime($cart_total->max_dispatch_time)) > 1) :
@@ -515,9 +539,12 @@
                                             <?php else : ?>
                                                 <?php if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
                                                     <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                    <?php elseif (!empty($this->auth_check)) :
-                                                    if (($this->auth_user->phone_number) == '') : ?>
+                                                <?php elseif (!empty($this->auth_check)) : ?>
+                                                    <?php if (($this->auth_user->phone_number) == '') : ?>
                                                         <a href="#" class="btn btn-block" data-toggle="modal" data-target="#registerMobileModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                    <?php elseif ($open_rating_modal && $this->general_settings->rate_previous_order) : ?>
+                                                        <?php $this->load->view('partials/_modal_rate_last_order'); ?>
+                                                        <a href="#" data-backdrop="static" data-keyboard="false" class="btn btn-block" data-toggle="modal" data-target="#rateProductModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
                                                         <?php else :
                                                         $is_made_to_order = false;
                                                         foreach ($cart_items as $cart_item) :
@@ -537,8 +564,8 @@
                                                                 </a>
                                                             <?php endif; ?>
                                                         <?php endif; ?>
-                                                    <?php endif;
-                                                elseif ($this->general_settings->guest_checkout == 1) : ?>
+                                                    <?php endif; ?>
+                                                <?php elseif ($this->general_settings->guest_checkout == 1) : ?>
                                                     <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo "Login to Continue"; ?> </strong></a>
                                     <div class="text-center m-b-15"><strong>OR</strong></div>
 

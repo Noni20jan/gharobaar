@@ -1148,7 +1148,7 @@ class Product_model extends Core_Model
             if (!empty($user_id)) {
 
                 // $sql = "SELECT count(search_text) FROM search_keyword where search_text like   '$search%'   and user_id=$user_id;";
-                $sql = "SELECT COUNT(*) as count FROM search_keyword where search_text='$search';";
+                $sql = "SELECT COUNT(*) as count FROM search_keyword where search_text='$search' AND user_id='$user_id';";
                 $query = $this->db->query($sql);
                 $count = $query->row();
                 // var_dump($count->count);die();
@@ -2215,7 +2215,36 @@ class Product_model extends Core_Model
         $this->db->group_by('products.user_id');
         return $this->db->get('products')->result();
     }
+    public function get_order_id($user_id)
+    {
 
+        $this->db->where('buyer_id', $user_id);
+        $this->db->where('order_status', 'completed');
+        $this->db->order_by('id DESC');
+        $this->db->limit(1);
+        return $this->db->get('order_products')->row();
+    }
+    public function get_order_product_id($order_id, $user_id)
+    {
+
+        $this->db->where('buyer_id', $user_id);
+        $this->db->where('order_id', $order_id);
+        $this->db->where('order_status', 'completed');
+        return $this->db->get('order_products')->result();
+    }
+    public function get_rating($product_id, $user_id)
+    {
+        $this->db->where('product_id', $product_id);
+        $this->db->where('user_id', $user_id);
+        return $this->db->get('reviews')->row();
+    }
+    public function get_not_rating_product($product_id, $user_id)
+    {
+        $sql = "SELECT order_products.id,order_products.product_id,buyer_id from order_products join reviews on order_products.product_id=reviews.product_id and order_products.buyer_id=reviews.user_id where order_products.product_id=$product_id and order_products.buyer_id=$user_id
+order by id desc LIMIT 1";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     //get related products by category for top discounts section
     public function get_products_by_discount_order()
     {
@@ -2724,5 +2753,48 @@ class Product_model extends Core_Model
             }
         }
         return $parent_cat_array;
+    }
+
+    public function hsn_validity($hsn_val, $hsn_code_len)
+
+    {
+
+        $sql = "SELECT COUNT(*) as count from hsn_with_gst_rate where SUBSTRING(hsn_code,1,$hsn_code_len)='$hsn_val'";
+
+        $query = $this->db->query($sql);
+
+        // $data = $this->db->last_query();
+        // return $data;
+        $data = $query->row();
+
+        return $data->count;
+    }
+    public function get_top_picks_products($limit, $user_id)
+    {
+        // $user_id = $this->auth_user->id;
+
+        $sql = "SELECT search_text FROM search_keyword where user_id = $user_id order by created_at desc limit 10;";
+        $query = $this->db->query($sql);
+        $data = $query->result();
+        $this->build_query();
+
+        $this->db->join('product_details', 'product_details.product_id = products.id');
+        $this->db->where('product_details.lang_id', clean_number($this->selected_lang->id));
+        $this->db->where('is_service', "0");
+        $this->db->where('status', 1)->where('products.is_draft', 0)->where('products.is_deleted', 0);
+
+        if (!empty($data)) :
+            $this->db->group_start();
+            foreach ($data as $item) {
+
+                $this->db->or_like('title', $item->search_text);
+                // $this->db->or_like('shop_name', clean_str($item));
+                // $this->db->or_like('brand_name', $item->search_text);
+            }
+            $this->db->group_end();
+
+        endif;
+        $this->db->order_by('products.created_at', 'DESC')->limit(clean_number($limit));
+        return $this->db->get('products')->result();
     }
 }

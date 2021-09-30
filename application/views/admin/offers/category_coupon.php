@@ -1,5 +1,9 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-
+<style>
+    .hide-div {
+        display: none;
+    }
+</style>
 <div class="content">
     <div class="col-sm-12">
         <?php echo form_open_multipart('coupon_controller/tag_cat_coupons_vouchers'); ?>
@@ -32,7 +36,7 @@
                         <label for="source_product" class="custom-control-label">Products</label>
                     </div>
                 </div>
-                <div class="col-12 col-sm-3 col-custom-field">
+                <div class="col-12 col-sm-3 col-custom-field hide-div">
                     <div class="custom-control custom-radio">
                         <input type="radio" name="source_type" value="category" id="source_category" class="custom-control-input" required>
                         <label for="source_category" class="custom-control-label">Category</label>

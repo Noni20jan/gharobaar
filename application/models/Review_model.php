@@ -25,6 +25,28 @@ class Review_model extends CI_Model
         }
     }
 
+    public function add_review1($rating, $product_id, $review_text)
+    {
+        $data = array(
+            'product_id' => $product_id,
+            'user_id' => $this->auth_user->id,
+            'rating' => $rating,
+            'review' => $review_text,
+            'ip_address' => 0,
+            'created_at' => date("Y-m-d H:i:s")
+        );
+        $ip = $this->input->ip_address();
+        if (!empty($ip)) {
+            $data['ip_address'] = $ip;
+        }
+        if (!empty($data['product_id']) && !empty($data['user_id']) && !empty($data['rating'])) {
+            $this->db->insert('reviews', $data);
+            //update product rating
+            $this->update_product_rating($product_id);
+        }
+        unset($data);
+    }
+
     //update review
     public function update_review($review_id, $rating, $product_id, $review_text)
     {
@@ -43,6 +65,27 @@ class Review_model extends CI_Model
             $this->db->where('user_id', $this->auth_user->id);
             $this->db->update('reviews', $data);
             //update product rating
+            $this->update_product_rating($product_id);
+        }
+    }
+    public function update_review1($review_id, $rating, $product_id, $review_text)
+    {
+        $data = array(
+            'rating' => $rating,
+            'review' => $review_text,
+            'ip_address' => 0,
+            'created_at' => date("Y-m-d H:i:s")
+        );
+        $ip = $this->input->ip_address();
+        if (!empty($ip)) {
+            $data['ip_address'] = $ip;
+        }
+        if (!empty($data['rating']) && !empty($data['review'])) {
+            $this->db->where('product_id', $product_id);
+            $this->db->where('user_id', $this->auth_user->id);
+            $this->db->update('reviews', $data);
+            //update product rating
+            unset($data);
             $this->update_product_rating($product_id);
         }
     }

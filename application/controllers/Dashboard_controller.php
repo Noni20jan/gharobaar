@@ -552,8 +552,8 @@ class Dashboard_controller extends Home_Core_Controller
         $html_content = $this->load->view('dashboard/schedule_shipment_view', $vars, true);
         $data = array(
             'result' => 1,
-             'html_content' => $html_content,
-            'vars'=>$vars
+            'html_content' => $html_content,
+            'vars' => $vars
         );
         echo json_encode($data);
     }
@@ -2654,7 +2654,6 @@ class Dashboard_controller extends Home_Core_Controller
         // $this->load->view('dashboard/includes/_footer');
     }
 
-
     public function refund_api_data($order_product_id)
     {
         $order_product_id = clean_number($order_product_id);
@@ -2740,6 +2739,14 @@ class Dashboard_controller extends Home_Core_Controller
         $refund_data["refund_note"] = 'Refund for ' . $product_name;
         $refund_data["created_by"] = $this->auth_user->id;
         $this->order_model->save_refund_detail($refund_data);
+    }
+
+    public function hsn_validity_check()
+    {
+        $hsn_code = $this->input->post('hsn_code');
+        $hsn_len = strlen($hsn_code);
+        $data["rse"] = $this->product_model->hsn_validity($hsn_code, $hsn_len);
+        echo json_encode($data);
     }
 
     public function penalty_calculate($order_product_table_id)
