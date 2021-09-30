@@ -1,63 +1,8 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<!-- <style>
-    .user-blog-2 {
-        background-color: white;
-        padding: 2%;
-        border-radius: 25px;
-        width: 70%;
-    }
-
-    .blogs-logo-2 {
-        width: 100%;
-    }
-
-    .blog-text-center {
-        text-align: left;
-    }
-
-    .blog-heading {
-        font-weight: bold;
-        margin-top: 5%;
-        font-size: 30px;
-        text-align: center;
-    }
-
-    .blog-2-content {
-        font-weight: 500;
-        font-size: 1.15rem;
-    }
-
-    .blog-2-point-list {
-        font-size: .875rem;
-        font-weight: 500;
-        list-style-type: disc;
-    }
-
-    .user-blog-2-headings {
-        font-weight: bolder;
-        margin-top: 4%;
-        font-size: 19px;
-    }
-
-    .blog-2-headinng-content {
-        text-align: justify;
-        margin-top: 5%;
-    }
-
-    @media(max-width:768px) {
-        .blog-heading {
-            font-weight: bold;
-            margin-top: 5%;
-            font-size: 20px;
-        }
-    }
-</style> -->
 
 <div id="wrapper" class="index-wrapper">
     <div class="container">
-        <div class="row blog-text-center" style="padding:0 15px;">
-            <h1 class="blog-heading">Why Home Cooked Food Always Beats Dine-out</h1>
-        </div>
+        <h2 class="blog-heading">Why Home Cooked Food Always Beats Dine-out</h2>
         <div class="row" style="place-content:center; padding:0 15px;">
             <img src="<?php echo base_url(); ?>assets/img/user-blog-2.png" class="blogs-logo-2">
         </div>

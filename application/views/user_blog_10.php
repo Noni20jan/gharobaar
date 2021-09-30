@@ -1,75 +1,12 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<style>
-    .user-blog-1 {
-        background-color: white;
-        padding: 2%;
-        border-radius: 35px;
-        width: 70%;
-    }
 
-    .blogs-logo {
-        width: 100%;
-    }
-
-    .blog-text-center {
-        text-align: left;
-    }
-
-    .blog-2-headinng-content {
-        text-align: justify;
-        margin-top: 5%;
-    }
-
-    .blog-heading {
-        font-weight: bold;
-        margin-top: 5%;
-        font-size: 30px;
-        padding: 0 15px;
-        text-align: center;
-    }
-
-    .blog-sub-heading {
-        font-size: 18px;
-        margin-top: 4%;
-        font-weight: 900;
-    }
-
-    .points-heading {
-        font-weight: bold;
-        font-size: 19px;
-    }
-
-    .points-heading-2 {
-        font-weight: bold;
-        font-size: 19px;
-        color: gray
-    }
-
-    .seventh-point-list {
-        font-size: 1.25rem;
-        font-weight: 500;
-        list-style: disc;
-    }
-
-    @media(max-width:768px) {
-        .blog-heading {
-            font-weight: bold;
-            margin-top: 5%;
-            font-size: 20px
-        }
-    }
-
-    .ul-style-type {
-        list-style: disc;
-    }
-</style>
 <div id="wrapper" class="index-wrapper">
     <div class="container">
-        <p class="blog-heading ">10+ Awe-Inspiring Gender Neutral Outfits You Can Get Online</p>
+        <h2 class="blog-heading">10+ Awe-Inspiring Gender Neutral Outfits You Can Get Online</h2>
         <div class="row" style="place-content:center; padding: 0 15px;">
             <img src="<?php echo base_url(); ?>assets/img/user-blog-10.jpg" class="blogs-logo">
         </div>
-        <p class="blog-sub-heading"><strong><span>Meta description: Best Gender-neutral outfits for any occasion. Gender fluid accessories &amp; clothes to match your style &amp; define your fashion statement. </span></strong></p>
+        <p class="blog-sub-heading"><strong><span>Best Gender-neutral outfits for any occasion. Gender fluid accessories &amp; clothes to match your style &amp; define your fashion statement. </span></strong></p>
         <div class="blog-2-headinng-content">
             <p><span>There's no doubt how people are going beyond the conventional trends &amp; are making their fashion statements - the ones that define them. The norm today is breaking the norms - &amp; in case of fashion, it is pretty much relatable. </span></p>
             <p><span>The battle of gender-equality &amp; conventional norms has always been irking the society, but fashion has won this battle by featuring unique &amp; out of the box ideas that are on everyone's minds today. </span></p>

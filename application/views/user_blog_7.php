@@ -1,83 +1,19 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<style>
-    .user-blog-1 {
-        background-color: white;
-        padding: 2%;
-        border-radius: 35px;
-        width: 70%;
-    }
 
-    .blogs-logo {
-        width: 100%;
-    }
-
-    .blog-text-center {
-        text-align: left;
-    }
-
-
-    .blog-heading {
-        font-weight: bold;
-        margin-top: 5%;
-        font-size: 30px;
-        padding: 0 15px;
-        text-align: center;
-    }
-
-    .blog-sub-heading {
-        font-size: 18px;
-        margin-top: 4%;
-        font-weight: 900;
-    }
-
-    .points-heading {
-        font-weight: bold;
-        font-size: 19px;
-    }
-
-    .blog-2-headinng-content {
-        text-align: justify;
-        margin-top: 5%;
-    }
-
-    .points-heading-2 {
-        font-weight: bold;
-        font-size: 19px;
-        color: gray
-    }
-
-    .seventh-point-list {
-        font-size: 1.25rem;
-        font-weight: 500;
-        list-style: disc;
-    }
-
-    @media(max-width:768px) {
-        .blog-heading {
-            font-weight: bold;
-            margin-top: 5%;
-            font-size: 20px
-        }
-    }
-
-    .ul-style-type {
-        list-style: disc;
-    }
-</style>
 <div id="wrapper" class="index-wrapper">
 
     <div class="container">
-        <p class="blog-heading ">Skincare Simplified - Keep up with your skincare routine with these products</p>
+        <h2 class="blog-heading ">Skincare Simplified - Keep up with your skincare routine with these products</h2>
         <div class="row" style="place-content:center; padding: 0 15px;">
             <img src="<?php echo base_url(); ?>assets/img/user-blog-7.jpg" class="blogs-logo">
         </div>
         <div class="blog-2-headinng-content">
-            <p class="blog-sub-heading">Meta description: Best skin care tips for every type of skin. Find affordable skincare products online at one of India's most trusted shopping websites. Shop moisturizers, body washes, scented soaps, face masks &amp; skin serums online.&nbsp; </p>
+            <p class="blog-sub-heading">Best skin care tips for every type of skin. Find affordable skincare products online at one of India's most trusted shopping websites. Shop moisturizers, body washes, scented soaps, face masks &amp; skin serums online.&nbsp; </p>
             <p>Amid unending hectic schedules, pollution &amp; stress, we somewhat forget about caring for ourselves. While we would desire flawlessly smooth skin, we rather end up with a paucity of time in our hands.</p>
             <h1 class="points-heading">How to maintain an active skincare regime despite your busy schedule?</h1>
             <p>Skincare is as essential for the body as oil is for machinery. It is better that you strive to rejuvenate the skin and make it look healthier and firm.&nbsp; </p>
             <p>To achieve healthy and resplendent skin, many methods can be adopted. Rather than spending your money on exorbitantly priced skincare goodies, you can use some simple products that will serve the purpose well. </p>
-            <h2>Basic skincare essentials in your Wardrobe </h2>
+            <h2 class="points-heading">Basic skincare essentials in your Wardrobe </h2>
             <p>Next, you should be conscious of what constitutes a safe skin routine. Which is to say, what kinds of things do you need to keep your skin clean and healthy?</p>
             <h3 class="points-heading-2">Cleansers&nbsp; </h3>
             <p>The cleanser is what you're going to use to wash your skin, and it's important to use a soap meant for your face &ndash;not just some mediocre bar or body wash. </p>

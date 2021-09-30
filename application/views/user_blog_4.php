@@ -1,83 +1,13 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<style>
-    .user-blog-1 {
-        background-color: white;
-        padding: 2%;
-        border-radius: 35px;
-        width: 70%;
-    }
-
-    .blogs-logo {
-        width: 100%;
-    }
-
-    .blog-text-center {
-        text-align: left;
-    }
-
-
-    .blog-heading {
-        font-weight: bold;
-        margin-top: 5%;
-        font-size: 30px;
-        padding: 0 15px;
-        text-align: center;
-    }
-
-    .blog-sub-heading {
-        font-size: 18px;
-        margin-top: 4%;
-        font-weight: 900;
-    }
-
-    .points-heading {
-        font-weight: bold;
-        font-size: 19px;
-    }
-
-    .points-heading-2 {
-        font-weight: bold;
-        font-size: 19px;
-        color: gray
-    }
-
-
-    .blog-2-headinng-content {
-        text-align: justify;
-        margin-top: 5%;
-    }
-
-
-    .seventh-point-list {
-        font-size: 1.25rem;
-        font-weight: 500;
-        list-style: disc;
-    }
-
-    @media(max-width:768px) {
-        .blog-heading {
-            font-weight: bold;
-            margin-top: 5%;
-            font-size: 20px
-        }
-    }
-
-    .ul-style-type {
-        list-style: disc;
-    }
-</style>
-
-
-
 <div id="wrapper" class="index-wrapper">
 
     <div class="container">
-        <p class="blog-heading">Corporate etiquette - Dress up well for your first interview</p>
+        <h2 class="blog-heading">Corporate etiquette - Dress up well for your first interview</h2>
         <div class="row" style="place-content:center; padding: 0 15px;">
             <img src="<?php echo base_url(); ?>assets/img/user-blog-4.jpg" class="blogs-logo">
         </div>
         <div class="blog-2-headinng-content">
-            <p class="blog-sub-heading">Meta description: Dress appropriately for your first interview. Get the best professional outfit online at attractive prices. Gharobaar is one of the most trusted shopping websites in India for professional attire. Here are some tips for dressing for an interview or any other occasion- make your first impression. </p>
+            <p class="blog-sub-heading"> Dress appropriately for your first interview. Get the best professional outfit online at attractive prices. Gharobaar is one of the most trusted shopping websites in India for professional attire. Here are some tips for dressing for an interview or any other occasion- make your first impression. </p>
 
             <p>That last-minute rush of grabbing things, that nervousness, &amp; of course, that paranoia of dressing awful or disappointing interviewers is all you would get reminded of when someone will ask you about your first interview experience. Got chills right? </p>
 

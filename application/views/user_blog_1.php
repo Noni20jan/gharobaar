@@ -1,62 +1,11 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<style>
-    .user-blog-1 {
-        background-color: white;
-        padding: 2%;
-        border-radius: 35px;
-        width: 70%;
-    }
-
-    .blogs-logo {
-        width: 100%;
-    }
-
-    .blog-text-center {
-        text-align: left;
-    }
-
-
-    .blog-heading {
-        font-weight: bold;
-        margin-top: 5%;
-        font-size: 30px;
-        padding: 0 15px;
-        text-align: center;
-    }
-
-    .blog-sub-heading {
-        font-size: 18px;
-        margin-top: 4%;
-    }
-
-    .points-heading {
-        font-weight: bold;
-        font-size: 19px;
-    }
-
-    .seventh-point-list {
-        font-size: 1.25rem;
-        font-weight: 500;
-        list-style: disc;
-    }
-
-    @media(max-width:768px) {
-        .blog-heading {
-            font-weight: bold;
-            margin-top: 5%;
-            font-size: 20px
-        }
-    }
-</style>
-
-
 
 <div id="wrapper" class="index-wrapper">
     <div class="container">
-        <div class="row">
-            <h1 class="blog-heading">Essential Ingredients To Start Your
-                Online Food Business</h1>
-        </div>
+
+        <h2 class="blog-heading">Essential Ingredients To Start Your
+            Online Food Business</h2>
+
         <div class="row" style="place-content:center; padding: 0 15px;">
             <img src="<?php echo base_url(); ?>assets/img/user-blog-1.png" class="blogs-logo">
         </div>
