@@ -167,14 +167,23 @@ foreach ($languages as $language) {
         $route[$key . getr('user_blog_7', $rts)]['GET'] = 'home_controller/user_blog_7';
         /*user_blog_8*/
         $route[$key . getr('user_blog_8', $rts)]['GET'] = 'home_controller/user_blog_8';
-        /*user_blog_8*/
+        /*user_blog_9*/
         $route[$key . getr('user_blog_9', $rts)]['GET'] = 'home_controller/user_blog_9';
-        /*user_blog_8*/
+        /*user_blog_10*/
         $route[$key . getr('user_blog_10', $rts)]['GET'] = 'home_controller/user_blog_10';
-        /*user_blog_8*/
+        /*user_blog_11*/
         $route[$key . getr('user_blog_11', $rts)]['GET'] = 'home_controller/user_blog_11';
-        /*user_blog_8*/
+        /*user_blog_12*/
         $route[$key . getr('user_blog_12', $rts)]['GET'] = 'home_controller/user_blog_12';
+        /*user_blog_13*/
+        $route[$key . getr('user_blog_13', $rts)]['GET'] = 'home_controller/user_blog_13';
+        /*user_blog_14*/
+        $route[$key . getr('user_blog_14', $rts)]['GET'] = 'home_controller/user_blog_14';
+        /*user_blog_15*/
+        $route[$key . getr('user_blog_15', $rts)]['GET'] = 'home_controller/user_blog_15';
+        /*user_blog_16*/
+        $route[$key . getr('user_blog_16', $rts)]['GET'] = 'home_controller/user_blog_16';
+
 
         //  categories
         // personal_care
