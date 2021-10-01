@@ -2817,4 +2817,25 @@ order by id desc LIMIT 1";
         $this->db->order_by('products.created_at', 'DESC')->limit(clean_number($limit));
         return $this->db->get('products')->result();
     }
+
+    //Check for exibition enabled
+    public function check_exhibition_enabled($product_id)
+    {
+        $data = array(
+            'product_id' => $product_id
+        );
+        $query = $this->db->query("SELECT 
+                count(p.id) count_item
+            FROM
+                products p,
+                users u,
+                temp_exhibition_sellers tes
+            WHERE
+                p.user_id = u.id
+                    AND u.email = tes.seller_email
+                    AND tes.is_active = 1
+                    AND p.id = $product_id");
+        $data = $query->row();
+        return $data->count_item;
+    }
 }
