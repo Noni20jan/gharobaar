@@ -590,9 +590,9 @@ foreach ($sellers as $seller) {
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'discount', '0'); ?>">
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'discount', 'No Discount'); ?>">
                                                 <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'discount', '0') ? 'checked' : ''; ?>>
+                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'discount', 'No Discount') ? 'checked' : ''; ?>>
                                                     <label class="custom-control-label">
                                                         No Discount
                                                     </label>

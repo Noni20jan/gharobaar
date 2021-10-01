@@ -927,20 +927,40 @@ class Product_model extends Core_Model
         }
 
         //discount rate
-        if ($discount == "More_than_50" || $discount == "0-25" || $discount == "25-50" || $discount == "0") {
-            $this->db->group_start();
-            if ($discount == "More_than_50") {
-                $this->db->where("cast(products.discount_rate as decimal(16,2)) BETWEEN 51 AND 100");
-            } else if ($discount == "25-50") {
-                $this->db->where("cast(products.discount_rate as decimal(16,2)) BETWEEN 25 AND 50");
-            } else if ($discount == "0-25") {
-                $this->db->where("products.discount_rate<=", 25);
-                $this->db->where("products.discount_rate>=", 1);
-            } else if ($discount == "0") {
-                $this->db->where("products.discount_rate=0");
-            }
-            $this->db->group_end();
-        }
+        if (!empty($discount)) :
+            $discount_array = explode(",", $discount);
+
+            if (count($discount_array) > 0) :
+                $this->db->group_start();
+                if (in_array("More_than_50", $discount_array)) {
+                    $this->db->or_where("cast(products.discount_rate as decimal(16,2)) BETWEEN 51 AND 100");
+                }
+                if (in_array("25-50", $discount_array)) {
+                    $this->db->or_where("cast(products.discount_rate as decimal(16,2)) BETWEEN 25 AND 50");
+                }
+                if (in_array("0-25", $discount_array)) {
+                    $this->db->or_where("cast(products.discount_rate as decimal(16,2)) BETWEEN 1 AND 25");
+                }
+                if (in_array("No Discount", $discount_array)) {
+                    $this->db->or_where("products.discount_rate = 0");
+                }
+                $this->db->group_end();
+            endif;
+        endif;
+        // if ($discount == "More_than_50" || $discount == "0-25" || $discount == "25-50" || $discount == "0") {
+        //     $this->db->group_start();
+        //     if ($discount == "More_than_50") {
+        //         $this->db->where("cast(products.discount_rate as decimal(16,2)) BETWEEN 51 AND 100");
+        //     } else if ($discount == "25-50") {
+        //         $this->db->where("cast(products.discount_rate as decimal(16,2)) BETWEEN 25 AND 50");
+        //     } else if ($discount == "0-25") {
+        //         $this->db->where("products.discount_rate<=", 25);
+        //         $this->db->where("products.discount_rate>=", 1);
+        //     } else if ($discount == "0") {
+        //         $this->db->where("products.discount_rate=0");
+        //     }
+        //     $this->db->group_end();
+        // }
 
         //seller type
         if (!empty($seller_type)) {
