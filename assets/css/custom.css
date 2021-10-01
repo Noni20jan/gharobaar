@@ -1636,3 +1636,79 @@ input[type="checkbox"][readonly] {
   font-size: large;
   margin: 10px 0px;
 }
+.user-blog-1 {
+  background-color: white;
+  padding: 2%;
+  border-radius: 35px;
+  width: 70%;
+}
+
+.blogs-logo-2 {
+  width: 100%;
+}
+
+.blogs-logo {
+  width: 100%;
+}
+
+.blog-text-center {
+  text-align: left;
+}
+
+.blog-heading {
+  font-weight: bold;
+  margin-top: 5%;
+  /* font-size: 30px; */
+  padding: 0 15px;
+  text-align: center;
+}
+
+.blog-sub-heading {
+  font-size: 18px;
+  margin-top: 4%;
+  font-weight: 900;
+}
+
+.points-heading {
+  font-weight: bold;
+  font-size: 19px;
+}
+
+.points-heading-2 {
+  font-weight: bold;
+  font-size: 19px;
+  color: #444444;
+}
+
+.blog-2-headinng-content {
+  text-align: justify;
+  margin-top: 5%;
+}
+
+.user-blog-2-headings {
+  font-weight: bolder;
+  margin-top: 4%;
+  font-size: 19px;
+}
+
+.seventh-point-list {
+  font-size: 1.25rem;
+  font-weight: 500;
+  list-style: disc;
+}
+
+@media (max-width: 768px) {
+  .blog-heading {
+    font-weight: bold;
+    margin-top: 5%;
+    font-size: 20px;
+  }
+}
+
+.links-in-blogs {
+  color: blue !important;
+}
+
+.ul-style-type {
+  list-style: disc;
+}

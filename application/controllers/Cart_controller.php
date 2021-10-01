@@ -418,6 +418,8 @@ class Cart_controller extends Home_Core_Controller
         $data['c_count'] = get_cart_product_count();
         $data['check_cashond'] = $this->order_model->check_cod($data['c_items'], $data['c_count']);
         $data['check_made_to_order'] = $this->order_model->check_mto($data['c_items']);
+        //check for exhibition enabled products
+        $data['check_exhibition'] = $this->order_model->check_exhibition_enabled($data['c_items']);
 
         $payment_type = input_get('payment_type');
         if ($payment_type != "membership" && $payment_type != "promote") {

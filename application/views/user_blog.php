@@ -196,15 +196,55 @@
                     </div>
                 </a>
             </div>
-            <!-- <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_10'>
-                    <img src="<?php echo base_url(); ?>assets/img/blog-10.png" class="blog-1-img">
+            <div class="col-md-6">
+                <a href='<?php echo base_url(); ?>user_blog_12'>
+                    <img src="<?php echo base_url(); ?>assets/img/blog-12.png" class="blog-1-img">
                     <div class="brief-content-blog">
-                        <h6 class="blogs-description">Why Home Cooked Food Always Beats Dine-out</h6>
-                        <p class="brief-content">As they say, there is no place like the home. A person may go anywhere,<br>but the comfort and satisfaction...</p>
+                        <h6 class="blogs-description">10 Gifts that your employees are going to love this Diwali</h6>
+                        <p class="brief-content">The festive bonus is something the employees eagerly wait for through...</p>
                     </div>
                 </a>
-            </div> -->
+            </div>
+        </div>
+        <div class="row" style="text-align:center;">
+            <div class="col-md-6">
+                <a href='<?php echo base_url(); ?>user_blog_13'>
+                    <img src="<?php echo base_url(); ?>assets/img/blog-13.png" class="blog-1-img">
+                    <div class="brief-content-blog">
+                        <h6 class="blogs-description">Best Gift Ideas for Diwali to Gift your Loved Ones</h6>
+                        <p class="brief-content">The iconic purple gift wrapped Haldiram’s or Bicano’s pack spelling<br>those...</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href='<?php echo base_url(); ?>user_blog_14'>
+                    <img src="<?php echo base_url(); ?>assets/img/blog-14.png" class="blog-1-img">
+                    <div class="brief-content-blog">
+                        <h6 class="blogs-description">Diwali Decoration Tips to Decorate your Home Like a<br>Paradise</h6>
+                        <p class="brief-content">It is that time of the year again! When the colourfully adorned streets...</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row" style="text-align:center;">
+            <div class="col-md-6">
+                <a href='<?php echo base_url(); ?>user_blog_15'>
+                    <img src="<?php echo base_url(); ?>assets/img/blog-15.png" class="blog-1-img">
+                    <div class="brief-content-blog">
+                        <h6 class="blogs-description">The coolest ethnic wear to look hot this Diwali</h6>
+                        <p class="brief-content">Tradition is as natural to India as mountains are to Kashmir and...</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href='<?php echo base_url(); ?>user_blog_16'>
+                    <img src="<?php echo base_url(); ?>assets/img/blog-16.png" class="blog-1-img">
+                    <div class="brief-content-blog">
+                        <h6 class="blogs-description">Edible Cutlery: To Keep Snacking After Snacking</h6>
+                        <p class="brief-content">Sustainable ways of life are the need of the hour world over...</p>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 </div>

@@ -1,72 +1,15 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<style>
-    .user-blog-1 {
-        background-color: white;
-        padding: 2%;
-        border-radius: 35px;
-        width: 70%;
-    }
-
-    .blogs-logo {
-        width: 100%;
-    }
-
-    .blog-text-center {
-        text-align: left;
-    }
-
-
-    .blog-2-headinng-content {
-        text-align: justify;
-        margin-top: 5%;
-    }
-
-
-    .blog-heading {
-        font-weight: bold;
-        margin-top: 5%;
-        font-size: 30px;
-        padding: 0 15px;
-        text-align: center;
-    }
-
-    .blog-sub-heading {
-        font-size: 18px;
-        margin-top: 4%;
-    }
-
-    .points-heading {
-        font-weight: bold;
-        font-size: 19px;
-    }
-
-    .seventh-point-list {
-        font-size: 1.25rem;
-        font-weight: 500;
-        list-style: disc;
-    }
-
-    @media(max-width:768px) {
-        .blog-heading {
-            font-weight: bold;
-            margin-top: 5%;
-            font-size: 20px
-        }
-    }
-</style>
-
-
 
 <div id="wrapper" class="index-wrapper">
     <div class="container">
-        <div class="row">
-            <h1 class="blog-heading">Know How Artisanal Jewellery Is Amplifying Current Fashion Standards</h1>
-        </div>
+
+        <h2 class="blog-heading">Know How Artisanal Jewellery Is Amplifying Current Fashion Standards</h2>
+
         <div class="row" style="place-content:center; padding: 0 15px;">
             <img src="<?php echo base_url(); ?>assets/img/user-blog-3.jpg" class="blogs-logo">
         </div>
         <div class="row blog-text-center" style="padding:0 15px; font-weight:900;">
-            <p class="blog-sub-heading">Meta description: Get the best handmade & artisanal jewellery online from India's one of the most trusted websites. Artisanal jewellery displays exquisite craftsmanship & genuineness. </p>
+            <p class="blog-sub-heading"> Get the best handmade & artisanal jewellery online from India's one of the most trusted websites. Artisanal jewellery displays exquisite craftsmanship & genuineness. </p>
         </div>
 
         <div class="row" style="text-align:justify; padding:0 15px;">
@@ -134,7 +77,7 @@
                     When you buy from an artisan, they'll have a relationship with the person they're buying metals and stones from, and you'll be able to ask questions about the process, should you be on the lookout for a piece as beautiful as it is ethical. Chances are the designer you choose to buy from will be happy to talk about their process - whether they've got a story about their gold guy or their adventures in sourcing certain hard-to-find materials.
                 </p>
                 <br>
-                <p class="points-heading">These days, people are getting more environmentally conscious. Many jewelers work with recycled metals or are reusing stones from vintage pieces, which come with both a history and a lower carbon footprint.
+                <p>These days, people are getting more environmentally conscious. Many jewelers work with recycled metals or are reusing stones from vintage pieces, which come with both a history and a lower carbon footprint.
                 </p>
                 <br>
                 <span class="points-heading">Fashion tips: style yourself with Artisanal Jewellery</span>
@@ -159,7 +102,6 @@
                 <p class="">There are no rules for fashion. But make sure whatever you do goes along with your choices- don't just randomly pick anything. Wear traditional jewellery with western outfits, try adding a shirt with a long skirt & plain canvas shoes or add a jacket, or rather, consider wearing a formal outfit with a light necklace & a pair of elegant earrings.
                 </p>
                 <br>
-                <span class="points-heading">13. Shipping </span>
                 <p class="">
                     Get authentic Artisanal Jewellery from Gharobaar & become an active part of your local economy!
                 </p>

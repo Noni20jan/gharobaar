@@ -1,79 +1,13 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<style>
-    .user-blog-1 {
-        background-color: white;
-        padding: 2%;
-        border-radius: 35px;
-        width: 70%;
-    }
 
-    .blogs-logo {
-        width: 100%;
-    }
-
-    .blog-text-center {
-        text-align: left;
-    }
-
-
-    .blog-heading {
-        font-weight: bold;
-        margin-top: 5%;
-        font-size: 30px;
-        padding: 0 15px;
-        text-align: center;
-    }
-
-    .blog-sub-heading {
-        font-size: 18px;
-        margin-top: 4%;
-        font-weight: 900;
-    }
-
-
-    .blog-2-headinng-content {
-        text-align: justify;
-        margin-top: 5%;
-    }
-
-
-    .points-heading {
-        font-weight: bold;
-        font-size: 19px;
-    }
-
-    .points-heading-2 {
-        font-weight: bold;
-        font-size: 19px;
-        color: gray
-    }
-
-    .seventh-point-list {
-        font-size: 1.25rem;
-        font-weight: 500;
-        list-style: disc;
-    }
-
-    @media(max-width:768px) {
-        .blog-heading {
-            font-weight: bold;
-            margin-top: 5%;
-            font-size: 20px
-        }
-    }
-
-    .ul-style-type {
-        list-style: disc;
-    }
-</style>
 <div id="wrapper" class="index-wrapper">
 
     <div class="container">
-        <p class="blog-heading ">Basics Of Logo Creation: How To Make A Great Logo For Your Brand </p>
+        <h2 class="blog-heading ">Basics Of Logo Creation: How To Make A Great Logo For Your Brand </h2>
         <div class="row" style="place-content:center; padding: 0 15px;">
             <img src="<?php echo base_url(); ?>assets/img/user-blog-8.jpg" class="blogs-logo">
         </div>
-        <p class="blog-sub-heading">Meta description - Design logo online with easy steps. An ideal logo generates credibility &amp; provides a distinguishable image in the market. </p>
+        <p class="blog-sub-heading">Design logo online with easy steps. An ideal logo generates credibility &amp; provides a distinguishable image in the market. </p>
         <div class="blog-2-headinng-content">
             <p>Logo creation is important for every business &amp; it takes considerable resources to get a logo made. Have you ever come across a reputable &amp; distinguished Brand that did not have a logo? Well no, because a Brand like that cannot exist. </p>
             <p>Logos might seem to be the part of a brand that can be managed later, but a lot of factors depend only on the logo. A good logo can make you roll in money, while the one that fails to convey the idea of your business to the public would lead to a complete disaster. </p>
@@ -104,7 +38,7 @@
                 <li>Simple - Shall be understandable by common people</li>
                 <li>Timeless - so that you do not have to redesign it over the years.</li>
             </ol>
-            <p>Types of Logos that could go well with your Brand:</p>
+            <p class="points-heading">Types of Logos that could go well with your Brand:</p>
             <h4 class="points-heading-2">1.Monograms (Letter marks) - </h4>
             <p>Letter marks or monograms are simple logos that include letters for making the logo. Many companies prefer to go by their initials like H&amp;M, ESPN, IBM &amp; much more. These logos are basic yet are successful enough to impress the customers. </p>
             <p>However, Monograms might not be good at defining your business. Sometimes, the abbreviation of your name might give you ridiculous results. For example, considering the initials of the name "The History Union of Guinea" would be THUG, &amp; it is not going well with the name of the association. Avoid such abbreviations &amp; consider more practical examples. </p>

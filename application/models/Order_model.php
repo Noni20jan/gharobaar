@@ -3281,6 +3281,22 @@ class Order_model extends CI_Model
         }
     }
 
+    public function check_exhibition_enabled($c_items)
+    {
+        $c_items = $this->cart_model->get_sess_cart_items();
+        $enabled = true;
+
+        foreach ($c_items as $c_item) {
+            $enable = $this->product_model->check_exhibition_enabled($c_item->product_id);
+            if (!$enable) {
+                $enabled = false;
+                break;
+            }
+        }
+
+        return $enabled;
+    }
+
     public function get_transaction_detail($order_id)
     {
         $order_id = clean_number($order_id);

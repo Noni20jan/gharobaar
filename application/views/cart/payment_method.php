@@ -37,7 +37,7 @@
         font-size: 20px;
     }
 
-   
+
 
     .progress-tracker {
         margin: 0px;
@@ -47,7 +47,7 @@
     .btn-custom {
         background-color: #007c05;
         border-color: #007c05;
-        font-weight:600 !important;
+        font-weight: 600 !important;
     }
 </style>
 <?php $is_all_deliverable = 1;
@@ -155,8 +155,8 @@ foreach ($cart_items as $item) {
                                                 echo '1.';
                                             } ?>
                                             &nbsp;<?php echo trans("payment_method"); ?></h2>
-
-                                        <?php if (!(($check_cashond) == "true" && ($check_made_to_order) == false)) : ?>
+                                        <?php if ($check_exhibition && $this->general_settings->enable_exhibition) : ?>
+                                        <?php elseif (!(($check_cashond) == "true" && ($check_made_to_order) == false)) : ?>
                                             <span class="cod_text"> <?php echo trans('cod_not_available'); ?></span>
                                         <?php endif; ?>
                                     </div>
@@ -342,7 +342,10 @@ foreach ($cart_items as $item) {
                                                         <li>
                                                             <div class="option-payment">
                                                                 <div class="custom-control custom-radio">
-                                                                    <?php if (($check_cashond) == "true" && ($check_made_to_order) == false) : ?>
+                                                                    <?php if ($check_exhibition && $this->general_settings->enable_exhibition) : ?>
+                                                                        <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" required <?php echo ($check_option == true) ? 'checked' : ''; ?>>
+                                                                        <label class="custom-control-label label-payment-option" for="option_cash_on_delivery"><?php echo trans("cash_on_delivery_fee"); ?><br><small><?php echo trans("cash_on_delivery_exp"); ?></small></label>
+                                                                    <?php elseif (($check_cashond) == "true" && ($check_made_to_order) == false) : ?>
                                                                         <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" required <?php echo ($check_option == true) ? 'checked' : ''; ?>>
                                                                         <label class="custom-control-label label-payment-option" for="option_cash_on_delivery"><?php echo trans("cash_on_delivery_fee"); ?><br><small><?php echo trans("cash_on_delivery_exp"); ?></small></label>
                                                                     <?php else : ?>

@@ -1,78 +1,14 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<style>
-    .user-blog-1 {
-        background-color: white;
-        padding: 2%;
-        border-radius: 35px;
-        width: 70%;
-    }
 
-    .blogs-logo {
-        width: 100%;
-    }
-
-    .blog-text-center {
-        text-align: left;
-    }
-
-
-    .blog-heading {
-        font-weight: bold;
-        margin-top: 5%;
-        font-size: 30px;
-        padding: 0 15px;
-        text-align: center;
-    }
-
-    .blog-sub-heading {
-        font-size: 18px;
-        margin-top: 4%;
-        font-weight: 900;
-    }
-
-    .points-heading {
-        font-weight: bold;
-        font-size: 19px;
-    }
-
-    .blog-2-headinng-content {
-        text-align: justify;
-        margin-top: 5%;
-    }
-
-    .points-heading-2 {
-        font-weight: bold;
-        font-size: 19px;
-        color: gray
-    }
-
-    .seventh-point-list {
-        font-size: 1.25rem;
-        font-weight: 500;
-        list-style: disc;
-    }
-
-    @media(max-width:768px) {
-        .blog-heading {
-            font-weight: bold;
-            margin-top: 5%;
-            font-size: 20px
-        }
-    }
-
-    .ul-style-type {
-        list-style: disc;
-    }
-</style>
 <div id="wrapper" class="index-wrapper">
 
     <div class="container">
-        <p class="blog-heading ">Essential Ingredients To Start Your Online Food Business</p>
+        <h2 class="blog-heading ">Essential Ingredients To Start Your Online Food Business</h2>
         <div class="row" style="place-content:center; padding: 0 15px;">
             <img src="<?php echo base_url(); ?>assets/img/user-blog-6.jpg" class="blogs-logo">
         </div>
         <div class="blog-2-headinng-content">
-            <p class="blog-sub-heading">Meta Description: Start your online food business with ease. Sell packaged food online through these simple steps see it thrive.
+            <p class="blog-sub-heading">Start your online food business with ease. Sell packaged food online through these simple steps see it thrive.
             <p>You might have a knack for baking delicious cookies or cooking smoked Barbeque Chicken in your yard. But did you ever come across the idea of taking your passion to the next level? If you did, then this is your time to showcase your creativity to the digital world - by setting up your store online.</p>
             <p>Having a passion is a good thing. If you are determined to make money out of your passion, you couldn't think of a better option. But what is required to own a business to run it smoothly? </p>
             <p>Businesses might seem to fluster people but the ones who get along with the journey to establish a business, things might work wonders for them. Starting a business from scratch whether online or offline demands a lot of brainstorming planning. When you decide to take your food business online, you might be made to face certain challenges if you do not carry out a comprehensive plan for your business. </p>

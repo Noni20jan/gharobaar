@@ -1,79 +1,14 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<style>
-    .user-blog-1 {
-        background-color: white;
-        padding: 2%;
-        border-radius: 35px;
-        width: 70%;
-    }
 
-    .blogs-logo {
-        width: 100%;
-    }
-
-    .blog-text-center {
-        text-align: left;
-    }
-
-
-    .blog-heading {
-        font-weight: bold;
-        margin-top: 5%;
-        font-size: 30px;
-        padding: 0 15px;
-        text-align: center;
-    }
-
-    .blog-sub-heading {
-        font-size: 18px;
-        margin-top: 4%;
-        font-weight: 900;
-    }
-
-    .points-heading {
-        font-weight: bold;
-        font-size: 19px;
-    }
-
-    .blog-2-headinng-content {
-        text-align: justify;
-        margin-top: 5%;
-    }
-
-
-    .points-heading-2 {
-        font-weight: bold;
-        font-size: 19px;
-        color: gray
-    }
-
-    .seventh-point-list {
-        font-size: 1.25rem;
-        font-weight: 500;
-        list-style: disc;
-    }
-
-    @media(max-width:768px) {
-        .blog-heading {
-            font-weight: bold;
-            margin-top: 5%;
-            font-size: 20px
-        }
-    }
-
-    .ul-style-type {
-        list-style: disc;
-    }
-</style>
 <div id="wrapper" class="index-wrapper">
 
     <div class="container">
-        <p class="blog-heading ">Getting Started On Affiliate Marketing:&nbsp; Turn product recommendations into a passive income </p>
+        <h2 class="blog-heading ">Getting Started On Affiliate Marketing:&nbsp; Turn product recommendations into a passive income </h2>
         <div class="row" style="place-content:center; padding: 0 15px;">
             <img src="<?php echo base_url(); ?>assets/img/user-blog-5.jpg" class="blogs-logo">
         </div>
         <div class="blog-2-headinng-content">
-            <p class="blog-sub-heading">Meta description: Affiliate marketing is one of the most popular tools in business that helps earn you commission by marketing other company's products or services. It is an easy yet feasible marketing strategy that helps you build your brand image.</p>
+            <p class="blog-sub-heading">Affiliate marketing is one of the most popular tools in business that helps earn you commission by marketing other company's products or services. It is an easy yet feasible marketing strategy that helps you build your brand image.</p>
             <p>Entrepreneurs who already run successful businesses know that there are always more ways in which they can choose to grow their businesses. Going online indeed is one of the best choices of any business for a multitude of factors: enhancing public reach or improving accessibility, increasing convenience for customers, cutting operational costs &amp; so on. One of the most famous strategies of business management that have come to light is Affiliate Marketing, which employs a simple yet smart tactic of disseminating one&rsquo;s business.&nbsp; </p>
             <p>You might have come across certain pages on Instagram &amp; Facebook where people post a picture of using a product, mostly giving positive feedback &amp; thus, encouraging other viewers to buy the product. This is simply nothing but Affiliate Marketing.&nbsp; </p>
             <p>Many bloggers &amp; Social Media Influencers are invited by certain businesses to promote their products. However, it is not direct marketing, as you do not approach such people for merely promoting your products. For example, you reach out to an Instagram influencer by sending her an exclusive gift box containing your products. If she approves of your products, she will start using them herself &amp; then promote them on her Instagram Page. Thus, with affiliate marketing, you do not only lead people to disseminate your brand, but also make them one of your loyal customers.&nbsp; </p>

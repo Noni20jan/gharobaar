@@ -137,6 +137,9 @@ $route['social-media-post']['POST'] = 'profile_controller/social_media_post';
 $route['social-media-seller-post']['POST'] = 'profile_controller/social_media_seller_post';
 $route['update-profile-post']['POST'] = 'profile_controller/update_profile_post';
 $route['update-story-post']['POST'] = 'profile_controller/update_story_post';
+
+$route['update-supplier-profile-logo']['POST'] = 'profile_controller/update_supplier_profile_logo';
+
 $route['update-payout-account']['POST'] = 'profile_controller/update_payout_account';
 $route['update-settings-post']['POST'] = 'profile_controller/update_settings_post';
 $route['update-seller-info-post']['POST'] = 'profile_controller/update_seller_info_post';

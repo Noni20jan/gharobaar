@@ -12266,6 +12266,9 @@ img {
 .p-r-0 {
   padding-right: 0 !important;
 }
+.p-l-0 {
+  padding-left: 0 !important;
+}
 
 .font-600 {
   font-weight: 600 !important;

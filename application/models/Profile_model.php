@@ -37,24 +37,27 @@ class Profile_model extends CI_Model
     {
         $user_id = clean_number($user_id);
         $this->load->model('upload_model');
-        $temp_path = $this->upload_model->upload_temp_image('profile-image');
-        if (!empty($temp_path)) {
-            //delete old avatar
-            delete_file_from_server($this->auth_user->avatar);
-            $data["avatar"] = $this->upload_model->avatar_upload($temp_path);
-            $this->upload_model->delete_temp_image($temp_path);
-        }
-        $temp_path = $this->upload_model->upload_temp_image('logo-image');
-        if (!empty($temp_path)) {
-            //delete old avatar
-            delete_file_from_server($this->auth_user->brand_logo);
-            $data["brand_logo"] = $this->upload_model->brand_logo_upload($temp_path);
-            $this->upload_model->delete_temp_image($temp_path);
-        }
+
+        // $temp_path = $this->upload_model->upload_temp_image('profile-image');
+        // if (!empty($temp_path)) {
+        //     //delete old avatar
+        //     delete_file_from_server($this->auth_user->avatar);
+        //     $data["avatar"] = $this->upload_model->avatar_upload($temp_path);
+        //     $this->upload_model->delete_temp_image($temp_path);
+        // }
+        // $temp_path = $this->upload_model->upload_temp_image('logo-image');
+        // if (!empty($temp_path)) {
+        //     //delete old avatar
+        //     delete_file_from_server($this->auth_user->brand_logo);
+        //     $data["brand_logo"] = $this->upload_model->brand_logo_upload($temp_path);
+        //     $this->upload_model->delete_temp_image($temp_path);
+        // }
         // $temp_path_gst = $this->upload_model->upload_temp_image('gst-image');
         // if (!empty($temp_path_gst)) {
         //delete old avatar
         // delete_file_from_server($this->auth_user->gst_image);
+
+
         if ($this->upload_model->upload_pdf_gst_file('gst-image') != null) {
             delete_file_from_server($this->auth_user->gst_image);
             $data["gst_image"] = $this->upload_model->upload_pdf_gst_file('gst-image');
@@ -96,6 +99,41 @@ class Profile_model extends CI_Model
         return $this->db->update('users', $data);
     }
 
+    // update supplier profile and logo
+    public function update_supplier_profile_logo($data, $user_id)
+    {
+
+        $user_id = clean_number($user_id);
+        $this->load->model('upload_model');
+
+
+        $temp_path = $this->upload_model->upload_temp_image('profile-image');
+        if (!empty($temp_path)) {
+            //delete old avatar
+            delete_file_from_server($this->auth_user->avatar);
+            $data["avatar"] = $this->upload_model->avatar_upload($temp_path);
+            $this->upload_model->delete_temp_image($temp_path);
+        }
+
+
+        $temp_path = $this->upload_model->upload_temp_image('logo-image');
+        if (!empty($temp_path)) {
+            //delete old brand logo
+            delete_file_from_server($this->auth_user->brand_logo);
+            $data["brand_logo"] = $this->upload_model->brand_logo_upload($temp_path);
+            $this->upload_model->delete_temp_image($temp_path);
+        }
+
+      
+        $this->db->where('id', $user_id);
+        return $this->db->update('users', $data);
+    }
+
+
+
+
+
+
 
     //update story model
     public function update_payout_account($data, $user_id)
@@ -119,15 +157,15 @@ class Profile_model extends CI_Model
                 'phone_number' => $this->input->post('phone_number', true),
                 'shop_name' => $this->input->post('shop_name', true),
                 'about_me' => $this->input->post('about_me', true),
-                'fssai_number'=>$this->input->post('fssai_number',true),
-                'pan_number'=>$this->input->post('pan_number',true),
-                'landmark'=>$this->input->post('landmark',true),
-                'pincode'=>$this->input->post('pincode',true),
+                'fssai_number' => $this->input->post('fssai_number', true),
+                'pan_number' => $this->input->post('pan_number', true),
+                'landmark' => $this->input->post('landmark', true),
+                'pincode' => $this->input->post('pincode', true),
                 'supplier_area' => $this->input->post('area', true),
                 'supplier_state' => $this->input->post('supplier_state', true),
                 'supplier_city' => $this->input->post('supplier_city', true),
                 'address' => $this->input->post('address', true),
-                'house_no' =>$this->input->post('house_no', true),
+                'house_no' => $this->input->post('house_no', true),
                 'facebook_url' => $this->input->post('facebook_url', true),
                 'twitter_url' => $this->input->post('twitter_url', true),
                 'instagram_url' => $this->input->post('instagram_url', true),
