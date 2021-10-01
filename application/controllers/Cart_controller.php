@@ -42,14 +42,16 @@ class Cart_controller extends Home_Core_Controller
         $data["open_rating_modal"] = false;
         if (!empty($this->auth_user)) :
             $order_id['product_id'] =  $this->product_model->get_order_id($this->auth_user->id);
-            $order['order_id'] = $this->product_model->get_order_product_id($order_id['product_id']->order_id, $this->auth_user->id);
-            foreach ($order['order_id'] as $order1) :
-                $not_rating['exist'] = $this->product_model->get_not_rating_product($order1->product_id, $this->auth_user->id);
-                if (empty($not_rating['exist'])) :
-                    $data["open_rating_modal"] = true;
-                    break;
-                endif;
-            endforeach;
+            if (!empty($order_id['product_id'])) :
+                $order['order_id'] = $this->product_model->get_order_product_id($order_id['product_id']->order_id, $this->auth_user->id);
+                foreach ($order['order_id'] as $order1) :
+                    $not_rating['exist'] = $this->product_model->get_not_rating_product($order1->product_id, $this->auth_user->id);
+                    if (empty($not_rating['exist'])) :
+                        $data["open_rating_modal"] = true;
+                        break;
+                    endif;
+                endforeach;
+            endif;
         endif;
         $this->load->view('partials/_header', $data);
         $this->load->view('cart/cart', $data);
