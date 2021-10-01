@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div id="wrapper" class="index-wrapper">
     <div class="container">
-        <p class="blog-heading ">Best Gift Ideas for Diwali to Gift your Loved Ones</p>
+        <h2 class="blog-heading ">Best Gift Ideas for Diwali to Gift your Loved Ones</h2>
         <div class="row" style="place-content:center; padding: 0 15px;">
             <img src="<?php echo base_url(); ?>assets/img/user-blog-13.jpg" class="blogs-logo">
         </div>
