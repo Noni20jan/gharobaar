@@ -226,6 +226,99 @@
         font-family: 'Montserrat';
     }
 </style>
+<style>
+    .coupons-div-header {
+        font-weight: bolder;
+        font-size: 18px;
+        padding: 0px 0px 7px 0px;
+    }
+
+    .coupons-div-content {
+        padding-bottom: 12px;
+        position: relative;
+        border-bottom: 1px solid #f5f5f6;
+        padding-left: 36px;
+    }
+
+    .coupons-div-label {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 16px;
+        padding: 7px 0;
+    }
+
+    .coupons-div-couponIcon {
+        position: absolute;
+        left: 0;
+        top: 7px;
+    }
+
+    .coupons-div-button {
+        float: right;
+        padding: 4px 16px;
+        position: absolute;
+        color: #007C05;
+        border: 1px solid #007C05;
+        border-radius: 3px;
+        text-transform: none;
+        cursor: pointer;
+        font-weight: 600;
+        top: 0;
+        right: 0;
+        background: #fff;
+        font-size: 12px;
+    }
+
+    .coupons-div-button-remove {
+        float: right;
+        padding: 4px 16px;
+        position: absolute;
+        color: #f15e4f;
+        border: 1px solid #f15e4f;
+        border-radius: 3px;
+        text-transform: none;
+        cursor: pointer;
+        font-weight: 600;
+        top: 0;
+        right: 0;
+        background: #fff;
+        font-size: 12px;
+    }
+
+    #loading-coupon {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 9999;
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 10000;
+    }
+
+    .hide-coupon-button {
+        display: none;
+    }
+
+    .hide-coupon-discount {
+        display: none;
+    }
+
+    .coupon-div-applied-label {
+        font-size: 12px;
+        color: #007C05;
+        padding: 2px 10px
+    }
+</style>
 <div id="wrapper" style="background:#fff;">
     <div class="container">
         <div class="fullwidth">
