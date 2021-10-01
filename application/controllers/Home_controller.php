@@ -1580,6 +1580,8 @@ class Home_controller extends Home_Core_Controller
                 'shipping_service_provider' => 'SELF',
                 'seller_id' => $this->auth_user->id,
             );
+            $this->membership_model->save_ship_type($ship);
+            $last_id = $this->db->insert_id();
             $ship_charge = $this->input->post('ship_charge', true);
             if ($ship_charge == "yes") {
                 // $ship_charge_arr = array();
@@ -1598,7 +1600,7 @@ class Home_controller extends Home_Core_Controller
                         'cod_charges' => $cod_amount
                     );
                     $this->membership_model->save_ship_charge_yes($thresh_0);
-                    $last_id = $this->db->insert_id();
+                    
                 } else if ($thresh > 0) {
                     $thresh_1 = array(
                         'seller_shipping_id' =>$last_id,
@@ -1626,7 +1628,7 @@ class Home_controller extends Home_Core_Controller
             }
 
 
-            $this->membership_model->save_ship_type($ship);
+            
         }
 
 
