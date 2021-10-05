@@ -28,11 +28,11 @@
         <h4 class="text-center p-b-15">Select Period</h4>
         <div class="col-sm-5">
             <label for="meeting-time">From:</label>
-            <input type="datetime-local" class="form-control" id="meeting-time" name="start_date" value="2000-01-12T19:30" required>
+            <input type="datetime-local" class="form-control" id="meeting-time" name="start_date" required>
         </div>
         <div class="col-sm-5">
             <label for="meeting-time">To:</label>
-            <input type="datetime-local" id="meeting-time" class="form-control" name="end_date" value="2000-06-12T19:30" required>
+            <input type="datetime-local" id="meeting-time" class="form-control" name="end_date" required>
         </div>
         <div class="col-sm-2 p-t-24">
             <button class="btn bg-purple">Search <i class="fa fa-search" aria-hidden="true"></i>
