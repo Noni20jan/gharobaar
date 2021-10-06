@@ -303,4 +303,26 @@ and source_type='Product')";
         $query = $this->db->query($sql);
         return $query->result();
     }
+
+    public function get_qualified_users()
+    {
+        $query = $this->db->get("lp_user_qualified");
+        return $query->result();
+    }
+
+    public function get_distinct_years()
+    {
+        $this->db->distinct();
+        $this->db->select('lp_year');
+        $query = $this->db->get("lp_user_qualified");
+        return $query->result();
+    }
+
+    public function get_qualified_users_by_range($quater, $year)
+    {
+        $this->db->where('lp_period', $quater);
+        $this->db->where('lp_year', $year);
+        $query = $this->db->get("lp_user_qualified");
+        return $query->result();
+    }
 }
