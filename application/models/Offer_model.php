@@ -262,6 +262,15 @@ order by created_at desc";
                 "min_value" => $d->min_value,
                 "max_value" => $d->max_value
             );
+            if ($d->criteria_value_type == 'BRONZE') {
+                $data["criteria_value_point"] = 1;
+            } elseif ($d->criteria_value_type == 'SILVER') {
+                $data["criteria_value_point"] = 2;
+            } elseif ($d->criteria_value_type == 'GOLD') {
+                $data["criteria_value_point"] = 3;
+            } elseif ($d->criteria_value_type == 'PLATINUM') {
+                $data["criteria_value_point"] = 4;
+            };
             array_push($data_insert, $data);
         }
 

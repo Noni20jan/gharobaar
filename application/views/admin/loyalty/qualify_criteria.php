@@ -143,7 +143,13 @@
                 var len = Json_data.length;
                 if (len != 0) {
                     for (var i = 0; i < len; i++) {
-                        $('#kpi_data').append("<tr><td>" + (j = i + 1) + "</td><td><input type='hidden' name='criteria_id+" + (j = i + 1) + "' value=" + Json_data[i].id + ">" + Json_data[i].name + "</td><td>" + Json_data[i].kpi_rel_type + "</td><td>" + Json_data[i].weightage + "</td><td>" + Json_data[i].parent_id + "</td><td><input type='text' onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57' name='min_value+" + (j = i + 1) + "' required></td><td><input type='text' onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57' name='max_value+" + (j = i + 1) + "' required></td></tr>")
+
+                        if (Json_data[i].kpi_rel_type == "Parent") {
+                            $('#kpi_data').append("<tr><td>" + (j = i + 1) + "</td><td><input type='hidden' name='criteria_id+" + (j = i + 1) + "' value=" + Json_data[i].id + ">" + Json_data[i].name + "</td><td>" + Json_data[i].kpi_rel_type + "</td><td>" + Json_data[i].weightage + "</td><td>" + Json_data[i].parent_id + "</td><td></td><td></td></tr>")
+                        } else {
+                            $('#kpi_data').append("<tr><td>" + (j = i + 1) + "</td><td><input type='hidden' name='criteria_id+" + (j = i + 1) + "' value=" + Json_data[i].id + ">" + Json_data[i].name + "</td><td>" + Json_data[i].kpi_rel_type + "</td><td>" + Json_data[i].weightage + "</td><td>" + Json_data[i].parent_id + "</td><td><input type='text' onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57' name='min_value+" + (j = i + 1) + "'required></td><td><input type='text' onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57' name='max_value+" + (j = i + 1) + "'required></td></tr>")
+
+                        }
                     }
                 }
             }
@@ -178,6 +184,8 @@
             url: base_url + url,
             data: d,
             success: function(data) {
+                alert("Data inserted successfully");
+                location.reload();
                 // console.log(data);
                 // var Json_data = JSON.parse(data);
                 // console.log(Json_data.length);

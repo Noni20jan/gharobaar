@@ -3782,6 +3782,12 @@ class Order_model extends CI_Model
         $sql = "SELECT distinct
         `a`.`order_id`,
         `a`.`net_seller_payable`,
+        `e`.`grand_total_amount`,
+        `e`.`Sup_Shipping_gst`,
+        `e`.`Sup_cod_gst`,
+        `e`.`Sup_subtotal_prd_gst`,
+        `a`.`shipping_charge_to_gharobaar`,
+        `a`.`cod_charge`,
         `b`.`shop_name`,
         `b`.`id`,
 
@@ -3801,8 +3807,11 @@ class Order_model extends CI_Model
         `orders` `c` ON `c`.`id` = `a`.`order_id`
             JOIN
         `order_products` `d` ON `d`.`order_id` = `c`.`id`
-    WHERE
-        `c`.`created_at` >= STR_TO_DATE('$from_date', '%Y-%m-%d')
+        JOIN
+        `order_supplier` `e` ON `a`.`order_id` = `e`.`order_id`
+        WHERE
+        `a`.`vendorId` = `e`.`seller_id`
+        AND `c`.`created_at` >= STR_TO_DATE('$from_date', '%Y-%m-%d')
             AND `c`.`created_at` < STR_TO_DATE('$to_date', '%Y-%m-%d') + 1
             AND `a`.`payout_initiated`='0'";
 
