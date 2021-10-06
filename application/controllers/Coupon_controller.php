@@ -170,7 +170,6 @@ class Coupon_controller extends Admin_Core_Controller
         //get paginated products
 
         $data["coupons"] = $this->offer_model->show_vouchers_data();
-        var_dump($data["coupons"]);
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/offers/user_vouchers', $data);
         $this->load->view('admin/includes/_footer');
