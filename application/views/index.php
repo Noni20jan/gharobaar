@@ -541,7 +541,7 @@
 
 <div class="section-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
-        $this->load->view("partials/new_slider");
+        $this->load->view("partials/_main_slider");
     endif; ?>
 </div>
 <!-- Wrapper -->
