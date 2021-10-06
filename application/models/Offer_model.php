@@ -284,4 +284,18 @@ order by created_at desc";
         $query = $this->db->get("criteria");
         return $query->result();
     }
+    public function get_data_products($offer_id, $per_page, $offset)
+    {
+
+        $sql = "SELECT  id,slug,sku,product_type
+from products   
+where  is_service=0 and stock>0 and  status=1  and id NOT IN(
+SELECT source_id 
+from offer_selection_details,
+cms_offers
+where   offer_selection_details.offer_id=$offer_id and offer_selection_details.offer_id = cms_offers.id and cms_offers.method='coupons'
+and source_type='Product')";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
 }

@@ -97,7 +97,23 @@ class Coupon_controller extends Admin_Core_Controller
 
         echo json_encode($data["users"]);
     }
+    public function products_users2()
+    {
+        // $data['title'] = trans("users");
 
+        // $data['title'] = trans("users");
+        $data['page_url'] = admin_url() . "products_offers";
+        $pagination = $this->paginate($data['page_url'], $this->auth_model->get_users_count_by_role('member'));
+
+        $data["offers"] = $this->offer_model->get_all_vouchers();
+        $offer_id = $this->input->post('offer_id');
+        // var_dump($offer_id);
+        // var_dump($this->input->get(object($data["offers"]->id));
+        $data["users"] = $this->offer_model->get_data_products($offer_id, $pagination['per_page'], $pagination['offset']);
+
+
+        echo json_encode($data["users"]);
+    }
 
 
     public function vouchers_data()
@@ -154,7 +170,7 @@ class Coupon_controller extends Admin_Core_Controller
         //get paginated products
 
         $data["coupons"] = $this->offer_model->show_vouchers_data();
-
+        var_dump($data["coupons"]);
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/offers/user_vouchers', $data);
         $this->load->view('admin/includes/_footer');
