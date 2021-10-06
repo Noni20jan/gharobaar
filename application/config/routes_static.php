@@ -191,6 +191,6 @@ $route['delete-coupon-post']['POST'] = 'coupon_controller/delete_coupon';
 $route['load-popup-coupon']['POST'] = 'coupon_controller/load_coupon_popup';
 $route['checked-availability-coupon']['POST'] = 'coupon_controller/checked_availability_coupon';
 $route['get-user-coupon']['POST'] = 'coupon_controller/vouchers_users2';
+$route['get-product-coupon']['POST'] = 'coupon_controller/products_users2';
 $route['remove-coupon']['POST'] = 'coupon_controller/remove_coupon';
 $route['check-hsn-validity']['POST'] = 'dashboard_controller/hsn_validity_check';
-

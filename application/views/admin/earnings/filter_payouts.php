@@ -79,7 +79,7 @@
 
         var url = form.attr('action');
 
-        table = $('#payouts_table').DataTable();
+        table = $('#offer_dashboard').DataTable();
         table.clear().destroy();
 
         $.ajax({
@@ -93,12 +93,59 @@
                 var len = Json_data.length;
                 if (len != 0) {
                     for (var i = 0; i < len; i++) {
-                        $('#payouts_data').append("<tr><td><input type='checkbox' onchange='checkbox(this,"+JSON.stringify(Json_data[i])+")'></td><td>" + (j = i + 1) + "</td><td>" + Json_data[i].order_id + "</td><td>" + Json_data[i].shop_name + "</td><td>" + Json_data[i].created_at + "</td><td>" + Json_data[i].order_status + "</td><td>" + (Json_data[i].net_seller_payable)/100 + "</td></tr>")
+                        $('#payouts_data').append("<tr><td><input type='checkbox' onchange='checkbox(this," + JSON.stringify(Json_data[i]) + ")'></td><td>" + (j = i + 1) + "</td><td>" + Json_data[i].order_id + "</td><td>" + Json_data[i].shop_name + "</td><td>" + Json_data[i].created_at + "</td><td>" + Json_data[i].order_status + "</td><td>" + ((Json_data[i].grand_total_amount) / 100).toFixed(2) + "</td><td>" + ((Json_data[i].shipping_charge_to_gharobaar) / 100).toFixed(2) + "</td><td>" + ((Json_data[i].cod_charge) / 100).toFixed(2) + "</td><td>" + (((Json_data[i].Sup_Shipping_gst / 100) + (Json_data[i].Sup_cod_gst / 100) + (Json_data[i].Sup_subtotal_prd_gst / 100))).toFixed(2) + "</td><td>" + ((Json_data[i].net_seller_payable) / 100).toFixed(2) + "</td></tr>")
                     }
                 }
-                $('#payouts_table').dataTable({
-                    paging: true,
-                    searching: true
+                $('#offer_dashboard').dataTable({
+                    orderCellsTop: true,
+                    fixedHeader: true,
+                    initComplete: function() {
+                        var api = this.api();
+
+                        // For each column
+                        api
+                            .columns()
+                            .eq(0)
+                            .each(function(colIdx) {
+                                // Set the header cell to contain the input element
+                                var cell = $('.filters th').eq(
+                                    $(api.column(colIdx + 1).header()).index()
+                                );
+                                var title = $(cell).text();
+                                $(cell).html('<input type="text" style="width:100%" placeholder="' + title + '" />');
+
+                                // On every keypress in this input
+                                $(
+                                        'input',
+                                        $('.filters th').eq($(api.column(colIdx).header()).index())
+                                    )
+                                    .off('keyup change')
+                                    .on('keyup change', function(e) {
+                                        e.stopPropagation();
+
+                                        // Get the search value
+                                        $(this).attr('title', $(this).val());
+                                        var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                        var cursorPosition = this.selectionStart;
+                                        // Search the column for that value
+                                        api
+                                            .column(colIdx)
+                                            .search(
+                                                this.value != '' ?
+                                                regexr.replace('{search}', '(((' + this.value + ')))') :
+                                                '',
+                                                this.value != '',
+                                                this.value == ''
+                                            )
+                                            .draw();
+
+                                        $(this)
+                                            .focus()[0]
+                                            .setSelectionRange(cursorPosition, cursorPosition);
+                                    });
+                            });
+                    },
                 });
             }
 

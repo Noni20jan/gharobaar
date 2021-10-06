@@ -250,6 +250,11 @@ foreach ($languages as $language) {
 
         $route[$key . getr('orders', $rts) . '/' . getr('completed_orders_dashboard', $rts)]['GET'] = 'order_controller/completed_orders_dashboard';
         $route[$key . getr('order_details', $rts) . '/(:num)']['GET'] = 'order_controller/order/$1';
+
+        //  $route[$key . getr('thankyou', $rts) . '/(:num)']['GET'] = 'order_controller/thankyou/$1';
+
+        $route[$key . getr('order-completed', $rts)]['GET'] = 'order_controller/thankyou';
+
         $route[$key . getr('order_product_details', $rts) . '/(:num)']['GET'] = 'order_controller/order_product/$1';
         $route[$key . getr('order_completed', $rts) . '/(:num)']['GET'] = 'cart_controller/order_completed/$1';
         $route[$key . getr('promote_payment_completed', $rts)]['GET'] = 'cart_controller/promote_payment_completed';

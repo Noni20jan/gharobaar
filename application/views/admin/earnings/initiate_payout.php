@@ -22,7 +22,7 @@
                 <div class="table-responsive">
                     <?php $this->load->view('admin/earnings/filter_payouts'); ?>
                     <!-- <table class="table table-bordered table-striped" role="grid"> -->
-                    <table id="payouts_table" class="display" style="width:100%">
+                    <table id="offer_dashboard" class="display" style="width:100%">
 
                         <thead>
                             <tr role="row">
@@ -33,7 +33,11 @@
                                 <th><?php echo trans('seller') ?></th>
                                 <th><?php echo trans('order_date'); ?></th>
                                 <th><?php echo trans('status'); ?></th>
-                                <th><?php echo ('Amount'); ?></th>
+                                <th><?php echo ('Order Value'); ?></th>
+                                <th><?php echo ('Shipping'); ?></th>
+                                <th><?php echo ('COD'); ?></th>
+                                <th><?php echo ('Total GST'); ?></th>
+                                <th><?php echo ('Seller Payable'); ?></th>
                             </tr>
                         </thead>
                         <tbody id="payouts_data">
@@ -49,7 +53,7 @@
         <button type="submit" id="ini_pay_btn" class="btn bg-purple" style="float: right;" onclick="init_pay(data_cal);"><?php echo ("Initiate Payout"); ?></button>
     </div>
 </div>
-<script>
+<!-- <script>
     $(document).ready(function() {
         $('#payouts_table').DataTable({
             paging: false,
@@ -58,6 +62,67 @@
                 'targets': [0], // column index (start from 0)
                 'orderable': false, // set orderable false for selected columns
             }]
+        });
+    });
+</script> -->
+<script>
+    $(document).ready(function() {
+        // Setup - add a text input to each footer cell
+        $('#offer_dashboard thead tr')
+            .clone(true)
+            .addClass('filters')
+            .appendTo('#offer_dashboard thead');
+
+        var table = $('#offer_dashboard').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true,
+            initComplete: function() {
+                var api = this.api();
+
+                // For each column
+                api
+                    .columns()
+                    .eq(0)
+                    .each(function(colIdx) {
+                        // Set the header cell to contain the input element
+                        var cell = $('.filters th').eq(
+                            $(api.column(colIdx+1).header()).index()
+                        );
+                        var title = $(cell).text();
+                        $(cell).html('<input type="text" style="width:100%" placeholder="' + title + '" />');
+
+                        // On every keypress in this input
+                        $(
+                                'input',
+                                $('.filters th').eq($(api.column(colIdx).header()).index())
+                            )
+                            .off('keyup change')
+                            .on('keyup change', function(e) {
+                                e.stopPropagation();
+
+                                // Get the search value
+                                $(this).attr('title', $(this).val());
+                                var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                var cursorPosition = this.selectionStart;
+                                // Search the column for that value
+                                api
+                                    .column(colIdx)
+                                    .search(
+                                        this.value != '' ?
+                                        regexr.replace('{search}', '(((' + this.value + ')))') :
+                                        '',
+                                        this.value != '',
+                                        this.value == ''
+                                    )
+                                    .draw();
+
+                                $(this)
+                                    .focus()[0]
+                                    .setSelectionRange(cursorPosition, cursorPosition);
+                            });
+                    });
+            },
         });
     });
 </script>

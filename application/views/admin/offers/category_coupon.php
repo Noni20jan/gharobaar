@@ -70,7 +70,7 @@
     $('input[type=radio][name=source_type]').change(function() {
         var data = {
             "source_type": this.value,
-            "sys_lang_id": sys_lang_id
+            "sys_lang_id": sys_lang_id,
         };
         data[csfr_token_name] = $.cookie(csfr_cookie_name);
         $.ajax({
@@ -91,6 +91,8 @@
                         }],
                         'order': [1, 'asc']
                     });
+                    table.clear().destroy();
+
                     // Handle click on "Select all" control
                     $('#example-select-all').on('click', function() {
                         // Check/uncheck all checkboxes in the table
@@ -151,41 +153,66 @@
     }
 </script>
 <script>
-    $(document).ready(function() {
-        var table = $('#example').DataTable({
-            'columnDefs': [{
-                'targets': 0,
-                "bPaginate": false,
-                "bFilter": false,
-                'searchable': true,
-                'orderable': false,
-                'className': 'dt-body-center',
-            }],
-            'order': [1, 'asc']
-        });
-        // Handle click on "Select all" control
-        $('#example-select-all').on('click', function() {
-            // Check/uncheck all checkboxes in the table
-            var rows = table.rows({
-                'search': 'applied'
-            }).nodes();
-            $('#product_checkbox', rows).prop('checked', this.checked);
-        });
-        // Handle click on checkbox to set state of "Select all" control
+    $('#source_product').change(function() {
+        table = $('#example').DataTable();
+        table.clear().destroy();
 
+        var offer_id = ($('#offer_id').val());
+        var data = {
+            'offer_id': offer_id
+        }
+        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+        $.ajax({
+
+            type: "POST",
+            url: base_url + "get-product-coupon",
+            data: data,
+            success: function(data) {
+                var Json_data = JSON.parse(data);
+                var len = Json_data.length;
+
+                for (var i = 0; i < len; i++) {
+
+                    $('#insert_data').append("<tr><td>" + Json_data[i].id + "</td><td>" + '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].slug + "</td><td>" + Json_data[i].sku + "</td><td>" + Json_data[i].product_type + "</td><td>" + '<input type="checkbox" name="selected_id" id="product_checkbox" value="' + Json_data[i].id + '">' + "</td></tr>");
+
+                }
+                var table = $('#example').DataTable({
+
+                    'columnDefs': [{
+                        'targets': 0,
+                        "bPaginate": false,
+                        "bFilter": false,
+                        'searchable': true,
+                        'orderable': false,
+                        'className': 'dt-body-center',
+
+                    }],
+                    'order': [1, 'asc']
+                });
+
+
+
+                // Handle click on "Select all" control
+                $('#example-select-all').on('click', function() {
+                    // Check/uncheck all checkboxes in the table
+                    var rows = table.rows({
+                        'search': 'applied'
+                    }).nodes();
+                    $('#product_checkbox', rows).prop('checked', this.checked);
+                });
+            }
+        });
     });
 </script>
 
 <script>
     function submit_data() {
-        alert("chal gya")
         var arr = [];
         $('input:checked[name=selected_id]').each(function() {
             arr.push($(this).val());
         });
 
         $('#my_match').val(arr.join(':'));
-        alert($('#my_match').val());
 
         console.log(typeof(($('#my_match').val())));
 
@@ -211,7 +238,7 @@
             data: data,
 
             success: function(data) {
-                alert(data);
+                location.reload();
             },
             error: function() {
                 alert("error"); //error occurs

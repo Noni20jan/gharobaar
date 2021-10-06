@@ -169,12 +169,17 @@ class Offer_model extends CI_Model
         return $query->row();
     }
 
-    public function get_all_available_coupons()
+    public function get_all_available_coupons($user_id)
     {
-        $sql = "SELECT * FROM cms_offers WHERE (end_date > now() or 
-                end_date is NULL)
-                and start_date <= now()
-                and status = 1";
+        $sql = "SELECT * FROM cms_offers where id in (SELECT offer_id FROM offer_selection_details where source_id = $user_id and source_type = 'User') and (end_date > now() or end_date is NULL)
+        and start_date < now()
+        and status = 1
+        UNION
+        SELECT * FROM cms_offers 
+        WHERE (end_date > now() or end_date is NULL)
+        and start_date < now()
+        and status = 1
+        and method = 'coupons';";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -262,6 +267,15 @@ order by created_at desc";
                 "min_value" => $d->min_value,
                 "max_value" => $d->max_value
             );
+            if ($d->criteria_value_type == 'BRONZE') {
+                $data["criteria_value_point"] = 1;
+            } elseif ($d->criteria_value_type == 'SILVER') {
+                $data["criteria_value_point"] = 2;
+            } elseif ($d->criteria_value_type == 'GOLD') {
+                $data["criteria_value_point"] = 3;
+            } elseif ($d->criteria_value_type == 'PLATINUM') {
+                $data["criteria_value_point"] = 4;
+            };
             array_push($data_insert, $data);
         }
 
@@ -273,6 +287,20 @@ order by created_at desc";
     {
         $this->db->where('user_type', $user_type);
         $query = $this->db->get("criteria");
+        return $query->result();
+    }
+    public function get_data_products($offer_id, $per_page, $offset)
+    {
+
+        $sql = "SELECT  id,slug,sku,product_type
+from products   
+where  is_service=0 and stock>0 and  status=1  and id NOT IN(
+SELECT source_id 
+from offer_selection_details,
+cms_offers
+where   offer_selection_details.offer_id=$offer_id and offer_selection_details.offer_id = cms_offers.id and cms_offers.method='coupons'
+and source_type='Product')";
+        $query = $this->db->query($sql);
         return $query->result();
     }
 }

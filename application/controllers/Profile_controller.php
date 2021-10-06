@@ -442,7 +442,7 @@ class Profile_controller extends Home_Core_Controller
             'supplier_story_url' => $this->input->post('story_vedio_url', true),
             'about_me' => $this->input->post('about_me', true),
             'update_profile' => '1',
-            'avatar_image' =>$this->input->post('about_me', true),
+    
 
         );
 
