@@ -31,10 +31,10 @@
                                 <th class="max-width-120"><input name="select_all" value="1" id="example-select-all" type="checkbox" /></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="insert_data">
 
-                            <?php if (!empty($products)) :
-                                foreach ($products as $item) : ?>
+                            <!-- <?php if (!empty($products)) :
+                                        foreach ($products as $item) : ?>
                                     <tr>
                                         <td><?php echo html_escape($item->id); ?></td>
                                         <td class="td-product">
@@ -60,7 +60,7 @@
                                     </tr>
 
                             <?php endforeach;
-                            endif; ?>
+                                    endif; ?> -->
 
                         </tbody>
                     </table>
