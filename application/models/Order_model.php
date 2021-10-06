@@ -3779,6 +3779,8 @@ class Order_model extends CI_Model
     // get cod charges by order id and seller id
     public function fetch_cod_seller_payable($from_date, $to_date)
     {
+        $to_date = $to_date. " 23:59:59";
+
         $sql = "SELECT distinct
         `a`.`order_id`,
         `a`.`net_seller_payable`,
@@ -3811,8 +3813,8 @@ class Order_model extends CI_Model
         `order_supplier` `e` ON `a`.`order_id` = `e`.`order_id`
         WHERE
         `a`.`vendorId` = `e`.`seller_id`
-        AND `c`.`created_at` >= STR_TO_DATE('$from_date', '%Y-%m-%d')
-            AND `c`.`created_at` < STR_TO_DATE('$to_date', '%Y-%m-%d') + 1
+        AND `c`.`created_at` >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
+            AND `c`.`created_at` <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
             AND `a`.`payout_initiated`='0'";
 
 
