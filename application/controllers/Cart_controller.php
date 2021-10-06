@@ -1026,10 +1026,9 @@ class Cart_controller extends Home_Core_Controller
                 // redirect(generate_url("order_details") . "/" . $order->order_number);
 
                 // redirect(generate_url("thankyou"). "/" . $order->order_number);
-                $this->session->set_userdata('thankyou_order_id',$order->order_number);
+                $this->session->set_userdata('thankyou_order_id', $order->order_number);
 
-                redirect(generate_url("thankyou"));
-
+                redirect(generate_url("order-completed"));
             }
         }
 
@@ -1069,8 +1068,8 @@ class Cart_controller extends Home_Core_Controller
                     $response->result = 1;
                     //  $response->redirect_url = $base_url . get_route("order_details", true) . $order->order_number;
                     //  $response->redirect_url = $base_url . get_route("thankyou", true) ."/". $order->order_number;
-                    $this->session->set_userdata('thankyou_order_id',$order->order_number);   
-                    $response->redirect_url = $base_url . get_route("thankyou", true);
+                    $this->session->set_userdata('thankyou_order_id', $order->order_number);
+                    $response->redirect_url = $base_url . get_route("order-completed", true);
 
                     if ($order->buyer_id == 0) {
                         $this->session->set_userdata('mds_show_order_completed_page', 1);
