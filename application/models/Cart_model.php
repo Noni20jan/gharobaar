@@ -757,11 +757,16 @@ class Cart_model extends CI_Model
                             if (strtoupper($coupon_details->type) == "FLAT") :
                                 $cart_total->applied_coupon_discount += $coupon_details->discount_amt * 100;
                             elseif (strtoupper($coupon_details->type) == "PERCENTAGE") :
-                                $coupon_discount = $cart_total->total * ($coupon_details->discount_percentage / 100);
-                                if ($coupon_discount / 100 > $coupon_details->allowed_max_discount) {
-                                    $cart_total->applied_coupon_discount += $coupon_details->allowed_max_discount * 100;
-                                } else {
-                                    $cart_total->applied_coupon_discount += $cart_total->total * ($coupon_details->discount_percentage / 100);
+                                foreach ($cart as $item) {
+                                    if ($item->product_id == $prod_id) :
+                                        $coupon_discount = $item->total_price * ($coupon_details->discount_percentage / 100);
+                                        if ($coupon_discount / 100 > $coupon_details->allowed_max_discount) {
+                                            $cart_total->applied_coupon_discount += $coupon_details->allowed_max_discount * 100;
+                                        } else {
+                                            $cart_total->applied_coupon_discount += $coupon_discount;
+                                        }
+                                        break;
+                                    endif;
                                 }
                             endif;
                         endforeach;
