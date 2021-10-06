@@ -390,7 +390,8 @@ class Coupon_controller extends Admin_Core_Controller
 
     public function load_coupon_popup()
     {
-        $data['all_coupons'] = $this->offer_model->get_all_available_coupons();
+        $user_id = $this->auth_user->id;
+        $data['all_coupons'] = $this->offer_model->get_all_available_coupons($user_id);
         $this->load->view('partials/_apply_coupon_modal', $data);
     }
 

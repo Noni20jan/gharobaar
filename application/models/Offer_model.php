@@ -169,12 +169,17 @@ class Offer_model extends CI_Model
         return $query->row();
     }
 
-    public function get_all_available_coupons()
+    public function get_all_available_coupons($user_id)
     {
-        $sql = "SELECT * FROM cms_offers WHERE (end_date > now() or 
-                end_date is NULL)
-                and start_date <= now()
-                and status = 1";
+        $sql = "SELECT * FROM cms_offers where id in (SELECT offer_id FROM offer_selection_details where source_id = $user_id and source_type = 'User') and (end_date > now() or end_date is NULL)
+        and start_date < now()
+        and status = 1
+        UNION
+        SELECT * FROM cms_offers 
+        WHERE (end_date > now() or end_date is NULL)
+        and start_date < now()
+        and status = 1
+        and method = 'coupons';";
         $query = $this->db->query($sql);
         return $query->result();
     }
