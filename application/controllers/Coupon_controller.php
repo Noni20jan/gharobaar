@@ -43,7 +43,7 @@ class Coupon_controller extends Admin_Core_Controller
         $data['main_settings'] = get_main_settings();
         $data['offers'] = $this->offer_model->get_all_coupons();
         $data['parent_categories'] = $this->category_model->get_all_parent_categories();
-        $data["coupons"] = $this->offer_model->get_all_coupons();
+        $data["coupons"] = $this->offer_model->coupon_validation();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/offers/category_coupon');
         $this->load->view('admin/includes/_footer');

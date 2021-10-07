@@ -16,7 +16,16 @@ class Offer_model extends CI_Model
         $query = $this->db->get('cms_offers');
         return $query->result();
     }
-
+    public function  coupon_validation()
+    {
+        $sql = "select * from cms_offers 
+    where method = 'coupons'  
+    and id NOT in ( Select offer_id 
+                    from offer_selection_details 
+                    where source_type <> 'User')";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     public function get_all_vouchers()
     {
         $this->db->where('method', 'vouchers');
