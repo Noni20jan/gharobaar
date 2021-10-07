@@ -171,7 +171,7 @@
                 <img src="assets/img/scooter.png">
             </div>
         </div>
-        <p id="demo" class="timer">.</p>
+        <!-- <p id="demo" class="timer">.</p> -->
     </div>
 </body>
 
@@ -203,7 +203,7 @@
         // If the count down is over, write some text 
         if (distance < 0) {
             clearInterval(x);
-            document.getElementById("demo").innerHTML = "EXPIRED";
+            // document.getElementById("demo").innerHTML = "EXPIRED";
         }
     }, 1000);
 </script>
