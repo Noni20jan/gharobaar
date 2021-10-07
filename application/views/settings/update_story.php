@@ -360,8 +360,8 @@
         </div>
 
         <div>
-        <?php if ($this->auth_user->update_profile == 1) : ?>
-          <button type="submit" name="submit" value="update_profile" style="margin-bottom: 2%;" class="btn btn-lg btn-success pull-right"><?php echo trans("save_profile_brand") ?></button>
+          <?php if ($this->auth_user->update_profile == 1) : ?>
+            <button type="submit" name="submit" value="update_profile" style="margin-bottom: 2%;" class="btn btn-lg btn-success pull-right"><?php echo trans("save_profile_brand") ?></button>
           <?php endif; ?>
         </div>
       </div>
@@ -373,39 +373,6 @@
 
   <?php echo form_open_multipart("update-story-post", ['id' => 'form_validate']); ?>
   <div class="profile-tab-content">
-    <div class="row">
-      <div class="background col-sm-6 m-b-30 groove">
-        <label class="control-label"><?php echo trans("story_images"); ?> (Maximum upload file size : 30 Mb)</label>
-        <?php $this->load->view("settings/_story_image_update_box"); ?>
-      </div>
-      <div class="background col-sm-6 m-b-30 groove">
-        <label class="control-label"><?php echo trans("story_video"); ?> (Maximum upload file size : 30 Mb)</label>
-        <?php $this->load->view("dashboard/product/_story_video_box"); ?>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 m-b-30 groove">
-        <label id="label1">About Your Brand</label>
-        <div class="form-group">
-          <div class="row Brand-1">
-            <div class="col-md-3"><label id="formlabel2">Brand Name<span class="Validation_error"> *</span></label></div>
-            <div class="col-md-9 Brand-name">
-              <input type='text' name="brand_name" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->brand_name); ?>" required>
-            </div>
-          </div>
-          <!-- <input type="text" name="brand_name" class="form-control form-input"  placeholder="Enter Brand Name" onKeyPress="if(this.value.length==10) return false;" required> -->
-        </div>
-        <div class="form-group">
-          <div class="row Brand-1">
-            <div class="col-md-3"><label id="formlabel2">Brand Description<span class="Validation_error"> *</span></label></div>
-            <div class="col-md-9 Brand-name">
-              <input type='text' name="brand_desc" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->brand_desc); ?>" required>
-            </div>
-          </div>
-          <!-- <input type="text" name="brand_desc" class="form-control form-input"  placeholder="Describe your brand" onKeyPress="if(this.value.length==10) return false;" required> -->
-        </div>
-      </div>
-    </div>
     <div class="row">
       <div class="col-sm-12 m-b-30 groove">
         <label id="label1">Your Bank Details</label>
@@ -451,6 +418,62 @@
         </div>
       </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row">
+      <div class="background col-sm-6 m-b-30 groove">
+        <label class="control-label"><?php echo trans("story_images"); ?> (Maximum upload file size : 30 Mb)</label>
+        <?php $this->load->view("settings/_story_image_update_box"); ?>
+      </div>
+      <div class="background col-sm-6 m-b-30 groove">
+        <label class="control-label"><?php echo trans("story_video"); ?> (Maximum upload file size : 30 Mb)</label>
+        <?php $this->load->view("dashboard/product/_story_video_box"); ?>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 m-b-30 groove">
+        <label id="label1">About Your Brand</label>
+        <div class="form-group">
+          <div class="row Brand-1">
+            <div class="col-md-3"><label id="formlabel2">Brand Name<span class="Validation_error"> *</span></label></div>
+            <div class="col-md-9 Brand-name">
+              <input type='text' name="brand_name" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->brand_name); ?>" required>
+            </div>
+          </div>
+          <!-- <input type="text" name="brand_name" class="form-control form-input"  placeholder="Enter Brand Name" onKeyPress="if(this.value.length==10) return false;" required> -->
+        </div>
+        <div class="form-group">
+          <div class="row Brand-1">
+            <div class="col-md-3"><label id="formlabel2">Brand Description<span class="Validation_error"> *</span></label></div>
+            <div class="col-md-9 Brand-name">
+              <input type='text' name="brand_desc" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->brand_desc); ?>" required>
+            </div>
+          </div>
+          <!-- <input type="text" name="brand_desc" class="form-control form-input"  placeholder="Describe your brand" onKeyPress="if(this.value.length==10) return false;" required> -->
+        </div>
+      </div>
+    </div>
+
 
     <div class="row">
       <div class="col-sm-12 m-b-30 groove">
