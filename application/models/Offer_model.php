@@ -135,8 +135,8 @@ class Offer_model extends CI_Model
     public function show_data()
     {
         $sql = "SELECT *
-        FROM cms_offers INNER JOIN offer_selection_details
-        WHERE offer_selection_details.offer_id = cms_offers.id &&  cms_offers.method='coupons'";
+        FROM cms_offers INNER JOIN offer_selection_details 
+        WHERE offer_selection_details.offer_id = cms_offers.id &&  cms_offers.method='coupons' && source_type!='User'";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -144,7 +144,7 @@ class Offer_model extends CI_Model
     {
         $sql = "SELECT *
         FROM cms_offers INNER JOIN offer_selection_details
-        WHERE offer_selection_details.offer_id = cms_offers.id && offer_selection_details.source_id!='NULL' and cms_offers.method='vouchers'";
+        WHERE offer_selection_details.offer_id = cms_offers.id && offer_selection_details.source_id!='NULL' and cms_offers.method='vouchers' and source_type='User'";
         $query = $this->db->query($sql);
         return $query->result();
     }
