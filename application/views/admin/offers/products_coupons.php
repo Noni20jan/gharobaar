@@ -9,6 +9,8 @@
 <table id="offers" class="display" style="width:100%">
     <thead>
         <tr>
+
+
             <th>Offer Id</th>
             <th>Coupon Name</th>
             <!-- <th>Method</th> -->
@@ -23,8 +25,6 @@
     </thead>
     <tbody>
         <?php foreach ($coupons as $coupon) : ?>
-            <?php $x = get_product($coupon->source_id); ?>
-            <?php var_dump($x); ?>
             <tr>
                 <td><?php echo $coupon->offer_id; ?></td>
                 <td><?php echo $coupon->name; ?></td>
