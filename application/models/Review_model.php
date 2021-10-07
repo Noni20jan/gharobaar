@@ -27,9 +27,11 @@ class Review_model extends CI_Model
 
     public function add_review1($rating, $product_id, $review_text)
     {
+        $seller_id=get_seller_id_by_product_id($product_id);
         $data = array(
             'product_id' => $product_id,
             'user_id' => $this->auth_user->id,
+            'supplier_id'=>$seller_id,
             'rating' => $rating,
             'review' => $review_text,
             'ip_address' => 0,
