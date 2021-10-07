@@ -299,7 +299,9 @@ SELECT source_id
 from offer_selection_details,
 cms_offers
 where   offer_selection_details.offer_id=$offer_id and offer_selection_details.offer_id = cms_offers.id and cms_offers.method='coupons'
-and source_type='Product')";
+and method='coupons' and source_type='Product')
+
+order by created_at desc";
         $query = $this->db->query($sql);
         return $query->result();
     }
