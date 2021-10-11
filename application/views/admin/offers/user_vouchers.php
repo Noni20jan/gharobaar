@@ -14,6 +14,7 @@
 
             <th>Email Address</th>
             <th>Voucher Code</th>
+            <th>Created At</th>
 
             <th>Start Date</th>
             <th>End Date</th>
@@ -32,7 +33,7 @@
 
                     <td class="source_id"><?php echo $zak->email; ?></td>
                     <td class="source_id"><?php echo $coupon->offer_code; ?></td>
-
+                    <td><?php echo $coupon->creation_date; ?></td>
                     <td><?php echo $coupon->start_date; ?></td>
                     <td><?php echo $coupon->end_date; ?></td>
 
