@@ -1,4 +1,9 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<style>
+    .Validation_error p {
+        display: block;
+    }
+</style>
 
 <div class="row">
     <div class="col-sm-8">
@@ -48,7 +53,7 @@
                     <div class="form-group">
                         <label><?php echo trans('email'); ?></label>
                         <input type="text" class="form-control auth-form-input" id="textEmail" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="<?php echo trans('email'); ?>" required value="<?php echo html_escape($user->email); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
-                        <span class="Validation_error" id="email_valid" style="color: #d43f3a;"></span>
+                        <span class="Validation_error" id="email_valid" style="color: red;"></span>
 
                     </div>
 
@@ -77,7 +82,7 @@
                     <div class="form-group">
                         <label><?php echo trans('phone_number'); ?></label>
                         <input type="text" class="form-control auth-form-input" id="phone_number" name="phone_number" value="<?php echo html_escape($user->phone_number); ?>" required <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> onkeyup="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
-                        <span class="Validation_error" id="number_valid" style="color: #d43f3a;"></span>
+                        <span class="Validation_error" id="number_valid" style="color: red;"></span>
 
                     </div>
                     <?php if ($user->role == "vendor") : ?>
@@ -123,7 +128,7 @@
                             <div class="row">
                                 <div class="col-12 col-sm-4 m-b-15">
                                     <label class="control-label">Area<span class="Validation_error"> *</span></label>
-                                    <input type="text" name="area" class="form-control auth-form-input" value="<?php echo html_escape($user->supplier_area); ?>" placeholder="Area" required>
+                                    <input type="text" name="area" id="supplier_area" class="form-control auth-form-input" value="<?php echo html_escape($user->supplier_area); ?>" placeholder="Area" required>
                                     <p class="Validation_error" id="area_p"></p>
                                 </div>
                                 <div class="col-12 col-sm-6 m-b-15">
@@ -292,8 +297,9 @@
 
 
         } else {
-            $("#pan_number_p").hide();
+            $("#pan_number_p")[0].innerHTML = "";
             $('#pan_number').css({
+
                 'borderColor': '#dfe0e6'
             });
         }
@@ -314,7 +320,7 @@
 
 
             } else {
-                $("#gst_number_p").hide();
+                $("#gst_number_p")[0].innerHTML = "";
                 $('#gst_number').css({
                     'borderColor': '#dfe0e6'
                 });
@@ -337,7 +343,7 @@
 
 
         } else {
-            $("#slug_p").hide();
+            $("#slug_p")[0].innerHTML = "";
             $('#slug').css({
                 'borderColor': '#dfe0e6'
             });
@@ -357,7 +363,7 @@
 
 
         } else {
-            $("#first_name_p").hide();
+            $("#first_name_p")[0].innerHTML = "";
             $('#first_name').css({
                 'borderColor': '#dfe0e6'
             });
@@ -369,14 +375,14 @@
             });
 
         } else if (regex3.test($("#last_name").val()) == false) {
-            $("#last_name_p")[0].innerHTML = "Enter a valid first name";
+            $("#last_name_p")[0].innerHTML = "Enter a valid last name";
             $('#last_name').css({
                 'borderColor': 'red'
             });
 
 
         } else {
-            $("#last_name_p").hide();
+            $("#last_name_p")[0].innerHTML = "";
             $('#last_name').css({
                 'borderColor': '#dfe0e6'
             });
@@ -395,7 +401,7 @@
 
 
         } else {
-            $("#shop_name_p").hide();
+            $("#shop_name_p")[0].innerHTML = "";
             $('#shop_name').css({
                 'borderColor': '#dfe0e6'
             });
@@ -430,7 +436,7 @@
 
 
         } else {
-            $("#email_valid").hide();
+            $("#email_valid")[0].innerHTML = "";
             $('#textEmail').css({
                 'borderColor': '#dfe0e6'
             });
@@ -451,7 +457,7 @@
             });
 
         } else {
-            $("#number_valid").hide();
+            $("#number_valid")[0].innerHTML = "";
             $('#phone_number').css({
                 'borderColor': '#dfe0e6'
             });
@@ -470,7 +476,7 @@
 
 
         } else {
-            $("#pincode_span").hide();
+            $("#pincode_span")[0].innerHTML = "";
             $('#pincode').css({
                 'borderColor': '#dfe0e6'
             });
@@ -515,7 +521,6 @@
                 type: "post",
                 data: b,
                 success: function(data) {
-                    $('.Validation_error').hide();
                     $('#first_name').css({
                         'borderColor': '#dfe0e6'
                     });

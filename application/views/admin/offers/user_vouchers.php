@@ -5,7 +5,7 @@
         width: 100%;
     }
 </style>
-
+<h3>Assigned Vouchers</h3>
 <table id="offers" class="display" style="width:100%">
     <thead>
         <tr>
@@ -14,7 +14,7 @@
 
             <th>Email Address</th>
             <th>Voucher Code</th>
-            <th>Created At</th>
+            <th>Assigned Date</th>
 
             <th>Start Date</th>
             <th>End Date</th>

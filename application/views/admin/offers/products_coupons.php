@@ -5,7 +5,7 @@
         width: 100%;
     }
 </style>
-<h3>Coupons</h3>
+<h3>Assigned Coupons</h3>
 <table id="offers" class="display" style="width:100%">
     <thead>
         <tr>
@@ -16,7 +16,7 @@
             <th>Source Type</th>
             <th>Coupon Code</th>
             <th>Product name</th>
-            <th>Created At</th>
+            <th>Assigned Date</th>
             <th>Start Date</th>
             <th>End Date</th>
 
