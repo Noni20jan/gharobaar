@@ -95,7 +95,9 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label"><?php echo trans('shop_description'); ?></label>
-                                <textarea class="form-control text-area" name="about_me" placeholder="<?php echo trans('shop_description'); ?>" required <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>><?php echo html_escape($user->about_me); ?></textarea>
+                                <textarea class="form-control text-area" name="about_me" id="shop_description" placeholder="<?php echo trans('shop_description'); ?>" required <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>><?php echo html_escape($user->about_me); ?></textarea>
+                                <p class="Validation_error" id="shop_description_p"></p>
+
                             </div>
                         <?php endif; ?>
 
@@ -406,7 +408,13 @@
                 'borderColor': '#dfe0e6'
             });
         }
+        if ($("#shop_description").val() == "") {
+            $("#shop_description_p")[0].innerHTML = "*Field must be filled out";
+            $('#shop_description').css({
+                'borderColor': 'red'
+            });
 
+        }
         if ($('#fssai_number').is(':visible')) {
             if ($("#fssai_number").val().length != 14) {
                 $("#fssai_p")[0].innerHTML = "*Enter valid fssai number";
@@ -515,7 +523,7 @@
                 'borderColor': 'red'
             });
 
-        } else if (($("#first_name").val() != "") && ($("#first_name").val().match(regex3)) && ($("#last_name").val() != "") && ($("#last_name").val().match(regex3)) && ($("#shop_name").val() != "") && ($("#shop_name").val().match(regex3)) && ($("#textEmail").val() != "") && ($("#textEmail").val().match(reg)) && ($("#phone_number").val() != "") && ($("#phone_number").val().length == 10) && ($("#pincode").val() != "") && ($("#pincode").val().length == 6) && ($("#supplier_state").val() != "") && ($("#supplier_city").val() != "") && ($("#supplier_area").val() != "") && ($("#supplier_house_no").val() != "" && ($("#fssai_number").val().length == 14) && ($("#pan_number").val() != "") && ($("#pan_number").val().match(regex) && ($("#gst_number").val() != "") && ($("#gst_number").val().match(regex1) && ($("#slug").val() != "") && ($("#slug").val().match(regex2)))))) {
+        } else if (($("#first_name").val() != "") && ($("#first_name").val().match(regex3)) && ($("#last_name").val() != "") && ($("#last_name").val().match(regex3)) && ($("#shop_name").val() != "") && ($("#shop_name").val().match(regex3)) && ($("#textEmail").val() != "") && ($("#textEmail").val().match(reg)) && ($("#phone_number").val() != "") && ($("#phone_number").val().length == 10) && ($("#pincode").val() != "") && ($("#pincode").val().length == 6) && ($("#supplier_state").val() != "") && ($("#supplier_city").val() != "") && ($("#supplier_area").val() != "") && ($("#supplier_house_no").val() != "" && ($("#fssai_number").val().length == 14) && ($("#pan_number").val() != "") && ($("#pan_number").val().match(regex) && ($("#gst_number").val() != "") && ($("#gst_number").val().match(regex1) && ($("#slug").val() != "") && ($("#slug").val().match(regex2) && ($("#shop_description").val() != "")))))) {
             $.ajax({
                 url: base_url + "membership_controller/edit_user_post",
                 type: "post",
@@ -556,6 +564,11 @@
 
                     })
                     $("#supplier_house_no").css({
+
+                        'borderColor': '#dfe0e6'
+
+                    })
+                    $("#shop_description").css({
 
                         'borderColor': '#dfe0e6'
 
