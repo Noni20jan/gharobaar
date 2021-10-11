@@ -89,7 +89,7 @@
                         <?php if (!empty($user->shop_name)) : ?>
                             <div class="form-group">
                                 <label><?php echo trans('shop_name'); ?></label>
-                                <input type="text" class="form-control auth-form-input" name="shop_name" pattern="[a-zA-Z ]+" title="Please input only english words" placeholder="<?php echo trans('shop_name'); ?>" required value="<?php echo html_escape($user->shop_name); ?>" required <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                                <input type="text" class="form-control auth-form-input" name="shop_name" id="shop_name" pattern="[a-zA-Z ]+" title="Please input only english words" placeholder="<?php echo trans('shop_name'); ?>" required value="<?php echo html_escape($user->shop_name); ?>" required <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
                                 <p class="Validation_error" id="shop_name_p"></p>
 
                             </div>
@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6 m-b-15">
                                     <label class="control-label">House no./Building no./Area<span class="Validation_error"> *</span></label>
-                                    <input type="text" name="house_no" id="supplier_house_no" class="form-control auth-form-input" value="<?php echo html_escape($user->house_no); ?>" placeholder="Area" required>
+                                    <input type="text" name="house_no" id="supplier_house_no" class="form-control auth-form-input" value="<?php echo html_escape($user->house_no); ?>" placeholder="House No" required>
                                     <p class="Validation_error" id="house_no_p"></p>
                                 </div>
                                 <div class="col-12 col-sm-6 m-b-15">
