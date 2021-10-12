@@ -5,6 +5,7 @@
         width: 100%;
     }
 </style>
+<h3>Vouchers Dashboard</h3>
 
 <table id="offer_dashboard" class="display" style="width:100%">
     <thead>

@@ -22,52 +22,63 @@
     }
 </style>
 
-<table id="offer_dashboard" class="display" style="width:100%">
+<div class="row p-b-15">
 
-    <div class="row p-b-15">
+    <form name="get_qualified_user" id="get_qualified_user" action="offer_controller/get_qualified_user_post">
         <h4 class="text-center p-b-15">Select Period</h4>
         <div class="col-sm-5">
-            <label for="meeting-time">From:</label>
-            <input type="datetime-local" class="form-control" id="meeting-time" name="start_date" required>
+            <label for="meeting-time">Select Quater:</label>
+            <select id="meeting-time" name="quater" class="form-control" required>
+                <option value="">Select a Quater</option>
+                <option value="Q-1">First Quater</option>
+                <option value="Q-2">Second Quater</option>
+                <option value="Q-3">Third Quater</option>
+                <option value="Q-4">Fourth Quater</option>
+            </select>
         </div>
         <div class="col-sm-5">
-            <label for="meeting-time">To:</label>
-            <input type="datetime-local" id="meeting-time" class="form-control" name="end_date" required>
+            <label for="meeting-time">Select Year:</label>
+            <select id="meeting-time" name="year" class="form-control" required>
+                <option value="">Select year</option>
+                <?php foreach ($years as $year) : ?>
+                    <option value="<?php echo $year->lp_year; ?>"><?php echo $year->lp_year; ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
         <div class="col-sm-2 p-t-24">
-            <button class="btn bg-purple">Search <i class="fa fa-search" aria-hidden="true"></i>
+            <button type="submit" class="btn bg-purple">Search <i class="fa fa-search" aria-hidden="true"></i>
             </button>
         </div>
-    </div>
-
-    <thead>
-        <tr>
-            <th>User</th>
-            <th>Bronze</th>
-            <th>Sliver</th>
-            <th>Gold</th>
-            <th>Platinum</th>
-            <th>View</th>
-            <!-- <th>%</th>
-            <th>Action</th> -->
-        </tr>
-    </thead>
-    <tbody>
-        <? //php foreach ($offers as $offer) : 
-        ?>
-        <tr class="text-center">
-            <td>Himanshu</td>
-            <td><i class="fa fa-times cross-color" aria-hidden="true"></i></td>
-            <td><i class="fa fa-times cross-color" aria-hidden="true"></i></td>
-            <td><i class="fa fa-times cross-color" aria-hidden="true"></i></td>
-            <td><i class="fa fa-check color-check" aria-hidden="true"></i></td>
-            <td><a href="javascript:void(0)" data-toggle="modal" data-target="#loyaltyDetailModel" style="text-decoration: underline; color:blue !important">Details</a></td>
-        </tr>
-        <? //php endforeach;
-        ?>
-    </tbody>
-</table>
-
+    </form>
+</div>
+<div id="offer-table">
+    <table id="offer_dashboard" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Bronze</th>
+                <th>Sliver</th>
+                <th>Gold</th>
+                <th>Platinum</th>
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($users as $qUser) :
+                $user = get_user($qUser->user_id);
+            ?>
+                <tr class="text-center">
+                    <td><?php echo $user->first_name . " " . $user->last_name; ?></td>
+                    <td><i class="fa <?php echo $qUser->lp_qualified_value == 1 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
+                    <td><i class="fa <?php echo $qUser->lp_qualified_value == 2 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
+                    <td><i class="fa <?php echo $qUser->lp_qualified_value == 3 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
+                    <td><i class="fa <?php echo $qUser->lp_qualified_value == 4 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
+                    <td><a href="<?php echo (admin_url() . 'qualified-user-details/' . $qUser->id); ?>" style="text-decoration: underline; color:blue !important">Details</a></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 
 <!-- modal for showing details related to loyelty  -->
 <div class="modal fade" id="loyaltyDetailModel" role="dialog">
@@ -89,62 +100,46 @@
 
 <script>
     $(document).ready(function() {
-        // Setup - add a text input to each footer cell
-        $('#offer_dashboard thead tr')
-            .clone(true)
-            .addClass('filters')
-            .appendTo('#offer_dashboard thead');
+        $('#offer_dashboard').DataTable();
+    });
+</script>
 
-        var table = $('#offer_dashboard').DataTable({
-            orderCellsTop: true,
-            fixedHeader: true,
-            initComplete: function() {
-                var api = this.api();
+<script>
+    $("#get_qualified_user").submit(function(e) {
 
-                // For each column
-                api
-                    .columns()
-                    .eq(0)
-                    .each(function(colIdx) {
-                        // Set the header cell to contain the input element
-                        var cell = $('.filters th').eq(
-                            $(api.column(colIdx).header()).index()
-                        );
-                        var title = $(cell).text();
-                        $(cell).html('<input type="text" placeholder="' + title + '" />');
-
-                        // On every keypress in this input
-                        $(
-                                'input',
-                                $('.filters th').eq($(api.column(colIdx).header()).index())
-                            )
-                            .off('keyup change')
-                            .on('keyup change', function(e) {
-                                e.stopPropagation();
-
-                                // Get the search value
-                                $(this).attr('title', $(this).val());
-                                var regexr = '({search})'; //$(this).parents('th').find('select').val();
-
-                                var cursorPosition = this.selectionStart;
-                                // Search the column for that value
-                                api
-                                    .column(colIdx)
-                                    .search(
-                                        this.value != '' ?
-                                        regexr.replace('{search}', '(((' + this.value + ')))') :
-                                        '',
-                                        this.value != '',
-                                        this.value == ''
-                                    )
-                                    .draw();
-
-                                $(this)
-                                    .focus()[0]
-                                    .setSelectionRange(cursorPosition, cursorPosition);
-                            });
-                    });
-            },
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+        var form = $(this);
+        var d = form.serializeArray();
+        d.push({
+            name: csfr_token_name,
+            value: $.cookie(csfr_cookie_name)
         });
+        d.push({
+            name: "sys_lang_id",
+            value: sys_lang_id
+        });
+
+        var url = form.attr('action');
+
+        table = $('#offer_dashboard').DataTable();
+        table.clear().destroy();
+
+        $.ajax({
+            type: "POST",
+            url: base_url + url,
+            data: d, // serializes the form's elements.
+            success: function(data) {
+                jsonData = JSON.parse(data);
+                if (jsonData.status) {
+                    $("#offer-table").html(jsonData.html_content);
+                    setTimeout(function() {
+                        $('#offer_dashboard').DataTable();
+                    }, 200)
+                }
+
+            }
+        });
+
+
     });
 </script>

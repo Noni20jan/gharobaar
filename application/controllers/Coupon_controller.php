@@ -72,7 +72,7 @@ class Coupon_controller extends Admin_Core_Controller
         $data["offers"] = $this->offer_model->get_all_vouchers();
 
         // var_dump($this->input->get(object($data["offers"]->id));
-        //  $data["users"] = $this->offer_model->get_data_users('member',20, $pagination['per_page'], $pagination['offset']);
+        //   $data["users"] = $this->offer_model->get_data_users('member',20, $pagination['per_page'], $pagination['offset']);
 
 
 
@@ -170,7 +170,6 @@ class Coupon_controller extends Admin_Core_Controller
         //get paginated products
 
         $data["coupons"] = $this->offer_model->show_vouchers_data();
-        var_dump($data["coupons"]);
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/offers/user_vouchers', $data);
         $this->load->view('admin/includes/_footer');

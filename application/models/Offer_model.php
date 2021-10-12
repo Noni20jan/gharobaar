@@ -16,7 +16,16 @@ class Offer_model extends CI_Model
         $query = $this->db->get('cms_offers');
         return $query->result();
     }
-
+    public function  coupon_validation()
+    {
+        $sql = "select * from cms_offers 
+    where method = 'coupons'  
+    and id NOT in ( Select offer_id 
+                    from offer_selection_details 
+                    where source_type <> 'User')";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     public function get_all_vouchers()
     {
         $this->db->where('method', 'vouchers');
@@ -135,8 +144,8 @@ class Offer_model extends CI_Model
     public function show_data()
     {
         $sql = "SELECT *
-        FROM cms_offers INNER JOIN offer_selection_details
-        WHERE offer_selection_details.offer_id = cms_offers.id &&  cms_offers.method='coupons'";
+        FROM cms_offers INNER JOIN offer_selection_details 
+        WHERE offer_selection_details.offer_id = cms_offers.id &&  cms_offers.method='coupons' && source_type!='User'";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -144,7 +153,7 @@ class Offer_model extends CI_Model
     {
         $sql = "SELECT *
         FROM cms_offers INNER JOIN offer_selection_details
-        WHERE offer_selection_details.offer_id = cms_offers.id && offer_selection_details.source_id!='NULL' and cms_offers.method='vouchers'";
+        WHERE offer_selection_details.offer_id = cms_offers.id && offer_selection_details.source_id!='NULL' and cms_offers.method='vouchers' and source_type='User'";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -299,8 +308,39 @@ SELECT source_id
 from offer_selection_details,
 cms_offers
 where   offer_selection_details.offer_id=$offer_id and offer_selection_details.offer_id = cms_offers.id and cms_offers.method='coupons'
-and source_type='Product')";
+and method='coupons' and source_type='Product')
+
+order by created_at desc";
         $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    public function get_qualified_users()
+    {
+        $query = $this->db->get("lp_user_qualified");
+        return $query->result();
+    }
+
+    public function get_qualified_users_by_id($lp_id)
+    {
+        $this->db->where("id", $lp_id);
+        $query = $this->db->get("lp_user_qualified");
+        return $query->row();
+    }
+
+    public function get_distinct_years()
+    {
+        $this->db->distinct();
+        $this->db->select('lp_year');
+        $query = $this->db->get("lp_user_qualified");
+        return $query->result();
+    }
+
+    public function get_qualified_users_by_range($quater, $year)
+    {
+        $this->db->where('lp_period', $quater);
+        $this->db->where('lp_year', $year);
+        $query = $this->db->get("lp_user_qualified");
         return $query->result();
     }
 }

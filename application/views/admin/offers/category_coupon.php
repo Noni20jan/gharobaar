@@ -153,6 +153,58 @@
     }
 </script>
 <script>
+    $('#offer_id').change(function() {
+        table = $('#example').DataTable();
+        table.clear().destroy();
+
+        var offer_id = ($('#offer_id').val());
+        var data = {
+            'offer_id': offer_id
+        }
+        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+        $.ajax({
+
+            type: "POST",
+            url: base_url + "get-product-coupon",
+            data: data,
+            success: function(data) {
+                var Json_data = JSON.parse(data);
+                var len = Json_data.length;
+
+                for (var i = 0; i < len; i++) {
+
+                    $('#insert_data').append("<tr><td>" + Json_data[i].id + "</td><td>" + '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].slug + "</td><td>" + Json_data[i].sku + "</td><td>" + Json_data[i].product_type + "</td><td>" + '<input type="checkbox" name="selected_id" id="product_checkbox" value="' + Json_data[i].id + '">' + "</td></tr>");
+
+                }
+                var table = $('#example').DataTable({
+
+                    'columnDefs': [{
+                        'targets': 0,
+                        "bPaginate": false,
+                        "bFilter": false,
+                        'searchable': true,
+                        'orderable': false,
+                        'className': 'dt-body-center',
+
+                    }],
+                    'order': [1, 'asc']
+                });
+
+
+
+                // Handle click on "Select all" control
+                $('#example-select-all').on('click', function() {
+                    // Check/uncheck all checkboxes in the table
+                    var rows = table.rows({
+                        'search': 'applied'
+                    }).nodes();
+                    $('#product_checkbox', rows).prop('checked', this.checked);
+                });
+            }
+        });
+    });
+</script>
+<script>
     $('#source_product').change(function() {
         table = $('#example').DataTable();
         table.clear().destroy();
@@ -204,7 +256,6 @@
         });
     });
 </script>
-
 <script>
     function submit_data() {
         var arr = [];

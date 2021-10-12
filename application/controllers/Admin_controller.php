@@ -513,19 +513,18 @@ class Admin_controller extends Admin_Core_Controller
     {
         $this->load->model("Offer_model");
         $data['title'] = trans("");
-        $data['user_type'] = $this->Offer_model->get_user_type();
-        $data['kpi'] = $this->Offer_model->get_kpi_name();
+        $data["users"] = $this->offer_model->get_qualified_users();
+        $data["years"] = $this->offer_model->get_distinct_years();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/loyalty/qualified_user', $data);
         $this->load->view('admin/includes/_footer');
     }
 
-    public function qualified_user_details()
+    public function qualified_user_details($lp_id)
     {
         $this->load->model("Offer_model");
         $data['title'] = trans("");
-        $data['user_type'] = $this->Offer_model->get_user_type();
-        $data['kpi'] = $this->Offer_model->get_kpi_name();
+        $data["lp_user_data"] = $this->offer_model->get_qualified_users_by_id($lp_id);
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/loyalty/qualified_user_details', $data);
         $this->load->view('admin/includes/_footer');

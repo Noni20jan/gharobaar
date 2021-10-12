@@ -41,4 +41,18 @@ class Offer_controller extends Admin_Core_Controller
             $this->session->set_flashdata('error', trans("msg_error"));
         }
     }
+
+    public function get_qualified_user_post()
+    {
+        $start_date = $this->input->post('quater', true);
+        $end_date = $this->input->post('year', true);
+        $dataGet = array(
+            "users" => $this->offer_model->get_qualified_users_by_range($start_date, $end_date)
+        );
+        $data = array(
+            "status" => 1,
+            "html_content" => $this->load->view("admin/loyalty/table_qualified_user", $dataGet, true)
+        );
+        echo json_encode($data);
+    }
 }
