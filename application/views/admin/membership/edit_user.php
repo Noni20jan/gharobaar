@@ -49,7 +49,7 @@
 
                 <div class="form-group">
                     <label><?php echo trans('email'); ?></label>
-                    <input type="text" class="form-control auth-form-input" id="textEmail" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="<?php echo trans('email'); ?>" required value="<?php echo html_escape($user->email); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                    <input type="text" class="form-control auth-form-input" id="textEmail" name="email" pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/" placeholder="<?php echo trans('email'); ?>" required value="<?php echo html_escape($user->email); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
                     <span class="Validation_error" id="email_valid" style="color: red;"></span>
 
                 </div>
