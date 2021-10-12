@@ -145,7 +145,7 @@
                         <div class="form-group">
 
                             <label class="control-label">GST Number</label>
-                            <input type="text" class="form-control form-input" id="gst_number" name="gst_number" pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$" placeholder="GST Number" required value="<?php echo html_escape($user->gst_number); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                            <input type="text" class="form-control form-input" id="gst_number" name="gst_number" pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$" placeholder="GST Number" minlength="15" maxlength="15" required value="<?php echo html_escape($user->gst_number); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
                             <p class="Validation_error" id="gst_number_p"></p>
                         </div>
                     <?php endif; ?>

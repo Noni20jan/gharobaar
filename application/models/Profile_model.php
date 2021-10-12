@@ -124,7 +124,7 @@ class Profile_model extends CI_Model
             $this->upload_model->delete_temp_image($temp_path);
         }
 
-      
+
         $this->db->where('id', $user_id);
         return $this->db->update('users', $data);
     }
@@ -159,6 +159,7 @@ class Profile_model extends CI_Model
                 'about_me' => $this->input->post('about_me', true),
                 'fssai_number' => $this->input->post('fssai_number', true),
                 'pan_number' => $this->input->post('pan_number', true),
+                'gst_number' => $this->input->post('gst_number', true),
                 'landmark' => $this->input->post('landmark', true),
                 'pincode' => $this->input->post('pincode', true),
                 'supplier_area' => $this->input->post('area', true),
