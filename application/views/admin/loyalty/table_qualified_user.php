@@ -19,7 +19,7 @@
                 <td><i class="fa <?php echo $qUser->lp_qualified_value == 2 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
                 <td><i class="fa <?php echo $qUser->lp_qualified_value == 3 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
                 <td><i class="fa <?php echo $qUser->lp_qualified_value == 4 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
-                <td><a href="javascript:void(0)" data-toggle="modal" data-target="#loyaltyDetailModel" style="text-decoration: underline; color:blue !important">Details</a></td>
+                <td><a href="<?php echo (admin_url() . 'qualified-user-details/' . $qUser->id); ?>" style="text-decoration: underline; color:blue !important">Details</a></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

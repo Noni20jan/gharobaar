@@ -33,9 +33,36 @@
     .table-content {
         overflow-x: auto;
     }
+
+    .medal {
+        width: 200px;
+    }
 </style>
 
+<?php var_dump($lp_user_data); ?>
+
 <div class="content">
+
+    <div>
+        <?php
+        $img = "";
+        switch ($lp_user_data->lp_qualified_program):
+            case "BRONZE":
+                $img = "bronze.png";
+                break;
+            case "SILVER":
+                $img = "silver.png";
+                break;
+            case "GOLD":
+                $img = "gold.png";
+                break;
+            case "PLATINUM":
+                $img = "platinum.png";
+                break;
+        endswitch;
+        ?>
+        <img class="medal" src="<?php echo base_url() ?>assets\img\<?php echo $img; ?>">
+    </div>
 
     <div class="img">
         <h3>Supplier Loyalty Criteria</h3>

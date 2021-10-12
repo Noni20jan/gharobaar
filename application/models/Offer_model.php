@@ -321,6 +321,13 @@ order by created_at desc";
         return $query->result();
     }
 
+    public function get_qualified_users_by_id($lp_id)
+    {
+        $this->db->where("id", $lp_id);
+        $query = $this->db->get("lp_user_qualified");
+        return $query->row();
+    }
+
     public function get_distinct_years()
     {
         $this->db->distinct();

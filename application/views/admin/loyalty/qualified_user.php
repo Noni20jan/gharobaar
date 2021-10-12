@@ -27,7 +27,7 @@
     <form name="get_qualified_user" id="get_qualified_user" action="offer_controller/get_qualified_user_post">
         <h4 class="text-center p-b-15">Select Period</h4>
         <div class="col-sm-5">
-            <label for="meeting-time">From:</label>
+            <label for="meeting-time">Select Quater:</label>
             <select id="meeting-time" name="quater" class="form-control" required>
                 <option value="">Select a Quater</option>
                 <option value="Q-1">First Quater</option>
@@ -37,7 +37,7 @@
             </select>
         </div>
         <div class="col-sm-5">
-            <label for="meeting-time">To:</label>
+            <label for="meeting-time">Select Year:</label>
             <select id="meeting-time" name="year" class="form-control" required>
                 <option value="">Select year</option>
                 <?php foreach ($years as $year) : ?>
@@ -73,7 +73,7 @@
                     <td><i class="fa <?php echo $qUser->lp_qualified_value == 2 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
                     <td><i class="fa <?php echo $qUser->lp_qualified_value == 3 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
                     <td><i class="fa <?php echo $qUser->lp_qualified_value == 4 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
-                    <td><a href="javascript:void(0)" data-toggle="modal" data-target="#loyaltyDetailModel" style="text-decoration: underline; color:blue !important">Details</a></td>
+                    <td><a href="<?php echo (admin_url() . 'qualified-user-details/' . $qUser->id); ?>" style="text-decoration: underline; color:blue !important">Details</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

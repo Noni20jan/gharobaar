@@ -171,7 +171,7 @@
                 <img src="assets/img/scooter.png">
             </div>
         </div>
-        <p id="demo" class="timer">.</p>
+        <!-- <p id="demo" class="timer">.</p> -->
     </div>
 </body>
 
