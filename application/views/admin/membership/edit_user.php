@@ -50,7 +50,7 @@
                 <div class="form-group">
                     <label><?php echo trans('email'); ?></label>
                     <input type="text" class="form-control auth-form-input" id="textEmail" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="<?php echo trans('email'); ?>" required value="<?php echo html_escape($user->email); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
-                    <span class="Validation_error" id="email_valid" style="color: #d43f3a;"></span>
+                    <span class="Validation_error" id="email_valid" style="color: red;"></span>
 
                 </div>
 
@@ -86,7 +86,7 @@
                         <div class="form-group">
                             <label><?php echo trans('shop_name'); ?></label>
                             <input type="text" class="form-control auth-form-input" id="shop_name" name="shop_name" pattern="[a-zA-Z ]+" title="Please input only english words" placeholder="<?php echo trans('shop_name'); ?>" required value="<?php echo html_escape($user->shop_name); ?>" required <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
-                            <p class="Validation_error" id="shop_name_p" style="color: #d43f3a;"></span>
+                            <p class="Validation_error" id="shop_name_p" style="color: red;"></span>
 
                         </div>
                         <div class="form-group">
