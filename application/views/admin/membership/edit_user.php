@@ -77,7 +77,7 @@
 
                 <div class="form-group">
                     <label><?php echo trans('phone_number'); ?></label>
-                    <input type="text" class="form-control auth-form-input" id="phone_number" name="phone_number" placeholder="<?php echo trans('last_name'); ?>" required value="<?php echo html_escape($user->phone_number); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                    <input type="text" class="form-control auth-form-input" id="phone_number" name="phone_number" placeholder="Enter mobile number" minlength="10" maxlength="10" required value="<?php echo html_escape($user->phone_number); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
                     <span class="Validation_error" id="number_valid" style="color:red;"></span>
 
                 </div>
