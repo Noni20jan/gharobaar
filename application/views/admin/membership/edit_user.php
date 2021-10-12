@@ -77,7 +77,7 @@
 
                 <div class="form-group">
                     <label><?php echo trans('phone_number'); ?></label>
-                    <input type="text" class="form-control auth-form-input" id="phone_number" name="phone_number" placeholder="Enter mobile number" minlength="10" maxlength="10" required value="<?php echo html_escape($user->phone_number); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                    <input type="text" class="form-control auth-form-input" id="phone_number" name="phone_number" onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57' placeholder="Enter mobile number" minlength="10" maxlength="10" required value="<?php echo html_escape($user->phone_number); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
                     <span class="Validation_error" id="number_valid" style="color:red;"></span>
 
                 </div>
@@ -297,7 +297,7 @@
 
 
         } else {
-            $("#pan_number_p").hide();
+            $("#pan_number_p")[0].innerHTML = ""
             $('#pan_number').css({
                 'borderColor': '#dfe0e6'
             });
@@ -319,7 +319,7 @@
 
 
             } else {
-                $("#gst_number_p").hide();
+                $("#gst_number_p").innerHTML = "";
                 $('#gst_number').css({
                     'borderColor': '#dfe0e6'
                 });
@@ -342,7 +342,7 @@
 
 
         } else {
-            $("#slug_p").hide();
+            $("#slug_p").innerHTML = "";
             $('#slug').css({
                 'borderColor': '#dfe0e6'
             });
@@ -447,7 +447,7 @@
 
 
         } else {
-            $("#email_valid").hide();
+            $("#email_valid")[0].innerHTML = "";
             $('#textEmail').css({
                 'borderColor': '#dfe0e6'
             });
