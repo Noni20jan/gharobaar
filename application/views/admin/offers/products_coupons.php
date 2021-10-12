@@ -25,7 +25,6 @@
     </thead>
     <tbody>
         <?php foreach ($coupons as $coupon) : ?>
-            <?php $zak = get_title_product($coupon->source_id); ?>
 
             <tr>
                 <td><?php echo $coupon->offer_id; ?></td>
