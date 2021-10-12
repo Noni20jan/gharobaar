@@ -77,8 +77,8 @@
 
                 <div class="form-group">
                     <label><?php echo trans('phone_number'); ?></label>
-                    <input type="text" class="form-control auth-form-input" id="phone_number" name="phone_number" value="<?php echo html_escape($user->phone_number); ?>" required <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> onkeyup="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
-                    <span class="Validation_error" id="number_valid" style="color: #d43f3a;"></span>
+                    <input type="text" class="form-control auth-form-input" id="phone_number" name="phone_number" placeholder="<?php echo trans('last_name'); ?>" required value="<?php echo html_escape($user->phone_number); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                    <span class="Validation_error" id="number_valid" style="color:red;"></span>
 
                 </div>
                 <?php if ($user->role == "vendor") : ?>
@@ -304,24 +304,28 @@
         }
 
         var regex1 = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
-        if ($("#gst_number").val() == "") {
-            $("#gst_number_p")[0].innerHTML = "*Field must be filled out";
-            $('#gst_number').css({
-                'borderColor': 'red'
-            });
+        if ($("#gst_number").is(":visible")) {
+            if ($("#gst_number").val() == "") {
+                $("#gst_number_p")[0].innerHTML = "*Field must be filled out";
+                $('#gst_number').css({
+                    'borderColor': 'red'
+                });
 
-        } else if (regex1.test($("#gst_number").val()) == false) {
-            $("#gst_number_p")[0].innerHTML = "Enter a valid gst number";
-            $('#gst_number').css({
-                'borderColor': 'red'
-            });
+            } else if (regex1.test($("#gst_number").val()) == false) {
+                $("#gst_number_p")[0].innerHTML = "Enter a valid gst number";
+                $('#gst_number').css({
+                    'borderColor': 'red'
+                });
 
 
+            } else {
+                $("#gst_number_p").hide();
+                $('#gst_number').css({
+                    'borderColor': '#dfe0e6'
+                });
+            }
         } else {
-            $("#gst_number_p").hide();
-            $('#gst_number').css({
-                'borderColor': '#dfe0e6'
-            });
+            console.log("Hell");
         }
         var regex2 = /^[a-z](-?[a-z])*$/;
         if ($("#slug").val() == "") {
