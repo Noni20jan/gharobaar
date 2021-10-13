@@ -39,31 +39,41 @@
     }
 </style>
 
-<?php var_dump($lp_user_data); ?>
 
 <div class="content">
-
-    <div>
-        <?php
-        $img = "";
-        switch ($lp_user_data->lp_qualified_program):
-            case "BRONZE":
-                $img = "bronze.png";
-                break;
-            case "SILVER":
-                $img = "silver.png";
-                break;
-            case "GOLD":
-                $img = "gold.png";
-                break;
-            case "PLATINUM":
-                $img = "platinum.png";
-                break;
-        endswitch;
-        ?>
-        <img class="medal" src="<?php echo base_url() ?>assets\img\<?php echo $img; ?>">
+    <div class="row">
+        <div class="col-md-3">
+            <?php
+            $img = "";
+            switch ($lp_user_data->lp_qualified_program):
+                case "BRONZE":
+                    $img = "bronze.png";
+                    break;
+                case "SILVER":
+                    $img = "silver.png";
+                    break;
+                case "GOLD":
+                    $img = "gold.png";
+                    break;
+                case "PLATINUM":
+                    $img = "platinum.png";
+                    break;
+            endswitch;
+            ?>
+            <img class="medal" src="<?php echo base_url() ?>assets\img\<?php echo $img; ?>">
+        </div>
+        <?php $user = get_user($lp_user_data->user_id); ?>
+        <div class="col-md-4">
+            <h3>User Name : <?php echo $user->first_name . " " . $user->last_name; ?></h3>
+            <h3>Qualified Program : <?php echo ($lp_user_data->lp_qualified_program); ?></h3>
+            <h3>Qualified Value : <?php echo ($lp_user_data->lp_qualified_value); ?></h3>
+        </div>
+        <div class="col-md-4">
+            <h3>User Type : <?php echo ($lp_user_data->user_type); ?></h3>
+            <h3>LP Period : <?php echo ($lp_user_data->lp_period); ?></h3>
+            <h3>LP Year : <?php echo ($lp_user_data->lp_year); ?></h3>
+        </div>
     </div>
-
     <div class="img">
         <h3>Supplier Loyalty Criteria</h3>
         <div class="table-content">
