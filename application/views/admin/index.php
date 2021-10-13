@@ -134,7 +134,7 @@
       <div class="inner">
         <h3 class="increase-count"><?php echo $service_count; ?></h3>
         <a href="<?php echo admin_url(); ?>services">
-          <p>Sevices</p>
+          <p>Services</p>
         </a>
       </div>
       <div class="icon">
