@@ -88,12 +88,14 @@
                         <div class="form-group">
                             <label><?php echo trans('shop_name'); ?></label>
                             <input type="text" class="form-control auth-form-input" id="shop_name" name="shop_name" pattern="[a-zA-Z ]+" title="Please input only english words" placeholder="<?php echo trans('shop_name'); ?>" required value="<?php echo html_escape($user->shop_name); ?>" required <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
-                            <p class="Validation_error" id="shop_name_p" style="color: red;"></span>
+                            <p class="Validation_error" id="shop_name_p" style="color: red;">
 
                         </div>
                         <div class="form-group">
                             <label class="control-label"><?php echo trans('shop_description'); ?></label>
-                            <textarea class="form-control text-area" name="about_me" placeholder="<?php echo trans('shop_description'); ?>" required <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>><?php echo html_escape($user->about_me); ?></textarea>
+                            <textarea class="form-control text-area" name="about_me" id="shop_description" placeholder="<?php echo trans('shop_description'); ?>" required <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>><?php echo html_escape($user->about_me); ?></textarea>
+                            <p class="Validation_error" id="shop_description_p" style="color: red;">
+
                         </div>
                     <?php endif; ?>
 
@@ -347,7 +349,7 @@
 
 
         } else {
-            $("#slug_p").innerHTML = "";
+            $("#slug_p")[0].innerHTML = "";
             $('#slug').css({
                 'borderColor': '#dfe0e6'
             });
@@ -358,6 +360,12 @@
                 'borderColor': 'red'
             });
 
+        }
+        if ($("#shop_description").val() == "") {
+            $("#shop_description_p")[0].innerHTML = "*Field must be filled out";
+            $('#shop_description').css({
+                'borderColor': 'red'
+            });
         }
         var regex3 = /^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/i;
         if ($("#first_name").val() == "") {
@@ -539,7 +547,7 @@
                 'borderColor': 'red'
             });
 
-        } else if ((($("#username").val() != "") && $("#first_name").val() != "") && ($("#first_name").val().match(regex3)) && ($("#last_name").val() != "") && ($("#last_name").val().match(regex3)) && ($("#textEmail").val() != "") && ($("#textEmail").val().match(reg)) && ($("#shop_name").val() != "") && ($("#shop_name").val().match(regex3)) && ($("#phone_number").val() != "") && ($("#phone_number").val().length == 10) && ($("#pincode").val() != "") && ($("#pincode").val().length == 6) && ($("#supplier_state").val() != "") && ($("#supplier_city").val() != "") && ($("#supplier_area").val() != "") && ($("#supplier_house_no").val() != "" && ($("#pan_number").val() != "") && ($("#pan_number").val().match(regex) && ($("#gst_number").val() != "") && ($("#gst_number").val().match(regex1) && ($("#slug").val() != "") && ($("#slug").val().match(regex2) && ($("#fssai_number").val() != "") && ($("#fssai_number").val().length == 14)))))) {
+        } else if ((($("#username").val() != "") && $("#first_name").val() != "") && ($("#first_name").val().match(regex3)) && ($("#last_name").val() != "") && ($("#last_name").val().match(regex3)) && ($("#textEmail").val() != "") && ($("#textEmail").val().match(reg)) && ($("#shop_name").val() != "") && ($("#shop_name").val().match(regex3)) && ($("#phone_number").val() != "") && ($("#phone_number").val().length == 10) && ($("#pincode").val() != "") && ($("#pincode").val().length == 6) && ($("#supplier_state").val() != "") && ($("#supplier_city").val() != "") && ($("#supplier_area").val() != "") && ($("#supplier_house_no").val() != "" && ($("#pan_number").val() != "") && ($("#pan_number").val().match(regex) && ($("#gst_number").val() != "") && ($("#gst_number").val().match(regex1) && ($("#slug").val() != "") && ($("#slug").val().match(regex2) && ($("#fssai_number").val() != "") && ($("#fssai_number").val().length == 14) && $("#shop_description").val() != ""))))) {
             $.ajax({
                 url: base_url + "membership_controller/edit_user_post",
                 type: "post",
@@ -567,23 +575,33 @@
 
                         'borderColor': '#dfe0e6'
 
-                    })
+                    });
                     $("#supplier_state").css({
 
                         'borderColor': '#dfe0e6'
 
-                    })
+                    });
                     $("#supplier_city").css({
 
                         'borderColor': '#dfe0e6'
 
-                    })
+                    });
                     $("#supplier_area").css({
 
                         'borderColor': '#dfe0e6'
 
                     })
                     $("#supplier_house_no").css({
+
+                        'borderColor': '#dfe0e6'
+
+                    });
+                    $("#username").css({
+
+                        'borderColor': '#dfe0e6'
+
+                    });
+                    $("#shop_description").css({
 
                         'borderColor': '#dfe0e6'
 
