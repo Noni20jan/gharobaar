@@ -15,7 +15,7 @@
             <th>Coupon Name</th>
             <th>Source Type</th>
             <th>Coupon Code</th>
-            <th>Product name</th>
+            <th>Source Id</th>
             <th>Assigned Date</th>
             <th>Start Date</th>
             <th>End Date</th>
