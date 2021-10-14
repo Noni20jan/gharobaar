@@ -216,6 +216,12 @@
                             <span>Update Profile Requests</span>
                         </a>
                     </li>
+                    <li class="nav-shop-opening-requests">
+                        <a href="<?php echo admin_url(); ?>shop-opening-requests">
+                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/shop-opening.png" alt="" style="width: 20px; height: 20px;" />
+                            <span>Approve Bank Details</span>
+                        </a>
+                    </li>
                     <li class="treeview<?php is_admin_nav_active(['add-administrator', 'administrators', 'vendors', 'members', 'edit-user']); ?>">
                         <a href="#">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" />
