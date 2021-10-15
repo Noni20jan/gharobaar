@@ -361,10 +361,9 @@ foreach ($languages as $language) {
         $route[$key . getr('dashboard', $rts) . '/' . getr('shop_settings', $rts)]['GET'] = 'dashboard_controller/shop_settings';
 
 
+        $route[$key . getr('admin', $rts) . '/' . 'edit_bank_details/(:num)'] = 'membership_controller/edit_vendor_bank_details/$1';
 
         $route[$key . getr('dashboard', $rts) . '/' . getr('last_product', $rts)]['GET'] = 'dashboard_controller/last_product';
-
-
 
 
         $route[$key . 'calculate-loyality-values']['GET'] = 'coupon_controller/calculate_loyality_values';
@@ -536,6 +535,7 @@ $route[getr('admin', $rts) . '/edit-user/(:num)'] = 'membership_controller/edit_
 $route[getr('admin', $rts) . '/membership-plans'] = 'membership_controller/membership_plans';
 $route[getr('admin', $rts) . '/transactions-membership'] = 'membership_controller/transactions_membership';
 $route[getr('admin', $rts) . '/edit-plan/(:num)'] = 'membership_controller/edit_plan/$1';
+$route[getr('admin', $rts) . '/bank-approve-details'] = 'membership_controller/bank_details_approve_requests';
 
 $route[getr('admin', $rts) . '/cache-system'] = 'admin_controller/cache_system';
 $route[getr('admin', $rts) . '/storage'] = 'admin_controller/storage';

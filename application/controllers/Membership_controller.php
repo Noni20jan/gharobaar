@@ -28,7 +28,84 @@ class Membership_controller extends Admin_Core_Controller
         $this->load->view('admin/membership/members');
         $this->load->view('admin/includes/_footer');
     }
+    public function edit_details_form($id)
+    {
 
+        $data['users'] = $this->product_admin_model->update_bank_details($id);
+
+
+        $this->load->view('admin/includes/_header');
+        $this->load->view('admin/membership/bank_details_form');
+        $this->load->view('admin/includes/_footer');
+    }
+    // }
+    // public function update_bank_info()
+    // {
+    //     //check user
+    //     if (!$this->auth_check) {
+    //         // redirect(admin_url());
+    //     }
+
+    //     $user_id = $this->auth_user->id;
+    //     $action = $this->input->post('submit', true);
+
+
+    //     // if ($action == "resend_activation_email") {
+    //     //     //send activation email
+    //     //     $this->load->model("email_model");
+    //     //     $this->email_model->send_email_activation($user_id);
+    //     //     $this->session->set_flashdata('success', trans("msg_send_confirmation_email"));
+    //     //     redirect($this->agent->referrer());
+    //     // }
+
+    //     //validate inputs
+    //     // $this->form_validation->set_rules('username', trans("username"), 'required|xss_clean|max_length[255]');
+
+
+    //     $ass = $this->input->post('assistance', true);
+    //     $data = array(
+    //         'acc_holder_name' => $this->input->post('holder_name', true),
+    //         'update_profile' => '1',
+    //         'ifsc_code' => $this->input->post('ifsc_code', true),
+    //         'bank_branch' => $this->input->post('bank_branch', true),
+    //         'account_number' => $this->input->post('account_number', true),
+    //         'brand_desc' => $this->input->post('brand_desc', true),
+    //         'assistance' => implode(',', $ass),
+    //         'brand_name' => $this->input->post('brand_name', true),
+    //         'supplier_speciality' => $this->input->post('supplier_speciality', true),
+    //         'customer_name' => $this->input->post('customer_name', true),
+    //         'source' => $this->input->post('source', true),
+    //         'different_type_products' => $this->input->post('different_type_products', true),
+    //         'testimonial' => $this->input->post('testimonial', true),
+    //         // 'about_me' => $this->input->post('about_me', true),
+    //         // 'supplier_story_url' => $this->input->post('story_vedio_url', true),
+
+    //     );
+
+
+    //     if ($action == "update") {
+
+    //         if ($this->profile_model->update_story($data, $user_id)) {
+    //             $this->session->set_flashdata('success', trans("msg_updated"));
+    //             //check email changed
+
+    //             redirect(admin_url());
+    //         } else {
+    //             $this->session->set_flashdata('error', trans("msg_error"));
+    //             // redirect($this->agent->referrer());
+    //         }
+    //     } else if ($action == "save_and_next_details") {
+    //         if ($this->profile_model->update_story($data, $user_id)) {
+    //             $this->session->set_flashdata('success', trans("msg_updated"));
+    //             //check email changed
+
+    //             // redirect(generate_dash_url("add_product"));
+    //         } else {
+    //             $this->session->set_flashdata('error', trans("msg_error"));
+    //             // redirect($this->agent->referrer());
+    //         }
+    //     }
+    // }
     /**
      * Vendors
      */
@@ -222,7 +299,15 @@ class Membership_controller extends Admin_Core_Controller
         $this->load->view('admin/membership/shop_opening_requests');
         $this->load->view('admin/includes/_footer');
     }
-
+    public function bank_details_approve_requests()
+    {
+        $data['title'] = trans("shop_opening_requests");
+        $pagination = $this->paginate(admin_url() . "bank-approve-details", $this->auth_model->get_users_count_by_role('vendor'));
+        $data['users'] = $this->auth_model->get_paginated_filtered_products('vendor', $pagination['per_page'], $pagination['offset']);
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/membership/bank_details');
+        $this->load->view('admin/includes/_footer');
+    }
     /**
      * Approve Shop Opening Request
      */
@@ -273,7 +358,40 @@ class Membership_controller extends Admin_Core_Controller
         }
         redirect($this->agent->referrer());
     }
+    public function edit_vendor_bank_details($id)
+    {
 
+        $data['title'] = trans("edit_user");
+        $data['user'] = $this->auth_model->get_user($id);
+
+
+        $this->load->view('admin/includes/_header');
+        $this->load->view('admin/membership/bank_details_form', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+    public function edit_bank_details_post()
+    {
+        //validate inputs
+        $user_id = $this->input->post('id', true);
+        $user = get_user($user_id);
+        $data = array(
+            'id' => $this->input->post('id', true),
+            'acc_holder_name' => $this->input->post('holder_name', true),
+            'update_profile' => '1',
+            'ifsc_code' => $this->input->post('ifsc_code', true),
+            'bank_branch' => $this->input->post('bank_branch', true),
+            'account_number' => $this->input->post('account_number', true)
+        );
+
+
+        if ($this->profile_model->edit_vendor_bank_details($user->id)) {
+            $this->session->set_flashdata('success', trans("msg_updated"));
+            redirect($this->agent->referrer());
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
     /**
      * Decline Shop Opening Request
      */
