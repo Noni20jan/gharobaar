@@ -217,7 +217,7 @@
                         </a>
                     </li>
                     <li class="nav-shop-opening-requests">
-                        <a href="<?php echo admin_url(); ?>shop-opening-requests">
+                        <a href="<?php echo admin_url(); ?>bank-approve-details">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/shop-opening.png" alt="" style="width: 20px; height: 20px;" />
                             <span>Approve Bank Details</span>
                         </a>
