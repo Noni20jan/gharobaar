@@ -541,7 +541,7 @@
 
 <div class="section-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
-        $this->load->view("partials/_main_slider");
+        $this->load->view("partials/new_slider", ["second_slider_items" => $occassion_slider_items]);
     endif; ?>
 </div>
 <!-- Wrapper -->
@@ -787,9 +787,9 @@
 
 
 
-        <div class="col-12 sides-gap-equal">
+        <!-- <div class="col-12 sides-gap-equal">
             <h3 class="find-your-seller">Shop By Occasion</h3>
-        </div>
+        </div> -->
         <div class="col-12 sides-gap-equal shop-by-occasion" style="padding-bottom: 12px;">
             <?php $shop_occasion = get_list_lookup_value_predefined("SHOP_BY_OCCASSION"); ?>
             <?php foreach ($shop_occasion as $occasion) : ?>
@@ -801,11 +801,11 @@
     </div>
 </div>
 
-<div class="section-slider">
+<!-- <div class="section-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
         $this->load->view("partials/_main_slider_occasion_new", ["second_slider_items" => $occassion_slider_items]);
     endif; ?>
-</div>
+</div> -->
 
 
 <div class="col-12 sides-gap-equal">

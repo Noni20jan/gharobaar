@@ -15,7 +15,7 @@
             <th>Coupon Name</th>
             <th>Source Type</th>
             <th>Coupon Code</th>
-            <th>Product name</th>
+            <th>Source Id</th>
             <th>Assigned Date</th>
             <th>Start Date</th>
             <th>End Date</th>
@@ -25,7 +25,6 @@
     </thead>
     <tbody>
         <?php foreach ($coupons as $coupon) : ?>
-            <?php $zak = get_title_product($coupon->source_id); ?>
 
             <tr>
                 <td><?php echo $coupon->offer_id; ?></td>

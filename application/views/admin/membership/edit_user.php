@@ -56,7 +56,9 @@
 
                 <div class="form-group">
                     <label><?php echo trans('username'); ?></label>
-                    <input type="text" class="form-control auth-form-input" name="username" placeholder="<?php echo trans('username'); ?>" required value="<?php echo html_escape($user->username); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                    <input type="text" class="form-control auth-form-input" id="username" name="username" placeholder="<?php echo trans('username'); ?>" required value="<?php echo html_escape($user->username); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                    <span class="Validation_error" id="username_p" style="color: red;"></span>
+
                 </div>
 
                 <div class="form-group">
@@ -86,12 +88,14 @@
                         <div class="form-group">
                             <label><?php echo trans('shop_name'); ?></label>
                             <input type="text" class="form-control auth-form-input" id="shop_name" name="shop_name" pattern="[a-zA-Z ]+" title="Please input only english words" placeholder="<?php echo trans('shop_name'); ?>" required value="<?php echo html_escape($user->shop_name); ?>" required <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
-                            <p class="Validation_error" id="shop_name_p" style="color: red;"></span>
+                            <p class="Validation_error" id="shop_name_p" style="color: red;">
 
                         </div>
                         <div class="form-group">
                             <label class="control-label"><?php echo trans('shop_description'); ?></label>
-                            <textarea class="form-control text-area" name="about_me" placeholder="<?php echo trans('shop_description'); ?>" required <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>><?php echo html_escape($user->about_me); ?></textarea>
+                            <textarea class="form-control text-area" name="about_me" id="shop_description" placeholder="<?php echo trans('shop_description'); ?>" required <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>><?php echo html_escape($user->about_me); ?></textarea>
+                            <p class="Validation_error" id="shop_description_p" style="color: red;">
+
                         </div>
                     <?php endif; ?>
 
@@ -145,7 +149,7 @@
                         <div class="form-group">
 
                             <label class="control-label">GST Number</label>
-                            <input type="text" class="form-control form-input" id="gst_number" name="gst_number" pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$" placeholder="GST Number" required value="<?php echo html_escape($user->gst_number); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                            <input type="text" class="form-control form-input" id="gst_number" name="gst_number" pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$" placeholder="GST Number" minlength="15" maxlength="15" required value="<?php echo html_escape($user->gst_number); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
                             <p class="Validation_error" id="gst_number_p"></p>
                         </div>
                     <?php endif; ?>
@@ -282,24 +286,28 @@
         var first_name = document.getElementById("first_name").value;
         var last_name = document.getElementById("last_name").value;
         var regex = /([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
-        if ($("#pan_number").val() == "") {
-            $("#pan_number_p")[0].innerHTML = "*Field must be filled out";
-            $('#pan_number').css({
-                'borderColor': 'red'
-            });
+        if ($("#pan_number").is(":visible")) {
+            if ($("#pan_number").val() == "") {
+                $("#pan_number_p")[0].innerHTML = "*Field must be filled out";
+                $('#pan_number').css({
+                    'borderColor': 'red'
+                });
 
-        } else if (regex.test($("#pan_number").val()) == false) {
-            $("#pan_number_p")[0].innerHTML = "Enter a valid pan number";
-            $('#pan_number').css({
-                'borderColor': 'red'
-            });
+            } else if (regex.test($("#pan_number").val()) == false) {
+                $("#pan_number_p")[0].innerHTML = "Enter a valid pan number";
+                $('#pan_number').css({
+                    'borderColor': 'red'
+                });
 
 
+            } else {
+                $("#pan_number_p")[0].innerHTML = ""
+                $('#pan_number').css({
+                    'borderColor': '#dfe0e6'
+                });
+            }
         } else {
-            $("#pan_number_p")[0].innerHTML = ""
-            $('#pan_number').css({
-                'borderColor': '#dfe0e6'
-            });
+            console.log("Het");
         }
 
         var regex1 = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
@@ -341,12 +349,24 @@
 
 
         } else {
-            $("#slug_p").innerHTML = "";
+            $("#slug_p")[0].innerHTML = "";
             $('#slug').css({
                 'borderColor': '#dfe0e6'
             });
         }
+        if ($("#username").val() == "") {
+            $("#username_p")[0].innerHTML = "*Field must be filled out";
+            $('#username').css({
+                'borderColor': 'red'
+            });
 
+        }
+        if ($("#shop_description").val() == "") {
+            $("#shop_description_p")[0].innerHTML = "*Field must be filled out";
+            $('#shop_description').css({
+                'borderColor': 'red'
+            });
+        }
         var regex3 = /^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/i;
         if ($("#first_name").val() == "") {
             $("#first_name_p")[0].innerHTML = "*Field must be filled out";
@@ -520,13 +540,14 @@
             });
 
         }
+
         if ($("#supplier_house_no").val() == "") {
             $("#house_no_p")[0].innerHTML = "*Field must be filled out";
             $('#shipping_address_login').css({
                 'borderColor': 'red'
             });
 
-        } else if (($("#first_name").val() != "") && ($("#first_name").val().match(regex3)) && ($("#last_name").val() != "") && ($("#last_name").val().match(regex3)) && ($("#textEmail").val() != "") && ($("#textEmail").val().match(reg)) && ($("#shop_name").val() != "") && ($("#shop_name").val().match(regex3)) && ($("#phone_number").val() != "") && ($("#phone_number").val().length == 10) && ($("#pincode").val() != "") && ($("#pincode").val().length == 6) && ($("#supplier_state").val() != "") && ($("#supplier_city").val() != "") && ($("#supplier_area").val() != "") && ($("#supplier_house_no").val() != "" && ($("#pan_number").val() != "") && ($("#pan_number").val().match(regex) && ($("#gst_number").val() != "") && ($("#gst_number").val().match(regex1) && ($("#slug").val() != "") && ($("#slug").val().match(regex2) && ($("#fssai_number").val() != "") && ($("#fssai_number").val().length == 14)))))) {
+        } else if ((($("#username").val() != "") && $("#first_name").val() != "") && ($("#first_name").val().match(regex3)) && ($("#last_name").val() != "") && ($("#last_name").val().match(regex3)) && ($("#textEmail").val() != "") && ($("#textEmail").val().match(reg)) && ($("#shop_name").val() != "") && ($("#shop_name").val().match(regex3)) && ($("#phone_number").val() != "") && ($("#phone_number").val().length == 10) && ($("#pincode").val() != "") && ($("#pincode").val().length == 6) && ($("#supplier_state").val() != "") && ($("#supplier_city").val() != "") && ($("#supplier_area").val() != "") && ($("#supplier_house_no").val() != "" && ($("#pan_number").val() != "") && ($("#pan_number").val().match(regex) && ($("#gst_number").val() != "") && ($("#gst_number").val().match(regex1) && ($("#slug").val() != "") && ($("#slug").val().match(regex2) && ($("#fssai_number").val() != "") && ($("#fssai_number").val().length == 14) && $("#shop_description").val() != ""))))) {
             $.ajax({
                 url: base_url + "membership_controller/edit_user_post",
                 type: "post",
@@ -534,6 +555,9 @@
                 success: function(data) {
                     $('.Validation_error').hide();
                     $('#first_name').css({
+                        'borderColor': '#dfe0e6'
+                    });
+                    $('#username').css({
                         'borderColor': '#dfe0e6'
                     });
                     $('#last_name').css({
@@ -551,23 +575,33 @@
 
                         'borderColor': '#dfe0e6'
 
-                    })
+                    });
                     $("#supplier_state").css({
 
                         'borderColor': '#dfe0e6'
 
-                    })
+                    });
                     $("#supplier_city").css({
 
                         'borderColor': '#dfe0e6'
 
-                    })
+                    });
                     $("#supplier_area").css({
 
                         'borderColor': '#dfe0e6'
 
                     })
                     $("#supplier_house_no").css({
+
+                        'borderColor': '#dfe0e6'
+
+                    });
+                    $("#username").css({
+
+                        'borderColor': '#dfe0e6'
+
+                    });
+                    $("#shop_description").css({
 
                         'borderColor': '#dfe0e6'
 
