@@ -350,12 +350,12 @@
     <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1600px;height:560px;overflow:hidden;">
         <?php if (!empty($second_slider_items)) :
             foreach ($second_slider_items as $item) : ?>
-                <a href="<?php echo html_escape($item->link); ?>">
-                    <div>
+                <div>
+                    <a href="<?php echo html_escape($item->link); ?>">
                         <img data-u="image" style="opacity:0.8;" data-src="<?php echo base_url() . $item->image; ?>" />
 
-                    </div>
-                </a>
+                    </a>
+                </div>
         <?php endforeach;
         endif; ?>
 

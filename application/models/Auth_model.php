@@ -159,18 +159,6 @@ class Auth_model extends CI_Model
         if (empty($user)) {
             $user = $this->get_user_by_mobile($mobile_number);
             if (!empty($user)) {
-                //check master key
-                //set user data
-                $user_data = array(
-                    'modesy_sess_unique_id' => md5(microtime() . rand()),
-                    'modesy_sess_user_id' => $user->id,
-                    'modesy_sess_user_email' => $user->email,
-                    'modesy_sess_user_role' => $user->role,
-                    'modesy_sess_logged_in' => true,
-                    'modesy_sess_app_key' => $this->config->item('app_key'),
-                );
-                $this->session->set_userdata($user_data);
-                return $user;
 
                 if ($user->email_status != 1) {
                     $this->session->set_flashdata('error', trans("msg_confirmed_required") . "&nbsp;<a href='javascript:void(0)' class='link-resend-activation-email' onclick=\"send_activation_email('" . $user->id . "','" . $user->token . "');\">" . trans("resend_activation_email") . "</a>");
