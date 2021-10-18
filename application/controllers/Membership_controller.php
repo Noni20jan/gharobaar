@@ -301,7 +301,7 @@ class Membership_controller extends Admin_Core_Controller
     }
     public function bank_details_approve_requests()
     {
-        $data['title'] = trans("shop_opening_requests");
+        $data['title'] = "Bank Approval Requests";
         $pagination = $this->paginate(admin_url() . "bank-approve-details", $this->auth_model->get_users_count_by_role('vendor'));
         $data['users'] = $this->auth_model->get_paginated_filtered_vendors('vendor', $pagination['per_page'], $pagination['offset']);
         $this->load->view('admin/includes/_header', $data);
