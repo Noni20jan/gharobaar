@@ -1,5 +1,20 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
+<style>
+  .upload-documents {
+      position: relative;
+      width: 200px;
+      height: 180px;
+      text-align: center;
+      background: white;
+      border: 2px dashed #eeeff1;
+      padding: 1px;
+      cursor: pointer;
+      margin: 20px;
+    }
+
+</style>
+
 <div class="row">
     <div class="col-sm-8">
         <div class="box">
@@ -54,7 +69,7 @@
                             <?php if ($active_tab == "iban") :
                                 $this->load->view('dashboard/includes/_messages');
                             endif; ?>
-                            <?php echo form_open('set-iban-payout-account-post', ['id' => 'form_validate_payout_2']); ?>
+                            <?php echo form_open_multipart('set-iban-payout-account-post', ['id' => 'form_validate_payout_2']); ?>
                             <div class="form-group">
                                 <label><?php echo trans("full_name"); ?>*</label>
                                 <input type="text" name="iban_full_name" class="form-control form-input" value="<?php echo html_escape($user_payout->iban_full_name); ?>" required>
@@ -90,8 +105,9 @@
                             <?php if ($active_tab == "swift") :
                                 $this->load->view('dashboard/includes/_messages');
                             endif; ?>
-                            <!-- <?//php echo form_open('set-swift-payout-account-post', ['id' => 'form_validate_payout_3']); ?> -->
-                            <?php echo form_open("update-payout-account", ['id' => 'form_validate']); ?>
+                            <!-- <? //php echo form_open('set-swift-payout-account-post', ['id' => 'form_validate_payout_3']); 
+                                    ?> -->
+                            <?php echo form_open_multipart("update-payout-account", ['id' => 'form_validate']); ?>
 
                             <!-- <div class="form-group">
                                 <div class="row">
@@ -140,7 +156,7 @@
                                             <div class="col-md-3"><label id="formlabel2">Account Number<span class="Validation_error"> *</span></label></div>
                                             <div class="col-md-9 Brand-name">
                                                 <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
-                                              
+
                                             </div>
                                         </div>
                                         <div class="row Brand-1">
@@ -167,6 +183,34 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <div class="row Brand-1">
+                                            <div class="col-md-3"><label id="formlabel2">Add Cheque Image<span class="Validation_error"> *</span></label></div>
+                                            <div class="col-sm-3 m-b-60">
+                                                <div class="row text-center">
+                                                    <?php if (empty($this->auth_user->cheque_image_url)) : ?>
+                                                        <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
+                                                    <?php else : ?>
+                                                        <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/certificate.png'; ?>" style="border-radius:10%" />
+                                                    <?php endif; ?>
+                                                    <input type="file" name="cheque-image" id="cheque-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>" />
+                                                    <p id="file-upload-filename" style="margin-bottom:0;"></p>
+
+                                                    <?php if (!empty($this->auth_user->cheque_image_url)) : ?>
+                                                        <small> <a href="<?php echo base_url() . $this->auth_user->cheque_image_url; ?>" target="_blank">View Cheque Image</a></small>
+                                                    <?php endif; ?>
+
+                                                    <script>
+                                                        $('#cheque-image').click(function() {
+                                                            $('#cheque-logo').click()
+                                                        })
+                                                    </script>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -232,7 +276,4 @@
     $(document).ready(function() {
         $("#submit").click(checkaccountno);
     });
-
-
-
 </script>

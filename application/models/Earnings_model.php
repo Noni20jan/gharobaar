@@ -209,11 +209,20 @@ class Earnings_model extends CI_Model
     public function set_iban_payout_account($user_id)
     {
         $user_id = clean_number($user_id);
+        $this->load->model('upload_model');
+        $temp_path = $this->upload_model->upload_temp_image('cheque-image');
+        if (!empty($temp_path)) {
+            //delete old avatar        
+            $data["cheque_image_url"] = $this->upload_model->cheque_upload($temp_path);
+            
+        }
+
         $data = array(
             'iban_full_name' => $this->input->post('iban_full_name', true),
             'iban_country_id' => $this->input->post('iban_country_id', true),
             'iban_bank_name' => $this->input->post('iban_bank_name', true),
             'iban_number' => $this->input->post('iban_number', true),
+            
         );
         $this->db->where('user_id', $user_id);
         return $this->db->update('users_payout_accounts', $data);

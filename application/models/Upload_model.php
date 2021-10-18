@@ -376,6 +376,17 @@ class Upload_model extends CI_Model
         return $new_path;
     }
 
+    // cheque image upload
+    public function cheque_upload($path)
+    {
+        $new_path = 'uploads/cheque_images/cheque_' . generate_unique_id() . '.jpg';
+        $img = Image::make($path)->orientate();
+        // $img->fit(240, 240);
+        $img->save(FCPATH . $new_path, $this->quality);
+        return $new_path;
+    }
+
+
     //avatar image upload
     public function avatar_upload($path)
     {

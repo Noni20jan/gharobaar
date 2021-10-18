@@ -54,7 +54,7 @@
 
     .profileImage-default {
       position: relative;
-      width: 140px;
+      width: 428px;
       height: 140px;
       text-align: center;
       background: white;
@@ -416,257 +416,263 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="row">
-      <div class="background col-sm-6 m-b-30 groove">
-        <label class="control-label"><?php echo trans("story_images"); ?> (Maximum upload file size : 30 Mb)</label>
-        <?php $this->load->view("settings/_story_image_update_box"); ?>
-      </div>
-      <div class="background col-sm-6 m-b-30 groove">
-        <label class="control-label"><?php echo trans("story_video"); ?> (Maximum upload file size : 30 Mb)</label>
-        <?php $this->load->view("dashboard/product/_story_video_box"); ?>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 m-b-30 groove">
-        <label id="label1">About Your Brand</label>
         <div class="form-group">
           <div class="row Brand-1">
-            <div class="col-md-3"><label id="formlabel2">Brand Name<span class="Validation_error"> *</span></label></div>
-            <div class="col-md-9 Brand-name">
-              <input type='text' name="brand_name" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->brand_name); ?>" required>
-            </div>
-          </div>
-          <!-- <input type="text" name="brand_name" class="form-control form-input"  placeholder="Enter Brand Name" onKeyPress="if(this.value.length==10) return false;" required> -->
-        </div>
-        <div class="form-group">
-          <div class="row Brand-1">
-            <div class="col-md-3"><label id="formlabel2">Brand Description<span class="Validation_error"> *</span></label></div>
-            <div class="col-md-9 Brand-name">
-              <input type='text' name="brand_desc" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->brand_desc); ?>" required>
-            </div>
-          </div>
-          <!-- <input type="text" name="brand_desc" class="form-control form-input"  placeholder="Describe your brand" onKeyPress="if(this.value.length==10) return false;" required> -->
-        </div>
-      </div>
-    </div>
+            <div class="col-md-3"><label id="formlabel2">Add Cheque Image<span class="Validation_error"> *</span></label></div>
+            <div class="col-sm-3 m-b-60">
+              <div class="row text-center">
+                <?php if (empty($this->auth_user->cheque_image_url)) : ?>
+                  <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
+                <?php else : ?>
+                  <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/certificate.png'; ?>" style="border-radius:10%" />
+                <?php endif; ?>
+                <input type="file" name="cheque-image" id="cheque-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>" />
+                <p id="file-upload-filename" style="margin-bottom:0;"></p>
 
+                <?php if (!empty($this->auth_user->cheque_image_url)) : ?>
+                  <small> <a href="<?php echo base_url() . $this->auth_user->cheque_image_url; ?>" target="_blank">View Cheque Image</a></small>
+                <?php endif; ?>
 
-    <div class="row">
-      <div class="col-sm-12 m-b-30 groove">
-        <label id="label1">Assistance (Optional)</label>
-        <div class="box-body" style="padding-top:0px">
-          <div class="row">
-            <!-- include message block -->
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="table-responsive">
-                <table class="table table-striped dataTable" id="cs_datatable_lang" role="grid" aria-describedby="example1_info">
-                  <thead>
-                    <tr role="row">
-                      <th scope="col"></th>
-                      <th scope="col">Service name</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Payment</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                <script>
+                  $('#cheque-image').click(function() {
+                    $('#cheque-logo').click()
+                  })
+                </script>
 
-                    <tr>
-                      <td><input type="checkbox" name="assistance[]" value="Photography" <?php echo (in_array("Photography", $assistance_array)) ? 'checked' : ''; ?>></td>
-                      <td>Photography</td>
-                      <td></td>
-                      <td>Basis scope of work</td>
-                      <td><a href="#" data-toggle="modal" data-target="#example1Modal">Click Here</a></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="assistance[]" value="Videos" <?php echo (in_array("Videos", $assistance_array)) ? 'checked' : ''; ?>></td>
-                      <td>Videos</td>
-                      <td></td>
-                      <td>6000 + GST</td>
-                      <td><a href="#" data-toggle="modal" data-target="#example2Modal">Click Here</a></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="assistance[]" value="Story writing/Content Writing" <?php echo (in_array("Story writing/Content Writing", $assistance_array)) ? 'checked' : ''; ?>></td>
-                      <td>Story writing/Content Writing</td>
-                      <td></td>
-                      <td>500 + GST</td>
-                      <td><a href="#" data-toggle="modal" data-target="#example3Modal">Click Here</a></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="assistance[]" value="Product description" <?php echo (in_array("Product description", $assistance_array)) ? 'checked' : ''; ?>></td>
-                      <td>Product description</td>
-                      <td></td>
-                      <td>100 + GST</td>
-                      <td><a href="#" data-toggle="modal" data-target="#example4Modal">Click Here</a></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="assistance[]" value="Brand description" <?php echo (in_array("Brand description", $assistance_array)) ? 'checked' : ''; ?>></td>
-                      <td>Brand description</td>
-                      <td></td>
-                      <td>100 + GST</td>
-                      <td><a href="#" data-toggle="modal" data-target="#example5Modal">Click Here</a></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="assistance[]" value="Creating Supplier Page" <?php echo (in_array("Creating Supplier Page", $assistance_array)) ? 'checked' : ''; ?>></td>
-                      <td>Creating Supplier Page</td>
-                      <td></td>
-                      <td>2000 + GST</td>
-                      <td><a href="#" data-toggle="modal" data-target="#example7Modal">Click Here</a></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="assistance[]" value="Packaging Assistance" <?php echo (in_array("Packaging Assistance", $assistance_array)) ? 'checked' : ''; ?>></td>
-                      <td>Packaging Assistance</td>
-                      <td></td>
-                      <td>Basis scope of work</td>
-                      <td><a href="#" data-toggle="modal" data-target="#example1Modal">Click Here</a></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="assistance[]" value="IPR (Intellectual Property Rights)" <?php echo (in_array("IPR (Intellectual Property Rights)", $assistance_array)) ? 'checked' : ''; ?>></td>
-                      <td>IPR (Intellectual Property Rights)</td>
-                      <td></td>
-                      <td>Basis scope of work</td>
-                      <td><a href="#" data-toggle="modal" data-target="#example1Modal">Click Here</a></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" name="assistance[]" value="Promotional Support" <?php echo (in_array("Promotional Support", $assistance_array)) ? 'checked' : ''; ?>></td>
-                      <td>Promotional Support</td>
-                      <td></td>
-                      <td><a href="#" data-toggle="modal" data-target="#contact-modal">Click Here</a></td>
-                      <td><a href="#" data-toggle="modal" data-target="#contact-modal">Click Here</a></td>
-                    </tr>
-
-                  </tbody>
-                </table>
               </div>
             </div>
           </div>
         </div>
-        <!-- /.box-body -->
       </div>
-    </div>
 
-    <div class="modal fade" id="example2Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered1" role="document">
-        <div class="modal-content1">
-          <div class="modal-header1">
-            <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
-            <h5 class="modal-title" id="exampleModalLabel">Contact vendor</h5>
+
+      <div class="row">
+        <div class="background col-sm-6 m-b-30 groove">
+          <label class="control-label"><?php echo trans("story_images"); ?> (Maximum upload file size : 30 Mb)</label>
+          <?php $this->load->view("settings/_story_image_update_box"); ?>
+        </div>
+        <div class="background col-sm-6 m-b-30 groove">
+          <label class="control-label"><?php echo trans("story_video"); ?> (Maximum upload file size : 30 Mb)</label>
+          <?php $this->load->view("dashboard/product/_story_video_box"); ?>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 m-b-30 groove">
+          <label id="label1">About Your Brand</label>
+          <div class="form-group">
+            <div class="row Brand-1">
+              <div class="col-md-3"><label id="formlabel2">Brand Name<span class="Validation_error"> *</span></label></div>
+              <div class="col-md-9 Brand-name">
+                <input type='text' name="brand_name" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->brand_name); ?>" required>
+              </div>
+            </div>
+            <!-- <input type="text" name="brand_name" class="form-control form-input"  placeholder="Enter Brand Name" onKeyPress="if(this.value.length==10) return false;" required> -->
           </div>
-          <br>
-          <div class="modal-body"><?php echo get_content("video_shoot_detail"); ?> </div>
-          <br>
-          <div class="modal-footer1">
-            <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
+          <div class="form-group">
+            <div class="row Brand-1">
+              <div class="col-md-3"><label id="formlabel2">Brand Description<span class="Validation_error"> *</span></label></div>
+              <div class="col-md-9 Brand-name">
+                <input type='text' name="brand_desc" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->brand_desc); ?>" required>
+              </div>
+            </div>
+            <!-- <input type="text" name="brand_desc" class="form-control form-input"  placeholder="Describe your brand" onKeyPress="if(this.value.length==10) return false;" required> -->
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal fade" id="example3Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered1" role="document">
-        <div class="modal-content1">
-          <div class="modal-header1">
-            <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
-            <h5 class="modal-title" id="exampleModalLabel">Contact vendor</h5>
+
+
+      <div class="row">
+        <div class="col-sm-12 m-b-30 groove">
+          <label id="label1">Assistance (Optional)</label>
+          <div class="box-body" style="padding-top:0px">
+            <div class="row">
+              <!-- include message block -->
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                  <table class="table table-striped dataTable" id="cs_datatable_lang" role="grid" aria-describedby="example1_info">
+                    <thead>
+                      <tr role="row">
+                        <th scope="col"></th>
+                        <th scope="col">Service name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Payment</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr>
+                        <td><input type="checkbox" name="assistance[]" value="Photography" <?php echo (in_array("Photography", $assistance_array)) ? 'checked' : ''; ?>></td>
+                        <td>Photography</td>
+                        <td></td>
+                        <td>Basis scope of work</td>
+                        <td><a href="#" data-toggle="modal" data-target="#example1Modal">Click Here</a></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="assistance[]" value="Videos" <?php echo (in_array("Videos", $assistance_array)) ? 'checked' : ''; ?>></td>
+                        <td>Videos</td>
+                        <td></td>
+                        <td>6000 + GST</td>
+                        <td><a href="#" data-toggle="modal" data-target="#example2Modal">Click Here</a></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="assistance[]" value="Story writing/Content Writing" <?php echo (in_array("Story writing/Content Writing", $assistance_array)) ? 'checked' : ''; ?>></td>
+                        <td>Story writing/Content Writing</td>
+                        <td></td>
+                        <td>500 + GST</td>
+                        <td><a href="#" data-toggle="modal" data-target="#example3Modal">Click Here</a></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="assistance[]" value="Product description" <?php echo (in_array("Product description", $assistance_array)) ? 'checked' : ''; ?>></td>
+                        <td>Product description</td>
+                        <td></td>
+                        <td>100 + GST</td>
+                        <td><a href="#" data-toggle="modal" data-target="#example4Modal">Click Here</a></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="assistance[]" value="Brand description" <?php echo (in_array("Brand description", $assistance_array)) ? 'checked' : ''; ?>></td>
+                        <td>Brand description</td>
+                        <td></td>
+                        <td>100 + GST</td>
+                        <td><a href="#" data-toggle="modal" data-target="#example5Modal">Click Here</a></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="assistance[]" value="Creating Supplier Page" <?php echo (in_array("Creating Supplier Page", $assistance_array)) ? 'checked' : ''; ?>></td>
+                        <td>Creating Supplier Page</td>
+                        <td></td>
+                        <td>2000 + GST</td>
+                        <td><a href="#" data-toggle="modal" data-target="#example7Modal">Click Here</a></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="assistance[]" value="Packaging Assistance" <?php echo (in_array("Packaging Assistance", $assistance_array)) ? 'checked' : ''; ?>></td>
+                        <td>Packaging Assistance</td>
+                        <td></td>
+                        <td>Basis scope of work</td>
+                        <td><a href="#" data-toggle="modal" data-target="#example1Modal">Click Here</a></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="assistance[]" value="IPR (Intellectual Property Rights)" <?php echo (in_array("IPR (Intellectual Property Rights)", $assistance_array)) ? 'checked' : ''; ?>></td>
+                        <td>IPR (Intellectual Property Rights)</td>
+                        <td></td>
+                        <td>Basis scope of work</td>
+                        <td><a href="#" data-toggle="modal" data-target="#example1Modal">Click Here</a></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" name="assistance[]" value="Promotional Support" <?php echo (in_array("Promotional Support", $assistance_array)) ? 'checked' : ''; ?>></td>
+                        <td>Promotional Support</td>
+                        <td></td>
+                        <td><a href="#" data-toggle="modal" data-target="#contact-modal">Click Here</a></td>
+                        <td><a href="#" data-toggle="modal" data-target="#contact-modal">Click Here</a></td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
-          <br>
-          <div class="modal-body"><?php echo get_content("story_writing_detail"); ?> </div>
-          <br>
-          <div class="modal-footer1">
-            <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
+          <!-- /.box-body -->
+        </div>
+      </div>
+
+      <div class="modal fade" id="example2Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered1" role="document">
+          <div class="modal-content1">
+            <div class="modal-header1">
+              <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+              <h5 class="modal-title" id="exampleModalLabel">Contact vendor</h5>
+            </div>
+            <br>
+            <div class="modal-body"><?php echo get_content("video_shoot_detail"); ?> </div>
+            <br>
+            <div class="modal-footer1">
+              <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal fade" id="example5Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered1" role="document">
-        <div class="modal-content1">
-          <div class="modal-header1">
-            <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
-            <h5 class="modal-title" id="exampleModalLabel">Contact vendor</h5>
-          </div>
-          <br>
-          <div class="modal-body"><?php echo get_content("product_description_detail"); ?> </div>
-          <br>
-          <div class="modal-footer1">
-            <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="example4Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered1" role="document">
-        <div class="modal-content1">
-          <div class="modal-header1">
-            <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
-            <h5 class="modal-title" id="exampleModalLabel">Contact vendor</h5>
-          </div>
-          <br>
-          <div class="modal-body"><?php echo get_content("brand_description_detail"); ?> </div>
-          <br>
-          <div class="modal-footer1">
-            <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
+      <div class="modal fade" id="example3Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered1" role="document">
+          <div class="modal-content1">
+            <div class="modal-header1">
+              <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+              <h5 class="modal-title" id="exampleModalLabel">Contact vendor</h5>
+            </div>
+            <br>
+            <div class="modal-body"><?php echo get_content("story_writing_detail"); ?> </div>
+            <br>
+            <div class="modal-footer1">
+              <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="modal fade" id="example7Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered1" role="document">
-        <div class="modal-content1">
-          <div class="modal-header1">
-            <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
-            <h5 class="modal-title" id="exampleModalLabel">Contact vendor</h5>
-          </div>
-          <br>
-          <div class="modal-body"><?php echo get_content("creating_supplier_page"); ?> </div>
-          <br>
-          <div class="modal-footer1">
-            <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
+      <div class="modal fade" id="example5Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered1" role="document">
+          <div class="modal-content1">
+            <div class="modal-header1">
+              <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+              <h5 class="modal-title" id="exampleModalLabel">Contact vendor</h5>
+            </div>
+            <br>
+            <div class="modal-body"><?php echo get_content("product_description_detail"); ?> </div>
+            <br>
+            <div class="modal-footer1">
+              <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div class="modal fade" id="example4Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered1" role="document">
+          <div class="modal-content1">
+            <div class="modal-header1">
+              <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+              <h5 class="modal-title" id="exampleModalLabel">Contact vendor</h5>
+            </div>
+            <br>
+            <div class="modal-body"><?php echo get_content("brand_description_detail"); ?> </div>
+            <br>
+            <div class="modal-footer1">
+              <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <div class="row">
-      <div class="col-sm-12 m-b-30 groove">
-        <label id="label1">Supplier Speciality<span class="Validation_error"> *</span></label>
-        <div class="form-group">
-          <div class="row " style="padding-left: 29px;">
-            <div class="col-12 col-sm-3 col-custom-field ">
-              <div class="custom-control1 custom-radio">
-                <input type="radio" name="supplier_speciality" value="Out of regular job" id="Out_of_regular_job" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "Out of regular job") {
-                                                                                                                                                          echo "checked";
-                                                                                                                                                        } ?>>
-                <label for="Out_of_regular_job" class="custom-control-label tooltip-product">Out of regular job <i class="fa fa-info-circle"><span class="tooltiptext">If you are not working either by design (personal choice) or by default (driven by pandemic)</span></i> </label>
+      <div class="modal fade" id="example7Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered1" role="document">
+          <div class="modal-content1">
+            <div class="modal-header1">
+              <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+              <h5 class="modal-title" id="exampleModalLabel">Contact vendor</h5>
+            </div>
+            <br>
+            <div class="modal-body"><?php echo get_content("creating_supplier_page"); ?> </div>
+            <br>
+            <div class="modal-footer1">
+              <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 m-b-30 groove">
+          <label id="label1">Supplier Speciality<span class="Validation_error"> *</span></label>
+          <div class="form-group">
+            <div class="row " style="padding-left: 29px;">
+              <div class="col-12 col-sm-3 col-custom-field ">
+                <div class="custom-control1 custom-radio">
+                  <input type="radio" name="supplier_speciality" value="Out of regular job" id="Out_of_regular_job" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "Out of regular job") {
+                                                                                                                                                            echo "checked";
+                                                                                                                                                          } ?>>
+                  <label for="Out_of_regular_job" class="custom-control-label tooltip-product">Out of regular job <i class="fa fa-info-circle"><span class="tooltiptext">If you are not working either by design (personal choice) or by default (driven by pandemic)</span></i> </label>
 
 
-                <!-- <div class="col-12 col-sm-4 col-custom-field">
+                  <!-- <div class="col-12 col-sm-4 col-custom-field">
               <div class="custom-control custom-radio">
                 <input type="radio" name="supplier_speciality" value="Phoenix (Rising from the ashes)" id="Phoenix" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "Phoenix (Rising from the ashes)") {
                                                                                                                                                             echo "checked";
@@ -674,94 +680,94 @@
                 <label for="Phoenix" class="custom-control-label tooltip-product">Phoenix (Rising from the ashes) <i class="fa fa-info-circle"><span class="tooltiptext"> The going was not smooth earlier, however, you have decided to not give up and are looking to create opportunities despite facing adversities</span></i> </label>
               </div> -->
 
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-sm-3 col-custom-field">
-              <div class="custom-control1 custom-radio">
-                <input type="radio" name="supplier_speciality" value="Pursuing Passion" id="Pursuing_Passion" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "Pursuing Passion") {
-                                                                                                                                                      echo "checked";
-                                                                                                                                                    } ?>>
-                <label for="Pursuing_Passion" class="custom-control-label tooltip-product">Pursuing Passion <i class="fa fa-info-circle"><span class="tooltiptext">Work is your passion, your passion has become your work. You are pursuing what you love doing.</span></i> </label>
-              </div>
-            </div>
-            <div class="col-12 col-sm-3 col-custom-field">
-              <div class="custom-control1 custom-radio">
-                <input type="radio" name="supplier_speciality" value="Sole Bread Earner" id="Sole_Bread_Earner" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "Sole Bread Earner") {
+              <div class="col-12 col-sm-3 col-custom-field">
+                <div class="custom-control1 custom-radio">
+                  <input type="radio" name="supplier_speciality" value="Pursuing Passion" id="Pursuing_Passion" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "Pursuing Passion") {
                                                                                                                                                         echo "checked";
                                                                                                                                                       } ?>>
-                <label for="Sole_Bread_Earner" class="custom-control-label tooltip-product">Sole Bread Earner <i class="fa fa-info-circle"><span class="tooltiptext">You are the superman/woman of your family, providing for all needs and luxuries</span></i> </label>
+                  <label for="Pursuing_Passion" class="custom-control-label tooltip-product">Pursuing Passion <i class="fa fa-info-circle"><span class="tooltiptext">Work is your passion, your passion has become your work. You are pursuing what you love doing.</span></i> </label>
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-sm-3 col-custom-field">
-              <div class="custom-control1 custom-radio">
-                <input type="radio" name="supplier_speciality" value="Cooperative Groups" id="Cooperative_Groups" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "Cooperative Groups") {
+              <div class="col-12 col-sm-3 col-custom-field">
+                <div class="custom-control1 custom-radio">
+                  <input type="radio" name="supplier_speciality" value="Sole Bread Earner" id="Sole_Bread_Earner" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "Sole Bread Earner") {
                                                                                                                                                           echo "checked";
                                                                                                                                                         } ?>>
-                <label for="Cooperative_Groups" class="custom-control-label tooltip-product">Cooperative Groups <i class="fa fa-info-circle"><span class="tooltiptext"> You have decided to hunt in packs, and are<br>creating products / providing services in <br>a group.</span></i> </label>
+                  <label for="Sole_Bread_Earner" class="custom-control-label tooltip-product">Sole Bread Earner <i class="fa fa-info-circle"><span class="tooltiptext">You are the superman/woman of your family, providing for all needs and luxuries</span></i> </label>
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-sm-3 col-custom-field">
-              <div class="custom-control1 custom-radio">
-                <input type="radio" name="supplier_speciality" value="First Venture" id="First_Venture" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "First Venture") {
-                                                                                                                                                echo "checked";
-                                                                                                                                              } ?>>
-                <label for="First_Venture" class="custom-control-label tooltip-product">First Venture <i class="fa fa-info-circle"><span class="tooltiptext"> This is your first attempt at being an entrepreneur and contribute effectively to the objective of nation building</span></i> </label>
-              </div>
-            </div>
-            <div class="col-12 col-sm-3 col-custom-field">
-              <div class="custom-control1 custom-radio">
-                <input type="radio" name="supplier_speciality" value="Gritty over Sixty" id="Gritty_over_Sixty" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "Gritty over Sixty") {
-                                                                                                                                                        echo "checked";
-                                                                                                                                                      } ?>>
-                <label for="Gritty_over_Sixty" class="custom-control-label tooltip-product">Gritty over Sixty <i class="fa fa-info-circle"><span class="tooltiptext"> You choose to continue your entrepreneurial journey even though your peers might have decided to hang up their boots</span></i> </label>
-              </div>
-            </div>
-            <div class="col-12 col-sm-4 col-custom-field">
-              <div class="custom-control1 custom-radio">
-                <input type="radio" name="supplier_speciality" value="Phoenix (Rising from the ashes)" id="Phoenix" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "Phoenix (Rising from the ashes)") {
+              <div class="col-12 col-sm-3 col-custom-field">
+                <div class="custom-control1 custom-radio">
+                  <input type="radio" name="supplier_speciality" value="Cooperative Groups" id="Cooperative_Groups" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "Cooperative Groups") {
                                                                                                                                                             echo "checked";
                                                                                                                                                           } ?>>
-                <label for="Phoenix" class="custom-control-label tooltip-product">Phoenix (Rising from the ashes) <i class="fa fa-info-circle"><span class="tooltiptext"> The going was not smooth earlier, however, you have decided to not give up and are looking to create opportunities despite facing adversities</span></i> </label>
+                  <label for="Cooperative_Groups" class="custom-control-label tooltip-product">Cooperative Groups <i class="fa fa-info-circle"><span class="tooltiptext"> You have decided to hunt in packs, and are<br>creating products / providing services in <br>a group.</span></i> </label>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3 col-custom-field">
+                <div class="custom-control1 custom-radio">
+                  <input type="radio" name="supplier_speciality" value="First Venture" id="First_Venture" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "First Venture") {
+                                                                                                                                                  echo "checked";
+                                                                                                                                                } ?>>
+                  <label for="First_Venture" class="custom-control-label tooltip-product">First Venture <i class="fa fa-info-circle"><span class="tooltiptext"> This is your first attempt at being an entrepreneur and contribute effectively to the objective of nation building</span></i> </label>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3 col-custom-field">
+                <div class="custom-control1 custom-radio">
+                  <input type="radio" name="supplier_speciality" value="Gritty over Sixty" id="Gritty_over_Sixty" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "Gritty over Sixty") {
+                                                                                                                                                          echo "checked";
+                                                                                                                                                        } ?>>
+                  <label for="Gritty_over_Sixty" class="custom-control-label tooltip-product">Gritty over Sixty <i class="fa fa-info-circle"><span class="tooltiptext"> You choose to continue your entrepreneurial journey even though your peers might have decided to hang up their boots</span></i> </label>
+                </div>
+              </div>
+              <div class="col-12 col-sm-4 col-custom-field">
+                <div class="custom-control1 custom-radio">
+                  <input type="radio" name="supplier_speciality" value="Phoenix (Rising from the ashes)" id="Phoenix" class="custom-control-input" required <?php if ($this->auth_user->supplier_speciality == "Phoenix (Rising from the ashes)") {
+                                                                                                                                                              echo "checked";
+                                                                                                                                                            } ?>>
+                  <label for="Phoenix" class="custom-control-label tooltip-product">Phoenix (Rising from the ashes) <i class="fa fa-info-circle"><span class="tooltiptext"> The going was not smooth earlier, however, you have decided to not give up and are looking to create opportunities despite facing adversities</span></i> </label>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col-sm-12 m-b-30 groove">
-        <div class="form-group">
-          <br>
-          <div class="row Brand-1">
-            <div class="col-md-4"><label id="formlabel2">Number of unique products offered by you<span class="Validation_error"> *</span></label></div>
-            <div class="col-md-8 Brand-name">
-              <select name="different_type_products" id="different_type_products" class="form-control auth-form-input" placeholder="">
-                <option value="" selected disabled>Select an option</option>
-                <option value="Less than 2" <?php if ($this->auth_user->different_type_products == "Less than 2") {
-                                              echo "selected";
-                                            } ?>>Less than 2</option>
-                <option value="2-5" <?php if ($this->auth_user->different_type_products == "2-5") {
-                                      echo "selected";
-                                    } ?>>2-5</option>
-                <option value="5-10" <?php if ($this->auth_user->different_type_products == "5-10") {
-                                        echo "selected";
-                                      } ?>>5-10</option>
-                <option value="10-15" <?php if ($this->auth_user->different_type_products == "10-15") {
-                                        echo "selected";
-                                      } ?>>10-15</option>
-                <option value="More than 15" <?php if ($this->auth_user->different_type_products == "More than 15") {
+      <div class="row">
+        <div class="col-sm-12 m-b-30 groove">
+          <div class="form-group">
+            <br>
+            <div class="row Brand-1">
+              <div class="col-md-4"><label id="formlabel2">Number of unique products offered by you<span class="Validation_error"> *</span></label></div>
+              <div class="col-md-8 Brand-name">
+                <select name="different_type_products" id="different_type_products" class="form-control auth-form-input" placeholder="">
+                  <option value="" selected disabled>Select an option</option>
+                  <option value="Less than 2" <?php if ($this->auth_user->different_type_products == "Less than 2") {
                                                 echo "selected";
-                                              } ?>>More than 15</option>
-              </select>
+                                              } ?>>Less than 2</option>
+                  <option value="2-5" <?php if ($this->auth_user->different_type_products == "2-5") {
+                                        echo "selected";
+                                      } ?>>2-5</option>
+                  <option value="5-10" <?php if ($this->auth_user->different_type_products == "5-10") {
+                                          echo "selected";
+                                        } ?>>5-10</option>
+                  <option value="10-15" <?php if ($this->auth_user->different_type_products == "10-15") {
+                                          echo "selected";
+                                        } ?>>10-15</option>
+                  <option value="More than 15" <?php if ($this->auth_user->different_type_products == "More than 15") {
+                                                  echo "selected";
+                                                } ?>>More than 15</option>
+                </select>
+              </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <!--<div class="col-sm-12 m-b-30 groove">
+      <div class="row">
+        <!--<div class="col-sm-12 m-b-30 groove">
         <label id="label1">Your Customers Testimonials</label>
         <div class="form-group">
           <div class="row Brand-1">
@@ -788,140 +794,140 @@
           </div>
         </div>
       </div> -->
-      <div class="col-sm-3 m-b-30">
-        <?php if (!empty($this->auth_user->gst_image)) : ?>
-          <a href="javascript:void(0)" class="remove-btn-btn" onclick="delete_item('profile_controller/delete_gst','<?php echo $this->auth_user->id; ?>','Are you sure you want to remove this GST Image?');">
-            <i class="icon-close btn-cross"></i></a>
-        <?php else : ?>
-          <a href="javascript:void(0)" class="remove-btn-btn display-none" id="gst-image-delete" onclick="delete_selected_item($(this),'gst-image','gst-logo','Are you sure you want to remove this GST Image?');">
-            <i class="icon-close btn-cross"></i></a>
-        <?php endif; ?>
-        <div class="row text-center">
-          <?php if (empty($this->auth_user->gst_image)) : ?>
-            <img id="gst-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
-          <?php else : ?>
-            <img id="gst-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/certificate.png'; ?>" style="border-radius:10%" />
-          <?php endif; ?>
-          <input type="file" name="gst-image" id="gst-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->gst_image)) ? $this->auth_user->gst_image : ''; ?>" />
-          <p id="file-upload-filename" style="margin-bottom:0;"></p>
-
+        <div class="col-sm-3 m-b-30">
           <?php if (!empty($this->auth_user->gst_image)) : ?>
-            <small> <a href="<?php echo base_url() . $this->auth_user->gst_image; ?>" target="_blank">View GST</a></small>
-          <?php endif; ?>
-
-        </div>
-        <script>
-          $('#gst-image').click(function() {
-            $('#gst-logo').click()
-          })
-        </script>
-
-        <div class="row text-center">
-          <label>Upload GST Photo (Optional)</label>
-        </div>
-      </div>
-      <div class="col-sm-3 m-b-30">
-        <?php if (!empty($this->auth_user->pan_image)) : ?>
-          <a href="javascript:void(0)" class="remove-btn-btn" onclick="delete_item('profile_controller/delete_pan','<?php echo $this->auth_user->id; ?>','Are you sure you want to remove this PAN Image?');">
-            <i class="icon-close btn-cross"></i></a>
-        <?php else : ?>
-          <a href="javascript:void(0)" class="remove-btn-btn display-none" id="pan-image-delete" onclick="delete_selected_item($(this),'pan-image','pan-logo','Are you sure you want to remove this PAN Image?');">
-            <i class="icon-close btn-cross"></i></a>
-        <?php endif; ?>
-        <div class="row text-center">
-          <?php if (empty($this->auth_user->pan_image)) : ?>
-            <img id="pan-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
+            <a href="javascript:void(0)" class="remove-btn-btn" onclick="delete_item('profile_controller/delete_gst','<?php echo $this->auth_user->id; ?>','Are you sure you want to remove this GST Image?');">
+              <i class="icon-close btn-cross"></i></a>
           <?php else : ?>
-            <img id="pan-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/certificate.png'; ?>" style="border-radius:10%" />
+            <a href="javascript:void(0)" class="remove-btn-btn display-none" id="gst-image-delete" onclick="delete_selected_item($(this),'gst-image','gst-logo','Are you sure you want to remove this GST Image?');">
+              <i class="icon-close btn-cross"></i></a>
           <?php endif; ?>
-          <input type="file" name="pan-image" id="pan-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->pan_image)) ? $this->auth_user->pan_image : ''; ?>" />
-          <p id="file-upload-filename" style="margin-bottom:0;"></p>
+          <div class="row text-center">
+            <?php if (empty($this->auth_user->gst_image)) : ?>
+              <img id="gst-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
+            <?php else : ?>
+              <img id="gst-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/certificate.png'; ?>" style="border-radius:10%" />
+            <?php endif; ?>
+            <input type="file" name="gst-image" id="gst-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->gst_image)) ? $this->auth_user->gst_image : ''; ?>" />
+            <p id="file-upload-filename" style="margin-bottom:0;"></p>
 
+            <?php if (!empty($this->auth_user->gst_image)) : ?>
+              <small> <a href="<?php echo base_url() . $this->auth_user->gst_image; ?>" target="_blank">View GST</a></small>
+            <?php endif; ?>
+
+          </div>
+          <script>
+            $('#gst-image').click(function() {
+              $('#gst-logo').click()
+            })
+          </script>
+
+          <div class="row text-center">
+            <label>Upload GST Photo (Optional)</label>
+          </div>
+        </div>
+        <div class="col-sm-3 m-b-30">
           <?php if (!empty($this->auth_user->pan_image)) : ?>
-            <small> <a href="<?php echo base_url() . $this->auth_user->pan_image; ?>" target="_blank">View PAN card</a></small>
-          <?php endif; ?>
-
-        </div>
-        <script>
-          $('#pan-image').click(function() {
-            $('#pan-logo').click()
-          })
-        </script>
-
-        <div class="row text-center">
-          <label>Upload Pan (Optional)</label>
-        </div>
-      </div>
-      <div class="col-sm-3 m-b-30">
-        <?php if (!empty($this->auth_user->aadhar_image)) : ?>
-          <a href="javascript:void(0)" id="aadhar" class="remove-btn-btn" onclick="delete_item('profile_controller/delete_adhaar','<?php echo $this->auth_user->id; ?>','Are you sure you want to remove this Aadhaar Image?');">
-            <i class="icon-close btn-cross"></i></a>
-        <?php else : ?>
-          <a href="javascript:void(0)" class="remove-btn-btn display-none" id="adhaar-image-delete" onclick="delete_selected_item($(this),'adhaar-image','adhaar-logo','Are you sure you want to remove this Aadhaar Image?');">
-            <i class="icon-close btn-cross"></i></a>
-        <?php endif; ?>
-        <div class="row text-center">
-          <?php if (empty($this->auth_user->aadhar_image)) : ?>
-            <img id="adhaar-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
+            <a href="javascript:void(0)" class="remove-btn-btn" onclick="delete_item('profile_controller/delete_pan','<?php echo $this->auth_user->id; ?>','Are you sure you want to remove this PAN Image?');">
+              <i class="icon-close btn-cross"></i></a>
           <?php else : ?>
-            <img id="adhaar-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/certificate.png'; ?>" style="border-radius:10%" />
+            <a href="javascript:void(0)" class="remove-btn-btn display-none" id="pan-image-delete" onclick="delete_selected_item($(this),'pan-image','pan-logo','Are you sure you want to remove this PAN Image?');">
+              <i class="icon-close btn-cross"></i></a>
           <?php endif; ?>
-          <input type="file" name="adhaar-image" id="adhaar-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->aadhar_image)) ? $this->auth_user->aadhar_image : ''; ?>" />
-          <p id="file-upload-filename" style="margin-bottom:0;"></p>
+          <div class="row text-center">
+            <?php if (empty($this->auth_user->pan_image)) : ?>
+              <img id="pan-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
+            <?php else : ?>
+              <img id="pan-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/certificate.png'; ?>" style="border-radius:10%" />
+            <?php endif; ?>
+            <input type="file" name="pan-image" id="pan-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->pan_image)) ? $this->auth_user->pan_image : ''; ?>" />
+            <p id="file-upload-filename" style="margin-bottom:0;"></p>
 
+            <?php if (!empty($this->auth_user->pan_image)) : ?>
+              <small> <a href="<?php echo base_url() . $this->auth_user->pan_image; ?>" target="_blank">View PAN card</a></small>
+            <?php endif; ?>
+
+          </div>
+          <script>
+            $('#pan-image').click(function() {
+              $('#pan-logo').click()
+            })
+          </script>
+
+          <div class="row text-center">
+            <label>Upload Pan (Optional)</label>
+          </div>
+        </div>
+        <div class="col-sm-3 m-b-30">
           <?php if (!empty($this->auth_user->aadhar_image)) : ?>
-            <small> <a href="<?php echo base_url() . $this->auth_user->aadhar_image; ?>" target="_blank">View Adhaar card</a></small>
-          <?php endif; ?>
-
-        </div>
-        <script>
-          $('#adhaar-image').click(function() {
-            $('#adhaar-logo').click()
-          })
-        </script>
-
-        <div class="row text-center">
-          <label>Upload IPR/Trademark(Optional)</label>
-        </div>
-      </div>
-      <div class="col-sm-3 m-b-30">
-        <?php if (!empty($this->auth_user->other_image)) : ?>
-          <a href="javascript:void(0)" class="remove-btn-btn" onclick="delete_item('profile_controller/delete_certificate','<?php echo $this->auth_user->id; ?>','Are you sure you want to remove this Certificate?');">
-            <i class="icon-close btn-cross"></i></a>
-        <?php else : ?>
-          <a href="javascript:void(0)" class="remove-btn-btn display-none" id="other-image-delete" onclick="delete_selected_item($(this),'other-image','other-logo','Are you sure you want to remove this Certificate?');">
-            <i class="icon-close btn-cross"></i></a>
-        <?php endif; ?>
-        <div class="row text-center">
-          <?php if (empty($this->auth_user->other_image)) : ?>
-            <img id="other-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
+            <a href="javascript:void(0)" id="aadhar" class="remove-btn-btn" onclick="delete_item('profile_controller/delete_adhaar','<?php echo $this->auth_user->id; ?>','Are you sure you want to remove this Aadhaar Image?');">
+              <i class="icon-close btn-cross"></i></a>
           <?php else : ?>
-            <img id="other-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/certificate.png'; ?>" style="border-radius:10%" />
+            <a href="javascript:void(0)" class="remove-btn-btn display-none" id="adhaar-image-delete" onclick="delete_selected_item($(this),'adhaar-image','adhaar-logo','Are you sure you want to remove this Aadhaar Image?');">
+              <i class="icon-close btn-cross"></i></a>
           <?php endif; ?>
-          <input type="file" name="other-image" id="other-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->other_image)) ? $this->auth_user->other_image : ''; ?>" />
-          <p id="file-upload-filename" style="margin-bottom:0;"></p>
+          <div class="row text-center">
+            <?php if (empty($this->auth_user->aadhar_image)) : ?>
+              <img id="adhaar-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
+            <?php else : ?>
+              <img id="adhaar-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/certificate.png'; ?>" style="border-radius:10%" />
+            <?php endif; ?>
+            <input type="file" name="adhaar-image" id="adhaar-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->aadhar_image)) ? $this->auth_user->aadhar_image : ''; ?>" />
+            <p id="file-upload-filename" style="margin-bottom:0;"></p>
 
-          <?php if (!empty($this->auth_user->other_image)) : ?>
-            <small> <a href="<?php echo base_url() . $this->auth_user->other_image; ?>" target="_blank">View Certificate</a></small>
-          <?php endif; ?>
-          <label class="tooltip-product-other-info1">Upload Certificates (Optional)&nbsp;<i class="fa fa-info-circle"></i><span class="tooltiptext-product" style="top: 50%;">Upload FSSAI license/registration if you're a food provider, any other certificate /license if you're not a food provider</span></label>
+            <?php if (!empty($this->auth_user->aadhar_image)) : ?>
+              <small> <a href="<?php echo base_url() . $this->auth_user->aadhar_image; ?>" target="_blank">View Adhaar card</a></small>
+            <?php endif; ?>
+
+          </div>
+          <script>
+            $('#adhaar-image').click(function() {
+              $('#adhaar-logo').click()
+            })
+          </script>
+
+          <div class="row text-center">
+            <label>Upload IPR/Trademark(Optional)</label>
+          </div>
         </div>
-        <script>
-          $('#other-image').click(function() {
-            $('#other-logo').click()
-          })
-        </script>
+        <div class="col-sm-3 m-b-30">
+          <?php if (!empty($this->auth_user->other_image)) : ?>
+            <a href="javascript:void(0)" class="remove-btn-btn" onclick="delete_item('profile_controller/delete_certificate','<?php echo $this->auth_user->id; ?>','Are you sure you want to remove this Certificate?');">
+              <i class="icon-close btn-cross"></i></a>
+          <?php else : ?>
+            <a href="javascript:void(0)" class="remove-btn-btn display-none" id="other-image-delete" onclick="delete_selected_item($(this),'other-image','other-logo','Are you sure you want to remove this Certificate?');">
+              <i class="icon-close btn-cross"></i></a>
+          <?php endif; ?>
+          <div class="row text-center">
+            <?php if (empty($this->auth_user->other_image)) : ?>
+              <img id="other-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
+            <?php else : ?>
+              <img id="other-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/certificate.png'; ?>" style="border-radius:10%" />
+            <?php endif; ?>
+            <input type="file" name="other-image" id="other-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->other_image)) ? $this->auth_user->other_image : ''; ?>" />
+            <p id="file-upload-filename" style="margin-bottom:0;"></p>
+
+            <?php if (!empty($this->auth_user->other_image)) : ?>
+              <small> <a href="<?php echo base_url() . $this->auth_user->other_image; ?>" target="_blank">View Certificate</a></small>
+            <?php endif; ?>
+            <label class="tooltip-product-other-info1">Upload Certificates (Optional)&nbsp;<i class="fa fa-info-circle"></i><span class="tooltiptext-product" style="top: 50%;">Upload FSSAI license/registration if you're a food provider, any other certificate /license if you're not a food provider</span></label>
+          </div>
+          <script>
+            $('#other-image').click(function() {
+              $('#other-logo').click()
+            })
+          </script>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<?php if ($this->auth_user->update_profile == 1) : ?>
-  <button type="submit" name="submit" value="update" class="btn btn-lg btn-success pull-right"><?php echo trans("save_changes") ?></button>
-<?php endif; ?>
-<?php if ($this->auth_user->update_profile == 0) : ?>
-  <button type="submit" name="submit" value="save_and_next_details" class="btn btn-lg btn-success pull-right">Save and Next</button>
-<?php endif; ?>
-<?php echo form_close(); ?>
+  <?php if ($this->auth_user->update_profile == 1) : ?>
+    <button type="submit" name="submit" value="update" class="btn btn-lg btn-success pull-right"><?php echo trans("save_changes") ?></button>
+  <?php endif; ?>
+  <?php if ($this->auth_user->update_profile == 0) : ?>
+    <button type="submit" name="submit" value="save_and_next_details" class="btn btn-lg btn-success pull-right">Save and Next</button>
+  <?php endif; ?>
+  <?php echo form_close(); ?>
 </div>
 <div class="modal fade" id="fee_schedule_modal" data-backdrop="static" role="dialog" style="display:none;">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1274,6 +1280,41 @@
         $('#' + id3).attr('src', e.target.result);
       }
       reader3.readAsDataURL(input3.files[0]);
+    }
+  }
+</script>
+<!-- cheque image -->
+
+<script>
+  var input1 = document.getElementById('cheque-logo');
+  // var infoArea = document.getElementById('file-upload-filename');
+
+  input1.addEventListener('change', showFileName1);
+
+  function showFileName1(event) {
+    $("#cheque-image-delete").show();
+    // the change event gives us the input it occurred in 
+    var input1 = event.srcElement;
+
+    // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
+    var fileName1 = input1.files[0].name;
+    var id1 = 'cheque-image';
+    // use fileName however fits your app best, i.e. add it into a div
+
+    extension1 = fileName1.split('.').pop();
+    var reader1 = new FileReader();
+    if (extension1 == 'pdf' || extension1 == 'docx') {
+      console.log("test")
+      reader1.onload = function(e) {
+        $('#' + id1).attr('src', '<?php echo base_url() . 'assets/img/certificate.png'; ?>');
+      }
+      reader1.readAsDataURL(input1.files[0]);
+    } else {
+      console.log("image")
+      reader1.onload = function(e) {
+        $('#' + id1).attr('src', e.target.result);
+      }
+      reader1.readAsDataURL(input1.files[0]);
     }
   }
 </script>
