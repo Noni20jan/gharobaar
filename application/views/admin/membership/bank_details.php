@@ -12,7 +12,7 @@
 <div class="box">
     <div class="box-header with-border">
         <div class="left">
-            <h3 class="box-title">Bank Details</h3>
+            <h3 class="box-title">Bank Approval Requests</h3>
         </div>
     </div>
 
