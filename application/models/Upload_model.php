@@ -146,6 +146,27 @@ class Upload_model extends CI_Model
             return null;
         }
     }
+    public function upload_cheque_image($file_name)
+    {
+        if (isset($_FILES[$file_name])) {
+            if (empty($_FILES[$file_name]['name'])) {
+                return null;
+            }
+        }
+        $config['upload_path'] = './uploads/cheque_images/';
+        $config['allowed_types'] = 'gif|jpg|jpeg|png|pdf';
+        $config['file_name'] = 'cheque_images' . generate_unique_id();
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload($file_name)) {
+            $data = array('upload_data' => $this->upload->data());
+            if (isset($data['upload_data']['full_path'])) {
+                return "uploads/cheque_images/" . $data['upload_data']['file_name'];
+            }
+            return null;
+        } else {
+            return null;
+        }
+    }
     //product default image upload
     public function product_default_image_upload($path, $folder)
     {

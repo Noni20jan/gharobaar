@@ -156,7 +156,6 @@ class Profile_model extends CI_Model
         if (!empty($temp_path)) {
             //delete old avatar        
             $data["cheque_image_url"] = $this->upload_model->cheque_upload($temp_path);
-            
         }
 
         return $this->db->update('users', $data);
@@ -244,21 +243,24 @@ class Profile_model extends CI_Model
         }
         return false;
     }
+
     public function edit_vendor_bank_details($id)
     {
         $user = $this->auth_model->get_user($id);
+
         if (!empty($user)) {
             $data = array(
+                'is_bank_details_approved' => 1,
                 'acc_holder_name' => $this->input->post('holder_name', true),
                 'update_profile' => '1',
                 'ifsc_code' => $this->input->post('ifsc_code', true),
                 'bank_branch' => $this->input->post('bank_branch', true),
                 'account_number' => $this->input->post('account_number', true)
             );
-            $this->db->where('id', $user->id);
-            $this->db->where('role', 'vendor');
-            return $this->db->update('users', $data);
         }
+        $this->db->where('id', $user->id);
+        $this->db->where('role', 'vendor');
+        return $this->db->update('users', $data);
     }
     public function delete_gst($id)
     {

@@ -303,7 +303,7 @@ class Membership_controller extends Admin_Core_Controller
     {
         $data['title'] = trans("shop_opening_requests");
         $pagination = $this->paginate(admin_url() . "bank-approve-details", $this->auth_model->get_users_count_by_role('vendor'));
-        $data['users'] = $this->auth_model->get_paginated_filtered_products('vendor', $pagination['per_page'], $pagination['offset']);
+        $data['users'] = $this->auth_model->get_paginated_filtered_vendors('vendor', $pagination['per_page'], $pagination['offset']);
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/membership/bank_details');
         $this->load->view('admin/includes/_footer');
@@ -361,12 +361,12 @@ class Membership_controller extends Admin_Core_Controller
     public function edit_vendor_bank_details($id)
     {
 
-        $data['title'] = trans("edit_user");
+        $data['title'] = "Edit Bank Details";
         $data['user'] = $this->auth_model->get_user($id);
 
 
-        $this->load->view('admin/includes/_header');
-        $this->load->view('admin/membership/bank_details_form', $data);
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/membership/bank_details_form');
         $this->load->view('admin/includes/_footer');
     }
     public function edit_bank_details_post()
@@ -374,15 +374,16 @@ class Membership_controller extends Admin_Core_Controller
         //validate inputs
         $user_id = $this->input->post('id', true);
         $user = get_user($user_id);
+
         $data = array(
             'id' => $this->input->post('id', true),
+            'is_bank_details_approved' => 1,
             'acc_holder_name' => $this->input->post('holder_name', true),
             'update_profile' => '1',
             'ifsc_code' => $this->input->post('ifsc_code', true),
             'bank_branch' => $this->input->post('bank_branch', true),
             'account_number' => $this->input->post('account_number', true)
         );
-
 
         if ($this->profile_model->edit_vendor_bank_details($user->id)) {
             $this->session->set_flashdata('success', trans("msg_updated"));

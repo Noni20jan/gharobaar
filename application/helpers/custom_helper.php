@@ -1018,7 +1018,20 @@ if (!function_exists('get_user_adhaar')) {
         }
     }
 }
-
+if (!function_exists('get_user_cheque_image')) {
+    function get_user_cheque_image($user)
+    {
+        if (!empty($user)) {
+            if (!empty($user->cheque_image_url) && file_exists(FCPATH . $user->cheque_image_url)) {
+                return base_url() . $user->cheque_image_url;
+            } elseif (!empty($user->cheque_image_url) && $user->user_type != "registered") {
+                return $user->cheque_image_url;
+            } else {
+                return  base_url() . $user->cheque_image_url;
+            }
+        }
+    }
+}
 if (!function_exists('get_user_other')) {
     function get_user_other($user)
     {
@@ -3046,13 +3059,11 @@ if (!function_exists('breadcrumbs')) {
 
 
     if (!function_exists('get_last_ordered_products')) {
-    function get_last_ordered_products($order_id)
-    {
-        $ci = &get_instance();
-        $rate_last_order = $ci->cart_model->get_last_ordered_products($order_id);
-        return $rate_last_order;
+        function get_last_ordered_products($order_id)
+        {
+            $ci = &get_instance();
+            $rate_last_order = $ci->cart_model->get_last_ordered_products($order_id);
+            return $rate_last_order;
+        }
     }
-
-    }
-
 }

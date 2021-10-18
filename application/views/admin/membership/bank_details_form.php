@@ -1,11 +1,143 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php $assistance_array = explode(",", $this->auth_user->assistance); ?>
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
     <script src="<?php echo base_url(); ?>assets/admin/js/main-1.7.js"></script>
+    <style>
+        .extra-margin {
+            margin: 0px 5px;
+        }
+
+        .back-link {
+            color: #fff;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+
+        #myImg {
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #myImg:hover {
+            opacity: 0.7;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            padding-top: 100px;
+            /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.9);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content (image) */
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        /* Caption of Modal Image */
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        /* Add Animation */
+        .modal-content,
+        #caption {
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom {
+            from {
+                -webkit-transform: scale(0)
+            }
+
+            to {
+                -webkit-transform: scale(1)
+            }
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        /* The Close Button */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 100% Image Width on Smaller Screens */
+        @media only screen and (max-width: 700px) {
+            .modal-content {
+                width: 100%;
+            }
+        }
+
+        /* The Modal (background) */
+
+
+        /* .huh #div1{
+      width: 475px;
+      height: 150px;
+      border: 1px solid black;
+      border-radius: 10px;
+
+    
+    } */
+    </style>
     <style>
         .extra-margin {
             margin: 0px 5px;
@@ -325,7 +457,7 @@
         <div class="row">
             <div class="col-sm-12 m-b-30 groove">
                 <label id="label1">Your Bank Details</label>
-                <?php foreach ($users as $user) : ?>
+                <?php foreach ($user as $use) : ?>
                 <?php endforeach; ?>
                 <input type="hidden" name="id" value="<?php echo html_escape($user->id); ?>">
 
@@ -369,54 +501,33 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="row Brand-1">
+                        <div class="col-md-3"><label id="formlabel2">Cheque Image<span class="Validation_error"> *</span></label></div>
+                        <div class="col-md-9 Brand-name">
+                            <img src="<?php echo get_user_cheque_image($user); ?>" id="myImg" width="100" height="100">
+                        </div>
+                    </div>
+                </div>
+                <div id="myModal" class="modal">
+                    <span class="close">&times;</span>
+                    <img class="modal-content" id="img01">
+                    <div id="caption"></div>
+                </div>
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </div>
 </div>
 <div class="row buttons_edit_vendors">
-    <button type="submit" name="submit" value="update" class="btn btn-lg btn-success pull-right extra-margin"><?php echo trans("save_changes") ?></button> &nbsp;&nbsp;&nbsp;
 
-    <button type="submit" name="submit" value="0" class="btn btn-lg btn-danger  pull-right extra-margin">
-        <i class="fa fa-times option-icon"></i><?php echo trans('decline'); ?>
+    <button type="submit" name="submit" value="update" class="btn btn-lg btn-success pull-right extra-margin"> <i class="fa fa-check option-icon"></i><?php echo trans('approve'); ?></button>
+    <button type="submit" name="submit" value="update" class="btn btn-lg btn-danger  pull-right extra-margin">
+        <a href="<?php echo admin_url() . 'approve-bank-details'; ?>" class="back-link">Back</a>
     </button>
-    <button type="submit" name="submit" value="1" class="btn btn-lg btn-warning  pull-right">
+    <!-- <button type="submit" name="submit" value="1" class="btn btn-lg btn-warning  pull-right">
         <i class="fa fa-check option-icon"></i><?php echo trans('approve'); ?>
-    </button>
+    </button> -->
 
     <?php echo form_close(); ?>
 </div>
@@ -459,16 +570,51 @@
 </script>
 
 
-
+<script>
+    $('#cheque-image').click(function() {
+        $('#brand-logo').click()
+    })
+</script>
 
 <script>
-    // var final_ass;
-    // var favorite_assistance = [];
-    // $.each($("input[name='assistance']:checked"), function() {
-    //   favorite_assistance.push($(this).val());
-    // });
-    // //final_sup = favorite.toString();
-    // console.log(favorite_assistance);
+    function imageShow(input, id) {
+        $('#upload-file-info').html($(input).val().replace(/.*[\/\\]/, ''));
+        $("#" + id + "-delete").show();
+        readURL(input, id);
+    };
 
-    // );
+
+
+    function readURL(input, id) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#' + id).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+</script>
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById("myImg");
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onclick = function() {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
 </script>
