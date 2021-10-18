@@ -523,7 +523,7 @@
 
     <button type="submit" name="submit" value="update" class="btn btn-lg btn-success pull-right extra-margin"> <i class="fa fa-check option-icon"></i><?php echo trans('approve'); ?></button>
     <button type="submit" name="submit" value="update" class="btn btn-lg btn-danger  pull-right extra-margin">
-        <a href="<?php echo admin_url() . 'approve-bank-details'; ?>" class="back-link">Back</a>
+        <a href="<?php echo admin_url() . 'bank-approve-details'; ?>" class="back-link">Back</a>
     </button>
     <!-- <button type="submit" name="submit" value="1" class="btn btn-lg btn-warning  pull-right">
         <i class="fa fa-check option-icon"></i><?php echo trans('approve'); ?>
