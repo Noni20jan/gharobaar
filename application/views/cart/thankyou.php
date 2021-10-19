@@ -32,7 +32,7 @@
       <h1 class="display-3"><?php echo trans("thankyou_messsage") ?></h1>
     </div>
 
-    <?php if (!isset($_SESSION)) : ?>
+    <?php if (!empty($order_number)) : ?>
       <div class="row">
         <div class="col-md-12 text-center">
           <p class="lead">
@@ -55,6 +55,6 @@
 <?php
 if (empty($this->session->userdata('thankyou_order_id'))) {
 
-  header("Refresh:5; url=" . lang_base_url());
+  header("Refresh:2; url=" . lang_base_url());
 }
 ?>

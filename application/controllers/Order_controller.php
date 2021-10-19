@@ -900,29 +900,4 @@ class Order_controller extends Home_Core_Controller
         // // $data = $this->offer_model->fetch_kpi_data($user_type);
         // // echo json_encode($data);
     }
-
-    public function thankyou()
-    {
-       
-
-        $data['title'] = trans("thankyou-title");
-        $data['description'] = trans("thankyou-title") . " - " . $this->app_name;
-        $data['keywords'] = trans("thankyou-title") . "," . $this->app_name;
-        $data["active_tab"] = "active_orders";
-        $data['main_settings'] = get_main_settings();
-
-        // if (empty($this->session->userdata('thankyou_order_id'))) {          
-        //     $this->load->view('cart/thankyou');  
-        //     sleep(5);
-        //     redirect(lang_base_url());
-        // }
-        //redirect to home controller
-        $data['order_number'] = $this->session->userdata('thankyou_order_id');
-
-        $this->load->view('partials/_header', $data);
-        $this->load->view('cart/thankyou', $data);
-        //unset the session for order
-        $this->session->unset_userdata('thankyou_order_id');
-        $this->load->view('partials/_footer');
-    }
 }
