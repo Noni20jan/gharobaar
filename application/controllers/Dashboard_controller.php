@@ -53,34 +53,58 @@ class Dashboard_controller extends Home_Core_Controller
         $data['latest_reviews'] = $this->review_model->get_paginated_vendor_reviews($this->auth_user->id, 6, 0);
         $data['main_settings'] = get_main_settings();
         $data['sales_sum'] = $this->order_admin_model->get_sales_sum_by_month($this->auth_user->id);
+        $data['avg_transaction'] = $this->dashboard_model->get_avg_transaction($this->auth_user->id);
+        $data['new_customers_last_week'] = $this->dashboard_model->get_new_customers_last_week($this->auth_user->id);
+        $data['no_of_transactions_last_week'] = $this->dashboard_model->get_no_of_transaction_last_week($this->auth_user->id);
 
-        $data['test'] = [50, 60, 75, 80, 70, 90, 100];
+        // var_dump($data['new_customers_last_week']);
+        // die();
 
-        // $data['test'] = $this->order_model->get_last_week_customer_data($this->auth_user->id);
+        $data['test'] = [(int)$data['new_customers_last_week'][6]->customer_count, (int)$data['new_customers_last_week'][5]->customer_count, (int)$data['new_customers_last_week'][4]->customer_count, (int)$data['new_customers_last_week'][3]->customer_count, (int)$data['new_customers_last_week'][2]->customer_count, (int)$data['new_customers_last_week'][1]->customer_count, (int)$data['new_customers_last_week'][0]->customer_count];
+        // echo json_encode($data['test']);
+
 
         //data for new coustomer bar graph
         $data['days_newCustomer'] = array();
         $date = new DateTime();
-        $date->modify('-7 day');
+        $date->modify('-7 week');
         while ($date->format('Y-m-d') != date('Y-m-d')) {
-            array_push($data['days_newCustomer'], $date->format("l"));
-            $date->modify('+1 day');
+            array_push($data['days_newCustomer'], $date->format("W"));
+            $date->modify('+1 week');
+            $i = $date->format("W");
         }
 
-        $data['test1'] = [500, 700, 650, 800, 950, 400, 300];
+        // var_dump($data['no_of_transactions_last_week']);
+        // die();
+        // echo json_encode($i);
+        // die;
+        // $i = 0;
+        // foreach ($data['no_of_transactions_last_week'] as $ij) {
+        //     var_dump($ij);
+        //     //     $i++;
+        // }
+        // die();
+        $ok['ok1'] = $this->dashboard_model->get_growth_over_last_week($this->auth_user->id);
+        $data['test1'] = [(int)$data['no_of_transactions_last_week'][58 - $i]->order_id, (int)$data['no_of_transactions_last_week'][57 - $i]->order_id, (int)$data['no_of_transactions_last_week'][56 - $i]->order_id, (int)$data['no_of_transactions_last_week'][55 - $i]->order_id, (int)$data['no_of_transactions_last_week'][54 - $i]->order_id, (int)$data['no_of_transactions_last_week'][53 - $i]->order_id, (int)$data['no_of_transactions_last_week'][52 - $i]->order_id];
         $data['test2'] = [500, 700, 650, 800, 950, 200, 400];
         $data['test3'] = [500, 700, 650, 800, 950, 700, 400];
         $data['test4'] = [500, 700, 650, 800, 950, 500, 400];
-        $json = '[{"name":"SUNDAY","y":60.62,"drilldown":"SUNDAY"},{"name":"MONDAY","y":62.74,"drilldown":"MONDAY"},{"name":"TUESDAY","y":10.57,"drilldown":"TUESDAY"},{"name":"WEDNESDAY","y":7.23,"drilldown":"WEDNESDAY"},{"name":"THRUSDAY","y":5.58,"drilldown":"THRUSDAY"},{"name":"FRIDAY","y":4.02,"drilldown":"FRIDAY"},{"name":"SATURDAY","y":1.92,"drilldown":"SATURDAY"}]';
+
+        $json = '[{"name":"WEEK 1","y":' . $ok['ok1'][0]->growth_rate . ',"drilldown":"WEEK 1"},{"name":"WEEK 2","y":' . $ok['ok1'][1]->growth_rate . ',"drilldown":"WEEK 2"}]';
         $data['test5'] = json_decode($json);
+
         $json = '[["Product 1",0.1],["Product 2",100.3],["Product 3",53.02],["Product 4",1.4],]';
         $data['dd1'] = json_decode($json);
-        $json = '[{"name":"SUNDAY","y":70.62,"drilldown":"SUNDAY"},{"name":"MONDAY","y":52.74,"drilldown":"MONDAY"},{"name":"TUESDAY","y":90.57,"drilldown":"TUESDAY"},{"name":"WEDNESDAY","y":7.23,"drilldown":"WEDNESDAY"},{"name":"THRUSDAY","y":5.58,"drilldown":"THRUSDAY"},{"name":"FRIDAY","y":4.02,"drilldown":"FRIDAY"},{"name":"SATURDAY","y":100.00,"drilldown":"SATURDAY"}]';
+
+        $json = '[{"name":"WEEK 1","y":70.62,"drilldown":"WEEK 1"},{"name":"WEEK 2","y":52.74,"drilldown":"WEEK 2"},{"name":"WEEK 3","y":90.57,"drilldown":"WEEK 3"},{"name":"WEEK 4","y":7.23,"drilldown":"WEEK 4"},{"name":"WEEK 5","y":5.58,"drilldown":"WEEK 5"},{"name":"WEEK 6","y":4.02,"drilldown":"WEEK 6"},{"name":"WEEK 7","y":100.00,"drilldown":"WEEK 7"}]';
         $data['test6'] = json_decode($json);
+
         $json = '[["Product 1",100.1],["Product 2",10.3],["Product 3",50.02],["Product 4",70.4]]';
         $data['dd2'] = json_decode($json);
+
         $json = '[{"name":"Deepansh","y":40,"drilldown":"Deepansh"},{"name":"Navin","y":20,"drilldown":"Navin"},{"name":"Rajesh","y":10,"drilldown":"Rajesh"},{"name":"knight","y":10,"drilldown":"knight"},{"name":"Joker","y":10,"drilldown":"Joker"},{"name":"Arrow","y":10,"drilldown":"Arrow"}]';
         $data['test7'] = json_decode($json);
+
         $json = '[["v65.0",0.1],["v64.0",1.3],["v63.0",53.02],["v62.0",1.4],["v61.0",0.88],["v60.0",0.56]]';
         $json = '[["v65.0",0.1],["v64.0",1.3],["v63.0",53.02],["v62.0",1.4],["v61.0",0.88],["v60.0",0.56]]';
         $json = '[["v65.0",0.1],["v64.0",1.3],["v63.0",53.02],["v62.0",1.4],["v61.0",0.88],["v60.0",0.56]]';

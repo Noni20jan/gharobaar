@@ -52,10 +52,26 @@
 .highcharts-data-table tr:hover {
   background: #f1f7ff;
 }
+.new-icons-position{
+  position: absolute;
+    right: 25px;
+    /* top: 0; */
+    bottom: 32px;
+    margin: auto;
+    font-size: 30px;
+    color: #9ca9be;
+}
+/* #svgelem{
+            position: relative;
+            left: 50%;
+            -webkit-transform: translateX(-40%);
+            -ms-transform: translateX(-40%);
+            transform: translateX(-40%);
+         } */
 </style>
 
 <div class="row m-b-30">
-  <div class="col-sm-12">
+  <div class="col-sm-12 m-b-15">
     <div class="small-boxes-dashboard">
       <?php if ($this->is_sale_active) : ?>
         <div class="col-lg-3 col-md-6 col-sm-12 p-0">
@@ -116,8 +132,84 @@
       </div>
     </div>
   </div>
-</div>
+  <div class="col-sm-12 m-b-15">
+    <div class="small-boxes-dashboard">
+      <?php if ($this->is_sale_active) : ?>
+        <div class="col-lg-3 col-md-6 col-sm-12 p-0">
+          <div class="small-box-dashboard small-box-dashboard-first">
+            <h3 class="total"><?= $total_sales_count; ?></h3>
+            <span class="text-muted">Average customer rating</span>
+            <i class="fa fa-star" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
+            <!-- <i class="fas fa-star"></i> -->
+            <!-- <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+              <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
+            </svg> -->
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 p-0">
+          <div class="small-box-dashboard">
+            <h3 class="total">50</h3>
+            <span class="text-muted">Repeated Orders</span>
+            <i class="fa fa-shopping-cart" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
+            <!-- <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cash-stack" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 3H1a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1h-1z" />
+              <path fill-rule="evenodd" d="M15 5H1v8h14V5zM1 4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H1z" />
+              <path d="M13 5a2 2 0 0 0 2 2V5h-2zM3 5a2 2 0 0 1-2 2V5h2zm10 8a2 2 0 0 1 2-2v2h-2zM3 13a2 2 0 0 0-2-2v2h2zm7-4a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
+            </svg> -->
+          </div>
+        </div>
+      <?php endif; ?>
+      <?php if ($user->supplier_type == "Goods") { ?>
+        <div class="col-lg-3 col-md-6 col-sm-12 p-0">
+          <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
+            <h3 class="total">55%</h3>
+            <span class="text-muted">Customer Index</span>
+            <i class="fa fa-users" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
+            <!-- <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-basket" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z" />
+            </svg> -->
+          </div>
+        </div>
+      <?php
+      } else if ($user->supplier_type == "Services") { ?>
+        <div class="col-lg-3 col-md-6 col-sm-12 p-0">
+          <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
+            <h3 class="total">55%</h3>
+            <span class="text-muted">Customer Index</span>
+            <i class="fa fa-users" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
+            <!-- <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-user" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z" />
+            </svg> -->
+          </div>
+        </div>
+      <?php } else { ?>
 
+      <?php } ?>
+
+      <div class="col-lg-3 col-md-6 col-sm-12 p-0">
+        <div class="small-box-dashboard small-box-dashboard-last">
+          <h3 class="total">60%</h3>
+          <span class="text-muted">Supplier Index</span>
+          <i class="fa fa-user" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
+          <!-- <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5h-2v12h2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z" />
+          </svg> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="small-box-dashboard small-box-dashboard-last">
+    <h3 class="total"><?= $avg_transaction->avg_transaction; ?></h3>
+    <span class="text-muted">Average Transaction</span>
+    <i class="fa fa-user" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
+    <!-- <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5h-2v12h2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z" />
+          </svg> -->
+  </div>
+</div>
 
 <!-- custom analytics  -->
 
@@ -130,7 +222,6 @@
       </p>
       <div id="container1"></div>
       <p class="highcharts-description"></p>
-
     </div>
     <div class="col-md-6">
       <div id="column"></div>
@@ -165,6 +256,7 @@
     </figure>
   </div>
 </div>
+
 <!-- custom analytics  End-->
 
 <?php if ($this->is_sale_active) : ?>
@@ -754,15 +846,7 @@
       text: 'No. of transactions in the last one week'
     },
     xAxis: {
-      categories: [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday'
-      ],
+      categories: <?php echo json_encode($days_newCustomer); ?>,
       plotBands: [{ // visualize the weekend
         from: 4.5,
         to: 6.5,

@@ -79,6 +79,9 @@ $route['download-purchased-digital-file-post']['POST'] = 'file_controller/downlo
 $route['download-free-digital-file-post']['POST'] = 'file_controller/download_free_digital_file';
 //product
 $route['add-product-post']['POST'] = 'dashboard_controller/add_product_post';
+//offers
+$route['create-offers']['POST'] = 'admin_controller/create_offers';
+
 
 $route['add-service-post']['POST'] = 'dashboard_controller/add_service_post';
 $route['edit-product-post']['POST'] = 'dashboard_controller/edit_product_post';
