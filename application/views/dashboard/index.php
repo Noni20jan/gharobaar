@@ -204,6 +204,8 @@
           <div class="box-footer clearfix"></div>
         </div>
       </div>
+
+
     <?php endif; ?>
   </div>
 <?php endif; ?>
@@ -374,7 +376,160 @@
       </div>
     </div>
   </div>
+  <div class="col-lg-6 col-sm-12 col-xs-12">
+    <div class="box box-primary box-sm">
+      <div class="box-header with-border">
+        <h3 class="box-title"><?php echo trans("pending_order"); ?></h3>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+
+      <div class="box-body index-table">
+        <div class="table-responsive">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th scope="col"><?php echo trans("order_id"); ?></th>
+                <th scope="col"><?php echo trans("total_amount"); ?></th>
+                <th scope="col"><?php echo trans("status"); ?></th>
+                <th scope="col"><?php echo trans("date"); ?></th>
+                <th scope="col"><?php echo trans("options"); ?></th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($latest_sales1 as $item) : ?>
+                <tr>
+                  <td>#<?php echo $item->order_number; ?></td>
+                  <td><?php echo price_currency_format($item->amount, $item->currency); ?></td>
+                  <td>
+                    <?php echo $item->order_status; ?>
+                  </td>
+                  <td><?php echo date("Y-m-d / h:i", strtotime($item->order_date)); ?></td>
+                  <td style="width: 10%">
+                    <a href="<?php echo generate_dash_url("sale"); ?>/<?php echo html_escape($item->order_number); ?>" class="btn btn-xs btn-info"><?php echo trans('details'); ?></a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+
+
+            </tbody>
+          </table>
+        </div>
+        <!-- /.table-responsive -->
+      </div>
+
+      <div class="box-footer clearfix text-right">
+        <a href="<?php echo generate_dash_url("sales"); ?>" class="btn btn-sm btn-default"><?php echo trans("view_all"); ?></a>
+      </div>
+    </div>
+  </div>
 </div>
+
+<div class="row">
+  <div class="col-lg-6 col-sm-12 col-xs-12">
+    <div class="box box-primary box-sm">
+      <div class="box-header with-border">
+        <h3 class="box-title"><?php echo trans("outstanding_payments"); ?></h3>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+
+      <div class="box-body index-table">
+        <div class="table-responsive">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th scope="col"><?php echo trans("order_id"); ?></th>
+                <th scope="col"><?php echo trans("total_amount"); ?></th>
+                <th scope="col"><?php echo trans("status"); ?></th>
+                <th scope="col"><?php echo trans("date"); ?></th>
+                <th scope="col"><?php echo trans("options"); ?></th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <?php if (!empty($latest_sales2)) :
+                foreach ($latest_sales2 as $item) : ?>
+                  <tr>
+                    <td>#<?php echo $item->order_number; ?></td>
+                    <td><?php echo price_currency_format($item->amount, $item->currency); ?></td>
+                    <td>
+                      <?php echo $item->payment_status; ?>
+                    </td>
+                    <td><?php echo date("Y-m-d / h:i", strtotime($item->order_date)); ?></td>
+                    <td style="width: 10%">
+                      <a href="<?php echo generate_dash_url("sale"); ?>/<?php echo html_escape($item->order_number); ?>" class="btn btn-xs btn-info"><?php echo trans('details'); ?></a>
+                    </td>
+                  </tr>
+              <?php endforeach;
+              endif; ?>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.table-responsive -->
+      </div>
+
+      <div class="box-footer clearfix text-right">
+        <a href="<?php echo generate_dash_url("sales"); ?>" class="btn btn-sm btn-default"><?php echo trans("view_all"); ?></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-sm-12 col-xs-12">
+    <div class="box box-primary box-sm">
+      <div class="box-header with-border">
+        <h3 class="box-title"><?php echo trans("cleared_payments"); ?></h3>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+      </div><!-- /.box-header -->
+
+      <div class="box-body index-table">
+        <div class="table-responsive">
+          <table class="table no-margin">
+            <thead>
+              <tr>
+                <th scope="col"><?php echo trans("order_id"); ?></th>
+                <th scope="col"><?php echo trans("total_amount"); ?></th>
+                <th scope="col"><?php echo trans("status"); ?></th>
+                <th scope="col"><?php echo trans("date"); ?></th>
+                <th scope="col"><?php echo trans("options"); ?></th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($latest_sales3 as $item) : ?>
+                <tr>
+                  <td>#<?php echo $item->order_number; ?></td>
+                  <td><?php echo price_currency_format($item->amount, $item->currency); ?></td>
+                  <td>
+                    <?php echo $item->payment_status; ?>
+                  </td>
+                  <td><?php echo date("Y-m-d / h:i", strtotime($item->order_date)); ?></td>
+                  <td style="width: 10%">
+                    <a href="<?php echo generate_dash_url("sale"); ?>/<?php echo html_escape($item->order_number); ?>" class="btn btn-xs btn-info"><?php echo trans('details'); ?></a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+
+
+            </tbody>
+          </table>
+        </div>
+        <!-- /.table-responsive -->
+      </div>
+
+      <div class="box-footer clearfix text-right">
+        <a href="<?php echo generate_dash_url("sales"); ?>" class="btn btn-sm btn-default"><?php echo trans("view_all"); ?></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <?php if (!empty($active_sales_count) || !empty($completed_sales_count)) : ?>
   <script>

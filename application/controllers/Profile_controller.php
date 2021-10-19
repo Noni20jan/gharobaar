@@ -411,6 +411,8 @@ class Profile_controller extends Home_Core_Controller
         if ($action == "update") {
 
             if ($this->profile_model->update_story($data, $user_id)) {
+                $this->load->model("email_model");
+                $this->email_model->seller_bank_account_detail($user_id);
                 $this->session->set_flashdata('success', trans("msg_updated"));
                 //check email changed
 
@@ -481,6 +483,8 @@ class Profile_controller extends Home_Core_Controller
         // if ($action == "update") {
 
         if ($this->profile_model->update_payout_account($data, $user_id)) {
+            $this->load->model("email_model");
+            $this->email_model->seller_bank_account_detail($user_id);
             $this->session->set_flashdata('success', trans("msg_updated"));
             //check email changed
 

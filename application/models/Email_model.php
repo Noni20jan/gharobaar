@@ -311,6 +311,62 @@ class Email_model extends CI_Model
             return $this->send_email($data);
         }
     }
+    // bank account verification mail
+    public function seller_bank_account_detail_verify($user_id)
+    {
+        $user_id = clean_number($user_id);
+        $user = $this->auth_model->get_user($user_id);
+        if (!empty($user)) {
+            $token = $user->token;
+            //check token
+            if (empty($token)) {
+                $token = generate_token();
+                $data = array(
+                    'token' => $token
+                );
+                $this->db->where('id', $user->id);
+                $this->db->update('users', $data);
+            }
+
+            $data = array(
+                'subject' => "Bank account added",
+                'to' => $user->email,
+                'template_path' => "email/email_newsletter",
+                'token' => $token,
+                'message' => "Dear seller,<br> Your bank account details are verified successfully"
+            );
+
+            $this->send_email($data);
+        }
+    }
+    // bank account confirmation for seller
+    public function seller_bank_account_detail($user_id)
+    {
+        $user_id = clean_number($user_id);
+        $user = $this->auth_model->get_user($user_id);
+        if (!empty($user)) {
+            $token = $user->token;
+            //check token
+            if (empty($token)) {
+                $token = generate_token();
+                $data = array(
+                    'token' => $token
+                );
+                $this->db->where('id', $user->id);
+                $this->db->update('users', $data);
+            }
+
+            $data = array(
+                'subject' => "Bank account added",
+                'to' => $this->general_settings->mail_username,
+                'template_path' => "email/email_newsletter",
+                'token' => $token,
+                'message' => "Dear admin,<br> Seller " . $user->username . "(" . $user->shop_name . ") successfully entered bank account details. Please approve.<br> Thank you,<br>Gharobaar."
+            );
+
+            $this->send_email($data);
+        }
+    }
     //send email activation
     public function send_email_activation($user_id)
     {

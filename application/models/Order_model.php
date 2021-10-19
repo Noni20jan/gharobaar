@@ -3779,7 +3779,7 @@ class Order_model extends CI_Model
     // get cod charges by order id and seller id
     public function fetch_cod_seller_payable($from_date, $to_date)
     {
-        $to_date = $to_date. " 23:59:59";
+        $to_date = $to_date . " 23:59:59";
 
         $sql = "SELECT distinct
         `a`.`order_id`,

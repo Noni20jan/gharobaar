@@ -516,7 +516,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 <div class="row buttons_edit_vendors">

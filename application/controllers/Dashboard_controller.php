@@ -46,6 +46,9 @@ class Dashboard_controller extends Home_Core_Controller
         $data['products_count'] = $this->product_model->get_user_products_count($this->auth_user->id);
         $data['services_count'] = $this->product_model->get_user_services_count($this->auth_user->id);
         $data['latest_sales'] = $this->order_model->get_limited_sales_by_seller($this->auth_user->id, 6);
+        $data['latest_sales1'] = $this->dashboard_model->get_pending_orders($this->auth_user->id, 6);
+        $data['latest_sales2'] = $this->dashboard_model->get_outstanding_payments($this->auth_user->id, 6);
+        $data['latest_sales3'] = $this->dashboard_model->get_cleared_payments($this->auth_user->id, 6);
         $data['latest_comments'] = $this->comment_model->get_paginated_vendor_comments($this->auth_user->id, 6, 0);
         $data['latest_reviews'] = $this->review_model->get_paginated_vendor_reviews($this->auth_user->id, 6, 0);
         $data['main_settings'] = get_main_settings();
@@ -63,11 +66,6 @@ class Dashboard_controller extends Home_Core_Controller
             array_push($data['days_newCustomer'], $date->format("l"));
             $date->modify('+1 day');
         }
-
-
-        // echo json_encode($data['days_newCustomer']);
-        // die;
-
 
         $data['test1'] = [500, 700, 650, 800, 950, 400, 300];
         $data['test2'] = [500, 700, 650, 800, 950, 200, 400];
