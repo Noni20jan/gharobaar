@@ -351,4 +351,17 @@ order by created_at desc";
         $query = $this->db->get("lp_user_qualified");
         return $query->result();
     }
+
+    public function get_criteria_values($quater, $user_id, $lp_year)
+    {
+        $sql = "select lpv.uq_qfc_value, qualifying_criteria.criteria_id, criteria.kpi_id
+        from lp_qu_criteria_values lpv
+        inner join qualifying_criteria 
+        on lpv.uq_qualifying_criteria_id = qualifying_criteria.id
+        inner join criteria
+        on qualifying_criteria.criteria_id = criteria.id
+        WHERE user_id = $user_id and lp_period = '$quater' and lp_year = $lp_year ";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
 }
