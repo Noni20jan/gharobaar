@@ -164,7 +164,7 @@
                     <?php if ($user->supplier_type_goods == "Food Products") : ?>
                         <div class="form-group">
                             <label class="control-label">FSSAI Number</label>
-                            <input type="text" class="form-control form-input" id="fssai_number" name="fssai_number" placeholder="FSSAI Number" required value="<?php echo html_escape($user->fssai_number); ?>" maxlength="14" minlength="14" onkeypress="return onlyNumberKey(event)" required<?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
+                            <input type="text" class="form-control form-input" id="fssai_number" name="fssai_number" placeholder="FSSAI Number" required maxlength="14" minlength="14" value="<?php echo html_escape($user->fssai_number); ?>" onkeypress="return onlyNumberKey(event)" required<?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
                             <p class="Validation_error" id="fssai_p"></p>
 
                         </div>
@@ -428,27 +428,26 @@
             });
         }
 
-        if ($("#fssai_number").is(":visible")) {
-            if ($("#fssai_number").val() == "") {
-                $("#fssai_p")[0].innerHTML = "*Field must be filled out";
-                $('#fssai_number').css({
-                    'borderColor': 'red'
-                });
+        if ($("#fssai_number").val() == "") {
+            $("#fssai_p")[0].innerHTML = "*Field must be filled out";
+            $('#fssai_number').css({
+                'borderColor': 'red'
+            });
 
-            } else if ($("#fssai_number").val().length != 14) {
-                $("#fssai_p")[0].innerHTML = "*Enter valid fssai number";
-                $('#fssai_number').css({
-                    'borderColor': 'red'
-                });
+        } else if ($("#fssai_number").val().length != 14) {
+            $("#fssai_p")[0].innerHTML = "*Enter valid fssai number";
+            $('#fssai_number').css({
+                'borderColor': 'red'
+            });
 
-            } else {
-                $("#fssai_p")[0].innerHTML = "";
+        } else {
+            $("#fssai_p")[0].innerHTML = "";
 
-                $('#fssai_number').css({
-                    'borderColor': '#dfe0e6'
-                });
-            }
+            $('#fssai_number').css({
+                'borderColor': '#dfe0e6'
+            });
         }
+
 
         var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
