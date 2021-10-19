@@ -184,6 +184,11 @@ foreach ($languages as $language) {
         /*user_blog_16*/
         $route[$key . getr('user_blog_16', $rts)]['GET'] = 'home_controller/user_blog_16';
 
+        $route[getr('admin', $rts) . '/bank-approve-details'] = 'membership_controller/bank_details_approve_requests';
+
+
+        $route[getr('dashboard', $rts) . '/loyalty-level'] = 'dashboard_controller/loyalty_level';
+
 
         //  categories
         // personal_care

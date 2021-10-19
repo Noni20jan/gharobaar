@@ -304,8 +304,9 @@ $user = get_user($this->auth_user->id);
                 </div>
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
-                    <div class="image">
-                        <img src="<?php echo get_user_avatar($this->auth_user); ?>" class="img-circle" alt="">
+                    <div class="">
+                        <img src="<?php echo base_url(); ?>assets/img/bronze-avatar.png" class="avatar-level" />
+                        <img src="<?php echo get_user_avatar($this->auth_user); ?>" class="user-img-in-avatar" alt="">
                     </div>
                     <div class="username">
                         <p><?= trans("hi") . ", " . get_full_name($this->auth_user); ?></p>
@@ -327,6 +328,12 @@ $user = get_user($this->auth_user->id);
                         <a href="<?php echo generate_dash_url("update_business_information"); ?>">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" />
                             <span>Update Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-profile">
+                        <a href="<?php echo generate_dash_url("loyalty-level"); ?>">
+                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" />
+                            <span>loyalty level</span>
                         </a>
                     </li>
                     <!-- <?php if ($this->auth_user->supplier_type == "Goods") : ?>

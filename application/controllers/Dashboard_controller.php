@@ -442,6 +442,7 @@ class Dashboard_controller extends Home_Core_Controller
         $this->load->view('dashboard/includes/_footer');
     }
 
+
     public function save_cards()
     {
 
@@ -2296,6 +2297,16 @@ class Dashboard_controller extends Home_Core_Controller
     /**
      * Set Payout Account
      */
+
+
+    public function loyalty_level()
+    {
+
+        $this->load->view('dashboard/includes/_header');
+        $this->load->view('loyalty_level');
+        $this->load->view('dashboard/includes/_footer');
+    }
+
     public function set_payout_account()
     {
         if (!$this->is_sale_active) {
