@@ -525,6 +525,7 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->model("Offer_model");
         $data['title'] = trans("");
         $data["lp_user_data"] = $this->offer_model->get_qualified_users_by_id($lp_id);
+        $data["lp_kpi_data"] = $this->offer_model->get_criteria_values($data["lp_user_data"]->lp_period, $data["lp_user_data"]->user_id, $data["lp_user_data"]->lp_year);
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/loyalty/qualified_user_details', $data);
         $this->load->view('admin/includes/_footer');
