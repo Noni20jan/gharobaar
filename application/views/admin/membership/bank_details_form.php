@@ -451,7 +451,7 @@
 <div id="wrapper">
 
 
-
+<?php $this->load->view('admin/includes/_messages'); ?>
     <?php echo form_open("membership_controller/edit_bank_details_post"); ?>
     <div class="profile-tab-content">
         <div class="row">

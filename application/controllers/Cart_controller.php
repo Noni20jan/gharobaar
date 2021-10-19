@@ -1292,33 +1292,7 @@ class Cart_controller extends Home_Core_Controller
                     $psd->seller_earned = ($psd->total_price / 100) - $psd->total_commission_amount;
 
 
-                    // if ($object_product->gst_rate == 0 || $object_product->gst_rate == null) {
-                    //     $psd->tcs_amount_product += 0;
-
-
-                    //     if (!empty($pan_number)) {
-                    //         if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
-                    //             $psd->tds_amount_product += 0;
-                    //         } else {
-                    //             $psd->tds_amount_product += 0.01 * ($psd->total_price);
-                    //         }
-                    //     } else {
-                    //         $psd->tds_amount_product += 0.05 * ($psd->total_price);
-                    //     }
-                    // } elseif ($object_product->gst_rate != 0) {
-                    //     $psd->tcs_amount_product += $psd->total_price_without_gst * 0.01;
-
-
-                    //     if (!empty($pan_number)) {
-                    //         if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
-                    //             $psd->tds_amount_product += 0;
-                    //         } else {
-                    //             $psd->tds_amount_product += 0.01 * ($psd->total_price_without_gst);
-                    //         }
-                    //     } else {
-                    //         $psd->tds_amount_product += 0.05 * ($psd->total_price_without_gst);
-                    //     }
-                    // }
+                    
                     if ($object_product->gst_rate == 0 || $object_product->gst_rate == null) {
                         $object_product->tcs_amount_product = 0;
 
@@ -1589,7 +1563,7 @@ class Cart_controller extends Home_Core_Controller
                 "returnUrl" => $returnUrl
             );
         else :
-            $data = array(
+            $data = array( 
                 "appId" => $this->general_settings->cashfree_app_id,
                 "orderId" => $this->input->post("orderid", true),
                 "orderAmount" => $this->input->post("orderamount", true),

@@ -387,8 +387,10 @@ class Membership_controller extends Admin_Core_Controller
 
         if ($this->profile_model->edit_vendor_bank_details($user->id)) {
             // $this->load->model("email_model");
-            // $this->email_model->seller_bank_account_detail_verify($user->id);
-            $this->session->set_flashdata('success', trans("msg_updated"));
+            // // $this->email_model->seller_bank_account_detail_verify($user->id);
+            // $this->session->set_flashdata('success', trans("msg_updated"));
+            $this->payout_settle_cycle_api($user->id);
+            // die();
             redirect($this->agent->referrer());
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
@@ -788,5 +790,153 @@ class Membership_controller extends Admin_Core_Controller
     {
         $id = $this->input->post('id', true);
         $this->membership_model->delete_transaction($id);
+    }
+
+    public function payout_settle_cycle_api($user_id)
+    {
+        // var_dump($data);die();
+        $curl = curl_init();
+        $user_id = $user_id;
+        $url = $this->general_settings->cashfree_api_base_url . 'api/v2/easy-split/vendors/settlement-cycles';
+        $client_id = $this->general_settings->cashfree_app_id;
+        $secret_key = $this->general_settings->cashfree_secret_key;
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'x-client-id: ' . $client_id,
+                'x-client-secret: ' . $secret_key,
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $res_decode = json_decode($response);
+        $status = json_decode($response)->status;
+        $max_settlement_cycle = end($res_decode->settlementCycles)->id;
+        if ($status == 'OK') {
+            $this->create_vendor_cashfree_easysplit($max_settlement_cycle, $user_id);
+        } else {
+            echo '<script>alert("Settlement Cycle API error")</script>';
+        }
+    }
+
+    public function create_vendor_cashfree_easysplit($max_settlement_cycle, $user_id)
+    {
+        $curl = curl_init();
+        $url = $this->general_settings->cashfree_api_base_url . 'api/v2/easy-split/vendors';
+        $client_id = $this->general_settings->cashfree_app_id;
+        $secret_key = $this->general_settings->cashfree_secret_key;
+        $seller_id = $user_id;
+
+        $bank_data = array(
+            "accountNumber" => get_user($seller_id)->account_number,
+            "accountHolder" => get_user($seller_id)->acc_holder_name,
+            "ifsc" => get_user($seller_id)->ifsc_code
+        );
+
+        $post_fields = array(
+            "email" => get_user($seller_id)->email,
+            "status" => "ACTIVE",
+            "bank" => $bank_data,
+            "phone" => get_user($seller_id)->phone_number,
+            "name" => get_user($seller_id)->first_name . ' ' . get_user($seller_id)->last_name,
+            "id" => $seller_id,
+            "settlementCycleId" => $max_settlement_cycle
+        );
+        // var_dump($post_fields);die();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($post_fields),
+            CURLOPT_HTTPHEADER => array(
+                'x-client-id: ' . $client_id,
+                'x-client-secret: ' . $secret_key,
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $response_dec = json_decode($response);
+        if ($response_dec->subCode == '200') {
+            $msg = trans("msg_updated") . " " . $response_dec->message;
+            $this->session->set_flashdata('success', $msg);
+        } elseif ($response_dec->message == 'VendorId already exists. Enter unique VendorId.') {
+            $this->update_vendor_cashfree_easysplit($max_settlement_cycle, $seller_id);
+        } else {
+            $msg = trans("msg_updated") . " " . $response_dec->message;
+            $this->session->set_flashdata('error', $msg);
+        }
+    }
+
+
+
+    public function update_vendor_cashfree_easysplit($max_settlement_cycle, $user_id)
+    {
+        $curl = curl_init();
+        $url = $this->general_settings->cashfree_api_base_url . 'api/v2/easy-split/vendors';
+        $client_id = $this->general_settings->cashfree_app_id;
+        $secret_key = $this->general_settings->cashfree_secret_key;
+        $seller_id = $user_id;
+
+        $bank_data = array(
+            "accountNumber" => get_user($seller_id)->account_number,
+            "accountHolder" => get_user($seller_id)->acc_holder_name,
+            "ifsc" => get_user($seller_id)->ifsc_code
+        );
+
+        $post_fields = array(
+            "email" => get_user($seller_id)->email,
+            "status" => "ACTIVE",
+            "bank" => $bank_data,
+            "phone" => get_user($seller_id)->phone_number,
+            "name" => get_user($seller_id)->first_name . ' ' . get_user($seller_id)->last_name,
+            "id" => $seller_id,
+            "settlementCycleId" => $max_settlement_cycle
+        );
+        // var_dump($post_fields);die();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_POSTFIELDS => json_encode($post_fields),
+            CURLOPT_HTTPHEADER => array(
+                'x-client-id: ' . $client_id,
+                'x-client-secret: ' . $secret_key,
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $response_dec = json_decode($response);
+        if ($response_dec->subCode == '200') {
+            $this->session->set_flashdata('success', $response_dec->message);
+        } else {
+            $this->session->set_flashdata('error', $response_dec->message);
+        }
     }
 }
