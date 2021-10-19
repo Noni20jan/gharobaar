@@ -494,7 +494,7 @@
               <?php foreach ($latest_sales1 as $item) : ?>
                 <tr>
                   <td>#<?php echo $item->order_number; ?></td>
-                  <td><?php echo price_currency_format($item->amount, $item->currency); ?></td>
+                  <td><?php echo price_formatted($item->amount, $item->currency); ?></td>
                   <td>
                     <?php echo $item->order_status; ?>
                   </td>
@@ -548,7 +548,7 @@
                 foreach ($latest_sales2 as $item) : ?>
                   <tr>
                     <td>#<?php echo $item->order_number; ?></td>
-                    <td><?php echo price_currency_format($item->amount, $item->currency); ?></td>
+                    <td><?php echo price_formatted($item->amount, $item->currency); ?></td>
                     <td>
                       <?php echo $item->payment_status; ?>
                     </td>
@@ -596,7 +596,7 @@
               <?php foreach ($latest_sales3 as $item) : ?>
                 <tr>
                   <td>#<?php echo $item->order_number; ?></td>
-                  <td><?php echo price_currency_format($item->amount, $item->currency); ?></td>
+                  <td><?php echo price_formatted($item->amount, $item->currency); ?></td>
                   <td>
                     <?php echo $item->payment_status; ?>
                   </td>
