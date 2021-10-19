@@ -251,6 +251,7 @@ class Profile_model extends CI_Model
         if (!empty($user)) {
             $data = array(
                 'is_bank_details_approved' => 1,
+                'is_shop_open' => 1,
                 'acc_holder_name' => $this->input->post('holder_name', true),
                 'update_profile' => '1',
                 'ifsc_code' => $this->input->post('ifsc_code', true),
