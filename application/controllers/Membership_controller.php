@@ -389,8 +389,10 @@ class Membership_controller extends Admin_Core_Controller
             // $this->load->model("email_model");
             // // $this->email_model->seller_bank_account_detail_verify($user->id);
             // $this->session->set_flashdata('success', trans("msg_updated"));
-            $this->payout_settle_cycle_api($user->id);
-            // die();
+            $this->easysplit_settle_cycle_api($user->id);
+            if ($this->general_settings->enable_payout_create_vendor_api == 1) {
+                $this->init_pay_auth($user->id);
+            }
             redirect($this->agent->referrer());
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
@@ -792,7 +794,8 @@ class Membership_controller extends Admin_Core_Controller
         $this->membership_model->delete_transaction($id);
     }
 
-    public function payout_settle_cycle_api($user_id)
+    // easy-split settlement cycle API
+    public function easysplit_settle_cycle_api($user_id)
     {
         // var_dump($data);die();
         $curl = curl_init();
@@ -830,6 +833,7 @@ class Membership_controller extends Admin_Core_Controller
         }
     }
 
+    // easy-split create vendor API
     public function create_vendor_cashfree_easysplit($max_settlement_cycle, $user_id)
     {
         $curl = curl_init();
@@ -887,7 +891,7 @@ class Membership_controller extends Admin_Core_Controller
     }
 
 
-
+    //easy-split update vendor API
     public function update_vendor_cashfree_easysplit($max_settlement_cycle, $user_id)
     {
         $curl = curl_init();
@@ -938,5 +942,85 @@ class Membership_controller extends Admin_Core_Controller
         } else {
             $this->session->set_flashdata('error', $response_dec->message);
         }
+    }
+
+    // api to add beneficiary for cashfree payouts
+    public function init_pay_auth($user_id)
+    {
+        $seller_id = $user_id;
+        $transfer_auth_url = ($this->general_settings->payout_batch_transfer_url) . "payout/v1/authorize";
+        $transfer_id = $this->general_settings->payout_batch_transfer_id;
+        $transfer_key = $this->general_settings->payout_batch_transfer_key;
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $transfer_auth_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => array(
+                'X-Client-Id: ' . $transfer_id,
+                'X-Client-Secret: ' . $transfer_key
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $token = json_decode($response)->data->token;
+        if (json_decode($response)->status == "SUCCESS") {
+            $this->create_payout_beneficiary($token, $seller_id);
+        } else {
+            echo '<script>alert("Invalid/Expired Token")</script>';
+        }
+    }
+
+    public function create_payout_beneficiary($token, $seller_id)
+    {
+        $header2 = array(
+            'Content-Type : application/json',
+            'Authorization: Bearer ' . $token
+        );
+        $post_fields = array(
+            "beneId" => $seller_id,
+            "name" => get_user($seller_id)->first_name . ' ' . get_user($seller_id)->last_name,
+            "email" => get_user($seller_id)->email,
+            "phone" => get_user($seller_id)->phone_number,
+            "bankAccount" => get_user($seller_id)->account_number,
+            "ifsc" => get_user($seller_id)->ifsc_code,
+            "address1" => get_user($seller_id)->house_no
+        );
+
+        $url = ($this->general_settings->payout_batch_transfer_url) . "payout/v1/addBeneficiary";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($post_fields),
+            CURLOPT_HTTPHEADER =>  $header2,
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        // $response_dec = json_decode($response);
+        // if ($response_dec->subCode == '200') {
+        //     $this->session->set_flashdata('success', $response_dec->message);
+        // }
+        // // elseif ($response_dec->message == 'Beneficiary Id already exists') {
+        // //     $this->session->set_flashdata('error', $response_dec->message);
+        // // }
+        // else {
+        //     $this->session->set_flashdata('error', $response_dec->message);
+        // }
     }
 }
