@@ -316,7 +316,19 @@ $user = get_user($this->auth_user->id);
 
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
+
+
+
+
+
                 <ul class="nav_bar_color sidebar-menu" data-widget="tree">
+                    <li class="header_color header">Dashboard</li>
+                    <li class="nav-profile">
+                        <a href="<?php echo generate_dash_url(""); ?>">
+
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
                     <li class="header_color header">PROFILE</li>
                     <li class="nav-profile">
                         <a href="<?php echo generate_dash_url("profile"); ?>">

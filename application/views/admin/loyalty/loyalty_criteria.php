@@ -109,9 +109,14 @@
                 </div>
             </div>
         </div>
+        <?php echo form_close(); ?>
     </div>
 </div>
-<?php echo form_close(); ?>
+
+
+
+
+
 <script>
     $(document).ready(function() {
         $('#parent_name').prop('disabled', true);
@@ -149,6 +154,47 @@
         })
     });
 </script>
+<h3 class="box-title">View</h3>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box box-primary box-sm">
+
+            <div class="table">
+                <table class="table no-margin">
+                    <thead>
+                        <tr>
+                            <th scope="col"><?php echo trans("s.no"); ?></th>
+                            <th scope="col"><?php echo trans("add_kpi"); ?></th>
+                            <th scope="col"><?php echo trans("description"); ?></th>
+                            <th scope="col"><?php echo trans("edit"); ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; ?>
+                        <?php if (!empty($criteria_detail)) :
+                            foreach ($criteria_detail as $item) : ?>
+                                <tr>
+                                    <?php $kpi = $this->Offer_model->get_kpi_name1($item->kpi_id); ?>
+                                    <td><?php echo $i; ?></td>
+
+                                    <td><?php echo $kpi->name; ?></td>
+                                    <td>
+                                        <?php echo $item->kpi_rel_type; ?>
+                                    </td>
+                                    <td style="width: 10%">
+                                        <a href="edit-loyalty-criteria/<?php echo html_escape($item->id); ?>" class="btn btn-xs btn-info"><?php echo trans('edit'); ?></a>
+                                    </td>
+                                    <?php $i++; ?>
+                                </tr>
+                        <?php endforeach;
+                        endif; ?>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.table-responsive -->
+        </div>
+    </div>
+</div>
 
 <script>
     function child_parent_name() {

@@ -575,7 +575,10 @@ $route[getr('admin', $rts) . '/subscribers'] = 'admin_controller/subscribers';
 $route[getr('admin', $rts) . '/send-email-members'] = 'admin_controller/send_email_members';
 //loyalty
 $route[getr('admin', $rts) . '/loyalty-criteria'] = 'admin_controller/loyalty_criteria';
+$route[getr('admin', $rts) . '/edit-loyalty-criteria/(:num)'] = 'admin_controller/edit_loyalty_criteria/$1';
 $route[getr('admin', $rts) . '/user-loyalty-program'] = 'admin_controller/user_loyalty_program';
+$route[getr('admin', $rts) . '/edit-kpi/(:num)'] = 'admin_controller/edit_kpi\/$1';
+$route[getr('admin', $rts) . '/edit-loyalty-program/(:num)'] = 'admin_controller/edit_loyalty_program/$1';
 $route[getr('admin', $rts) . '/kpi-form'] = 'admin_controller/kpi_form';
 $route[getr('admin', $rts) . '/qualified-user'] = 'admin_controller/qualified_user';
 $route[getr('admin', $rts) . '/qualified-user-details/(:num)'] = 'admin_controller/qualified_user_details/$1';
