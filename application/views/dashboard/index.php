@@ -52,26 +52,10 @@
 .highcharts-data-table tr:hover {
   background: #f1f7ff;
 }
-.new-icons-position{
-  position: absolute;
-    right: 25px;
-    /* top: 0; */
-    bottom: 32px;
-    margin: auto;
-    font-size: 30px;
-    color: #9ca9be;
-}
-/* #svgelem{
-            position: relative;
-            left: 50%;
-            -webkit-transform: translateX(-40%);
-            -ms-transform: translateX(-40%);
-            transform: translateX(-40%);
-         } */
 </style>
 
 <div class="row m-b-30">
-  <div class="col-sm-12 m-b-15">
+  <div class="col-sm-12">
     <div class="small-boxes-dashboard">
       <?php if ($this->is_sale_active) : ?>
         <div class="col-lg-3 col-md-6 col-sm-12 p-0">
@@ -132,10 +116,19 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-12 m-b-15">
+</div>
+<?php foreach ($repeat as $rep) : ?>
+<?php endforeach; ?>
+<?php foreach ($max_count as $max) : ?>
+<?php endforeach; ?>
+<?php foreach ($customers_weekly as $cust) : ?>
+<?php endforeach; ?>
+
+<div class="row m-b-30">
+  <div class="col-sm-12">
     <div class="small-boxes-dashboard">
       <?php if ($this->is_sale_active) : ?>
-        <div class="col-lg-3 col-md-6 col-sm-12 p-0">
+        <div class="col-lg-4 col-md-6 col-sm-12 p-0">
           <div class="small-box-dashboard small-box-dashboard-first">
             <h3 class="total"><?= $total_sales_count; ?></h3>
             <span class="text-muted">Average customer rating</span>
@@ -147,21 +140,10 @@
             </svg> -->
           </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 p-0">
-          <div class="small-box-dashboard">
-            <h3 class="total">50</h3>
-            <span class="text-muted">Repeated Orders</span>
-            <i class="fa fa-shopping-cart" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
-            <!-- <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cash-stack" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M14 3H1a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1h-1z" />
-              <path fill-rule="evenodd" d="M15 5H1v8h14V5zM1 4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H1z" />
-              <path d="M13 5a2 2 0 0 0 2 2V5h-2zM3 5a2 2 0 0 1-2 2V5h2zm10 8a2 2 0 0 1 2-2v2h-2zM3 13a2 2 0 0 0-2-2v2h2zm7-4a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
-            </svg> -->
-          </div>
-        </div>
+
       <?php endif; ?>
       <?php if ($user->supplier_type == "Goods") { ?>
-        <div class="col-lg-3 col-md-6 col-sm-12 p-0">
+        <div class="col-lg-4 col-md-6 col-sm-12 p-0">
           <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
             <h3 class="total">55%</h3>
             <span class="text-muted">Customer Index</span>
@@ -173,7 +155,7 @@
         </div>
       <?php
       } else if ($user->supplier_type == "Services") { ?>
-        <div class="col-lg-3 col-md-6 col-sm-12 p-0">
+        <div class="col-lg-4 col-md-6 col-sm-12 p-0">
           <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
             <h3 class="total">55%</h3>
             <span class="text-muted">Customer Index</span>
@@ -187,7 +169,7 @@
 
       <?php } ?>
 
-      <div class="col-lg-3 col-md-6 col-sm-12 p-0">
+      <div class="col-lg-4 col-md-6 col-sm-12 p-0">
         <div class="small-box-dashboard small-box-dashboard-last">
           <h3 class="total">60%</h3>
           <span class="text-muted">Supplier Index</span>
@@ -200,14 +182,79 @@
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="small-box-dashboard small-box-dashboard-last">
-    <h3 class="total"><?= $avg_transaction->avg_transaction; ?></h3>
-    <span class="text-muted">Average Transaction</span>
-    <i class="fa fa-user" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
-    <!-- <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5h-2v12h2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z" />
-          </svg> -->
+<div class="row m-b-30">
+  <div class="col-sm-12">
+    <div class="small-box-dashboard small-box-dashboard-last">
+      <h3 class="total"><?= $avg_transaction->avg_transaction; ?></h3>
+      <span class="text-muted">Average Transaction</span>
+      <i class="fa fa-user" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
+      <!-- <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5h-2v12h2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z" />
+      </svg> -->
+    </div>
+  </div>
+</div>
+
+<div class="row m-b-30">
+  <div class="col-sm-12">
+    <div class="small-boxes-dashboard">
+      <?php if ($this->is_sale_active) : ?>
+        <div class="col-lg-4 col-md-6 col-sm-12 p-0">
+          <div class="small-box-dashboard small-box-dashboard-first">
+            <?php if ($rep->sum != 0) : ?>
+              <h3 class="total"><?php echo $rep->sum; ?></h3>
+              <span class="text-muted">Repeated Purchases</span>
+            <?php else : ?>
+              <h3 class="total">0</h3>
+              <span class="text-muted">Repeated Purchases</span>
+            <?php endif; ?>
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+              <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
+            </svg>
+          </div>
+        </div>
+
+      <?php endif; ?>
+      <?php if ($user->supplier_type == "Goods") { ?>
+        <div class="col-lg-4 col-md-6 col-sm-12 p-0">
+          <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
+            <h3 class="total"><?php echo $max->count; ?></h3>
+            <span class="text-muted">Maximum Orders</span>
+            <i class="fa fa-shopping-cart" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
+
+          </div>
+        </div>
+      <?php
+      } else if ($user->supplier_type == "Services") { ?>
+        <div class="col-lg-4 col-md-6 col-sm-12 p-0">
+          <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
+            <h3 class="total"><?= $services_count; ?></h3>
+            <span class="text-muted">Service</span>
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-user" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z" />
+            </svg>
+          </div>
+        </div>
+      <?php } else { ?>
+
+      <?php } ?>
+
+      <div class="col-lg-4 col-md-6 col-sm-12 p-0">
+        <div class="small-box-dashboard small-box-dashboard-last">
+
+          <?php if (empty($customers_weekly)) : ?>
+            <h3 class="total">0</h3>
+            <span class="text-muted">Maximum Customers</span>
+            <i class="fa fa-user" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
+          <?php else : ?>
+            <h3 class="total"><?php echo $cust->cnt; ?></h3>
+            <span class="text-muted">Maximum Customers</span>
+            <i class="fa fa-user" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -222,6 +269,7 @@
       </p>
       <div id="container1"></div>
       <p class="highcharts-description"></p>
+
     </div>
     <div class="col-md-6">
       <div id="column"></div>
@@ -256,7 +304,6 @@
     </figure>
   </div>
 </div>
-
 <!-- custom analytics  End-->
 
 <?php if ($this->is_sale_active) : ?>
@@ -296,8 +343,6 @@
           <div class="box-footer clearfix"></div>
         </div>
       </div>
-
-
     <?php endif; ?>
   </div>
 <?php endif; ?>
@@ -468,115 +513,61 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-6 col-sm-12 col-xs-12">
-    <div class="box box-primary box-sm">
-      <div class="box-header with-border">
-        <h3 class="box-title"><?php echo trans("pending_order"); ?></h3>
-        <div class="box-tools pull-right">
-          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        </div>
-      </div><!-- /.box-header -->
-
-      <div class="box-body index-table">
-        <div class="table-responsive">
-          <table class="table no-margin">
-            <thead>
-              <tr>
-                <th scope="col"><?php echo trans("order_id"); ?></th>
-                <th scope="col"><?php echo trans("total_amount"); ?></th>
-                <th scope="col"><?php echo trans("status"); ?></th>
-                <th scope="col"><?php echo trans("date"); ?></th>
-                <th scope="col"><?php echo trans("options"); ?></th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($latest_sales1 as $item) : ?>
-                <tr>
-                  <td>#<?php echo $item->order_number; ?></td>
-                  <td><?php echo price_formatted($item->amount, $item->currency); ?></td>
-                  <td>
-                    <?php echo $item->order_status; ?>
-                  </td>
-                  <td><?php echo date("Y-m-d / h:i", strtotime($item->order_date)); ?></td>
-                  <td style="width: 10%">
-                    <a href="<?php echo generate_dash_url("sale"); ?>/<?php echo html_escape($item->order_number); ?>" class="btn btn-xs btn-info"><?php echo trans('details'); ?></a>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-
-
-            </tbody>
-          </table>
-        </div>
-        <!-- /.table-responsive -->
-      </div>
-
-      <div class="box-footer clearfix text-right">
-        <a href="<?php echo generate_dash_url("sales"); ?>" class="btn btn-sm btn-default"><?php echo trans("view_all"); ?></a>
-      </div>
-    </div>
-  </div>
 </div>
-
 <div class="row">
-  <div class="col-lg-6 col-sm-12 col-xs-12">
-    <div class="box box-primary box-sm">
-      <div class="box-header with-border">
-        <h3 class="box-title"><?php echo trans("outstanding_payments"); ?></h3>
-        <div class="box-tools pull-right">
-          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        </div>
-      </div><!-- /.box-header -->
+  <?php if ($this->is_sale_active) : ?>
+    <div class="col-lg-6 col-sm-12 col-xs-12">
+      <div class="box box-primary box-sm">
+        <div class="box-header with-border">
+          <h3 class="box-title">Top Rated Suppliers</h3>
+          <div class="box-tools pull-right">
+            <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+          </div>
+        </div><!-- /.box-header -->
 
-      <div class="box-body index-table">
-        <div class="table-responsive">
-          <table class="table no-margin">
-            <thead>
-              <tr>
-                <th scope="col"><?php echo trans("order_id"); ?></th>
-                <th scope="col"><?php echo trans("total_amount"); ?></th>
-                <th scope="col"><?php echo trans("status"); ?></th>
-                <th scope="col"><?php echo trans("date"); ?></th>
-                <th scope="col"><?php echo trans("options"); ?></th>
-              </tr>
-            </thead>
-            <tbody>
+        <div class="box-body index-table">
+          <div class="table-responsive">
+            <table class="table no-margin">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Username</th>
+                  <th>Shop Name</th>
+                  <th>Sales</th>
+                </tr>
+              </thead>
+              <tbody>
 
-              <?php if (!empty($latest_sales2)) :
-                foreach ($latest_sales2 as $item) : ?>
+                <?php foreach ($top_sell as $sel) : ?>
                   <tr>
-                    <td>#<?php echo $item->order_number; ?></td>
-                    <td><?php echo price_formatted($item->amount, $item->currency); ?></td>
-                    <td>
-                      <?php echo $item->payment_status; ?>
-                    </td>
-                    <td><?php echo date("Y-m-d / h:i", strtotime($item->order_date)); ?></td>
-                    <td style="width: 10%">
-                      <a href="<?php echo generate_dash_url("sale"); ?>/<?php echo html_escape($item->order_number); ?>" class="btn btn-xs btn-info"><?php echo trans('details'); ?></a>
-                    </td>
-                  </tr>
-              <?php endforeach;
-              endif; ?>
-            </tbody>
-          </table>
-        </div>
-        <!-- /.table-responsive -->
-      </div>
+                    <td><?php echo $sel->seller_id; ?></td>
+                    <td><a href="<?php echo base_url() . 'profile/' . $sel->slug; ?>"><?php echo $sel->username; ?></a></td>
 
-      <div class="box-footer clearfix text-right">
-        <a href="<?php echo generate_dash_url("sales"); ?>" class="btn btn-sm btn-default"><?php echo trans("view_all"); ?></a>
+                    <td><?php echo $sel->shop_name; ?></td>
+                    <td><?php echo $sel->count; ?></td>
+                  </tr>
+                <?php endforeach; ?>
+
+              </tbody>
+            </table>
+          </div>
+          <!-- /.table-responsive -->
+        </div>
+
+        <!-- <div class="box-footer clearfix text-right">
+          <a href="<?= generate_dash_url("sales"); ?>" class="btn btn-sm btn-default"><?php echo trans("view_all"); ?></a>
+        </div> -->
       </div>
     </div>
-  </div>
+  <?php endif; ?>
   <div class="col-lg-6 col-sm-12 col-xs-12">
     <div class="box box-primary box-sm">
       <div class="box-header with-border">
-        <h3 class="box-title"><?php echo trans("cleared_payments"); ?></h3>
+        <h3 class="box-title">Top Selling Products</h3>
         <div class="box-tools pull-right">
-          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
         </div>
       </div><!-- /.box-header -->
 
@@ -585,43 +576,66 @@
           <table class="table no-margin">
             <thead>
               <tr>
-                <th scope="col"><?php echo trans("order_id"); ?></th>
-                <th scope="col"><?php echo trans("total_amount"); ?></th>
-                <th scope="col"><?php echo trans("status"); ?></th>
-                <th scope="col"><?php echo trans("date"); ?></th>
-                <th scope="col"><?php echo trans("options"); ?></th>
+                <th>Id</th>
+                <th>Product</th>
+                <th>SKU</th>
+                <th>Shop Name</th>
+
+                <th><?php echo trans("date"); ?></th>
+                <th>Sales</th>
               </tr>
             </thead>
             <tbody>
-              <?php foreach ($latest_sales3 as $item) : ?>
+
+              <?php foreach ($top_selling as $sell) : ?>
+                <?php $product = get_product($sell->product_id) ?>
+                <?php $user = get_user($sell->seller_id); ?>
+
                 <tr>
-                  <td>#<?php echo $item->order_number; ?></td>
-                  <td><?php echo price_formatted($item->amount, $item->currency); ?></td>
+                  <td><?php echo $sell->product_id; ?></td>
                   <td>
-                    <?php echo $item->payment_status; ?>
+                    <div class="img-table">
+                      <a href="<?php echo generate_product_url($product); ?>" target="_blank">
+                        <img src="<?php echo get_product_image($product->id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
+                      </a>
+                    </div>
+                    <a href="<?php echo generate_product_url($product); ?>" target="_blank" class="table-product-title">
+                      <?php echo $sell->product_title; ?>
+                    </a>
                   </td>
-                  <td><?php echo date("Y-m-d / h:i", strtotime($item->order_date)); ?></td>
-                  <td style="width: 10%">
-                    <a href="<?php echo generate_dash_url("sale"); ?>/<?php echo html_escape($item->order_number); ?>" class="btn btn-xs btn-info"><?php echo trans('details'); ?></a>
+                  <td><?php echo $product->sku; ?></td>
+                  <td><?php echo $user->shop_name; ?></td>
+                  <td><?php echo $sell->created_at; ?></td>
+                  <td><?php echo $sell->cnt; ?></td>
+
+                  <!-- <td>
+                    <?php echo $sell->sku; ?>
                   </td>
+                  <td>
+                    <?php echo $sell->product_type; ?>
+                  </td>
+                  <td>
+                    <?php echo $sell->stock; ?>
+                  </td> -->
+                  <!-- <td style="width: 10%">
+                    <?php echo $sell->created_at; ?>
+                  </td> -->
                 </tr>
               <?php endforeach; ?>
 
-
             </tbody>
           </table>
         </div>
         <!-- /.table-responsive -->
       </div>
 
-      <div class="box-footer clearfix text-right">
-        <a href="<?php echo generate_dash_url("sales"); ?>" class="btn btn-sm btn-default"><?php echo trans("view_all"); ?></a>
-      </div>
+      <!-- <div class="box-footer clearfix text-right">
+        <a href="<?= generate_dash_url("sales"); ?>" class="btn btn-sm btn-default"><?php echo trans("view_all"); ?></a>
+      </div> -->
     </div>
   </div>
+
 </div>
-
-
 
 <?php if (!empty($active_sales_count) || !empty($completed_sales_count)) : ?>
   <script>
@@ -846,7 +860,15 @@
       text: 'No. of transactions in the last one week'
     },
     xAxis: {
-      categories: <?php echo json_encode($days_newCustomer); ?>,
+      categories: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday'
+      ],
       plotBands: [{ // visualize the weekend
         from: 4.5,
         to: 6.5,

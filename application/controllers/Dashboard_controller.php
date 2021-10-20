@@ -37,11 +37,12 @@ class Dashboard_controller extends Home_Core_Controller
         $data["user"] = $this->auth_user;
         $data["user_rating"] = calculate_user_rating($this->auth_user->id);
         $data["active_tab"] = "products";
-
         $data['active_sales_count'] = $this->order_admin_model->get_active_sales_count_by_seller($this->auth_user->id);
         $data['completed_sales_count'] = $this->order_admin_model->get_completed_sales_count_by_seller($this->auth_user->id);
         $data['total_sales_count'] = $data['active_sales_count'] + $data['completed_sales_count'];
-
+        $data["max_count"] = $this->product_admin_model->max_orders_count($this->auth_user->id);
+        $data["repeat"] = $this->product_admin_model->repeated_purchase($this->auth_user->id);
+        $data["customers_weekly"] = $this->product_admin_model->max_customers_weekly($this->auth_user->id);
         $data['total_pageviews_count'] = $this->product_model->get_vendor_total_pageviews_count($this->auth_user->id);
         $data['products_count'] = $this->product_model->get_user_products_count($this->auth_user->id);
         $data['services_count'] = $this->product_model->get_user_services_count($this->auth_user->id);
@@ -63,6 +64,10 @@ class Dashboard_controller extends Home_Core_Controller
         $data['test'] = [(int)$data['new_customers_last_week'][6]->customer_count, (int)$data['new_customers_last_week'][5]->customer_count, (int)$data['new_customers_last_week'][4]->customer_count, (int)$data['new_customers_last_week'][3]->customer_count, (int)$data['new_customers_last_week'][2]->customer_count, (int)$data['new_customers_last_week'][1]->customer_count, (int)$data['new_customers_last_week'][0]->customer_count];
         // echo json_encode($data['test']);
 
+        $data["top_sell"] = $this->product_admin_model->top_selling_products();
+        $data['test'] = [50, 60, 75, 80, 70, 90, 100];
+        $data["top_selling"] = $this->product_admin_model->products_top_selling($this->auth_user->id);
+        // $data['test'] = $this->order_model->get_last_week_customer_data($this->auth_user->id);
 
         //data for new coustomer bar graph
         $data['days_newCustomer'] = array();
