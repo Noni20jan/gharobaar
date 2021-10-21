@@ -156,33 +156,38 @@ foreach ($languages as $language) {
         /*user_blog_2*/
         $route[$key . getr('user_blog_2', $rts)]['GET'] = 'home_controller/user_blog_2';
         /*user_blog_3*/
-        $route[$key . getr('user_blog_3', $rts)]['GET'] = 'home_controller/user_blog_3';
+        $route[$key . getr('Artisanal-jewellery-amplifying-current-fashion-standards', $rts)]['GET'] = 'home_controller/user_blog_3';
         /*user_blog_4*/
-        $route[$key . getr('user_blog_4', $rts)]['GET'] = 'home_controller/user_blog_4';
+        $route[$key . getr('Dress-well-first-interview', $rts)]['GET'] = 'home_controller/user_blog_4';
         /*user_blog_5*/
-        $route[$key . getr('user_blog_5', $rts)]['GET'] = 'home_controller/user_blog_5';
+        $route[$key . getr('affiliate-marketing-passive-income', $rts)]['GET'] = 'home_controller/user_blog_5';
         /*user_blog_6*/
-        $route[$key . getr('user_blog_6', $rts)]['GET'] = 'home_controller/user_blog_6';
+        $route[$key . getr('Essential-ingredients-online-food-business-home', $rts)]['GET'] = 'home_controller/user_blog_6';
         /*user_blog_7*/
-        $route[$key . getr('user_blog_7', $rts)]['GET'] = 'home_controller/user_blog_7';
+        $route[$key . getr('Skincare-routine', $rts)]['GET'] = 'home_controller/user_blog_7';
         /*user_blog_8*/
-        $route[$key . getr('user_blog_8', $rts)]['GET'] = 'home_controller/user_blog_8';
+        $route[$key . getr('logo-creation-basics', $rts)]['GET'] = 'home_controller/user_blog_8';
         /*user_blog_9*/
-        $route[$key . getr('user_blog_9', $rts)]['GET'] = 'home_controller/user_blog_9';
+        $route[$key . getr('handmade-products', $rts)]['GET'] = 'home_controller/user_blog_9';
         /*user_blog_10*/
-        $route[$key . getr('user_blog_10', $rts)]['GET'] = 'home_controller/user_blog_10';
+        $route[$key . getr('gender-neutral-outfits-online', $rts)]['GET'] = 'home_controller/user_blog_10';
         /*user_blog_11*/
-        $route[$key . getr('user_blog_11', $rts)]['GET'] = 'home_controller/user_blog_11';
+        $route[$key . getr('embracing-everything-ethnic', $rts)]['GET'] = 'home_controller/user_blog_11';
         /*user_blog_12*/
-        $route[$key . getr('user_blog_12', $rts)]['GET'] = 'home_controller/user_blog_12';
+        $route[$key . getr('employee-diwali-gifts', $rts)]['GET'] = 'home_controller/user_blog_12';
         /*user_blog_13*/
-        $route[$key . getr('user_blog_13', $rts)]['GET'] = 'home_controller/user_blog_13';
+        $route[$key . getr('diwali-gift-ideas', $rts)]['GET'] = 'home_controller/user_blog_13';
         /*user_blog_14*/
-        $route[$key . getr('user_blog_14', $rts)]['GET'] = 'home_controller/user_blog_14';
+        $route[$key . getr('diwali-decoration-tips', $rts)]['GET'] = 'home_controller/user_blog_14';
         /*user_blog_15*/
-        $route[$key . getr('user_blog_15', $rts)]['GET'] = 'home_controller/user_blog_15';
+        $route[$key . getr('coolest-ethnic-wear-diwali', $rts)]['GET'] = 'home_controller/user_blog_15';
         /*user_blog_16*/
-        $route[$key . getr('user_blog_16', $rts)]['GET'] = 'home_controller/user_blog_16';
+        $route[$key . getr('edible-cutlery', $rts)]['GET'] = 'home_controller/user_blog_16';
+
+        $route[getr('admin', $rts) . '/bank-approve-details'] = 'membership_controller/bank_details_approve_requests';
+
+
+        $route[getr('dashboard', $rts) . '/loyalty-level'] = 'dashboard_controller/loyalty_level';
 
 
         //  categories
@@ -279,9 +284,9 @@ foreach ($languages as $language) {
         /*blogs*/
         $route[$key . getr('user_blog', $rts)]['GET'] = 'home_controller/user_blog';
         /*user_blog_1*/
-        $route[$key . getr('user_blog_1', $rts)]['GET'] = 'home_controller/user_blog_1';
+        $route[$key . getr('Essential-ingredients-online-food-business', $rts)]['GET'] = 'home_controller/user_blog_1';
         /*user_blog_2*/
-        $route[$key . getr('user_blog_2', $rts)]['GET'] = 'home_controller/user_blog_2';
+        $route[$key . getr('home-cooked-food-beats-dine-out', $rts)]['GET'] = 'home_controller/user_blog_2';
         /*return_and_exchange*/
         $route[$key . getr('return_and_exchange', $rts)]['GET'] = 'home_controller/return_and_exchange';
         /*shop_by_occasion*/
@@ -361,10 +366,9 @@ foreach ($languages as $language) {
         $route[$key . getr('dashboard', $rts) . '/' . getr('shop_settings', $rts)]['GET'] = 'dashboard_controller/shop_settings';
 
 
+        $route[$key . getr('admin', $rts) . '/' . 'edit_bank_details/(:num)'] = 'membership_controller/edit_vendor_bank_details/$1';
 
         $route[$key . getr('dashboard', $rts) . '/' . getr('last_product', $rts)]['GET'] = 'dashboard_controller/last_product';
-
-
 
 
         $route[$key . 'calculate-loyality-values']['GET'] = 'coupon_controller/calculate_loyality_values';
@@ -536,6 +540,7 @@ $route[getr('admin', $rts) . '/edit-user/(:num)'] = 'membership_controller/edit_
 $route[getr('admin', $rts) . '/membership-plans'] = 'membership_controller/membership_plans';
 $route[getr('admin', $rts) . '/transactions-membership'] = 'membership_controller/transactions_membership';
 $route[getr('admin', $rts) . '/edit-plan/(:num)'] = 'membership_controller/edit_plan/$1';
+$route[getr('admin', $rts) . '/bank-approve-details'] = 'membership_controller/bank_details_approve_requests';
 
 $route[getr('admin', $rts) . '/cache-system'] = 'admin_controller/cache_system';
 $route[getr('admin', $rts) . '/storage'] = 'admin_controller/storage';
@@ -570,7 +575,10 @@ $route[getr('admin', $rts) . '/subscribers'] = 'admin_controller/subscribers';
 $route[getr('admin', $rts) . '/send-email-members'] = 'admin_controller/send_email_members';
 //loyalty
 $route[getr('admin', $rts) . '/loyalty-criteria'] = 'admin_controller/loyalty_criteria';
+$route[getr('admin', $rts) . '/edit-loyalty-criteria/(:num)'] = 'admin_controller/edit_loyalty_criteria/$1';
 $route[getr('admin', $rts) . '/user-loyalty-program'] = 'admin_controller/user_loyalty_program';
+$route[getr('admin', $rts) . '/edit_kpi/(:num)'] = 'admin_controller/edit_kpi/$1';
+$route[getr('admin', $rts) . '/edit-loyalty-program/(:num)'] = 'admin_controller/edit_loyalty_program/$1';
 $route[getr('admin', $rts) . '/kpi-form'] = 'admin_controller/kpi_form';
 $route[getr('admin', $rts) . '/qualified-user'] = 'admin_controller/qualified_user';
 $route[getr('admin', $rts) . '/qualified-user-details/(:num)'] = 'admin_controller/qualified_user_details/$1';
