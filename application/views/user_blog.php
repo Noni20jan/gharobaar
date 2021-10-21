@@ -86,7 +86,7 @@
         </div>
         <div class="row" style="text-align:center;">
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_1'>
+                <a href='<?php echo base_url(); ?>Essential-ingredients-online-food-business'>
                     <img src="<?php echo base_url(); ?>assets/img/Blog-1.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">Essential Ingredients To Start Your Online Food Business</h6>
@@ -95,7 +95,7 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_2'>
+                <a href='<?php echo base_url(); ?>home-cooked-food-beats-dine-out'>
                     <img src="<?php echo base_url(); ?>assets/img/Blog-2.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">Why Home Cooked Food Always Beats Dine-out</h6>
@@ -106,7 +106,7 @@
         </div>
         <div class="row" style="text-align:center;">
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_3'>
+                <a href='<?php echo base_url(); ?>Artisanal-jewellery-amplifying-current-fashion-standards'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-3.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">Know How Artisanal Jewellery Is Amplifying Current <br>Fashion Standards
@@ -116,7 +116,7 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_4'>
+                <a href='<?php echo base_url(); ?>Dress-well-first-interview'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-4.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">Corporate etiquette - Dress up well for your first interview
@@ -128,7 +128,7 @@
         </div>
         <div class="row" style="text-align:center;">
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_5'>
+                <a href='<?php echo base_url(); ?>affiliate-marketing-passive-income'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-5.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">Getting Started On Affiliate Marketing: Turn product<br> recommendations into a passive income</h6>
@@ -137,7 +137,7 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_6'>
+                <a href='<?php echo base_url(); ?>Essential-ingredients-online-food-business-home'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-6.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">Essential Ingredients To Start Your Online Food Business</h6>
@@ -148,7 +148,7 @@
         </div>
         <div class="row" style="text-align:center;">
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_7'>
+                <a href='<?php echo base_url(); ?>Skincare-routine'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-7.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">Skincare Simplified - Keep up with your skincare<br> routine with these products </h6>
@@ -157,7 +157,7 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_8'>
+                <a href='<?php echo base_url(); ?>logo-creation-basics'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-8.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">Basics Of Logo Creation: How To Make A Great Logo <br>For Your Brand</h6>
@@ -168,7 +168,7 @@
         </div>
         <div class="row" style="text-align:center;">
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_9'>
+                <a href='<?php echo base_url(); ?>handmade-products'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-9.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">Reasons to Say Yes to Handmade Products</h6>
@@ -177,7 +177,7 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_10'>
+                <a href='<?php echo base_url(); ?>gender-neutral-outfits online'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-10.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">10+ Awe-Inspiring Gender Neutral Outfits You Can Get<br>Online</h6>
@@ -188,7 +188,7 @@
         </div>
         <div class="row" style="text-align:center;">
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_11'>
+                <a href='<?php echo base_url(); ?>embracing-everything-ethnic'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-11.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">Why are Films Suddenly embracing everything ethnic?</h6>
@@ -197,7 +197,7 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_12'>
+                <a href='<?php echo base_url(); ?>employee-diwali-gifts'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-12.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">10 Gifts that your employees are going to love this Diwali</h6>
@@ -208,7 +208,7 @@
         </div>
         <div class="row" style="text-align:center;">
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_13'>
+                <a href='<?php echo base_url(); ?>diwali-gift-ideas'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-13.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">Best Gift Ideas for Diwali to Gift your Loved Ones</h6>
@@ -217,7 +217,7 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_14'>
+                <a href='<?php echo base_url(); ?>diwali-decoration-tips'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-14.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">Diwali Decoration Tips to Decorate your Home Like a<br>Paradise</h6>
@@ -228,7 +228,7 @@
         </div>
         <div class="row" style="text-align:center;">
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_15'>
+                <a href='<?php echo base_url(); ?>coolest-ethnic-wear-diwali'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-15.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">The coolest ethnic wear to look hot this Diwali</h6>
@@ -237,7 +237,7 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>user_blog_16'>
+                <a href='<?php echo base_url(); ?>edible-cutlery'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-16.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">Edible Cutlery: To Keep Snacking After Snacking</h6>
