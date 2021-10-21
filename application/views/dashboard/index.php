@@ -132,6 +132,9 @@
             </div>
         </div>
     </div>
+</div>
+<div class="row m-b-30">
+
     <div class="col-sm-12 m-b-15">
         <div class="small-boxes-dashboard">
             <?php if ($this->is_sale_active) : ?>
@@ -798,7 +801,72 @@
     </div>
 
 </div>
+<div class="row m-b-30">
 
+    <div class="col-lg-6 col-sm-12 col-xs-12">
+        <div class="box box-primary box-sm">
+            <div class="box-header with-border">
+                <h3 class="box-title">Active Customers Placed atleast one order in 3 months</h3>
+                <div class="box-tools pull-right">
+                    <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+                </div>
+            </div><!-- /.box-header -->
+
+            <div class="box-body index-table">
+                <div class="table-responsive">
+                    <table class="table no-margin">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Username</th>
+                                <th>Mobile No</th>
+
+                                <!-- <th><?php echo trans("date"); ?></th> -->
+                                <th>No Of Orders</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <?php foreach ($active_customers as $active) : ?>
+                                <?php $product = get_product($sell->product_id) ?>
+                                <?php $user = get_user($active->buyer_id); ?>
+
+                                <tr>
+                                    <td><?php echo $active->buyer_id; ?></td>
+                                    <td><?php echo $user->email; ?></td>
+                                    <td><?php echo $user->phone_number; ?></td>
+                                    <!-- <td><?php echo $active->Period; ?></td> -->
+                                    <td><?php echo $active->order_count; ?></td>
+
+                                    <!-- <td>
+                    <?php echo $sell->sku; ?>
+                  </td>
+                  <td>
+                    <?php echo $sell->product_type; ?>
+                  </td>
+                  <td>
+                    <?php echo $sell->stock; ?>
+                  </td> -->
+                                    <!-- <td style="width: 10%">
+                    <?php echo $sell->created_at; ?>
+                  </td> -->
+                                </tr>
+                            <?php endforeach; ?>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+
+            <!-- <div class="box-footer clearfix text-right">
+        <a href="<?= generate_dash_url("sales"); ?>" class="btn btn-sm btn-default"><?php echo trans("view_all"); ?></a>
+      </div> -->
+        </div>
+    </div>
+
+</div>
 
 
 <?php if (!empty($active_sales_count) || !empty($completed_sales_count)) : ?>

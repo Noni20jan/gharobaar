@@ -57,7 +57,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data['avg_transaction'] = $this->dashboard_model->get_avg_transaction($this->auth_user->id);
         $data['new_customers_last_week'] = $this->dashboard_model->get_new_customers_last_week($this->auth_user->id);
         $data['no_of_transactions_last_week'] = $this->dashboard_model->get_no_of_transaction_last_week($this->auth_user->id);
-
+        $data['active_customers'] = $this->dashboard_model->active_customers($this->auth_user->id);
         // var_dump($data['new_customers_last_week']);
         // die();
 

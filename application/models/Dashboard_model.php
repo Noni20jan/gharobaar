@@ -55,7 +55,14 @@ class Dashboard_model extends CI_Model
         return $this->db->get('fact_growth_over_last_week_customer')->result();
     }
 
-
+    public function active_customers($seller_id)
+    {
+        $sql = "SELECT * from fact_active_customers 
+WHERE seller_id=$seller_id AND seller_id!=buyer_id AND order_date > now() - INTERVAL 3 MONTH 
+GROUP BY seller_id,buyer_id";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     //get growth over last week customer
     public function get_new_customers_last_week($id)
     {
