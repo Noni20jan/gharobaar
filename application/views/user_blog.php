@@ -177,7 +177,7 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a href='<?php echo base_url(); ?>gender-neutral-outfits online'>
+                <a href='<?php echo base_url(); ?>gender-neutral-outfits-online'>
                     <img src="<?php echo base_url(); ?>assets/img/blog-10.png" class="blog-1-img">
                     <div class="brief-content-blog">
                         <h6 class="blogs-description">10+ Awe-Inspiring Gender Neutral Outfits You Can Get<br>Online</h6>
