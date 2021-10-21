@@ -897,7 +897,7 @@ class Membership_controller extends Admin_Core_Controller
     public function update_vendor_cashfree_easysplit($max_settlement_cycle, $user_id)
     {
         $curl = curl_init();
-        $url = $this->general_settings->cashfree_api_base_url . 'api/v2/easy-split/vendors';
+        $url = $this->general_settings->cashfree_api_base_url . 'api/v2/easy-split/vendors/' . $user_id;
         $client_id = $this->general_settings->cashfree_app_id;
         $secret_key = $this->general_settings->cashfree_secret_key;
         $seller_id = $user_id;
@@ -914,7 +914,6 @@ class Membership_controller extends Admin_Core_Controller
             "bank" => $bank_data,
             "phone" => get_user($seller_id)->phone_number,
             "name" => get_user($seller_id)->first_name . ' ' . get_user($seller_id)->last_name,
-            "id" => $seller_id,
             "settlementCycleId" => $max_settlement_cycle
         );
         // var_dump($post_fields);die();
