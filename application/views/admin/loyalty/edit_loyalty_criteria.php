@@ -29,6 +29,7 @@
         color: white;
     }
 </style>
+<?php $this->load->view('admin/includes/_messages'); ?>
 <!-- form start -->
 <div class="row">
     <div class="col-xs-12">
@@ -40,7 +41,7 @@
 
             <!-- form start -->
             <div class="box-body">
-                <?php $this->load->view('admin/includes/_messages'); ?>
+
                 <?php echo form_open('admin_controller/loyalty_program_submit'); ?>
                 <div class="col-12 coupons-from-holder">
                     <div class="form-group">
@@ -115,7 +116,9 @@
 <?php echo form_close(); ?>
 <script>
     $(document).ready(function() {
-        $('#parent_name').prop('disabled', true);
+        <?php if ($criteria_detail->kpi_rel_type != "Child") { ?>
+            $('#parent_name').prop('disabled', true);
+        <?php } ?>
         // if ($('#parent_name').prop('disabled', true)) {
         //     $('#parent_hidden').val = "";
         // }

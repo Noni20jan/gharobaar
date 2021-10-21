@@ -125,7 +125,7 @@
                     <thead>
                         <tr>
                             <th scope="col"><?php echo trans("s.no"); ?></th>
-                            <th scope="col"><?php echo trans("loyalty_program"); ?></th>
+                            <th scope="col"><?php echo trans("name"); ?></th>
                             <th scope="col"><?php echo trans("description"); ?></th>
                             <th scope="col"><?php echo trans("edit"); ?></th>
                         </tr>

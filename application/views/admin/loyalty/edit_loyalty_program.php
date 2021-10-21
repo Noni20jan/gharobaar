@@ -29,6 +29,7 @@
         color: white;
     }
 </style>
+<?php $this->load->view('admin/includes/_messages'); ?>
 <!-- form start -->
 <div class="row">
     <div class="col-xs-12">
@@ -36,7 +37,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title"><?php echo trans('user_loyalty_program'); ?></h3>
             </div>
-            <?php $this->load->view('admin/includes/_messages'); ?>
+
             <?php echo form_open('admin_controller/edit_loyalty_program_submit'); ?>
             <div class="col-12 coupons-from-holder">
                 <div class="form-group">
@@ -92,7 +93,7 @@
                             <label>Start Date:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type='date' name="start_date" value="<?php echo $get_program_data->start_date; ?>" class="form-control auth-form-input" value="" required>
+                            <input type='date' name="start_date" value="<?php echo $get_program_data->start_date; ?>" class="form-control auth-form-input" id="start_date" value="" required>
                         </div>
                     </div>
                 </div>
@@ -102,7 +103,7 @@
                             <label>End Date:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type='date' name="end_date" class="form-control auth-form-input" value="<?php echo $get_program_data->name; ?>" value="" required>
+                            <input type='date' name="end_date" class="form-control auth-form-input" value="<?php echo $get_program_data->end_date; ?>" id="end_date" value="" required>
                         </div>
                     </div>
                 </div>

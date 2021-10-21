@@ -108,7 +108,7 @@
                                         <?php echo $item->description; ?>
                                     </td>
                                     <td style="width: 10%">
-                                        <a href="edit-kpi/<?php echo html_escape($item->id); ?>" class="btn btn-xs btn-info"><?php echo trans('edit'); ?></a>
+                                        <a href="<?php echo admin_url(); ?>edit_kpi/<?php echo html_escape($item->id); ?>" class="btn btn-xs btn-info"><?php echo trans('edit'); ?></a>
                                     </td>
                                 </tr>
                                 <?php $i++; ?>
