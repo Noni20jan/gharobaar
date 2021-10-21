@@ -162,7 +162,7 @@ foreach ($languages as $language) {
         /*user_blog_5*/
         $route[$key . getr('affiliate-marketing-passive-income', $rts)]['GET'] = 'home_controller/user_blog_5';
         /*user_blog_6*/
-        $route[$key . getr('user_blog_6', $rts)]['GET'] = 'home_controller/user_blog_6';
+        $route[$key . getr('Essential-ingredients-online-food-business-home', $rts)]['GET'] = 'home_controller/user_blog_6';
         /*user_blog_7*/
         $route[$key . getr('Skincare-routine', $rts)]['GET'] = 'home_controller/user_blog_7';
         /*user_blog_8*/
