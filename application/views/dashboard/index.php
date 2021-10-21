@@ -233,7 +233,7 @@
             <?php if ($user->supplier_type == "Goods") { ?>
                 <div class="col-lg-4 col-md-6 col-sm-12 p-0">
                     <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
-                        <h3 class="total"><?php echo $max->count; ?></h3>
+                        <h3 class="total"><?php echo $max->order_sum; ?></h3>
                         <span class="text-muted">Maximum Orders</span>
                         <i class="fa fa-shopping-cart" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
 
@@ -262,7 +262,7 @@
                         <span class="text-muted">Maximum Customers</span>
                         <i class="fa fa-user" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
                     <?php else : ?>
-                        <h3 class="total"><?php echo $cust->cnt; ?></h3>
+                        <h3 class="total"><?php echo $cust->sum; ?></h3>
                         <span class="text-muted">Maximum Customers</span>
                         <i class="fa fa-user" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
                     <?php endif; ?>

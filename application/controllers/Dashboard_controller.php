@@ -40,9 +40,9 @@ class Dashboard_controller extends Home_Core_Controller
         $data['active_sales_count'] = $this->order_admin_model->get_active_sales_count_by_seller($this->auth_user->id);
         $data['completed_sales_count'] = $this->order_admin_model->get_completed_sales_count_by_seller($this->auth_user->id);
         $data['total_sales_count'] = $data['active_sales_count'] + $data['completed_sales_count'];
-        $data["max_count"] = $this->product_admin_model->max_orders_count($this->auth_user->id);
-        $data["repeat"] = $this->product_admin_model->repeated_purchase($this->auth_user->id);
-        $data["customers_weekly"] = $this->product_admin_model->max_customers_weekly($this->auth_user->id);
+        $data["max_count"] = $this->dashboard_model->max_orders_count($this->auth_user->id);
+        $data["repeat"] = $this->dashboard_model->repeated_purchase($this->auth_user->id);
+        $data["customers_weekly"] = $this->dashboard_model->max_customers_weekly($this->auth_user->id);
         $data['total_pageviews_count'] = $this->product_model->get_vendor_total_pageviews_count($this->auth_user->id);
         $data['products_count'] = $this->product_model->get_user_products_count($this->auth_user->id);
         $data['services_count'] = $this->product_model->get_user_services_count($this->auth_user->id);
