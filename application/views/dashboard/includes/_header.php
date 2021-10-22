@@ -305,7 +305,7 @@ $user = get_user($this->auth_user->id);
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <div class="">
-                        <img src="<?php echo base_url(); ?>assets/img/bronze-avatar.png" class="avatar-level" />
+                        <!-- <img src="<?php echo base_url(); ?>assets/img/bronze-avatar.png" class="avatar-level" /> -->
                         <img src="<?php echo get_user_avatar($this->auth_user); ?>" class="user-img-in-avatar" alt="">
                     </div>
                     <div class="username">
