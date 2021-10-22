@@ -64,7 +64,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data['test'] = [(int)$data['new_customers_last_week'][6]->customer_count, (int)$data['new_customers_last_week'][5]->customer_count, (int)$data['new_customers_last_week'][4]->customer_count, (int)$data['new_customers_last_week'][3]->customer_count, (int)$data['new_customers_last_week'][2]->customer_count, (int)$data['new_customers_last_week'][1]->customer_count, (int)$data['new_customers_last_week'][0]->customer_count];
         // echo json_encode($data['test']);
 
-        $data["top_sell"] = $this->product_admin_model->top_selling_products();
+        $data["top_sell"] = $this->dashboard_model->top_selling_products();
         $data['test'] = [50, 60, 75, 80, 70, 90, 100];
         $data["top_selling"] = $this->product_admin_model->products_top_selling($this->auth_user->id);
         // $data['test'] = $this->order_model->get_last_week_customer_data($this->auth_user->id);
