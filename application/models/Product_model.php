@@ -133,6 +133,9 @@ class Product_model extends Core_Model
 
         return $this->db->insert('products', $data);
     }
+
+
+
     //add product title and desc
     public function add_product_title_desc($product_id)
     {
@@ -1828,13 +1831,13 @@ class Product_model extends Core_Model
         $this->db->where('products.is_service', "0");
         return $this->db->count_all_results('products');
     }
-    //get user products count
-    public function get_user_barter_products_count($user_id, $list_type = 'active')
+    //get avg transaction
+    public function get_avg_transation($user_id, $list_type = 'active')
     {
         $this->filter_user_products($list_type);
-        $this->db->where('users.id', clean_number($user_id));
-        $this->db->where('products.available_for_barter', 'Y');
-        return $this->db->count_all_results('products');
+        $this->db->where('seller_id', clean_number($user_id));
+        $this->db->where('products.is_service', "0");
+        return $this->db->count_all_results('order_products');
     }
 
     public function get_user_services_count($user_id, $list_type = 'active')

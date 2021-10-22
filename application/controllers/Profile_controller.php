@@ -394,12 +394,14 @@ class Profile_controller extends Home_Core_Controller
             'account_number' => $this->input->post('account_number', true),
             'brand_desc' => $this->input->post('brand_desc', true),
             'assistance' => implode(',', $ass),
+            'cheque_image_url' => $this->input->post('cheque_image_url', true),
             'brand_name' => $this->input->post('brand_name', true),
             'supplier_speciality' => $this->input->post('supplier_speciality', true),
             'customer_name' => $this->input->post('customer_name', true),
             'source' => $this->input->post('source', true),
             'different_type_products' => $this->input->post('different_type_products', true),
             'testimonial' => $this->input->post('testimonial', true),
+            'is_bank_details_approved' => 0
             // 'about_me' => $this->input->post('about_me', true),
             // 'supplier_story_url' => $this->input->post('story_vedio_url', true),
 
@@ -409,6 +411,8 @@ class Profile_controller extends Home_Core_Controller
         if ($action == "update") {
 
             if ($this->profile_model->update_story($data, $user_id)) {
+                $this->load->model("email_model");
+                $this->email_model->seller_bank_account_detail($user_id);
                 $this->session->set_flashdata('success', trans("msg_updated"));
                 //check email changed
 
@@ -437,20 +441,19 @@ class Profile_controller extends Home_Core_Controller
             redirect(lang_base_url());
         }
 
-        $user_id = $this->auth_user->id;       
+        $user_id = $this->auth_user->id;
         $data = array(
             'supplier_story_url' => $this->input->post('story_vedio_url', true),
             'about_me' => $this->input->post('about_me', true),
             'update_profile' => '1',
-    
+
 
         );
 
 
 
         $this->profile_model->update_supplier_profile_logo($data, $user_id);
-        redirect($this->agent->referrer());  
-        
+        redirect($this->agent->referrer());
     }
 
 
@@ -473,12 +476,15 @@ class Profile_controller extends Home_Core_Controller
             'ifsc_code' => $this->input->post('ifsc_code', true),
             'bank_branch' => $this->input->post('bank_branch', true),
             'account_number' => $this->input->post('account_number', true),
+
         );
 
 
         // if ($action == "update") {
 
         if ($this->profile_model->update_payout_account($data, $user_id)) {
+            $this->load->model("email_model");
+            $this->email_model->seller_bank_account_detail($user_id);
             $this->session->set_flashdata('success', trans("msg_updated"));
             //check email changed
 

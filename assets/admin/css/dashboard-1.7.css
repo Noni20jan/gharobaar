@@ -538,8 +538,8 @@ small {
   margin: 0 auto;
   padding: 3px;
   border-radius: 100%;
-  background-color: #007c05;
-  background-image: #007c05;
+  /* background-color: #007c05; */
+  background-image: url(assets/img/bronze-avatar.png);
 }
 
 .user-panel .username {
@@ -900,18 +900,18 @@ small {
   /* float: left; */
 }
 
-  .pagination > li > a {
-    background-color: #fff !important;
-    border-color: #eee;
-    border-radius: 2px;
-    min-width: 36px;
-    padding: 8px 12px;
-    text-align: center;
-  text-align: center;
-}
-@media(max-width:700px){
 .pagination > li > a {
   background-color: #fff !important;
+  border-color: #eee;
+  border-radius: 2px;
+  min-width: 36px;
+  padding: 8px 12px;
+  text-align: center;
+  text-align: center;
+}
+@media (max-width: 700px) {
+  .pagination > li > a {
+    background-color: #fff !important;
     border-color: #eee;
     border-radius: 2px;
     min-width: 36px;
@@ -919,7 +919,7 @@ small {
     padding: 8px 12px;
     text-align: center;
     text-align: center;
-}
+  }
 }
 .pagination > .active > a,
 .pagination > .active > a:focus,

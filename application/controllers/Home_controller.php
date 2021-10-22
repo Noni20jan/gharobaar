@@ -2340,6 +2340,9 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('user_blog_12', $data);
         $this->load->view('partials/_footer');
     }
+
+
+
     public function user_blog_13()
     {
         get_method();
@@ -2353,6 +2356,9 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('user_blog_13', $data);
         $this->load->view('partials/_footer');
     }
+
+
+
     public function user_blog_14()
     {
         get_method();
@@ -2366,6 +2372,8 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('user_blog_14', $data);
         $this->load->view('partials/_footer');
     }
+
+
     public function user_blog_15()
     {
         get_method();
@@ -2379,6 +2387,8 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('user_blog_15', $data);
         $this->load->view('partials/_footer');
     }
+
+
     public function user_blog_16()
     {
         get_method();
@@ -2392,6 +2402,7 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('user_blog_16', $data);
         $this->load->view('partials/_footer');
     }
+
     public function privacy()
     {
         get_method();
@@ -2405,6 +2416,8 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('privacy', $data);
         $this->load->view('partials/_footer');
     }
+
+
 
 
     //Return and exchange///

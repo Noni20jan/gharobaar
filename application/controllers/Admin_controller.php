@@ -378,8 +378,21 @@ class Admin_controller extends Admin_Core_Controller
         $data['user_type'] = $this->Offer_model->get_user_type();
         $data['kpi'] = $this->Offer_model->get_kpi_name();
         $data['parent_name'] = $this->Offer_model->get_parent_name();
+        $data['criteria_detail'] = $this->Offer_model->get_loyalty_criteria();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/loyalty/loyalty_criteria', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+    public function edit_loyalty_criteria($id)
+    {
+        $this->load->model("Offer_model");
+        $data['title'] = trans("loyalty_criteria");
+        $data['user_type'] = $this->Offer_model->get_user_type();
+        $data['kpi'] = $this->Offer_model->get_kpi_name();
+        $data['parent_name'] = $this->Offer_model->get_parent_name();
+        $data['criteria_detail'] = $this->Offer_model->get_criteria_detail($id);
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/loyalty/edit_loyalty_criteria', $data);
         $this->load->view('admin/includes/_footer');
     }
 
@@ -442,16 +455,28 @@ class Admin_controller extends Admin_Core_Controller
         } else {
             $this->session->set_flashdata('error', trans("loyalty_criteria_error"));
         }
-        redirect($this->agent->referrer());
+        redirect(admin_url() . "loyalty-criteria");
     }
     public function user_loyalty_program()
     {
         $this->load->model("Offer_model");
         $data['title'] = trans("user_loyalty_program");
         $data['loyalty'] = $this->Offer_model->get_loyalty_program();
+        $data['get_program_data'] = $this->Offer_model->get_loyalty_data();
 
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/loyalty/user_loyalty_program', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+    public function edit_loyalty_program($id)
+    {
+        $this->load->model("Offer_model");
+        $data['title'] = trans("user_loyalty_program");
+        $data['loyalty'] = $this->Offer_model->get_loyalty_program();
+        $data['get_program_data'] = $this->Offer_model->get_user_loyalty_data($id);
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/loyalty/edit_loyalty_program', $data);
         $this->load->view('admin/includes/_footer');
     }
 
@@ -475,11 +500,44 @@ class Admin_controller extends Admin_Core_Controller
         }
         redirect($this->agent->referrer());
     }
+
+    public function edit_loyalty_program_submit()
+    {
+        $id = $this->input->post('id', true);
+        $this->load->model("Offer_model");
+        $data['name'] = $this->input->post('name', true);
+        $data['user_type'] = $this->input->post('user_type', true);
+        $data['loyalty_program'] = $this->input->post('loyalty_type', true);
+        $data['description'] = $this->input->post('description', true);
+        $data['start_date'] = $this->input->post('start_date', true);
+        $data['end_date'] = $this->input->post('end_date', true);
+        $data['status'] = "A";
+        $data['last_updated_by'] = $this->auth_user->id;
+        $this->Offer_model->loyalty_program_update_details($data, $id);
+        $result = "true";
+        if ($result == true) {
+            $this->session->set_flashdata('success', trans("user_loyalty_program_submit"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+        redirect(admin_url() . "user-loyalty-program");
+    }
     public function kpi_form()
     {
+        $this->load->model("Offer_model");
         $data['title'] = trans("kpi_form");
+        $data['get_kpi_data'] = $this->Offer_model->get_kpi_data();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/loyalty/kpi_form', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+    public function edit_kpi($id)
+    {
+        $this->load->model("Offer_model");
+        $data['title'] = trans("kpi_form");
+        $data['kpi_detail'] = $this->Offer_model->get_kpi_detail($id);
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/loyalty/edit_kpi', $data);
         $this->load->view('admin/includes/_footer');
     }
     public  function kpi_form_submit()
@@ -506,6 +564,31 @@ class Admin_controller extends Admin_Core_Controller
         }
         redirect($this->agent->referrer());
     }
+    public  function edit_kpi_form_submit()
+    {
+        $id = $this->input->post('id', true);
+        $this->load->model("Offer_model");
+        $data['name'] = $this->input->post('kpi_name', true);
+        $data['description'] = $this->input->post('description', true);
+        $data['type'] = $this->input->post('kpi_type', true);
+        $data['formula'] = $this->input->post('formula', true);
+        $data['status'] = "A";
+        $data['created_by'] = $this->auth_user->id;
+        $kpi_id['id'] = $this->Offer_model->get_kpi_id($data);
+        if (isset($kpi_id['id'])) {
+            $data['id'] = $kpi_id['id']->id;
+            $this->Offer_model->kpi_update_details($data);
+        } else {
+            $this->Offer_model->kpi_edit_details($data, $id);
+        }
+        $result = "true";
+        if ($result == true) {
+            $this->session->set_flashdata('success', trans("kpi_form_submit"));
+        } else {
+            $this->session->set_flashdata('error', trans("kpi_error"));
+        }
+        redirect(admin_url() . "kpi-form");
+    }
 
     //qualified user listing
 
@@ -525,6 +608,7 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->model("Offer_model");
         $data['title'] = trans("");
         $data["lp_user_data"] = $this->offer_model->get_qualified_users_by_id($lp_id);
+        $data["lp_kpi_data"] = $this->offer_model->get_criteria_values($data["lp_user_data"]->lp_period, $data["lp_user_data"]->user_id, $data["lp_user_data"]->lp_year);
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/loyalty/qualified_user_details', $data);
         $this->load->view('admin/includes/_footer');

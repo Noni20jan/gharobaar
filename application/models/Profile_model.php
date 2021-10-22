@@ -87,6 +87,16 @@ class Profile_model extends CI_Model
             delete_file_from_server($this->auth_user->other_image);
             $data["other_image"]  = $this->upload_model->upload_pdf_file('other-image');
         }
+
+
+        $temp_path = $this->upload_model->upload_temp_image('cheque-image');
+        if (!empty($temp_path)) {
+            //delete old avatar
+            delete_file_from_server($this->auth_user->cheque_image_url);
+            $data["cheque_image_url"] = $this->upload_model->cheque_upload($temp_path);
+            $this->upload_model->delete_temp_image($temp_path);
+        }
+
         // if (!empty($temp_path_other)) {
 
         //     delete_file_from_server($this->auth_user->other_image);
@@ -140,6 +150,14 @@ class Profile_model extends CI_Model
     {
         $user_id = clean_number($user_id);
         $this->db->where('id', $user_id);
+
+        $this->load->model('upload_model');
+        $temp_path = $this->upload_model->upload_temp_image('cheque-image');
+        if (!empty($temp_path)) {
+            //delete old avatar        
+            $data["cheque_image_url"] = $this->upload_model->cheque_upload($temp_path);
+        }
+
         return $this->db->update('users', $data);
     }
 
@@ -224,6 +242,26 @@ class Profile_model extends CI_Model
             return $this->db->update('users', $data);
         }
         return false;
+    }
+
+    public function edit_vendor_bank_details($id)
+    {
+        $user = $this->auth_model->get_user($id);
+
+        if (!empty($user)) {
+            $data = array(
+                'is_bank_details_approved' => 1,
+                'is_shop_open' => 1,
+                'acc_holder_name' => $this->input->post('holder_name', true),
+                'update_profile' => '1',
+                'ifsc_code' => $this->input->post('ifsc_code', true),
+                'bank_branch' => $this->input->post('bank_branch', true),
+                'account_number' => $this->input->post('account_number', true)
+            );
+        }
+        $this->db->where('id', $user->id);
+        $this->db->where('role', 'vendor');
+        return $this->db->update('users', $data);
     }
     public function delete_gst($id)
     {

@@ -29,26 +29,29 @@
         color: white;
     }
 </style>
-<!-- form start -->
 <?php $this->load->view('admin/includes/_messages'); ?>
+<!-- form start -->
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title"><?php echo trans('user_loyalty_program'); ?></h3>
             </div>
-            <?php echo form_open('admin_controller/user_loyalty_program_submit'); ?>
+
+            <?php echo form_open('admin_controller/edit_loyalty_program_submit'); ?>
             <div class="col-12 coupons-from-holder">
                 <div class="form-group">
                     <div class="row">
+
+                        <input type="hidden" name="id" value="<?php echo $get_program_data->id; ?>">
                         <div class="col-sm-6"><label>Loyality Program</label></div>
                         <div class="col-sm-6">
                             <select name="loyalty_type" class="form-control auth-form-input" id="offer-type" required>
                                 <?php $data['loyalty'] = $this->Offer_model->get_loyalty_program(); ?>
-                                <option value="Bronze">Bronze</option>
-                                <option value="Silver">Silver</option>
-                                <option value="Gold">Gold</option>
-                                <option value="Platinum">Platinum</option>
+                                <option <?php if ($get_program_data->loyalty_program == "Bronze") echo 'selected="selected"'; ?> value="Bronze">Bronze</option>
+                                <option <?php if ($get_program_data->loyalty_program == "Silver") echo 'selected="selected"'; ?> value="Silver">Silver</option>
+                                <option <?php if ($get_program_data->loyalty_program == "Gold") echo 'selected="selected"'; ?> value="Gold">Gold</option>
+                                <option <?php if ($get_program_data->loyalty_program == "Platinum") echo 'selected="selected"'; ?> value="Platinum">Platinum</option>
                             </select>
                         </div>
                     </div>
@@ -58,8 +61,8 @@
                         <div class="col-sm-6"><label>User Type:</label></div>
                         <div class="col-sm-6">
                             <select name="user_type" class="form-control auth-form-input" id="offer-type" required>
-                                <option value="BUYER">Buyer</option>
-                                <option value="SUPPLIER">Supplier</option>
+                                <option <?php if ($get_program_data->user_type == "Buyer") echo 'selected="selected"'; ?>value="Buyer">Buyer</option>
+                                <option <?php if ($get_program_data->user_type == "Supplier") echo 'selected="selected"'; ?>value="Supplier">Supplier</option>
                             </select>
                         </div>
                     </div>
@@ -70,7 +73,7 @@
                             <label>Name:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type='text' name="name" class="form-control auth-form-input" value="" required>
+                            <input type='text' name="name" value="<?php echo $get_program_data->name; ?>" class=" form-control auth-form-input" value="" required>
                         </div>
                     </div>
                 </div>
@@ -80,7 +83,7 @@
                             <label>Description:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type='text' name="description" class="form-control auth-form-input" value="" required>
+                            <input type='text' name="description" value="<?php echo $get_program_data->description; ?>" class="form-control auth-form-input" value="" required>
                         </div>
                     </div>
                 </div>
@@ -90,7 +93,7 @@
                             <label>Start Date:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type='date' name="start_date" id="start_date" class="form-control auth-form-input" value="" required>
+                            <input type='date' name="start_date" value="<?php echo $get_program_data->start_date; ?>" class="form-control auth-form-input" id="start_date" value="" required>
                         </div>
                     </div>
                 </div>
@@ -100,7 +103,7 @@
                             <label>End Date:</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type='date' name="end_date" id="end_date" class="form-control auth-form-input" value="" required>
+                            <input type='date' name="end_date" class="form-control auth-form-input" value="<?php echo $get_program_data->end_date; ?>" id="end_date" value="" required>
                             <span id="end_date1" style="color:red;">End date should be greater than Start date</span>
                         </div>
                     </div>
@@ -112,48 +115,6 @@
         </div>
 
         <?php echo form_close(); ?>
-    </div>
-</div>
-
-
-<h3 class="box-title">View</h3>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="box box-primary box-sm">
-
-            <div class="table">
-                <table class="table no-margin">
-                    <thead>
-                        <tr>
-                            <th scope="col"><?php echo trans("s.no"); ?></th>
-                            <th scope="col"><?php echo trans("name"); ?></th>
-                            <th scope="col"><?php echo trans("description"); ?></th>
-                            <th scope="col"><?php echo trans("edit"); ?></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $i = 1; ?>
-
-                        <?php if (!empty($get_program_data)) :
-                            foreach ($get_program_data as $item) : ?>
-                                <tr>
-                                    <td><?php echo $i; ?></td>
-                                    <td><?php echo $item->name; ?></td>
-                                    <td>
-                                        <?php echo $item->description; ?>
-                                    </td>
-                                    <td style="width: 10%">
-                                        <a href="edit-loyalty-program/<?php echo html_escape($item->id); ?>" class="btn btn-xs btn-info"><?php echo trans('edit'); ?></a>
-                                    </td>
-                                </tr>
-                                <?php $i++; ?>
-                        <?php endforeach;
-                        endif; ?>
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.table-responsive -->
-        </div>
     </div>
 </div>
 <script>

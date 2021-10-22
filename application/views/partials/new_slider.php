@@ -2,7 +2,7 @@
 
 <script src="assets\js\jssor.slider-28.1.0.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-    window.jssor_1_slider_init = function() {
+    window.jssor_1_slider_init1 = function() {
 
         var jssor_1_SlideoTransitions = [
             [{
@@ -345,7 +345,7 @@
 <div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:1600px;height:480px;overflow:hidden;visibility:hidden;">
     <!-- Loading Screen -->
     <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;">
-        <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="assets/banners/img/spin.svg" />
+        <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="assets/gif/reload.gif" />
     </div>
     <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1600px;height:560px;overflow:hidden;">
         <?php if (!empty($second_slider_items)) :
@@ -382,6 +382,6 @@
 </div>
 
 <script type="text/javascript">
-    jssor_1_slider_init();
+    jssor_1_slider_init1();
 </script>
 <!-- #endregion Jssor Slider End -->

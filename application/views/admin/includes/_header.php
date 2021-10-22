@@ -217,7 +217,7 @@
                         </a>
                     </li>
                     <li class="nav-shop-opening-requests">
-                        <a href="<?php echo admin_url(); ?>shop-opening-requests">
+                        <a href="<?php echo admin_url(); ?>bank-approve-details">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/shop-opening.png" alt="" style="width: 20px; height: 20px;" />
                             <span>Approve Bank Details</span>
                         </a>
@@ -238,7 +238,7 @@
                     </li>
 
                     <li class="header"><?php echo trans("orders"); ?></li>
-                    <li class="treeview<?php is_admin_nav_active(['orders', 'transactions', 'order-bank-transfers', 'invoices', 'order-details']); ?>">
+                    <li class="treeview<?php is_admin_nav_active(['orders', 'transactions', 'order-bank-transfers', 'invoices', 'order-details', 'refunds']); ?>">
                         <a href="#">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/order-icon.png" alt="" style="width: 20px; height: 20px;" />
                             <span><?php echo trans("orders"); ?></span>
@@ -258,7 +258,7 @@
                             <span><?php echo trans("digital_sales"); ?></span>
                         </a>
                     </li>
-                    <li class="treeview<?php is_admin_nav_active(['earnings', 'seller-balances', 'update-seller-balance']); ?>">
+                    <li class="treeview<?php is_admin_nav_active(['earnings', 'seller-balances', 'penalties', 'update-seller-balance']); ?>">
                         <a href="#">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/earnings.jpg" alt="" style="width: 20px; height: 20px;" />
                             <span><?php echo trans("earnings"); ?></span>
@@ -270,7 +270,7 @@
                             <li class="nav-seller-balances"><a href="<?php echo admin_url(); ?>seller-balances"> <?php echo trans("seller_balances"); ?></a></li>
                         </ul>
                     </li>
-                    <li class="treeview<?php is_admin_nav_active(['add-payout', 'payout-requests', 'completed-payouts', 'payout-settings']); ?>">
+                    <li class="treeview<?php is_admin_nav_active(['add-payout', 'payout-requests', 'completed-payouts', 'payout-settings', 'initiate-payout']); ?>">
                         <a href="#">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/payment-icon.png" alt="" style="width: 20px; height: 20px;" />
                             <span><?php echo trans("payouts"); ?></span>
@@ -513,7 +513,7 @@
                     <li class="treeview<?php is_admin_nav_active(['send-email-members', 'members']); ?>">
                         <a href="#">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/news.png" alt="" style="width: 20px; height: 20px;" />
-                            <span><?php echo trans("Members"); ?></span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            <span><?php echo trans("compaign_mail"); ?></span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
                             <li class="nav-send-email-subscribers">
@@ -595,7 +595,7 @@
                     </li>
                     <li class="header text-uppercase"><?php echo trans("offer_management"); ?></li>
 
-                    <li class="treeview<?php is_admin_nav_active(['system-settings', 'route-settings']); ?>">
+                    <li class="treeview<?php is_admin_nav_active(['offers-dashboard', 'coupons-dashboard', 'vouchers-dashboard', 'consumption-dashboard']); ?>">
                         <a href="#">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/dashboard.png" alt="" style="width: 20px; height: 20px;" />
                             <span><?php echo trans("dashboard"); ?></span>
@@ -608,7 +608,7 @@
                             <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>consumption-dashboard"> <?php echo trans("consumption_dashboard"); ?></a></li>
                         </ul>
                     </li>
-                    <li class="treeview<?php is_admin_nav_active(['system-settings', 'route-settings']); ?>">
+                    <li class="treeview<?php is_admin_nav_active(['create-offers', 'vouchers-users', 'category-coupon', 'products_coupons', 'user_vouchers']); ?>">
                         <a href="#">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/offers.png" alt="" style="width: 20px; height: 20px;" />
                             <span><?php echo trans(""); ?>Offers</span>
@@ -624,7 +624,7 @@
                         </ul>
                     </li>
                     <li class="header text-uppercase"><?php echo trans("loyalty_program"); ?></li>
-                    <li class="treeview<?php is_admin_nav_active(['Loyalty Program', 'program']); ?>">
+                    <li class="treeview<?php is_admin_nav_active(['user-loyalty-program', 'kpi-form', 'loyalty-criteria', 'qualify-criteria', 'qualified-user']); ?>">
                         <a href="#">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/news.png" alt="" style="width: 20px; height: 20px;" />
                             <span><?php echo trans("loyalty_program"); ?></span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>

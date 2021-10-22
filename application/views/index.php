@@ -537,11 +537,37 @@
     #wrapper {
         padding-bottom: 5px;
     }
+
+
+
+    @media (max-width: 768px) {
+        .mobile-slider {
+            display: block !important;
+        }
+
+        .web-slider {
+            display: none !important;
+        }
+    }
+
+    .web-slider {
+        display: block;
+    }
+
+    .mobile-slider {
+        display: none;
+    }
 </style>
 
-<div class="section-slider">
+
+<div class="section-slider web-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
         $this->load->view("partials/new_slider", ["second_slider_items" => $occassion_slider_items]);
+    endif; ?>
+</div>
+<div class="section-slider mobile-slider">
+    <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
+        $this->load->view("partials/new_mobile_slider", ["second_slider_items" => $occassion_slider_items]);
     endif; ?>
 </div>
 <!-- Wrapper -->

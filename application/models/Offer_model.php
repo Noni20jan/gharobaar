@@ -113,10 +113,38 @@ class Offer_model extends CI_Model
         $query = $this->db->get('lookup_values');
         return $query->result();
     }
+    public function get_loyalty_data()
+    {
+        $query = $this->db->get('user_loyalty_programs');
+        return $query->result();
+    }
+
+    public function get_kpi_data()
+    {
+        $query = $this->db->get('kpi');
+        return $query->result();
+    }
+    public function get_kpi_detail($id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->get('kpi');
+        return $query->row();
+    }
+    public function get_user_loyalty_data($id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->get('user_loyalty_programs');
+        return $query->row();
+    }
 
     public function loyalty_program_insert_details($data)
     {
         return $this->db->insert('user_loyalty_programs', $data);
+    }
+    public function loyalty_program_update_details($data, $id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('user_loyalty_programs', $data);
     }
 
     public function get_user_type()
@@ -205,11 +233,32 @@ class Offer_model extends CI_Model
     {
         return $this->db->insert('kpi', $data);
     }
-
+    public function kpi_edit_details($data, $id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->insert('kpi', $data);
+    }
     public function get_kpi_name()
     {
         $query = $this->db->get('kpi');
         return $query->result();
+    }
+    public function get_kpi_name1($id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->get('kpi');
+        return $query->row();
+    }
+    public function get_loyalty_criteria()
+    {
+        $query = $this->db->get('criteria');
+        return $query->result();
+    }
+    public function get_criteria_detail($id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->get('criteria');
+        return $query->row();
     }
 
     public function get_coupon_details_by_code($coupon_code)
@@ -349,6 +398,19 @@ order by created_at desc";
         $this->db->where('lp_period', $quater);
         $this->db->where('lp_year', $year);
         $query = $this->db->get("lp_user_qualified");
+        return $query->result();
+    }
+
+    public function get_criteria_values($quater, $user_id, $lp_year)
+    {
+        $sql = "select lpv.uq_qfc_value, qualifying_criteria.criteria_id, criteria.kpi_id
+        from lp_qu_criteria_values lpv
+        inner join qualifying_criteria 
+        on lpv.uq_qualifying_criteria_id = qualifying_criteria.id
+        inner join criteria
+        on qualifying_criteria.criteria_id = criteria.id
+        WHERE user_id = $user_id and lp_period = '$quater' and lp_year = $lp_year ";
+        $query = $this->db->query($sql);
         return $query->result();
     }
 }

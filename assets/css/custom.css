@@ -1712,3 +1712,13 @@ input[type="checkbox"][readonly] {
 .ul-style-type {
   list-style: disc;
 }
+.avatar-level {
+  width: 89%;
+}
+.user-img-in-avatar {
+  width: 39%;
+  border-radius: 50%;
+  position: absolute;
+  left: 80px;
+  top: 84px;
+}

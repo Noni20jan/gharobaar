@@ -815,7 +815,7 @@
 
     xAxis: {
       categories: [
-        'Monday',
+        'WEEK 1',
         'Tuesday',
         'Wednesday',
         'Thursday',
@@ -1189,38 +1189,38 @@
     }],
     drilldown: {
       series: [{
-          name: "SUNDAY",
-          id: "SUNDAY",
+          name: "WEEK 1",
+          id: "WEEK 1",
           data: <?php echo json_encode($dd1); ?>
         },
         {
-          name: "MONDAY",
-          id: "MONDAY",
+          name: "WEEK 2",
+          id: "WEEK 2",
           data: <?php echo json_encode($dd1); ?>
         },
         {
-          name: "TUESDAY",
-          id: "TUESDAY",
+          name: "WEEK 3",
+          id: "WEEK 3",
           data: <?php echo json_encode($dd1); ?>
         },
         {
-          name: "WEDNESDAY",
-          id: "WEDNESDAY",
+          name: "WEEK 4",
+          id: "WEEK 4",
           data: <?php echo json_encode($dd1); ?>
         },
         {
-          name: "THRUSDAY",
-          id: "THRUSDAY",
+          name: "WEEK 5",
+          id: "WEEK 5",
           data: <?php echo json_encode($dd1); ?>
         },
         {
-          name: "FRIDAY",
-          id: "FRIDAY",
+          name: "WEEK 6",
+          id: "WEEK 6",
           data: <?php echo json_encode($dd1); ?>
         },
         {
-          name: "SATURDAY",
-          id: "SATURDAY",
+          name: "WEEK 7",
+          id: "WEEK 7",
           data: <?php echo json_encode($dd1); ?>
         },
 
@@ -1300,43 +1300,40 @@
     }],
     drilldown: {
       series: [{
-          name: "SUNDAY",
-          id: "SUNDAY",
+          name: "WEEK 1",
+          id: "WEEK 1",
           data: <?php echo json_encode($dd2); ?>
         },
         {
-          name: "MONDAY",
-          id: "MONDAY",
-          data: <?php echo json_encode($dd2); ?>
-
-
-        },
-        {
-          name: "TUESDAY",
-          id: "TUESDAY",
+          name: "WEEK 2",
+          id: "WEEK 2",
           data: <?php echo json_encode($dd2); ?>
         },
         {
-          name: "WEDNESDAY",
-          id: "WEDNESDAY",
+          name: "WEEK 3",
+          id: "WEEK 3",
           data: <?php echo json_encode($dd2); ?>
         },
         {
-          name: "THRUSDAY",
-          id: "THRUSDAY",
+          name: "WEEK 4",
+          id: "WEEK 4",
           data: <?php echo json_encode($dd2); ?>
         },
         {
-          name: "FRIDAY",
-          id: "FRIDAY",
+          name: "WEEK 5",
+          id: "WEEK 5",
           data: <?php echo json_encode($dd2); ?>
         },
         {
-          name: "SATURDAY",
-          id: "SATURDAY",
+          name: "WEEK 6",
+          id: "WEEK 6",
           data: <?php echo json_encode($dd2); ?>
         },
-
+        {
+          name: "WEEK 7",
+          id: "WEEK 7",
+          data: <?php echo json_encode($dd2); ?>
+        },
       ]
     }
   });

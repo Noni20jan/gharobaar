@@ -240,12 +240,8 @@ class Coupon_controller extends Admin_Core_Controller
         $this->load->view('admin/includes/_footer');
     }
 
-
-
-
     public function edit_details_coupon()
     {
-
         if (!empty($this->input->post('t_c_c', true))) {
             $terms_conditions = $this->input->post('t_c_c', true);
         }
@@ -258,8 +254,6 @@ class Coupon_controller extends Admin_Core_Controller
         if (!empty($this->input->post('voucher_code', true))) {
             $offer_code = $this->input->post('voucher_code', true);
         }
-
-
         $this->load->model("Offer_model");
         $id = $this->input->post('id', true);
         $data['name'] = $this->input->post('offer_name', true);
@@ -326,7 +320,6 @@ class Coupon_controller extends Admin_Core_Controller
         if (empty($data["description"])) {
             $data["description"] = "";
         }
-
         if (!empty($this->input->post('coupon_code', true))) {
             $offer_code = $this->input->post('coupon_code', true);
             $this->Offer_model->edit_coupons_vouchers($id, $data);
@@ -340,6 +333,7 @@ class Coupon_controller extends Admin_Core_Controller
             redirect(admin_url() . 'vouchers-dashboard');
         }
     }
+
 
 
     public function consumption_dashboard()

@@ -64,6 +64,54 @@ class Product_admin_model extends CI_Model
     }
 
     //get products count
+    public function top_selling_products()
+    {
+        $sql = "SELECT 
+        op.seller_id,
+        op.created_at,
+        u.shop_name,u.slug,u.username,u.email,COUNT(o.price_total)*20 as count,
+        FORMAT(SUM(o.price_total),2)
+    FROM
+        local_gharobaar.order_products op,
+        local_gharobaar.orders o,
+        local_gharobaar.users u
+    WHERE
+        DATE(op.created_at) >= '2020-12-30'
+            AND DATE(op.created_at) <= '2021-04-30'
+            AND op.order_status != 'cancelled' AND op.order_status!='completed'
+            AND op.order_id = o.id  
+            AND op.seller_id=u.id
+    GROUP BY (op.seller_id)
+    ORDER BY SUM(op.product_quantity) DESC
+    LIMIT 5";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    public function top_sales()
+    {
+        $sql = "SELECT 
+        op.seller_id, op.created_at,op.product_title,op.product_id,p.sku,p.stock,p.product_type,
+        u.shop_name,u.slug,u.username,u.email,COUNT(o.price_total)*20 count,
+        FORMAT(SUM(o.price_total),2)
+    FROM
+       order_products op,
+      orders o,
+        users u,
+       products p,
+      product_details as pd WHERE
+        DATE(op.created_at) >= '2020-12-30'
+            AND DATE(op.created_at) <= '2021-12-31'
+            AND op.order_status != 'cancelled' AND op.order_status!='completed'
+            AND op.order_id = o.id  
+            AND op.seller_id=u.id
+            AND op.product_id=p.id
+            AND op.product_id=pd.product_id
+    GROUP BY (op.product_id)
+    ORDER BY SUM(op.product_quantity) DESC
+    LIMIT 5";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     public function get_products_count()
     {
         $this->build_query();
@@ -79,7 +127,13 @@ class Product_admin_model extends CI_Model
         $this->db->where('status', 1)->where('products.is_draft', 0)->where('products.is_deleted', 0);
         return $this->db->count_all_results('products');
     }
-
+    public function update_bank_details($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->where('role', 'vendor');
+        $query = $this->db->get('users');
+        return $query->row();
+    }
     //get pending products
     public function get_pending_products()
     {
@@ -99,7 +153,24 @@ class Product_admin_model extends CI_Model
         $this->db->order_by('products.created_at', 'DESC')->limit(clean_number($limit));
         return $this->db->get('products')->result();
     }
-
+    public function products_top_selling($seller_id)
+    {
+        $sql = "select stsp.seller_id, stsp.category_id, stsp.product_id, count(stsp.product_id) as cnt,DATE_FORMAT(stsp.created_at, '%M') as Month,stsp.product_title,stsp.created_at
+        from  stag_top_selling_products as stsp
+        where stsp.seller_id != $seller_id
+        and stsp.category_id IN (SELECT DISTINCT
+                    (category_id)
+                FROM
+                    order_products
+                        INNER JOIN
+                    products ON order_products.product_id = products.id
+                WHERE
+                    seller_id = $seller_id)
+        group by stsp.seller_id, stsp.category_id, stsp.product_id,month
+        order by count(stsp.product_id) desc LIMIT 5";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     //get pending products count
     public function get_pending_products_count()
     {
@@ -931,8 +1002,33 @@ class Product_admin_model extends CI_Model
             }
         }
     }
-
+    public function get_title($product_id)
+    {
+        $sql = "SELECT title from product_details,products where product_details.product_id=products.id";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    public function repeated_purchase($seller_id)
+    {
+        $seller_id = clean_number($seller_id);
+        $sql = "SELECT SUM(REPEAT_count) as sum from fact_repeat_purchase where seller_id=$seller_id";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     //get csv price
+    public function max_orders_count($seller_id)
+    {
+        $sql = "SELECT COUNT(*) as count from stag_max_orders_weekly where seller_id=$seller_id and week(order_date)=week(created_at)";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    public function max_customers_weekly($seller_id)
+    {
+        $sql = "SELECT COUNT(buyer_id) as cnt FROM stag_max_customers_weekly where seller_id=$seller_id AND  WEEK(created_at)=week(now()) AND YEAR(created_at)=YEAR(now()) GROUP BY seller_id,WEEK(created_at) ";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     public function get_csv_price($price)
     {
         if (!empty($price)) {

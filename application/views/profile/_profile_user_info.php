@@ -56,6 +56,19 @@
     .new-width-bank {
         max-width: 50%;
     }
+
+    .upload-documents {
+      position: relative;
+      width: 200px;
+      height: 180px;
+      text-align: center;
+      background: white;
+      border: 2px dashed #eeeff1;
+      padding: 1px;
+      cursor: pointer;
+      margin: 20px;
+    }
+
 </style>
 <!--user profile info-->
 <div class="row-custom">
@@ -215,7 +228,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <?php echo form_open("update-payout-account", ['id' => 'form_validate']); ?>
+                        <?php echo form_open_multipart("update-payout-account", ['id' => 'form_validate']); ?>
                         <!-- <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 m-b-sm-15">
@@ -294,11 +307,45 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="row Brand-1">
+                                <div class="col-md-3"><label id="formlabel2">Add Cheque Image<span class="Validation_error"> *</span></label></div>
+                                <div class="col-sm-3 m-b-60">
+                                    <div class="row text-center">
+                                        <?php if (empty($this->auth_user->cheque_image_url)) : ?>
+                                            <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
+                                        <?php else : ?>
+                                            <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/certificate.png'; ?>" style="border-radius:10%" />
+                                        <?php endif; ?>
+                                        <input type="file" name="cheque-image" id="cheque-logo" required=""  style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>" />
+                                        <p id="file-upload-filename" style="margin-bottom:0;"></p>
+                                        <span style="color: red;" id="cheque_error"></span>
+
+                                        <script>
+                                            $('#cheque-image').click(function() {
+                                                $('#cheque-logo').click()
+                                            })
+
+                                            function cheque_image() {
+
+                                                if (!$('#cheque-logo').val()) {
+                                                    $('#cheque_error').html("Please enter cheque image.");
+                                                }
+                                                $('#cheque_error').html("");
+                                            }
+                           
+                                        </script>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- </div> -->
                     </div>
                     <div class="modal-footer">
                         <div class="form-group">
-                            <button type="submit" id="account_button" value="update" class="btn btn-md btn-success"><?php echo trans("save_changes"); ?></button>
+                            <button type="submit" id="account_button" onclick="cheque_image();" value="update" class="btn btn-md btn-success"><?php echo trans("save_changes"); ?></button>
                         </div>
                         <?php echo form_close(); ?>
                     </div>
@@ -574,4 +621,37 @@
     //         returnfalse;
     //     }
     // }
+</script>
+<script>
+  var input1 = document.getElementById('cheque-logo');
+  // var infoArea = document.getElementById('file-upload-filename');
+
+  input1.addEventListener('change', showFileName1);
+
+  function showFileName1(event) {
+    $("#cheque-image-delete").show();
+    // the change event gives us the input it occurred in 
+    var input1 = event.srcElement;
+
+    // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
+    var fileName1 = input1.files[0].name;
+    var id1 = 'cheque-image';
+    // use fileName however fits your app best, i.e. add it into a div
+
+    extension1 = fileName1.split('.').pop();
+    var reader1 = new FileReader();
+    if (extension1 == 'pdf' || extension1 == 'docx') {
+      console.log("test")
+      reader1.onload = function(e) {
+        $('#' + id1).attr('src', '<?php echo base_url() . 'assets/img/certificate.png'; ?>');
+      }
+      reader1.readAsDataURL(input1.files[0]);
+    } else {
+      console.log("image")
+      reader1.onload = function(e) {
+        $('#' + id1).attr('src', e.target.result);
+      }
+      reader1.readAsDataURL(input1.files[0]);
+    }
+  }
 </script>

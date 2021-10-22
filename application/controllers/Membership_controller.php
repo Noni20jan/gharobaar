@@ -28,7 +28,84 @@ class Membership_controller extends Admin_Core_Controller
         $this->load->view('admin/membership/members');
         $this->load->view('admin/includes/_footer');
     }
+    public function edit_details_form($id)
+    {
 
+        $data['users'] = $this->product_admin_model->update_bank_details($id);
+
+
+        $this->load->view('admin/includes/_header');
+        $this->load->view('admin/membership/bank_details_form');
+        $this->load->view('admin/includes/_footer');
+    }
+    // }
+    // public function update_bank_info()
+    // {
+    //     //check user
+    //     if (!$this->auth_check) {
+    //         // redirect(admin_url());
+    //     }
+
+    //     $user_id = $this->auth_user->id;
+    //     $action = $this->input->post('submit', true);
+
+
+    //     // if ($action == "resend_activation_email") {
+    //     //     //send activation email
+    //     //     $this->load->model("email_model");
+    //     //     $this->email_model->send_email_activation($user_id);
+    //     //     $this->session->set_flashdata('success', trans("msg_send_confirmation_email"));
+    //     //     redirect($this->agent->referrer());
+    //     // }
+
+    //     //validate inputs
+    //     // $this->form_validation->set_rules('username', trans("username"), 'required|xss_clean|max_length[255]');
+
+
+    //     $ass = $this->input->post('assistance', true);
+    //     $data = array(
+    //         'acc_holder_name' => $this->input->post('holder_name', true),
+    //         'update_profile' => '1',
+    //         'ifsc_code' => $this->input->post('ifsc_code', true),
+    //         'bank_branch' => $this->input->post('bank_branch', true),
+    //         'account_number' => $this->input->post('account_number', true),
+    //         'brand_desc' => $this->input->post('brand_desc', true),
+    //         'assistance' => implode(',', $ass),
+    //         'brand_name' => $this->input->post('brand_name', true),
+    //         'supplier_speciality' => $this->input->post('supplier_speciality', true),
+    //         'customer_name' => $this->input->post('customer_name', true),
+    //         'source' => $this->input->post('source', true),
+    //         'different_type_products' => $this->input->post('different_type_products', true),
+    //         'testimonial' => $this->input->post('testimonial', true),
+    //         // 'about_me' => $this->input->post('about_me', true),
+    //         // 'supplier_story_url' => $this->input->post('story_vedio_url', true),
+
+    //     );
+
+
+    //     if ($action == "update") {
+
+    //         if ($this->profile_model->update_story($data, $user_id)) {
+    //             $this->session->set_flashdata('success', trans("msg_updated"));
+    //             //check email changed
+
+    //             redirect(admin_url());
+    //         } else {
+    //             $this->session->set_flashdata('error', trans("msg_error"));
+    //             // redirect($this->agent->referrer());
+    //         }
+    //     } else if ($action == "save_and_next_details") {
+    //         if ($this->profile_model->update_story($data, $user_id)) {
+    //             $this->session->set_flashdata('success', trans("msg_updated"));
+    //             //check email changed
+
+    //             // redirect(generate_dash_url("add_product"));
+    //         } else {
+    //             $this->session->set_flashdata('error', trans("msg_error"));
+    //             // redirect($this->agent->referrer());
+    //         }
+    //     }
+    // }
     /**
      * Vendors
      */
@@ -222,7 +299,17 @@ class Membership_controller extends Admin_Core_Controller
         $this->load->view('admin/membership/shop_opening_requests');
         $this->load->view('admin/includes/_footer');
     }
+    public function bank_details_approve_requests()
+    {
+        $data['title'] = "Bank Approval Requests";
+        $data['page_url'] = admin_url() . "bank-approve-details";
 
+        $pagination = $this->paginate($data['page_url'], $this->auth_model->get_users_count_by_role('vendor'));
+        $data['users'] = $this->auth_model->get_paginated_filtered_vendors('vendor', $pagination['per_page'], $pagination['offset']);
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/membership/bank_details');
+        $this->load->view('admin/includes/_footer');
+    }
     /**
      * Approve Shop Opening Request
      */
@@ -273,7 +360,47 @@ class Membership_controller extends Admin_Core_Controller
         }
         redirect($this->agent->referrer());
     }
+    public function edit_vendor_bank_details($id)
+    {
 
+        $data['title'] = "Edit Bank Details";
+        $data['user'] = $this->auth_model->get_user($id);
+
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/membership/bank_details_form');
+        $this->load->view('admin/includes/_footer');
+    }
+    public function edit_bank_details_post()
+    {
+        //validate inputs
+        $user_id = $this->input->post('id', true);
+        $user = get_user($user_id);
+
+        $data = array(
+            'id' => $this->input->post('id', true),
+            'is_bank_details_approved' => 1,
+            'acc_holder_name' => $this->input->post('holder_name', true),
+            'update_profile' => '1',
+            'ifsc_code' => $this->input->post('ifsc_code', true),
+            'bank_branch' => $this->input->post('bank_branch', true),
+            'account_number' => $this->input->post('account_number', true)
+        );
+
+        if ($this->profile_model->edit_vendor_bank_details($user->id)) {
+            // $this->load->model("email_model");
+            // // $this->email_model->seller_bank_account_detail_verify($user->id);
+            // $this->session->set_flashdata('success', trans("msg_updated"));
+            $this->easysplit_settle_cycle_api($user->id);
+            if ($this->general_settings->enable_payout_create_vendor_api == 1) {
+                $this->init_pay_auth($user->id);
+            }
+            redirect($this->agent->referrer());
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+            redirect($this->agent->referrer());
+        }
+    }
     /**
      * Decline Shop Opening Request
      */
@@ -667,5 +794,234 @@ class Membership_controller extends Admin_Core_Controller
     {
         $id = $this->input->post('id', true);
         $this->membership_model->delete_transaction($id);
+    }
+
+    // easy-split settlement cycle API
+    public function easysplit_settle_cycle_api($user_id)
+    {
+        // var_dump($data);die();
+        $curl = curl_init();
+        $user_id = $user_id;
+        $url = $this->general_settings->cashfree_api_base_url . 'api/v2/easy-split/vendors/settlement-cycles';
+        $client_id = $this->general_settings->cashfree_app_id;
+        $secret_key = $this->general_settings->cashfree_secret_key;
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'x-client-id: ' . $client_id,
+                'x-client-secret: ' . $secret_key,
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $res_decode = json_decode($response);
+        $status = json_decode($response)->status;
+        $max_settlement_cycle = end($res_decode->settlementCycles)->id;
+        if ($status == 'OK') {
+            $this->create_vendor_cashfree_easysplit($max_settlement_cycle, $user_id);
+        } else {
+            echo '<script>alert("Settlement Cycle API error")</script>';
+        }
+    }
+
+    // easy-split create vendor API
+    public function create_vendor_cashfree_easysplit($max_settlement_cycle, $user_id)
+    {
+        $curl = curl_init();
+        $url = $this->general_settings->cashfree_api_base_url . 'api/v2/easy-split/vendors';
+        $client_id = $this->general_settings->cashfree_app_id;
+        $secret_key = $this->general_settings->cashfree_secret_key;
+        $seller_id = $user_id;
+
+        $bank_data = array(
+            "accountNumber" => get_user($seller_id)->account_number,
+            "accountHolder" => get_user($seller_id)->acc_holder_name,
+            "ifsc" => get_user($seller_id)->ifsc_code
+        );
+
+        $post_fields = array(
+            "email" => get_user($seller_id)->email,
+            "status" => "ACTIVE",
+            "bank" => $bank_data,
+            "phone" => get_user($seller_id)->phone_number,
+            "name" => get_user($seller_id)->first_name . ' ' . get_user($seller_id)->last_name,
+            "id" => $seller_id,
+            "settlementCycleId" => $max_settlement_cycle
+        );
+        // var_dump($post_fields);die();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($post_fields),
+            CURLOPT_HTTPHEADER => array(
+                'x-client-id: ' . $client_id,
+                'x-client-secret: ' . $secret_key,
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $response_dec = json_decode($response);
+        if ($response_dec->subCode == '200') {
+            $msg = trans("msg_updated") . " " . $response_dec->message;
+            $this->session->set_flashdata('success', $msg);
+        } elseif ($response_dec->message == 'VendorId already exists. Enter unique VendorId.') {
+            $this->update_vendor_cashfree_easysplit($max_settlement_cycle, $seller_id);
+        } else {
+            $msg = trans("msg_updated") . " " . $response_dec->message;
+            $this->session->set_flashdata('error', $msg);
+        }
+    }
+
+
+    //easy-split update vendor API
+    public function update_vendor_cashfree_easysplit($max_settlement_cycle, $user_id)
+    {
+        $curl = curl_init();
+        $url = $this->general_settings->cashfree_api_base_url . 'api/v2/easy-split/vendors/' . $user_id;
+        $client_id = $this->general_settings->cashfree_app_id;
+        $secret_key = $this->general_settings->cashfree_secret_key;
+        $seller_id = $user_id;
+
+        $bank_data = array(
+            "accountNumber" => get_user($seller_id)->account_number,
+            "accountHolder" => get_user($seller_id)->acc_holder_name,
+            "ifsc" => get_user($seller_id)->ifsc_code
+        );
+
+        $post_fields = array(
+            "email" => get_user($seller_id)->email,
+            "status" => "ACTIVE",
+            "bank" => $bank_data,
+            "phone" => get_user($seller_id)->phone_number,
+            "name" => get_user($seller_id)->first_name . ' ' . get_user($seller_id)->last_name,
+            "settlementCycleId" => $max_settlement_cycle
+        );
+        // var_dump($post_fields);die();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_POSTFIELDS => json_encode($post_fields),
+            CURLOPT_HTTPHEADER => array(
+                'x-client-id: ' . $client_id,
+                'x-client-secret: ' . $secret_key,
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $response_dec = json_decode($response);
+        if ($response_dec->subCode == '200') {
+            $this->session->set_flashdata('success', $response_dec->message);
+        } else {
+            $this->session->set_flashdata('error', $response_dec->message);
+        }
+    }
+
+    // api to add beneficiary for cashfree payouts
+    public function init_pay_auth($user_id)
+    {
+        $seller_id = $user_id;
+        $transfer_auth_url = ($this->general_settings->payout_batch_transfer_url) . "payout/v1/authorize";
+        $transfer_id = $this->general_settings->payout_batch_transfer_id;
+        $transfer_key = $this->general_settings->payout_batch_transfer_key;
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $transfer_auth_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => array(
+                'X-Client-Id: ' . $transfer_id,
+                'X-Client-Secret: ' . $transfer_key
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $token = json_decode($response)->data->token;
+        if (json_decode($response)->status == "SUCCESS") {
+            $this->create_payout_beneficiary($token, $seller_id);
+        } else {
+            echo '<script>alert("Invalid/Expired Token")</script>';
+        }
+    }
+
+    public function create_payout_beneficiary($token, $seller_id)
+    {
+        $header2 = array(
+            'Content-Type : application/json',
+            'Authorization: Bearer ' . $token
+        );
+        $post_fields = array(
+            "beneId" => $seller_id,
+            "name" => get_user($seller_id)->first_name . ' ' . get_user($seller_id)->last_name,
+            "email" => get_user($seller_id)->email,
+            "phone" => get_user($seller_id)->phone_number,
+            "bankAccount" => get_user($seller_id)->account_number,
+            "ifsc" => get_user($seller_id)->ifsc_code,
+            "address1" => get_user($seller_id)->house_no
+        );
+
+        $url = ($this->general_settings->payout_batch_transfer_url) . "payout/v1/addBeneficiary";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($post_fields),
+            CURLOPT_HTTPHEADER =>  $header2,
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        // $response_dec = json_decode($response);
+        // if ($response_dec->subCode == '200') {
+        //     $this->session->set_flashdata('success', $response_dec->message);
+        // }
+        // // elseif ($response_dec->message == 'Beneficiary Id already exists') {
+        // //     $this->session->set_flashdata('error', $response_dec->message);
+        // // }
+        // else {
+        //     $this->session->set_flashdata('error', $response_dec->message);
+        // }
     }
 }
