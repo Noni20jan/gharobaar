@@ -342,12 +342,12 @@ $user = get_user($this->auth_user->id);
                             <span>Update Profile</span>
                         </a>
                     </li>
-                    <li class="nav-profile">
+                    <!-- <li class="nav-profile">
                         <a href="<?php echo generate_dash_url("loyalty-level"); ?>">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" />
                             <span>loyalty level</span>
                         </a>
-                    </li>
+                    </li> -->
                     <!-- <?php if ($this->auth_user->supplier_type == "Goods") : ?>
                         <li class="nav-update_seller_info">
                             <a href="<?php echo generate_dash_url("update_seller_info"); ?>">
