@@ -23,6 +23,7 @@ class Order_model extends CI_Model
     public function add_order($data_transaction)
     {
         $order_product_status = "processing";
+        $cashfree_order_id = $data_transaction["cashfree_order_id"];
         $cart_total = $this->cart_model->get_sess_cart_total();
         if (!empty($cart_total)) {
             $data = array(
@@ -106,6 +107,9 @@ class Order_model extends CI_Model
 
                 //clear cart
                 $this->cart_model->clear_cart();
+
+                //update order id in casfree prepaid payouts
+                $this->update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id);
 
                 return $order_id;
             }
@@ -997,7 +1001,11 @@ class Order_model extends CI_Model
         if ($this->db->insert('transactions', $data)) {
             //add invoice
             $this->add_invoice($order_id);
-            $this->update_net_seller_payable($data_transaction["cashfree_order_id"]);
+            if ($this->general_settings->enable_easysplit == 1) {
+                $this->update_net_seller_payable($data_transaction["cashfree_order_id"]);
+            } else if ($this->general_settings->enable_easysplit == 0) {
+                $this->update_cashfree_payout_complete($data_transaction["cashfree_order_id"]);
+            }
         }
     }
 
@@ -1008,6 +1016,14 @@ class Order_model extends CI_Model
         );
         $this->db->where('cashfree_order_id', $cashfree_order_id);
         $this->db->update('cashfree_seller_payable', $data);
+    }
+    public function update_cashfree_payout_complete($cashfree_order_id)
+    {
+        $data = array(
+            'is_completed' => "1"
+        );
+        $this->db->where('cashfree_order_id', $cashfree_order_id);
+        $this->db->update('cashfree_seller_payout', $data);
     }
 
     //add payment transaction in case of failure
@@ -3753,6 +3769,11 @@ class Order_model extends CI_Model
     {
         $this->db->insert('cashfree_seller_payable', $data);
     }
+    // online payment payouts:
+    public function save_cashfree_seller_payable_payouts($data)
+    {
+        $this->db->insert('cashfree_seller_payout', $data);
+    }
 
     // get cod charges by order id and seller id
     public function get_charges_seller_wise($sellerid, $order_id)
@@ -3842,6 +3863,66 @@ class Order_model extends CI_Model
 
         $this->db->where('order_id', $order_id);
         $this->db->where('vendorId', $seller_id);
-        $this->db->update('cod_seller_payable', $data);
+        if ($this->general_settings->enable_easysplit == 1) {
+            $this->db->update('cod_seller_payable', $data);
+        }
+        // cashfree online payment data save for payouts 
+        else if ($this->general_settings->enable_easysplit == 0) {
+            $this->db->update('cashfree_seller_payout', $data);
+        }
+    }
+
+    public function update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id)
+    {
+        $order_id = clean_number($order_id);
+        $data = array(
+            'order_id' => $order_id
+        );
+        $this->db->where('cashfree_order_id', $cashfree_order_id);
+        $this->db->update('cashfree_seller_payout', $data);
+    }
+
+    public function fetch_prepaid_seller_payable($from_date, $to_date)
+    {
+        $to_date = $to_date . " 23:59:59";
+
+        $sql = "SELECT distinct
+        `a`.`order_id`,
+        `a`.`net_seller_payable`,
+        `a`.`gateway_amount_gst`,
+        `a`.`gateway_amount`,
+        `e`.`grand_total_amount`,
+        `e`.`Sup_Shipping_gst`,
+        `e`.`Sup_subtotal_prd_gst`,
+        `a`.`shipping_charge_to_gharobaar`,
+        `b`.`shop_name`,
+        `b`.`id`,
+
+        `b`.`phone_number`,
+        `b`.`email`,
+        `b`.`account_number`,
+        `b`.`acc_holder_name`,
+        `b`.`ifsc_code`,
+
+        `c`.`created_at`,
+        `d`.`order_status`
+    FROM
+        `cashfree_seller_payout` `a`
+            JOIN
+        `users` `b` ON `b`.`id` = `a`.`vendorId`
+            JOIN
+        `orders` `c` ON `c`.`id` = `a`.`order_id`
+            JOIN
+        `order_products` `d` ON `d`.`order_id` = `c`.`id`
+        JOIN
+        `order_supplier` `e` ON `a`.`order_id` = `e`.`order_id`
+        WHERE
+        `a`.`vendorId` = `e`.`seller_id`
+        AND `c`.`created_at` >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
+            AND `c`.`created_at` <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
+            AND `a`.`payout_initiated`='0' AND `a`.`is_completed`='1'";
+
+        $query = $this->db->query($sql);
+        return $query->result();
     }
 }

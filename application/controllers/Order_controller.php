@@ -839,6 +839,16 @@ class Order_controller extends Home_Core_Controller
         echo json_encode($cod_seller_payable);
     }
 
+    public function prepaid_payout_initiate()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $cod_seller_payable = $this->order_model->fetch_prepaid_seller_payable($from_date, $to_date);
+        echo json_encode($cod_seller_payable);
+        die();
+    }
+
     public function qualify_criteria()
     {
         $user_type = $this->input->post('user_type', true);

@@ -1292,7 +1292,7 @@ class Cart_controller extends Home_Core_Controller
                     $psd->seller_earned = ($psd->total_price / 100) - $psd->total_commission_amount;
 
 
-                    
+
                     if ($object_product->gst_rate == 0 || $object_product->gst_rate == null) {
                         $object_product->tcs_amount_product = 0;
 
@@ -1520,12 +1520,14 @@ class Cart_controller extends Home_Core_Controller
         }
         // var_dump($seller_settlement);
         // die();
-        $object = new stdClass();
-        $object->vendorId = "Gharobaar";
-        $object->cashfree_order_id = $this->input->post("orderid", true);
-        $object->net_seller_payable =  $total_amount - $total_amount_paid;
-        // var_dump($object);die();
-        array_push($seller_settlement, $object);
+        if ($this->general_settings->enable_easysplit == 1) {
+            $object = new stdClass();
+            $object->vendorId = "Gharobaar";
+            $object->cashfree_order_id = $this->input->post("orderid", true);
+            $object->net_seller_payable =  $total_amount - $total_amount_paid;
+            // var_dump($object);die();
+            array_push($seller_settlement, $object);
+        }
 
 
         // var_dump(json_encode($seller_settlement));die();
@@ -1549,32 +1551,55 @@ class Cart_controller extends Home_Core_Controller
         $easysplit = $_SESSION['settelment_json_base64'];
 
         // easy-split end
-
-        if (auth_check()) :
-            $data = array(
-                "appId" => $this->general_settings->cashfree_app_id,
-                "orderId" => $this->input->post("orderid", true),
-                "orderAmount" => $this->input->post("orderamount", true),
-                // "paymentSplits" => $this->input->post("paymentsplits", true),
-                "paymentSplits" => $easysplit,
-                "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
-                "customerPhone" => $this->auth_user->phone_number,
-                "customerEmail" => $this->auth_user->email,
-                "returnUrl" => $returnUrl
-            );
-        else :
-            $data = array( 
-                "appId" => $this->general_settings->cashfree_app_id,
-                "orderId" => $this->input->post("orderid", true),
-                "orderAmount" => $this->input->post("orderamount", true),
-                // "paymentSplits" => $this->input->post("paymentsplits", true),
-                "paymentSplits" => $easysplit,
-                "customerName" => $shipping_address->shipping_first_name . " " . $shipping_address->shipping_last_name,
-                "customerPhone" => $shipping_address->shipping_phone_number,
-                "customerEmail" => $shipping_address->shipping_email,
-                "returnUrl" => $returnUrl
-            );
-        endif;
+        if ($this->general_settings->enable_easysplit == 1) {
+            if (auth_check()) :
+                $data = array(
+                    "appId" => $this->general_settings->cashfree_app_id,
+                    "orderId" => $this->input->post("orderid", true),
+                    "orderAmount" => $this->input->post("orderamount", true),
+                    // "paymentSplits" => $this->input->post("paymentsplits", true),
+                    "paymentSplits" => $easysplit,
+                    "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
+                    "customerPhone" => $this->auth_user->phone_number,
+                    "customerEmail" => $this->auth_user->email,
+                    "returnUrl" => $returnUrl
+                );
+            else :
+                $data = array(
+                    "appId" => $this->general_settings->cashfree_app_id,
+                    "orderId" => $this->input->post("orderid", true),
+                    "orderAmount" => $this->input->post("orderamount", true),
+                    // "paymentSplits" => $this->input->post("paymentsplits", true),
+                    "paymentSplits" => $easysplit,
+                    "customerName" => $shipping_address->shipping_first_name . " " . $shipping_address->shipping_last_name,
+                    "customerPhone" => $shipping_address->shipping_phone_number,
+                    "customerEmail" => $shipping_address->shipping_email,
+                    "returnUrl" => $returnUrl
+                );
+            endif;
+        } elseif ($this->general_settings->enable_easysplit == 0) {
+            if (auth_check()) :
+                $data = array(
+                    "appId" => $this->general_settings->cashfree_app_id,
+                    "orderId" => $this->input->post("orderid", true),
+                    "orderAmount" => $this->input->post("orderamount", true),
+                    "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
+                    "customerPhone" => $this->auth_user->phone_number,
+                    "customerEmail" => $this->auth_user->email,
+                    "returnUrl" => $returnUrl
+                );
+            else :
+                $data = array(
+                    "appId" => $this->general_settings->cashfree_app_id,
+                    "orderId" => $this->input->post("orderid", true),
+                    "orderAmount" => $this->input->post("orderamount", true),
+                    "customerName" => $shipping_address->shipping_first_name . " " . $shipping_address->shipping_last_name,
+                    "customerPhone" => $shipping_address->shipping_phone_number,
+                    "customerEmail" => $shipping_address->shipping_email,
+                    "returnUrl" => $returnUrl
+                );
+            endif;
+        }
         if (($this->input->post("payment_mode", true)) == "nb") {
             $data["paymentOption"] = $this->input->post("payment_mode", true);
             $data["paymentCode"] = $this->input->post("bank_select", true);
@@ -1588,9 +1613,19 @@ class Cart_controller extends Home_Core_Controller
             $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentModes=" . $data["paymentModes"];
         }
         $data["signature"] = $this->cashfree_gen_signature($data);
-        $save_payment = $seller_settlement;
-        foreach ($save_payment as $sp) {
-            $this->order_model->save_cashfree_seller_payable($sp);
+        if ($this->general_settings->enable_easysplit == 1) {
+            $save_payment = $seller_settlement;
+            foreach ($save_payment as $sp) {
+                $this->order_model->save_cashfree_seller_payable($sp);
+            }
+        }
+        // cashfree online payment data save for payouts 
+        else if ($this->general_settings->enable_easysplit == 0) {
+            $save_payment = $seller_settlement;
+            // var_dump($save_payment);die();
+            foreach ($save_payment as $sp) {
+                $this->order_model->save_cashfree_seller_payable_payouts($sp);
+            }
         }
         $this->load->view('cart/cashfree_form', $data);
     }
