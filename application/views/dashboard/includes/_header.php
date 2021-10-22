@@ -320,15 +320,15 @@ $user = get_user($this->auth_user->id);
 
 
 
-
                 <ul class="nav_bar_color sidebar-menu" data-widget="tree">
-                    <li class="header_color header">Dashboard</li>
-                    <li class="nav-profile">
-                        <a href="<?php echo generate_dash_url(""); ?>">
-
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
+                    <?php if ($this->general_settings->seller_dashboard_navigation == 1) : ?>
+                        <li class="header_color header">Dashboard</li>
+                        <li class="nav-profile">
+                            <a href="<?php echo generate_dash_url(""); ?>">
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                     <li class="header_color header">PROFILE</li>
                     <li class="nav-profile">
                         <a href="<?php echo generate_dash_url("profile"); ?>">
