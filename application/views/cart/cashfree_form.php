@@ -5,7 +5,9 @@
   <input type="hidden" name="appId" value="<?php echo $appId ?>" />
   <input type="hidden" name="orderId" value="<?php echo $orderId ?>" />
   <input type="hidden" name="orderAmount" value="<?php echo $orderAmount ?>" />
+  <?php if($this->general_settings->enable_easysplit==1):?>
   <input type="hidden" name="paymentSplits" value="<?php echo $paymentSplits ?>" />
+ <?php endif;?>
   <input type="hidden" name="customerName" value="<?php echo $customerName ?>" />
   <input type="hidden" name="customerPhone" value="<?php echo $customerPhone ?>" />
   <input type="hidden" name="customerEmail" value="<?php echo $customerEmail ?>" />

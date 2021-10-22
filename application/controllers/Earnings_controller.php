@@ -162,7 +162,7 @@ class Earnings_controller extends Admin_Core_Controller
      */
     public function initiate_payout()
     {
-        $data['title'] = trans("payout_requests");
+        $data['title'] = trans("cod_payouts");
         $data['form_action'] = admin_url() . "payout-requests";
         //get paginated earnings
         $pagination = $this->paginate(admin_url() . 'payout-requests', $this->earnings_admin_model->get_payout_requests_count());
@@ -174,6 +174,23 @@ class Earnings_controller extends Admin_Core_Controller
         $this->load->view('admin/includes/_footer');
     }
 
+
+    /**
+     * Initiate Payout
+     */
+    public function initiate_payout_prepaid()
+    {
+        $data['title'] = trans("prepaid_payouts");
+        $data['form_action'] = admin_url() . "payout-requests";
+        //get paginated earnings
+        $pagination = $this->paginate(admin_url() . 'payout-requests', $this->earnings_admin_model->get_payout_requests_count());
+        $data['payout_requests'] = $this->earnings_admin_model->get_paginated_payout_requests($pagination['per_page'], $pagination['offset']);
+        $data["session"] = get_user_session();
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/earnings/prepaid_payouts', $data);
+        $this->load->view('admin/includes/_footer');
+    }
 
 
     /**

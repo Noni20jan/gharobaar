@@ -64,7 +64,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data['test'] = [(int)$data['new_customers_last_week'][6]->customer_count, (int)$data['new_customers_last_week'][5]->customer_count, (int)$data['new_customers_last_week'][4]->customer_count, (int)$data['new_customers_last_week'][3]->customer_count, (int)$data['new_customers_last_week'][2]->customer_count, (int)$data['new_customers_last_week'][1]->customer_count, (int)$data['new_customers_last_week'][0]->customer_count];
         // echo json_encode($data['test']);
 
-        $data["top_sell"] = $this->product_admin_model->top_selling_products();
+        $data["top_sell"] = $this->dashboard_model->top_selling_products();
         $data['test'] = [50, 60, 75, 80, 70, 90, 100];
         $data["top_selling"] = $this->product_admin_model->products_top_selling($this->auth_user->id);
         // $data['test'] = $this->order_model->get_last_week_customer_data($this->auth_user->id);
@@ -93,7 +93,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data['test1'] = [(int)$data['no_of_transactions_last_week'][58 - $i]->order_id, (int)$data['no_of_transactions_last_week'][57 - $i]->order_id, (int)$data['no_of_transactions_last_week'][56 - $i]->order_id, (int)$data['no_of_transactions_last_week'][55 - $i]->order_id, (int)$data['no_of_transactions_last_week'][54 - $i]->order_id, (int)$data['no_of_transactions_last_week'][53 - $i]->order_id, (int)$data['no_of_transactions_last_week'][52 - $i]->order_id];
         $data['test2'] = [500, 700, 650, 800, 950, 200, 400];
         $data['test3'] = [500, 700, 650, 800, 950, 700, 400];
-        // $data['test4'] = [500, 700, 650, 800, 950, 500, 400];
+        $data['test4'] = [500, 700, 650, 800, 950, 500, 400];
 
         $json = '[{"name":"WEEK 1","y":' . $ok['ok1'][0]->growth_rate . ',"drilldown":"WEEK 1"},{"name":"WEEK 2","y":' . $ok['ok1'][1]->growth_rate . ',"drilldown":"WEEK 2"}]';
         $data['test5'] = json_decode($json);

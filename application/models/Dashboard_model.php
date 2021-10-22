@@ -131,6 +131,27 @@ GROUP BY seller_id,buyer_id";
         $query = $this->db->query($sql);
         return $query->result();
     }
+    public function top_selling_products()
+    {
+        $sql = "SELECT 
+        op.seller_id,
+        op.created_at,
+        u.shop_name,u.slug,u.username,u.email,
+        COUNT(o.id) as sm
+    FROM
+        order_products op,
+        orders o,
+        users u
+    WHERE
+         op.order_status!='completed'
+            AND op.order_id = o.id  
+            AND op.seller_id=u.id
+    GROUP BY op.seller_id
+    ORDER BY COUNT(o.id) DESC
+    LIMIT 5";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     //get growth over last week customer
     public function get_new_customers_last_week($id)
     {

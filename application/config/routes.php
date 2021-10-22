@@ -494,7 +494,8 @@ $route[getr('admin', $rts) . '/penalties'] = 'earnings_controller/penalties';
 
 $route[getr('admin', $rts) . '/completed-payouts'] = 'earnings_controller/completed_payouts';
 $route[getr('admin', $rts) . '/payout-requests'] = 'earnings_controller/payout_requests';
-$route[getr('admin', $rts) . '/initiate-payout'] = 'earnings_controller/initiate_payout';
+$route[getr('admin', $rts) . '/initiate-payout-cod'] = 'earnings_controller/initiate_payout';
+$route[getr('admin', $rts) . '/initiate-payout-prepaid'] = 'earnings_controller/initiate_payout_prepaid';
 $route[getr('admin', $rts) . '/payout-settings'] = 'earnings_controller/payout_settings';
 $route[getr('admin', $rts) . '/add-payout'] = 'earnings_controller/add_payout';
 $route[getr('admin', $rts) . '/seller-balances'] = 'earnings_controller/seller_balances';

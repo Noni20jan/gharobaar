@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php echo form_open('cart_controller/payment_cashfree'); ?>
+<?php echo form_open('cart_controller/payment_cashfree',['id' => 'form_submit_disable']); ?>
 <style>
     .shipping_details {
         text-align: justify;
@@ -279,4 +279,17 @@
             element2.hide();
         }
     }
+</script>
+<script>
+    $(document).ready(function () {
+
+        $("#form_submit_disable").submit(function (e) {
+
+            // e.preventDefault();
+            $("#cashfreebtn").attr("disabled", true);
+
+            return true;
+
+        });
+    });
 </script>
