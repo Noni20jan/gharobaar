@@ -63,6 +63,51 @@ GROUP BY seller_id,buyer_id";
         $query = $this->db->query($sql);
         return $query->result();
     }
+    //get growth over last week transaction
+    public function get_growth_over_last_week_transaction($id)
+    {
+        $this->db->select("growth_rate,week");
+        $this->db->where("seller_id", clean_number($id));
+        $this->db->limit("5");
+        $this->db->order_by("week", "DESC");
+        return $this->db->get('fact_growth_last_week_transaction')->result();
+    }
+
+
+    //get new market covered till now
+    public function new_market_covered_till_now($id)
+    {
+        $this->db->select("count_shipping_area,week");
+        $this->db->where("seller_id", clean_number($id));
+        $this->db->limit("5");
+        $this->db->order_by("week", "DESC");
+        return $this->db->get('fact_new_market_last_week')->result();
+    }
+
+
+
+
+
+    public function new_market_delivered_to_the_last_one_week($id)
+    {
+        $sql = "SELECT count(DISTINCT
+        shipping_area)
+    FROM
+        gharobaar_test.stag_new_market_last_week
+    WHERE
+        seller_id = '$id'
+            AND week BETWEEN '1' AND '(week(CURRENT_DATE())-2)'
+            AND shipping_area NOT IN (SELECT 
+                shipping_area
+            FROM
+                fact_new_market_last_week
+            WHERE
+                seller_id = '$id' AND week = '(week(CURRENT_DATE())-1)')";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+
 
     public function repeated_purchase($seller_id)
     {

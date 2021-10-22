@@ -1218,13 +1218,12 @@
 
         xAxis: {
             categories: [
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-                'Sunday'
+                'week 1',
+                'week 2',
+                'week 3',
+                'week 4',
+                'week 5',
+               
             ],
             plotBands: [{ // visualize the weekend
                 from: 4.5,
