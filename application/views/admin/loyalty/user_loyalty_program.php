@@ -30,13 +30,13 @@
     }
 </style>
 <!-- form start -->
+<?php $this->load->view('admin/includes/_messages'); ?>
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title"><?php echo trans('user_loyalty_program'); ?></h3>
             </div>
-            <?php $this->load->view('admin/includes/_messages'); ?>
             <?php echo form_open('admin_controller/user_loyalty_program_submit'); ?>
             <div class="col-12 coupons-from-holder">
                 <div class="form-group">
@@ -101,6 +101,7 @@
                         </div>
                         <div class="col-sm-6">
                             <input type='date' name="end_date" id="end_date" class="form-control auth-form-input" value="" required>
+                            <span id="end_date1" style="color:red;">End date should be greater than Start date</span>
                         </div>
                     </div>
                 </div>
@@ -156,13 +157,21 @@
     </div>
 </div>
 <script>
+    $(document).ready(function() {
+        document.getElementById("end_date1").style.display = "none";
+    });
+</script>
+<script>
     $("#end_date").change(function() {
         var startDate = document.getElementById("start_date").value;
         var endDate = document.getElementById("end_date").value;
 
         if ((Date.parse(endDate) <= Date.parse(startDate))) {
-            alert("End date should be greater than Start date");
+            // alert("End date should be greater than Start date");
+            document.getElementById("end_date1").style.display = "block";
             document.getElementById("end_date").value = "";
+        } else {
+            document.getElementById("end_date1").style.display = "none";
         }
     });
 </script>
@@ -172,8 +181,11 @@
         var endDate = document.getElementById("end_date").value;
 
         if ((Date.parse(endDate) <= Date.parse(startDate))) {
-            alert("End date should be greater than Start date");
+            // alert("End date should be greater than Start date");
+            document.getElementById("end_date1").style.display = "block";
             document.getElementById("start_date").value = "";
+        } else {
+            document.getElementById("end_date1").style.display = "none";
         }
     });
 </script>

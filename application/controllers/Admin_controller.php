@@ -455,7 +455,7 @@ class Admin_controller extends Admin_Core_Controller
         } else {
             $this->session->set_flashdata('error', trans("loyalty_criteria_error"));
         }
-        redirect($this->agent->referrer());
+        redirect(admin_url() . "loyalty-criteria");
     }
     public function user_loyalty_program()
     {
@@ -520,7 +520,7 @@ class Admin_controller extends Admin_Core_Controller
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
         }
-        redirect($this->agent->referrer());
+        redirect(admin_url() . "user-loyalty-program");
     }
     public function kpi_form()
     {
@@ -587,7 +587,7 @@ class Admin_controller extends Admin_Core_Controller
         } else {
             $this->session->set_flashdata('error', trans("kpi_error"));
         }
-        redirect($this->agent->referrer());
+        redirect(admin_url() . "kpi-form");
     }
 
     //qualified user listing

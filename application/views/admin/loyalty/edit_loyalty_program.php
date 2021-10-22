@@ -104,6 +104,7 @@
                         </div>
                         <div class="col-sm-6">
                             <input type='date' name="end_date" class="form-control auth-form-input" value="<?php echo $get_program_data->end_date; ?>" id="end_date" value="" required>
+                            <span id="end_date1" style="color:red;">End date should be greater than Start date</span>
                         </div>
                     </div>
                 </div>
@@ -117,13 +118,21 @@
     </div>
 </div>
 <script>
+    $(document).ready(function() {
+        document.getElementById("end_date1").style.display = "none";
+    });
+</script>
+<script>
     $("#end_date").change(function() {
         var startDate = document.getElementById("start_date").value;
         var endDate = document.getElementById("end_date").value;
 
         if ((Date.parse(endDate) <= Date.parse(startDate))) {
-            alert("End date should be greater than Start date");
+            // alert("End date should be greater than Start date");
+            document.getElementById("end_date1").style.display = "block";
             document.getElementById("end_date").value = "";
+        } else {
+            document.getElementById("end_date1").style.display = "none";
         }
     });
 </script>
@@ -133,8 +142,11 @@
         var endDate = document.getElementById("end_date").value;
 
         if ((Date.parse(endDate) <= Date.parse(startDate))) {
-            alert("End date should be greater than Start date");
+            // alert("End date should be greater than Start date");
+            document.getElementById("end_date1").style.display = "block";
             document.getElementById("start_date").value = "";
+        } else {
+            document.getElementById("end_date1").style.display = "none";
         }
     });
 </script>

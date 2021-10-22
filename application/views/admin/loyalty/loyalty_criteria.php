@@ -30,6 +30,7 @@
     }
 </style>
 <!-- form start -->
+<?php $this->load->view('admin/includes/_messages'); ?>
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
@@ -40,7 +41,6 @@
 
             <!-- form start -->
             <div class="box-body">
-                <?php $this->load->view('admin/includes/_messages'); ?>
                 <?php echo form_open('admin_controller/loyalty_program_submit'); ?>
                 <div class="col-12 coupons-from-holder">
                     <div class="form-group">
