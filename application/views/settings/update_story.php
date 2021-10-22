@@ -54,7 +54,7 @@
 
     .profileImage-default {
       position: relative;
-      width: 428px;
+      width: 155px;
       height: 140px;
       text-align: center;
       background: white;

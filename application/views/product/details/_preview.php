@@ -16,6 +16,12 @@ if (!empty($product_images)) {
         left: -10px;
     }
 
+    #heart-icon-1-2 {
+        opacity: 1;
+        bottom: 203px;
+        left: -10px;
+    }
+
     @media (max-width:768px) {
         .expanded-view {
             margin-left: 25%;
@@ -132,13 +138,17 @@ if (!empty($product_images)) {
                 </div>
 
                 <div class="product-item-options" style="margin-right:11%">
-                    <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist" id="heart-icon-1" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
-                        <?php if (is_product_in_wishlist($product) == 1) : ?>
-                            <i class="icon-heart"></i>
-                        <?php else : ?>
-                            <i class="icon-heart-o"></i>
-                        <?php endif; ?>
-                    </a>
+                    <?php if ($this->auth_check) : ?>
+                        <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist" id="heart-icon-1" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
+                            <?php if (is_product_in_wishlist($product) == 1) : ?>
+                                <i class="icon-heart"></i>
+                            <?php else : ?>
+                                <i class="icon-heart-o"></i>
+                            <?php endif; ?>
+                        </a>
+                    <?php else : ?>
+                        <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist" id="heart-icon-1-2" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>"><i class="icon-heart-o"></i></a>
+                    <?php endif; ?>
                 </div>
 
                 <?php if (item_count($product_images) > 1) : ?>
@@ -228,4 +238,12 @@ if (!empty($product_images)) {
     $('#productAudioModal').on('hidden.bs.modal', function(e) {
         Amplitude.pause();
     });
+</script>
+
+<script>
+    $("#heart-icon-1-2").click(function() {
+        $(this).find('i').toggleClass('icon-heart-o')
+        $('#loginModal').modal('show');
+        // alert("ok");
+    })
 </script>
