@@ -113,7 +113,7 @@ GROUP BY seller_id,buyer_id";
     public function repeated_purchase($seller_id)
     {
         $seller_id = clean_number($seller_id);
-        $sql = "SELECT SUM(Repeat_Count) as sum  from fact_repeat_purchase where seller_id=$seller_id and buyer_id!=seller_id and month(order_date)=month(now())-1 GROUP BY Period";
+        $sql = "SELECT SUM(Repeat_Count) as sum  from fact_repeat_purchase where seller_id=$seller_id and Repeat_Count>1 AND  buyer_id!=seller_id and month(order_date)=month(now())-1 GROUP BY Period";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -143,7 +143,7 @@ GROUP BY seller_id,buyer_id";
         orders o,
         users u
     WHERE
-         op.order_status!='completed'
+         op.order_status!='cancelled'
             AND op.order_id = o.id  
             AND op.seller_id=u.id
     GROUP BY op.seller_id

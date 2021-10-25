@@ -371,7 +371,7 @@ class Profile_controller extends Home_Core_Controller
 
         $user_id = $this->auth_user->id;
         $action = $this->input->post('submit', true);
-
+        $bank_details = $this->auth_user->is_bank_details_approved;
 
         // if ($action == "resend_activation_email") {
         //     //send activation email
@@ -387,26 +387,33 @@ class Profile_controller extends Home_Core_Controller
 
         $ass = $this->input->post('assistance', true);
         $data = array(
-            'acc_holder_name' => $this->input->post('holder_name', true),
+            // 'acc_holder_name' => $this->input->post('holder_name', true),
             'update_profile' => '1',
-            'ifsc_code' => $this->input->post('ifsc_code', true),
-            'bank_branch' => $this->input->post('bank_branch', true),
-            'account_number' => $this->input->post('account_number', true),
+            // 'ifsc_code' => $this->input->post('ifsc_code', true),
+            // 'bank_branch' => $this->input->post('bank_branch', true),
+            // 'account_number' => $this->input->post('account_number', true),
             'brand_desc' => $this->input->post('brand_desc', true),
             'assistance' => implode(',', $ass),
-            'cheque_image_url' => $this->input->post('cheque_image_url', true),
+            // 'cheque_image_url' => $this->input->post('cheque_image_url', true),
             'brand_name' => $this->input->post('brand_name', true),
             'supplier_speciality' => $this->input->post('supplier_speciality', true),
             'customer_name' => $this->input->post('customer_name', true),
             'source' => $this->input->post('source', true),
             'different_type_products' => $this->input->post('different_type_products', true),
             'testimonial' => $this->input->post('testimonial', true),
-            'is_bank_details_approved' => 0
+            'is_bank_details_approved' =>   $bank_details
             // 'about_me' => $this->input->post('about_me', true),
             // 'supplier_story_url' => $this->input->post('story_vedio_url', true),
 
         );
-
+        $data1 = array(
+            'acc_holder_name' => $this->input->post('holder_name', true),
+            'update_profile' => '1',
+            'ifsc_code' => $this->input->post('ifsc_code', true),
+            'bank_branch' => $this->input->post('bank_branch', true),
+            'account_number' => $this->input->post('account_number', true),
+            'is_bank_details_approved' => 0
+        );
 
         if ($action == "update") {
 
@@ -416,6 +423,9 @@ class Profile_controller extends Home_Core_Controller
                 $this->session->set_flashdata('success', trans("msg_updated"));
                 //check email changed
 
+                redirect(generate_dash_url("profile"));
+            } elseif ($this->profile_model->update_bank($data1, $user_id)) {
+                $this->profile_model->update_bank($data1, $user_id);
                 redirect(generate_dash_url("profile"));
             } else {
                 $this->session->set_flashdata('error', trans("msg_error"));
@@ -427,6 +437,9 @@ class Profile_controller extends Home_Core_Controller
                 //check email changed
 
                 redirect(generate_dash_url("add_product"));
+            } elseif ($this->profile_model->update_bank($data1, $user_id)) {
+                $this->profile_model->update_bank($data1, $user_id);
+                redirect(generate_dash_url("profile"));
             } else {
                 $this->session->set_flashdata('error', trans("msg_error"));
                 redirect($this->agent->referrer());
@@ -446,6 +459,7 @@ class Profile_controller extends Home_Core_Controller
             'supplier_story_url' => $this->input->post('story_vedio_url', true),
             'about_me' => $this->input->post('about_me', true),
             'update_profile' => '1',
+
 
 
         );
