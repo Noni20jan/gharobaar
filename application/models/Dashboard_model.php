@@ -69,7 +69,7 @@ GROUP BY seller_id,buyer_id";
     {
         $this->db->select("growth_rate,week");
         $this->db->where("seller_id", clean_number($id));
-        $this->db->limit("5");
+        $this->db->limit("2");
         $this->db->order_by("week", "DESC");
         return $this->db->get('fact_growth_last_week_transaction')->result();
     }
@@ -88,7 +88,7 @@ GROUP BY seller_id,buyer_id";
 
 
 
-
+    //get new_market_delivered_to_the_last_one_week
     public function new_market_delivered_to_the_last_one_week($id)
     {
         $sql = "SELECT count(DISTINCT

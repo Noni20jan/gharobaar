@@ -92,7 +92,7 @@ class Dashboard_controller extends Home_Core_Controller
         $ok['ok1'] = $this->dashboard_model->get_growth_over_last_week($this->auth_user->id);
         $data['test1'] = [(int)$data['no_of_transactions_last_week'][58 - $i]->order_id, (int)$data['no_of_transactions_last_week'][57 - $i]->order_id, (int)$data['no_of_transactions_last_week'][56 - $i]->order_id, (int)$data['no_of_transactions_last_week'][55 - $i]->order_id, (int)$data['no_of_transactions_last_week'][54 - $i]->order_id, (int)$data['no_of_transactions_last_week'][53 - $i]->order_id, (int)$data['no_of_transactions_last_week'][52 - $i]->order_id];
         $data['test2'] = [500, 700, 650, 800, 950, 200, 400];
-        $data['test3'] = [500, 700, 650, 800, 950, 700, 400];
+        // $data['test3'] = [500, 700, 650, 800, 950, 700, 400];
         // $data['test4'] = [500, 700, 650, 800, 950, 500, 400];
 
         $json = '[{"name":"WEEK 1","y":' . $ok['ok1'][0]->growth_rate . ',"drilldown":"WEEK 1"},{"name":"WEEK 2","y":' . $ok['ok1'][1]->growth_rate . ',"drilldown":"WEEK 2"}]';
@@ -104,7 +104,7 @@ class Dashboard_controller extends Home_Core_Controller
         // get growth over last week transaction
 
         $get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'] = $this->dashboard_model->get_growth_over_last_week_transaction($this->auth_user->id);
-        $json = '[{"name":"WEEK 1","y":' . $get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'][0]->growth_rate . ',"drilldown":"WEEK 1"},{"name":"WEEK 2","y":' . $get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'][1]->growth_rate . ',"drilldown":"WEEK 2"},{"name":"WEEK 3","y":' . $get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'][2]->growth_rate . ',"drilldown":"WEEK 3"},{"name":"WEEK 4","y":' . $get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'][3]->growth_rate . ',"drilldown":"WEEK 4"},{"name":"WEEK 5","y":' . $get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'][4]->growth_rate . ',"drilldown":"WEEK 5"}]';
+        $json = '[{"name":"WEEK 1","y":' . $get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'][0]->growth_rate . ',"drilldown":"WEEK 1"},{"name":"WEEK 2","y":' . $get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'][1]->growth_rate . ',"drilldown":"WEEK 2"}]';
         $data['test6'] = json_decode($json);
 
         //complete//  
