@@ -117,6 +117,8 @@ GROUP BY seller_id,buyer_id";
         $query = $this->db->query($sql);
         return $query->result();
     }
+
+
     //get csv price
     public function max_orders_count($seller_id)
     {

@@ -447,6 +447,8 @@ class Profile_controller extends Home_Core_Controller
         }
     }
 
+
+
     public function update_supplier_profile_logo()
     {
 

@@ -108,6 +108,54 @@ class Profile_model extends CI_Model
         $this->db->where('id', $user_id);
         return $this->db->update('users', $data);
     }
+    public function update_bank($data1, $user_id)
+
+    {
+        $user_id = clean_number($user_id);
+        $this->load->model('upload_model');
+
+        // $temp_path = $this->upload_model->upload_temp_image('profile-image');
+        // if (!empty($temp_path)) {
+        //     //delete old avatar
+        //     delete_file_from_server($this->auth_user->avatar);
+        //     $data["avatar"] = $this->upload_model->avatar_upload($temp_path);
+        //     $this->upload_model->delete_temp_image($temp_path);
+        // }
+        // $temp_path = $this->upload_model->upload_temp_image('logo-image');
+        // if (!empty($temp_path)) {
+        //     //delete old avatar
+        //     delete_file_from_server($this->auth_user->brand_logo);
+        //     $data["brand_logo"] = $this->upload_model->brand_logo_upload($temp_path);
+        //     $this->upload_model->delete_temp_image($temp_path);
+        // }
+        // $temp_path_gst = $this->upload_model->upload_temp_image('gst-image');
+        // if (!empty($temp_path_gst)) {
+        //delete old avatar
+        // delete_file_from_server($this->auth_user->gst_image);
+
+
+
+
+        $temp_path = $this->upload_model->upload_temp_image('cheque-image');
+        if (!empty($temp_path)) {
+            //delete old avatar
+            delete_file_from_server($this->auth_user->cheque_image_url);
+            $data1["cheque_image_url"] = $this->upload_model->cheque_upload($temp_path);
+            $this->upload_model->delete_temp_image($temp_path);
+        }
+
+        // if (!empty($temp_path_other)) {
+
+        //     delete_file_from_server($this->auth_user->other_image);
+        //     $data["other_image"] = $this->upload_model->other_upload($temp_path_other);
+        //     $this->upload_model->delete_temp_image($temp_path_other);
+        // }
+
+        $this->session->set_userdata('modesy_user_old_email', $this->auth_user->email);
+        $this->db->where('id', $user_id);
+        return $this->db->update('users', $data1);
+    }
+
 
     // update supplier profile and logo
     public function update_supplier_profile_logo($data, $user_id)
