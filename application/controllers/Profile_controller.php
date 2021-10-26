@@ -401,9 +401,9 @@ class Profile_controller extends Home_Core_Controller
             'source' => $this->input->post('source', true),
             'different_type_products' => $this->input->post('different_type_products', true),
             'testimonial' => $this->input->post('testimonial', true),
-            'is_bank_details_approved' =>   $bank_details
-            // 'about_me' => $this->input->post('about_me', true),
-            // 'supplier_story_url' => $this->input->post('story_vedio_url', true),
+            'is_bank_details_approved' =>   0,
+            'about_me' => $this->input->post('about_me', true),
+            'supplier_story_url' => $this->input->post('story_vedio_url', true),
 
         );
         $data1 = array(
