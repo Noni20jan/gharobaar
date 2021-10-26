@@ -1721,8 +1721,10 @@
         },
 
         title: {
-            text: 'Active Customer  not placed order in 3 months'
+            text: 'InActive Customer  not placed order in 3 months'
         },
+
+
         credits: {
             enabled: false
         },
