@@ -387,14 +387,14 @@ class Profile_controller extends Home_Core_Controller
 
         $ass = $this->input->post('assistance', true);
         $data = array(
-            // 'acc_holder_name' => $this->input->post('holder_name', true),
+            'acc_holder_name' => $this->input->post('holder_name', true),
             'update_profile' => '1',
-            // 'ifsc_code' => $this->input->post('ifsc_code', true),
-            // 'bank_branch' => $this->input->post('bank_branch', true),
-            // 'account_number' => $this->input->post('account_number', true),
+            'ifsc_code' => $this->input->post('ifsc_code', true),
+            'bank_branch' => $this->input->post('bank_branch', true),
+            'account_number' => $this->input->post('account_number', true),
             'brand_desc' => $this->input->post('brand_desc', true),
             'assistance' => implode(',', $ass),
-            // 'cheque_image_url' => $this->input->post('cheque_image_url', true),
+            'cheque_image_url' => $this->input->post('cheque_image_url', true),
             'brand_name' => $this->input->post('brand_name', true),
             'supplier_speciality' => $this->input->post('supplier_speciality', true),
             'customer_name' => $this->input->post('customer_name', true),
