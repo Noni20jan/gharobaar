@@ -760,10 +760,9 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Product</th>
-                                <th>SKU</th>
                                 <th>Shop Name</th>
 
-                                <th><?php echo trans("date"); ?></th>
+
                                 <th>Sales</th>
                             </tr>
                         </thead>
@@ -776,18 +775,14 @@
                                 <tr>
                                     <td><?php echo $sell->product_id; ?></td>
                                     <td>
-                                        <div class="img-table">
-                                            <a href="<?php echo generate_product_url($product); ?>" target="_blank">
-                                                <img src="<?php echo get_product_image($product->id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
-                                            </a>
-                                        </div>
+
                                         <a href="<?php echo generate_product_url($product); ?>" target="_blank" class="table-product-title">
                                             <?php echo $sell->product_title; ?>
                                         </a>
                                     </td>
-                                    <td><?php echo $product->sku; ?></td>
+                                    <!-- <td><?php echo $product->sku; ?></td> -->
                                     <td><?php echo $user->shop_name; ?></td>
-                                    <td><?php echo $sell->created_at; ?></td>
+                                    <!-- <td><?php echo $sell->created_at; ?></td> -->
                                     <td><?php echo $sell->cnt; ?></td>
 
                                     <!-- <td>
