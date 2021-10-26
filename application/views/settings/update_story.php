@@ -360,9 +360,9 @@
         </div>
 
         <div>
-          <?php if ($this->auth_user->update_profile == 1) : ?>
+        
             <button type="submit" name="submit" value="update_profile" style="margin-bottom: 2%;" class="btn btn-lg btn-success pull-right"><?php echo trans("save_profile_brand") ?></button>
-          <?php endif; ?>
+     
         </div>
       </div>
     </div>
