@@ -617,7 +617,11 @@
                 </div>
             </div>
 
-
+            <?php if ($this->general_settings->reviews == 1) : ?>
+                <div id="tab_reviews_content" role="tabpanel">
+                    <?php $this->load->view('product/details/_reviews'); ?>
+                </div>
+            <?php endif; ?>
             <div class="col-12">
                 <div class="row-custom row-bn">
                     <!--Include banner-->
