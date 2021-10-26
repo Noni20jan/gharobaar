@@ -158,11 +158,20 @@ GROUP BY seller_id,buyer_id";
     public function get_new_customers_last_week($id)
     {
 
-        $sql = " SELECT weeks.week, IFNULL(fact_new_customers_in_last_week.customer_count,0) as customer_count
-        FROM
-          weeks
-                LEFT OUTER JOIN
-             fact_new_customers_in_last_week ON  weeks.week= fact_new_customers_in_last_week.week where seller_id is NULL OR seller_id=$id order by week desc";
+        $sql = " Select * from (
+            SELECT seller_id as sid, sncl.week as nweek, sncl.customer_count as new_customers
+            FROM weeks as w
+            JOIN fact_new_customers_in_last_week as sncl
+            ON w.week = sncl.week
+            where seller_id=$id 
+            and sncl.year = year(now())
+            group by sncl.week
+            UNION
+            select 181 as sid, w2.week as nweek, 0 as new_customers from weeks as w2
+            where w2.week NOT IN ( select sncl1.week 
+                                     from fact_new_customers_in_last_week as sncl1
+                                     where sncl1.seller_id = $id)) as temp
+                                     order by CAST(temp.nweek AS UNSIGNED )";
         $query = $this->db->query($sql);
         return $query->result();
 

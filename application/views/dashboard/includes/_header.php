@@ -306,7 +306,7 @@ $user = get_user($this->auth_user->id);
                 <div class="user-panel">
                     <div class="image">
                         <!-- <img src="<?php echo base_url(); ?>assets/img/bronze-avatar.png" class="avatar-level" />    -->
-                        <!-- style for seller image class="user-img-in-avatar" replace with the style given in img source -->
+                        <!-- style for seller image class="user-img-in-avatar" replace with the style given in img source   -->
                         <img src="<?php echo get_user_avatar($this->auth_user); ?>" style="border-radius:50%;" alt="">
                     </div>
                     <div class="username">
