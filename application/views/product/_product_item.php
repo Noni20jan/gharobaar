@@ -84,7 +84,7 @@
                         <?php endif; ?>
                     </a>
                 <?php else : ?>
-                    <a id="wishlist_cards"  href="javascript:void(0)" class="item-option btn-add-remove-wishlist" id="heart-icon-1-2" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>"><i class="icon-heart-o"></i></a>
+                    <a  onclick='wishlist_login();'  class="item-option btn-add-remove-wishlist"  data-toggle="tooltip" data-placement="left" title="<?php echo trans("wishlist"); ?>"><i class="icon-heart-o"></i></a>
                 <?php endif; ?>
             </div>
 
@@ -125,9 +125,8 @@
 </div>
 
 <script>
-    $("#wishlist_cards").click(function() {
+    function wishlist_login() {
         $(this).find('i').toggleClass('icon-heart-o')
         $('#loginModal').modal('show');
-
-    })
+    }
 </script>

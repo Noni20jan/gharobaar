@@ -438,7 +438,7 @@
                             <?php if ($this->auth_check) : ?>
                             <a href="javascript:void(0)" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="<?php echo $product->id; ?>" data-reload="1">Add to Wishlist</i></a>
                             <?php else : ?>
-                                <a id="wishlist_btn" href="javascript:void(0)" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="0" data-reload="1">Add to Wishlist</i></a>
+                                <a id="wishlist_btn" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="0" >Add to Wishlist</i></a>
                                 <?php endif; ?>
                             <?php endif; ?>
                     </div>
@@ -1058,8 +1058,6 @@ endif; ?>
     })
     // })
 </script>
-
-
 
 <script>
     $("#wishlist_btn").click(function() {     
