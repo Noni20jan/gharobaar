@@ -980,16 +980,19 @@ function init_pay(data_cal) {
         success: function (response) {
             // alert(response);
             // var res=response;
-            console.log(response);
-            if(response==200){
-                alert("Payout Initiated");
+
+            res = JSON.parse(response);
+            if (res.subCode == 200) {
+                console.log(res);
+                alert("Payout Initiated with Ref. Id:" + res.data.referenceId);
                 location.reload();
             }
-            else if(response!=200){
-                alert("ERROR/Batch TransferId already exists. Please try again");
+            else {
+                console.log(res);
+                alert(res.message);
                 location.reload();
             }
-            
+
         }
     });
 };
