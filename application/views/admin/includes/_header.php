@@ -277,7 +277,7 @@
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="nav-add-payout"><a href="<?php echo admin_url(); ?>add-payout"> <?php echo trans("add_payout"); ?></a></li>
+                            <!-- <li class="nav-add-payout"><a href="<?php echo admin_url(); ?>add-payout"> <?php echo trans("add_payout"); ?></a></li> -->
                             <!-- <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>payout-requests"> <?php echo trans("payout_requests"); ?></a></li> -->
                             <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>initiate-payout-cod"> <?php echo trans("cod_payouts"); ?></a></li>
                             <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>initiate-payout-prepaid"> <?php echo trans("prepaid_payouts"); ?></a></li> 
