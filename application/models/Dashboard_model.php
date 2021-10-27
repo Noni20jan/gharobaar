@@ -113,7 +113,7 @@ GROUP BY seller_id,buyer_id";
     public function repeated_purchase($seller_id)
     {
         $seller_id = clean_number($seller_id);
-        $sql = "SELECT SUM(Repeat_Count) as sum  from fact_repeat_purchase where seller_id=$seller_id  AND  buyer_id!=seller_id AND SUM(Repeat_Count)>1 and month(Period)=month(now())-1 GROUP BY Period";
+        $sql = "SELECT SUM(Repeat_Count) as sum  from fact_repeat_purchase where seller_id=$seller_id  AND  buyer_id!=seller_id  and month(Period)=month(now())-1 GROUP BY seller_id";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -130,7 +130,7 @@ GROUP BY seller_id,buyer_id";
 
     public function max_customers_weekly($seller_id)
     {
-        $sql = "SELECT MAX(max_customers) as sum from fact_max_customers_weekly where seller_id=$seller_id AND buyer_id!=seller_id AND week(Period)=week(now()) GROUP BY Period";
+        $sql = "SELECT MAX(max_customers) as sum from fact_max_customers_weekly where seller_id=$seller_id AND buyer_id!=seller_id AND week(Period)=week(now()) GROUP BY seller_id";
         $query = $this->db->query($sql);
         return $query->result();
     }
