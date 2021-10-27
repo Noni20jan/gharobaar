@@ -396,7 +396,7 @@
           <div class="row Brand-1">
             <div class="col-md-3"><label id="formlabel2">Confirm Account Number<span class="Validation_error"> *</span></label></div>
             <div class="col-md-9 Brand-name">
-              <input type='text' name="confirm_account_number" id="confirm_account_number" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
+              <input type='text' name="confirm_account_number" id="confirm_account_number" class="form-control auth-form-input" minlength="13" maxlength="13" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
               <span style="color: red;" id="verity_account"></span>
             </div>
           </div>
