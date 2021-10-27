@@ -398,10 +398,9 @@ class Profile_controller extends Home_Core_Controller
             'customer_name' => $this->input->post('customer_name', true),
             'source' => $this->input->post('source', true),
             'different_type_products' => $this->input->post('different_type_products', true),
-            'testimonial' => $this->input->post('testimonial', true),
-            'about_me' => $this->input->post('about_me', true),
+            'testimonial' => $this->input->post('testimonial', true),           
             'is_bank_details_approved' => (int)$this->input->post('is_bank_details_aprroved', true),
-            'supplier_story_url' => $this->input->post('story_vedio_url', true),
+            
 
         );
         $bank_branch = $this->auth_user->bank_branch;
