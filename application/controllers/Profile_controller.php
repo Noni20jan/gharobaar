@@ -417,13 +417,13 @@ class Profile_controller extends Home_Core_Controller
         } else {
             //  $this->profile_model->update_bank($data, $user_id);
             $data['is_bank_details_approved'] = 0;
+            $this->load->model("email_model");
+            $this->email_model->seller_bank_account_detail($user_id);
         }
 
         if ($action == "update") {
 
             if ($this->profile_model->update_story($data, $user_id)) {
-                $this->load->model("email_model");
-                $this->email_model->seller_bank_account_detail($user_id);
                 $this->session->set_flashdata('success', trans("msg_updated"));
 
 
