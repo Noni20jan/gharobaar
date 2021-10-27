@@ -1930,9 +1930,9 @@ class Cart_controller extends Home_Core_Controller
                 $obj->order_id = $data_pay_array[$i]->order_id;
                 $this->order_model->update_status_payouts($obj->seller_id, $obj->order_id, $status_code, $refrence_id, $message, $status, $batch_id, $obj->payout_charge);
             }
-            echo $status_code;
+            echo $response;
         } else {
-            echo  $status_code;
+            echo  $response;
         }
     }
     //add reviews of last order product

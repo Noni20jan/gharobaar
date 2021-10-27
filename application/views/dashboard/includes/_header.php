@@ -304,9 +304,10 @@ $user = get_user($this->auth_user->id);
                 </div>
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
-                    <div class="">
-                        <!-- <img src="<?php echo base_url(); ?>assets/img/bronze-avatar.png" class="avatar-level" /> -->
-                        <img src="<?php echo get_user_avatar($this->auth_user); ?>" class="user-img-in-avatar" alt="">
+                    <div class="image">
+                        <!-- <img src="<?php echo base_url(); ?>assets/img/bronze-avatar.png" class="avatar-level" />    -->
+                        <!-- style for seller image class="user-img-in-avatar" replace with the style given in img source   -->
+                        <img src="<?php echo get_user_avatar($this->auth_user); ?>" style="border-radius:50%;" alt="">
                     </div>
                     <div class="username">
                         <p><?= trans("hi") . ", " . get_full_name($this->auth_user); ?></p>
@@ -454,8 +455,8 @@ $user = get_user($this->auth_user->id);
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-icon.png" alt="" style="width: 20px; height: 20px;" />
                             <span>Barter System</span>
                         </a>
-                    </li> -->
-                    <!-- <li class="nav-barter-requests">
+                    </li>
+                    <li class="nav-barter-requests">
                         <a href="<?= generate_dash_url("barter_requests"); ?>">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-req-icon.png" alt="" style="width: 20px; height: 20px;" />
                             <span>Barter Requests</span>

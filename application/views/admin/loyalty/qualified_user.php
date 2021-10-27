@@ -25,7 +25,9 @@
 <div class="row p-b-15">
 
     <form name="get_qualified_user" id="get_qualified_user" action="offer_controller/get_qualified_user_post">
-        <h4 class="text-center p-b-15">Select Period</h4>
+        <div>
+            <h4 class="p-b-15">Qualified Users</h4>
+        </div>
         <div class="col-sm-5">
             <label for="meeting-time">Select Quater:</label>
             <select id="meeting-time" name="quater" class="form-control" required>
@@ -69,10 +71,10 @@
             ?>
                 <tr class="text-center">
                     <td><?php echo $user->first_name . " " . $user->last_name; ?></td>
-                    <td><i class="fa <?php echo $qUser->lp_qualified_value == 1 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
-                    <td><i class="fa <?php echo $qUser->lp_qualified_value == 2 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
-                    <td><i class="fa <?php echo $qUser->lp_qualified_value == 3 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
-                    <td><i class="fa <?php echo $qUser->lp_qualified_value == 4 ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
+                    <td><i class="fa <?php echo (1 <= $qUser->lp_qualified_value && $qUser->lp_qualified_value < 2) ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
+                    <td><i class="fa <?php echo (2 <= $qUser->lp_qualified_value && $qUser->lp_qualified_value < 3) ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
+                    <td><i class="fa <?php echo (3 <= $qUser->lp_qualified_value && $qUser->lp_qualified_value < 4) ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
+                    <td><i class="fa <?php echo (4 <= $qUser->lp_qualified_value && $qUser->lp_qualified_value < 5) ? 'fa-check color-check' : 'fa-times cross-color'; ?>" aria-hidden="true"></i></td>
                     <td><a href="<?php echo (admin_url() . 'qualified-user-details/' . $qUser->id); ?>" style="text-decoration: underline; color:blue !important">Details</a></td>
                 </tr>
             <?php endforeach; ?>

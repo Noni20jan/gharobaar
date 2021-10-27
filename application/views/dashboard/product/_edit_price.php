@@ -53,7 +53,7 @@
                     <?php if (!empty($user->gst_number)) : ?>
                         <div class="col-xs-12 col-sm-3 m-b-sm-15">
                             <label class="font-600">HSN Code<span class="Validation_error"> *</span></label>
-                            <input type="text" name="hsn_code" id="hsn_code" class="form-control auth-form-input" placeholder="Product HSN Code" value="<?php echo $product->hsn_code; ?>" onkeyup="hsn_valid();">
+                            <input type="text" name="hsn_code" id="hsn_code" class="form-control auth-form-input" placeholder="Product HSN Code" value="<?php echo $product->hsn_code; ?>" required oninput="hsn_valid();">
                             <p id="demo"></p>
 
                         </div>

@@ -74,16 +74,20 @@
                 <span class="badge badge-dark badge-promoted" style="display:none"></span>
             <?php endif; ?>
 
-
             <div class="product-item-options">
-                <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
-                    <?php if (is_product_in_wishlist($product) == 1) : ?>
-                        <i class="icon-heart"></i>
-                    <?php else : ?>
-                        <i class="icon-heart-o"></i>
-                    <?php endif; ?>
-                </a>
+                <?php if ($this->auth_check) : ?>
+                    <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
+                        <?php if (is_product_in_wishlist($product) == 1) : ?>
+                            <i class="icon-heart"></i>
+                        <?php else : ?>
+                            <i class="icon-heart-o"></i>
+                        <?php endif; ?>
+                    </a>
+                <?php else : ?>
+                    <a  onclick='wishlist_login();'  class="item-option btn-add-remove-wishlist"  data-toggle="tooltip" data-placement="left" title="<?php echo trans("wishlist"); ?>"><i class="icon-heart-o"></i></a>
+                <?php endif; ?>
             </div>
+
             <?php if (!empty($product->discount_rate) && !empty($discount_label)) : ?>
                 <span class="badge-discount">-<?= $product->discount_rate; ?>%</span>
             <?php endif; ?>
@@ -119,3 +123,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    function wishlist_login() {
+        $(this).find('i').toggleClass('icon-heart-o')
+        $('#loginModal').modal('show');
+    }
+</script>

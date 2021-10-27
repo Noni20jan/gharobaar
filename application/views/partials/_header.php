@@ -4139,7 +4139,7 @@
                                             </li>
                                         <?php else : ?>
                                             <li class="icon-bg">
-                                                <a href="<?php echo generate_url("wishlist"); ?>">
+                                                <a id='wishlist'>
                                                     <i class="icon-heart-o"></i>
                                                 </a>
                                             </li>
@@ -5508,4 +5508,11 @@
             $(this).removeClass("x onX").val("").change();
             $("#form_validate_pincode_search").submit();
         });
+    </script>
+
+
+    <script>
+        $("#wishlist").click(function() {
+            $('#loginModal').modal('show');
+        })
     </script>

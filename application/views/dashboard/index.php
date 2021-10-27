@@ -203,8 +203,6 @@
     </div>
 </div>
 
-
-
 <?php foreach ($repeat as $rep) : ?>
 <?php endforeach; ?>
 <?php foreach ($max_count as $max) : ?>
@@ -216,30 +214,47 @@
         <div class="small-boxes-dashboard">
             <?php if ($this->is_sale_active) : ?>
                 <div class="col-lg-4 col-md-6 col-sm-12 p-0">
-                    <div class="small-box-dashboard small-box-dashboard-first">
-                        <?php if ($rep->sum != 0) : ?>
-                            <h3 class="total"><?php echo $rep->sum; ?></h3>
-                            <span class="text-muted">Repeated Purchases</span>
-                        <?php else : ?>
+                    <?php if (empty($rep)) : ?>
+                        <div class="small-box-dashboard small-box-dashboard-first">
                             <h3 class="total">0</h3>
                             <span class="text-muted">Repeated Purchases</span>
-                        <?php endif; ?>
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                            <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                        </svg>
-                    </div>
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                            </svg>
+
+                        </div>
+                    <?php else : ?>
+                        <div class="small-box-dashboard small-box-dashboard-first">
+                            <h3 class="total"><?php echo $rep->sum ?></h3>
+                            <span class="text-muted">Repeated Purchases</span>
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                            </svg>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
             <?php endif; ?>
             <?php if ($user->supplier_type == "Goods") { ?>
                 <div class="col-lg-4 col-md-6 col-sm-12 p-0">
-                    <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
-                        <h3 class="total"><?php echo $max->order_sum; ?></h3>
-                        <span class="text-muted">Maximum Orders</span>
-                        <i class="fa fa-shopping-cart" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
+                    <?php if (empty($max)) : ?>
+                        <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
+                            <h3 class="total">0</h3>
+                            <span class="text-muted">Maximum Orders</span>
+                            <i class="fa fa-shopping-cart" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
 
-                    </div>
+                        </div>
+                    <?php else : ?>
+                        <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
+                            <h3 class="total"><?php echo $max->order_sum; ?></h3>
+                            <span class="text-muted">Maximum Orders</span>
+                            <i class="fa fa-shopping-cart" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
+
+                        </div>
+                    <?php endif; ?>
+
                 </div>
             <?php
             } else if ($user->supplier_type == "Services") { ?>
@@ -745,10 +760,9 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Product</th>
-                                <th>SKU</th>
                                 <th>Shop Name</th>
 
-                                <th><?php echo trans("date"); ?></th>
+
                                 <th>Sales</th>
                             </tr>
                         </thead>
@@ -761,18 +775,14 @@
                                 <tr>
                                     <td><?php echo $sell->product_id; ?></td>
                                     <td>
-                                        <div class="img-table">
-                                            <a href="<?php echo generate_product_url($product); ?>" target="_blank">
-                                                <img src="<?php echo get_product_image($product->id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
-                                            </a>
-                                        </div>
+
                                         <a href="<?php echo generate_product_url($product); ?>" target="_blank" class="table-product-title">
                                             <?php echo $sell->product_title; ?>
                                         </a>
                                     </td>
-                                    <td><?php echo $product->sku; ?></td>
+                                    <!-- <td><?php echo $product->sku; ?></td> -->
                                     <td><?php echo $user->shop_name; ?></td>
-                                    <td><?php echo $sell->created_at; ?></td>
+                                    <!-- <td><?php echo $sell->created_at; ?></td> -->
                                     <td><?php echo $sell->cnt; ?></td>
 
                                     <!-- <td>
@@ -1711,8 +1721,10 @@
         },
 
         title: {
-            text: 'Active Customer  not placed order in 3 months'
+            text: 'InActive Customer  not placed order in 3 months'
         },
+
+
         credits: {
             enabled: false
         },

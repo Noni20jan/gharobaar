@@ -69,7 +69,7 @@ GROUP BY seller_id,buyer_id";
     {
         $this->db->select("growth_rate,week");
         $this->db->where("seller_id", clean_number($id));
-        $this->db->limit("5");
+        $this->db->limit("2");
         $this->db->order_by("week", "DESC");
         return $this->db->get('fact_growth_last_week_transaction')->result();
     }
@@ -88,7 +88,7 @@ GROUP BY seller_id,buyer_id";
 
 
 
-
+    //get new_market_delivered_to_the_last_one_week
     public function new_market_delivered_to_the_last_one_week($id)
     {
         $sql = "SELECT count(DISTINCT
@@ -113,21 +113,24 @@ GROUP BY seller_id,buyer_id";
     public function repeated_purchase($seller_id)
     {
         $seller_id = clean_number($seller_id);
-        $sql = "SELECT SUM(Repeat_Count) as sum  from fact_repeat_purchase where seller_id=$seller_id and buyer_id!=seller_id and month(order_date)=month(now())-1 GROUP BY Period";
+        $sql = "SELECT SUM(Repeat_Count) as sum  from fact_repeat_purchase where seller_id=$seller_id  AND  buyer_id!=seller_id  and month(Period)=month(now())-1 GROUP BY seller_id";
         $query = $this->db->query($sql);
         return $query->result();
     }
+
+
+
     //get csv price
     public function max_orders_count($seller_id)
     {
-        $sql = "SELECT SUM(max_orders)as order_sum from fact_max_orders_weekly where seller_id=$seller_id  and week(order_date)=week(now()) GROUP BY Period";
+        $sql = "SELECT MAX(max_orders)as order_sum from fact_max_orders_weekly where seller_id=$seller_id  and week(Period)=week(now()) GROUP BY seller_id";
         $query = $this->db->query($sql);
         return $query->result();
     }
 
     public function max_customers_weekly($seller_id)
     {
-        $sql = "SELECT SUM(max_customers) as sum from fact_max_customers_weekly where seller_id=$seller_id AND buyer_id!=seller_id AND week(order_date)=week(now()) GROUP BY Period";
+        $sql = "SELECT MAX(max_customers) as sum from fact_max_customers_weekly where seller_id=$seller_id AND buyer_id!=seller_id AND week(Period)=week(now()) GROUP BY seller_id";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -143,7 +146,7 @@ GROUP BY seller_id,buyer_id";
         orders o,
         users u
     WHERE
-         op.order_status!='completed'
+         op.order_status='completed'
             AND op.order_id = o.id  
             AND op.seller_id=u.id
     GROUP BY op.seller_id
@@ -156,11 +159,20 @@ GROUP BY seller_id,buyer_id";
     public function get_new_customers_last_week($id)
     {
 
-        $sql = " SELECT weeks.week, IFNULL(fact_new_customers_in_last_week.customer_count,0) as customer_count
-        FROM
-          weeks
-                LEFT OUTER JOIN
-             fact_new_customers_in_last_week ON  weeks.week= fact_new_customers_in_last_week.week where seller_id is NULL OR seller_id=$id order by week desc";
+        $sql = " Select * from (
+            SELECT seller_id as sid, sncl.week as nweek, sncl.customer_count as new_customers
+            FROM weeks as w
+            JOIN fact_new_customers_in_last_week as sncl
+            ON w.week = sncl.week
+            where seller_id=$id 
+            and sncl.year = year(now())
+            group by sncl.week
+            UNION
+            select 181 as sid, w2.week as nweek, 0 as new_customers from weeks as w2
+            where w2.week NOT IN ( select sncl1.week 
+                                     from fact_new_customers_in_last_week as sncl1
+                                     where sncl1.seller_id = $id)) as temp
+                                     order by CAST(temp.nweek AS UNSIGNED )";
         $query = $this->db->query($sql);
         return $query->result();
 
