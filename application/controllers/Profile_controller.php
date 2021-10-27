@@ -410,14 +410,13 @@ class Profile_controller extends Home_Core_Controller
         $cheque_image_url = $this->auth_user->cheque_image_url;
         $account_holder_name = $this->auth_user->acc_holder_name;
 
-        if ($bank_branch == $data["bank_branch"] || $ifsc_code != $data["ifsc_code"] || $account_number != $data["account_number"] ||  $cheque_image_url != $data["cheque_image_url"] || $account_holder_name != $data['acc_holder_name']) {
-            $data['is_bank_details_approved'] = $this->auth_user->is_bank_details_approved;
-        } else {
-            //  $this->profile_model->update_bank($data, $user_id);
-
+        if ($bank_branch !== $data["bank_branch"] || $ifsc_code !== $data["ifsc_code"] || $account_number !== $data["account_number"] ||  $cheque_image_url !== $data["cheque_image_url"] || $account_holder_name !== $data['acc_holder_name']) {
             $data['is_bank_details_approved'] = 0;
             $this->load->model("email_model");
             $this->email_model->seller_bank_account_detail($user_id);
+        } else {
+            //  $this->profile_model->update_bank($data, $user_id);
+            $data['is_bank_details_approved'] = $this->auth_user->is_bank_details_approved;
         }
 
         if ($action == "update") {
@@ -505,15 +504,14 @@ class Profile_controller extends Home_Core_Controller
         $account_number = $this->auth_user->account_number;
         $cheque_image_url = $this->auth_user->cheque_image_url;
         $account_holder_name = $this->auth_user->acc_holder_name;
-        if ($bank_branch == $data["bank_branch"] || $ifsc_code == $data["ifsc_code"] || $account_number == $data["account_number"]  || $account_holder_name == $data['acc_holder_name']) {
-            $data['is_bank_details_approved'] = $this->auth_user->is_bank_details_approved;
-        } else {
-            //  $this->profile_model->update_bank($data, $user_id);
+        if ($bank_branch !== $data["bank_branch"] || $ifsc_code !== $data["ifsc_code"] || $account_number !== $data["account_number"] ||  $cheque_image_url !== $data["cheque_image_url"] || $account_holder_name !== $data['acc_holder_name']) {
             $data['is_bank_details_approved'] = 0;
             $this->load->model("email_model");
             $this->email_model->seller_bank_account_detail($user_id);
+        } else {
+            //  $this->profile_model->update_bank($data, $user_id);
+            $data['is_bank_details_approved'] = $this->auth_user->is_bank_details_approved;
         }
-
         // if ($action == "update") {
 
         if ($this->profile_model->update_payout_account($data, $user_id)) {
