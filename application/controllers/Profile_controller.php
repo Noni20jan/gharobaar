@@ -398,9 +398,10 @@ class Profile_controller extends Home_Core_Controller
             'customer_name' => $this->input->post('customer_name', true),
             'source' => $this->input->post('source', true),
             'different_type_products' => $this->input->post('different_type_products', true),
-            'testimonial' => $this->input->post('testimonial', true),           
+            'testimonial' => $this->input->post('testimonial', true),
+            'about_me' => $this->input->post('about_me', true),
             'is_bank_details_approved' => (int)$this->input->post('is_bank_details_aprroved', true),
-            
+            'supplier_story_url' => $this->input->post('story_vedio_url', true),
 
         );
         $bank_branch = $this->auth_user->bank_branch;
@@ -409,13 +410,13 @@ class Profile_controller extends Home_Core_Controller
         $cheque_image_url = $this->auth_user->cheque_image_url;
         $account_holder_name = $this->auth_user->acc_holder_name;
 
-        if ($bank_branch == $data["bank_branch"] || $ifsc_code == $data["ifsc_code"] || $account_number == $data["account_number"] ||  $cheque_image_url == $data["cheque_image_url"] || $account_holder_name == $data['acc_holder_name']) {
-            $data['is_bank_details_approved'] = $this->auth_user->is_bank_details_approved;
-        } else {
-            //  $this->profile_model->update_bank($data, $user_id);
+        if ($bank_branch != $data["bank_branch"] || $ifsc_code != $data["ifsc_code"] || $account_number != $data["account_number"] ||  $cheque_image_url != $data["cheque_image_url"] || $account_holder_name != $data['acc_holder_name']) {
             $data['is_bank_details_approved'] = 0;
             $this->load->model("email_model");
             $this->email_model->seller_bank_account_detail($user_id);
+        } else {
+            //  $this->profile_model->update_bank($data, $user_id);
+            $data['is_bank_details_approved'] = $this->auth_user->is_bank_details_approved;
         }
 
         if ($action == "update") {
@@ -447,6 +448,7 @@ class Profile_controller extends Home_Core_Controller
     }
 
 
+
     public function update_supplier_profile_logo()
     {
 
@@ -460,7 +462,12 @@ class Profile_controller extends Home_Core_Controller
             'about_me' => $this->input->post('about_me', true),
             'update_profile' => '1',
 
+
+
         );
+
+
+
         $this->profile_model->update_supplier_profile_logo($data, $user_id);
         redirect($this->agent->referrer());
     }
