@@ -410,7 +410,6 @@ class Profile_controller extends Home_Core_Controller
         $account_number = $this->auth_user->account_number;
         $cheque_image_url = $this->auth_user->cheque_image_url;
         $account_holder_name = $this->auth_user->acc_holder_name;
-        var_dump($data["is_bank_details_approved"]);
 
         if ($bank_branch == $data["bank_branch"] || $ifsc_code == $data["ifsc_code"] || $account_number == $data["account_number"] ||  $cheque_image_url == $data["cheque_image_url"] || $account_holder_name == $data['acc_holder_name']) {
             $data['is_bank_details_approved'] = $this->auth_user->is_bank_details_approved;
@@ -494,15 +493,31 @@ class Profile_controller extends Home_Core_Controller
             'ifsc_code' => $this->input->post('ifsc_code', true),
             'bank_branch' => $this->input->post('bank_branch', true),
             'account_number' => $this->input->post('account_number', true),
+            'cheque_image_url' => $this->input->post('cheque_image_url', true),
+            'is_bank_details_approved' => (int)$this->input->post('is_bank_details_aprroved', true),
+
+
 
         );
-
+        $bank_branch = $this->auth_user->bank_branch;
+        $ifsc_code = $this->auth_user->ifsc_code;
+        $account_number = $this->auth_user->account_number;
+        $cheque_image_url = $this->auth_user->cheque_image_url;
+        $account_holder_name = $this->auth_user->acc_holder_name;
+        if ($bank_branch == $data["bank_branch"] || $ifsc_code == $data["ifsc_code"] || $account_number == $data["account_number"] ||  $cheque_image_url == $data["cheque_image_url"] || $account_holder_name == $data['acc_holder_name']) {
+            $data['is_bank_details_approved'] = $this->auth_user->is_bank_details_approved;
+        } else {
+            //  $this->profile_model->update_bank($data, $user_id);
+            $data['is_bank_details_approved'] = 0;
+            $this->load->model("email_model");
+            $this->email_model->seller_bank_account_detail($user_id);
+        }
 
         // if ($action == "update") {
 
         if ($this->profile_model->update_payout_account($data, $user_id)) {
-            $this->load->model("email_model");
-            $this->email_model->seller_bank_account_detail($user_id);
+            // $this->load->model("email_model");
+            // $this->email_model->seller_bank_account_detail($user_id);
             $this->session->set_flashdata('success', trans("msg_updated"));
             //check email changed
 
