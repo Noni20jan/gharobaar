@@ -38,102 +38,51 @@ class Profile_model extends CI_Model
         $user_id = clean_number($user_id);
         $this->load->model('upload_model');
 
-        // $temp_path = $this->upload_model->upload_temp_image('profile-image');
-        // if (!empty($temp_path)) {
-        //     //delete old avatar
-        //     delete_file_from_server($this->auth_user->avatar);
-        //     $data["avatar"] = $this->upload_model->avatar_upload($temp_path);
-        //     $this->upload_model->delete_temp_image($temp_path);
-        // }
-        // $temp_path = $this->upload_model->upload_temp_image('logo-image');
-        // if (!empty($temp_path)) {
-        //     //delete old avatar
-        //     delete_file_from_server($this->auth_user->brand_logo);
-        //     $data["brand_logo"] = $this->upload_model->brand_logo_upload($temp_path);
-        //     $this->upload_model->delete_temp_image($temp_path);
-        // }
-        // $temp_path_gst = $this->upload_model->upload_temp_image('gst-image');
-        // if (!empty($temp_path_gst)) {
-        //delete old avatar
-        // delete_file_from_server($this->auth_user->gst_image);
-
-
         if ($this->upload_model->upload_pdf_gst_file('gst-image') != null) {
             delete_file_from_server($this->auth_user->gst_image);
             $data["gst_image"] = $this->upload_model->upload_pdf_gst_file('gst-image');
         }
-
-        //     $this->upload_model->delete_temp_image($temp_path_gst);
-        // }
-        // $temp_path_pan = $this->upload_model->upload_temp_image('pan-image');
-        // if (!empty($temp_path_pan)) {
-
-        //     delete_file_from_server($this->auth_user->pan_image);
         if ($this->upload_model->upload_pdf_pan_file('pan-image') != null) {
             delete_file_from_server($this->auth_user->pan_image);
             $data["pan_image"] = $this->upload_model->upload_pdf_pan_file('pan-image');
         }
-        //     $this->upload_model->delete_temp_image($temp_path_pan);
-        // }
-        // $temp_path_adhar = $this->upload_model->upload_temp_image('adhaar-image');
-        // if (!empty($temp_path_adhar)) {
         if ($this->upload_model->upload_pdf_adhaar_file('adhaar-image') != null) {
             delete_file_from_server($this->auth_user->adhaar_image);
             $data["aadhar_image"] = $this->upload_model->upload_pdf_adhaar_file('adhaar-image');
         }
-        //     $this->upload_model->delete_temp_image($temp_path_adhar);
-        // }
         if ($this->upload_model->upload_pdf_file('other-image') != null) {
             delete_file_from_server($this->auth_user->other_image);
             $data["other_image"]  = $this->upload_model->upload_pdf_file('other-image');
         }
 
-
-        $temp_path = $this->upload_model->upload_temp_image('cheque-image');
-        if (!empty($temp_path)) {
-            //delete old avatar
+        if ($this->upload_model->upload_cheque_image('cheque-image') != null) {
             delete_file_from_server($this->auth_user->cheque_image_url);
-            $data["cheque_image_url"] = $this->upload_model->cheque_upload($temp_path);
-            $this->upload_model->delete_temp_image($temp_path);
+            $data["cheque_image_url"] = $this->upload_model->upload_cheque_image('cheque-image');
         }
 
-        // if (!empty($temp_path_other)) {
 
-        //     delete_file_from_server($this->auth_user->other_image);
-        //     $data["other_image"] = $this->upload_model->other_upload($temp_path_other);
-        //     $this->upload_model->delete_temp_image($temp_path_other);
+
+
+        // $temp_path = $this->upload_model->upload_temp_image('cheque-image');
+        // if (!empty($temp_path)) {
+        //     //delete old avatar
+        //     delete_file_from_server($this->auth_user->cheque_image_url);
+        //     $data["cheque_image_url"] = $this->upload_model->cheque_upload($temp_path);
+        //     $this->upload_model->delete_temp_image($temp_path);
         // }
 
         $this->session->set_userdata('modesy_user_old_email', $this->auth_user->email);
         $this->db->where('id', $user_id);
+       
         return $this->db->update('users', $data);
     }
+
+
     public function update_bank($data1, $user_id)
 
     {
         $user_id = clean_number($user_id);
         $this->load->model('upload_model');
-
-        // $temp_path = $this->upload_model->upload_temp_image('profile-image');
-        // if (!empty($temp_path)) {
-        //     //delete old avatar
-        //     delete_file_from_server($this->auth_user->avatar);
-        //     $data["avatar"] = $this->upload_model->avatar_upload($temp_path);
-        //     $this->upload_model->delete_temp_image($temp_path);
-        // }
-        // $temp_path = $this->upload_model->upload_temp_image('logo-image');
-        // if (!empty($temp_path)) {
-        //     //delete old avatar
-        //     delete_file_from_server($this->auth_user->brand_logo);
-        //     $data["brand_logo"] = $this->upload_model->brand_logo_upload($temp_path);
-        //     $this->upload_model->delete_temp_image($temp_path);
-        // }
-        // $temp_path_gst = $this->upload_model->upload_temp_image('gst-image');
-        // if (!empty($temp_path_gst)) {
-        //delete old avatar
-        // delete_file_from_server($this->auth_user->gst_image);
-
-
 
 
         $temp_path = $this->upload_model->upload_temp_image('cheque-image');
@@ -143,13 +92,6 @@ class Profile_model extends CI_Model
             $data1["cheque_image_url"] = $this->upload_model->cheque_upload($temp_path);
             $this->upload_model->delete_temp_image($temp_path);
         }
-
-        // if (!empty($temp_path_other)) {
-
-        //     delete_file_from_server($this->auth_user->other_image);
-        //     $data["other_image"] = $this->upload_model->other_upload($temp_path_other);
-        //     $this->upload_model->delete_temp_image($temp_path_other);
-        // }
 
         $this->session->set_userdata('modesy_user_old_email', $this->auth_user->email);
         $this->db->where('id', $user_id);
@@ -186,11 +128,6 @@ class Profile_model extends CI_Model
         $this->db->where('id', $user_id);
         return $this->db->update('users', $data);
     }
-
-
-
-
-
 
 
     //update story model

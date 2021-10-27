@@ -723,7 +723,7 @@
             <?php if ($this->auth_check) : ?>
                 <div class="checkout-steps summary-section add-to-wishlist-container" style="padding: 1%;"> <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>"><img src="<?php echo base_url(); ?>assets/img/bookmark-plus_2.svg" alt="bookmark plus icon" id="bookmark"><b> Add more products from Wishlist </b> </a></div>
             <?php else : ?>
-                <div class="checkout-steps summary-section add-to-wishlist-container" style="padding: 1%;"> <a href="<?php echo generate_url("wishlist"); ?>"><img src="<?php echo base_url(); ?>assets/img/bookmark-plus_2.svg" alt="bookmark plus icon" id="bookmark_plus"><b> Add more products from Wishlist </b> </a></div>
+                <div  onclick="cart_wishlist()"class="checkout-steps summary-section add-to-wishlist-container" style="padding: 1%;"><img src="<?php echo base_url(); ?>assets/img/bookmark-plus_2.svg" alt="bookmark plus icon" id="bookmark_plus"><b> Add more products from Wishlist </b> </a></div>
             <?php endif; ?>
             <b>
             </b>

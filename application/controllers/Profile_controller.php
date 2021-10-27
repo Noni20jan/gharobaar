@@ -393,7 +393,6 @@ class Profile_controller extends Home_Core_Controller
             'account_number' => $this->input->post('account_number', true),
             'brand_desc' => $this->input->post('brand_desc', true),
             'assistance' => implode(',', $ass),
-            'cheque_image_url' => $this->input->post('cheque_image_url', true),
             'brand_name' => $this->input->post('brand_name', true),
             'supplier_speciality' => $this->input->post('supplier_speciality', true),
             'customer_name' => $this->input->post('customer_name', true),
@@ -449,7 +448,6 @@ class Profile_controller extends Home_Core_Controller
     }
 
 
-
     public function update_supplier_profile_logo()
     {
 
@@ -463,12 +461,7 @@ class Profile_controller extends Home_Core_Controller
             'about_me' => $this->input->post('about_me', true),
             'update_profile' => '1',
 
-
-
         );
-
-
-
         $this->profile_model->update_supplier_profile_logo($data, $user_id);
         redirect($this->agent->referrer());
     }
@@ -493,7 +486,6 @@ class Profile_controller extends Home_Core_Controller
             'ifsc_code' => $this->input->post('ifsc_code', true),
             'bank_branch' => $this->input->post('bank_branch', true),
             'account_number' => $this->input->post('account_number', true),
-            'cheque_image_url' => $this->input->post('cheque_image_url', true),
             'is_bank_details_approved' => (int)$this->input->post('is_bank_details_aprroved', true),
 
 
