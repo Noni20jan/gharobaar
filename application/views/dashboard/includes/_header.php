@@ -449,14 +449,14 @@ $user = get_user($this->auth_user->id);
                         </ul>
                     </li>
 
-                    <!-- <li class="header_color header">Barter</li>
+                    <li class="header_color header">Barter</li>
                     <li class="nav-add-product">
                         <a href="<?= generate_dash_url("barter_system"); ?>">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-icon.png" alt="" style="width: 20px; height: 20px;" />
                             <span>Barter System</span>
                         </a>
-                    </li> -->
-                    <!-- <li class="nav-barter-requests">
+                    </li>
+                    <li class="nav-barter-requests">
                         <a href="<?= generate_dash_url("barter_requests"); ?>">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-req-icon.png" alt="" style="width: 20px; height: 20px;" />
                             <span>Barter Requests</span>
@@ -467,7 +467,7 @@ $user = get_user($this->auth_user->id);
                                 </span>
                             <?php endif; ?>
                         </a>
-                    </li> -->
+                    </li>
                     <?php if (is_bidding_system_active()) : ?>
                         <li class="nav-quote-requests">
                             <a href="<?= generate_dash_url("quote_requests"); ?>">
