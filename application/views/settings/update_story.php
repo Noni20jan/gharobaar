@@ -299,7 +299,6 @@
     }
   </style>
 </head>
-
 <div id="wrapper">
   <div class="profile-tab-content">
     <?php $this->load->view('partials/_messages'); ?>
@@ -360,9 +359,9 @@
         </div>
 
         <div>
-        
-            <button type="submit" name="submit" value="update_profile" style="margin-bottom: 2%;" class="btn btn-lg btn-success pull-right"><?php echo trans("save_profile_brand") ?></button>
-     
+
+          <button type="submit" name="submit" value="update_profile" style="margin-bottom: 2%;" class="btn btn-lg btn-success pull-right"><?php echo trans("save_profile_brand") ?></button>
+
         </div>
       </div>
     </div>
@@ -389,7 +388,9 @@
           <div class="row Brand-1">
             <div class="col-md-3"><label id="formlabel2">Account Number<span class="Validation_error"> *</span></label></div>
             <div class="col-md-9 Brand-name">
-              <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
+              <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" minlength="13" maxlength="13" value="<?php echo html_escape($user->account_number); ?>" required onkeyup="checkLength()">
+              <span style="color: red;" id="acc_number"></span>
+
             </div>
           </div>
           <div class="row Brand-1">
@@ -444,7 +445,6 @@
           </div>
         </div>
       </div>
-
 
       <div class="row">
         <div class="background col-sm-6 m-b-30 groove">
@@ -1315,6 +1315,18 @@
         $('#' + id1).attr('src', e.target.result);
       }
       reader1.readAsDataURL(input1.files[0]);
+    }
+  }
+</script>
+<script>
+  function checkLength() {
+    var account = $("#account_number").val();
+    if (account.length < 13) {
+      $("#acc_number").html("Please enter a valid account number");
+      console.log("not match");
+
+    } else {
+      $("#acc_number").html("");
     }
   }
 </script>
