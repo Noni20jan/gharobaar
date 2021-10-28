@@ -2043,6 +2043,9 @@ class Home_controller extends Home_Core_Controller
         $data['comment_limit'] = $this->comment_limit;
         $data['post_user'] = $this->auth_model->get_user($data['post']->user_id);
         $data["category"] = $this->blog_category_model->get_category($data['post']->category_id);
+        $data['latest_products'] = $this->product_admin_model->get_latest_products(5);
+        $data['sub_category'] = $this->blog_model->get_sub_category_id($data['post']->category_id);
+        $data['latest_produts'] = $this->product_admin_model->get_product_id($data['sub_category'][0]->id, 5);
 
         //og tags
         $data['show_og_tags'] = true;
@@ -2402,6 +2405,9 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('user_blog_16', $data);
         $this->load->view('partials/_footer');
     }
+
+
+
 
     public function privacy()
     {
