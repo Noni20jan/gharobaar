@@ -118,24 +118,26 @@ GROUP BY seller_id,buyer_id";
     public function repeated_purchase($seller_id)
     {
         $seller_id = clean_number($seller_id);
-        $sql = "SELECT SUM(Repeat_Count) as sum  from fact_repeat_purchase where seller_id=$seller_id  AND  buyer_id!=seller_id  and month(Period)=month(now())-1 GROUP BY seller_id";
+        $sql = "SELECT SUM(Repeat_Count) as sum  from fact_repeat_purchase where seller_id=$seller_id    and Period=monthname(now()-INTERVAL 1 MONTH)";
         $query = $this->db->query($sql);
         return $query->result();
     }
+
+
 
 
 
     //get csv price
     public function max_orders_count($seller_id)
     {
-        $sql = "SELECT MAX(max_orders)as order_sum from fact_max_orders_weekly where seller_id=$seller_id  and week(Period)=week(now()) GROUP BY seller_id";
+        $sql = "SELECT MAX(max_orders)as order_sum from fact_max_orders_weekly where seller_id=$seller_id  AND Period=WEEK(now())";
         $query = $this->db->query($sql);
         return $query->result();
     }
 
     public function max_customers_weekly($seller_id)
     {
-        $sql = "SELECT MAX(max_customers) as sum from fact_max_customers_weekly where seller_id=$seller_id AND buyer_id!=seller_id AND week(Period)=week(now()) GROUP BY seller_id";
+        $sql = "SELECT MAX(max_customers) as sum from fact_max_customers_weekly where seller_id=$seller_id AND buyer_id!=seller_id AND Period=WEEK(now())";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -208,7 +210,8 @@ GROUP BY seller_id,buyer_id";
         $this->db->where("seller_id", clean_number($id));
         return $this->db->get('fact_avg_transactions')->row();
     }
-    public function get_seller_rating($seller_id){
+    public function get_seller_rating($seller_id)
+    {
         $this->db->select("avg_rating");
         $this->db->where("seller_id", clean_number($seller_id));
         return $this->db->get('fact_seller_rating')->row();
