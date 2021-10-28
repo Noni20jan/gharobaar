@@ -6,14 +6,8 @@ class Dashboard_model extends CI_Model
     //get_outstanding_payments
     public function get_outstanding_payments($user_id, $limit)
     {
-        $this->db->join('orders', 'orders.id = fact_outstanding_payments.order_id');
-        $this->db->select('fact_outstanding_payments.*,orders.order_number,fact_outstanding_payments.payment_status');
-        $this->db->group_by('fact_outstanding_payments.id');
-        $this->db->where('seller_id', clean_number($user_id));
-        $this->db->where('fact_outstanding_payments.payment_status!=', '0');
-        $this->db->order_by('fact_outstanding_payments.order_date', 'DESC');
-        $this->db->limit($limit);
-        $query = $this->db->get('fact_outstanding_payments');
+        $sql = "select * from fact_outstanding_payments join orders on orders.id=fact_outstanding_payments.order_id where seller_id='$user_id' AND fact_outstanding_payments.payment_status=	0 and (order_status!='cancelled_by_seller' OR order_status='cancelled_by_user' OR order_status='cancelled') order by fact_outstanding_payments.id desc limit 6 ";
+        $query = $this->db->query($sql);
         return $query->result();
     }
     //get pending orders
@@ -34,15 +28,21 @@ class Dashboard_model extends CI_Model
     //get cleared payments
     public function get_cleared_payments($user_id, $limit)
     {
-        $this->db->join('orders', 'orders.id = fact_cleared_payments.order_id');
-        $this->db->distinct();
-        $this->db->select('distinct(order_id),amount,currency,order_date,orders.order_number,fact_cleared_payments.payment_status');
-        $this->db->group_by('fact_cleared_payments.id');
-        $this->db->where('seller_id', clean_number($user_id));
-        $this->db->where('fact_cleared_payments.payment_status', '1');
-        $this->db->order_by('fact_cleared_payments.order_date', 'DESC');
-        $this->db->limit($limit);
-        $query = $this->db->get('fact_cleared_payments');
+        // $this->db->join('orders', 'orders.id = fact_cleared_payments.order_id');
+        // $this->db->distinct();
+        // $this->db->select('distinct(order_id),amount,currency,order_date,orders.order_number,fact_cleared_payments.payment_status');
+        // $this->db->group_by('fact_cleared_payments.id');
+        // $this->db->where('seller_id', clean_number($user_id));
+        // $this->db->where('fact_cleared_payments.payment_status', '1');
+        // $this->db->where('fact_cleared_payments.order_status!=', 'cancelled');
+        // $this->db->where_in('fact_cleared_payments.order_status!=', 'cancelled', 'cancelled_by_seller', 'cancelled_by_user');
+        // // $this->db->or_where('fact_cleared_payments.order_status!=', 'cancelled');
+        // // $this->db->order_by('fact_cleared_payments.order_date', 'DESC');
+        // $this->db->limit($limit);
+        $sql = "select distinct(order_id),fact_cleared_payments.order_status,amount,currency,order_date,orders.order_number,fact_cleared_payments.payment_status from fact_cleared_payments join orders on orders.id = fact_cleared_payments.order_id where seller_id='$user_id' and fact_cleared_payments.payment_status='1' AND (order_status!='cancelled' OR order_status!='cancelled_by_seller' OR order_status!='cancelled_by_user') order by fact_cleared_payments.id desc limit 6;
+        ";
+        // $query = $this->db->get('fact_cleared_payments');
+        $query = $this->db->query($sql);
         return $query->result();
     }
 

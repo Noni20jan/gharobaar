@@ -629,9 +629,9 @@
                                     <tr>
                                         <td>#<?php echo $item->order_number; ?></td>
                                         <td><?php echo price_formatted($item->amount, $item->currency); ?></td>
-                                        <td>
-                                            Payment Pending
-                                        </td>
+
+                                        <td><?php echo $item->order_status; ?></td>
+
                                         <td><?php echo date("Y-m-d / h:i", strtotime($item->order_date)); ?></td>
                                         <td style="width: 10%">
                                             <a href="<?php echo generate_dash_url("sale"); ?>/<?php echo html_escape($item->order_number); ?>" class="btn btn-xs btn-info"><?php echo trans('details'); ?></a>
@@ -677,9 +677,7 @@
                                 <tr>
                                     <td>#<?php echo $item->order_number; ?></td>
                                     <td><?php echo price_currency_format($item->amount, $item->currency); ?></td>
-                                    <td>
-                                        Payment Cleared
-                                    </td>
+                                    <td><?php echo $item->order_status; ?></td>
                                     <td><?php echo date("Y-m-d / h:i", strtotime($item->order_date)); ?></td>
                                     <td style="width: 10%">
                                         <a href="<?php echo generate_dash_url("sale"); ?>/<?php echo html_escape($item->order_number); ?>" class="btn btn-xs btn-info"><?php echo trans('details'); ?></a>
