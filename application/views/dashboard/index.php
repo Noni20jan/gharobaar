@@ -140,7 +140,11 @@
             <?php if ($this->is_sale_active) : ?>
                 <div class="col-lg-3 col-md-6 col-sm-12 p-0">
                     <div class="small-box-dashboard small-box-dashboard-first">
-                        <h3 class="total"><?= $total_sales_count; ?></h3>
+                        <?php if (empty($avg_seller_rating)) : ?>
+                            <h3 class="total"><?php echo '0/5' ?></h3>
+                        <?php else : ?>
+                            <h3 class="total"><?= $avg_seller_rating->avg_rating; ?><?php echo '/5' ?></h3>
+                        <?php endif; ?>
                         <span class="text-muted">Average customer rating</span>
                         <i class="fa fa-star" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
                         <!-- <i class="fas fa-star"></i> -->

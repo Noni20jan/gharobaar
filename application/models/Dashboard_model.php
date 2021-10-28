@@ -203,4 +203,9 @@ GROUP BY seller_id,buyer_id";
         $this->db->where("seller_id", clean_number($id));
         return $this->db->get('fact_avg_transactions')->row();
     }
+    public function get_seller_rating($seller_id){
+        $this->db->select("avg_rating");
+        $this->db->where("seller_id", clean_number($seller_id));
+        return $this->db->get('fact_seller_rating')->row();
+    }
 }
