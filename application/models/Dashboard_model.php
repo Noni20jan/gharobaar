@@ -108,7 +108,12 @@ GROUP BY seller_id,buyer_id";
         return $query->result();
     }
 
-
+    public function top_ten_sellers()
+    {
+        $sql = "select * from (select seller_id, sum(max_orders) as total_orders ,period from fact_max_orders_weekly where year=year(now()) and period=week(now())-1 group by seller_id,period order by period desc,sum(max_orders) desc) as temp limit 10";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
 
     public function repeated_purchase($seller_id)
     {

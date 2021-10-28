@@ -50,6 +50,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data['latest_sales1'] = $this->dashboard_model->get_pending_orders($this->auth_user->id, 6);
         $data['latest_sales2'] = $this->dashboard_model->get_outstanding_payments($this->auth_user->id, 6);
         $data['latest_sales3'] = $this->dashboard_model->get_cleared_payments($this->auth_user->id, 6);
+        $data['latest_sales4'] = $this->dashboard_model->top_ten_sellers();
         $data['latest_comments'] = $this->comment_model->get_paginated_vendor_comments($this->auth_user->id, 6, 0);
         $data['latest_reviews'] = $this->review_model->get_paginated_vendor_reviews($this->auth_user->id, 6, 0);
         $data['main_settings'] = get_main_settings();
