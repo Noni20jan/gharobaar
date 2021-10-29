@@ -50,7 +50,7 @@
 
     </div><!-- /.box-body -->
     <div class="row">
-        <button type="submit" id="ini_pay_btn" class="btn bg-purple" style="float: right;" onclick="init_pay(data_cal);"><?php echo ("Initiate Payout"); ?></button>
+        <button type="submit" id="ini_pay_btn" class="btn bg-purple" style="float: right;" onclick="init_pay(data_cal,'prepaid');"><?php echo ("Initiate Payout"); ?></button>
     </div>
 </div>
 <!-- <script>
@@ -86,7 +86,7 @@
                     .each(function(colIdx) {
                         // Set the header cell to contain the input element
                         var cell = $('.filters th').eq(
-                            $(api.column(colIdx+1).header()).index()
+                            $(api.column(colIdx + 1).header()).index()
                         );
                         var title = $(cell).text();
                         $(cell).html('<input type="text" style="width:100%" placeholder="' + title + '" />');
@@ -208,5 +208,4 @@
     //     }
     //     console.log(duplicateArr);
     // }
-
 </script>
