@@ -2044,8 +2044,11 @@ class Home_controller extends Home_Core_Controller
         $data['post_user'] = $this->auth_model->get_user($data['post']->user_id);
         $data["category"] = $this->blog_category_model->get_category($data['post']->category_id);
         $data['latest_products'] = $this->product_admin_model->get_latest_products(5);
+        // var_dump($data['post']->category_id);
+        // die();
         $data['sub_category'] = $this->blog_model->get_sub_category_id($data['post']->category_id);
-        $data['latest_produts'] = $this->product_admin_model->get_product_id($data['sub_category'][0]->id, 5);
+        $data['sub_category1'] = $this->blog_model->get_sub_category_id($data['sub_category'][0]->id);
+        $data['latest_produts'] = $this->product_admin_model->get_product_id($data['sub_category1'][0]->id, 5);
 
         //og tags
         $data['show_og_tags'] = true;

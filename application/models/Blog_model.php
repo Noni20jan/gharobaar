@@ -269,7 +269,7 @@ class Blog_model extends CI_Model
     }
     public function get_sub_category_id($category_id)
     {
-        $sql = "select * from categories where category_order='$category_id' order by id desc LIMIT 1";
+        $sql = "select * from categories where parent_id='$category_id' order by id limit 1";
         $query = $this->db->query($sql);
         return $query->result();
     }
