@@ -59,8 +59,7 @@ class Dashboard_model extends CI_Model
     public function active_customers($seller_id)
     {
         $sql = "SELECT * from fact_active_customers 
-WHERE seller_id=$seller_id AND seller_id!=buyer_id AND order_date > now() - INTERVAL 3 MONTH 
-GROUP BY seller_id,buyer_id";
+        WHERE seller_id=$seller_id AND seller_id!=buyer_id AND order_date > now() - INTERVAL 3 MONTH ORDER BY order_count DESC LIMIT 5";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -118,7 +117,7 @@ GROUP BY seller_id,buyer_id";
     public function repeated_purchase($seller_id)
     {
         $seller_id = clean_number($seller_id);
-        $sql = "SELECT SUM(Repeat_Count) as sum  from fact_repeat_purchase where seller_id=$seller_id    and Period=monthname(now()-INTERVAL 1 MONTH)";
+        $sql = "SELECT SUM(Repeat_Count) as sum  from fact_repeat_purchase where seller_id=$seller_id  AND Period=monthname(now()-INTERVAL 1 MONTH)";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -149,7 +148,7 @@ GROUP BY seller_id,buyer_id";
         u.shop_name,u.slug,u.username,u.email,
         COUNT(o.id) as sm
     FROM
-        order_products op,
+    order_products op,
         orders o,
         users u
     WHERE
