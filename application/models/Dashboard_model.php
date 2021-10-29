@@ -6,7 +6,7 @@ class Dashboard_model extends CI_Model
     //get_outstanding_payments
     public function get_outstanding_payments($user_id, $limit)
     {
-        $sql = "select * from fact_outstanding_payments join orders on orders.id=fact_outstanding_payments.order_id where seller_id='$user_id' AND fact_outstanding_payments.payment_status=	0 and (order_status!='cancelled_by_seller' OR order_status='cancelled_by_user' OR order_status='cancelled') order by fact_outstanding_payments.id desc limit 6 ";
+        $sql = "select distinct order_id,order_status,order_date,fact_outstanding_payments.payment_status,fact_outstanding_payments.seller_id,fact_outstanding_payments.amount,fact_outstanding_payments.currency,orders.order_number from fact_outstanding_payments join orders on orders.id=fact_outstanding_payments.order_id where seller_id='$user_id' AND fact_outstanding_payments.payment_status=	0 and (order_status!='cancelled_by_seller' OR order_status='cancelled_by_user' OR order_status='cancelled') order by fact_outstanding_payments.id desc limit 6 ";
         $query = $this->db->query($sql);
         return $query->result();
     }
