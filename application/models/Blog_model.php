@@ -267,5 +267,17 @@ class Blog_model extends CI_Model
             return false;
         }
     }
-
+    public function get_sub_category_id($category_id)
+    {
+        $sql = "select * from categories where category_order='$category_id' order by id desc LIMIT 1";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    //get related posts
+    public function get_product_id($category_id)
+    {
+        $sql = "select * from products join categories on products.category_id=categories.id where category_id='$category_id'LIMIT 5";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
 }
