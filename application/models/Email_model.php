@@ -451,7 +451,7 @@ class Email_model extends CI_Model
                     'subject' => $subject,
                     'message' => $message,
                     'to' =>  $this->general_settings->mail_username,
-                    'template_path' => "email/email_newsletter",
+                    'template_path' => "email/event_template",
 
 
                 );
@@ -468,7 +468,7 @@ class Email_model extends CI_Model
                     'subject' => $subject,
                     'message' => $message,
                     'to' => $this->general_settings->mail_username,
-                    'template_path' => "email/email_newsletter",
+                    'template_path' => "email/event_template",
                 );
                 $bcc = array();
                 foreach ($emailtoall as $emailtoall) {

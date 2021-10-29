@@ -52,6 +52,15 @@ class Product_admin_model extends CI_Model
         $this->db->order_by('products.created_at', 'DESC')->limit(clean_number($limit));
         return $this->db->get('products')->result();
     }
+    public function get_product_id($category_id, $limit)
+    {
+        $this->build_query();
+        $this->db->where('is_service', "0");
+        $this->db->where('status', 1)->where('products.is_draft', 0)->where('products.is_deleted', 0);
+        $this->db->where('category_id', $category_id);
+        $this->db->order_by('products.created_at', 'DESC')->limit(clean_number($limit));
+        return $this->db->get('products')->result();
+    }
 
     //get latest services
     public function get_latest_services($limit)

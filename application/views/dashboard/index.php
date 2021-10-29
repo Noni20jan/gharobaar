@@ -140,7 +140,11 @@
             <?php if ($this->is_sale_active) : ?>
                 <div class="col-lg-3 col-md-6 col-sm-12 p-0">
                     <div class="small-box-dashboard small-box-dashboard-first">
-                        <h3 class="total"><?= $total_sales_count; ?></h3>
+                        <?php if (empty($avg_seller_rating)) : ?>
+                            <h3 class="total"><?php echo '0/5' ?></h3>
+                        <?php else : ?>
+                            <h3 class="total"><?= $avg_seller_rating->avg_rating; ?><?php echo '/5' ?></h3>
+                        <?php endif; ?>
                         <span class="text-muted">Average customer rating</span>
                         <i class="fa fa-star" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
                         <!-- <i class="fas fa-star"></i> -->
@@ -214,7 +218,7 @@
         <div class="small-boxes-dashboard">
             <?php if ($this->is_sale_active) : ?>
                 <div class="col-lg-4 col-md-6 col-sm-12 p-0">
-                    <?php if (empty($rep)) : ?>
+                    <?php if (empty($rep) || is_null($rep->sum)) : ?>
                         <div class="small-box-dashboard small-box-dashboard-first">
                             <h3 class="total">0</h3>
                             <span class="text-muted">Repeated Purchases</span>
@@ -239,17 +243,17 @@
             <?php endif; ?>
             <?php if ($user->supplier_type == "Goods") { ?>
                 <div class="col-lg-4 col-md-6 col-sm-12 p-0">
-                    <?php if (empty($max)) : ?>
+                    <?php if (empty($max) || is_null($max->order_sum)) : ?>
                         <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
                             <h3 class="total">0</h3>
-                            <span class="text-muted">Maximum Orders</span>
+                            <span class="text-muted">Max Orders Placed in a week</span>
                             <i class="fa fa-shopping-cart" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
 
                         </div>
                     <?php else : ?>
                         <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
                             <h3 class="total"><?php echo $max->order_sum; ?></h3>
-                            <span class="text-muted">Maximum Orders</span>
+                            <span class="text-muted">Max Orders Placed in a week</span>
                             <i class="fa fa-shopping-cart" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
 
                         </div>
@@ -274,13 +278,13 @@
             <div class="col-lg-4 col-md-6 col-sm-12 p-0">
                 <div class="small-box-dashboard small-box-dashboard-last">
 
-                    <?php if (empty($customers_weekly)) : ?>
+                    <?php if (empty($customers_weekly) || is_null($cust->sum)) : ?>
                         <h3 class="total">0</h3>
-                        <span class="text-muted">Maximum Customers</span>
+                        <span class="text-muted">Max Customers in a week</span>
                         <i class="fa fa-user" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
                     <?php else : ?>
                         <h3 class="total"><?php echo $cust->sum; ?></h3>
-                        <span class="text-muted">Maximum Customers</span>
+                        <span class="text-muted">Max Customers in a week</span>
                         <i class="fa fa-user" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
                     <?php endif; ?>
                 </div>
@@ -625,9 +629,9 @@
                                     <tr>
                                         <td>#<?php echo $item->order_number; ?></td>
                                         <td><?php echo price_formatted($item->amount, $item->currency); ?></td>
-                                        <td>
-                                            Payment Pending
-                                        </td>
+
+                                        <td><?php echo $item->order_status; ?></td>
+
                                         <td><?php echo date("Y-m-d / h:i", strtotime($item->order_date)); ?></td>
                                         <td style="width: 10%">
                                             <a href="<?php echo generate_dash_url("sale"); ?>/<?php echo html_escape($item->order_number); ?>" class="btn btn-xs btn-info"><?php echo trans('details'); ?></a>
@@ -673,9 +677,7 @@
                                 <tr>
                                     <td>#<?php echo $item->order_number; ?></td>
                                     <td><?php echo price_currency_format($item->amount, $item->currency); ?></td>
-                                    <td>
-                                        Payment Cleared
-                                    </td>
+                                    <td><?php echo $item->order_status; ?></td>
                                     <td><?php echo date("Y-m-d / h:i", strtotime($item->order_date)); ?></td>
                                     <td style="width: 10%">
                                         <a href="<?php echo generate_dash_url("sale"); ?>/<?php echo html_escape($item->order_number); ?>" class="btn btn-xs btn-info"><?php echo trans('details'); ?></a>
@@ -878,912 +880,1177 @@
         </div>
     </div>
 
-</div>
+    <div class="row">
+        <div class="col-lg-6 col-sm-12 col-xs-12">
+            <div class="box box-primary box-sm">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?php echo trans("top_10_seller_last_week"); ?></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+
+                <div class="box-body index-table">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th scope="col"><?php echo trans("shop_name"); ?></th>
+                                    <th scope="col"><?php echo trans("total_orders"); ?></th>
+                                    <th scope="col"><?php echo trans("status"); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php if (!empty($latest_sales4)) :
+                                    foreach ($latest_sales4 as $item) : ?>
+                                        <?php $rrr = get_user($item->seller_id); ?>
+                                        <tr>
+                                            <td><?php echo $rrr->shop_name; ?></td>
+                                            <td><?php echo $item->total_orders; ?></td>
+                                            <td>
+                                                <?php echo $item->period; ?>
+                                            </td>
+                                        </tr>
+                                <?php endforeach;
+                                endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+
+            </div>
 
 
-<?php if (!empty($active_sales_count) || !empty($completed_sales_count)) : ?>
-    <script>
-        //total sales
-        var ctx = document.getElementById('chart_sales').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: [
-                    "<?= trans("active_sales"); ?> (<?= !empty($active_sales_count) ? $active_sales_count : 0; ?>)",
-                    "<?= trans("completed_sales"); ?> (<?= !empty($completed_sales_count) ? $completed_sales_count : 0; ?>)"
-                ],
-                datasets: [{
-                    data: [<?= !empty($active_sales_count) ? $active_sales_count : 0; ?>, <?= !empty($completed_sales_count) ? $completed_sales_count : 0; ?>],
-                    backgroundColor: [
-                        '#1BC5BD',
-                        '#6993FF'
-                    ],
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                cutoutPercentage: 70,
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            return data['labels'][tooltipItem['index']];
-                        }
-                    }
-                }
-            }
-        });
-    </script>
-<?php endif; ?>
-
-<?php if (!empty($sales_sum)) : ?>
-    <script>
-        //monthly sales
-        var months = ["<?= trans("january"); ?>", "<?= trans("february"); ?>", "<?= trans("march"); ?>", "<?= trans("april"); ?>", "<?= trans("may"); ?>", "<?= trans("june"); ?>", "<?= trans("july"); ?>", "<?= trans("august"); ?>", "<?= trans("september"); ?>", "<?= trans("october"); ?>", "<?= trans("november"); ?>", "<?= trans("december"); ?>"];
-        var i;
-        for (i = 0; i < months.length; i++) {
-            months[i] = months[i].substr(0, 3);
-        }
-        var presets = window.chartColors;
-        var utils = Samples.utils;
-        var inputs = {
-            min: 0,
-            max: 100,
-            count: 8,
-            decimals: 2,
-            continuity: 1
-        };
-        var options = {
-            maintainAspectRatio: false,
-            spanGaps: false,
-            elements: {
-                line: {
-                    tension: 0.000001
-                }
-            },
-            plugins: {
-                filler: {
-                    propagate: false
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        autoSkip: false,
-                        maxRotation: 0
-                    }
-                },
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        callback: function(label, index, labels) {
-                            return "<?= get_currency_sign($this->payment_settings->default_currency); ?>" + label;
-                        }
-                    }
-                }]
-            },
-            tooltips: {
-                callbacks: {
-                    label: function(tooltipItem, data) {
-                        return data['labels'][tooltipItem['index']] + ": <?= get_currency_sign($this->payment_settings->default_currency); ?>" + data['datasets'][0]['data'][tooltipItem['index']];
-                    }
-                }
-            }
-        };
-        [false, 'origin', 'start', 'end'].forEach(function() {
-            utils.srand(8);
-            new Chart('chart_montly_sales', {
-                type: 'line',
-                data: {
-                    labels: months,
-                    datasets: [{
-                        backgroundColor: utils.transparentize("#bfe8e6"),
-                        borderColor: "#1BC5BD",
-                        data: [<?php for ($i = 1; $i <= 12; $i++) {
-                                    echo $i > 1 ? ',' : '';
-                                    $total = 0;
-                                    foreach ($sales_sum as $sum) {
-                                        if (isset($sum->month) && $sum->month == $i) {
-                                            $total = $sum->total_amount;
-                                            break;
-                                        }
+            <?php if (!empty($active_sales_count) || !empty($completed_sales_count)) : ?>
+                <script>
+                    //total sales
+                    var ctx = document.getElementById('chart_sales').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: [
+                                "<?= trans("active_sales"); ?> (<?= !empty($active_sales_count) ? $active_sales_count : 0; ?>)",
+                                "<?= trans("completed_sales"); ?> (<?= !empty($completed_sales_count) ? $completed_sales_count : 0; ?>)"
+                            ],
+                            datasets: [{
+                                data: [<?= !empty($active_sales_count) ? $active_sales_count : 0; ?>, <?= !empty($completed_sales_count) ? $completed_sales_count : 0; ?>],
+                                backgroundColor: [
+                                    '#1BC5BD',
+                                    '#6993FF'
+                                ],
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            cutoutPercentage: 70,
+                            tooltips: {
+                                callbacks: {
+                                    label: function(tooltipItem, data) {
+                                        return data['labels'][tooltipItem['index']];
                                     }
-                                    echo get_price($total, 'decimal');
-                                } ?>],
-                        label: "<?= trans("sales"); ?> (<?= date("Y") ?>)"
-                    }]
-                },
-                options: Chart.helpers.merge(options, {
-                    title: {
-                        display: false
-                    },
-                    elements: {
-                        line: {
-                            tension: 0.4,
-                            borderWidth: 2
+                                }
+                            }
                         }
+                    });
+                </script>
+            <?php endif; ?>
+
+            <?php if (!empty($sales_sum)) : ?>
+                <script>
+                    //monthly sales
+                    var months = ["<?= trans("january"); ?>", "<?= trans("february"); ?>", "<?= trans("march"); ?>", "<?= trans("april"); ?>", "<?= trans("may"); ?>", "<?= trans("june"); ?>", "<?= trans("july"); ?>", "<?= trans("august"); ?>", "<?= trans("september"); ?>", "<?= trans("october"); ?>", "<?= trans("november"); ?>", "<?= trans("december"); ?>"];
+                    var i;
+                    for (i = 0; i < months.length; i++) {
+                        months[i] = months[i].substr(0, 3);
                     }
-                })
-            });
-        });
-    </script>
-<?php endif; ?>
+                    var presets = window.chartColors;
+                    var utils = Samples.utils;
+                    var inputs = {
+                        min: 0,
+                        max: 100,
+                        count: 8,
+                        decimals: 2,
+                        continuity: 1
+                    };
+                    var options = {
+                        maintainAspectRatio: false,
+                        spanGaps: false,
+                        elements: {
+                            line: {
+                                tension: 0.000001
+                            }
+                        },
+                        plugins: {
+                            filler: {
+                                propagate: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    autoSkip: false,
+                                    maxRotation: 0
+                                }
+                            },
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    callback: function(label, index, labels) {
+                                        return "<?= get_currency_sign($this->payment_settings->default_currency); ?>" + label;
+                                    }
+                                }
+                            }]
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: function(tooltipItem, data) {
+                                    return data['labels'][tooltipItem['index']] + ": <?= get_currency_sign($this->payment_settings->default_currency); ?>" + data['datasets'][0]['data'][tooltipItem['index']];
+                                }
+                            }
+                        }
+                    };
+                    [false, 'origin', 'start', 'end'].forEach(function() {
+                        utils.srand(8);
+                        new Chart('chart_montly_sales', {
+                            type: 'line',
+                            data: {
+                                labels: months,
+                                datasets: [{
+                                    backgroundColor: utils.transparentize("#bfe8e6"),
+                                    borderColor: "#1BC5BD",
+                                    data: [<?php for ($i = 1; $i <= 12; $i++) {
+                                                echo $i > 1 ? ',' : '';
+                                                $total = 0;
+                                                foreach ($sales_sum as $sum) {
+                                                    if (isset($sum->month) && $sum->month == $i) {
+                                                        $total = $sum->total_amount;
+                                                        break;
+                                                    }
+                                                }
+                                                echo get_price($total, 'decimal');
+                                            } ?>],
+                                    label: "<?= trans("sales"); ?> (<?= date("Y") ?>)"
+                                }]
+                            },
+                            options: Chart.helpers.merge(options, {
+                                title: {
+                                    display: false
+                                },
+                                elements: {
+                                    line: {
+                                        tension: 0.4,
+                                        borderWidth: 2
+                                    }
+                                }
+                            })
+                        });
+                    });
+                </script>
+            <?php endif; ?>
 
-<script>
-    var dataMap;
-    // Create the chart
-    $(document).ready(function() {
-        var data = {
-            "test": "test"
-        }
-
-
-        data[csfr_token_name] = $.cookie(csfr_cookie_name);
-        $.ajax({
-            type: 'post',
-            url: 'http://localhost/gharobar/Bar_controller/json_data',
-            data: data,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-
-                // console.log(data);
-                dataMap = data;
-            }
-        });
-        // console.log(dataMap);
-    });
-
-
-    Highcharts.chart('column', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'New Customers in Last Week'
-        },
-
-        xAxis: {
-            categories: <?php echo json_encode($days_newCustomer); ?>,
-            plotBands: [{ // visualize the weekend
-                from: 4.5,
-                to: 6.5,
-                color: 'white'
-            }]
-        },
-        yAxis: {
-            title: {
-                text: 'Number of Customers'
-            }
-        },
-        tooltip: {
-            shared: true,
-            valueSuffix: ' customers'
-        },
-        credits: {
-            enabled: false
-        },
-        plotOptions: {
-            line: {
-                fillOpacity: 0.5
-            }
-        },
-        series: [{
-            name: 'Last Week',
-            data: <?php echo json_encode($test); ?>
-        }, ]
-    });
-
-
-
-    $(document).ready(function() {
-
-        var data = {
-            "test1": "test1"
-        };
-        data[csfr_token_name] = $.cookie(csfr_cookie_name);
-        $.ajax({
-            type: 'post',
-            url: 'http://localhost/gharobar/Line_controller/json_data',
-            data: data,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-                // console.log(data);
-                dataMap = data;
-            }
-        });
-
-        Highcharts.chart('column3', {
-            chart: {
-                type: 'line'
-            },
-            title: {
-                text: 'New markets covered till now'
-            },
-
-            xAxis: {
-                categories: [
-                    'week 1',
-                    'week 2',
-                    'week 3',
-                    'week 4',
-                    'week 5',
-
-                ],
-                plotBands: [{ // visualize the weekend
-                    from: 4.5,
-                    to: 6.5,
-                    color: 'white'
-                }]
-            },
-            yAxis: {
-                title: {
-                    text: 'Number of transactions'
-                }
-            },
-            tooltip: {
-                shared: true,
-                valueSuffix: ' transaction'
-            },
-            credits: {
-                enabled: false
-            },
-            plotOptions: {
-                line: {
-                    fillOpacity: 0.5
-                }
-            },
-            series: [{
-                name: 'Last Week',
-                data: <?php echo json_encode($test3); ?>
-            }, ]
-        })
-        console.log(dataMap);
-    });
-
-    Highcharts.chart('column1', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'No. of transactions in the last one week'
-        },
-        xAxis: {
-            categories: <?php echo json_encode($days_newCustomer); ?>,
-            plotBands: [{ // visualize the weekend
-                from: 4.5,
-                to: 6.5,
-                color: 'white'
-            }]
-        },
-        yAxis: {
-            title: {
-                text: 'Number of transactions'
-            }
-        },
-        tooltip: {
-            shared: true,
-            valueSuffix: ' transaction'
-        },
-        credits: {
-            enabled: false
-        },
-        plotOptions: {
-            line: {
-                fillOpacity: 0.5
-            }
-        },
-        series: [{
-            name: 'Last Week',
-            data: <?php echo json_encode($test1); ?>
-        }, ]
-    });
-    $(document).ready(function() {
-
-        var data = {
-            "test2": "test2"
-        };
-        data[csfr_token_name] = $.cookie(csfr_cookie_name);
-        $.ajax({
-            type: 'post',
-            url: 'http://localhost/gharobar/Line_controller/json_data',
-            data: data,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-                // console.log(data);
-                dataMap = data;
-            }
-        });
-        console.log(dataMap);
-    });
-
-    Highcharts.chart('column2', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Average value of transactions'
-        },
-        xAxis: {
-            categories: [
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-                'Sunday'
-            ],
-            plotBands: [{ // visualize the weekend
-                from: 4.5,
-                to: 6.5,
-                color: 'white'
-            }]
-        },
-        yAxis: {
-            title: {
-                text: 'Number of transactions'
-            }
-        },
-        tooltip: {
-            shared: true,
-            valueSuffix: ' transaction'
-        },
-        credits: {
-            enabled: false
-        },
-        plotOptions: {
-            line: {
-                fillOpacity: 0.5
-            }
-        },
-        series: [{
-            name: 'Last Week',
-            data: <?php echo json_encode($test2); ?>
-        }, ]
-    });
-    // 
-
-    $(document).ready(function() {
-
-        var data = {
-            "test3": "test3"
-        };
-        data[csfr_token_name] = $.cookie(csfr_cookie_name);
-        $.ajax({
-            type: 'post',
-            url: 'http://localhost/gharobar/Line_controller/json_data',
-            data: data,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-                // console.log(data);
-                dataMap = data;
-            }
-        });
-        console.log(dataMap);
-    });
-
-    Highcharts.chart('column3', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'New markets covered till now'
-        },
-
-        xAxis: {
-            categories: [
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-                'Sunday'
-            ],
-            plotBands: [{ // visualize the weekend
-                from: 4.5,
-                to: 6.5,
-                color: 'white'
-            }]
-        },
-        yAxis: {
-            title: {
-                text: 'Number of transactions'
-            }
-        },
-        tooltip: {
-            shared: true,
-            valueSuffix: ' transaction'
-        },
-        credits: {
-            enabled: false
-        },
-        plotOptions: {
-            line: {
-                fillOpacity: 0.5
-            }
-        },
-        series: [{
-            name: 'Last Week',
-            data: <?php echo json_encode($test3); ?>
-        }, ]
-    });
+            <script>
+                var dataMap;
+                // Create the chart
+                $(document).ready(function() {
+                    var data = {
+                        "test": "test"
+                    }
 
 
-    $(document).ready(function() {
+                    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: 'post',
+                        url: 'http://localhost/gharobar/Bar_controller/json_data',
+                        data: data,
+                        dataType: 'json',
+                        async: false,
+                        success: function(data) {
 
-        var data = {
-            "test4": "test4"
-        };
-        data[csfr_token_name] = $.cookie(csfr_cookie_name);
-        $.ajax({
-            type: 'post',
-            url: 'http://localhost/gharobar/Line_controller/json_data',
-            data: data,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-                // console.log(data);
-                dataMap = data;
-            }
-        });
-        console.log(dataMap);
-    });
+                            // console.log(data);
+                            dataMap = data;
+                        }
+                    });
+                    // console.log(dataMap);
+                });
 
-    Highcharts.chart('column4', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'New markets delivered to in the last one week'
-        },
-        xAxis: {
-            categories: [
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-                'Sunday'
-            ],
-            plotBands: [{ // visualize the weekend
-                from: 4.5,
-                to: 6.5,
-                color: 'white'
-            }]
-        },
-        yAxis: {
-            title: {
-                text: 'Number of transactions'
-            }
-        },
-        tooltip: {
-            shared: true,
-            valueSuffix: ' transaction'
-        },
-        credits: {
-            enabled: false
-        },
-        plotOptions: {
-            line: {
-                fillOpacity: 0.5
-            }
-        },
-        series: [{
-            name: 'Last Week',
-            data: <?php echo json_encode($test4); ?>
-        }, ]
-    });
+
+                Highcharts.chart('column', {
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'New Customers in Last Week'
+                    },
+
+                    xAxis: {
+                        categories: <?php echo json_encode($days_newCustomer); ?>,
+                        plotBands: [{ // visualize the weekend
+                            from: 4.5,
+                            to: 6.5,
+                            color: 'white'
+                        }]
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Number of Customers'
+                        }
+                    },
+                    tooltip: {
+                        shared: true,
+                        valueSuffix: ' customers'
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        line: {
+                            fillOpacity: 0.5
+                        }
+                    },
+                    series: [{
+                        name: 'Last Week',
+                        data: <?php echo json_encode($test); ?>
+                    }, ]
+                });
 
 
 
+                $(document).ready(function() {
 
-    $(document).ready(function() {
+                    var data = {
+                        "test1": "test1"
+                    };
+                    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: 'post',
+                        url: 'http://localhost/gharobar/Line_controller/json_data',
+                        data: data,
+                        dataType: 'json',
+                        async: false,
+                        success: function(data) {
+                            // console.log(data);
+                            dataMap = data;
+                        }
+                    });
 
-        var data = {
-            "test5": "test5"
-        };
-        data[csfr_token_name] = $.cookie(csfr_cookie_name);
-        $.ajax({
-            type: 'post',
-            url: 'http://localhost/gharobar/Line_controller/json_data',
-            data: data,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-                // console.log(data);
-                dataMap = data;
-            }
-        });
-        console.log(dataMap);
-    });
+                    Highcharts.chart('column3', {
+                        chart: {
+                            type: 'line'
+                        },
+                        title: {
+                            text: 'New markets covered till now'
+                        },
 
-    Highcharts.chart('container', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'GROWTH OVER LAST WEEK'
-        },
-        credits: {
-            enabled: false
-        },
-        accessibility: {
-            announceNewData: {
-                enabled: true
-            }
-        },
-        xAxis: {
-            type: 'category'
-        },
-        yAxis: {
-            title: {
-                text: 'Total growth percent'
-            }
+                        xAxis: {
+                            categories: [
+                                'week 1',
+                                'week 2',
+                                'week 3',
+                                'week 4',
+                                'week 5',
 
-        },
-        legend: {
-            enabled: false
-        },
-        plotOptions: {
-            series: {
-                borderWidth: 0,
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y:.1f}%'
-                }
-            }
-        },
+                            ],
+                            plotBands: [{ // visualize the weekend
+                                from: 4.5,
+                                to: 6.5,
+                                color: 'white'
+                            }]
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Number of transactions'
+                            }
+                        },
+                        tooltip: {
+                            shared: true,
+                            valueSuffix: ' transaction'
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        plotOptions: {
+                            line: {
+                                fillOpacity: 0.5
+                            }
+                        },
+                        series: [{
+                            name: 'Last Week',
+                            data: <?php echo json_encode($test3); ?>
+                        }, ]
+                    })
+                    console.log(dataMap);
+                });
 
-        tooltip: {
-            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-        },
+                Highcharts.chart('column1', {
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'No. of transactions in the last one week'
+                    },
+                    xAxis: {
+                        categories: <?php echo json_encode($days_newCustomer); ?>,
+                        plotBands: [{ // visualize the weekend
+                            from: 4.5,
+                            to: 6.5,
+                            color: 'white'
+                        }]
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Number of transactions'
+                        }
+                    },
+                    tooltip: {
+                        shared: true,
+                        valueSuffix: ' transaction'
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        line: {
+                            fillOpacity: 0.5
+                        }
+                    },
+                    series: [{
+                        name: 'Last Week',
+                        data: <?php echo json_encode($test1); ?>
+                    }, ]
+                });
+                $(document).ready(function() {
 
-        series: [{
-            name: "Days",
-            colorByPoint: true,
-            data: <?php echo json_encode($test5); ?>
-        }],
-        drilldown: {
-            series: [{
-                    name: "SUNDAY",
-                    id: "SUNDAY",
-                    data: <?php echo json_encode($dd1); ?>
-                },
-                {
-                    name: "MONDAY",
-                    id: "MONDAY",
-                    data: <?php echo json_encode($dd1); ?>
-                },
-                {
-                    name: "TUESDAY",
-                    id: "TUESDAY",
-                    data: <?php echo json_encode($dd1); ?>
-                },
-                {
-                    name: "WEDNESDAY",
-                    id: "WEDNESDAY",
-                    data: <?php echo json_encode($dd1); ?>
-                },
-                {
-                    name: "THRUSDAY",
-                    id: "THRUSDAY",
-                    data: <?php echo json_encode($dd1); ?>
-                },
-                {
-                    name: "FRIDAY",
-                    id: "FRIDAY",
-                    data: <?php echo json_encode($dd1); ?>
-                },
-                {
-                    name: "SATURDAY",
-                    id: "SATURDAY",
-                    data: <?php echo json_encode($dd1); ?>
-                },
+                    var data = {
+                        "test2": "test2"
+                    };
+                    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: 'post',
+                        url: 'http://localhost/gharobar/Line_controller/json_data',
+                        data: data,
+                        dataType: 'json',
+                        async: false,
+                        success: function(data) {
+                            // console.log(data);
+                            dataMap = data;
+                        }
+                    });
+                    console.log(dataMap);
+                });
 
-            ]
-        }
-    });
-
-
-    // Create the chart
-    $(document).ready(function() {
-
-        var data = {
-            "test6": "test6"
-        }
-
-        data[csfr_token_name] = $.cookie(csfr_cookie_name);
-        $.ajax({
-            type: 'post',
-            url: 'http://localhost/gharobar/Bar_controller/json_data',
-            data: data,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-
-                // console.log(data);
-                dataMap = data;
-            }
-        });
-    });
-    Highcharts.chart('container-fluid', {
-        chart: {
-            type: 'column'
-        },
-
-        title: {
-            text: 'GROWTH OVER LAST WEEK'
-        },
-        credits: {
-            enabled: false
-        },
-        accessibility: {
-            announceNewData: {
-                enabled: true
-            }
-        },
-        xAxis: {
-            type: 'category'
-        },
-        yAxis: {
-            title: {
-                text: 'Total transaction percent'
-            }
-
-        },
-        legend: {
-            enabled: false
-        },
-        plotOptions: {
-            series: {
-                borderWidth: 0,
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y:.1f}%'
-                }
-            }
-        },
-
-        tooltip: {
-            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-        },
-
-        series: [{
-            name: "Days",
-            colorByPoint: true,
-            data: <?php echo json_encode($test6); ?>
-        }],
-        drilldown: {
-            series: [{
-                    name: "SUNDAY",
-                    id: "SUNDAY",
-                    data: <?php echo json_encode($dd2); ?>
-                },
-                {
-                    name: "MONDAY",
-                    id: "MONDAY",
-                    data: <?php echo json_encode($dd2); ?>
+                // Highcharts.chart('column2', {
+                //   chart: {
+                //     type: 'line'
+                //   },
+                //   title: {
+                //     text: 'Average value of transactions'
+                //   },
+                //   xAxis: {
+                //     categories: [
+                //       'Monday',
+                //       'Tuesday',
+                //       'Wednesday',
+                //       'Thursday',
+                //       'Friday',
+                //       'Saturday',
+                //       'Sunday'
+                //     ],
+                //     plotBands: [{ // visualize the weekend
+                //       from: 4.5,
+                //       to: 6.5,
+                //       color: 'white'
+                //     }]
+                //   },
+                //   yAxis: {
+                //     title: {
+                //       text: 'Number of transactions'
+                //     }
+                //   },
+                //   tooltip: {
+                //     shared: true,
+                //     valueSuffix: ' transaction'
+                //   },
+                //   credits: {
+                //     enabled: false
+                //   },
+                //   plotOptions: {
+                //     line: {
+                //       fillOpacity: 0.5
+                //     }
+                //   },
+                //   series: [{
+                //     name: 'Last Week',
+                //     data: <?php echo json_encode($test2); ?>
+                //   }, ]
+                // });
 
 
-                },
-                {
-                    name: "TUESDAY",
-                    id: "TUESDAY",
-                    data: <?php echo json_encode($dd2); ?>
-                },
-                {
-                    name: "WEDNESDAY",
-                    id: "WEDNESDAY",
-                    data: <?php echo json_encode($dd2); ?>
-                },
-                {
-                    name: "THRUSDAY",
-                    id: "THRUSDAY",
-                    data: <?php echo json_encode($dd2); ?>
-                },
-                {
-                    name: "FRIDAY",
-                    id: "FRIDAY",
-                    data: <?php echo json_encode($dd2); ?>
-                },
-                {
-                    name: "SATURDAY",
-                    id: "SATURDAY",
-                    data: <?php echo json_encode($dd2); ?>
-                },
+                // $(document).ready(function() {
 
-            ]
-        }
-    });
+                //   var data = {
+                //     "test3": "test3"
+                //   };
+                //   data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                //   $.ajax({
+                //     type: 'post',
+                //     url: 'http://localhost/gharobar/Line_controller/json_data',
+                //     data: data,
+                //     dataType: 'json',
+                //     async: false,
+                //     success: function(data) {
+                //       // console.log(data);
+                //       dataMap = data;
+                //     }
+                //   });
+                //   console.log(dataMap);
+                // });
 
-    $(document).ready(function() {
-        var data = {
-            "test7": "test7"
-        };
-        data[csfr_token_name] = $.cookie(csfr_cookie_name);
-        $.ajax({
-            type: 'post',
-            url: 'http://localhost/gharobar/Pie_controller/json_data',
-            data: data,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
+                Highcharts.chart('column3', {
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'New markets covered till now'
+                    },
 
-                // console.log(data);
-                dataMap = data;
-            }
-        });
-    });
-
-    Highcharts.chart(container1, {
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie',
-        },
-
-        title: {
-            text: 'Active Customer placed order in 3 months'
-        },
-        credits: {
-            enabled: false
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        accessibility: {
-            point: {
-                valueSuffix: '%'
-            }
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                }
-            }
-        },
-        series: [{
-            name: 'Customers',
-            colorByPoint: true,
-            data: <?php echo json_encode($test7); ?>
-        }],
-        drilldown: {
-            series: [{
-                    name: "Deepansh",
-                    id: "Deepansh",
-                    data: <?php echo json_encode($dy1); ?>
-                }, {
-                    name: "Navin",
-                    id: "Navin",
-                    data: <?php echo json_encode($dy2); ?>
-                },
-                {
-                    name: "Rajesh",
-                    id: "Rajesh",
-                    data: <?php echo json_encode($dy3); ?>
-                },
-                {
-                    name: "knight",
-                    id: "knight",
-                    data: <?php echo json_encode($dy4); ?>
-                },
-                {
-                    name: "Joker",
-                    id: "Joker",
-                    data: <?php echo json_encode($dy5); ?>
-                },
-                {
-                    name: "Arrow",
-                    id: "Arrow",
-                    data: <?php echo json_encode($dy6); ?>
-                }
-            ],
-        }
-    });
-
-    $(document).ready(function() {
-        var data = {
-            "test8": "test8"
-        };
-        data[csfr_token_name] = $.cookie(csfr_cookie_name);
-        $.ajax({
-            type: 'post',
-            url: 'http://localhost/gharobar/Pie_controller/json_data',
-            data: data,
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-
-                // console.log(data);
-                dataMap = data;
-            }
-        });
-    });
-    Highcharts.chart(container2, {
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie',
-        },
-
-        title: {
-            text: 'InActive Customer  not placed order in 3 months'
-        },
+                    xAxis: {
+                        categories: [
+                            'Monday',
+                            'Tuesday',
+                            'Wednesday',
+                            'Thursday',
+                            'Friday',
+                            'Saturday',
+                            'Sunday'
+                        ],
+                        plotBands: [{ // visualize the weekend
+                            from: 4.5,
+                            to: 6.5,
+                            color: 'white'
+                        }]
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Number of transactions'
+                        }
+                    },
+                    tooltip: {
+                        shared: true,
+                        valueSuffix: ' transaction'
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        line: {
+                            fillOpacity: 0.5
+                        }
+                    },
+                    series: [{
+                        name: 'Last Week',
+                        data: <?php echo json_encode($test3); ?>
+                    }, ]
+                });
 
 
-        credits: {
-            enabled: false
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        accessibility: {
-            point: {
-                valueSuffix: '%'
-            }
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
+                $(document).ready(function() {
 
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                }
-            }
-        },
-        series: [{
-            name: 'Customers',
-            colorByPoint: true,
-            data: <?php echo json_encode($test8); ?>
-        }],
-        drilldown: {
-            series: [{
-                    name: "Deepansh",
-                    id: "Deepansh",
-                    data: <?php echo json_encode($dy1); ?>
-                }, {
-                    name: "Navin",
-                    id: "Navin",
-                    data: <?php echo json_encode($dy2); ?>
-                },
-                {
-                    name: "Rajesh",
-                    id: "Rajesh",
-                    data: <?php echo json_encode($dy3); ?>
-                },
-                {
-                    name: "knight",
-                    id: "knight",
-                    data: <?php echo json_encode($dy4); ?>
-                },
-                {
-                    name: "Joker",
-                    id: "Joker",
-                    data: <?php echo json_encode($dy5); ?>
-                },
-                {
-                    name: "Arrow",
-                    id: "Arrow",
-                    data: <?php echo json_encode($dy6); ?>
-                }
-            ],
-        }
+                    var data = {
+                        "test4": "test4"
+                    };
+                    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: 'post',
+                        url: 'http://localhost/gharobar/Line_controller/json_data',
+                        data: data,
+                        dataType: 'json',
+                        async: false,
+                        success: function(data) {
+                            // console.log(data);
+                            dataMap = data;
+                        }
+                    });
+                    console.log(dataMap);
+                });
 
-    });
-</script>
+                Highcharts.chart('column4', {
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'New markets delivered to in the last one week'
+                    },
+                    xAxis: {
+                        categories: [
+                            'Monday',
+                            'Tuesday',
+                            'Wednesday',
+                            'Thursday',
+                            'Friday',
+                            'Saturday',
+                            'Sunday'
+                        ],
+                        plotBands: [{ // visualize the weekend
+                            from: 4.5,
+                            to: 6.5,
+                            color: 'white'
+                        }]
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Number of transactions'
+                        }
+                    },
+                    tooltip: {
+                        shared: true,
+                        valueSuffix: ' transaction'
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        line: {
+                            fillOpacity: 0.5
+                        }
+                    },
+                    series: [{
+                        name: 'Last Week',
+                        data: <?php echo json_encode($test4); ?>
+                    }, ]
+                    // console.log(dataMap);
+                });
+
+                // Highcharts.chart('column2', {
+                //   chart: {
+                //     type: 'line'
+                //   },
+                //   title: {
+                //     text: 'Average value of transactions'
+                //   },
+                //   xAxis: {
+                //     categories: [
+                //       'Monday',
+                //       'Tuesday',
+                //       'Wednesday',
+                //       'Thursday',
+                //       'Friday',
+                //       'Saturday',
+                //       'Sunday'
+                //     ],
+                //     plotBands: [{ // visualize the weekend
+                //       from: 4.5,
+                //       to: 6.5,
+                //       color: 'white'
+                //     }]
+                //   },
+                //   yAxis: {
+                //     title: {
+                //       text: 'Number of transactions'
+                //     }
+                //   },
+                //   tooltip: {
+                //     shared: true,
+                //     valueSuffix: ' transaction'
+                //   },
+                //   credits: {
+                //     enabled: false
+                //   },
+                //   plotOptions: {
+                //     line: {
+                //       fillOpacity: 0.5
+                //     }
+                //   },
+                //   series: [{
+                //     name: 'Last Week',
+                //     data: <?php echo json_encode($test2); ?>
+                //   }, ]
+                // });
+                // // 
+
+                // $(document).ready(function() {
+
+                //   var data = {
+                //     "test3": "test3"
+                //   };
+                //   data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                //   $.ajax({
+                //     type: 'post',
+                //     url: 'http://localhost/gharobar/Line_controller/json_data',
+                //     data: data,
+                //     dataType: 'json',
+                //     async: false,
+                //     success: function(data) {
+                //       // console.log(data);
+                //       dataMap = data;
+                //     }
+                //   });
+                //   console.log(dataMap);
+                // });
+
+                Highcharts.chart('column3', {
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'New markets covered till now'
+                    },
+
+                    xAxis: {
+                        categories: [
+                            'Monday',
+                            'Tuesday',
+                            'Wednesday',
+                            'Thursday',
+                            'Friday',
+                            'Saturday',
+                            'Sunday'
+                        ],
+                        plotBands: [{ // visualize the weekend
+                            from: 4.5,
+                            to: 6.5,
+                            color: 'white'
+                        }]
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Number of transactions'
+                        }
+                    },
+                    tooltip: {
+                        shared: true,
+                        valueSuffix: ' transaction'
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        line: {
+                            fillOpacity: 0.5
+                        }
+                    },
+                    series: [{
+                        name: 'Last Week',
+                        data: <?php echo json_encode($test3); ?>
+                    }, ]
+                });
+
+
+                $(document).ready(function() {
+
+                    var data = {
+                        "test4": "test4"
+                    };
+                    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: 'post',
+                        url: 'http://localhost/gharobar/Line_controller/json_data',
+                        data: data,
+                        dataType: 'json',
+                        async: false,
+                        success: function(data) {
+                            // console.log(data);
+                            dataMap = data;
+                        }
+                    });
+
+                });
+
+
+                $(document).ready(function() {
+
+                    var data = {
+                        "test5": "test5"
+                    };
+                    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: 'post',
+                        url: 'http://localhost/gharobar/Line_controller/json_data',
+                        data: data,
+                        dataType: 'json',
+                        async: false,
+                        success: function(data) {
+                            // console.log(data);
+                            dataMap = data;
+                        }
+                    });
+                    console.log(dataMap);
+                });
+
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'GROWTH OVER LAST WEEK'
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    accessibility: {
+                        announceNewData: {
+                            enabled: true
+                        }
+                    },
+                    xAxis: {
+                        type: 'category'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Total growth percent'
+                        }
+
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        series: {
+                            borderWidth: 0,
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.y:.1f}%'
+                            }
+                        }
+                    },
+
+                    tooltip: {
+                        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+                    },
+
+                    series: [{
+                        name: "Days",
+                        colorByPoint: true,
+                        data: <?php echo json_encode($test5); ?>
+                    }],
+                    drilldown: {
+                        series: [{
+                                name: "SUNDAY",
+                                id: "SUNDAY",
+                                data: <?php echo json_encode($dd1); ?>
+                            },
+                            {
+                                name: "MONDAY",
+                                id: "MONDAY",
+                                data: <?php echo json_encode($dd1); ?>
+                            },
+                            {
+                                name: "TUESDAY",
+                                id: "TUESDAY",
+                                data: <?php echo json_encode($dd1); ?>
+                            },
+                            {
+                                name: "WEDNESDAY",
+                                id: "WEDNESDAY",
+                                data: <?php echo json_encode($dd1); ?>
+                            },
+                            {
+                                name: "THRUSDAY",
+                                id: "THRUSDAY",
+                                data: <?php echo json_encode($dd1); ?>
+                            },
+                            {
+                                name: "FRIDAY",
+                                id: "FRIDAY",
+                                data: <?php echo json_encode($dd1); ?>
+                            },
+                            {
+                                name: "SATURDAY",
+                                id: "SATURDAY",
+                                data: <?php echo json_encode($dd1); ?>
+                            },
+
+                        ]
+                    }
+                });
+
+
+                // Create the chart
+                $(document).ready(function() {
+
+                    var data = {
+                        "test6": "test6"
+                    }
+
+                    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: 'post',
+                        url: 'http://localhost/gharobar/Bar_controller/json_data',
+                        data: data,
+                        dataType: 'json',
+                        async: false,
+                        success: function(data) {
+
+                            // console.log(data);
+                            dataMap = data;
+                        }
+                    });
+                });
+                Highcharts.chart('container-fluid', {
+                    chart: {
+                        type: 'column'
+                    },
+
+                    title: {
+                        text: 'GROWTH OVER LAST WEEK'
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    accessibility: {
+                        announceNewData: {
+                            enabled: true
+                        }
+                    },
+                    xAxis: {
+                        type: 'category'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Total transaction percent'
+                        }
+
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        series: {
+                            borderWidth: 0,
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.y:.1f}%'
+                            }
+                        }
+                    },
+
+                    tooltip: {
+                        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+                    },
+
+                    series: [{
+                        name: "Days",
+                        colorByPoint: true,
+                        data: <?php echo json_encode($test6); ?>
+                    }],
+                    drilldown: {
+                        series: [{
+                                name: "SUNDAY",
+                                id: "SUNDAY",
+                                data: <?php echo json_encode($dd2); ?>
+                            },
+                            {
+                                name: "MONDAY",
+                                id: "MONDAY",
+                                data: <?php echo json_encode($dd2); ?>
+
+
+                            },
+                            {
+                                name: "TUESDAY",
+                                id: "TUESDAY",
+                                data: <?php echo json_encode($dd2); ?>
+                            },
+                            {
+                                name: "WEDNESDAY",
+                                id: "WEDNESDAY",
+                                data: <?php echo json_encode($dd2); ?>
+                            },
+                            {
+                                name: "THRUSDAY",
+                                id: "THRUSDAY",
+                                data: <?php echo json_encode($dd2); ?>
+                            },
+                            {
+                                name: "FRIDAY",
+                                id: "FRIDAY",
+                                data: <?php echo json_encode($dd2); ?>
+                            },
+                            {
+                                name: "SATURDAY",
+                                id: "SATURDAY",
+                                data: <?php echo json_encode($dd2); ?>
+                            },
+
+                        ]
+                    }
+                });
+
+                $(document).ready(function() {
+                    var data = {
+                        "test7": "test7"
+                    };
+                    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: 'post',
+                        url: 'http://localhost/gharobar/Pie_controller/json_data',
+                        data: data,
+                        dataType: 'json',
+                        async: false,
+                        success: function(data) {
+
+                            // console.log(data);
+                            dataMap = data;
+                        }
+                    });
+                });
+
+                Highcharts.chart(container1, {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie',
+                    },
+
+                    title: {
+                        text: 'Active Customer placed order in 3 months'
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    accessibility: {
+                        point: {
+                            valueSuffix: '%'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Customers',
+                        colorByPoint: true,
+                        data: <?php echo json_encode($test7); ?>
+                    }],
+                    drilldown: {
+                        series: [{
+                                name: "Deepansh",
+                                id: "Deepansh",
+                                data: <?php echo json_encode($dy1); ?>
+                            }, {
+                                name: "Navin",
+                                id: "Navin",
+                                data: <?php echo json_encode($dy2); ?>
+                            },
+                            {
+                                name: "Rajesh",
+                                id: "Rajesh",
+                                data: <?php echo json_encode($dy3); ?>
+                            },
+                            {
+                                name: "knight",
+                                id: "knight",
+                                data: <?php echo json_encode($dy4); ?>
+                            },
+                            {
+                                name: "Joker",
+                                id: "Joker",
+                                data: <?php echo json_encode($dy5); ?>
+                            },
+                            {
+                                name: "Arrow",
+                                id: "Arrow",
+                                data: <?php echo json_encode($dy6); ?>
+                            }
+                        ],
+                    }
+                });
+
+                $(document).ready(function() {
+                    var data = {
+                        "test8": "test8"
+                    };
+                    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: 'post',
+                        url: 'http://localhost/gharobar/Pie_controller/json_data',
+                        data: data,
+                        dataType: 'json',
+                        async: false,
+                        success: function(data) {
+
+                            // console.log(data);
+                            dataMap = data;
+                        }
+                    });
+                });
+
+                $(document).ready(function() {
+                    var data = {
+                        "test8": "test8"
+                    };
+                    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: 'post',
+                        url: 'http://localhost/gharobar/Pie_controller/json_data',
+                        data: data,
+                        dataType: 'json',
+                        async: false,
+                        success: function(data) {
+
+                            // console.log(data);
+                            dataMap = data;
+                        }
+                    });
+                });
+                Highcharts.chart(container2, {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie',
+                    },
+
+                    title: {
+                        text: 'InActive Customer  not placed order in 3 months'
+                    },
+
+
+                    credits: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    accessibility: {
+                        point: {
+                            valueSuffix: '%'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Customers',
+                        colorByPoint: true,
+                        data: <?php echo json_encode($test8); ?>
+                    }],
+                    drilldown: {
+                        series: [{
+                                name: "Deepansh",
+                                id: "Deepansh",
+                                data: <?php echo json_encode($dy1); ?>
+                            }, {
+                                name: "Navin",
+                                id: "Navin",
+                                data: <?php echo json_encode($dy2); ?>
+                            },
+                            {
+                                name: "Rajesh",
+                                id: "Rajesh",
+                                data: <?php echo json_encode($dy3); ?>
+                            },
+                            {
+                                name: "knight",
+                                id: "knight",
+                                data: <?php echo json_encode($dy4); ?>
+                            },
+                            {
+                                name: "Joker",
+                                id: "Joker",
+                                data: <?php echo json_encode($dy5); ?>
+                            },
+                            {
+                                name: "Arrow",
+                                id: "Arrow",
+                                data: <?php echo json_encode($dy6); ?>
+                            }
+                        ],
+                    }
+                });
+                Highcharts.chart(container2, {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie',
+                    },
+
+                    title: {
+                        text: 'Active Customer  not placed order in 3 months'
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    accessibility: {
+                        point: {
+                            valueSuffix: '%'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Customers',
+                        colorByPoint: true,
+                        data: <?php echo json_encode($test8); ?>
+                    }],
+                    drilldown: {
+                        series: [{
+                                name: "Deepansh",
+                                id: "Deepansh",
+                                data: <?php echo json_encode($dy1); ?>
+                            }, {
+                                name: "Navin",
+                                id: "Navin",
+                                data: <?php echo json_encode($dy2); ?>
+                            },
+                            {
+                                name: "Rajesh",
+                                id: "Rajesh",
+                                data: <?php echo json_encode($dy3); ?>
+                            },
+                            {
+                                name: "knight",
+                                id: "knight",
+                                data: <?php echo json_encode($dy4); ?>
+                            },
+                            {
+                                name: "Joker",
+                                id: "Joker",
+                                data: <?php echo json_encode($dy5); ?>
+                            },
+                            {
+                                name: "Arrow",
+                                id: "Arrow",
+                                data: <?php echo json_encode($dy6); ?>
+                            }
+                        ],
+                    }
+
+                });
+            </script>

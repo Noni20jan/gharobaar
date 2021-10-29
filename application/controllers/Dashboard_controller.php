@@ -50,6 +50,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data['latest_sales1'] = $this->dashboard_model->get_pending_orders($this->auth_user->id, 6);
         $data['latest_sales2'] = $this->dashboard_model->get_outstanding_payments($this->auth_user->id, 6);
         $data['latest_sales3'] = $this->dashboard_model->get_cleared_payments($this->auth_user->id, 6);
+        $data['latest_sales4'] = $this->dashboard_model->top_ten_sellers();
         $data['latest_comments'] = $this->comment_model->get_paginated_vendor_comments($this->auth_user->id, 6, 0);
         $data['latest_reviews'] = $this->review_model->get_paginated_vendor_reviews($this->auth_user->id, 6, 0);
         $data['main_settings'] = get_main_settings();
@@ -58,6 +59,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data['new_customers_last_week'] = $this->dashboard_model->get_new_customers_last_week($this->auth_user->id);
         $data['no_of_transactions_last_week'] = $this->dashboard_model->get_no_of_transaction_last_week($this->auth_user->id);
         $data['active_customers'] = $this->dashboard_model->active_customers($this->auth_user->id);
+        $data['avg_seller_rating']=$this->dashboard_model->get_seller_rating($this->auth_user->id);
         // var_dump($data['new_customers_last_week']);
         // die();
 
@@ -1506,6 +1508,21 @@ class Dashboard_controller extends Home_Core_Controller
 
         $this->load->view('dashboard/includes/_header', $data);
         $this->load->view('dashboard/product/' . $view, $data);
+        $this->load->view('dashboard/includes/_footer');
+    }
+
+
+    /**
+     * Bulk Product Upload NEW
+     */
+    public function bulk_product_upload_demo_file()
+    {
+        $data['title'] = trans("bulk_product_upload");
+        // $view = !$this->membership_model->is_allowed_adding_product() ? 'plan_expired' : 'bulk_product_upload';
+        // $data['main_settings'] = get_main_settings();
+
+        $this->load->view('dashboard/includes/_header', $data);
+        $this->load->view('dashboard/product/bulk_upload', $data);
         $this->load->view('dashboard/includes/_footer');
     }
 

@@ -1721,7 +1721,7 @@ class Product_model extends Core_Model
         $this->build_query();
         $this->db->where('products.user_id', $user_id);
         $this->db->where('products.available_for_barter', 'Y');
-        $this->db->order_by('products.created_at', 'DESC')->limit(10);
+        $this->db->order_by('products.created_at', 'DESC');
         return $this->db->get('products')->result();
     }
     //get user products count

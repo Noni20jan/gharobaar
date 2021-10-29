@@ -6,14 +6,8 @@ class Dashboard_model extends CI_Model
     //get_outstanding_payments
     public function get_outstanding_payments($user_id, $limit)
     {
-        $this->db->join('orders', 'orders.id = fact_outstanding_payments.order_id');
-        $this->db->select('fact_outstanding_payments.*,orders.order_number,fact_outstanding_payments.payment_status');
-        $this->db->group_by('fact_outstanding_payments.id');
-        $this->db->where('seller_id', clean_number($user_id));
-        $this->db->where('fact_outstanding_payments.payment_status!=', '0');
-        $this->db->order_by('fact_outstanding_payments.order_date', 'DESC');
-        $this->db->limit($limit);
-        $query = $this->db->get('fact_outstanding_payments');
+        $sql = "select distinct order_id,order_status,order_date,fact_outstanding_payments.payment_status,fact_outstanding_payments.seller_id,fact_outstanding_payments.amount,fact_outstanding_payments.currency,orders.order_number from fact_outstanding_payments join orders on orders.id=fact_outstanding_payments.order_id where seller_id='$user_id' AND fact_outstanding_payments.payment_status=	0 and (order_status!='cancelled_by_seller' OR order_status='cancelled_by_user' OR order_status='cancelled') order by fact_outstanding_payments.id desc limit 6 ";
+        $query = $this->db->query($sql);
         return $query->result();
     }
     //get pending orders
@@ -34,15 +28,21 @@ class Dashboard_model extends CI_Model
     //get cleared payments
     public function get_cleared_payments($user_id, $limit)
     {
-        $this->db->join('orders', 'orders.id = fact_cleared_payments.order_id');
-        $this->db->distinct();
-        $this->db->select('distinct(order_id),amount,currency,order_date,orders.order_number,fact_cleared_payments.payment_status');
-        $this->db->group_by('fact_cleared_payments.id');
-        $this->db->where('seller_id', clean_number($user_id));
-        $this->db->where('fact_cleared_payments.payment_status', '1');
-        $this->db->order_by('fact_cleared_payments.order_date', 'DESC');
-        $this->db->limit($limit);
-        $query = $this->db->get('fact_cleared_payments');
+        // $this->db->join('orders', 'orders.id = fact_cleared_payments.order_id');
+        // $this->db->distinct();
+        // $this->db->select('distinct(order_id),amount,currency,order_date,orders.order_number,fact_cleared_payments.payment_status');
+        // $this->db->group_by('fact_cleared_payments.id');
+        // $this->db->where('seller_id', clean_number($user_id));
+        // $this->db->where('fact_cleared_payments.payment_status', '1');
+        // $this->db->where('fact_cleared_payments.order_status!=', 'cancelled');
+        // $this->db->where_in('fact_cleared_payments.order_status!=', 'cancelled', 'cancelled_by_seller', 'cancelled_by_user');
+        // // $this->db->or_where('fact_cleared_payments.order_status!=', 'cancelled');
+        // // $this->db->order_by('fact_cleared_payments.order_date', 'DESC');
+        // $this->db->limit($limit);
+        $sql = "select distinct(order_id),fact_cleared_payments.order_status,amount,currency,order_date,orders.order_number,fact_cleared_payments.payment_status from fact_cleared_payments join orders on orders.id = fact_cleared_payments.order_id where seller_id='$user_id' and fact_cleared_payments.payment_status='1' AND (order_status!='cancelled' OR order_status!='cancelled_by_seller' OR order_status!='cancelled_by_user') order by fact_cleared_payments.id desc limit 6;
+        ";
+        // $query = $this->db->get('fact_cleared_payments');
+        $query = $this->db->query($sql);
         return $query->result();
     }
 
@@ -59,8 +59,7 @@ class Dashboard_model extends CI_Model
     public function active_customers($seller_id)
     {
         $sql = "SELECT * from fact_active_customers 
-WHERE seller_id=$seller_id AND seller_id!=buyer_id AND order_date > now() - INTERVAL 3 MONTH 
-GROUP BY seller_id,buyer_id";
+        WHERE seller_id=$seller_id AND seller_id!=buyer_id AND order_date > now() - INTERVAL 3 MONTH ORDER BY order_count DESC LIMIT 5";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -108,29 +107,36 @@ GROUP BY seller_id,buyer_id";
         return $query->result();
     }
 
-
+    public function top_ten_sellers()
+    {
+        $sql = "select * from (select seller_id, sum(max_orders) as total_orders ,period from fact_max_orders_weekly where year=year(now()) and period=week(now())-1 group by seller_id,period order by period desc,sum(max_orders) desc) as temp limit 10";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
 
     public function repeated_purchase($seller_id)
     {
         $seller_id = clean_number($seller_id);
-        $sql = "SELECT SUM(Repeat_Count) as sum  from fact_repeat_purchase where seller_id=$seller_id  AND  buyer_id!=seller_id  and month(Period)=month(now())-1 GROUP BY seller_id";
+        $sql = "SELECT SUM(Repeat_Count) as sum  from fact_repeat_purchase where seller_id=$seller_id  AND Period=monthname(now()-INTERVAL 1 MONTH)";
         $query = $this->db->query($sql);
         return $query->result();
     }
+
+
 
 
 
     //get csv price
     public function max_orders_count($seller_id)
     {
-        $sql = "SELECT MAX(max_orders)as order_sum from fact_max_orders_weekly where seller_id=$seller_id  and week(Period)=week(now()) GROUP BY seller_id";
+        $sql = "SELECT MAX(max_orders)as order_sum from fact_max_orders_weekly where seller_id=$seller_id  AND Period=WEEK(now())";
         $query = $this->db->query($sql);
         return $query->result();
     }
 
     public function max_customers_weekly($seller_id)
     {
-        $sql = "SELECT MAX(max_customers) as sum from fact_max_customers_weekly where seller_id=$seller_id AND buyer_id!=seller_id AND week(Period)=week(now()) GROUP BY seller_id";
+        $sql = "SELECT MAX(max_customers) as sum from fact_max_customers_weekly where seller_id=$seller_id AND buyer_id!=seller_id AND Period=WEEK(now())";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -142,7 +148,7 @@ GROUP BY seller_id,buyer_id";
         u.shop_name,u.slug,u.username,u.email,
         COUNT(o.id) as sm
     FROM
-        order_products op,
+    order_products op,
         orders o,
         users u
     WHERE
@@ -202,5 +208,11 @@ GROUP BY seller_id,buyer_id";
         $this->db->select("avg_transaction");
         $this->db->where("seller_id", clean_number($id));
         return $this->db->get('fact_avg_transactions')->row();
+    }
+    public function get_seller_rating($seller_id)
+    {
+        $this->db->select("avg_rating");
+        $this->db->where("seller_id", clean_number($seller_id));
+        return $this->db->get('fact_seller_rating')->row();
     }
 }

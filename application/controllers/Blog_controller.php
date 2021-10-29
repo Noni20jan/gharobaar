@@ -75,6 +75,7 @@ class Blog_controller extends Admin_Core_Controller
         $data['posts'] = $this->blog_model->get_posts_all();
         $data['lang_search_column'] = 2;
         $data['main_settings'] = get_main_settings();
+        // $data['latest_products'] = $this->product_admin_model->get_latest_products(15);
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/blog/posts', $data);
         $this->load->view('admin/includes/_footer');
@@ -367,7 +368,7 @@ class Blog_controller extends Admin_Core_Controller
     public function get_categories_by_lang()
     {
         $lang_id = $this->input->post('lang_id', true);
-        if (!empty($lang_id)):
+        if (!empty($lang_id)) :
             $categories = $this->blog_category_model->get_categories_by_lang($lang_id);
             foreach ($categories as $item) {
                 echo '<option value="' . $item->id . '">' . $item->name . '</option>';
