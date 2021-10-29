@@ -84,7 +84,7 @@
                         <?php endif; ?>
                     </a>
                 <?php else : ?>
-                    <a  onclick='wishlist_login();'  class="item-option btn-add-remove-wishlist"  data-toggle="tooltip" data-placement="left" title="<?php echo trans("wishlist"); ?>"><i class="icon-heart-o"></i></a>
+                    <a onclick='wishlist_login();' class="item-option btn-add-remove-wishlist" data-toggle="tooltip" data-placement="left" title="<?php echo trans("wishlist"); ?>"><i class="icon-heart-o"></i></a>
                 <?php endif; ?>
             </div>
 
@@ -108,10 +108,10 @@
         </p>
         <div class="product-item-rating">
             <?php if ($this->general_settings->reviews == 1) {
-                // $this->load->view('partials/_review_stars', ['review' => $product->rating]);
+                $this->load->view('partials/_review_stars', ['review' => $product->rating]);
             } ?>
 
-            <!-- <span class="item-wishlist"><i class="icon-heart-o"></i><?php echo $product->wishlist_count; ?></span> -->
+            <span class="item-wishlist"><i class="icon-heart-o"></i><?php echo $product->wishlist_count; ?></span>
         </div>
         <?php if ($product->discount_rate != '0') : ?>
             <!-- <div class="discount-rate" style="float:right; color: green; margin-top: -15%">

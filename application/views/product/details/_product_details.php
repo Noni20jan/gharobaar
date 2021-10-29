@@ -146,6 +146,17 @@
         width: 100%;
     }
 
+    .product-details-review {
+        margin-left: 0 !important;
+    }
+
+    @media(max-width:768px) {
+        .product-details-review {
+            margin-left: 15px !important;
+        }
+
+    }
+
     /* .quantity_margin{
         margin-bottom: -13px !important;
     } */
@@ -195,6 +206,11 @@
                     <div class="product-details-user">
                         By&nbsp;<a href="<?php echo generate_profile_url($product->user_slug); ?>"><?php echo character_limiter(ucfirst(get_brand_name_product($product)), 30, '..'); ?></a><br>
                     </div>
+                </div>
+                <div class="product-details-review">
+                    <?php if ($this->general_settings->reviews == 1) {
+                        $this->load->view('partials/_review_stars', ['review' => $product->rating]);
+                    } ?>
                 </div>
             </div>
         </div>
@@ -436,11 +452,11 @@
                             <a href="javascript:void(0)" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="<?php echo $product->id; ?>" data-reload="1">Remove from Wishlist</a>
                         <?php else : ?>
                             <?php if ($this->auth_check) : ?>
-                            <a href="javascript:void(0)" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="<?php echo $product->id; ?>" data-reload="1">Add to Wishlist</i></a>
+                                <a href="javascript:void(0)" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="<?php echo $product->id; ?>" data-reload="1">Add to Wishlist</i></a>
                             <?php else : ?>
-                                <a id="wishlist_btn" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="0" >Add to Wishlist</i></a>
-                                <?php endif; ?>
+                                <a id="wishlist_btn" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="0">Add to Wishlist</i></a>
                             <?php endif; ?>
+                        <?php endif; ?>
                     </div>
 
                     <!-- <div class="col-6"><?php echo $buttton2; ?></div> -->
@@ -1060,7 +1076,7 @@ endif; ?>
 </script>
 
 <script>
-    $("#wishlist_btn").click(function() {     
+    $("#wishlist_btn").click(function() {
         $('#loginModal').modal('show');
         // alert("ok");
     })
