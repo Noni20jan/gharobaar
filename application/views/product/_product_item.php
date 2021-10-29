@@ -106,13 +106,7 @@
 
             </a>
         </p>
-        <div class="product-item-rating">
-            <?php if ($this->general_settings->reviews == 1) {
-                $this->load->view('partials/_review_stars', ['review' => $product->rating]);
-            } ?>
 
-            <span class="item-wishlist"><i class="icon-heart-o"></i><?php echo $product->wishlist_count; ?></span>
-        </div>
         <?php if ($product->discount_rate != '0') : ?>
             <!-- <div class="discount-rate" style="float:right; color: green; margin-top: -15%">
                 <?php echo discount_rate_format($product->discount_rate) ?>

@@ -1779,6 +1779,7 @@ class Cart_controller extends Home_Core_Controller
     public function init_pay_auth()
     {
         $data_cal = $this->input->post('data_cal', true);
+        $mode = $this->input->post('mode', true);
         $data_pay = json_encode($data_cal);
 
 
@@ -1817,14 +1818,14 @@ class Cart_controller extends Home_Core_Controller
 
         $token = json_decode($response)->data->token;
         if (json_decode($response)->status == "SUCCESS") {
-            $this->init_payout($data_pay, $token);
+            $this->init_payout($data_pay, $token, $mode);
         } else {
             echo '<script>alert("Invalid/Expired Token")</script>';
         }
     }
 
     // Cashfree payouts initiate API
-    public function init_payout($data_pay, $token)
+    public function init_payout($data_pay, $token, $mode)
     {
         $header2 = array(
             'Content-Type : application/json',
@@ -1928,7 +1929,7 @@ class Cart_controller extends Home_Core_Controller
 
                 $obj->seller_id = $data_pay_array[$i]->seller_id;
                 $obj->order_id = $data_pay_array[$i]->order_id;
-                $this->order_model->update_status_payouts($obj->seller_id, $obj->order_id, $status_code, $refrence_id, $message, $status, $batch_id, $obj->payout_charge);
+                $this->order_model->update_status_payouts($obj->seller_id, $obj->order_id, $status_code, $refrence_id, $message, $status, $batch_id, $obj->payout_charge, $mode);
             }
             echo $response;
         } else {

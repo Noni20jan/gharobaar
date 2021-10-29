@@ -3845,7 +3845,7 @@ class Order_model extends CI_Model
     }
 
 
-    public function update_status_payouts($seller_id, $order_id, $status_code, $refrence_id, $message, $status, $batchid, $payout_charge)
+    public function update_status_payouts($seller_id, $order_id, $status_code, $refrence_id, $message, $status, $batchid, $payout_charge, $mode)
     {
         $data = array(
             'payout_initiated' => 1,
@@ -3860,11 +3860,11 @@ class Order_model extends CI_Model
 
         $this->db->where('order_id', $order_id);
         $this->db->where('vendorId', $seller_id);
-        if ($this->general_settings->enable_easysplit == 1) {
+        if ($mode == 'cod') {
             $this->db->update('cod_seller_payable', $data);
         }
         // cashfree online payment data save for payouts 
-        else if ($this->general_settings->enable_easysplit == 0) {
+        else if ($mode == 'prepaid') {
             $this->db->update('cashfree_seller_payout', $data);
         }
     }
