@@ -598,7 +598,23 @@
                                             <div class="text-center">
                                                 <img src="<?php echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
                                             </div>
-                                            <p class="dispatch-COD-return">Return Available</p>
+                                            <p class="dispatch-COD-return">Return/Exchange</p>
+                                            <p class="dispatch-COD-return">Returnable</p>
+                                        </div>
+                                    <?php elseif ($product->available_for_return_or_exchange == 'exchange') : ?>
+                                        <div class="col-4 add_to_cart_buy_now return-aviable-width">
+                                            <div class="text-center">
+                                                <img src="<?php echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
+                                            </div>
+                                            <p class="dispatch-COD-return">Return/Exchange</p>
+                                            <p class="dispatch-COD-return">Exchangeable</p>
+                                        </div>
+                                    <?php elseif ($product->available_for_return_or_exchange == 'both') : ?>
+                                        <div class="col-4 add_to_cart_buy_now return-aviable-width">
+                                            <div class="text-center">
+                                                <img src="<?php echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
+                                            </div>
+                                            <p class="dispatch-COD-return">Return/Exchange</p>
                                             <p class="dispatch-COD-return">Yes</p>
                                         </div>
                                     <?php else : ?>
@@ -606,7 +622,7 @@
                                             <div class="text-center">
                                                 <img src="<?php echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
                                             </div>
-                                            <p class="dispatch-COD-return">Return Available</p>
+                                            <p class="dispatch-COD-return">Return/Exchange</p>
                                             <p class="dispatch-COD-return">No</p>
                                         </div>
                                     <?php endif; ?>
