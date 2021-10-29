@@ -246,14 +246,14 @@
                     <?php if (empty($max) || is_null($max->order_sum)) : ?>
                         <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
                             <h3 class="total">0</h3>
-                            <span class="text-muted">Maximum Orders</span>
+                            <span class="text-muted">Max Orders Placed in a week</span>
                             <i class="fa fa-shopping-cart" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
 
                         </div>
                     <?php else : ?>
                         <div class="small-box-dashboard" <?= !$this->is_sale_active ? 'style="border-radius: 4px 0 0 4px;"' : ''; ?>>
                             <h3 class="total"><?php echo $max->order_sum; ?></h3>
-                            <span class="text-muted">Maximum Orders</span>
+                            <span class="text-muted">Max Orders Placed in a week</span>
                             <i class="fa fa-shopping-cart" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
 
                         </div>
@@ -280,11 +280,11 @@
 
                     <?php if (empty($customers_weekly) || is_null($cust->sum)) : ?>
                         <h3 class="total">0</h3>
-                        <span class="text-muted">Maximum Customers</span>
+                        <span class="text-muted">Max Customers in a week</span>
                         <i class="fa fa-user" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
                     <?php else : ?>
                         <h3 class="total"><?php echo $cust->sum; ?></h3>
-                        <span class="text-muted">Maximum Customers</span>
+                        <span class="text-muted">Max Customers in a week</span>
                         <i class="fa fa-user" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
                     <?php endif; ?>
                 </div>
