@@ -40,15 +40,16 @@ foreach ($sellers as $seller) {
         /* left: -44px; */
         right: 305px;
         top: 6px;
-        /* left: 0px; */
     }
 
     @media only screen and (max-width: 900px) {
         .cash-on-delivery-card {
             position: relative;
-            right: 0px;
-            top: 45px;
             left: 0px;
+            /* right: -11
+px
+; */
+            top: 42px;
         }
 
     }
@@ -314,21 +315,24 @@ foreach ($sellers as $seller) {
                     <?php if (isset($parent_category)) : ?>
 
                         <div class="cash-on-delivery-card">
-                            <?php if ($category->id != 2) : ?>
-                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'cash_on_delivery', 'Y') ? "active_cod" : "non-active_cod"; ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>">Cash on Delivery</a>
-                            <?php elseif ($parent_category->id != 2) : ?>
-                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'cash_on_delivery', 'Y') ? "active_cod" : "non-active_cod"; ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>">Cash on Delivery</a>
+                            <?php if (!empty($parent_categories)) : ?>
+                                <?php if ($parent_categories[0]->id != 2) : ?>
 
-                            <?php endif; ?>
+                                    <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'cash_on_delivery', 'Y') ? "active_cod" : "non-active_cod"; ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>">Cash on Delivery</a>
+
+
+
+                                <?php endif; ?>
 
                         </div>
                     <?php endif; ?>
-
                 <?php endif; ?>
 
-                <button class="btn btn-filter-products-mobile" type="button" data-toggle="collapse" data-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
-                    <i class="icon-filter"></i>&nbsp;<?php echo trans("filter_products"); ?>
-                </button>
+            <?php endif; ?>
+
+            <button class=" btn btn-filter-products-mobile" type="button" data-toggle="collapse" data-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
+                <i class="icon-filter"></i>&nbsp;<?php echo trans("filter_products"); ?>
+            </button>
 
             </div>
         </div>
