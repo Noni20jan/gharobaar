@@ -45,7 +45,6 @@ foreach ($sellers as $seller) {
     @media only screen and (max-width: 900px) {
         .cash-on-delivery-card {
             position: relative;
-            position: relative;
             left: 0px;
             /* right: -11
 px
@@ -321,8 +320,7 @@ px
 
                                     <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'cash_on_delivery', 'Y') ? "active_cod" : "non-active_cod"; ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>">Cash on Delivery</a>
 
-                                <?php else : ?>
-                                    <!-- <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'cash_on_delivery', 'Y') ? "active_cod" : "non-active_cod"; ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>">Cash on Delivery</a> -->
+
 
                                 <?php endif; ?>
 
