@@ -134,9 +134,24 @@ class Dashboard_model extends CI_Model
         return $query->result();
     }
 
-    public function max_customers_weekly($seller_id)
+    public function max_customers_weekly()
     {
-        $sql = "SELECT MAX(max_customers) as sum from fact_max_customers_weekly where seller_id=$seller_id AND buyer_id!=seller_id AND Period=WEEK(now())";
+        $sql = "select week_no, cnt from
+        (SELECT Concat('Week ',week(created_at)) as week_no , 0 as cnt
+        FROM weeks 
+        WHERE weeks.week NOT IN (SELECT distinct week(weeks.created_at) as week_no
+                                 FROM weeks
+                                 LEFT JOIN stag_max_customers_weekly as smcw
+                                   ON weeks.week = week(smcw.user_registered_date) 
+                                   WHERE week(weeks.created_at) between week(now())-5 AND week(now())
+                                  group by week(user_registered_date))
+        UNION
+        SELECT Concat('Week ',week(smcw1.user_registered_date)) as week_no, count(user_id) as cnt
+        FROM stag_max_customers_weekly as smcw1
+        where week(smcw1.user_registered_date) between week(now())-5 AND week(now())
+        group by week(smcw1.user_registered_date)
+        ) as temp
+        order by week_no";
         $query = $this->db->query($sql);
         return $query->result();
     }

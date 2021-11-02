@@ -9,9 +9,6 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
-
-
 <style type="text.css">
 
     .highcharts-figure, .highcharts-data-table table {
@@ -19,6 +16,7 @@
   max-width: 800px;
   margin: 1em auto;
 }
+
 
 
 #container {
@@ -69,7 +67,6 @@
             transform: translateX(-40%);
          } */
 </style>
-
 <div class="row m-b-30">
     <div class="col-sm-12 m-b-15">
         <div class="small-boxes-dashboard">
@@ -275,7 +272,7 @@
 
             <?php } ?>
 
-            <div class="col-lg-4 col-md-6 col-sm-12 p-0">
+            <!-- <div class="col-lg-4 col-md-6 col-sm-12 p-0">
                 <div class="small-box-dashboard small-box-dashboard-last">
 
                     <?php if (empty($customers_weekly) || is_null($cust->sum)) : ?>
@@ -288,7 +285,7 @@
                         <i class="fa fa-user" aria-hidden="true" style="position: absolute;right: 25px;bottom: 32px;font-size: 30px;color: #9ca9be;"></i>
                     <?php endif; ?>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div> <!-- custom analytics -->
@@ -333,6 +330,13 @@
             <p class="highcharts-description">
             <div id="column4"></div>
             <p class="highcharts-description"></p>
+        </figure>
+    </div>
+    <div class="col-md-6">
+        <label><b>NEW CUSTOMERS ONBOARDED</b></label>
+        <figure class="highcharts-figure">
+            <div id="column5"></div>
+            <p class="highcharts-description">
         </figure>
     </div>
 </div>
@@ -1242,6 +1246,45 @@
                     console.log(dataMap);
                 });
 
+                Highcharts.chart('column5', {
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'New Customers Onboarded'
+                    },
+
+                    xAxis: {
+                        categories: <?php echo json_encode($z); ?>,
+                        plotBands: [{ // visualize the weekend
+                            from: 4.5,
+                            to: 6.5,
+                            color: 'white'
+                        }]
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Number of Customers',
+                        }
+                    },
+                    tooltip: {
+                        shared: true,
+                        valueSuffix: ' customers'
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        line: {
+                            fillOpacity: 0.5
+                        }
+                    },
+                    series: [{
+                        name: 'Last Week',
+                        data: <?php echo json_encode($h); ?>
+                    }, ]
+                })
+
                 // Highcharts.chart('column2', {
                 //   chart: {
                 //     type: 'line'
@@ -1308,6 +1351,7 @@
                 //   });
                 //   console.log(dataMap);
                 // });
+
 
                 Highcharts.chart('column3', {
                     chart: {
