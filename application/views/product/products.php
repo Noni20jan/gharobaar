@@ -45,9 +45,12 @@ foreach ($sellers as $seller) {
     @media only screen and (max-width: 900px) {
         .cash-on-delivery-card {
             position: relative;
-
-            right: 139px;
-            top: 15px;
+            position: relative;
+            left: 0px;
+            /* right: -11
+px
+; */
+            top: 42px;
         }
 
     }
