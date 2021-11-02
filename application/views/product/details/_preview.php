@@ -123,7 +123,7 @@ if (!empty($product_images)) {
                             <div class="item">
                                 <a href="<?php echo get_product_image_url($image, 'image_big'); ?>" title="">
                                     <img src="<?php echo base_url() . IMG_BG_PRODUCT_SLIDER; ?>" class="img-bg" alt="slider-bg" style="border-radius:20px;">
-                                    <img src="<?php echo IMG_BASE64_1x1; ?>" style="border-radius:20px;" data-lazy="<?php echo get_product_image_url($image, 'image_default'); ?>" alt="<?php echo get_product_title($product); ?>" class="img-product-slider">
+                                    <img src="<?php echo IMG_BASE64_1x1; ?>" style="border-radius:20px;" data-lazy="<?php echo get_product_image_url($image, 'image_default'); ?>" alt="<?php echo $product->slug; ?>" class="img-product-slider">
                                 </a>
                             </div>
                         <?php endforeach;
