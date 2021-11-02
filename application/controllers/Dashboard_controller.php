@@ -42,7 +42,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data['total_sales_count'] = $data['active_sales_count'] + $data['completed_sales_count'];
         $data["max_count"] = $this->dashboard_model->max_orders_count($this->auth_user->id);
         $data["repeat"] = $this->dashboard_model->repeated_purchase($this->auth_user->id);
-        $data["customers_weekly"] = $this->dashboard_model->max_customers_weekly($this->auth_user->id);
+        $data["customers_weekly"] = $this->dashboard_model->max_customers_weekly();
         $data['total_pageviews_count'] = $this->product_model->get_vendor_total_pageviews_count($this->auth_user->id);
         $data['products_count'] = $this->product_model->get_user_products_count($this->auth_user->id);
         $data['services_count'] = $this->product_model->get_user_services_count($this->auth_user->id);
@@ -59,7 +59,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data['new_customers_last_week'] = $this->dashboard_model->get_new_customers_last_week($this->auth_user->id);
         $data['no_of_transactions_last_week'] = $this->dashboard_model->get_no_of_transaction_last_week($this->auth_user->id);
         $data['active_customers'] = $this->dashboard_model->active_customers($this->auth_user->id);
-        $data['avg_seller_rating']=$this->dashboard_model->get_seller_rating($this->auth_user->id);
+        $data['avg_seller_rating'] = $this->dashboard_model->get_seller_rating($this->auth_user->id);
         // var_dump($data['new_customers_last_week']);
         // die();
 
@@ -70,8 +70,20 @@ class Dashboard_controller extends Home_Core_Controller
         // $data['test'] = [50, 60, 75, 80, 70, 90, 100];
         $data["top_selling"] = $this->product_admin_model->products_top_selling($this->auth_user->id);
         // $data['test'] = $this->order_model->get_last_week_customer_data($this->auth_user->id);
-
+        // $x = json_encode($data["customers_weekly"]);
+        // var_dump($x);
+        $i = 0;
+        $data["cust"] = ($data["customers_weekly"]);
+        $count = sizeof($data["cust"]);
+        $data["z"] = array();
+        $data["h"] = array();
+        while ($i < $count) {
+            $data["z"][] = ($data["customers_weekly"][$i]->week_no);
+            $data["h"][] = (int)($data["customers_weekly"][$i]->cnt);
+            $i++;
+        }
         //data for new coustomer bar graph
+
         $data['days_newCustomer'] = array();
         $date = new DateTime();
         $date->modify('-7 week');
@@ -80,6 +92,8 @@ class Dashboard_controller extends Home_Core_Controller
             $i = $date->format("W");
             $date->modify('+1 week');
         }
+
+
         $data['test'] = [(int)$data['new_customers_last_week'][$i - 7]->new_customers, (int)$data['new_customers_last_week'][$i - 6]->new_customers, (int)$data['new_customers_last_week'][$i - 5]->new_customers, (int)$data['new_customers_last_week'][$i - 4]->new_customers, (int)$data['new_customers_last_week'][$i - 3]->new_customers, (int)$data['new_customers_last_week'][$i - 2]->new_customers, (int)$data['new_customers_last_week'][$i - 1]->new_customers];
         // var_dump($data['no_of_transactions_last_week']);
         // die();

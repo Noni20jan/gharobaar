@@ -35,9 +35,33 @@ foreach ($sellers as $seller) {
         }
     }
 
+    .cash-on-delivery-card {
+        position: absolute;
+        /* left: -44px; */
+        right: 305px;
+        top: 6px;
+        /* left: 0px; */
+    }
 
+    @media only screen and (max-width: 900px) {
+        .cash-on-delivery-card {
+            position: relative;
+            right: 0px;
+            top: 45px;
+            left: 0px;
+        }
 
-    .active_non-veg {
+    }
+
+    .cash_on_delivery {
+        padding: .2rem .9rem !important;
+        border-radius: 20px !important;
+        line-height: 1.5 !important;
+        color: #fff !important;
+        background-color: green;
+    }
+
+    .active_ .active_non-veg {
         padding: .2rem .9rem !important;
         border-radius: 20px !important;
         line-height: 1.5 !important;
@@ -63,7 +87,44 @@ foreach ($sellers as $seller) {
         background-color: green;
     }
 
+    .active_cod {
+        padding: .2rem .9rem !important;
+        border-radius: 20px !important;
+        line-height: 1.5 !important;
+        color: #fff !important;
+        background-color: green;
+    }
 
+    @media only screen and (max-width: 900px) {
+        .active_cod {
+            padding: .2rem .7rem !important;
+            border-radius: 20px !important;
+            line-height: 1.5 !important;
+            color: #fff !important;
+            background-color: green;
+        }
+    }
+
+    .non-active_cod {
+        padding: .2rem .9rem !important;
+        border-radius: 20px !important;
+        line-height: 1.5 !important;
+        color: black !important;
+        background-color: transparent;
+        border: 1px solid red;
+    }
+
+    @media only screen and (max-width: 900px) {
+        .non-active_cod {
+            padding: .2rem .7rem !important;
+            border-radius: 20px !important;
+            line-height: 1.5 !important;
+            color: black !important;
+            background-color: transparent;
+            border: 1px solid red;
+
+        }
+    }
 
     @media only screen and (max-width: 900px) {
         .active_veg {
@@ -209,6 +270,7 @@ foreach ($sellers as $seller) {
                         </select>
                     </div>
                 </div>
+
                 <?php if (isset($category)) : ?>
                     <div class="veg-non-veg">
                         <?php if ($category->id == 2) : ?>
@@ -248,7 +310,21 @@ foreach ($sellers as $seller) {
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
+                <?php if (isset($category)) : ?>
+                    <?php if (isset($parent_category)) : ?>
 
+                        <div class="cash-on-delivery-card">
+                            <?php if ($category->id != 2) : ?>
+                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'cash_on_delivery', 'Y') ? "active_cod" : "non-active_cod"; ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>">Cash on Delivery</a>
+                            <?php elseif ($parent_category->id != 2) : ?>
+                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'cash_on_delivery', 'Y') ? "active_cod" : "non-active_cod"; ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>">Cash on Delivery</a>
+
+                            <?php endif; ?>
+
+                        </div>
+                    <?php endif; ?>
+
+                <?php endif; ?>
 
                 <button class="btn btn-filter-products-mobile" type="button" data-toggle="collapse" data-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
                     <i class="icon-filter"></i>&nbsp;<?php echo trans("filter_products"); ?>
