@@ -15,11 +15,16 @@
         .product-imgs-modal {
             height: 84px;
         }
+
+        .scroll-for-mobile {
+            overflow-y: scroll !important;
+            height: 70vh;
+        }
     }
 </style>
 <div class="modal fade" id="rateProductModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content modal-custom">
+        <div class="modal-content modal-custom scroll-for-mobile">
             <!-- form start -->
             <?php echo form_open('cart_controller/save_rate_last_order'); ?>
             <div class="modal-header">
