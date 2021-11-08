@@ -2124,6 +2124,21 @@ class Home_controller extends Home_Core_Controller
         }
     }
 
+    // site map page
+    public function siteMap()
+    {
+        get_method();
+        $page = $this->page_model->get_page_by_default_name('sitemap', $this->selected_lang->id);
+        $data['title'] = $page->title;
+        $data['description'] = $page->description . " - " . $this->app_name;
+        $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        $data['page'] = $page;
+        $data["index_settings"] = get_index_settings();
+        $this->load->view('partials/_header', $data);
+        $this->load->view('sitemap', $data);
+        $this->load->view('partials/_footer');
+    }
+
 
 
     // about_us////
