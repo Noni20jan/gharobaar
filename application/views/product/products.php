@@ -14,6 +14,127 @@ foreach ($sellers as $seller) {
 //var_dump($unique_state_array);
 ?>
 <style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 90px;
+        height: 34px;
+        right: 1%;
+        float: right;
+    }
+
+    @media(max-width: 768px) {
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 90px;
+            height: 34px;
+            /* right: 72px;
+            top: 44px; */
+            right: 20%;
+            top: 54%;
+            float: right;
+
+
+        }
+    }
+
+    .cod {
+        position: absolute;
+        right: 32%;
+        top: 12%;
+        font-weight: 600;
+
+    }
+
+    @media(max-width: 768px) {
+
+        .cod {
+            position: absolute;
+            right: 59%;
+            top: 80%;
+            font-weight: 600;
+
+        }
+    }
+
+    .switch input {
+        display: none;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: blue;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked+.slider {
+        background-color: #2ab934;
+    }
+
+    input:focus+.slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked+.slider:before {
+        -webkit-transform: translateX(55px);
+        -ms-transform: translateX(55px);
+        transform: translateX(55px);
+    }
+
+    /*------ ADDED CSS ---------*/
+    .on {
+        display: none;
+    }
+
+    .on,
+    .off {
+        color: white;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        font-size: 10px;
+        font-family: Verdana, sans-serif;
+    }
+
+    input:checked+.slider .on {
+        display: block;
+    }
+
+    input:checked+.slider .off {
+        display: none;
+    }
+
+    /*--------- END --------*/
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
     @media (max-width: 768px) {
         .svg-fotter {
             position: absolute;
@@ -35,32 +156,8 @@ foreach ($sellers as $seller) {
         }
     }
 
-    .cash-on-delivery-card {
-        position: absolute;
-        /* left: -44px; */
-        right: 305px;
-        top: 6px;
-    }
 
-    @media only screen and (max-width: 900px) {
-        .cash-on-delivery-card {
-            position: relative;
-            left: 0px;
-            /* right: -11
-px
-; */
-            top: 42px;
-        }
 
-    }
-
-    .cash_on_delivery {
-        padding: .2rem .9rem !important;
-        border-radius: 20px !important;
-        line-height: 1.5 !important;
-        color: #fff !important;
-        background-color: green;
-    }
 
     .active_ .active_non-veg {
         padding: .2rem .9rem !important;
@@ -255,8 +352,6 @@ px
                         <h1 class="page-title product-list-title"><?php echo trans("products") ?></h1>
                     <?php endif; ?>
                 <?php endif; ?>
-
-
                 <div class="product-sort-by">
                     <span class="span-sort-by"><?php echo trans("sort_by"); ?></span>
                     <?php $filter_sort = str_slug($this->input->get('sort', true)); ?>
@@ -271,23 +366,23 @@ px
                         </select>
                     </div>
                 </div>
+                <?php if (!empty($parent_categories)) : ?>
+                    <?php if (isset($category)) : ?>
+                        <div class="veg-non-veg">
+                            <?php if ($parent_categories[0]->id == 2) : ?>
 
-                <?php if (isset($category)) : ?>
-                    <div class="veg-non-veg">
-                        <?php if ($category->id == 2) : ?>
+                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only </a>
 
 
-                            <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only </a>
+                            <?php elseif (isset($parent_category)) : ?>
+                                <?php if ($parent_category->id == 2) : ?>
+                                    <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only
+                                    </a>
 
-
-                        <?php elseif (isset($parent_category)) : ?>
-                            <?php if ($parent_category->id == 2) : ?>
-                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only
-                                </a>
-
+                                <?php endif; ?>
                             <?php endif; ?>
-                        <?php endif; ?>
-                    </div>
+                        </div>
+                    <?php endif; ?>
                 <?php endif; ?>
 
                 <?php if (isset($user_categories)) : ?>
@@ -311,28 +406,62 @@ px
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
-                <?php if (isset($category)) : ?>
-                    <?php if (isset($parent_category)) : ?>
 
-                        <div class="cash-on-delivery-card">
-                            <?php if (!empty($parent_categories)) : ?>
-                                <?php if ($parent_categories[0]->id != 2) : ?>
+                <?php if (!empty($parent_categories) && $parent_categories[0]->id != 2) : ?>
+                    <label class="switch">
 
-                                    <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'cash_on_delivery', 'Y') ? "active_cod" : "non-active_cod"; ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>">Cash on Delivery</a>
+                        <input type="checkbox" id="togBtn" <?= is_custom_field_option_selected($query_string_object_array, "cash_on_delivery", "Y") ? "checked" : ""; ?>>
 
+                        <div class="slider round">
+                            <!--ADDED HTML -->
 
+                            <span class="on">YES</span>
 
-                                <?php endif; ?>
-
+                            <span class="off">NO</span>
+                            <!--END-->
                         </div>
+                    </label>
+                    <label class="cod">Cash On Delivery</label>
+                <?php elseif (!empty($user_categories)) : ?>
+                    <?php if ($cat_id != 2) : ?>
+                        <label class="switch">
+
+                            <input type="checkbox" id="togBtn" <?= is_custom_field_option_selected($query_string_object_array, "cash_on_delivery", "Y") ? "checked" : ""; ?>>
+
+                            <div class="slider round">
+                                <!--ADDED HTML -->
+
+                                <span class="on">YES</span>
+
+                                <span class="off">NO</span>
+                                <!--END-->
+                            </div>
+                        </label>
+                        <label class="cod">Cash On Delivery</label>
                     <?php endif; ?>
+
+                <?php elseif (empty($parent_categories)) : ?>
+                    <label class="switch">
+
+                        <input type="checkbox" id="togBtn" <?= is_custom_field_option_selected($query_string_object_array, "cash_on_delivery", "Y") ? "checked" : ""; ?>>
+
+                        <div class="slider round">
+                            <!--ADDED HTML -->
+
+                            <span class="on">YES</span>
+
+                            <span class="off">NO</span>
+                            <!--END-->
+                        </div>
+                    </label>
+                    <label class="cod">Cash On Delivery</label>
+
                 <?php endif; ?>
 
-            <?php endif; ?>
 
-            <button class=" btn btn-filter-products-mobile" type="button" data-toggle="collapse" data-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
-                <i class="icon-filter"></i>&nbsp;<?php echo trans("filter_products"); ?>
-            </button>
+                <button class=" btn btn-filter-products-mobile" type="button" data-toggle="collapse" data-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
+                    <i class="icon-filter"></i>&nbsp;<?php echo trans("filter_products"); ?>
+                </button>
 
             </div>
         </div>
@@ -573,10 +702,10 @@ px
 
                             <?php if (!empty($parent_categories)) : ?>
                                 <?php if ($parent_categories[0]->id != 2) : ?>
-                                    <div>
+                                    <!-- <div>
                                         <input type="checkbox" class="check-box-size" id="availability" value="availability" name="filter_checkbox[]" onclick="show_availability(this)">
                                         <label for="availability" style="margin: 10px;"><b>Availability</b></label>
-                                    </div>
+                                    </div> -->
                                     <div class="filter-item" id="availability_filter" style="display: none">
 
                                         <div class="filter-list-container">
@@ -589,17 +718,17 @@ px
                                         </div>
                                     </a>
                                 </li> -->
-                                                <li>
+                                                <!-- <li>
                                                     <a href="<?= current_url() . generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>">
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'cash_on_delivery', 'Y') ? 'checked' : ''; ?>>
                                                             <label class="custom-control-label">Cash on Delivery</label>
                                                         </div>
                                                     </a>
-                                                </li>
+                                                </li> -->
 
 
-                                            </ul>
+                                                <!-- </ul> -->
                                         </div>
                                     </div>
                                 <?php endif; ?>
@@ -858,62 +987,6 @@ px
                                     </div>
                             <?php endforeach;
                             endif; ?>
-                            <!-- <<<<<<< Updated upstream=======>>>>>>> Stashed changes -->
-
-
-
-
-                            <!-- <<<<<<< Updated upstream=======>>>>>>> Stashed changes -->
-                            <!-- <div class="filter-item">
-                        <h4 class="title">Size</h4>
-                        <div class="filter-list-container">
-                            <ul class="filter-list">
-                                <li>
-                                    <a href="<?= current_url() . generate_filter_url($query_string_array, 'basic_size', 'Small'); ?>">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'basic_size', 'Small') ? 'checked' : ''; ?>>
-                                            <label class="custom-control-label">
-                                                Small
-                                            </label>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="<?= current_url() . generate_filter_url($query_string_array, 'basic_size', 'Medium'); ?>">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'basic_size', 'Medium') ? 'checked' : ''; ?>>
-                                            <label class="custom-control-label">
-                                                Medium
-                                            </label>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="<?= current_url() . generate_filter_url($query_string_array, 'basic_size', 'Large'); ?>">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'basic_size', 'Large') ? 'checked' : ''; ?>>
-                                            <label class="custom-control-label">
-                                                Large
-                                            </label>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="<?= current_url() . generate_filter_url($query_string_array, 'basic_size', 'Others'); ?>">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'basic_size', 'Others') ? 'checked' : ''; ?>>
-                                            <label class="custom-control-label">
-                                                Others
-                                            </label>
-                                        </div>
-                                    </a>
-                                </li>
-
-
-                            </ul>
-                        </div>
-                    </div> -->
-
 
 
 
@@ -1793,4 +1866,29 @@ px
             });
         }
     })();
+</script>
+<script>
+    $("#togBtn").on('change', function() {
+        var x = "<?php echo current_url(); ?>"
+        var y = "<?php echo generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>";
+        z = x + y;
+        console.log($(this).val());
+        if ($(this).is(':checked')) {
+            $(this).attr('value', 'true');
+            console.log($(this).val());
+
+            window.location.href = z;
+
+
+
+
+
+
+        } else {
+            $(this).attr('value', 'false');
+            console.log($(this).val());
+            window.location.href = x;
+        }
+
+    });
 </script>

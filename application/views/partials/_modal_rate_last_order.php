@@ -1,7 +1,30 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<style>
+    .product-imgs-modal {
+        height: 118px;
+    }
+
+    .form-textarea {
+        min-height: 60px;
+        border-radius: 15px;
+        padding: 10px 12px;
+        resize: vertical;
+    }
+
+    @media(max-width:768px) {
+        .product-imgs-modal {
+            height: 84px;
+        }
+
+        .scroll-for-mobile {
+            overflow-y: scroll !important;
+            height: 70vh;
+        }
+    }
+</style>
 <div class="modal fade" id="rateProductModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content modal-custom">
+        <div class="modal-content modal-custom scroll-for-mobile">
             <!-- form start -->
             <?php echo form_open('cart_controller/save_rate_last_order'); ?>
             <div class="modal-header">
@@ -22,7 +45,7 @@
                             <div class="row-custom">
                                 <div class="row">
                                     <div class="col-6">
-                                        <img style="height:118px " src="<?php echo get_product_image($get_last_order->product_id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
+                                        <img class="product-imgs-modal" src="<?php echo get_product_image($get_last_order->product_id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
                                     </div>
                                     <div class="col-6">
                                         <?php echo $get_last_order->product_title ?>
@@ -36,7 +59,6 @@
                                         <label class="label-star" data-star="3" for="star3"><i class="icon-star"></i></label>
                                         <label class="label-star" data-star="2" for="star2"><i class="icon-star"></i></label>
                                         <label class="label-star" data-star="1" for="star1"><i class="icon-star"></i></label>
-
                                     </div>
                                 </div>
                             </div>
@@ -44,7 +66,6 @@
                             <div class="form-group">
                                 <textarea name="review[]" id="user_review" class="form-control form-input form-textarea" placeholder="<?php echo trans("write_review"); ?>"></textarea>
                                 <input type="hidden" name="rating[]" id="user_rating_<?php echo $i ?>" value="5">
-
                                 <input type="hidden" name="product_id[]" value="<?php echo $get_last_order->product_id ?>" id="review_product_id">
                             </div>
                             <script>

@@ -225,6 +225,7 @@ foreach ($languages as $language) {
         $route[$key . getr('blog', $rts) . '/(:any)/(:any)']['GET'] = 'home_controller/post/$1/$2';
         /*contact*/
         $route[$key . getr('contact', $rts)]['GET'] = 'home_controller/contact';
+        $route[$key . getr('sitemap', $rts)]['GET'] = 'home_controller/siteMap';
         /*messages*/
         $route[$key . getr('messages', $rts)]['GET'] = 'message_controller/messages';
         //$route[$key . getr('barter_requests', $rts)]['GET'] = 'message_controller/barter_requests';

@@ -203,7 +203,7 @@
             case 6: ?>
                 <div class="row shop-by-center">
                     <div class="col-2 two-for-mobile">
-                        <a href="<?php echo generate_url("kids-corner/accessories"); ?>">
+                        <a href="<?php echo generate_url("kids-corner/accessories-39"); ?>">
                             <img class="shop_by_seller_imgs" src="<?php echo base_url(); ?>assets/img/kids_corner_imgs/kids_corner_1.png">
                             <p class="category_page_title">Accessories</p>
                         </a>
