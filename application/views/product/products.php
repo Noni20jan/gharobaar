@@ -69,7 +69,7 @@ foreach ($sellers as $seller) {
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #ca2222;
+        background-color: blue;
         -webkit-transition: .4s;
         transition: .4s;
     }
@@ -423,6 +423,22 @@ foreach ($sellers as $seller) {
                     </label>
                     <label class="cod">Cash On Delivery</label>
                 <?php elseif (!empty($user_categories)) : ?>
+                    <?php if ($cat_id != 2) : ?>
+                        <label class="switch">
+
+                            <input type="checkbox" id="togBtn" <?= is_custom_field_option_selected($query_string_object_array, "cash_on_delivery", "Y") ? "checked" : ""; ?>>
+
+                            <div class="slider round">
+                                <!--ADDED HTML -->
+
+                                <span class="on">YES</span>
+
+                                <span class="off">NO</span>
+                                <!--END-->
+                            </div>
+                        </label>
+                        <label class="cod">Cash On Delivery</label>
+                    <?php endif; ?>
 
                 <?php elseif (empty($parent_categories)) : ?>
                     <label class="switch">
@@ -686,10 +702,10 @@ foreach ($sellers as $seller) {
 
                             <?php if (!empty($parent_categories)) : ?>
                                 <?php if ($parent_categories[0]->id != 2) : ?>
-                                    <div>
+                                    <!-- <div>
                                         <input type="checkbox" class="check-box-size" id="availability" value="availability" name="filter_checkbox[]" onclick="show_availability(this)">
                                         <label for="availability" style="margin: 10px;"><b>Availability</b></label>
-                                    </div>
+                                    </div> -->
                                     <div class="filter-item" id="availability_filter" style="display: none">
 
                                         <div class="filter-list-container">
@@ -702,17 +718,17 @@ foreach ($sellers as $seller) {
                                         </div>
                                     </a>
                                 </li> -->
-                                                <li>
+                                                <!-- <li>
                                                     <a href="<?= current_url() . generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>">
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'cash_on_delivery', 'Y') ? 'checked' : ''; ?>>
                                                             <label class="custom-control-label">Cash on Delivery</label>
                                                         </div>
                                                     </a>
-                                                </li>
+                                                </li> -->
 
 
-                                            </ul>
+                                                <!-- </ul> -->
                                         </div>
                                     </div>
                                 <?php endif; ?>
