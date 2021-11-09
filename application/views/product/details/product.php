@@ -634,7 +634,7 @@
             </div>
 
             <?php if ($this->general_settings->view_product_rating == 1) : ?>
-                <div id="tab_reviews_content" role="tabpanel">
+                <div id="tab_reviews_content" style="margin-left: 25px;" role="tabpanel">
                     <?php $this->load->view('product/details/_reviews'); ?>
                 </div>
             <?php endif; ?>
