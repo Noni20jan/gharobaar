@@ -106,13 +106,16 @@ class Dashboard_controller extends Home_Core_Controller
         // }
         // die();
         $ok['ok1'] = $this->dashboard_model->get_growth_over_last_week($this->auth_user->id);
+
         $data['test1'] = [(int)$data['no_of_transactions_last_week'][57 - $i]->order_id, (int)$data['no_of_transactions_last_week'][56 - $i]->order_id, (int)$data['no_of_transactions_last_week'][55 - $i]->order_id, (int)$data['no_of_transactions_last_week'][54 - $i]->order_id, (int)$data['no_of_transactions_last_week'][53 - $i]->order_id, (int)$data['no_of_transactions_last_week'][52 - $i]->order_id, (int)$data['no_of_transactions_last_week'][51 - $i]->order_id];
+
         $data['test2'] = [500, 700, 650, 800, 950, 200, 400];
         // $data['test3'] = [500, 700, 650, 800, 950, 700, 400];
         // $data['test4'] = [500, 700, 650, 800, 950, 500, 400];
-
-        $json = '[{"name":"WEEK 1","y":' . $ok['ok1'][0]->growth_rate . ',"drilldown":"WEEK 1"},{"name":"WEEK 2","y":' . $ok['ok1'][1]->growth_rate . ',"drilldown":"WEEK 2"}]';
-        $data['test5'] = json_decode($json);
+        if (!empty($ok['ok1'])) {
+            $json = '[{"name":"WEEK 1","y":' . $ok['ok1'][0]->growth_rate . ',"drilldown":"WEEK 1"},{"name":"WEEK 2","y":' . $ok['ok1'][1]->growth_rate . ',"drilldown":"WEEK 2"}]';
+            $data['test5'] = json_decode($json);
+        }
 
         $json = '[["Product 1",0.1],["Product 2",100.3],["Product 3",53.02],["Product 4",1.4],]';
         $data['dd1'] = json_decode($json);
@@ -120,9 +123,10 @@ class Dashboard_controller extends Home_Core_Controller
         // get growth over last week transaction
 
         $get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'] = $this->dashboard_model->get_growth_over_last_week_transaction($this->auth_user->id);
-        $json = '[{"name":"WEEK 1","y":' . $get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'][0]->growth_rate . ',"drilldown":"WEEK 1"},{"name":"WEEK 2","y":' . $get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'][1]->growth_rate . ',"drilldown":"WEEK 2"}]';
-        $data['test6'] = json_decode($json);
-
+        if (!empty($get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'])) {
+            $json = '[{"name":"WEEK 1","y":' . $get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'][0]->growth_rate . ',"drilldown":"WEEK 1"},{"name":"WEEK 2","y":' . $get_growth_over_last_week_transaction['get_growth_over_last_week_transaction1'][1]->growth_rate . ',"drilldown":"WEEK 2"}]';
+            $data['test6'] = json_decode($json);
+        }
         //complete//  
 
         // new market delivered to the last one week
@@ -138,17 +142,12 @@ class Dashboard_controller extends Home_Core_Controller
         // new market covered till now
 
         $new_market_covered_till_now['new_market_covered_till_now'] = $this->dashboard_model->new_market_covered_till_now($this->auth_user->id);
-        $json = '[{"name":"WEEK 1","y":' . $new_market_covered_till_now['new_market_covered_till_now'][0]->count_shipping_area . ',"drilldown":"WEEK 1"},{"name":"WEEK 2","y":' . $new_market_covered_till_now['new_market_covered_till_now'][1]->count_shipping_area . ',"drilldown":"WEEK 2"},{"name":"WEEK 3","y":' . $new_market_covered_till_now['new_market_covered_till_now'][2]->count_shipping_area . ',"drilldown":"WEEK 3"},{"name":"WEEK 4","y":' . $new_market_covered_till_now['new_market_covered_till_now'][3]->count_shipping_area . ',"drilldown":"WEEK 4"},{"name":"WEEK 5","y":' . $new_market_covered_till_now['new_market_covered_till_now'][4]->count_shipping_area . ',"drilldown":"WEEK 5"}]';
-        // $data['test3'] = [500, 700, 650, 800, 950, 700, 400];
-        $data['test3'] = json_decode($json);
-        // complete
-
-
-
-
-
-
-
+        if (!empty($new_market_covered_till_now['new_market_covered_till_now'])) {
+            $json = '[{"name":"WEEK 1","y":' . $new_market_covered_till_now['new_market_covered_till_now'][0]->count_shipping_area . ',"drilldown":"WEEK 1"},{"name":"WEEK 2","y":' . $new_market_covered_till_now['new_market_covered_till_now'][1]->count_shipping_area . ',"drilldown":"WEEK 2"},{"name":"WEEK 3","y":' . $new_market_covered_till_now['new_market_covered_till_now'][2]->count_shipping_area . ',"drilldown":"WEEK 3"},{"name":"WEEK 4","y":' . $new_market_covered_till_now['new_market_covered_till_now'][3]->count_shipping_area . ',"drilldown":"WEEK 4"},{"name":"WEEK 5","y":' . $new_market_covered_till_now['new_market_covered_till_now'][4]->count_shipping_area . ',"drilldown":"WEEK 5"}]';
+            // $data['test3'] = [500, 700, 650, 800, 950, 700, 400];
+            $data['test3'] = json_decode($json);
+            // complete
+        }
 
 
         $json = '[["Product 1",100.1],["Product 2",10.3],["Product 3",50.02],["Product 4",70.4]]';
@@ -177,7 +176,9 @@ class Dashboard_controller extends Home_Core_Controller
             $this->load->view('dashboard/includes/_footer');
         } else {
             $this->load->view('dashboard/includes/_header_buyer', $data);
+            // $this->load->view('partials/_header', $data);
             $this->load->view('profile/buyer_profile', $data);
+            // $this->load->view('partials/_footer');/
             $this->load->view('dashboard/includes/_footer');
         }
     }
@@ -194,7 +195,9 @@ class Dashboard_controller extends Home_Core_Controller
         $data['main_settings'] = get_main_settings();
         $data['sales_sum'] = $this->order_admin_model->get_sales_sum_by_month($this->auth_user->id);
         $this->load->view('dashboard/includes/_header_buyer', $data);
+        // $this->load->view('partials/_header', $data);
         $this->load->view('profile/buyer_profile', $data);
+        // $this->load->view('partials/_footer');
         $this->load->view('dashboard/includes/_footer');
     }
 
