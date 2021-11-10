@@ -53,9 +53,9 @@ foreach ($sellers as $seller) {
 
         .cod {
             position: absolute;
-            right: 59%;
-            left: 2%;
-            top: 80%;
+            right: 56%;
+            left: 5%;
+            top: 81%;
             font-weight: 600;
 
         }
