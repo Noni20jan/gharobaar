@@ -20,13 +20,17 @@
         </tr>
     </thead>
     <tbody>
-        <?php $count = count($consumptions); ?>
-        <?php foreach ($consumptions as $consumption) : ?>
+        <?php $count = count($consumptions);
+        $sr_no = 0;
+        ?>
+        <?php foreach ($consumptions as $consumption) :
+            $sr_no++;
+        ?>
             <tr>
                 <td>
-                    <?php for ($i = 1; $i <= $count; $i++) {
-                        echo $i;
-                    } ?>
+                    <?php
+                    echo $sr_no;
+                    ?>
                 </td>
                 <td><?php echo $consumption->email; ?></td>
                 <td><?php echo $consumption->name; ?></td>
