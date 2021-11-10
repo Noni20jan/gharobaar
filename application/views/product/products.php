@@ -913,7 +913,7 @@ foreach ($sellers as $seller) {
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'available_for_return_or_exchange', 'both'); ?>">
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'available_for_return_or_exchange', 'none'); ?>">
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'available_for_return_or_exchange', 'none') ? 'checked' : ''; ?>>
                                                     <label class="custom-control-label">None</label>
