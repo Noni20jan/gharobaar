@@ -329,7 +329,7 @@
                                             <span class="input-group-btn for-height">
                                                 <button type="button" class="btn btn-default btn-spinner-minus" id="minus-btn" style=" padding: 6px 8px;" data-dir="dwn">-</button>
                                             </span>
-                                            <input type="text" class="form-control text-center" id="product_quantity" name="product_quantity" value="1" max="3" readonly="" style="background-color:white; height: calc(1.5em + 0.75rem + 0px);">
+                                            <input type="text" class="form-control text-center" id="product_quantity" name="product_quantity" value="1" readonly="" style="background-color:white; height: calc(1.5em + 0.75rem + 0px);">
 
                                             <span class="input-group-btn for-height">
                                                 <button type="button" class="btn btn-default btn-spinner-plus" id="plus-btn" style=" padding: 6px 8px;" data-dir="up">+</button>
@@ -350,7 +350,7 @@
                                         <span class="input-group-btn for-height">
                                             <button type="button" class="btn btn-default btn-spinner-minus" id="minus-btn" style=" padding: 6px 8px;" data-dir="dwn">-</button>
                                         </span>
-                                        <input type="text" class="form-control text-center" id="product_quantity" name="product_quantity" value="1" max="3" readonly="" style="background-color:white; height: calc(1.5em + 0.75rem + 0px);">
+                                        <input type="text" class="form-control text-center" id="product_quantity" name="product_quantity" value="1" readonly="" style="background-color:white; height: calc(1.5em + 0.75rem + 0px);">
 
                                         <span class="input-group-btn for-height">
                                             <button type="button" class="btn btn-default btn-spinner-plus" id="plus-btn" style=" padding: 6px 8px;" data-dir="up">+</button>

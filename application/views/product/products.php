@@ -40,9 +40,11 @@ foreach ($sellers as $seller) {
     }
 
     .cod {
-        position: absolute;
-        right: 32%;
-        top: 12%;
+        position: relative;
+        /* right: -33%; */
+        right: 2%;
+        top: 17%;
+        float: right;
         font-weight: 600;
 
     }
@@ -51,8 +53,9 @@ foreach ($sellers as $seller) {
 
         .cod {
             position: absolute;
-            right: 59%;
-            top: 80%;
+            right: 56%;
+            left: 5%;
+            top: 81%;
             font-weight: 600;
 
         }
@@ -875,6 +878,51 @@ foreach ($sellers as $seller) {
                                     </ul>
                                 </div>
                             </div>
+                            <div>
+                                <input type="checkbox" class="check-box-size" id="return_exchange" value="return_exchange" name="filter_checkbox[]" onclick="show_return_or_exchange(this)">
+                                <label for="return_exchange" style="margin: 10px;"><b>Returns & Exchange </b></label>
+                            </div>
+                            <div class="filter-item" id="return_exchange_filter" style="display: none">
+
+                                <div class="filter-list-container">
+                                    <ul class="filter-list">
+                                        <li>
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'available_for_return_or_exchange', 'return'); ?>">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'available_for_return_or_exchange', 'return') ? 'checked' : ''; ?>>
+                                                    <label class="custom-control-label">Returns</label>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'available_for_return_or_exchange', 'exchange'); ?>">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'available_for_return_or_exchange', 'exchange') ? 'checked' : ''; ?>>
+                                                    <label class="custom-control-label">Exchange</label>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'available_for_return_or_exchange', 'both'); ?>">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'available_for_return_or_exchange', 'both') ? 'checked' : ''; ?>>
+                                                    <label class="custom-control-label">Both</label>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'available_for_return_or_exchange', 'none'); ?>">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'available_for_return_or_exchange', 'none') ? 'checked' : ''; ?>>
+                                                    <label class="custom-control-label">None</label>
+                                                </div>
+                                            </a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </div>
 
                             <div>
                                 <input type="checkbox" class="check-box-size" id="seller_type" value="seller_type" name="filter_checkbox[]" onclick="show_seller_type(this)">
@@ -1506,6 +1554,60 @@ foreach ($sellers as $seller) {
                                             <span><?= str_replace('_', ' ', html_escape($filter->value)); ?></span>
                                         </div>
                                     </div>
+                                <?php elseif ($filter->key == "available_for_return_or_exchange") : ?>
+
+                                    <?php if ($filter->value == "return") : ?>
+
+                                        <div class="filter-reset-tag">
+                                            <div class="left">
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                            </div>
+                                            <div class="right">
+                                                <span class="reset-tag-title">Returns & Exchange</span>
+                                                <span><?= html_escape($filter->value); ?></span>
+                                            </div>
+                                        </div>
+                                    <?php elseif ($filter->value == "exchange") : ?>
+                                        <div class="filter-reset-tag">
+                                            <div class="left">
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                            </div>
+                                            <div class="right">
+                                                <span class="reset-tag-title">Returns & Exchange</span>
+                                                <span><?= html_escape($filter->value); ?></span>
+                                            </div>
+                                        </div>
+                                    <?php elseif ($filter->value == "both") : ?>
+                                        <div class="filter-reset-tag">
+                                            <div class="left">
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                            </div>
+                                            <div class="right">
+                                                <span class="reset-tag-title">Returns & Exchange</span>
+                                                <span><?= html_escape($filter->value); ?></span>
+                                            </div>
+                                        </div>
+                                    <?php elseif ($filter->value == "none") : ?>
+                                        <div class="filter-reset-tag">
+                                            <div class="left">
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                            </div>
+                                            <div class="right">
+                                                <span class="reset-tag-title">Returns & Exchange</span>
+                                                <span><?= html_escape($filter->value); ?></span>
+                                            </div>
+                                        </div>
+                                    <?php else : ?>
+                                        <div class="filter-reset-tag">
+                                            <div class="left">
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                            </div>
+                                            <div class="right">
+                                                <span class="reset-tag-title">Returns & Exchange</span>
+                                                <span><?= html_escape($filter->value); ?></span>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
                                 <?php elseif ($filter->key == "blouse_details") : ?>
                                     <div class="filter-reset-tag">
                                         <div class="left">
@@ -1616,7 +1718,6 @@ foreach ($sellers as $seller) {
                         <a href="<?= current_url(); ?>" class="link-reset-filters"><?= trans("reset_filters"); ?></a>
                     <?php endif; ?>
                 </div>
-
                 <div class="product-list-content">
                     <div class="row row-product">
                         <h6><b><?php echo ($product_count); ?></b>&nbsp;products found
@@ -1697,6 +1798,11 @@ foreach ($sellers as $seller) {
         } else if ($('#rating').is(":not(:checked)")) {
             document.getElementById("rating_filter").style.display = "none";
         }
+        if ($('#return_exchange').is(":checked")) {
+            document.getElementById("return_exchange_filter").style.display = "block";
+        } else if ($('#return_exchange').is(":not(:checked)")) {
+            document.getElementById("return_exchange_filter").style.display = "none";
+        }
 
         if ($('#seller_type').is(":checked")) {
             document.getElementById("seller_type_filter").style.display = "block";
@@ -1725,6 +1831,11 @@ foreach ($sellers as $seller) {
             document.getElementById("origin_of_product_filter").style.display = "none";
         }
 
+        if ($('#gender').is(":checked")) {
+            document.getElementById("gender_filter").style.display = "block";
+        } else if ($('#gender').is(":not(:checked)")) {
+            document.getElementById("gender_filter").style.display = "none";
+        }
         if ($('#gender').is(":checked")) {
             document.getElementById("gender_filter").style.display = "block";
         } else if ($('#gender').is(":not(:checked)")) {
@@ -1788,6 +1899,11 @@ foreach ($sellers as $seller) {
 
     function show_blouse_detail(check) {
         var dvPassport = document.getElementById("blouse_detail_filter");
+        dvPassport.style.display = check.checked ? "block" : "none";
+    }
+
+    function show_return_or_exchange(check) {
+        var dvPassport = document.getElementById("return_exchange_filter");
         dvPassport.style.display = check.checked ? "block" : "none";
     }
 

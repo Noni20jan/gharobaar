@@ -245,6 +245,16 @@ class Auth_model extends CI_Model
 
         $this->session->set_userdata($user_data);
         $this->save_user_login_session_data();
+
+        $this->cart_model->add_session_to_cart_in_db($user->id);
+
+        $user_cart = $this->cart_model->get_user_cart_from_db($user->id);
+
+        if (!empty($user_cart)) {
+            $user_cart_id = $user_cart->id;
+            $cart_details = $this->cart_model->get_cart_details_by_id($user_cart_id);
+            $this->cart_model->add_cart_to_session_from_db($cart_details, true);
+        }
     }
 
     //login with facebook

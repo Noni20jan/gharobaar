@@ -264,8 +264,11 @@ endif;
         <?php endif; ?>
         <div class="row">
             <div class="pull-right">
-                <button class="btn btn-md btn-block btn-info btn-table-delete" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
+                <?php $shiprocket_order_details = get_shiprocket_order_details($order->id, $item->product_id); ?>
 
+                <?php if (empty($shiprocket_order_details)) : ?>
+                    <button class="btn btn-md btn-block btn-info btn-table-delete" id="schedule_sipment" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
+                <?php endif; ?>
             </div>
         </div>
         <div class="row">
@@ -1470,7 +1473,7 @@ endforeach; ?>
                 }
             }
         });
-
+        // $('#schedule_sipment').prop('disabled', true);
 
     }
 </script>
