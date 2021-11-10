@@ -134,13 +134,22 @@ class Cart_controller extends Home_Core_Controller
         // var_dump($action);die();
         if ($action == "add_to_cart") {
             $product_id = $this->input->post('product_id', true);
-
+            $quantity = $this->input->post('product_quantity', true);
+            $data['product_id'] =  $this->input->post('product_id', true);
+            $data['quantity'] = $this->input->post('product_quantity', true);
             $product = $this->product_model->get_active_product($product_id);
+            $data['price'] = $product->price_exclude_gst;
+            $data['title'] = $product->slug;
+            $data['seller_id'] = $product->user_id;
+            $data['created_by'] = $this->input->ip_address();;
             if (!empty($product)) {
                 if ($product->status != 1) {
                     $this->session->set_flashdata('product_details_error', trans("msg_error_cart_unapproved_products"));
                 } else {
                     $this->cart_model->add_to_cart($product);
+                    if (!$this->auth_user) {
+                        $this->product_model->add_to_cart_without_auth($data);
+                    }
                 }
             }
 
@@ -1836,7 +1845,7 @@ class Cart_controller extends Home_Core_Controller
         $transfer_url = ($this->general_settings->payout_batch_transfer_url) . "payout/v1/requestBatchTransfer";
         // $length=count($data_pay);
         $timestamp = date('Y-m-d H:i:s');
-        $transfer_id = random_int(10000, 99999);
+        // $transfer_id = random_int(10000, 99999);
         $six_digit_random_number = random_int(100000, 999999);
 
         $data_pay_array = json_decode($data_pay);
@@ -1844,7 +1853,7 @@ class Cart_controller extends Home_Core_Controller
         for ($i = 0; $i < $length; $i++) {
             $obj = new stdClass();
 
-
+            $transfer_id = random_int(10000, 99999);
             if ((($data_pay_array[$i]->seller_pay) / 100) < 1000) {
                 $payout_charge_with_gst = 2.50 + (0.18 * 2.50);
                 $obj->amount = (($data_pay_array[$i]->seller_pay) / 100) - $payout_charge_with_gst;
@@ -1856,12 +1865,13 @@ class Cart_controller extends Home_Core_Controller
                 $obj->amount = (($data_pay_array[$i]->seller_pay) / 100) - $payout_charge_with_gst;
             }
             // $obj->amount = ($data_pay_array[$i]->seller_pay) / 100;
-
+            $acc_holder_name = $data_pay_array[$i]->acc_name;
+            $acc_name = preg_replace('/[^A-Za-z0-9\ ]/', '', $acc_holder_name);
             // $obj->transferId = $data_pay_array[$i]->seller_id . "-" . $timestamp;
             $obj->transferId = $transfer_id;
             $obj->remarks = "Transfer with Id" . $obj->transferId;
 
-            $obj->name = $data_pay_array[$i]->acc_name;
+            $obj->name = $acc_name;
             $obj->email = $data_pay_array[$i]->email;
             $obj->phone = $data_pay_array[$i]->phone;
             $obj->bankAccount = $data_pay_array[$i]->acc_no;

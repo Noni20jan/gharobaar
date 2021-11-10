@@ -1140,7 +1140,7 @@
         </div>
     </div>
 </div>
-
+<script src="<?php echo base_url(); ?>assets/js/script-1.7.min.js"></script>
 <?php $this->load->view('partials/_modal_rate_product'); ?>
 
 <script>

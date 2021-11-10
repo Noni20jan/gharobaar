@@ -21,17 +21,17 @@ class Review_model extends CI_Model
         if (!empty($data['product_id']) && !empty($data['user_id']) && !empty($data['rating'])) {
             $this->db->insert('reviews', $data);
             //update product rating
-            $this->update_product_rating($product_id);
+            // $this->update_product_rating($product_id);
         }
     }
 
     public function add_review1($rating, $product_id, $review_text)
     {
-        $seller_id=get_seller_id_by_product_id($product_id);
+        $seller_id = get_seller_id_by_product_id($product_id);
         $data = array(
             'product_id' => $product_id,
             'user_id' => $this->auth_user->id,
-            'supplier_id'=>$seller_id,
+            'supplier_id' => $seller_id,
             'rating' => $rating,
             'review' => $review_text,
             'ip_address' => 0,
@@ -44,7 +44,7 @@ class Review_model extends CI_Model
         if (!empty($data['product_id']) && !empty($data['user_id']) && !empty($data['rating'])) {
             $this->db->insert('reviews', $data);
             //update product rating
-            $this->update_product_rating($product_id);
+            // $this->update_product_rating($product_id);
         }
         unset($data);
     }
@@ -67,7 +67,7 @@ class Review_model extends CI_Model
             $this->db->where('user_id', $this->auth_user->id);
             $this->db->update('reviews', $data);
             //update product rating
-            $this->update_product_rating($product_id);
+            // $this->update_product_rating($product_id);
         }
     }
     public function update_review1($review_id, $rating, $product_id, $review_text)
@@ -88,7 +88,7 @@ class Review_model extends CI_Model
             $this->db->update('reviews', $data);
             //update product rating
             unset($data);
-            $this->update_product_rating($product_id);
+            // $this->update_product_rating($product_id);
         }
     }
 
@@ -258,7 +258,7 @@ class Review_model extends CI_Model
         $this->db->where('id', $id);
         if ($this->db->delete('reviews')) {
             //update product rating
-            $this->update_product_rating($product->id);
+            // $this->update_product_rating($product->id);
             return true;
         }
         return false;

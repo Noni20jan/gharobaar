@@ -20,17 +20,13 @@
                         <!-- <div class="row"> -->
                         <div class="col-md-4">
                             <li class="media">
-                                <a href="<?php echo generate_profile_url($review->user_slug); ?>">
-                                    <img src="<?php echo get_user_avatar_by_id($review->user_id); ?>" alt="<?php echo get_shop_name_by_user_id($review->user_id); ?>">
-                                </a>
+                                <img src="<?php echo get_user_avatar_by_id($review->user_id); ?>" alt="<?php echo get_shop_name_by_user_id($review->user_id); ?>">
                                 <div class="media-body">
                                     <div class="row-custom">
                                         <?php $this->load->view('partials/_review_stars', ['review' => $review->rating]); ?>
                                     </div>
                                     <div class="row-custom">
-                                        <a href="<?php echo generate_profile_url($review->user_slug); ?>">
-                                            <h5 class="username"><?php echo get_shop_name_by_user_id($review->user_id); ?></h5>
-                                        </a>
+                                        <h5 class="username"><?php echo get_first_last_name_by_user_id($review->user_id); ?></h5>
                                     </div>
                                     <div class="row-custom">
                                         <div class="review">
