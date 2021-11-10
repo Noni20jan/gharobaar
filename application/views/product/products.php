@@ -879,10 +879,8 @@ foreach ($sellers as $seller) {
                                 </div>
                             </div>
                             <div>
-                                <div>
-                                    <input type="checkbox" class="check-box-size" id="rating" value="rating" name="filter_checkbox[]" onclick="show_return_or_exchange(this)">
-                                    <label for="rating" style="margin: 10px;"><b>Returns & Exchange </b></label>
-                                </div>
+                                <input type="checkbox" class="check-box-size" id="return_exchange" value="return_exchange" name="filter_checkbox[]" onclick="show_return_or_exchange(this)">
+                                <label for="return_exchange" style="margin: 10px;"><b>Returns & Exchange </b></label>
                             </div>
                             <div class="filter-item" id="return_exchange_filter" style="display: none">
 
@@ -1800,6 +1798,11 @@ foreach ($sellers as $seller) {
         } else if ($('#rating').is(":not(:checked)")) {
             document.getElementById("rating_filter").style.display = "none";
         }
+        if ($('#return_exchange').is(":checked")) {
+            document.getElementById("return_exchange_filter").style.display = "block";
+        } else if ($('#return_exchange').is(":not(:checked)")) {
+            document.getElementById("return_exchange_filter").style.display = "none";
+        }
 
         if ($('#seller_type').is(":checked")) {
             document.getElementById("seller_type_filter").style.display = "block";
@@ -1828,6 +1831,11 @@ foreach ($sellers as $seller) {
             document.getElementById("origin_of_product_filter").style.display = "none";
         }
 
+        if ($('#gender').is(":checked")) {
+            document.getElementById("gender_filter").style.display = "block";
+        } else if ($('#gender').is(":not(:checked)")) {
+            document.getElementById("gender_filter").style.display = "none";
+        }
         if ($('#gender').is(":checked")) {
             document.getElementById("gender_filter").style.display = "block";
         } else if ($('#gender').is(":not(:checked)")) {
