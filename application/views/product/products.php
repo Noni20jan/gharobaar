@@ -879,7 +879,55 @@ foreach ($sellers as $seller) {
                                     </ul>
                                 </div>
                             </div>
-                            <?php if ($parent_categories[0]->id != 2) : ?>
+                            <?php if (empty($parent_categories)) : ?>
+                                <div>
+                                    <input type="checkbox" class="check-box-size" id="return_exchange" value="return_exchange" name="filter_checkbox[]" onclick="show_return_or_exchange(this)">
+                                    <label for="return_exchange" style="margin: 10px;"><b>Returns & Exchange </b></label>
+                                </div>
+
+                                <div class="filter-item" id="return_exchange_filter" style="display: none">
+
+                                    <div class="filter-list-container">
+                                        <ul class="filter-list">
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'available_for_return_or_exchange', 'return'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'available_for_return_or_exchange', 'return') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Returns</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'available_for_return_or_exchange', 'exchange'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'available_for_return_or_exchange', 'exchange') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Exchange</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'available_for_return_or_exchange', 'both'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'available_for_return_or_exchange', 'both') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Both</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'available_for_return_or_exchange', 'none'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'available_for_return_or_exchange', 'none') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">None</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (!empty($parent_categories) && $parent_categories[0]->id != 2) : ?>
                                 <div>
                                     <input type="checkbox" class="check-box-size" id="return_exchange" value="return_exchange" name="filter_checkbox[]" onclick="show_return_or_exchange(this)">
                                     <label for="return_exchange" style="margin: 10px;"><b>Returns & Exchange </b></label>
@@ -1277,6 +1325,7 @@ foreach ($sellers as $seller) {
                                         </div>
                                     <?php endif; ?>
                                 <?php endif; ?>
+
                                 <?php if ($parent_categories[0]->id == 2) : ?>
                                     <div>
 
