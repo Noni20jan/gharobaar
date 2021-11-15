@@ -2036,6 +2036,11 @@ class Product_model extends Core_Model
         return $this->db->get('products')->row();
     }
 
+    //add to cart withou auth
+    public function add_to_cart_without_auth($data)
+    {
+        return $this->db->insert('add_to_cart', $data);
+    }
     //get available product
     public function get_active_product($id)
     {

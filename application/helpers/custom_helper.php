@@ -410,6 +410,17 @@ if (!function_exists('get_shop_name_by_user_id')) {
     }
 }
 
+//get shop name by user id
+if (!function_exists('get_first_last_name_by_user_id')) {
+    function get_first_last_name_by_user_id($user_id)
+    {
+        $user = get_user($user_id);
+        if (!empty($user)) {
+            return html_escape($user->first_name . " " . $user->last_name);
+        }
+    }
+}
+
 //is multi-vendor active
 if (!function_exists('is_multi_vendor_active')) {
     function is_multi_vendor_active()

@@ -54,7 +54,7 @@
         background-color: #e4e4e4;
     }
 
-    
+
     @media (max-width: 700px) {
         #add_to_wishlist_1 {
             position: relative;
@@ -406,9 +406,18 @@
                                                                         <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'">
                                                                     </a>
                                                                 <?php else : ?>
-                                                                    <a href="<?php echo generate_product_url($product); ?>">
-                                                                        <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_variation_main_option_image_url($cart_item->variation_option, null); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'">
-                                                                    </a>
+                                                                    <?php $variation_image = get_variation_main_option_image_url($cart_item->variation_option, null); ?>
+                                                                    <?php if (empty($variation_image)) : ?>
+                                                                        <a href="<?php echo generate_product_url($product); ?>">
+                                                                            <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'">
+                                                                            <!-- <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_variation_main_option_image_url($cart_item->variation_option, null); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'"> -->
+                                                                        </a>
+                                                                    <?php else : ?>
+                                                                        <a href="<?php echo generate_product_url($product); ?>">
+                                                                            <!-- <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'"> -->
+                                                                            <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_variation_main_option_image_url($cart_item->variation_option, null); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'">
+                                                                        </a>
+                                                                    <?php endif; ?>
                                                                 <?php endif; ?>
                                                             </div>
                                                         </div>
@@ -487,7 +496,7 @@
                                                                         <a href="javascript:void(0)" id="add_to_wishlist" class="btn-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?> wishlist-all" data-product-id="<?php echo $product->id; ?>" data-reload="1" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><?php echo trans("add_to_wishlist"); ?></span></a>
                                                                     <?php endif; ?>
                                                                 <?php else : ?>
-                                                                    <a  id="add_to_wishlist_1" onclick="cart_wishlist()"  class="btn-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?> wishlist-all" data-product-id="<?php echo $product->id; ?>" );><?php echo trans("add_to_wishlist"); ?></span></a>
+                                                                    <a id="add_to_wishlist_1" onclick="cart_wishlist()" class="btn-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?> wishlist-all" data-product-id="<?php echo $product->id; ?>" );><?php echo trans("add_to_wishlist"); ?></span></a>
 
                                                                 <?php endif; ?>
 
@@ -661,7 +670,7 @@
                                                         <a href="#" class="btn btn-block" data-toggle="modal" data-target="#registerMobileModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
                                                     <?php elseif ($open_rating_modal && $this->general_settings->rate_previous_order) : ?>
                                                         <?php $this->load->view('partials/_modal_rate_last_order'); ?>
-                                                        <a href="#" data-backdrop="static" data-keyboard="false" class="btn btn-block" data-toggle="modal" data-target="#rateProductModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                        <a href="#" data-backdrop="static" data-keyboard="false" class="btn btn-block" data-toggle="modal" data-target="#rateProductModalorder"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
                                                         <?php else :
                                                         $is_made_to_order = false;
                                                         foreach ($cart_items as $cart_item) :
@@ -723,7 +732,7 @@
             <?php if ($this->auth_check) : ?>
                 <div class="checkout-steps summary-section add-to-wishlist-container" style="padding: 1%;"> <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>"><img src="<?php echo base_url(); ?>assets/img/bookmark-plus_2.svg" alt="bookmark plus icon" id="bookmark"><b> Add more products from Wishlist </b> </a></div>
             <?php else : ?>
-                <div  onclick="cart_wishlist()"class="checkout-steps summary-section add-to-wishlist-container" style="padding: 1%;"><img src="<?php echo base_url(); ?>assets/img/bookmark-plus_2.svg" alt="bookmark plus icon" id="bookmark_plus"><b> Add more products from Wishlist </b> </a></div>
+                <div onclick="cart_wishlist()" class="checkout-steps summary-section add-to-wishlist-container" style="padding: 1%;"><img src="<?php echo base_url(); ?>assets/img/bookmark-plus_2.svg" alt="bookmark plus icon" id="bookmark_plus"><b> Add more products from Wishlist </b> </a></div>
             <?php endif; ?>
             <b>
             </b>
@@ -1126,8 +1135,7 @@
 </script>
 
 <script>
-
-    function cart_wishlist(){
+    function cart_wishlist() {
         $('#loginModal').modal('show');
         // alert("ok");
     }

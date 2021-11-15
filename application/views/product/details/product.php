@@ -634,102 +634,101 @@
             </div>
 
             <?php if ($this->general_settings->view_product_rating == 1) : ?>
-                <div id="tab_reviews_content" style="margin-left: 25px;" role="tabpanel">
-                    <?php $this->load->view('product/details/_reviews'); ?>
-                </div>
-            <?php endif; ?>
-            <div class="col-12">
-                <div class="row-custom row-bn">
-                    <!--Include banner-->
-                    <?php $this->load->view("partials/_ad_spaces", ["ad_space" => "product", "class" => "m-b-30"]); ?>
-                </div>
-            </div>
-            <?php if (!empty($user_products) && $this->general_settings->multi_vendor_system == 1) : ?>
-                <div class="col-12 section section-related-products m-t-30">
-                    <h3 class="title"><?php echo trans("more_from"); ?>&nbsp;<a href="<?php echo generate_profile_url($user->slug); ?>"><?php echo get_shop_name($user); ?></a></h3>
-                    <div class="row row-product">
-                        <!--print related posts-->
-                        <?php $count = 0;
-                        foreach ($user_products as $item) :
-                            if ($count < 5) : ?>
-                                <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                                    <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
-                                </div>
-                        <?php endif;
-                            $count++;
-                        endforeach; ?>
-                    </div>
-                    <?php if (item_count($user_products) > 5) : ?>
-                        <div class="row-custom text-center">
-                            <a href="<?php echo generate_profile_url($product->user_slug); ?>" class="link-see-more"><span><?php echo trans("view_all"); ?>&nbsp;</span><i class="icon-arrow-right"></i></a>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            <?php endif; ?>
-
-            <?php if (!empty($related_products) && false) : ?>
-                <div class="col-12 section section-related-products">
-                    <h3 class="title"><?php echo trans("you_may_also_like"); ?></h3>
-                    <div class="row row-product">
-                        <!--print related posts-->
-                        <?php foreach ($related_products as $item) : ?>
-                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                                <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            <?php endif; ?>
-
-            <div class="col-12">
-                <div class="row-custom row-bn">
-                    <!--Include banner-->
-                    <?php $this->load->view("partials/_ad_spaces", ["ad_space" => "product_bottom", "class" => "m-b-30"]); ?>
-                </div>
-            </div>
-
-            <?php if ($this->general_settings->index_latest_products == 1 && !empty($latest_products) && false) : ?>
-
-                <div class="col-12 section section-latest-products">
-                    <h3 class="title" id="top-picks">Similar Products You May Like</h3>
-                    <div class="row row-product">
-                        <!--print products-->
-                        <?php foreach ($latest_products as $product) : ?>
-                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
-                            </div>
-                        <?php endforeach; ?>
-                        <div class="btn btn-md btn-custom m-t-15" id="view-products">View More Products</div>
-                    </div>
-                </div>
-            <?php endif; ?>
-
-            <div class="col-12 section section-latest-products">
-                <h3 class="title" id="top-picks">Similar Products From Different Seller</h3>
-                <div class="row row-product">
-                    <!--print products-->
-                    <?php $count = 0;
-                    if (!empty($diff_prod)) :
-                        foreach ($diff_prod as $product) :
-                            if ($count < 5) : ?>
-                                <div class="col-6 col-sm-2 col-md-4 col-lg-2 col-product product-margin">
-                                    <?php $this->load->view('product/_product_item', ['product' =>  $product]); ?>
-                                </div>
-                        <?php endif;
-                            $count++;
-                        endforeach;
-                    else : ?>
-                        <div class="m-t-15" id="view-products">No products to display !</div>
-                    <?php endif; ?>
-                </div>
-                <?php if (!empty($diff_prod)) : ?>
-                    <div class="btn btn-md btn-custom m-t-15" id="view-products">
-                        <a href="<?= generate_url("more_products") . '/' . $product->category_id; ?>">View More Products</a>
-                    </div>
-                <?php endif; ?>
-            </div>
+                <?php $this->load->view('product/details/_reviews'); ?>
+        </div>
+    <?php endif; ?>
+    <div class="col-12">
+        <div class="row-custom row-bn">
+            <!--Include banner-->
+            <?php $this->load->view("partials/_ad_spaces", ["ad_space" => "product", "class" => "m-b-30"]); ?>
         </div>
     </div>
+    <?php if (!empty($user_products) && $this->general_settings->multi_vendor_system == 1) : ?>
+        <div class="col-12 section section-related-products m-t-30">
+            <h3 class="title"><?php echo trans("more_from"); ?>&nbsp;<a href="<?php echo generate_profile_url($user->slug); ?>"><?php echo get_shop_name($user); ?></a></h3>
+            <div class="row row-product">
+                <!--print related posts-->
+                <?php $count = 0;
+                foreach ($user_products as $item) :
+                    if ($count < 5) : ?>
+                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                            <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
+                        </div>
+                <?php endif;
+                    $count++;
+                endforeach; ?>
+            </div>
+            <?php if (item_count($user_products) > 5) : ?>
+                <div class="row-custom text-center">
+                    <a href="<?php echo generate_profile_url($product->user_slug); ?>" class="link-see-more"><span><?php echo trans("view_all"); ?>&nbsp;</span><i class="icon-arrow-right"></i></a>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($related_products) && false) : ?>
+        <div class="col-12 section section-related-products">
+            <h3 class="title"><?php echo trans("you_may_also_like"); ?></h3>
+            <div class="row row-product">
+                <!--print related posts-->
+                <?php foreach ($related_products as $item) : ?>
+                    <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                        <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <div class="col-12">
+        <div class="row-custom row-bn">
+            <!--Include banner-->
+            <?php $this->load->view("partials/_ad_spaces", ["ad_space" => "product_bottom", "class" => "m-b-30"]); ?>
+        </div>
+    </div>
+
+    <?php if ($this->general_settings->index_latest_products == 1 && !empty($latest_products) && false) : ?>
+
+        <div class="col-12 section section-latest-products">
+            <h3 class="title" id="top-picks">Similar Products You May Like</h3>
+            <div class="row row-product">
+                <!--print products-->
+                <?php foreach ($latest_products as $product) : ?>
+                    <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                        <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                    </div>
+                <?php endforeach; ?>
+                <div class="btn btn-md btn-custom m-t-15" id="view-products">View More Products</div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <div class="col-12 section section-latest-products">
+        <h3 class="title" id="top-picks">Similar Products From Different Seller</h3>
+        <div class="row row-product">
+            <!--print products-->
+            <?php $count = 0;
+            if (!empty($diff_prod)) :
+                foreach ($diff_prod as $product) :
+                    if ($count < 5) : ?>
+                        <div class="col-6 col-sm-2 col-md-4 col-lg-2 col-product product-margin">
+                            <?php $this->load->view('product/_product_item', ['product' =>  $product]); ?>
+                        </div>
+                <?php endif;
+                    $count++;
+                endforeach;
+            else : ?>
+                <div class="m-t-15" id="view-products">No products to display !</div>
+            <?php endif; ?>
+        </div>
+        <?php if (!empty($diff_prod)) : ?>
+            <div class="btn btn-md btn-custom m-t-15" id="view-products">
+                <a href="<?= generate_url("more_products") . '/' . $product->category_id; ?>">View More Products</a>
+            </div>
+        <?php endif; ?>
+    </div>
+    </div>
+</div>
 
 </div>
 

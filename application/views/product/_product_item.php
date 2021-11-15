@@ -106,7 +106,11 @@
 
             </a>
         </p>
-
+        <?php if ($this->general_settings->reviews == 1) : ?>
+            <div class="product-details-review">
+                <?php $this->load->view('partials/_review_stars', ['review' => $product->rating]); ?>
+            </div>
+        <?php endif; ?>
         <?php if ($product->discount_rate != '0') : ?>
             <!-- <div class="discount-rate" style="float:right; color: green; margin-top: -15%">
                 <?php echo discount_rate_format($product->discount_rate) ?>

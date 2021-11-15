@@ -265,8 +265,9 @@ endif;
         <div class="row">
             <div class="pull-right">
                 <?php $shiprocket_order_details = get_shiprocket_order_details($order->id, $item->product_id); ?>
+                <?php $now_bike_data = get_nowBike_order_details($order->order_number, $item->id); ?>
 
-                <?php if (empty($shiprocket_order_details)) : ?>
+                <?php if (empty($shiprocket_order_details) && empty($now_bike_data)) : ?>
                     <button class="btn btn-md btn-block btn-info btn-table-delete" id="schedule_sipment" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
                 <?php endif; ?>
             </div>
@@ -1453,24 +1454,24 @@ endforeach; ?>
                 console.log(obj.vars.order_items.length);
                 var a = "<?php echo sizeof($order_products); ?>"
                 console.log(a);
-                if (a == 1) {
-                    if (obj.result == 1) {
-                        document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
+                // if (a == 1) {
+                //     if (obj.result == 1) {
+                //         document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
 
-                        wrapper_multiple_product(obj.vars.products, obj.vars.order_items);
-                    }
+                //         wrapper_multiple_product(obj.vars.products, obj.vars.order_items);
+                //     }
 
+                // }
+                // if (a > 1) {
+
+                if (obj.result == 1) {
+                    document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
                 }
-                if (a > 1) {
-
-                    if (obj.result == 1) {
-                        document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
-                    }
-                    setTimeout(
-                        function() {
-                            $("#schedule_multiple_products").modal('show');
-                        }, 200);
-                }
+                setTimeout(
+                    function() {
+                        $("#schedule_multiple_products").modal('show');
+                    }, 200);
+                // }
             }
         });
         // $('#schedule_sipment').prop('disabled', true);
