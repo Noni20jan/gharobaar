@@ -259,6 +259,7 @@
                 </div>
             <?php break;
             case 7: ?>
+
                 <div class="row shop-by-center">
                     <div class="col-2 two-for-mobile">
                         <a href="<?php echo generate_url("art-stationery/drawings-paintings"); ?>">

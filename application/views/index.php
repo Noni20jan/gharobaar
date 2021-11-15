@@ -869,6 +869,7 @@
                 </div>
                 <div id="top-discounts-container_nav" class="index-products-slider-nav">
                     <button class="prev"><i class="icon-arrow-left"></i></button>
+
                     <button class="next"><i class="icon-arrow-right"></i></button>
                 </div>
             </div>
