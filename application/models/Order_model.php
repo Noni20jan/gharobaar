@@ -1769,7 +1769,20 @@ class Order_model extends CI_Model
         return $query->num_rows();
     }
 
+    public function get_return_orders_count($user_id)
+    {
+        // json_decode(json_encode($this->lookup_model->get_lookup_order_return),true)
+        $order_statuses = json_decode(json_encode($this->lookup_model->get_lookup_order_return()), true);
 
+        $this->db->join('order_products', 'order_products.order_id = orders.id');
+        $this->db->select('orders.id');
+        $this->db->group_by('orders.id');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+        $this->db->where_in('order_products.order_status', $order_statuses);
+        $this->filter_sales();
+        $query = $this->db->get('orders');
+        return $query->num_rows();
+    }
     //get cancelled bu seller sales count
     public function get_cancelled_by_seller_count($user_id)
     {
@@ -1863,7 +1876,19 @@ class Order_model extends CI_Model
         $query = $this->db->get('orders');
         return $query->result();
     }
-
+    public function get_return_orders($user_id, $per_page, $offset)
+    {
+        $order_statuses = json_decode(json_encode($this->lookup_model->get_lookup_order_return()), true);
+        $this->db->join('orders', 'order_products.order_id = orders.id');
+        $this->db->select('order_products.order_id,order_products.product_id,order_products.product_title,order_products.product_currency,order_products.order_status,orders.created_at,orders.order_number');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+        $this->db->where_in('order_products.order_status', $order_statuses);
+        $this->filter_sales();
+        $this->db->order_by('orders.created_at', 'DESC');
+        $this->db->limit($per_page, $offset);
+        $query = $this->db->get('order_products');
+        return $query->result();
+    }
 
     //get paginated cancelled_by_seller sales
     public function get_paginated_cancelled_by_seller($user_id, $per_page, $offset)

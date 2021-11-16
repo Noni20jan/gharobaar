@@ -89,6 +89,18 @@ class Item extends REST_Controller
                 case "IN TRANSIT":
                     $data["order_status"] = "shipped";
                     break;
+                case "RTO INITIATED":
+                    $data["order_status"] = "RTO";
+                    break;
+                case "RTO ACKNOWLEDGED":
+                    $data["order_status"] = "RTO";
+                    break;
+                case "RTO DELIVERED":
+                    $data["order_status"] = "RTO";
+                    break;
+                case "RTO IN TRANSIT":
+                    $data["order_status"] = "RTO";
+                    break;
                 default:
                     $data["order_status"] = $new_input['order_status'];
             }

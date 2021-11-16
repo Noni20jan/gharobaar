@@ -42,7 +42,13 @@ class Lookup_model extends CI_Model
         $query = $this->db->get("lookup_values");
         return $query->result();
     }
-
+    public function get_lookup_order_return()
+    {
+        $this->db->select('lookup_code');
+        $this->db->where('lookup_type', 'ORDER_RETURN_STATUS');
+        $query = $this->db->get('lookup_values');
+        return $query->row();
+    }
 
     public function get_lookup_image_url($lookup_code)
     {

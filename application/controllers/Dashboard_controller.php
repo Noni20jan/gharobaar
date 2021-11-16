@@ -60,21 +60,10 @@ class Dashboard_controller extends Home_Core_Controller
         $data['no_of_transactions_last_week'] = $this->dashboard_model->get_no_of_transaction_last_week($this->auth_user->id);
         $data['active_customers'] = $this->dashboard_model->active_customers($this->auth_user->id);
         $data['avg_seller_rating'] = $this->dashboard_model->get_seller_rating($this->auth_user->id);
-        // var_dump($data['new_customers_last_week']);
-        // die();
-
-
-        // echo json_encode($data['test']);
-
         $data["top_sell"] = $this->dashboard_model->top_selling_products();
-        // $data['test'] = [50, 60, 75, 80, 70, 90, 100];
-        $data["top_selling"] = $this->product_admin_model->products_top_selling($this->auth_user->id);
-        // $data['test'] = $this->order_model->get_last_week_customer_data($this->auth_user->id);
-        // $x = json_encode($data["customers_weekly"]);
-        // var_dump($x);
+        $data["top_selling"] = $this->dashboard_model->products_top_selling($this->auth_user->id);
         $i = 0;
-        $data["cust"] = ($data["customers_weekly"]);
-        $count = sizeof($data["cust"]);
+        $count = sizeof($data["customers_weekly"]);
         $data["z"] = array();
         $data["h"] = array();
         while ($i < $count) {
@@ -95,16 +84,6 @@ class Dashboard_controller extends Home_Core_Controller
 
 
         $data['test'] = [(int)$data['new_customers_last_week'][$i - 7]->new_customers, (int)$data['new_customers_last_week'][$i - 6]->new_customers, (int)$data['new_customers_last_week'][$i - 5]->new_customers, (int)$data['new_customers_last_week'][$i - 4]->new_customers, (int)$data['new_customers_last_week'][$i - 3]->new_customers, (int)$data['new_customers_last_week'][$i - 2]->new_customers, (int)$data['new_customers_last_week'][$i - 1]->new_customers];
-        // var_dump($data['no_of_transactions_last_week']);
-        // die();
-        // echo json_encode($i);
-        // die;
-        // $i = 0;
-        // foreach ($data['no_of_transactions_last_week'] as $ij) {
-        //     var_dump($ij);
-        //     //     $i++;
-        // }
-        // die();
         $ok['ok1'] = $this->dashboard_model->get_growth_over_last_week($this->auth_user->id);
 
         $data['test1'] = [(int)$data['no_of_transactions_last_week'][57 - $i]->order_id, (int)$data['no_of_transactions_last_week'][56 - $i]->order_id, (int)$data['no_of_transactions_last_week'][55 - $i]->order_id, (int)$data['no_of_transactions_last_week'][54 - $i]->order_id, (int)$data['no_of_transactions_last_week'][53 - $i]->order_id, (int)$data['no_of_transactions_last_week'][52 - $i]->order_id, (int)$data['no_of_transactions_last_week'][51 - $i]->order_id];
@@ -1157,6 +1136,19 @@ class Dashboard_controller extends Home_Core_Controller
         $this->load->view('dashboard/product/products', $data);
         $this->load->view('dashboard/includes/_footer');
     }
+    public function bulk_products()
+    {
+        $data['title'] = trans("products");
+        $data['description'] = trans("products") . " - " . $this->app_name;
+        $data['keywords'] = trans("products") . "," . $this->app_name;
+        $data['page_url'] = generate_dash_url("products");
+        if (!empty($this->dashboard_model->products_batch($this->auth_user->id))) {
+            $data['products'] = $this->dashboard_model->products_batch($this->auth_user->id);
+        }
+        $this->load->view('dashboard/includes/_header', $data);
+        $this->load->view('dashboard/product/bulk_upload', $data);
+        $this->load->view('dashboard/includes/_footer');
+    }
 
 
     /**
@@ -1936,7 +1928,26 @@ class Dashboard_controller extends Home_Core_Controller
         $this->load->view('dashboard/sales/sales', $data);
         $this->load->view('dashboard/includes/_footer');
     }
+    public function return_orders()
+    {
+        if (!$this->is_sale_active) {
+            redirect(dashboard_url());
+        }
+        $data['title'] = "Return Orders";
+        $data['description'] = trans("cancelled_by_user") . " - " . $this->app_name;
+        $data['keywords'] = trans("cancelled_by_user") . "," . $this->app_name;
+        $data['active_page'] = "RTO";
+        $data['page_url'] = generate_dash_url("return_orders");
 
+        $data['num_rows'] = $this->order_model->get_return_orders_count($this->auth_user->id);
+        $pagination = $this->paginate($data['page_url'], $data['num_rows'], $this->per_page);
+        $data['sales'] = $this->order_model->get_return_orders($this->auth_user->id, $pagination['per_page'], $pagination['offset']);
+        $data['main_settings'] = get_main_settings();
+
+        $this->load->view('dashboard/includes/_header', $data);
+        $this->load->view('dashboard/sales/return', $data);
+        $this->load->view('dashboard/includes/_footer');
+    }
 
     /**
      * User Cancelled Sales
