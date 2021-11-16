@@ -5298,6 +5298,8 @@
             document.getElementById("verify_mobile_span").innerHTML = "";
             var phn_num = document.getElementById("phone_number").value;
             var email_address = document.getElementById("email_new").value;
+            email_address = email_address.toLowerCase();
+            console.log(email_address);
             if (phn_num == '') {
                 document.getElementById("verify_mobile_span").innerHTML = "*Please enter mobile number !";
             } else if (email_address == "") {

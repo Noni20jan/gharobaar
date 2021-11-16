@@ -20,9 +20,9 @@ class Email extends Verify_email
         if ($mail->check($email)) {
             echo json_encode(['status' => 200, 'message' => 'Email is exist']);
         } elseif (verify_Email::validate($email)) {
-            echo json_encode(['status' => 303, 'message' => 'Email is valid but not exist']);
+            echo json_encode(['status' => 303, 'message' => 'Invalid Email address']);
         } else {
-            echo json_encode(['status' => 304, 'message' => 'Email is not valid and exist']);
+            echo json_encode(['status' => 304, 'message' => 'Invalid Email address']);
         }
     }
 }
