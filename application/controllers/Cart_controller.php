@@ -147,7 +147,7 @@ class Cart_controller extends Home_Core_Controller
                     $this->session->set_flashdata('product_details_error', trans("msg_error_cart_unapproved_products"));
                 } else {
                     $this->cart_model->add_to_cart($product);
-                    if (!$this->auth_user) {
+                    if (!$this->auth_check) {
                         $this->product_model->add_to_cart_without_auth($data);
                     }
                 }
