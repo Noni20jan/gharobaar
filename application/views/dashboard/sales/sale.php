@@ -263,17 +263,28 @@ endif;
                 </div>
             </div>
         <?php endif; ?>
+
+        <!-- check for schedule shipment buttom -->
+        <?php
+        $show = 0;
+        foreach ($order_products as $item) :
+            if ($item->seller_id == $this->auth_user->id) :
+                $shiprocket_order_details = get_shiprocket_order_details($order->id, $item->product_id);
+                $now_bike_data = get_nowBike_order_details($order->order_number, $item->id);
+
+                if (empty($shiprocket_order_details) && empty($now_bike_data)) :
+                    $show = 1;
+                endif;
+            endif;
+        endforeach;
+        ?>
         <div class="row">
             <div class="pull-right">
-                <?php $shiprocket_order_details = get_shiprocket_order_details($order->id, $item->product_id); ?>
-                <?php $now_bike_data = get_nowBike_order_details($order->order_number, $item->id); ?>
-
-                <?php if (empty($shiprocket_order_details) && empty($now_bike_data)) : ?>
+                <?php if ($show) : ?>
                     <button class="btn btn-md btn-block btn-info btn-table-delete" id="schedule_sipment" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
                 <?php endif; ?>
             </div>
         </div>
-
 
         <div class="row">
             <div class="col-sm-12">
