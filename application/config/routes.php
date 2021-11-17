@@ -106,6 +106,7 @@ foreach ($languages as $language) {
         $route[$key . getr('stories', $rts) . '/(:any)']['GET'] = 'profile_controller/stories/$1';
         $route[$key . getr('reviews', $rts) . '/(:any)']['GET'] = 'profile_controller/reviews/$1';
         /*settings*/
+
         $route[$key . getr('settings', $rts)]['GET'] = 'profile_controller/update_profile';
         $route[$key . getr('settings', $rts) . '/' . getr('update_profile', $rts)]['GET'] = 'profile_controller/update_profile';
         $route[$key . getr('settings', $rts) . '/' . getr('update_settings', $rts)]['GET'] = 'profile_controller/update_settings';

@@ -4175,6 +4175,8 @@
                                                             <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
                                                                 <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
                                                                 Buyer Panel
+
+
                                                             </a>
                                                         </li>
                                                         <li>
@@ -4194,10 +4196,11 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="<?php echo dashboard_url(); ?>">
+                                                            <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
                                                                 <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
                                                                 Buyer Panel
                                                             </a>
+
                                                         </li>
                                                         <li>
                                                             <a href="<?php echo generate_url("following") . "/" . $this->auth_user->slug; ?>">
