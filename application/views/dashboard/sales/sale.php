@@ -284,6 +284,8 @@ endif;
                 <?php endif; ?>
             </div>
         </div>
+
+
         <div class="row">
             <div class="col-sm-12">
                 <h3 class="block-title"><?php echo trans("products"); ?></h3>
@@ -704,7 +706,7 @@ endif;
 
                                         <?php endif; ?>
                                     <?php else : ?>
-                                        <p>Awb code not generated</p>
+                                        <!-- <p>Awb code not generated</p> -->
                                     <?php endif; ?>
 
                                     <?php if ($item->order_status == "shipped" && $item->product_delivery_partner == "SELF") : ?>
@@ -1228,6 +1230,7 @@ endforeach; ?>
                                         "shipment_order_id": result.payload.order_id,
                                         "order_id": <?php echo $order->id ?>,
                                         "product_id": product_id_array,
+                                        "order_product_id": order_item_id_array,
                                         "shipment_id": result.payload.shipment_id,
                                         "awb_code": result.payload.awb_code,
                                         "pickup_scheduled_date": result.payload.pickup_scheduled_date,
@@ -1391,6 +1394,7 @@ endforeach; ?>
                     var data = {
                         "shipment_order_id": result.payload.order_id,
                         "reference_order_id": ref_order_id,
+                        "order_product_id": order_item_id_array,
                         "product_id": product_id_array,
                         "order_id": <?php echo $order->id; ?>,
                         "shipment_id": result.payload.shipment_id,
