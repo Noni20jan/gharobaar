@@ -390,6 +390,8 @@ $user = get_user($this->auth_user->id);
                                 <li class="nav-rejected-sales"><a href="<?= generate_dash_url("rejected_sales"); ?>"><?= trans("rejected_sales"); ?></a></li>
                                 <li class="nav-cancelled_by_user"><a href="<?= generate_dash_url("cancelled_by_user"); ?>"><?= trans("cancelled_by_user"); ?></a></li>
                                 <li class="nav-cancelled_by_seller"><a href="<?= generate_dash_url("cancelled_by_seller"); ?>"><?= trans("cancelled_by_seller"); ?></a></li>
+                                <li class="nav-cancelled_by_user"><a href="<?= generate_dash_url("return_orders"); ?>">Return Orders</a></li>
+
                             </ul>
                         </li>
                     <?php endif; ?>
@@ -516,6 +518,8 @@ $user = get_user($this->auth_user->id);
                                 <li class="nav-products"><a href="<?= generate_dash_url("products"); ?>"><?= trans("approved-products"); ?></a></li>
                                 <li class="nav-pending-products"><a href="<?= generate_dash_url("pending_products"); ?>"><?= trans("pending_products"); ?></a></li>
                                 <li class="nav-hidden-products"><a href="<?= generate_dash_url("hidden_products"); ?>"><?= trans("hidden_products"); ?></a></li>
+                                <!-- <li class="nav-products"><a href="<?= generate_dash_url("bulk_product"); ?>">Bulk Product Listing</a></li> -->
+
                                 <?php if ($this->general_settings->membership_plans_system == 1) : ?>
                                     <li class="nav-expired-products"><a href="<?= generate_dash_url("expired_products"); ?>"><?= trans("expired_products"); ?></a></li>
                                 <?php endif; ?>
