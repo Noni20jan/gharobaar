@@ -153,7 +153,12 @@ class Ajax_controller extends Home_Core_Controller
             } else {
                 $data['result'] = 1;
                 $response = '<ul>';
-                $products = $this->product_model->search_products($input_value);
+                $nlp_search = $this->general_settings->nlpsearch;
+                if ($nlp_search == 1) {
+                    $products = $this->product_model->search_products_new($input_value);
+                } else {
+                    $products = $this->product_model->search_products($input_value);
+                }
                 if (!empty($products)) {
                     foreach ($products as $product) {
                         $response .= '<li><a href="' . $lang_base_url . $product->slug . '">' . get_product_title($product) . '</a></li>';

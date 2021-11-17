@@ -448,14 +448,16 @@ $user = get_user($this->auth_user->id);
                             <li class="nav-payment-history"><a href="<?= generate_dash_url("payment_history"); ?>?payment=promotion"><?= trans("promotion_payments"); ?></a></li>
                         </ul>
                     </li>
-
-                    <li class="header_color header">Barter</li>
-                    <li class="nav-add-product">
-                        <a href="<?= generate_dash_url("barter_system"); ?>">
-                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-icon.png" alt="" style="width: 20px; height: 20px;" />
-                            <span>Barter System</span>
-                        </a>
-                    </li>
+                    <?php $barter_view = $this->general_settings->barter_view; ?>
+                    <?php if ($barter_view == 1) { ?>
+                        <li class="header_color header">Barter</li>
+                        <li class="nav-add-product">
+                            <a href="<?= generate_dash_url("barter_system"); ?>">
+                                <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-icon.png" alt="" style="width: 20px; height: 20px;" />
+                                <span>Barter System</span>
+                            </a>
+                        </li>
+                    <?php } ?>
                     <li class="nav-barter-requests">
                         <a href="<?= generate_dash_url("barter_requests"); ?>">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-req-icon.png" alt="" style="width: 20px; height: 20px;" />
