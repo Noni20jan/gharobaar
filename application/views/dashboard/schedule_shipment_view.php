@@ -118,7 +118,7 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><?php echo trans("close"); ?></button>
 
-            <button type="button" onclick="nowBike_multiple_create_order(<?php echo htmlspecialchars(json_encode($order_items), ENT_QUOTES); ?>,<?php echo $sale_total_price; ?>);" class="btn btn-md btn-primary">Update</button>
+            <button type="button" onclick="nowBike_multiple_create_order(<?php echo htmlspecialchars(json_encode($order_items), ENT_QUOTES); ?>,<?php echo $sale_total_price; ?>);" class="btn btn-md btn-primary">Schedule</button>
         </div>
     <?php elseif ($order_items[0]->product_delivery_partner == "SELF") : ?>
         <?php echo form_open_multipart('add-shipping-tracking-number-post'); ?>
