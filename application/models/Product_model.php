@@ -1983,6 +1983,7 @@ class Product_model extends Core_Model
 
     public function get_barter_product_of_current_user()
     {
+        $this->build_query();
         $this->db->where('products.available_for_barter', 'Y');
         $this->db->where('products.user_id', $this->auth_user->id);
         $query = $this->db->get('products');
@@ -2857,5 +2858,48 @@ order by id desc LIMIT 1";
                     AND p.id = $product_id");
         $data = $query->row();
         return $data->count_item;
+    }
+    public function search_products_new($word)
+    {
+        $metaphone = metaphone($word);
+        $soundex = soundex($word);
+
+
+        // select all words from the dictionary matching the current word
+        $sql = "SELECT * FROM word WHERE word ='$word'";
+        $wordresult = $this->db->query($sql)->num_rows();
+        // $wordnum = mysqli_num_rows($wordresult);
+        if ($wordresult == 0) {
+            $sql3 = "INSERT INTO word (word,metaphone,soundex) VALUES ('$word','$metaphone','$soundex')";
+            $query = $this->db->query($sql3);
+        }
+        $sql2 = "SELECT * FROM word WHERE soundex ='$soundex'";
+        $query1 = $this->db->query($sql2);
+        // $count = $query1->num_rows();
+
+        $result1 = $query1->result();
+        $i = 1;
+        $where = "";
+        // while ($worddata = mysqli_fetch_array($wordresult, MYSQLI_ASSOC)) {
+        $count = count($result1);
+        // echo $count;
+        foreach ($result1 as $results) {
+            if ($i < $count) {
+                $soundword = $results->word;
+                // echo $soundword;
+                $where .= "title like '%$soundword%' OR brand_name like ('%$soundword%') OR ";
+            } else {
+                $soundword = $results->word;
+                // echo $soundword;
+                $where .= "title like '%$soundword%') OR brand_name like ('%$soundword%') ";
+            }
+            $i++;
+        }
+        $sselect = "SELECT title,brand_name,products.slug FROM product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where (";
+        $union = "UNION select title,brand_name,products.slug from product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where title like ('%$word%') OR brand_name like ('%$word%')";
+        $sql5 = $sselect . $where . $union;
+
+        $query8 = $this->db->query($sql5);
+        return $query8->result();
     }
 }

@@ -390,6 +390,8 @@ $user = get_user($this->auth_user->id);
                                 <li class="nav-rejected-sales"><a href="<?= generate_dash_url("rejected_sales"); ?>"><?= trans("rejected_sales"); ?></a></li>
                                 <li class="nav-cancelled_by_user"><a href="<?= generate_dash_url("cancelled_by_user"); ?>"><?= trans("cancelled_by_user"); ?></a></li>
                                 <li class="nav-cancelled_by_seller"><a href="<?= generate_dash_url("cancelled_by_seller"); ?>"><?= trans("cancelled_by_seller"); ?></a></li>
+                                <li class="nav-cancelled_by_user"><a href="<?= generate_dash_url("return_orders"); ?>">Return Orders</a></li>
+
                             </ul>
                         </li>
                     <?php endif; ?>
@@ -448,14 +450,16 @@ $user = get_user($this->auth_user->id);
                             <li class="nav-payment-history"><a href="<?= generate_dash_url("payment_history"); ?>?payment=promotion"><?= trans("promotion_payments"); ?></a></li>
                         </ul>
                     </li>
-
-                    <!-- <li class="header_color header">Barter</li>
-                    <li class="nav-add-product">
-                        <a href="<?= generate_dash_url("barter_system"); ?>">
-                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-icon.png" alt="" style="width: 20px; height: 20px;" />
-                            <span>Barter System</span>
-                        </a>
-                    </li>
+                    <?php $barter_view = $this->general_settings->barter_view; ?>
+                    <?php if ($barter_view == 1) { ?>
+                        <li class="header_color header">Barter</li>
+                        <li class="nav-add-product">
+                            <a href="<?= generate_dash_url("barter_system"); ?>">
+                                <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-icon.png" alt="" style="width: 20px; height: 20px;" />
+                                <span>Barter System</span>
+                            </a>
+                        </li>
+                    <?php } ?>
                     <li class="nav-barter-requests">
                         <a href="<?= generate_dash_url("barter_requests"); ?>">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-req-icon.png" alt="" style="width: 20px; height: 20px;" />
@@ -514,6 +518,8 @@ $user = get_user($this->auth_user->id);
                                 <li class="nav-products"><a href="<?= generate_dash_url("products"); ?>"><?= trans("approved-products"); ?></a></li>
                                 <li class="nav-pending-products"><a href="<?= generate_dash_url("pending_products"); ?>"><?= trans("pending_products"); ?></a></li>
                                 <li class="nav-hidden-products"><a href="<?= generate_dash_url("hidden_products"); ?>"><?= trans("hidden_products"); ?></a></li>
+                                <!-- <li class="nav-products"><a href="<?= generate_dash_url("bulk_product"); ?>">Bulk Product Listing</a></li> -->
+
                                 <?php if ($this->general_settings->membership_plans_system == 1) : ?>
                                     <li class="nav-expired-products"><a href="<?= generate_dash_url("expired_products"); ?>"><?= trans("expired_products"); ?></a></li>
                                 <?php endif; ?>

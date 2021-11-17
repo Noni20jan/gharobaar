@@ -1262,7 +1262,7 @@ class Order_model extends CI_Model
     public function shiprocket_response()
     {
 
-        //$order_product_ids = $this->input->post('order_product_ids', true);
+        $order_product_ids = $this->input->post('order_product_id', true);
         $product_ids = $this->input->post('product_id', true);
         //var_dump(count($product_ids));
 
@@ -1270,6 +1270,7 @@ class Order_model extends CI_Model
             $data = array(
                 'order_id' => trim($this->input->post('order_id', true)),
                 'product_id' => $product_ids[$j],
+                'order_product_id' => $order_product_ids[$j],
                 'reference_order_id' => $this->input->post('reference_order_id', true),
                 'shipment_order_id' => trim($this->input->post('shipment_order_id', true)),
                 'shipment_id' => trim($this->input->post('shipment_id', true)),

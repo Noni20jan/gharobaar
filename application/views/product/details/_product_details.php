@@ -210,7 +210,9 @@
                 <div class="product-details-review">
                     <?php if ($this->general_settings->reviews == 1) {
                         $this->load->view('partials/_review_stars', ['review' => $product->rating]);
-                    } ?>
+                        $count_star = $this->review_model->get_review_count($product->id); ?>
+                        <span><b> (<?php echo $count_star; ?>)</b> </span>
+                    <?php  } ?>
                 </div>
             </div>
         </div>
