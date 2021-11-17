@@ -317,7 +317,7 @@
                                         <?php else : ?>
                                             <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/certificate.png'; ?>" style="border-radius:10%" />
                                         <?php endif; ?>
-                                        <input type="file" name="cheque-image" id="cheque-logo" required=""  style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>" />
+                                        <input type="file" name="cheque-image" accept="image/*"  id="cheque-logo" required=""  style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>" />
                                         <p id="file-upload-filename" style="margin-bottom:0;"></p>
                                         <span style="color: red;" id="cheque_error"></span>
 
@@ -622,7 +622,7 @@
     //     }
     // }
 </script>
-<script>
+ <script>
   var input1 = document.getElementById('cheque-logo');
   // var infoArea = document.getElementById('file-upload-filename');
 
@@ -654,4 +654,4 @@
       reader1.readAsDataURL(input1.files[0]);
     }
   }
-</script>
+</script> 
