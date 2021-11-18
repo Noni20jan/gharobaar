@@ -32,8 +32,6 @@
         transform: scale(1.25);
     }
 </style>
-<?php //var_dump($product); 
-?>
 <div class="product-item">
     <div class="row-custom<?php echo (!empty($product->image_second)) ? ' product-multiple-image' : ''; ?>">
         <a class="item-wishlist-button item-wishlist-enable <?php echo (is_product_in_wishlist($product) == 1) ? 'item-wishlist' : ''; ?>" data-product-id="<?php echo $product->id; ?>"></a>
@@ -114,12 +112,7 @@
                 <span><b> (<?php echo $count_star; ?>)</b> </span>
             </div>
         <?php endif; ?>
-        <?php if ($product->discount_rate != '0') : ?>
-            <!-- <div class="discount-rate" style="float:right; color: green; margin-top: -15%">-->
-            <?php echo discount_rate_format($product->discount_rate) ?>
 
-            <!-- </div> -->
-        <?php endif; ?>
         <div class="item-meta">
             <?php $this->load->view('product/_price_product_item', ['product' => $product]); ?>
         </div>

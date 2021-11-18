@@ -278,7 +278,6 @@ endif;
             endif;
         endforeach;
         ?>
-
         <div class="row">
             <div class="pull-right">
                 <?php if ($show) : ?>
@@ -286,7 +285,6 @@ endif;
                 <?php endif; ?>
             </div>
         </div>
-
 
         <div class="row">
             <div class="col-sm-12">

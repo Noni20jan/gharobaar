@@ -106,6 +106,7 @@ foreach ($languages as $language) {
         $route[$key . getr('stories', $rts) . '/(:any)']['GET'] = 'profile_controller/stories/$1';
         $route[$key . getr('reviews', $rts) . '/(:any)']['GET'] = 'profile_controller/reviews/$1';
         /*settings*/
+
         $route[$key . getr('settings', $rts)]['GET'] = 'profile_controller/update_profile';
         $route[$key . getr('settings', $rts) . '/' . getr('update_profile', $rts)]['GET'] = 'profile_controller/update_profile';
         $route[$key . getr('settings', $rts) . '/' . getr('update_settings', $rts)]['GET'] = 'profile_controller/update_settings';
@@ -326,6 +327,8 @@ foreach ($languages as $language) {
         $route[$key . getr('dashboard', $rts) . '/' . getr('addresses', $rts)]['GET'] = 'dashboard_controller/addresses';
 
         $route[$key . getr('dashboard', $rts) . '/' . getr('products', $rts)]['GET'] = 'dashboard_controller/products';
+        //$route[$key . getr('dashboard', $rts) . '/' . getr('bulk_product', $rts)]['GET'] = 'dashboard_controller/bulk_products';
+
         $route[$key . getr('dashboard', $rts) . '/' . getr('pending_products', $rts)]['GET'] = 'dashboard_controller/pending_products';
 
         $route[$key . getr('dashboard', $rts) . '/' . getr('edit_service', $rts) . '/(:num)']['GET'] = 'dashboard_controller/edit_service/$1';
@@ -346,6 +349,8 @@ foreach ($languages as $language) {
         $route[$key . getr('dashboard', $rts) . '/' . getr('sale', $rts) . '/(:num)']['GET'] = 'dashboard_controller/sale/$1';
         $route[$key . getr('dashboard', $rts) . '/' . getr('track_status', $rts) . '/(:num)']['GET'] = 'dashboard_controller/track_status/$1';
         // $route[$key . getr('dashboard', $rts) . '/' . getr('cancelorder', $rts) . '/(:num)']['GET'] = 'dashboard_controller/cancelorder/$1';
+        $route[$key . getr('dashboard', $rts) . '/' . getr('return_orders', $rts)]['GET'] = 'dashboard_controller/return_orders';
+
 
         $route[$key . getr('dashboard', $rts) . '/' . getr('hidden_products', $rts)]['GET'] = 'dashboard_controller/hidden_products';
         $route[$key . getr('dashboard', $rts) . '/' . getr('expired_products', $rts)]['GET'] = 'dashboard_controller/expired_products';

@@ -2630,6 +2630,7 @@ class Order_model extends CI_Model
         //     'cod_charges' => json_decode($response)->data->available_courier_companies[0]->cod_charges * 100,
         //     'freight_charges' => json_decode($response)->data->available_courier_companies[0]->freight_charge * 100,
         // );
+        // var_dump(json_decode($response)->data);
 
         $shipping_data = array(
             'actual_shipping_charges_with_gst' => intval((json_decode($response)->data->available_courier_companies[0]->rate) * 100),
@@ -3947,5 +3948,30 @@ class Order_model extends CI_Model
 
         $query = $this->db->query($sql);
         return $query->result();
+    }
+
+    //get order status count for a perticular order id
+    public function get_order_item_count($order_id)
+    {
+        $sql = "SELECT Count(order_status) as count_val FROM order_products where order_id= $order_id  and order_status not in ('order_rejected','cancelled_by_user','cancelled_by_seller','rejected')";
+        $query = $this->db->query($sql);
+        $item_count = $query->row();
+        $sql1 = "SELECT Count(order_status) as count_val1 FROM order_products where order_id= $order_id  and order_status = 'completed'";
+        $query1 = $this->db->query($sql1);
+        $order_item_count = $query1->row();
+        $sql3 = "SELECT Count(order_status) as count_val2 FROM order_products where order_id= $order_id  and order_status in ('order_rejected','cancelled_by_user','cancelled_by_seller','rejected')";
+        $query2 = $this->db->query($sql3);
+        $reject_item_count = $query2->row();
+        $sql4 = "SELECT Count(order_status) as count_val3 FROM order_products where order_id= $order_id ";
+        $query3 = $this->db->query($sql4);
+        $total_item_count = $query3->row();
+
+        if ($total_item_count->count_val3 == $reject_item_count->count_val2) {
+            $sql2 = "UPDATE orders set status=2 where id = $order_id";
+            $query2 = $this->db->query($sql2);
+        } elseif ($item_count->count_val == $order_item_count->count_val1) {
+            $sql3 = "UPDATE orders set status=1 where id = $order_id";
+            $query2 = $this->db->query($sql3);
+        }
     }
 }

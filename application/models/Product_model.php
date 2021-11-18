@@ -2891,13 +2891,14 @@ order by id desc LIMIT 1";
             } else {
                 $soundword = $results->word;
                 // echo $soundword;
-                $where .= "title like '%$soundword%') OR brand_name like ('%$soundword%') ";
+                $where .= "title like '%$soundword%') OR brand_name like ('%$soundword%')";
             }
             $i++;
         }
-        $sselect = "SELECT title,brand_name,products.slug FROM product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where (";
-        $union = "UNION select title,brand_name,products.slug from product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where title like ('%$word%') OR brand_name like ('%$word%')";
-        $sql5 = $sselect . $where . $union;
+        $wherecon = "and users.banned ='0' and products.is_draft='0' and products.is_deleted='0' and products.visibility='1' and status='1' order by products.is_promoted desc limit 5) ";
+        $sselect = "(SELECT title,brand_name,products.slug FROM product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where (";
+        $union = "UNION (select title,brand_name,products.slug from product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where title like ('%$word%') OR brand_name like ('%$word%')";
+        $sql5 = $sselect . $where . $wherecon . $union . $wherecon;
 
         $query8 = $this->db->query($sql5);
         return $query8->result();
