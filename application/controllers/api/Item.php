@@ -105,15 +105,12 @@ class Item extends REST_Controller
                     $data["order_status"] = $new_input['order_status'];
             }
             // $data["order_status"] = $new_input['order_status'];
-
             // $data = $this->db->get_where("shiprocket_order_details", ['awb_code' => $id])->row_array();
             $this->db->where("order_id", $order_id);
             $this->db->where_in("product_id", $product_array);
             $this->db->update('order_products', $data);
-
-
             $this->order_model->update_whole_order_status($order_id);
-
+            $this->order_model->get_order_item_count($order_id);
             $this->response(['Item updated successfully.'], REST_Controller::HTTP_OK);
         } else {
             $this->response(['No Records to update.'], REST_Controller::HTTP_OK);
