@@ -192,6 +192,7 @@ foreach ($languages as $language) {
 
 
         //  categories
+        $route[getr('category', $rts)] = 'home_controller/categories';
         // personal_care
         $route[getr('personal_care', $rts)] = 'home_controller/personal_care';
         // groceries
