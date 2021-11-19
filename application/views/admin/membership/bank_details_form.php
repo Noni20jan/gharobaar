@@ -10,6 +10,10 @@
             margin: 0px 5px;
         }
 
+        .view_cheque_image {
+            margin: 61px;
+        }
+
         .back-link {
             color: #fff;
         }
@@ -451,7 +455,7 @@
 <div id="wrapper">
 
 
-<?php $this->load->view('admin/includes/_messages'); ?>
+    <?php $this->load->view('admin/includes/_messages'); ?>
     <?php echo form_open("membership_controller/edit_bank_details_post"); ?>
     <div class="profile-tab-content">
         <div class="row">
@@ -474,7 +478,7 @@
                     <div class="row Brand-1">
                         <div class="col-md-3"><label id="formlabel2">Account Number<span class="Validation_error"> *</span></label></div>
                         <div class="col-md-9 Brand-name">
-                            <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" value="<?php echo html_escape($user->account_number); ?>" required>
+                            <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" minlength="9" value="<?php echo html_escape($user->account_number); ?>" required>
                         </div>
                     </div>
                     <div class="row Brand-1">
@@ -505,7 +509,11 @@
                     <div class="row Brand-1">
                         <div class="col-md-3"><label id="formlabel2">Cheque Image<span class="Validation_error"> *</span></label></div>
                         <div class="col-md-9 Brand-name">
-                            <img src="<?php echo get_user_cheque_image($user); ?>" id="myImg" width="100" height="100">
+                            <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/cheque_image.jpeg'; ?>" style="border-radius:10%" />
+
+                            <input type="file" name="cheque-image" accept="image/*" id="cheque-logo" style="display: none;" value="<?php echo (!empty($user->cheque_image_url)) ? $user->cheque_image_url : ''; ?>" />
+                            <br />
+                            <small> <a href="<?php echo base_url() . $user->cheque_image_url; ?>" target="_blank" class="view_cheque_image">View Cheque Image</a></small>
                         </div>
                     </div>
                 </div>
@@ -594,6 +602,75 @@
             reader.readAsDataURL(input.files[0]); // convert to base64 string
         }
     }
+</script>
+<script>
+    var input3 = document.getElementById('gst-logo');
+    // var infoArea = document.getElementById('file-upload-filename');
+
+    input3.addEventListener('change', showFileName3);
+
+    function showFileName3(event) {
+        $("#gst-image-delete").show();
+        // the change event gives us the input it occurred in 
+        var input3 = event.srcElement;
+
+        // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
+        var fileName3 = input3.files[0].name;
+        var id3 = 'gst-image';
+        // use fileName however fits your app best, i.e. add it into a div
+
+        extension3 = fileName3.split('.').pop();
+        var reader3 = new FileReader();
+        if (extension3 == 'pdf' || extension3 == 'docx') {
+            console.log("test")
+            reader3.onload = function(e) {
+                $('#' + id3).attr('src', '<?php echo base_url() . 'assets/img/certificate.png'; ?>');
+            }
+            reader3.readAsDataURL(input3.files[0]);
+        } else {
+            console.log("image")
+            reader3.onload = function(e) {
+                $('#' + id3).attr('src', e.target.result);
+            }
+            reader3.readAsDataURL(input3.files[0]);
+        }
+    }
+</script>
+<!-- cheque image -->
+
+<script>
+    var input1 = document.getElementById('cheque-logo');
+    // var infoArea = document.getElementById('file-upload-filename');
+
+    input1.addEventListener('change', showFileName1);
+
+    function showFileName1(event) {
+        $("#cheque-image-delete").show();
+        // the change event gives us the input it occurred in 
+        var input1 = event.srcElement;
+
+        // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
+        var fileName1 = input1.files[0].name;
+        var id1 = 'cheque-image';
+        // use fileName however fits your app best, i.e. add it into a div
+
+        extension1 = fileName1.split('.').pop();
+        var reader1 = new FileReader();
+        if (extension1 == 'pdf' || extension1 == 'docx') {
+            console.log("test")
+            reader1.onload = function(e) {
+                $('#' + id1).attr('src', '<?php echo base_url() . 'assets/img/certificate.png'; ?>');
+            }
+            reader1.readAsDataURL(input1.files[0]);
+        } else {
+            console.log("image")
+            reader1.onload = function(e) {
+                $('#' + id1).attr('src', e.target.result);
+            }
+            reader1.readAsDataURL(input1.files[0]);
+        }
+    }
+</script>
 </script>
 <script>
     // Get the modal
