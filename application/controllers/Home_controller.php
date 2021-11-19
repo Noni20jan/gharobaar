@@ -2803,4 +2803,31 @@ class Home_controller extends Home_Core_Controller
         $this->session->unset_userdata('thankyou_order_id');
         $this->load->view('partials/_footer');
     }
+
+    public function categories()
+    {
+        $data['title'] = trans("category_title");
+        $data['description'] = trans("category_title") . " - " . $this->app_name;
+        $data['keywords'] = trans("category_title") . "," . $this->app_name;
+        $data["active_tab"] = "active_orders";
+        $data['main_settings'] = get_main_settings();
+       
+        $this->load->view('partials/_header',$data);
+        $this->load->view('categories');
+        $this->load->view('partials/_footer');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
