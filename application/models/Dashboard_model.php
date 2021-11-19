@@ -143,12 +143,12 @@ class Dashboard_model extends CI_Model
                                  FROM weeks
                                  LEFT JOIN stag_max_customers_weekly as smcw
                                    ON weeks.week = week(smcw.user_registered_date) 
-                                   WHERE week(weeks.created_at) between week(now())-5 AND week(now())
+                                   WHERE week(weeks.created_at) between week(now())-4 AND week(now())
                                   group by week(user_registered_date))
         UNION
         SELECT Concat('Week ',week(smcw1.user_registered_date)) as week_no, count(user_id) as cnt
         FROM stag_max_customers_weekly as smcw1
-        where week(smcw1.user_registered_date) between week(now())-5 AND week(now())
+        where week(smcw1.user_registered_date) between week(now())-4 AND week(now())
         group by week(smcw1.user_registered_date)
         ) as temp
         order by week_no";
@@ -157,22 +157,27 @@ class Dashboard_model extends CI_Model
     }
     public function top_selling_products()
     {
-        $sql = "SELECT 
-        op.seller_id,
-        op.created_at,
-        u.shop_name,u.slug,u.username,u.email,
-        COUNT(o.id) as sm
-    FROM
-    order_products op,
-        orders o,
-        users u
-    WHERE
-         op.order_status='completed'
-            AND op.order_id = o.id  
-            AND op.seller_id=u.id
-    GROUP BY op.seller_id
-    ORDER BY COUNT(o.id) DESC
-    LIMIT 5";
+        $sql = "
+        SELECT 
+                op.seller_id,
+                op.created_at,
+                u.shop_name,u.slug,u.username,u.email,
+                COUNT(o.id) as sm
+            FROM
+            stag_max_orders_weekly op,
+            order_products os,
+                orders o,
+                users u
+            WHERE
+            os.order_id=op.order_id AND
+            os.order_id=o.id AND
+            os.order_status='completed' AND
+                   op.order_id = o.id  
+                   AND os.seller_id=u.id 
+                    AND op.seller_id=u.id
+            GROUP BY op.seller_id
+            ORDER BY COUNT(o.id) DESC
+            LIMIT 5";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -215,7 +220,12 @@ class Dashboard_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
-
+    public function products_batch($seller_id)
+    {
+        $sql = "SELECT * from PRODUCT_BATCH where seller_id=$seller_id and category_id Is NOT NULL";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     //get avg taransaction
 
     public function get_avg_transaction($id)
@@ -229,5 +239,23 @@ class Dashboard_model extends CI_Model
         $this->db->select("avg_rating");
         $this->db->where("seller_id", clean_number($seller_id));
         return $this->db->get('fact_seller_rating')->row();
+    }
+    public function products_top_selling($seller_id)
+    {
+        $sql = "select stsp.seller_id, stsp.category_id, stsp.product_id, count(stsp.product_id) as cnt,DATE_FORMAT(stsp.created_at, '%M') as Month,stsp.product_title,stsp.created_at
+        from  stag_top_selling_products as stsp
+        where stsp.seller_id != $seller_id
+        and stsp.category_id IN (SELECT DISTINCT
+                    (category_id)
+                FROM
+                    order_products
+                        INNER JOIN
+                    products ON order_products.product_id = products.id
+                WHERE
+                    seller_id = $seller_id)
+        group by stsp.seller_id, stsp.category_id, stsp.product_id,month
+        order by count(stsp.product_id) desc LIMIT 5";
+        $query = $this->db->query($sql);
+        return $query->result();
     }
 }
