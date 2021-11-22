@@ -191,77 +191,89 @@
         .modal-content {
             width: 100%;
         }
+
+        .background-box {
+            background-color: #ffffff78;
+            justify-content: center;
+            margin: 0px !important;
+            padding: 31px;
+            border-radius: 20px;
+        }
+
+        .email-responsive {
+            word-break: break-all;
+        }
+    }
+
+    .background-box {
+        background-color: #ffffff78;
+        justify-content: center;
+        margin: 0px 15%;
+        padding: 31px;
+        border-radius: 20px;
     }
 </style>
 <div id="wrapper">
     <div class="container">
-        <h1 class="box-title">Hi , <?php echo html_escape($user->first_name); ?> ! </h1>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Profile</h3>
-                    </div><!-- /.box-header -->
+        <h3 class="box-title">Hi , <?php echo html_escape($user->first_name); ?> ! </h3>
+        <div class="row background-box m-b-15">
+            <!-- <div class="col-sm-12"> -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="text-center">Profile</h3>
+                </div><!-- /.box-header -->
 
-                    <div class="box-body">
-                        <!-- include message block -->
-                        <?php $this->load->view('admin/includes/_messages'); ?>
-                        <div class="row" style="margin: 20px;padding-top:0px; ">
-                            <div class="form-group">
-                                <p>
-                                    <img src="<?php echo get_user_avatar($user); ?>" alt="<?php echo $user->username; ?>" class="form-avatar" id="test" style="width: 30%;">
-                                </p>
+                <!-- <div class="box-body"> -->
+                <!-- include message block -->
+                <?php $this->load->view('admin/includes/_messages'); ?>
 
-                            </div>
-
-                            <div class="row row-product-details">
-                                <div class="col-md-3 col-sm-12">
-                                    <label class="control-label">Full name</label>
-                                </div>
-                                <div class="col-md-9 col-sm-12 right">
-                                    <?php echo html_escape($user->first_name); ?> <?php echo html_escape($user->last_name); ?>
-                                </div>
-                            </div>
-                            <div class="row row-product-details">
-                                <div class="col-md-3 col-sm-12">
-                                    <label class="control-label">Mobile Number</label>
-                                </div>
-                                <div class="col-md-9 col-sm-12 right">
-                                    <?php echo html_escape($user->phone_number); ?>
-                                </div>
-                            </div>
-                            <div class="row row-product-details">
-                                <div class="col-md-3 col-sm-12">
-                                    <label class="control-label">Email</label>
-                                </div>
-                                <div class="col-md-9 col-sm-12 right">
-                                    <?php echo html_escape($user->email); ?>
-                                </div>
-                            </div>
-                            <div class="row row-product-details">
-                                <div class="col-md-3 col-sm-12">
-                                    <label class="control-label">Gender</label>
-                                </div>
-                                <div class="col-md-9 col-sm-12 right">
-                                    <?php echo $user->gender; ?>
-                                </div>
-                            </div>
-
-                            <center>
-                                <a href="<?php echo generate_url("profile_settings"); ?>" class="btn btn-success">Edit Profile</a>
-
-                            </center>
-
-                        </div>
-
-
-                    </div>
-                    <!-- /.box-body -->
-
-
+                <div class="row">
+                    <p>
+                        <img src="<?php echo get_user_avatar($user); ?>" alt="<?php echo $user->username; ?>" id="test">
+                    </p>
                 </div>
-                <!-- /.box -->
+
+                <div class="row m-t-10">
+                    <div class="col-6">
+                        <label class="control-label">Full name</label>
+                    </div>
+                    <div class="col-6 right">
+                        <?php echo html_escape($user->first_name); ?> <?php echo html_escape($user->last_name); ?>
+                    </div>
+                </div>
+                <div class="row m-t-10">
+                    <div class="col-6">
+                        <label class="control-label">Mobile Number</label>
+                    </div>
+                    <div class="col-6 right">
+                        <?php echo html_escape($user->phone_number); ?>
+                    </div>
+                </div>
+                <div class="row m-t-10">
+                    <div class="col-6">
+                        <label class="control-label">Email</label>
+                    </div>
+                    <div class="col-6 right email-responsive">
+                        <?php echo html_escape($user->email); ?>
+                    </div>
+                </div>
+                <div class="row m-t-10">
+                    <div class="col-6">
+                        <label class="control-label">Gender</label>
+                    </div>
+                    <div class="col-6 right">
+                        <?php echo $user->gender; ?>
+                    </div>
+                </div>
+                <center class="m-t-10">
+                    <a href="<?php echo generate_url("profile_settings"); ?>" class="btn btn-success">Edit Profile</a>
+                </center>
+
+                <!-- </div> -->
+                <!-- /.box-body -->
             </div>
+            <!-- /.box -->
+            <!-- </div> -->
         </div>
     </div>
 </div>

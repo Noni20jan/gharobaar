@@ -53,6 +53,9 @@
             position: relative;
             z-index: 2;
         }
+        #wrapper{
+            background:#ffffff00;
+        }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">

@@ -176,9 +176,10 @@ class Dashboard_controller extends Home_Core_Controller
         $this->load->view('dashboard/includes/_header_buyer', $data);
         // $this->load->view('partials/_header', $data);
         $this->load->view('profile/buyer_profile', $data);
-        // $this->load->view('partials/_footer');
-        $this->load->view('dashboard/includes/_footer');
+        $this->load->view('partials/_footer');
+        // $this->load->view('dashboard/includes/_footer');
     }
+
 
     // public function buyer_index()
     // {
@@ -374,7 +375,8 @@ class Dashboard_controller extends Home_Core_Controller
 
         $this->load->view('dashboard/includes/_header_buyer', $data);
         $this->load->view('dashboard/addresses', $data);
-        $this->load->view('dashboard/includes/_footer');
+        // $this->load->view('dashboard/includes/_footer');
+        $this->load->view('partials/_footer');
     }
 
     /**

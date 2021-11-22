@@ -4166,7 +4166,7 @@
                                                     <?php if (is_user_vendor()) : ?>
                                                         <li>
                                                             <!-- <a href="<?= dashboard_url(); ?>"> -->
-                                                            <a href="<?= generate_dash_url("profile"); ?>">
+                                                            <a href="<?= generate_dash_url("profile"); ?>" target="_blank">
                                                                 <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
                                                                 <?php echo trans("supplier_panel"); ?>
                                                             </a>

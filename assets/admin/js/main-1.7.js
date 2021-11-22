@@ -187,29 +187,29 @@ function add_remove_special_offers(val) {
     });
 }
 
-function edit_address(address_id) {
-    var data = {
-        "address_id": address_id,
-        "sys_lang_id": sys_lang_id
-    };
-    data[csfr_token_name] = $.cookie(csfr_cookie_name);
-    $.ajax({
-        url: base_url + "edit-address",
-        type: "post",
-        data: data,
-        success: function (response) {
-            //alert(response);
-            var obj = JSON.parse(response);
-            if (obj.result == 1) {
-                document.getElementById("response_edit_address").innerHTML = obj.html_content;
-            }
-            setTimeout(
-                function () {
-                    $("#editaddress-modal").modal('show');
-                }, 200);
-        }
-    });
-}
+// function edit_address(address_id) {
+//     var data = {
+//         "address_id": address_id,
+//         "sys_lang_id": sys_lang_id
+//     };
+//     data[csfr_token_name] = $.cookie(csfr_cookie_name);
+//     $.ajax({
+//         url: base_url + "edit-address",
+//         type: "post",
+//         data: data,
+//         success: function (response) {
+//             //alert(response);
+//             var obj = JSON.parse(response);
+//             if (obj.result == 1) {
+//                 document.getElementById("response_edit_address").innerHTML = obj.html_content;
+//             }
+//             setTimeout(
+//                 function () {
+//                     $("#editaddress-modal").modal('show');
+//                 }, 200);
+//         }
+//     });
+// }
 
 function edit_card(card_id) {
     var data = {

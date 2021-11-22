@@ -471,7 +471,7 @@ $user = get_user($this->auth_user->id);
                                 </span>
                             <?php endif; ?>
                         </a>
-                    </li> -->
+                    </li>
                     <?php if (is_bidding_system_active()) : ?>
                         <li class="nav-quote-requests">
                             <a href="<?= generate_dash_url("quote_requests"); ?>">

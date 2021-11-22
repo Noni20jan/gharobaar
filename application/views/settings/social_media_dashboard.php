@@ -1,4 +1,9 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<style>
+      #wrapper{
+            background:#ffffff00;
+        }
+</style>
 <!-- Wrapper -->
 <div id="wrapper">
     <div class="container">
