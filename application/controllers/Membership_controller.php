@@ -304,7 +304,7 @@ class Membership_controller extends Admin_Core_Controller
         $data['title'] = "Bank Approval Requests";
         $data['page_url'] = admin_url() . "bank-approve-details";
 
-        $pagination = $this->paginate($data['page_url'], $this->auth_model->get_users_count_by_role('vendor'));
+        $pagination = $this->paginate($data['page_url'], $this->auth_model->get_bank_details_requests_count());
         $data['users'] = $this->auth_model->get_paginated_filtered_vendors('vendor', $pagination['per_page'], $pagination['offset']);
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/membership/bank_details');

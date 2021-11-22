@@ -298,6 +298,11 @@ class Order_controller extends Home_Core_Controller
 
         if ($action == "reject" && $payment_method == "Cashfree") {
             $this->refund_api_data($order_product_id);
+            if ($this->general_settings->enable_easysplit == 0) {
+                $this->order_model->recal_prepaid_seller_payable($order_id);
+            } else {
+                $this->order_model->recal_cod_seller_payable($order_id);
+            }
         }
         if ($this->order_model->accept_reject_order_product($order_product_id, $action, $reject_reason_before_accept, $reject_reason_comment)) {
 
@@ -325,7 +330,6 @@ class Order_controller extends Home_Core_Controller
     }
 
 
-    // change sanyam start
     /**
      * Cancel Order Product
      */
@@ -353,6 +357,11 @@ class Order_controller extends Home_Core_Controller
             if ($payment_method == 'Cashfree') {
                 //refund api call for cashfree
                 $this->refund_api_data($order_product_id);
+                if ($this->general_settings->enable_easysplit == 0) {
+                    $this->order_model->recal_prepaid_seller_payable($order_id);
+                }
+            } else {
+                $this->order_model->recal_cod_seller_payable($order_id);
             }
 
             $this->load->model("email_model");
@@ -369,7 +378,7 @@ class Order_controller extends Home_Core_Controller
             redirect($this->agent->referrer());
         }
     }
-    // change sanyam end
+
 
 
     public function order_window_update()
@@ -846,7 +855,7 @@ class Order_controller extends Home_Core_Controller
 
         $cod_seller_payable = $this->order_model->fetch_prepaid_seller_payable($from_date, $to_date);
         echo json_encode($cod_seller_payable);
-        die();
+        // die();
     }
 
     public function qualify_criteria()

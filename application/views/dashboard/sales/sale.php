@@ -8,6 +8,14 @@ endif;
 ?>
 
 <style>
+    .dispatch_alert {
+        color: red;
+    }
+
+    .dispatch_late {
+        color: red;
+    }
+
     .ajax-loader {
         visibility: hidden;
         background-color: rgba(255, 255, 255, 0.7);
@@ -285,6 +293,44 @@ endif;
                 <?php endif; ?>
             </div>
         </div>
+        <?php if (($item->product_delivery_partner) == "SHIPROCKET") : ?>
+            <?php if (empty($shiprocket_order_details)) : ?>
+                <?php if ($item->order_status != 'cancelled_by_seller' || $item->order_status != 'cancelled_by_user') : ?>
+                    <?php $product = get_product($item->product_id); ?>
+                    <?php $z = date('Y-m-d H:i:s'); ?>
+                    <?php $order_date = strtotime($order->created_at); ?>
+                    <?php $ordered_date = date("dS M Y", $order_date); ?>
+                    <?php $x = $product->shipping_time; ?>
+
+                    <?php if (substr_count($x, "_") > 2) : ?>
+                        <?php $y = intval($product->shipping_time[2]); ?>
+                        <?php $h = strtotime($order->created_at); ?>
+                        <?php $h = strtotime("$y day", $h); ?>
+
+                        <?php $k = (date("dS M Y", $h)); ?>
+                        <?php if ($z > $k) : ?>
+                            <p class="dispatch_late">Shipment is late and some penalty amount will be charged Rs 200</p>
+                        <?php else : ?>
+                            <p class="dispatch_alert"><b>Your order was placed on <?php echo $ordered_date; ?> and dispatch date is <?php echo $k; ?></b></p>
+                        <?php endif; ?>
+                    <?php elseif (substr_count($x, "_") == 2) : ?>
+                        <?php $j = intval($product->shipping_time); ?>
+                        <?php $h = strtotime($order->created_at); ?>
+                        <?php $h = strtotime("$j day", $h); ?>
+                        <?php $i = (date("dS M Y", $h)); ?>
+                        <?php if ($z > $i) : ?>
+                            <p class="dispatch_late">Shipment is late and penalty amount will be charged Rs 200</p>
+                        <?php else : ?>
+                            <p class="dispatch_alert"><b>Your order was placed on <?php echo $ordered_date; ?> and dispatch date is <?php echo $k; ?></b></p>
+
+                        <?php endif; ?>
+                    <?php else : ?>
+                        <p></p>
+                    <?php endif; ?>
+                <?php endif; ?>
+
+            <?php endif; ?>
+        <?php endif; ?>
 
         <div class="row">
             <div class="col-sm-12">
@@ -1768,6 +1814,7 @@ $this->session->unset_userdata('mds_send_email_data_seller'); ?>
             "customer_pic_url": null,
             "store_id": '<?= $seller->store_id; ?>'
         };
+
 
         var session_token_nowbike = '<?php echo $this->general_settings->now_bike_session_token; ?>';
 

@@ -501,7 +501,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#category-app-bar"><img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_categories.png">
+                        <a href="<?php echo generate_url("category"); ?>"><img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_categories.png">
                             <p class="aap_bar_text">Categories</p>
                         </a>
                     </li>
@@ -517,25 +517,28 @@
                                 <p class="aap_bar_text">Wishlist</p>
                             </a>
                         <?php else : ?>
-                            <a href="<?php echo generate_url("wishlist"); ?>">
+                            <a style="font-weight: bold" id='wishlist-mobile-view'>
                                 <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_whishlist.png">
                                 <p class="aap_bar_text">Wishlist</p>
                             </a>
-                        <?php endif; ?>
                     </li>
-                    <li>
-                        <?php if ($this->auth_check) : ?>
-                            <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
-                                <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_profile.png">
-                                <p class="aap_bar_text">Profile</p>
-                            </a>
-                        <?php else : ?>
-                            <a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal">
-                                <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_profile.png">
-                                <p class="aap_bar_text">Profile</p>
-                            </a>
-                        <?php endif; ?>
-                    </li>
+
+
+                <?php endif; ?>
+                </li>
+                <li>
+                    <?php if ($this->auth_check) : ?>
+                        <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
+                            <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_profile.png">
+                            <p class="aap_bar_text">Profile</p>
+                        </a>
+                    <?php else : ?>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal">
+                            <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_profile.png">
+                            <p class="aap_bar_text">Profile</p>
+                        </a>
+                    <?php endif; ?>
+                </li>
                 </ul>
             </div>
         </div>
@@ -756,3 +759,10 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
         });
     })
 </script> -->
+
+<script>
+    $("#wishlist-mobile-view").click(function() {
+   
+        $('#loginModal').modal('show');
+    })
+</script>

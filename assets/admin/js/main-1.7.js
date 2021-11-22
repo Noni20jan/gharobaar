@@ -965,11 +965,12 @@ function delete_selected_item(element, id, input_id, message) {
 };
 
 
-function init_pay(data_cal) {
+function init_pay(data_cal, mode) {
 
     var data = {
         "data_cal": data_cal,
-        "sys_lang_id": sys_lang_id
+        "sys_lang_id": sys_lang_id,
+        "mode": mode
         // "supplier_id": user_id
     };
     data[csfr_token_name] = $.cookie(csfr_cookie_name);

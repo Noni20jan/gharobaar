@@ -642,6 +642,17 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/newsletter/send_email_members', $data);
         $this->load->view('admin/includes/_footer');
     }
+    /**
+     * Send sms to members
+     */
+    public function send_sms_members()
+    {
+        $data['title'] = trans("send_sms_members");
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/newsletter/send_sms_users', $data);
+        $this->load->view('admin/includes/_footer');
+    }
 
     /**
      * Newsletter Send Email Post

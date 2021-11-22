@@ -1044,6 +1044,15 @@ class Auth_model extends CI_Model
         $this->db->order_by('created_at', 'DESC')->limit(clean_number($per_page), clean_number($offset));
         return $this->db->get('users')->result();
     }
+    public function get_bank_details_requests_count()
+    {
+
+        $this->db->where('role', 'vendor');
+        $this->db->where('is_bank_details_approved', 0);
+        $query = $this->db->get('users');
+
+        return $query->num_rows();
+    }
     //get paginated featured users
     public function get_paginated_featured_users($role, $per_page, $offset)
     {

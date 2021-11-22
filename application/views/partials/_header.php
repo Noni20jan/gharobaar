@@ -4348,7 +4348,7 @@
                                         <i class="icon-heart-o"></i>
                                     </a>
                                 <?php else : ?>
-                                    <a href="<?php echo generate_url("wishlist"); ?>">
+                                    <a id='wishlist-mobile-view-header' ?>
                                         <i class="icon-heart-o"></i>
                                     </a>
                                 <?php endif; ?>
@@ -5519,3 +5519,9 @@
             $('#loginModal').modal('show');
         })
     </script>
+    <script>
+    $("#wishlist-mobile-view-header").click(function() {
+   
+        $('#loginModal').modal('show');
+    })
+</script>

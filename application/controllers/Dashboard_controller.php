@@ -1526,13 +1526,47 @@ class Dashboard_controller extends Home_Core_Controller
      */
     public function bulk_product_upload_demo_file()
     {
-        $data['title'] = trans("bulk_product_upload");
-        // $view = !$this->membership_model->is_allowed_adding_product() ? 'plan_expired' : 'bulk_product_upload';
-        // $data['main_settings'] = get_main_settings();
-
+        $data['title'] = trans("bulk_product_upload_sample_download");
         $this->load->view('dashboard/includes/_header', $data);
         $this->load->view('dashboard/product/bulk_upload', $data);
         $this->load->view('dashboard/includes/_footer');
+    }
+
+
+    public function downlaod_sample_product_upload()
+    {
+        $seller_id = $this->auth_user->id;
+        $parent_lvl_cat_id = get_parent_category_id();
+        $last_lvl_cat_id = get_dropdown_category_id();
+        $last_cat_name = $this->product_model->get_cat_name($last_lvl_cat_id);
+
+        if ($parent_lvl_cat_id == 1) {
+            $file_name = 'fashion';
+        } elseif ($parent_lvl_cat_id == 2) {
+            $file_name = 'homecook';
+        } elseif ($parent_lvl_cat_id == 3) {
+            $file_name = 'grocery';
+        } elseif ($parent_lvl_cat_id == 4) {
+            $file_name = 'home';
+        } elseif ($parent_lvl_cat_id == 5) {
+            $file_name = 'personalcare';
+        } elseif ($parent_lvl_cat_id == 6) {
+            $file_name = 'kidscorner';
+        } elseif ($parent_lvl_cat_id == 7) {
+            $file_name = 'art';
+        } elseif ($parent_lvl_cat_id == 8) {
+            $file_name = 'gifts';
+        }
+
+        $data = array(
+            'batch_name' => $file_name . "-" . $last_cat_name,
+            'seller_id' => $seller_id,
+            'category_id' => $last_lvl_cat_id,
+            'creation_date' => date('Y-m-d H:i:s')
+        );
+
+        $this->product_model->save_batch_download($data);
+        $this->download_sample_file($parent_lvl_cat_id);
     }
 
     public function bulk_service_upload()
@@ -1545,6 +1579,41 @@ class Dashboard_controller extends Home_Core_Controller
         $this->load->view('dashboard/service/' . $view, $data);
         $this->load->view('dashboard/includes/_footer');
     }
+
+
+    /**
+     * Download Sample Bulk Product Upload File
+     */
+    public function download_sample_file($parent_lvl_cat_id)
+    {
+        $parent_id = $parent_lvl_cat_id;
+        if ($parent_id == 1) {
+            $this->load->helper('download');
+            force_download(FCPATH . "uploads/temp/fashion.xls", NULL);
+        } elseif ($parent_id == 2) {
+            $this->load->helper('download');
+            force_download(FCPATH . "uploads/temp/homecook.xls", NULL);
+        } elseif ($parent_id == 3) {
+            $this->load->helper('download');
+            force_download(FCPATH . "uploads/temp/grocery.xls", NULL);
+        } elseif ($parent_id == 4) {
+            $this->load->helper('download');
+            force_download(FCPATH . "uploads/temp/home.xls", NULL);
+        } elseif ($parent_id == 5) {
+            $this->load->helper('download');
+            force_download(FCPATH . "uploads/temp/personalcare.xls", NULL);
+        } elseif ($parent_id == 6) {
+            $this->load->helper('download');
+            force_download(FCPATH . "uploads/temp/kidscorner.xls", NULL);
+        } elseif ($parent_id == 7) {
+            $this->load->helper('download');
+            force_download(FCPATH . "uploads/temp/art.xls", NULL);
+        } elseif ($parent_id == 8) {
+            $this->load->helper('download');
+            force_download(FCPATH . "uploads/temp/gifts.xls", NULL);
+        }
+    }
+
 
     /**
      * Download CSV Files Post
@@ -2108,6 +2177,11 @@ class Dashboard_controller extends Home_Core_Controller
                     $this->penalty_calculate($id);
                     if ($payment_method == "Cashfree") {
                         $this->refund_api_data($id);
+                        if ($this->general_settings->enable_easysplit == 0) {
+                            $this->order_model->recal_prepaid_seller_payable($order_id);
+                        }
+                    } else {
+                        $this->order_model->recal_cod_seller_payable($order_id);
                     }
                 }
                 $this->order_admin_model->update_order_status_if_completed($order_product->order_id);

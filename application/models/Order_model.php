@@ -3845,22 +3845,29 @@ class Order_model extends CI_Model
         `b`.`ifsc_code`,
 
         `c`.`created_at`,
-        `d`.`order_status`
+        `c`.`created_at`,
+        (  
+         CASE 
+        WHEN `c`.`status` = 0  THEN 'Pending'
+        WHEN `c`.`status` = 1  THEN 'Completed'
+        WHEN `c`.`status` = 2  THEN 'Rejected'
+        
+        END)as 'order_status'
+     
     FROM
         `cod_seller_payable` `a`
             JOIN
         `users` `b` ON `b`.`id` = `a`.`vendorId`
             JOIN
         `orders` `c` ON `c`.`id` = `a`.`order_id`
-            JOIN
-        `order_products` `d` ON `d`.`order_id` = `c`.`id`
+            
         JOIN
         `order_supplier` `e` ON `a`.`order_id` = `e`.`order_id`
         WHERE
         `a`.`vendorId` = `e`.`seller_id`
         AND `c`.`created_at` >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
             AND `c`.`created_at` <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
-            AND `a`.`payout_initiated`='0'";
+            AND `a`.`payout_initiated`='0' AND `a`.`is_active`='1'";
 
 
 
@@ -3887,6 +3894,7 @@ class Order_model extends CI_Model
 
         $this->db->where('order_id', $order_id);
         $this->db->where('vendorId', $seller_id);
+        $this->db->where('is_active', 1);
         if ($mode == 'cod') {
             $this->db->update('cod_seller_payable', $data);
         }
@@ -3929,22 +3937,25 @@ class Order_model extends CI_Model
         `b`.`ifsc_code`,
 
         `c`.`created_at`,
-        `d`.`order_status`
+        (CASE
+        WHEN `c`.`status` = 0 THEN 'Pending'
+        WHEN `c`.`status` = 1 THEN 'Completed'
+        WHEN `c`.`status` = 2 THEN 'Rejected'
+    END) AS 'order_status'
     FROM
         `cashfree_seller_payout` `a`
             JOIN
         `users` `b` ON `b`.`id` = `a`.`vendorId`
             JOIN
         `orders` `c` ON `c`.`id` = `a`.`order_id`
-            JOIN
-        `order_products` `d` ON `d`.`order_id` = `c`.`id`
+            
         JOIN
         `order_supplier` `e` ON `a`.`order_id` = `e`.`order_id`
         WHERE
         `a`.`vendorId` = `e`.`seller_id`
         AND `c`.`created_at` >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
             AND `c`.`created_at` <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
-            AND `a`.`payout_initiated`='0' AND `a`.`is_completed`='1'";
+            AND `a`.`payout_initiated`='0' AND `a`.`is_completed`='1' AND `a`.`is_active`='1'";
 
         $query = $this->db->query($sql);
         return $query->result();
@@ -3972,6 +3983,622 @@ class Order_model extends CI_Model
         } elseif ($item_count->count_val == $order_item_count->count_val1) {
             $sql3 = "UPDATE orders set status=1 where id = $order_id";
             $query2 = $this->db->query($sql3);
+        }
+    }
+
+
+    public function recal_cod_seller_payable($order_id)
+    {
+        $order_id = $order_id;
+
+        $order_items = $this->order_model->get_order_products_ex_cancelled($order_id);
+        $order_total = $this->order_model->get_order_total($order_id);
+        $shipping_detail = $this->order_model->get_shipping($order_id);
+
+        $seller_array = array();
+        $amount_array = array();
+        $product_seller_details = array();
+        $payment_mode = "COD";
+
+
+        foreach ($order_items as $cart_item) {
+            $object = new stdClass();
+            $product_details = get_active_product($cart_item->product_id);
+
+            $object->seller_id = $product_details->user_id;
+
+            $pan_number = get_pan_number_by_sellerid($object->seller_id);
+            $pan_forth_char = str_split($pan_number);
+
+            $object->seller_commission_rate = calculate_commission_rate_seller($object->seller_id);
+            $new = true;
+            foreach ($product_seller_details as $psd) {
+                if ($psd->seller_id == $object->seller_id) {
+                    $object_product = new stdClass();
+                    $object_product->product_id = $cart_item->product_id;
+                    $object_product->gst_rate = $product_details->gst_rate;
+                    $object_product->product_total_price = $cart_item->product_total_price;
+
+
+                    $gst_cal = 1 + ($object_product->gst_rate / 100);
+                    $product_price_excluding_gst = round($object_product->product_total_price / $gst_cal, 0);
+                    $amount = $product_price_excluding_gst / 100;
+                    $commission = ($object->seller_commission_rate) / 100;
+                    $commission_amount_without_round = $amount * $commission;
+                    $commission_amount = round($commission_amount_without_round, 2);
+
+                    $object_product->product_price_excluding_gst = $product_price_excluding_gst;
+
+                    $gst_on_commission_amount = $commission_amount * 0.18;
+                    $commission_amount_with_gst = $commission_amount + $gst_on_commission_amount;
+
+
+                    $object_product->product_commission_amount = $commission_amount;
+                    $object_product->product_gst_on_commission_amount = round($gst_on_commission_amount, 2);
+                    $object_product->product_commission_amount_with_gst = round($commission_amount_with_gst, 2);
+
+
+                    $psd->total_commission_amount += $object_product->product_commission_amount_with_gst;
+                    $psd->total_price += $object_product->product_total_price;
+                    $psd->total_price_without_gst += $object_product->product_price_excluding_gst;
+                    $psd->seller_earned = ($psd->total_price / 100) - $psd->total_commission_amount;
+
+
+                    if ($object_product->gst_rate == 0 || $object_product->gst_rate == null) {
+                        $object_product->tcs_amount_product = 0;
+
+                        if (!empty($pan_number)) {
+                            if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                                $object_product->tds_amount_product = 0;
+                            } else {
+                                $object_product->tds_amount_product = 0.01 * ($object->total_price);
+                            }
+                        } else {
+                            $object_product->tds_amount_product = 0.05 * ($object->total_price);
+                        }
+                    } elseif ($object_product->gst_rate != 0) {
+                        $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
+                        if (!empty($pan_number)) {
+                            if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                                $object_product->tds_amount_product = 0;
+                            } else {
+                                $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
+                            }
+                        } else {
+                            $object_product->tds_amount_product = 0.05 * ($object_product->product_price_excluding_gst);
+                        }
+                    }
+
+                    if (count($psd->products) > 0) {
+                        foreach ($psd->products as $prod) {
+                            if (floatval($object_product->gst_rate) > floatval($prod->gst_rate)) {
+                                $psd->seller_gst_rate = $object_product->gst_rate;
+                            }
+                        }
+                    }
+
+                    $psd->total_tcs_amount_product += $object_product->tcs_amount_product;
+                    $psd->total_tds_amount_product += $object_product->tds_amount_product;
+                    array_push($psd->products, $object_product);
+                    $new = false;
+                }
+            }
+            if ($new) :
+                $object->products = array();
+                $object_product = new stdClass();
+                $object_product->product_id = $cart_item->product_id;
+                $object_product->gst_rate = $product_details->gst_rate;
+                $object_product->product_total_price = $cart_item->product_total_price;
+
+
+
+                $gst_cal = 1 + ($object_product->gst_rate / 100);
+                $product_price_excluding_gst = round($object_product->product_total_price / $gst_cal, 0);
+                $amount = $product_price_excluding_gst / 100;
+                $commission = $object->seller_commission_rate / 100;
+                $commission_amount_without_round = $amount * $commission;
+                $commission_amount = round($commission_amount_without_round, 2);
+
+
+                $object_product->product_price_excluding_gst = $product_price_excluding_gst;
+
+                $gst_on_commission_amount = $commission_amount * 0.18;
+                $commission_amount_with_gst = $commission_amount + $gst_on_commission_amount;
+
+                $object_product->product_commission_amount = $commission_amount;
+                $object_product->product_gst_on_commission_amount = round($gst_on_commission_amount, 2);
+                $object_product->product_commission_amount_with_gst = round($commission_amount_with_gst, 2);
+
+
+                $object->total_commission_amount = $object_product->product_commission_amount_with_gst;
+                $object->total_price = $object_product->product_total_price;
+                $object->total_price_without_gst = $object_product->product_price_excluding_gst;
+
+                if ($object_product->gst_rate == 0 || $object_product->gst_rate == null) {
+                    $object_product->tcs_amount_product = 0;
+
+                    if (!empty($pan_number)) {
+                        if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                            $object_product->tds_amount_product = 0;
+                        } else {
+                            $object_product->tds_amount_product = 0.01 * ($object->total_price);
+                        }
+                    } else {
+                        $object_product->tds_amount_product = 0.05 * ($object->total_price);
+                    }
+                } elseif ($object_product->gst_rate != 0) {
+                    $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
+                    if (!empty($pan_number)) {
+                        if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                            $object_product->tds_amount_product = 0;
+                        } else {
+                            $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
+                        }
+                    } else {
+                        $object_product->tds_amount_product = 0.05 * ($object_product->product_price_excluding_gst);
+                    }
+                }
+
+                $object->total_tcs_amount_product = $object_product->tcs_amount_product;
+                $object->total_tds_amount_product = $object_product->tds_amount_product;
+
+                $object->seller_earned = ($object->total_price / 100) - $object->total_commission_amount;
+                $object->seller_gst_rate = $object_product->gst_rate;
+                array_push($object->products, $object_product);
+                array_push($product_seller_details, $object);
+            endif;
+        }
+        $seller_settlement = array();
+        $total_amount_paid = 0;
+        foreach ($product_seller_details as $psd) {
+            $object = new stdClass();
+            $object->vendorId = $psd->seller_id;
+            $object->seller_gst_rate = $psd->seller_gst_rate;
+
+
+            $gst_number = get_gst_number_by_sellerid($object->vendorId);
+
+            $object->total_tcs_amount_product = $psd->total_tcs_amount_product;
+            $object->total_tds_amount_product = $psd->total_tds_amount_product;
+
+
+            $object->total_amount_with_gst = $psd->total_price;
+            $object->total_amount_without_gst = $psd->total_price_without_gst;
+            $object->commission_rate = $psd->seller_commission_rate;
+            $object->commission_amount = round($object->total_amount_without_gst * ($object->commission_rate / 100));
+            $object->commission_amount_gst = round($object->commission_amount * 0.18);
+            $object->commission_amount_with_gst = round($object->commission_amount_gst + $object->commission_amount);
+
+
+            $object->amount = $psd->seller_earned;
+
+
+            // $cod_charges = 0;
+            $cod_charges_without_gst = ($this->get_charges_seller_wise($object->vendorId, $order_id))->Sup_cod_cost;
+            $cod_charges_with_gst = $cod_charges_without_gst + (0.18 * $cod_charges_without_gst);
+            $cod_charges_with_product_gst = ($this->get_charges_seller_wise($object->vendorId, $order_id))->total_cod_cost;
+            $shipping_cod_gst_rate = ($this->get_charges_seller_wise($object->vendorId, $order_id))->shipping_cod_gst_rate;
+            $cod_charges_without_product_gst = $cod_charges_with_product_gst - (($shipping_cod_gst_rate / 100) * $cod_charges_with_product_gst);
+            $cod_charges_shiprocket = $cod_charges_without_product_gst + (0.18 * $cod_charges_without_product_gst);
+            $cod_inc_gst_in_invoice = $cod_charges_without_product_gst + (($shipping_cod_gst_rate / 100) * $cod_charges_without_product_gst);
+
+
+            $object->cod_charges_without_gst = $cod_charges_without_product_gst;
+            if ($object->seller_gst_rate == 0) {
+                $object->cod_charge = $object->cod_charges_without_gst;
+            } elseif ($object->seller_gst_rate != 0) {
+                $object->cod_charge = $cod_charges_shiprocket;
+            }
+
+            foreach ($shipping_detail as $ship_detail) {
+                if ($psd->seller_id == $ship_detail->seller_id) {
+                    // $object->shipping = ($ship_detail->Supplier_Shipping_cost);
+                    // $object->shipping_tax_charge = ($ship_detail->shipping_tax_charges);
+                    // $object->shipping_charge_with_gst = ($object->shipping) + ($object->shipping_tax_charge);
+
+
+                    // $object->supplier_shipping_cost_with_gst = ($ship_detail->Supplier_Shipping_cost_with_gst);
+
+                    // $object->shipping_charge_to_gharobaar = $object->supplier_shipping_cost_with_gst;
+                    $object->shipping = ($ship_detail->sup_shipping_cost);
+                    $object->shipping_tax_charge = ($ship_detail->Sup_Shipping_gst);
+                    $object->shipping_charge_with_gst = ($object->shipping) + ($object->shipping_tax_charge);
+                    $object->supplier_shipping_cost_with_gst = $object->shipping + (0.18 * $object->shipping);
+                    $object->shipping_charge_to_gharobaar = $object->supplier_shipping_cost_with_gst;
+                }
+            }
+
+
+            // condition for shipping slabs
+            $slab = true;
+            if ($slab == true) {
+                if ($object->total_amount_with_gst >= 50000) {
+                    $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
+                } else if ($object->total_amount_with_gst >= 200000) {
+                    $object->shipping_charge_to_gharobaar = 0;
+                }
+            }
+            // condition end
+
+
+            if (!empty($pan_number)) {
+                if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                    $object->tds_amount_shipping = 0;
+                    $object->total_tds_cod = 0;
+                } else {
+                    $object->tds_amount_shipping = 0.01 * ($object->shipping);
+                    $object->total_tds_cod = 0.01 * $object->cod_charges_without_gst;
+                }
+            } else {
+                $object->tds_amount_shipping = 0.05 * ($object->shipping);
+                $object->total_tds_cod = 0.05 * $object->cod_charges_without_gst;
+            }
+
+
+            if ($object->total_tcs_amount_product == 0) {
+                $object->total_tcs_shipping = 0;
+                $object->total_tcs_cod = 0;
+            } elseif ($object->total_tcs_amount_product != 0) {
+                $object->total_tcs_shipping = ($object->shipping) * 0.01;
+                $object->total_tcs_cod = 0.01 * $object->cod_charges_without_gst;
+            }
+
+            $object->tcs_amount = $object->total_tcs_amount_product + $object->total_tcs_shipping + $object->total_tcs_cod;
+
+
+            $object->tds_amount = $object->total_tds_amount_product + $object->tds_amount_shipping + $object->total_tds_cod;
+            $object->total_deduction = round($object->cod_charge + $object->shipping_charge_to_gharobaar + $object->tcs_amount + $object->commission_amount_with_gst + $object->tds_amount);
+
+
+            $object->net_seller_payable = round($object->total_amount_with_gst + $cod_inc_gst_in_invoice + $object->shipping_charge_with_gst - $object->total_deduction);
+
+
+            $total_amount_paid += $object->net_seller_payable;
+
+            $object->payment_mode = $payment_mode;
+            $object->order_id = $order_id;
+
+            array_push($seller_settlement, $object);
+        }
+        $this->disable_cod_seller_payable_payouts($order_id);
+        $save_payment = $seller_settlement;
+        foreach ($save_payment as $sp) {
+            $this->order_model->save_cod_seller_payable($sp);
+        }
+    }
+
+
+
+
+
+
+    //get order products
+    public function get_order_products_ex_cancelled($order_id)
+    {
+        $ignore = array('cancelled', 'cancelled_by_seller', 'cancelled_by_user', 'rejected');
+        $order_id = clean_number($order_id);
+        $this->db->where('order_id', $order_id);
+        $this->db->where_not_in('order_status', $ignore);
+        $query = $this->db->get('order_products');
+        return $query->result();
+    }
+
+    public function get_order_total($order_id)
+    {
+        $order_id = clean_number($order_id);
+        $this->db->where('id', $order_id);
+        $query = $this->db->get('orders');
+        return $query->result();
+    }
+    public function get_payment_mode($order_id)
+    {
+        $order_id = clean_number($order_id);
+        $this->db->where('order_id', $order_id);
+        $query = $this->db->get('cashfree_seller_payout');
+        return $query->row();
+    }
+
+    public function get_shipping($order_id)
+    {
+        $order_id = clean_number($order_id);
+        $this->db->where('order_id', $order_id);
+        $query = $this->db->get('order_supplier');
+        return $query->result();
+    }
+
+    // online payment payouts is_active=0
+    public function disable_cashfree_seller_payable_payouts($order_id)
+    {
+        $order_id = clean_number($order_id);
+        $data = array(
+            'is_active' => 0
+        );
+        $this->db->where('order_id', $order_id);
+        $this->db->update('cashfree_seller_payout', $data);
+    }
+
+    // cod payouts is_active=0
+    public function disable_cod_seller_payable_payouts($order_id)
+    {
+        $order_id = clean_number($order_id);
+        $data = array(
+            'is_active' => 0
+        );
+        $this->db->where('order_id', $order_id);
+        $this->db->update('cod_seller_payable', $data);
+    }
+
+    public function recal_prepaid_seller_payable($order_id)
+    {
+        $order_items = $this->order_model->get_order_products_ex_cancelled($order_id);
+        $order_total = $this->order_model->get_order_total($order_id);
+        $shipping_detail = $this->order_model->get_shipping($order_id);
+
+
+        $product_seller_details = array();
+        $payment_mode_detail = $this->order_model->get_payment_mode($order_id);
+        $payment_mode = $payment_mode_detail->payment_mode;
+        $cashfree_order_id = $payment_mode_detail->cashfree_order_id;
+
+        if ($payment_mode == 'nb') {
+            $bank_code = $payment_mode_detail->bank_code;
+        } elseif ($payment_mode == 'wallet') {
+            $wallet_code = $payment_mode_detail->wallet_code;
+        }
+
+
+        foreach ($order_items as $cart_item) {
+            $object = new stdClass();
+            $product_details = get_active_product($cart_item->product_id);
+            $object->seller_id = $product_details->user_id;
+            $pan_number = get_pan_number_by_sellerid($object->seller_id);
+            $pan_forth_char = str_split($pan_number);
+            $object->seller_commission_rate = calculate_commission_rate_seller($object->seller_id);
+            $new = true;
+            foreach ($product_seller_details as $psd) {
+                if ($psd->seller_id == $object->seller_id) {
+                    $object_product = new stdClass();
+                    $object_product->product_id = $cart_item->product_id;
+                    $object_product->gst_rate = $product_details->gst_rate;
+                    $object_product->product_total_price = $cart_item->product_total_price;
+
+                    $gst_cal = 1 + ($object_product->gst_rate / 100);
+                    $product_price_excluding_gst = round($object_product->product_total_price / $gst_cal, 0);
+                    $amount = $product_price_excluding_gst / 100;
+                    $commission = ($object->seller_commission_rate) / 100;
+                    $commission_amount_without_round = $amount * $commission;
+                    $commission_amount = round($commission_amount_without_round, 2);
+
+                    $object_product->product_price_excluding_gst = $product_price_excluding_gst;
+
+                    $gst_on_commission_amount = $commission_amount * 0.18;
+                    $commission_amount_with_gst = $commission_amount + $gst_on_commission_amount;
+
+                    $object_product->product_commission_amount = $commission_amount;
+                    $object_product->product_gst_on_commission_amount = round($gst_on_commission_amount, 2);
+                    $object_product->product_commission_amount_with_gst = round($commission_amount_with_gst, 2);
+
+                    $psd->total_commission_amount += $object_product->product_commission_amount_with_gst;
+                    $psd->total_price += $object_product->product_total_price;
+                    $psd->total_price_without_gst += $object_product->product_price_excluding_gst;
+                    $psd->seller_earned = ($psd->total_price / 100) - $psd->total_commission_amount;
+
+
+
+                    if ($object_product->gst_rate == 0 || $object_product->gst_rate == null) {
+                        $object_product->tcs_amount_product = 0;
+
+                        if (!empty($pan_number)) {
+                            if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                                $object_product->tds_amount_product = 0;
+                            } else {
+                                $object_product->tds_amount_product = 0.01 * ($object->total_price);
+                            }
+                        } else {
+                            $object_product->tds_amount_product = 0.05 * ($object->total_price);
+                        }
+                    } elseif ($object_product->gst_rate != 0) {
+                        $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
+                        if (!empty($pan_number)) {
+                            if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                                $object_product->tds_amount_product = 0;
+                            } else {
+                                $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
+                            }
+                        } else {
+                            $object_product->tds_amount_product = 0.05 * ($object_product->product_price_excluding_gst);
+                        }
+                    }
+
+                    $psd->total_tcs_amount_product += $object_product->tcs_amount_product;
+                    $psd->total_tds_amount_product += $object_product->tds_amount_product;
+                    array_push($psd->products, $object_product);
+                    $new = false;
+                }
+            }
+            if ($new) :
+                $object->products = array();
+                $object_product = new stdClass();
+                $object_product->product_id = $cart_item->product_id;
+                $object_product->gst_rate = $product_details->gst_rate;
+                $object_product->product_total_price = $cart_item->product_total_price;
+
+
+
+                $gst_cal = 1 + ($object_product->gst_rate / 100);
+                $product_price_excluding_gst = round($object_product->product_total_price / $gst_cal, 0);
+                $amount = $product_price_excluding_gst / 100;
+                $commission = $object->seller_commission_rate / 100;
+                $commission_amount_without_round = $amount * $commission;
+                $commission_amount = round($commission_amount_without_round, 2);
+
+
+                $object_product->product_price_excluding_gst = $product_price_excluding_gst;
+                $gst_on_commission_amount = $commission_amount * 0.18;
+                $commission_amount_with_gst = $commission_amount + $gst_on_commission_amount;
+
+                $object_product->product_commission_amount = $commission_amount;
+                $object_product->product_gst_on_commission_amount = round($gst_on_commission_amount, 2);
+                $object_product->product_commission_amount_with_gst = round($commission_amount_with_gst, 2);
+
+                $object->total_commission_amount = $object_product->product_commission_amount_with_gst;
+                $object->total_price = $object_product->product_total_price;
+                $object->total_price_without_gst = $object_product->product_price_excluding_gst;
+
+                if ($object_product->gst_rate == 0 || $object_product->gst_rate == null) {
+                    $object_product->tcs_amount_product = 0;
+
+                    if (!empty($pan_number)) {
+                        if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                            $object_product->tds_amount_product = 0;
+                        } else {
+                            $object_product->tds_amount_product = 0.01 * ($object->total_price);
+                        }
+                    } else {
+                        $object_product->tds_amount_product = 0.05 * ($object->total_price);
+                    }
+                } elseif ($object_product->gst_rate != 0) {
+                    $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
+                    if (!empty($pan_number)) {
+                        if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                            $object_product->tds_amount_product = 0;
+                        } else {
+                            $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
+                        }
+                    } else {
+                        $object_product->tds_amount_product = 0.05 * ($object_product->product_price_excluding_gst);
+                    }
+                }
+
+                $object->total_tcs_amount_product = $object_product->tcs_amount_product;
+                $object->total_tds_amount_product = $object_product->tds_amount_product;
+
+                $object->seller_earned = ($object->total_price / 100) - $object->total_commission_amount;
+                array_push($object->products, $object_product);
+                array_push($product_seller_details, $object);
+            endif;
+        }
+
+        $seller_settlement = array();
+        $total_amount_paid = 0;
+        foreach ($product_seller_details as $psd) {
+            $object = new stdClass();
+            $object->vendorId = $psd->seller_id;
+
+
+            $gst_number = get_gst_number_by_sellerid($object->vendorId);
+
+            $object->total_tcs_amount_product = $psd->total_tcs_amount_product;
+            $object->total_tds_amount_product = $psd->total_tds_amount_product;
+            $object->total_amount_with_gst = $psd->total_price;
+            $object->total_amount_without_gst = $psd->total_price_without_gst;
+            $object->commission_rate = $psd->seller_commission_rate;
+            $object->commission_amount = round($object->total_amount_without_gst * ($object->commission_rate / 100));
+            $object->commission_amount_gst = round($object->commission_amount * 0.18);
+            $object->commission_amount_with_gst = round($object->commission_amount_gst + $object->commission_amount);
+            $object->amount = $psd->seller_earned;
+
+            if ($payment_mode == 'nb') {
+                // $bank_code = $this->input->post("bank_select", true);
+                $com = $this->order_model->get_commission_rate_nb_wallet($payment_mode, $bank_code);
+                $gateway_charge = $com->gateway_charge;
+            } elseif ($payment_mode == 'wallet') {
+                // $wallet_code = $this->input->post("wallet_select", true);
+                $com = $this->order_model->get_commission_rate_nb_wallet($payment_mode, $wallet_code);
+                $gateway_charge = $com->gateway_charge;
+            } elseif ($payment_mode == 'cc') {
+                // $com = $this->order_model->get_commission_rate_dc_cc_wallet($payment_mode);
+                $gateway_charge = 1.85;
+            } elseif ($payment_mode == 'upi') {
+                $gateway_charge = 0.15;
+            } elseif ($payment_mode == 'dc') {
+                $payment_amount = $psd->total_price;
+                if ($payment_amount < 200000) {
+                    $gateway_charge = 0.45;
+                } elseif ($payment_amount >= 200000) {
+                    $gateway_charge = 0.95;
+                }
+            }
+            $object->gateway_charge = $gateway_charge;
+
+            foreach ($shipping_detail as $ship_detail) {
+                if ($psd->seller_id == $ship_detail->seller_id) {
+                    $object->shipping = ($ship_detail->sup_shipping_cost);
+                    $object->shipping_tax_charge = ($ship_detail->Sup_Shipping_gst);
+                    $object->shipping_charge_with_gst = ($object->shipping) + ($object->shipping_tax_charge);
+                    $object->supplier_shipping_cost_with_gst = $object->shipping + (0.18 * $object->shipping);
+                    $object->shipping_charge_to_gharobaar = $object->supplier_shipping_cost_with_gst;
+                }
+            }
+
+
+            // condition for shipping slabs
+            $slab = true;
+            if ($slab == true) {
+                if ($object->total_amount_with_gst >= 50000) {
+                    $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
+                } else if ($object->total_amount_with_gst >= 200000) {
+                    $object->shipping_charge_to_gharobaar = 0;
+                }
+            }
+            // condition end
+
+
+            if (!empty($pan_number)) {
+                if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                    // $object->tds_amount = 0;
+                    $object->tds_amount_shipping = 0;
+                } else {
+                    // $object->tds_amount = 0.01 * ($psd->total_price_without_gst);
+                    $object->tds_amount_shipping = 0.01 * ($object->shipping);
+                }
+            } else {
+                // $object->tds_amount = 0.05 * ($psd->total_price_without_gst);
+                $object->tds_amount_shipping = 0.05 * ($object->shipping);
+            }
+
+
+            if ($object->total_tcs_amount_product == 0) {
+                $object->total_tcs_shipping = 0;
+            } elseif ($object->total_tcs_amount_product != 0) {
+                $object->total_tcs_shipping = ($object->shipping) * 0.01;
+            }
+
+            $object->tcs_amount = $object->total_tcs_amount_product + $object->total_tcs_shipping;
+
+
+            $object->tds_amount = $object->total_tds_amount_product + $object->tds_amount_shipping;
+            $object->gateway_amount = round(($object->shipping_charge_with_gst + $object->total_amount_with_gst) * ($object->gateway_charge / 100));
+            $object->gateway_amount_gst = round($object->gateway_amount * 0.18);
+            $object->gateway_amount_with_gst = round($object->gateway_amount + $object->gateway_amount_gst);
+            $object->total_deduction = round($object->gateway_amount_with_gst + $object->shipping_charge_to_gharobaar + $object->tcs_amount + $object->commission_amount_with_gst + $object->tds_amount);
+            $object->net_seller_payable = round($object->total_amount_with_gst + $object->shipping_charge_with_gst - $object->total_deduction);
+
+
+            $total_amount_paid += $object->net_seller_payable;
+
+
+
+            $object->order_id = $order_id;
+            $object->cashfree_order_id = $cashfree_order_id;
+            $object->payment_mode = $payment_mode;
+            if ($object->payment_mode == 'nb') {
+                $object->bank_code = $bank_code;
+            } elseif ($object->payment_mode == 'wallet') {
+                $object->wallet_code = $wallet_code;
+            }
+            $object->is_completed = 1;
+
+            array_push($seller_settlement, $object);
+        }
+
+
+        if ($this->general_settings->enable_easysplit == 0) {
+            $this->order_model->disable_cashfree_seller_payable_payouts($order_id);
+            $save_payment = $seller_settlement;
+            foreach ($save_payment as $sp) {
+                $this->order_model->save_cashfree_seller_payable_payouts($sp);
+            }
         }
     }
 }

@@ -192,6 +192,7 @@ foreach ($languages as $language) {
 
 
         //  categories
+        $route[getr('category', $rts)] = 'home_controller/categories';
         // personal_care
         $route[getr('personal_care', $rts)] = 'home_controller/personal_care';
         // groceries
@@ -580,6 +581,7 @@ $route[getr('admin', $rts) . '/update-currency/(:num)'] = 'admin_controller/upda
 $route[getr('admin', $rts) . '/send-email-subscribers'] = 'admin_controller/send_email_subscribers';
 $route[getr('admin', $rts) . '/subscribers'] = 'admin_controller/subscribers';
 $route[getr('admin', $rts) . '/send-email-members'] = 'admin_controller/send_email_members';
+$route[getr('admin', $rts) . '/send-sms-members'] = 'admin_controller/send_sms_members';
 //loyalty
 $route[getr('admin', $rts) . '/loyalty-criteria'] = 'admin_controller/loyalty_criteria';
 $route[getr('admin', $rts) . '/edit-loyalty-criteria/(:num)'] = 'admin_controller/edit_loyalty_criteria/$1';
