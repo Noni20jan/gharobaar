@@ -297,7 +297,7 @@ endif;
             <?php if (empty($shiprocket_order_details)) : ?>
                 <?php if ($item->order_status != 'cancelled_by_seller' || $item->order_status != 'cancelled_by_user') : ?>
                     <?php $product = get_product($item->product_id); ?>
-                    <?php $z = date('Y-m-d H:i:s'); ?>
+                    <?php $z = date('dS M Y'); ?>
                     <?php $order_date = strtotime($order->created_at); ?>
                     <?php $ordered_date = date("dS M Y", $order_date); ?>
                     <?php $x = $product->shipping_time; ?>
