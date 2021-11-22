@@ -1347,7 +1347,6 @@ endforeach; ?>
         console.log(products_array);
         console.log(order_items_array);
 
-
         function uuidv4() {
             return 'yxxyxxx'.replace(/[xy]/g, function(c) {
                 var r = Math.random() * 16 | 0,

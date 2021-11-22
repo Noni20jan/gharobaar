@@ -53,7 +53,8 @@ class Order_controller extends Home_Core_Controller
         // $data['testing'] =  $this->order_model->get_order_product_by_id();
         $this->load->view('dashboard/includes/_header_buyer', $data);
         $this->load->view('order/orders', $data);
-        $this->load->view('dashboard/includes/_footer');
+        // $this->load->view('dashboard/includes/_footer');
+        $this->load->view('partials/_footer');
     }
 
     public function orders_dashboard_mobile()

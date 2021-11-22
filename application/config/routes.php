@@ -328,7 +328,7 @@ foreach ($languages as $language) {
         $route[$key . getr('dashboard', $rts) . '/' . getr('addresses', $rts)]['GET'] = 'dashboard_controller/addresses';
 
         $route[$key . getr('dashboard', $rts) . '/' . getr('products', $rts)]['GET'] = 'dashboard_controller/products';
-        $route[$key . getr('dashboard', $rts) . '/' . getr('bulk_product', $rts)]['GET'] = 'dashboard_controller/bulk_products';
+        //$route[$key . getr('dashboard', $rts) . '/' . getr('bulk_product', $rts)]['GET'] = 'dashboard_controller/bulk_products';
 
         $route[$key . getr('dashboard', $rts) . '/' . getr('pending_products', $rts)]['GET'] = 'dashboard_controller/pending_products';
 

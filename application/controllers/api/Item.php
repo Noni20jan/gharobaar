@@ -101,8 +101,8 @@ class Item extends REST_Controller
                 case "RTO IN TRANSIT":
                     $data["order_status"] = "RTO";
                     break;
-                default:
-                    $data["order_status"] = $new_input['order_status'];
+                    // default:
+                    //     $data["order_status"] = $new_input['order_status'];
             }
             // $data["order_status"] = $new_input['order_status'];
             // $data = $this->db->get_where("shiprocket_order_details", ['awb_code' => $id])->row_array();

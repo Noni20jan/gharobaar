@@ -2880,7 +2880,6 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('partials/_footer');
     }
 
-
     public function thankyou()
     {
 
