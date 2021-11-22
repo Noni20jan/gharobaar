@@ -400,7 +400,7 @@ class Profile_controller extends Home_Core_Controller
             'different_type_products' => $this->input->post('different_type_products', true),
             'testimonial' => $this->input->post('testimonial', true),
             'about_me' => $this->input->post('about_me', true),
-            'is_bank_details_approved' => (int)$this->input->post('is_bank_details_aprroved', true),
+            'is_bank_details_approved' => (int)($this->input->post('is_bank_details_approved', true)),
             'supplier_story_url' => $this->input->post('story_vedio_url', true),
 
         );
@@ -409,13 +409,11 @@ class Profile_controller extends Home_Core_Controller
         $account_number = $this->auth_user->account_number;
         $cheque_image_url = $this->auth_user->cheque_image_url;
         $account_holder_name = $this->auth_user->acc_holder_name;
-
-        if ($bank_branch !== $data["bank_branch"] || $ifsc_code !== $data["ifsc_code"] || $account_number !== $data["account_number"] ||  $cheque_image_url !== $data["cheque_image_url"] || $account_holder_name !== $data['acc_holder_name']) {
+        if ($data['bank_branch'] != $bank_branch || $data['ifsc_code'] != $ifsc_code || $data['account_number'] != $account_number || $data['account_holder_name'] != $account_holder_name) {
             $data['is_bank_details_approved'] = 0;
             $this->load->model("email_model");
             $this->email_model->seller_bank_account_detail($user_id);
         } else {
-            //  $this->profile_model->update_bank($data, $user_id);
             $data['is_bank_details_approved'] = $this->auth_user->is_bank_details_approved;
         }
 
@@ -504,12 +502,11 @@ class Profile_controller extends Home_Core_Controller
         $account_number = $this->auth_user->account_number;
         $cheque_image_url = $this->auth_user->cheque_image_url;
         $account_holder_name = $this->auth_user->acc_holder_name;
-        if ($bank_branch !== $data["bank_branch"] || $ifsc_code !== $data["ifsc_code"] || $account_number !== $data["account_number"] ||  $cheque_image_url !== $data["cheque_image_url"] || $account_holder_name !== $data['acc_holder_name']) {
+        if ($data['bank_branch'] != $bank_branch || $data['ifsc_code'] != $ifsc_code || $data['account_number'] != $account_number || $data['account_holder_name'] != $account_holder_name) {
             $data['is_bank_details_approved'] = 0;
             $this->load->model("email_model");
             $this->email_model->seller_bank_account_detail($user_id);
         } else {
-            //  $this->profile_model->update_bank($data, $user_id);
             $data['is_bank_details_approved'] = $this->auth_user->is_bank_details_approved;
         }
         // if ($action == "update") {
