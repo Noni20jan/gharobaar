@@ -280,7 +280,7 @@
                             <!-- <li class="nav-add-payout"><a href="<?php echo admin_url(); ?>add-payout"> <?php echo trans("add_payout"); ?></a></li> -->
                             <!-- <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>payout-requests"> <?php echo trans("payout_requests"); ?></a></li> -->
                             <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>initiate-payout-cod"> <?php echo trans("cod_payouts"); ?></a></li>
-                            <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>initiate-payout-prepaid"> <?php echo trans("prepaid_payouts"); ?></a></li> 
+                            <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>initiate-payout-prepaid"> <?php echo trans("prepaid_payouts"); ?></a></li>
                             <!-- <li class="nav-completed-payouts"><a href="<?php echo admin_url(); ?>completed-payouts"> <?php echo trans("completed_payouts"); ?></a></li>
                             <li class="nav-payout-settings"><a href="<?php echo admin_url(); ?>payout-settings"> <?php echo trans("payout_settings"); ?></a></li> -->
                         </ul>
@@ -511,7 +511,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="treeview<?php is_admin_nav_active(['send-email-members', 'members']); ?>">
+                    <li class="treeview<?php is_admin_nav_active(['send-email-members', 'members', 'send_sms_members']); ?>">
                         <a href="#">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/news.png" alt="" style="width: 20px; height: 20px;" />
                             <span><?php echo trans("compaign_mail"); ?></span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
@@ -519,6 +519,9 @@
                         <ul class="treeview-menu">
                             <li class="nav-send-email-subscribers">
                                 <a href="<?php echo admin_url(); ?>send-email-members"><?php echo trans("send_email_members"); ?></a>
+                            </li>
+                            <li class="nav-subscribers">
+                                <a href="<?php echo admin_url(); ?>send-sms-members"><?php echo trans("send_sms_members"); ?></a>
                             </li>
                         </ul>
                     </li>
