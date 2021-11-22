@@ -12,7 +12,109 @@ class Home_controller extends Home_Core_Controller
         // shipment api call for secret key
         $this->shiprocket();
     }
+    public function send_sms_members_post()
+    {
 
+        $emailto = $this->input->post('emailto', true);
+        $emailall = $this->input->post('emailall', true);
+        $coupon_code = $this->input->post('coupon_code', true);
+        $discount = $this->input->post('discount', true);
+        // $phoneall1 = array();
+        if ($emailall == 'individual') {
+            $where = "";
+            $count = 0;
+            foreach ($emailto as $phone) {
+                $count++;
+            }
+            $i = 1;
+            foreach ($emailto as $results) {
+                if ($i < $count) {
+
+                    // echo $soundword;
+                    $where .= $results . ",";
+                } else {
+
+                    $where .= $results;
+                }
+                $i++;
+            }
+        }
+        if ($emailall == 'all') {
+            $data['phone'] = $this->newsletter_model->get_members();
+            $where = "";
+            $count = 0;
+            foreach ($data['phone'] as $phone) {
+                $count++;
+            }
+            $i = 1;
+            foreach ($data['phone'] as $results) {
+                if ($i < $count) {
+
+                    // echo $soundword;
+                    $where .= $results->phone_number . ",";
+                } else {
+
+                    $where .= $results->phone_number;
+                }
+                $i++;
+            }
+        }
+        $label_content = 'coupon_code';
+        $result = $this->send_bulk_sms($where, $coupon_code, $discount, $label_content);
+        $this->session->set_flashdata('success', trans("msg_sms_sent"));
+
+        redirect($this->agent->referrer());
+    }
+    public function send_bulk_sms($phone, $coupon_code, $discount, $label_content)
+    {
+        // Authorisation details.
+        $username = "chirag.raut@austere.co.in";
+        $hash = $this->general_settings->textlocal_api;
+        // Config variables. Consult http://api.textlocal.in/docs for more info.
+        $test = "0";
+
+        // Data for text message. This is the text message data.
+        $sender = "GHRBAR"; // This is who the message appears to be from.
+        $numbers = "$phone"; // A single number or a comma-seperated list of numbers
+        $msg_content = get_content($label_content);
+        if ($label_content == "coupon_code") {
+            $token = array(
+                'code'  => $coupon_code,
+                'discount' => $discount
+            );
+        }
+        $pattern = '[%s]';
+        foreach ($token as $key => $val) {
+            $varMap[sprintf($pattern, $key)] = $val;
+        }
+        $apikey = "8hnKwcSmxnU-wlltbtQanStuagBcFtJoZBcHG6sQfB";
+        $message = strtr($msg_content, $varMap);
+        // $message = "Hi there ! We have not seen you on Gharobaar for long, and would love to have you back. Use coupon welcome on your next purchase to avail a flat discount (T&Cs apply). Visit https://gharobaar.com.";
+        // $data = "username=" . ($username) . "&hash=" . ($hash) . "&message=" . $message . "&sender=" . $sender . "&numbers=" . $numbers . "&test=" . $test;
+        $data = array('apikey' => $apikey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+        // var_dump($data);
+        // die();
+        $ch = curl_init('https://api.textlocal.in/send/?');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch); // This is the result from the API
+        curl_close($ch);
+        if ($label_content == "coupon_code1") {
+            $data = array(
+                'html_content1' => "",
+                'code'  => $coupon_code,
+                'discount' => $discount,
+                'message' => $message,
+                'result' => $result,
+                'numbers' => $numbers
+            );
+            // $this->session->set_flashdata('success', "SMS Sent Successfully !");
+            // $data["html_content1"] = $this->load->view('partials/_messages', null, true);
+            // reset_flash_data();
+            return true;
+        }
+    }
     //send otp function
     public function send_otp_verification($phn_num)
     {
@@ -58,11 +160,7 @@ class Home_controller extends Home_Core_Controller
         }
 
         $message = strtr($msg_content, $varMap);
-
-
-
         $data = "username=" . ($username) . "&hash=" . ($hash) . "&message=" . $message . "&sender=" . $sender . "&numbers=" . $numbers . "&test=" . $test;
-
         $ch = curl_init('http://api.textlocal.in/send/?');
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -569,6 +667,7 @@ class Home_controller extends Home_Core_Controller
      */
     public function products()
     {
+        // var_dump($pagination['per_page']);
         get_method();
         $data['title'] = trans("products");
         $data['description'] = trans("products") . " - " . $this->app_name;
@@ -579,6 +678,8 @@ class Home_controller extends Home_Core_Controller
         $data["query_string_object_array"] = convert_query_string_to_object_array($data["query_string_array"]);
         //get paginated posts
         $pagination = $this->paginate(generate_url("products"), $this->product_model->get_paginated_filtered_products_count($data["query_string_array"], null), $this->product_per_page);
+        // var_dump($pagination);
+        // die();
         $data['products'] = $this->product_model->get_paginated_filtered_products($data["query_string_array"], null, $pagination['per_page'], $pagination['offset']);
         $data['product_count'] = $this->product_model->get_paginated_filtered_products_count($data["query_string_array"]);
         $data["categories"] = $this->parent_categories;
@@ -2811,23 +2912,9 @@ class Home_controller extends Home_Core_Controller
         $data['keywords'] = trans("category_title") . "," . $this->app_name;
         $data["active_tab"] = "active_orders";
         $data['main_settings'] = get_main_settings();
-       
-        $this->load->view('partials/_header',$data);
+
+        $this->load->view('partials/_header', $data);
         $this->load->view('categories');
         $this->load->view('partials/_footer');
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

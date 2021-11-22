@@ -52,7 +52,7 @@ class Newsletter_model extends CI_Model
     }
     public function get_members1()
     {
-        $this->db->where('email_status', 1);
+        $this->db->where('user_type', 'registered');
         $query = $this->db->get('users');
         return $query->result();
     }
