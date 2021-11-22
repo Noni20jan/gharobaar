@@ -309,9 +309,14 @@ endif;
 
                         <?php $k = (date("dS M Y", $h)); ?>
                         <?php if ($z > $k) : ?>
-                            <p class="dispatch_late">Shipment is late and some penalty amount will be charged Rs 200</p>
+                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs. 200 for this order shall be charged as per the terms of the agreement.
+
+                                **<br />
+
+                                ** Kindly take note that the seller has to only schedule shipment on or before the due date. If the pickup was not done on time by the Shipping Partners, then no penalty will be levied on the seller.
+                            </p>
                         <?php else : ?>
-                            <p class="dispatch_alert"><b>Your order was placed on <?php echo $ordered_date; ?> and dispatch date is <?php echo $k; ?></b></p>
+                            <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $k; ?></b></p>
                         <?php endif; ?>
                     <?php elseif (substr_count($x, "_") == 2) : ?>
                         <?php $j = intval($product->shipping_time); ?>
@@ -319,9 +324,13 @@ endif;
                         <?php $h = strtotime("$j day", $h); ?>
                         <?php $i = (date("dS M Y", $h)); ?>
                         <?php if ($z > $i) : ?>
-                            <p class="dispatch_late">Shipment is late and penalty amount will be charged Rs 200</p>
+                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs. 200 for this order shall be charged as per the terms of the agreement.
+                                **
+                                <br />
+                                ** Kindly take note that the seller has to only schedule shipment on or before the due date. If the pickup was not done on time by the Shipping Partners, then no penalty will be levied on the seller.
+                            </p>
                         <?php else : ?>
-                            <p class="dispatch_alert"><b>Your order was placed on <?php echo $ordered_date; ?> and dispatch date is <?php echo $k; ?></b></p>
+                            <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $k; ?></b></p>
 
                         <?php endif; ?>
                     <?php else : ?>
