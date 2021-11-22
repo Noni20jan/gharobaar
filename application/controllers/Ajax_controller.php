@@ -239,12 +239,14 @@ class Ajax_controller extends Home_Core_Controller
         $selected_option_id = $this->input->post('selected_option_id', true);
         $variation = $this->variation_model->get_variation($variation_id);
         $option = $this->variation_model->get_variation_option($selected_option_id);
+        $option_name = get_variation_option_name($option->option_names, $this->selected_lang->id);
 
         $data = array(
             'status' => 0,
             'html_content_slider' => "",
             'html_content_price' => "",
             'html_content_stock' => "",
+            'html_net_weight' => $option_name,
             'stock_status' => 1,
         );
         if (!empty($variation) && !empty($option)) {
