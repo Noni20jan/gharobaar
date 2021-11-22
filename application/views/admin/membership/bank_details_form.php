@@ -509,11 +509,18 @@
                     <div class="row Brand-1">
                         <div class="col-md-3"><label id="formlabel2">Cheque Image<span class="Validation_error"> *</span></label></div>
                         <div class="col-md-9 Brand-name">
-                            <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/cheque_image.jpeg'; ?>" style="border-radius:10%" />
+                            <?php if (empty($user->cheque_image_url)) : ?>
+                                <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
+                            <?php else : ?>
+                                <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/cheque_image.jpeg'; ?>" style="border-radius:10%" />
+                            <?php endif; ?>
+                            <input type="file" name="cheque-image" id="cheque-logo" style="display: none;" value="<?php echo (!empty($user->cheque_image_url)) ? $user->cheque_image_url : ''; ?>" />
+                            <p id="file-upload-filename" style="margin-bottom:0;"></p>
 
-                            <input type="file" name="cheque-image" accept="image/*" id="cheque-logo" style="display: none;" value="<?php echo (!empty($user->cheque_image_url)) ? $user->cheque_image_url : ''; ?>" />
-                            <br />
-                            <small> <a href="<?php echo base_url() . $user->cheque_image_url; ?>" target="_blank" class="view_cheque_image">View Cheque Image</a></small>
+                            <?php if (!empty($user->cheque_image_url)) : ?>
+                                <small class="view_cheque_image"> <a href="<?php echo base_url() . $user->cheque_image_url; ?>" target="_blank">View Cheque Image</a></small>
+                            <?php endif; ?>
+
                         </div>
                     </div>
                 </div>
