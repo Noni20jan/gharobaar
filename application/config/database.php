@@ -76,15 +76,16 @@ $query_builder = TRUE;
 $db['default'] = array(
     'dsn'    => '',
 
-    'hostname' => 'educationdoctor.cz5snxflsj5z.ap-south-1.rds.amazonaws.com',
-    'username' => 'Gharobar',
-    'password' => 'c4db7107ec17ac4085b87eb533cc39b0',
-    'database' => 'Gharobar',
 
     // 'hostname' => 'qanew.cz5snxflsj5z.ap-south-1.rds.amazonaws.com',
     // 'username' => 'educationdoctor',
     // 'password' => 'PnHJM7VnasplnewqamCkAsr2v',
     // 'database' => 'local_gharobaar',
+
+    'hostname' => 'qanew.cz5snxflsj5z.ap-south-1.rds.amazonaws.com',
+    'username' => 'educationdoctor',
+    'password' => 'PnHJM7VnasplnewqamCkAsr2v',
+    'database' => 'gharobaar_test',
 
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
