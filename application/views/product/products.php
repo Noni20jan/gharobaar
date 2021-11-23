@@ -1,7 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- custom style style -->
-
-<!-- <?php var_dump(get_filters()); ?> -->
 <?php $sellers = get_products();
 $unique_state_array = array();
 foreach ($sellers as $seller) {
@@ -23,6 +21,7 @@ foreach ($sellers as $seller) {
         float: right;
     }
 
+
     @media(max-width: 768px) {
         .switch {
             position: relative;
@@ -32,7 +31,7 @@ foreach ($sellers as $seller) {
             /* right: 72px;
             top: 44px; */
             right: 20%;
-            top: 54%;
+            top: 42%;
             float: right;
 
 
@@ -49,13 +48,13 @@ foreach ($sellers as $seller) {
 
     }
 
+
+
     @media(max-width: 768px) {
 
         .cod {
-            position: absolute;
-            right: 56%;
-            left: 5%;
-            top: 81%;
+            float: left;
+            right: 45%;
             font-weight: 600;
 
         }
@@ -1136,8 +1135,118 @@ foreach ($sellers as $seller) {
                                     </div>
                             <?php endforeach;
                             endif; ?>
+                            <?php if (empty($parent_categories)) : ?>
+                                <div>
 
+                                    <input type="checkbox" class="check-box-size" id="days_available" value="days_available" name="filter_checkbox[]" onclick="show_available_days(this)">
+                                    <label for="days_available" style="margin: 10px;"><b>Available Delivery Days</b></label>
+                                </div>
+                                <div class="filter-item" id="days_filter" style="display: none">
 
+                                    <div class="filter-list-container">
+                                        <ul class="filter-list">
+                                            <?php $z = date('dS M Y'); ?>
+                                            <?php $day = strtotime($z . "+1 Days"); ?>
+                                            <?php $day_2 = strtotime($z . "+2 Days"); ?>
+                                            <?php $way = date('l', $day); ?>
+                                            <?php $way2 = date('l', $day_2); ?>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $way) ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Delivery in one day</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way2); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $way2) ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Delivery in Two days</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            <?php elseif (!empty($user_categories)) : ?>
+                                <?php if ($cat_id == 2) : ?>
+                                    <div>
+
+                                        <input type="checkbox" class="check-box-size" id="days_available" value="days_available" name="filter_checkbox[]" onclick="show_available_days(this)">
+                                        <label for="days_available" style="margin: 10px;"><b>Available Delivery Days</b></label>
+                                    </div>
+                                    <div class="filter-item" id="days_filter" style="display: none">
+
+                                        <div class="filter-list-container">
+                                            <ul class="filter-list">
+                                                <?php $z = date('dS M Y'); ?>
+                                                <?php $day = strtotime($z . "+1 Days"); ?>
+                                                <?php $day_2 = strtotime($z . "+2 Days"); ?>
+                                                <?php $way = date('l', $day); ?>
+                                                <?php $way2 = date('l', $day_2); ?>
+                                                <li>
+                                                    <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way); ?>">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $way) ? 'checked' : ''; ?>>
+                                                            <label class="custom-control-label">Delivery in one day</label>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way2); ?>">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $way2) ? 'checked' : ''; ?>>
+                                                            <label class="custom-control-label">Delivery in Two days</label>
+                                                        </div>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endif; ?>
+
+                            <?php if (!empty($parent_categories)) : ?>
+                                <?php if ($parent_categories[0]->id == 2) : ?>
+                                    <div>
+
+                                        <input type="checkbox" class="check-box-size" id="days_available" value="days_available" name="filter_checkbox[]" onclick="show_available_days(this)">
+                                        <label for="days_available" style="margin: 10px;"><b>Available Delivery Days</b></label>
+                                    </div>
+                                    <div class="filter-item" id="days_filter" style="display: none">
+
+                                        <div class="filter-list-container">
+                                            <ul class="filter-list">
+                                                <?php $z = date('dS M Y'); ?>
+                                                <?php $day = strtotime($z . "+1 Days"); ?>
+                                                <?php $day_2 = strtotime($z . "+2 Days"); ?>
+                                                <?php $way = date('l', $day); ?>
+                                                <?php $way2 = date('l', $day_2); ?>
+                                                <li>
+                                                    <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way); ?>">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $way) ? 'checked' : ''; ?>>
+                                                            <label class="custom-control-label">Delivery in one day</label>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way2); ?>">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $way2) ? 'checked' : ''; ?>>
+                                                            <label class="custom-control-label">Delivery in Two days</label>
+                                                        </div>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endif; ?>
 
 
                             <?php if (!empty($parent_categories)) : ?>
@@ -1311,6 +1420,7 @@ foreach ($sellers as $seller) {
                                             </div>
                                         </div>
                                     <?php endif; ?>
+
                                     <?php if ($parent_categories[0]->id == 1 && $parent_categories[1]->id == 11) : ?>
                                         <div>
                                             <input type="checkbox" id="jewellery_type" value="jewellery_type" name="filter_checkbox[]" onclick="show_jeweller_type(this)">
@@ -1609,6 +1719,16 @@ foreach ($sellers as $seller) {
                                         </div>
                                         <div class="right">
                                             <span class="reset-tag-title">Cash on Delivery</span>
+                                            <span><?= html_escape($filter->value); ?></span>
+                                        </div>
+                                    </div>
+                                <?php elseif ($filter->key == "availability") : ?>
+                                    <div class="filter-reset-tag">
+                                        <div class="left">
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                        </div>
+                                        <div class="right">
+                                            <span class="reset-tag-title">Available Delivery Days</span>
                                             <span><?= html_escape($filter->value); ?></span>
                                         </div>
                                     </div>
@@ -1938,6 +2058,11 @@ foreach ($sellers as $seller) {
         } else if ($('#gender').is(":not(:checked)")) {
             document.getElementById("gender_filter").style.display = "none";
         }
+        if ($('#days_available').is(":checked")) {
+            document.getElementById("days_filter").style.display = "block";
+        } else if ($('#days_available').is(":not(:checked)")) {
+            document.getElementById("days_filter").style.display = "none";
+        }
         if ($('#gender').is(":checked")) {
             document.getElementById("gender_filter").style.display = "block";
         } else if ($('#gender').is(":not(:checked)")) {
@@ -2024,6 +2149,11 @@ foreach ($sellers as $seller) {
         dvPassport.style.display = check.checked ? "block" : "none";
     }
 
+    function show_available_days(check) {
+        var dvPassport = document.getElementById("days_filter");
+        dvPassport.style.display = check.checked ? "block" : "none";
+    }
+
     function show_origin_of_product(check) {
         var dvPassport = document.getElementById("origin_of_product_filter");
         dvPassport.style.display = check.checked ? "block" : "none";
@@ -2051,7 +2181,6 @@ foreach ($sellers as $seller) {
 
         $(window).scroll(function() {
 
-            console.log($(window).scrollTop());
 
             if ($(window).scrollTop() > 550) {
                 $('#nav_bar').addClass('navbar-fixed-top');
@@ -2110,3 +2239,155 @@ foreach ($sellers as $seller) {
 
     });
 </script>
+<!-- <script>
+    $(document).ready(function() {
+        var length = $("#product_filter").height() - $("#insideFilter").height();
+        var insideLength = $("#insideFilter").height();
+        var len = $("#collapseFilters").height();
+        var foot = $('#wrapper').height();
+        var root = len + foot;
+        console.log("Collapse filter height", len);
+        // console.log("Inside filter height", foot);
+
+        // console.log("Product filter height", length);
+
+        $(window).scroll(function() {
+            var scroll = $(this).scrollTop();
+            var height = $('#insideFilter').height() + 'px';
+
+            if (scroll <= 0) {
+                $("#collapseFilters").css({
+                    position: 'absolute',
+                    top: '0',
+                    // width: '100%',
+                });
+            } else if (scroll >= length) {
+                $("#collapseFilters").css({
+                    position: 'absolute',
+                    top: 'auto',
+                    bottom: '0',
+                    // width: '100%'
+                });
+            } else {
+                $("#collapseFilters").css({
+                    position: 'fixed',
+                    top: '0',
+
+                });
+            }
+        });
+    });
+</script> -->
+<!-- <script>
+    $(document).ready(function() {
+        var total = 0;
+        // var length = $('#insideFilter').height() - $('#collapseFilters').height() + $('#collapseFilters').offset().top;
+        // console.log(length);
+        var z = $("#collapseFilters").height();
+        var x = $(".product-list-content").height();
+        console.log(z);
+        console.log(x);
+        // if (z < x) {
+        //     $("#collapseFilters").css({
+        //         'position': 'fixed',
+        //         'top': 'auto',
+        //         'minHeight': 'max-content',
+        //         'overflow-x': 'hidden'
+        //     });
+
+        // }
+        var chkbox = $("input[name='filter_checkbox[]']:checked");
+        console.log(chkbox['length']);
+        if ($("input[name='filter_checkbox[]']".checked)) {
+            for (var i = 0; i <= chkbox.length; i++) {
+                console.log("Total is", i + " " + total);
+            }
+            total += z;
+        } else if ($("input[name='filter_checkbox[]']".not(':checked').length == 0)) {
+            total += 326.667;
+        }
+        console.log(total);
+        $(window).scroll(function() {
+            var scroll = $(this).scrollTop();
+            var height = $('#collapseFilters').height() + 'px';
+            if (scroll <= 0) {
+                $("#collapseFilters").css({
+                    'position': 'relative',
+                    // 'top': '0',
+                    // 'bottom': 'auto',
+                    'float': 'left'
+                });
+                $('.product-filters .filter-item .price-filter-inputs').css({
+                    'display': 'block',
+                    'float': 'left',
+                    'position': 'relative',
+                    'width': '100%'
+                });
+
+            } else if (scroll > total) {
+                $("#collapseFilters").css({
+                    'position': 'relative',
+                    // 'top': 'auto',
+                    // 'bottom': '0',
+                    'float': 'left'
+
+                });
+                $('.product-filters .filter-item .price-filter-inputs').css({
+                    'display': 'block',
+                    'float': 'left',
+                    'position': 'relative',
+                    'width': '100%'
+                });
+            } else {
+                $("#collapseFilters").css({
+                    'position': 'fixed',
+                    // 'top': '0',
+                    // 'height': 'auto',
+                    'float': 'left'
+
+
+                });
+                $('.product-filters .filter-item .price-filter-inputs').css({
+                    'display': 'block',
+                    'float': 'left',
+                    'position': 'relative',
+                    'width': '19%'
+                });
+            }
+        });
+
+
+
+    });
+</script> -->
+<!-- <script>
+    jQuery(function($) {
+
+        $(window).bind('scroll', function(e) {
+            if ($(window).scrollTop() + window.innerHeight >= $('#footer').offset().top) {
+                $('#collapseFilters').css({
+                    'position': 'relative',
+                    'zIndex': '0',
+                    'overflowY': 'hidden'
+
+                });
+            } else {
+                $('#collapseFilters').css({
+                    'height': '100%',
+                    'width': '100%',
+                    'position': 'fixed',
+                    'zIndex': '1',
+
+                    'overflowX': 'hidden'
+                });
+                $('.product-filters .filter-item .price-filter-inputs').css({
+                    'display': 'block',
+                    'float': 'left',
+                    'position': 'relative',
+                    'width': '15%'
+                });
+
+            };
+        });
+    });
+</script> -->

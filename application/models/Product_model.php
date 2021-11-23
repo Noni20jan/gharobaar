@@ -790,6 +790,7 @@ class Product_model extends Core_Model
         $food_preference = $this->input->get("food_preference", true);
         $blouse_details =  str_replace('_', ' ', $this->input->get("blouse_details", true));
         $available_for_return_or_exchange = $this->input->get("available_for_return_or_exchange", true);
+        $availability = $this->input->get("availability", true);
         $add_meet = str_replace('_', ' ', $this->input->get("product_type", true));
         $rating = remove_special_characters($this->input->get("rating", true));
         $seller_type = remove_special_characters($this->input->get("seller_type", true));
@@ -833,7 +834,7 @@ class Product_model extends Core_Model
 
 
             foreach ($query_string_array as $key => $array_values) {
-                if ($key != "product_type" && $key != "meal_type" && $key != "cash_on_delivery" && $key != "blouse_details" && $key != "pet_age" && $key != "available"  && $key != "gender" && $key != "discount"  && $key != "food_type" && $key != "jewellery_type"  && $key != "rating"  && $key != "p_min" && $key != "p_max" && $key != "sort" && $key != "search" && $key != "seller_type" && $key != "origin_of_product" && $key != "food_preference" && $key != "available_for_return_or_exchange") {
+                if ($key != "product_type" && $key != "meal_type" && $key != "cash_on_delivery" && $key != "blouse_details" && $key != "pet_age" && $key != "available"  && $key != "gender" && $key != "discount"  && $key != "food_type" && $key != "jewellery_type"  && $key != "rating"  && $key != "p_min" && $key != "p_max" && $key != "sort" && $key != "search" && $key != "seller_type" && $key != "origin_of_product" && $key != "food_preference" && $key != "available_for_return_or_exchange" && $key != "availability") {
                     $item = new stdClass();
                     $item->key = $key;
                     $updated_array_values = array();
@@ -924,6 +925,12 @@ class Product_model extends Core_Model
         if (!empty($array_available_for_return_or_exchange) && !empty($array_available_for_return_or_exchange[0])) {
             $this->db->group_start();
             $this->db->where_in("products.available_for_return_or_exchange", $array_available_for_return_or_exchange);
+            $this->db->group_end();
+        }
+        $array_days_available = @explode(',', $availability);
+        if (!empty($array_days_available) && !empty($array_days_available[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.availability", $array_days_available);
             $this->db->group_end();
         }
         //pet age
