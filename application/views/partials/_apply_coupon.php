@@ -114,16 +114,18 @@
 <script>
     function copy(copyValue) {
         var copy = copyValue;
-        for (const copied of copy) {
-            copied.addEventListener("copy", function(event) {
-                event.preventDefault();
-                if (event.clipboardData) {
-                    event.clipboardData.setData("text/plain", copied.textContent);
-                    console.log(event.clipboardData.getData("text"))
-                    $("#coupon-input-field").val(event.clipboardData.getData("text")).change();
-                };
-            });
-            document.execCommand("copy");
-        };
+        console.log(copy[0].innerText)
+        $('#coupon-input-field').val(copy[0].innerText).change();
+        // for (const copied of copy) {
+        //     copied.addEventListener("copy", function(event) {
+        //         if (event.clipboardData) {
+        //             event.clipboardData.setData("text/plain", copied.textContent);
+        //             console.log(event.clipboardData.getData("text"))
+        //             $("#coupon-input-field").val(event.clipboardData.getData("text")).change();
+        //         };
+        //         event.preventDefault();
+        //     });
+        //     document.execCommand("copy");
+        // };
     }
 </script>
