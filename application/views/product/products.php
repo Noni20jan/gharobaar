@@ -1154,7 +1154,7 @@ foreach ($sellers as $seller) {
                                                 <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way); ?>">
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $way) ? 'checked' : ''; ?>>
-                                                        <label class="custom-control-label">Delivery in one day</label>
+                                                        <label class="custom-control-label">Delivery in 1 day</label>
                                                     </div>
                                                 </a>
                                             </li>
@@ -1162,7 +1162,7 @@ foreach ($sellers as $seller) {
                                                 <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way2); ?>">
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $way2) ? 'checked' : ''; ?>>
-                                                        <label class="custom-control-label">Delivery in Two days</label>
+                                                        <label class="custom-control-label">Delivery in 2 days</label>
                                                     </div>
                                                 </a>
                                             </li>
@@ -1190,7 +1190,7 @@ foreach ($sellers as $seller) {
                                                     <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way); ?>">
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $way) ? 'checked' : ''; ?>>
-                                                            <label class="custom-control-label">Delivery in one day</label>
+                                                            <label class="custom-control-label">Delivery in 1 day</label>
                                                         </div>
                                                     </a>
                                                 </li>
@@ -1198,7 +1198,7 @@ foreach ($sellers as $seller) {
                                                     <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way2); ?>">
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $way2) ? 'checked' : ''; ?>>
-                                                            <label class="custom-control-label">Delivery in Two days</label>
+                                                            <label class="custom-control-label">Delivery in 2 days</label>
                                                         </div>
                                                     </a>
                                                 </li>
@@ -1229,7 +1229,7 @@ foreach ($sellers as $seller) {
                                                     <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way); ?>">
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $way) ? 'checked' : ''; ?>>
-                                                            <label class="custom-control-label">Delivery in one day</label>
+                                                            <label class="custom-control-label">Delivery in 1 day</label>
                                                         </div>
                                                     </a>
                                                 </li>
@@ -1237,7 +1237,7 @@ foreach ($sellers as $seller) {
                                                     <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way2); ?>">
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $way2) ? 'checked' : ''; ?>>
-                                                            <label class="custom-control-label">Delivery in Two days</label>
+                                                            <label class="custom-control-label">Delivery in 2 days</label>
                                                         </div>
                                                     </a>
                                                 </li>
