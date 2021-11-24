@@ -11,6 +11,12 @@
         visibility: hidden;
     }
 
+
+    #textEmail {
+        background-color: #d1d1d1 !important;
+
+    }
+
     @media only screen and (max-width: 1024px) {
         #footer .newsletter .footer-title {
             color: #222;
@@ -18,7 +24,7 @@
             font-weight: 400;
             line-height: 30px;
             /* max-width: 200px; */
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             text-indent: 3px;
             position: relative;
             left: 10px;
@@ -35,6 +41,8 @@
         border-radius: 20px;
         background-color: transparent;
         border: 0;
+        background-color: #d1d1d1;
+
     }
 
     footer .newsletter .newsletter-inner button {
@@ -115,6 +123,8 @@
             float: left;
 
             margin-top: 0%;
+            margin-bottom: 0rem;
+
 
 
         }
@@ -269,15 +279,11 @@
             </svg> -->
             <div class="col-12">
                 <div class="footer-top">
-                    <!-- style="padding-top: 20px;" -->
+
                     <div class="row" id="social-links-for-mobile">
-
                         <div class="col-12" id="footer-follow-us">
-                            <!-- <h4 class="footer-title"><?php echo trans("follow_us"); ?></h4> -->
-                            <div class="footer-social-links-mobile" style="margin-top: 10px;text-align:center;">
-
+                            <div class="footer-social-links-mobile" style="margin-top: 0px;text-align:center;">
                                 <?php $this->load->view('partials/_social_links', ['show_rss' => true]); ?>
-
                             </div>
                         </div>
                     </div>
@@ -365,21 +371,15 @@
 
                         <div class="col-12 col-sm-2 footer-widget" id="support-footer-view">
                             <form id="form_validate_newsletter">
-
                                 <div class="newsletter-inner">
                                     <h4 class="footer-title"><?php echo trans("newsletter"); ?></h4>
                                     <div class="d-table-cell">
                                         <input type="text" id="textEmail" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("type_email"); ?>">
                                         <p id="demo"></p>
                                     </div>
-
-
-
                                     <div class="d-table-cell">
-                                        <!-- <button class="btn btn-default" type="submit" onclick="validateEmail()"><?php echo trans("subscribe"); ?> -->
                                         <button type="button" class="btn btn-default" id="subscribe"><?php echo trans("subscribe"); ?></button>
                                         </button>
-
                                     </div>
                                 </div>
                                 <p id="demo" style="color: red;display:inline-block"></p>
@@ -762,7 +762,7 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
 
 <script>
     $("#wishlist-mobile-view").click(function() {
-   
+
         $('#loginModal').modal('show');
     })
 </script>
