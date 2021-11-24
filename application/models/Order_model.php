@@ -452,10 +452,17 @@ class Order_model extends CI_Model
 
             // condition for shipping slabs
             $slab = true;
+            // if ($slab == true) {
+            //     if ($object->total_amount_with_gst >= 50000) {
+            //         $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
+            //     } else if ($object->total_amount_with_gst >= 200000) {
+            //         $object->shipping_charge_to_gharobaar = 0;
+            //     }
+            // }
             if ($slab == true) {
-                if ($object->total_amount_with_gst >= 50000) {
+                if ($object->total_amount_with_gst > 0 && $object->total_amount_with_gst < 100000) {
                     $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
-                } else if ($object->total_amount_with_gst >= 200000) {
+                } else if ($object->total_amount_with_gst >= 100000) {
                     $object->shipping_charge_to_gharobaar = 0;
                 }
             }
@@ -2843,7 +2850,34 @@ class Order_model extends CI_Model
                     $Supplier_Shipping_cost_with_gst = intval($shiprocket_charges["freight_charges"] + ($shiprocket_charges["freight_charges"] * 18 / 100));
 
                     if (!$prod_details->free_shipping) :
-                        if ($psd->total_price >= 200000) {
+                        // if ($psd->total_price >= 200000) {
+                        //     $actual_shipping_charges = array(
+                        //         "freight_charges" => 0
+                        //     );
+                        //     if (!$cod) {
+                        //         $actual_shipping_charges["cod_charges"] = 0;
+                        //     } else {
+                        //         $actual_shipping_charges["cod_charges"] = (50) * 100;
+                        //     }
+                        //     $tax_charges = intval((($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100)));
+                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                        // } elseif ($psd->total_price >= 50000 && $psd->total_price < 200000) {
+                        //     $actual_shipping_charges = array(
+                        //         "freight_charges" => 10000
+                        //     );
+                        //     if (!$cod) {
+                        //         $actual_shipping_charges["cod_charges"] = 0;
+                        //     } else {
+                        //         $actual_shipping_charges["cod_charges"] = (50) * 100;
+                        //     }
+                        //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                        // } else {
+                        //     $actual_shipping_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
+                        //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                        // }
+                        if ($psd->total_price >= 100000) {
                             $actual_shipping_charges = array(
                                 "freight_charges" => 0
                             );
@@ -2854,7 +2888,7 @@ class Order_model extends CI_Model
                             }
                             $tax_charges = intval((($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100)));
                             $actual_shipping_charges["tax_charges"] = $tax_charges;
-                        } elseif ($psd->total_price >= 50000 && $psd->total_price < 200000) {
+                        } elseif ($psd->total_price >= 0 && $psd->total_price < 100000) {
                             $actual_shipping_charges = array(
                                 "freight_charges" => 10000
                             );
@@ -3148,7 +3182,34 @@ class Order_model extends CI_Model
                 } else if ($prod_details->delivery_partner == "SHIPROCKET") {
 
                     if (!$prod_details->free_shipping) :
-                        if ($psd->total_price >= 200000) {
+                        // if ($psd->total_price >= 200000) {
+                        //     $actual_shipping_charges = array(
+                        //         "freight_charges" => 0
+                        //     );
+                        //     if (!$cod) {
+                        //         $actual_shipping_charges["cod_charges"] = 0;
+                        //     } else {
+                        //         $actual_shipping_charges["cod_charges"] = (50) * 100;
+                        //     }
+                        //     $tax_charges = intval((($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100)));
+                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                        // } elseif ($psd->total_price >= 50000 && $psd->total_price < 200000) {
+                        //     $actual_shipping_charges = array(
+                        //         "freight_charges" => 10000
+                        //     );
+                        //     if (!$cod) {
+                        //         $actual_shipping_charges["cod_charges"] = 0;
+                        //     } else {
+                        //         $actual_shipping_charges["cod_charges"] = (50) * 100;
+                        //     }
+                        //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                        // } else {
+                        //     $actual_shipping_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
+                        //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                        // }
+                        if ($psd->total_price >= 100000) {
                             $actual_shipping_charges = array(
                                 "freight_charges" => 0
                             );
@@ -3159,7 +3220,7 @@ class Order_model extends CI_Model
                             }
                             $tax_charges = intval((($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100)));
                             $actual_shipping_charges["tax_charges"] = $tax_charges;
-                        } elseif ($psd->total_price >= 50000 && $psd->total_price < 200000) {
+                        } elseif ($psd->total_price >= 0 && $psd->total_price < 100000) {
                             $actual_shipping_charges = array(
                                 "freight_charges" => 10000
                             );
@@ -4211,10 +4272,17 @@ class Order_model extends CI_Model
 
             // condition for shipping slabs
             $slab = true;
+            // if ($slab == true) {
+            //     if ($object->total_amount_with_gst >= 50000) {
+            //         $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
+            //     } else if ($object->total_amount_with_gst >= 200000) {
+            //         $object->shipping_charge_to_gharobaar = 0;
+            //     }
+            // }
             if ($slab == true) {
-                if ($object->total_amount_with_gst >= 50000) {
+                if ($object->total_amount_with_gst > 0 && $object->total_amount_with_gst < 100000) {
                     $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
-                } else if ($object->total_amount_with_gst >= 200000) {
+                } else if ($object->total_amount_with_gst >= 100000) {
                     $object->shipping_charge_to_gharobaar = 0;
                 }
             }
@@ -4534,10 +4602,17 @@ class Order_model extends CI_Model
 
             // condition for shipping slabs
             $slab = true;
+            // if ($slab == true) {
+            //     if ($object->total_amount_with_gst >= 50000) {
+            //         $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
+            //     } else if ($object->total_amount_with_gst >= 200000) {
+            //         $object->shipping_charge_to_gharobaar = 0;
+            //     }
+            // }
             if ($slab == true) {
-                if ($object->total_amount_with_gst >= 50000) {
+                if ($object->total_amount_with_gst > 0 && $object->total_amount_with_gst < 100000) {
                     $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
-                } else if ($object->total_amount_with_gst >= 200000) {
+                } else if ($object->total_amount_with_gst >= 100000) {
                     $object->shipping_charge_to_gharobaar = 0;
                 }
             }
