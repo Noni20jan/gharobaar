@@ -648,7 +648,7 @@ class Auth_controller extends Home_Core_Controller
                     //update slug
                     $this->auth_model->update_slug($user->id);
                     if ($this->general_settings->email_verification != 1) {
-                        $this->auth_model->login_direct($user);
+                        // $this->auth_model->login_direct($user);
                         $this->session->set_flashdata('success', trans("msg_register_success"));
                         // redirect(generate_url(""));
                     }
