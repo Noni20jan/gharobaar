@@ -11382,7 +11382,7 @@ button.bg-dark:hover {
 
 .text-center {
   text-align: center !important;
-  margin-left: -14%;
+
 }
 
 @media (min-width: 576px) {
@@ -12191,7 +12191,7 @@ img {
 
 .m-t-10 {
   margin-top: 10px !important;
-  margin-left: -6%;
+
 }
 
 .m-t-15 {
@@ -21425,7 +21425,7 @@ form select.error {
   }
 
   .copyright {
-    margin-bottom: -15px;
+    margin-bottom: 10px;
   }
 
   .product-item-horizontal .item-purchase-code span {
