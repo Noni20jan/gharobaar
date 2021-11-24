@@ -11382,6 +11382,7 @@ button.bg-dark:hover {
 
 .text-center {
   text-align: center !important;
+  margin-left: -14%;
 }
 
 @media (min-width: 576px) {
@@ -11808,6 +11809,7 @@ img.lazyload:not([src]) {
 img {
   text-indent: -9999px;
   color: transparent;
+ 
 }
 
 .font-size-13 {
@@ -12189,6 +12191,7 @@ img {
 
 .m-t-10 {
   margin-top: 10px !important;
+  margin-left: -6%;
 }
 
 .m-t-15 {
@@ -18122,6 +18125,7 @@ img {
   margin-right: 10px;
   margin-bottom: 10px;
   background-color: #007c05;
+  margin-top:13px
 }
 
 .filter-reset-tag .right {
@@ -19550,6 +19554,17 @@ img {
   text-align: center;
 }
 
+@media only screen and (max-width: 1024px) {
+#footer .footer-logo {
+  margin: 3px auto 0px;
+  max-width: 270px;
+  max-height: 180px;
+  text-align: center;
+}
+
+}
+
+
 #footer .footer-logo a {
   display: block;
 }
@@ -19902,8 +19917,8 @@ img {
 .scrollup {
   display: none;
   position: fixed;
-  bottom: 85px;
-  right: 30px;
+  bottom: 136px;
+  right: 16px;
   color: #fff !important;
   z-index: 999999;
 }
@@ -20925,11 +20940,11 @@ form select.error {
   }
 
   #footer .nav-footer {
-    padding-left: 0;
+    padding-left: 8px;
   }
 
   .footer-widget {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
   }
 
   .image-upload-box .uploaded-image {
@@ -21410,7 +21425,7 @@ form select.error {
   }
 
   .copyright {
-    margin-bottom: 10px;
+    margin-bottom: -15px;
   }
 
   .product-item-horizontal .item-purchase-code span {

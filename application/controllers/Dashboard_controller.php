@@ -2204,6 +2204,18 @@ class Dashboard_controller extends Home_Core_Controller
         }
         redirect($this->agent->referrer());
     }
+    public function update_stock_post_variation()
+    {
+        $id = $this->input->post('id', true);
+        $stock = $this->input->post('stock', true);
+        $product = $this->variation_model->get_variation_option($id);
+
+        if (!empty($product)) {
+            if ($this->product_model->update_variation_stock($id, $stock)) {
+            }
+        }
+        redirect($this->agent->referrer());
+    }
 
     /**
      * Add Shipping Tracking Number Post

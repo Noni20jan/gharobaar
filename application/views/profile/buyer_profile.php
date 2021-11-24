@@ -227,7 +227,7 @@
                 <!-- include message block -->
                 <?php $this->load->view('admin/includes/_messages'); ?>
 
-                <div class="row">
+                <div class="row" style="margin-left:6%">
                     <p>
                         <img src="<?php echo get_user_avatar($user); ?>" alt="<?php echo $user->username; ?>" id="test">
                     </p>

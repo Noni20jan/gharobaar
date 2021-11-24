@@ -163,10 +163,15 @@
             <?php else : ?>
                 <p>
                     <!-- <?php echo trans("shipping"); ?> -->
-                    <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span>
+                    <!-- <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span> -->
 
                     <!-- <span class="float-right"><?php echo price_formatted($cart_total->shipping_cost, $this->payment_settings->default_currency); ?>/-</span> -->
-
+                    <?php if (($cart_total->total_price) >= 100000) : ?>
+                        <?php echo trans("shipping"); ?><span class="float-right"><?php echo ("₹0/-"); ?></span>
+                    <?php elseif ($psd->total_price >= 0 && $psd->total_price < 100000) : ?> {
+                        <?php echo trans("shipping"); ?><span class="float-right"><?php echo ("₹100/-"); ?></span>
+                        }
+                    <?php endif; ?>
 
                 </p>
             <?php endif; ?>

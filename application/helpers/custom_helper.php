@@ -1610,6 +1610,29 @@ if (!function_exists('get_dropdown_category_id')) {
     }
 }
 
+
+//get parent category id
+if (!function_exists('get_parent_category_id')) {
+    function get_parent_category_id()
+    {
+        $ci = &get_instance();
+        $category_id = 0;
+        $category_ids = $ci->input->post('category_id');
+        if (!empty($category_ids)) {
+            // $category_ids = array_reverse($category_ids);
+            foreach ($category_ids as $category_id) {
+                if (!empty($category_id)) {
+                    $data['category_id'] = $category_id;
+                    break;
+                }
+            }
+        }
+        return $category_id;
+    }
+}
+
+
+
 //get custom field
 if (!function_exists('get_custom_field')) {
     function get_custom_field($field_id)

@@ -96,6 +96,7 @@
                 <h3 class="box-title"><?= html_escape($title); ?></h3>
             </div>
         </div>
+        <?php $i = 0; ?>
         <div class="box-body">
             <div class="row">
                 <div class="col-sm-12">
@@ -113,60 +114,206 @@
                             <tbody>
                                 <?php if (!empty($products)) :
                                     foreach ($products as $item) : ?>
-                                        <tr>
-                                            <td><?php echo html_escape($item->id); ?></td>
-                                            <td class="td-product">
-                                                <?php if ($item->is_promoted == 1) : ?>
-                                                    <label class="label label-success"><?php echo trans("featured"); ?></label>
-                                                <?php endif; ?>
-                                                <div class="img-table">
-                                                    <a href="<?php echo generate_product_url($item); ?>" target="_blank">
-                                                        <img src="<?php echo get_product_image($item->id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
+                                        <?php $data["half_width_product_variations"] = $this->variation_model->get_half_width_product_variations($item->id);
+                                        $data["full_width_product_variations"] = $this->variation_model->get_full_width_product_variations($item->id);
+                                        // var_dump($data["half_width_product_variations"]);
+                                        // var_dump($data["full_width_product_variations"]);
+
+                                        if (empty($data["full_width_product_variations"]) && empty($data["half_width_product_variations"])) {
+                                        ?>
+                                            <tr>
+                                                <?php $i++; ?>
+                                                <td><?php echo html_escape($item->id); ?></td>
+                                                <td class="td-product">
+                                                    <?php if ($item->is_promoted == 1) : ?>
+                                                        <label class="label label-success"><?php echo trans("featured"); ?></label>
+                                                    <?php endif; ?>
+                                                    <div class="img-table">
+                                                        <a href="<?php echo generate_product_url($item); ?>" target="_blank">
+                                                            <img src="<?php echo get_product_image($item->id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
+                                                        </a>
+                                                    </div>
+                                                    <a href="<?php echo generate_product_url($item); ?>" target="_blank" class="table-product-title"><br />
+                                                        <?php echo get_product_title($item); ?>
                                                     </a>
-                                                </div>
-                                                <a href="<?php echo generate_product_url($item); ?>" target="_blank" class="table-product-title"><br />
-                                                    <?php echo get_product_title($item); ?>
-                                                </a>
-                                            </td>
-                                            <td><?php echo $item->sku; ?></td>
+                                                </td>
+                                                <td><?php echo $item->sku; ?></td>
 
 
-                                        <td class="white-space-nowrap">
-                                            <?php if ($item->product_type == "digital" && $item->add_meet == "Made to stock") : ?>
-                                                <span class="text-success"><?php echo trans("in_stock"); ?></span>
-                                            <?php elseif ($item->add_meet == "Made to order") : ?>
-                                                <span class="text-success">Available in <?php echo $item->lead_days; ?> Days <?php echo $item->lead_time; ?> Hours </span>
-                                                <?php else :
-                                                if ($item->stock < 1) : ?>
-                                                    <span class="text-danger"><?= $item->listing_type == 'ordinary_listing' ? trans("sold") : trans("out_of_stock"); ?></span>
-                                                <?php else : ?>
-                                                    <span class="text-success"><?php echo trans("in_stock"); ?>&nbsp;<?= $item->listing_type != 'ordinary_listing' ? "(" . $item->stock . ")" : ''; ?></span>
-                                                <?php endif; ?>
+                                                <td class="white-space-nowrap">
+                                                    <?php if ($item->product_type == "digital" && $item->add_meet == "Made to stock") : ?>
+                                                        <span class="text-success"><?php echo trans("in_stock"); ?></span>
+                                                    <?php elseif ($item->add_meet == "Made to order") : ?>
+                                                        <span class="text-success">Available in <?php echo $item->lead_days; ?> Days <?php echo $item->lead_time; ?> Hours </span>
+                                                        <?php else :
+                                                        if ($item->stock < 1) : ?>
+                                                            <span class="text-danger"><?= $item->listing_type == 'ordinary_listing' ? trans("sold") : trans("out_of_stock"); ?></span>
+                                                        <?php else : ?>
+                                                            <span class="text-success"><?php echo trans("in_stock"); ?>&nbsp;<?= $item->listing_type != 'ordinary_listing' ? "(" . $item->stock . ")" : ''; ?></span>
+                                                        <?php endif; ?>
 
 
-                                            <?php endif; ?>
-                                        </td>
+                                                    <?php endif; ?>
+                                                </td>
 
-                                        <td>
-                                            <?php echo form_open('update-stock-post'); ?>
-                                            <input type="hidden" name="id" value="<?php echo $item->id; ?>">
+                                                <td>
+                                                    <?php echo form_open('update-stock-post'); ?>
+                                                    <input type="hidden" name="id" value="<?php echo $item->id; ?>">
 
-                                            <div>
-                                                <div style="float:left;">
-                                                    <input type="number" name="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>" required>
-                                                </div>
-                                                <div style="float:left;">
-                                                    <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('edit'); ?></button>
-                                                </div>
-                                            </div>
-                                            
+                                                    <div>
+                                                        <div style="float:left;">
+                                                            <input type="number" name="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>" required>
+                                                        </div>
+                                                        <div style="float:left;">
+                                                            <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('edit'); ?></button>
+                                                        </div>
+                                                    </div>
 
 
 
 
-                                                <?php echo form_close(); ?>
-                                            </td>
-                                        </tr>
+
+                                                    <?php echo form_close(); ?>
+                                                </td>
+                                            </tr>
+                                            <?php } else if (!empty($data["full_width_product_variations"])) {
+                                            foreach ($data["full_width_product_variations"] as $datads) :
+                                                $variation = $this->variation_model->get_variation($datads->id);
+                                                // var_dump($variation->id);
+                                                $option = $this->variation_model->get_variation_options($variation->id);
+                                                $label = get_variation_label($variation->label_names, $this->selected_lang->id);
+                                                // var_dump($option);
+                                                foreach ($option as $options) :
+                                                    $option_name = get_variation_option_name($options->option_names, $this->selected_lang->id);
+                                            ?>
+                                                    <?php $i++; ?>
+                                                    <tr>
+                                                        <td><?php echo html_escape($item->id); ?></td>
+                                                        <td class="td-product">
+                                                            <?php if ($item->is_promoted == 1) : ?>
+                                                                <label class="label label-success"><?php echo trans("featured"); ?></label>
+                                                            <?php endif; ?>
+                                                            <div class="img-table">
+                                                                <a href="<?php echo generate_product_url($item); ?>" target="_blank">
+                                                                    <img src="<?php echo get_product_image($item->id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
+                                                                </a>
+                                                            </div>
+                                                            <a href="<?php echo generate_product_url($item); ?>" target="_blank" class="table-product-title"><br />
+                                                                <?php echo get_product_title($item) . "(" . $label . ":" . $option_name . ")"; ?>
+                                                            </a>
+                                                        </td>
+                                                        <td><?php echo $item->sku; ?></td>
+
+
+                                                        <td class="white-space-nowrap">
+                                                            <?php if ($item->product_type == "digital" && $item->add_meet == "Made to stock") : ?>
+                                                                <span class="text-success"><?php echo trans("in_stock"); ?></span>
+                                                            <?php elseif ($item->add_meet == "Made to order") :
+                                                            ?>
+                                                                <span class="text-success">Available in <?php echo $item->lead_days; ?> Days <?php echo $item->lead_time; ?> Hours </span>
+                                                                <?php else :
+                                                                if ($options->stock < 1) : ?>
+                                                                    <span class="text-danger"><?= $item->listing_type == 'ordinary_listing' ? trans("sold") : trans("out_of_stock"); ?></span>
+                                                                <?php else : ?>
+                                                                    <span class="text-success"><?php echo trans("in_stock"); ?>&nbsp;<?php echo $options->stock; ?></span>
+                                                                <?php endif; ?>
+
+
+                                                            <?php endif; ?>
+                                                        </td>
+
+                                                        <td>
+                                                            <?php echo form_open('update-stock-post-variation'); ?>
+                                                            <input type="hidden" name="id" value="<?php echo $options->id; ?>">
+
+                                                            <div>
+                                                                <div style="float:left;">
+                                                                    <input type="number" name="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>" required>
+                                                                </div>
+                                                                <div style="float:left;">
+                                                                    <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('edit'); ?></button>
+                                                                </div>
+                                                            </div>
+
+
+
+
+
+                                                            <?php echo form_close(); ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php endforeach; ?>
+                                        <?php } ?>
+                                        <?php if (!empty($data["half_width_product_variations"])) {
+                                            foreach ($data["half_width_product_variations"] as $datad) :
+
+                                                $variation = $this->variation_model->get_variation($datad->id);
+                                                // var_dump($variation->id);
+                                                $option = $this->variation_model->get_variation_options($variation->id);
+                                                $label = get_variation_label($variation->label_names, $this->selected_lang->id);
+                                                // var_dump($option);
+                                                foreach ($option as $options) :
+                                                    $option_name = get_variation_option_name($options->option_names, $this->selected_lang->id);
+                                        ?> <?php $i++; ?>
+                                                    <tr>
+                                                        <td><?php echo html_escape($item->id); ?></td>
+                                                        <td class="td-product">
+                                                            <?php if ($item->is_promoted == 1) : ?>
+                                                                <label class="label label-success"><?php echo trans("featured"); ?></label>
+                                                            <?php endif; ?>
+                                                            <div class="img-table">
+                                                                <a href="<?php echo generate_product_url($item); ?>" target="_blank">
+                                                                    <img src="<?php echo get_product_image($item->id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
+                                                                </a>
+                                                            </div>
+                                                            <a href="<?php echo generate_product_url($item); ?>" target="_blank" class="table-product-title"><br />
+                                                                <?php echo get_product_title($item) . "(" . $label . ":" . $option_name . ")"; ?>
+                                                            </a>
+                                                        </td>
+                                                        <td><?php echo $item->sku; ?></td>
+
+
+                                                        <td class="white-space-nowrap">
+                                                            <?php if ($item->product_type == "digital" && $item->add_meet == "Made to stock") : ?>
+                                                                <span class="text-success"><?php echo trans("in_stock"); ?></span>
+                                                            <?php elseif ($item->add_meet == "Made to order") :
+                                                            ?>
+                                                                <span class="text-success">Available in <?php echo $item->lead_days; ?> Days <?php echo $item->lead_time; ?> Hours </span>
+                                                                <?php else :
+                                                                if ($options->stock < 1) : ?>
+                                                                    <span class="text-danger"><?= $item->listing_type == 'ordinary_listing' ? trans("sold") : trans("out_of_stock"); ?></span>
+                                                                <?php else : ?>
+                                                                    <span class="text-success"><?php echo trans("in_stock"); ?>&nbsp;<?php echo $options->stock; ?></span>
+                                                                <?php endif; ?>
+
+
+                                                            <?php endif; ?>
+                                                        </td>
+
+                                                        <td>
+                                                            <?php echo form_open('update-stock-post-variation'); ?>
+                                                            <input type="hidden" name="id" value="<?php echo $options->id; ?>">
+
+                                                            <div>
+                                                                <div style="float:left;">
+                                                                    <input type="number" name="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>" required>
+                                                                </div>
+                                                                <div style="float:left;">
+                                                                    <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('edit'); ?></button>
+                                                                </div>
+                                                            </div>
+
+
+
+
+
+                                                            <?php echo form_close(); ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php endforeach; ?>
+                                        <?php } ?>
                                 <?php endforeach;
                                 endif; ?>
                             </tbody>
@@ -183,7 +330,7 @@
                 <div class="col-sm-12">
                     <?php if (!empty($products)) : ?>
                         <div class="number-of-entries">
-                            <span><?= trans("number_of_entries"); ?>:</span>&nbsp;&nbsp;<strong><?= $num_rows; ?></strong>
+                            <span><?= trans("number_of_entries"); ?>:</span>&nbsp;&nbsp;<strong><?= $i; ?></strong>
                         </div>
                     <?php endif; ?>
                     <div class="table-pagination">

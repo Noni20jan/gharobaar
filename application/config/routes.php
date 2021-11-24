@@ -337,6 +337,7 @@ foreach ($languages as $language) {
         $route[$key . getr('dashboard', $rts) . '/' . getr('services', $rts)]['GET'] = 'dashboard_controller/services';
         $route[$key . getr('dashboard', $rts) . '/' . getr('pending_services', $rts)]['GET'] = 'dashboard_controller/pending_services';
         $route[$key . getr('dashboard', $rts) . '/' . getr('bulk_product_upload', $rts)]['GET'] = 'dashboard_controller/bulk_product_upload';
+        $route[$key . getr('dashboard', $rts) . '/' . getr('bulk_product_upload_demo_file', $rts)]['GET'] = 'dashboard_controller/bulk_product_upload_demo_file';
         $route[$key . getr('dashboard', $rts) . '/' . getr('bulk_service_upload', $rts)]['GET'] = 'dashboard_controller/bulk_service_upload';
         $route[$key . getr('dashboard', $rts) . '/' . getr('barter_system', $rts)]['GET'] = 'dashboard_controller/barter_system';
         $route[$key . getr('dashboard', $rts) . '/' . getr('sales', $rts)]['GET'] = 'dashboard_controller/sales';
