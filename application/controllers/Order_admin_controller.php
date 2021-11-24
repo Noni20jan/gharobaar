@@ -125,6 +125,18 @@ class Order_admin_controller extends Admin_Core_Controller
 						}
 					}
 				}
+
+				if ($order_status == 'cancelled') {
+					$order = $this->order_admin_model->get_order($order_product->order_id);
+					$payment_method = $order->payment_method;
+					if ($payment_method == 'Cashfree') {
+						if ($this->general_settings->enable_easysplit == 0) {
+							$this->order_model->recal_prepaid_seller_payable($order->id);
+						}
+					} else {
+						$this->order_model->recal_cod_seller_payable($order->id);
+					}
+				}
 				$this->session->set_flashdata('success', trans("msg_updated"));
 			} else {
 				$this->session->set_flashdata('error', trans("msg_error"));

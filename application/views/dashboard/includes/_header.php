@@ -508,6 +508,16 @@ $user = get_user($this->auth_user->id);
                                 <span><?php echo trans("bulk_product_upload"); ?></span>
                             </a>
                         </li> -->
+                        <?php if ($this->general_settings->enable_bulk_upload == 1) : ?>
+                            <li class="nav-bulk-product-upload">
+                                <a href="<?= generate_dash_url("bulk_product_upload_demo_file"); ?>">
+                                    <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/bulk-product-icon.png" alt="" style="width: 20px; height: 20px;" />
+                                    <span><?php echo trans("bulk_product_upload"); ?></span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+
+
                         <li class="treeview<?php is_admin_nav_active(['products', 'pending-products', 'hidden-products', 'expired-products', 'drafts']); ?>">
                             <a href="#">
                                 <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/products-icon.jpg" alt="" style="width: 20px; height: 20px;" />

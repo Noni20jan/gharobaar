@@ -2910,4 +2910,15 @@ order by id desc LIMIT 1";
         $query8 = $this->db->query($sql5);
         return $query8->result();
     }
+
+    public function get_cat_name($last_lvl_cat_id)
+    {
+        $this->db->where("category_id", $last_lvl_cat_id);
+        $result = $this->db->get('categories_lang');
+        return $result->row()->name;
+    }
+
+    public function save_batch_download($data){
+        $this->db->insert('PRODUCT_BATCH', $data);
+    }
 }
