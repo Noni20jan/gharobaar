@@ -11,7 +11,22 @@ foreach ($sellers as $seller) {
 
 //var_dump($unique_state_array);
 ?>
+<style type="text/css">
+    .ajax-load {
+        /* background: #e1e1e1; */
+        padding: 10px 0px;
+        width: 100%;
+    }
+
+    .more-products-loading {
+        width: 5%;
+    }
+</style>
 <style>
+    .loadedcontent {
+        min-height: 1200px;
+    }
+
     .switch {
         position: relative;
         display: inline-block;
@@ -1955,7 +1970,7 @@ foreach ($sellers as $seller) {
                                 <?= trans("products"); ?>
                             <?php endif; ?><h6> -->
                     </div>
-                    <div class="row row-product" style="margin-top:20px">
+                    <div class="row row-product" id="post-data" style="margin-top:20px">
 
                         <!--print products-->
 
@@ -1967,14 +1982,15 @@ foreach ($sellers as $seller) {
                         <?php endforeach; ?>
                         <?php if (empty($products)) : ?>
                             <div class="col-12">
-                                <p class="no-records-found"><?php echo trans("no_products_found"); ?></p>
+                                <p class="no-records-found"><?php echo trans("no_more_products_to_show"); ?></p>
                             </div>
                         <?php endif; ?>
                     </div>
-                </div>
-
-                <div class="row product-list-pagination">
-                    <?php echo $this->pagination->create_links(); ?>
+                    <div class="ajax-load text-center" style="display:none">
+                        <p><img class="more-products-loading" src="assets/img/dark-loader.gif"></p>
+                    </div>
+                    <div class="ajax-load-2 text-center" style="display:none">
+                    </div>
                 </div>
 
                 <div class="col-12">
@@ -1986,6 +2002,55 @@ foreach ($sellers as $seller) {
     </div>
 </div>
 <!-- Wrapper End-->
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"></script>
+<script>
+    var page = 1;
+    $(window).scroll(function() {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            page++;
+            loadMoreData(page);
+        }
+    });
+
+    function loadMoreData(page) {
+        $.ajax({
+                url: base_url + "home_controller/infinite_scroll_products/" + page,
+                type: "get",
+                beforeSend: function() {
+
+                    // if (page == "2") {
+                    $('.ajax-load').show();
+                    // } else {
+                    // $('.ajax-load-1').show();
+                    // }
+                }
+            })
+            .done(function(data) {
+                if (data == " ") {
+                    // $('.ajax-load-2').html("Fr");
+                    $('.ajax-load-2').html("No more records found");
+                    return;
+                }
+                $('.ajax-load').hide();
+                // $('.ajax-load-1').hide();
+                $('#no-more-products').html("");
+                $("#post-data").append(data);
+            })
+            .fail(function(jqXHR, ajaxOptions, thrownError) {
+                alert('server not responding...');
+            });
+    }
+</script>
+
+
+
+
+
+
 
 <script type="text/javascript">
     $(document).ready(function() {

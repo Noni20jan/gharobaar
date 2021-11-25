@@ -88,7 +88,7 @@ class Core_Controller extends CI_Controller
 
         //update last seen time
         $this->auth_model->update_last_seen();
-        $this->product_per_page = 24;
+        $this->product_per_page = 20;
 
         //is sale active
         $this->is_sale_active = false;
@@ -214,6 +214,31 @@ class Home_Core_Controller extends Core_Controller
     {
         //initialize pagination
         $page = $this->security->xss_clean($this->input->get('page'));
+        $page = clean_number($page);
+        if (empty($page) || $page <= 0) {
+            $page = 0;
+        }
+
+        if ($page != 0) {
+            $page = $page - 1;
+        }
+
+        $config['num_links'] = 2;
+        $config['base_url'] = $url;
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $per_page;
+        $config['reuse_query_string'] = true;
+        $this->pagination->initialize($config);
+
+        $per_page = clean_number($per_page);
+
+
+        return array('per_page' => $per_page, 'offset' => $page * $per_page, 'current_page' => $page + 1);
+    }
+    public function paginate1($url, $total_rows, $per_page, $page)
+    {
+        //initialize pagination
+        // $page = $this->security->xss_clean($this->input->get('page'));
         $page = clean_number($page);
         if (empty($page) || $page <= 0) {
             $page = 0;
