@@ -634,7 +634,7 @@ class Cart_model extends CI_Model
 
                     $cart_total->subtotal += $object->price * $item->quantity;
                     $cart_total->gst += $item->product_gst;
-                    $cart_total->discount += round((($object->price) * ($object->discount_rate)) / 10000) * $item->quantity;
+                    $cart_total->discount += round(((floatval($object->price)) * (floatval($object->discount_rate))) / 10000) * $item->quantity;
                 }
                 if (empty($cart_total->min_dispatch_time)) :
                     $cart_total->min_dispatch_time = $item->product_dispatch_time;
@@ -989,7 +989,7 @@ class Cart_model extends CI_Model
                     $item->unit_price = $object->price_calculated;
                     $item->total_price = $object->price_calculated * $cart_item->quantity;
                     $item->discount_rate = $object->discount_rate;
-                    $item->discount_amount = round((($object->price) * ($object->discount_rate)) / 10000);
+                    $item->discount_amount = round((floatval($object->price)) * (floatval($object->discount_rate)) / 10000);
                     $item->currency = $product->currency;
                     $item->listing_price = $object->price;
                     $item->product_gst_rate = $product->gst_rate;
