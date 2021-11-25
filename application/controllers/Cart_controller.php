@@ -1469,20 +1469,20 @@ class Cart_controller extends Home_Core_Controller
 
             // condition for shipping slabs
             $slab = true;
-            // if ($slab == true) {
-            //     if ($object->total_amount_with_gst >= 50000) {
-            //         $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
-            //     } else if ($object->total_amount_with_gst >= 200000) {
-            //         $object->shipping_charge_to_gharobaar = 0;
-            //     }
-            // }
             if ($slab == true) {
-                if ($object->total_amount_with_gst > 0 && $object->total_amount_with_gst < 100000) {
+                if ($object->total_amount_with_gst >= 50000) {
                     $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
-                } else if ($object->total_amount_with_gst >= 100000) {
+                } else if ($object->total_amount_with_gst >= 200000) {
                     $object->shipping_charge_to_gharobaar = 0;
                 }
             }
+            // if ($slab == true) {
+            //     if ($object->total_amount_with_gst > 0 && $object->total_amount_with_gst < 100000) {
+            //         $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
+            //     } else if ($object->total_amount_with_gst >= 100000) {
+            //         $object->shipping_charge_to_gharobaar = 0;
+            //     }
+            // }
             // condition end
 
 

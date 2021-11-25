@@ -613,14 +613,11 @@
                                     <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
                                         <p>
 
-                                            <?php if (($cart_total->total_price) >= 100000) : ?>
-                                                <?php echo trans("shipping"); ?><span id="ship_charge" class="float-right"><?php echo ("₹0/-"); ?></span>
-                                            <?php elseif ($cart_total->total_price >= 0 && $cart_total->total_price < 100000) : ?> 
-                                                <?php echo trans("shipping"); ?><span id="ship_charge" class="float-right"><?php echo ("₹100/-"); ?></span>
+
                                                 
-                                                <!-- <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span> -->
+                                                <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span>
                                         </p>
-                                    <?php endif; ?>
+
                                 <?php endif; ?>
                                 <p style="color:#007C05;" id="coupon-discount-tag" class="<?php echo ((!empty($this->session->userdata('mds_shopping_cart_coupon')))) ? '' : 'hide-coupon-discount' ?>">
                                     <strong>
