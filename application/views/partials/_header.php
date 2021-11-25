@@ -3905,6 +3905,55 @@
         </script>
     <?php endif; ?>
     <!-- chat system end -->
+    <script>
+        var def_tawk_bottom = "20px"; /*This is their default style that I want to change*/
+        var def_tawk_right = "16px"; /*This is their default style that I want to change*/
+        var customize_tawk = ""; /*Interval object*/
+
+        function customize_tawk_widget() {
+            var cur_bottom = jQuery("iframe[title='chat widget']").eq(0).css('bottom'); /*Get the default style*/
+            var cur_right = jQuery("iframe[title='chat widget']").eq(0).css('right'); /*Get the default style*/
+            if (cur_bottom == def_tawk_bottom && cur_right == def_tawk_right) {
+                /*Check if the default style exists then remove it and add my custom style*/
+                jQuery("iframe[title='chat widget']").eq(0).css({
+                    'right': '2px',
+                    'bottom': '64px'
+                });
+                jQuery("iframe[title='chat widget']").eq(0).addClass("custom-chat-widget");
+                clearInterval(customize_tawk);
+            }
+        }
+
+        /*Customize the widget as soon as the widget is loaded*/
+        Tawk_API = Tawk_API || {};
+        Tawk_API.onLoad = function() {
+            /*Only for mobile version*/
+            if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent)) {
+                var customize_tawk = setInterval(customize_tawk_widget, 100);
+            }
+        };
+
+        /*Customize the widget as soon as the widget is minimized*/
+        Tawk_API = Tawk_API || {};
+        Tawk_API.onChatMinimized = function() {
+            /*Only for mobile version*/
+            if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent)) {
+                var customize_tawk = setInterval(customize_tawk_widget, 100);
+            }
+        };
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -5520,8 +5569,8 @@
         })
     </script>
     <script>
-    $("#wishlist-mobile-view-header").click(function() {
-   
-        $('#loginModal').modal('show');
-    })
-</script>
+        $("#wishlist-mobile-view-header").click(function() {
+
+            $('#loginModal').modal('show');
+        })
+    </script>
