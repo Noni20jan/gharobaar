@@ -53,8 +53,8 @@ class Order_controller extends Home_Core_Controller
         // $data['testing'] =  $this->order_model->get_order_product_by_id();
         $this->load->view('dashboard/includes/_header_buyer', $data);
         $this->load->view('order/orders', $data);
-        // $this->load->view('dashboard/includes/_footer');
-        $this->load->view('partials/_footer');
+        $this->load->view('dashboard/includes/_footer');
+        // $this->load->view('partials/_footer');
     }
 
     public function orders_dashboard_mobile()
@@ -496,7 +496,6 @@ class Order_controller extends Home_Core_Controller
         $data['description'] = trans("orders") . " - " . $this->app_name;
         $data['keywords'] = trans("orders") . "," . $this->app_name;
         $data["active_tab"] = "";
-
         $data["cart_items"] = $this->cart_model->get_sess_cart_items();
         $data["cart_total"] = $this->cart_model->get_sess_cart_total();
         // $data["order"] = $this->order_model->get_order_by_order_number($order_number);
@@ -513,15 +512,12 @@ class Order_controller extends Home_Core_Controller
             $data['url'] = $response->tracking_data->track_url;
         }
 
-
-
         // // var_dump($data['track_statuses']);
         // $product = array();
         // foreach ($data["order_products"] as $order_details) {
         //     array_push($product, $this->product_model->get_product_by_id($order_details->product_id));
         // }
         // $data["products"] = $product;
-
         $this->load->view('partials/_header', $data);
         $this->load->view('order/orders_details', $data);
         $this->load->view('partials/_footer');

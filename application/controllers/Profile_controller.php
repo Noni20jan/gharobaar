@@ -274,8 +274,8 @@ class Profile_controller extends Home_Core_Controller
         $data["session"] = get_user_session();
         $this->load->view('dashboard/includes/_header_buyer', $data);
         $this->load->view('settings/update_profile_dashboard', $data);
-        // $this->load->view('dashboard/includes/_footer');
-        $this->load->view('partials/_footer');
+        $this->load->view('dashboard/includes/_footer');
+        // $this->load->view('partials/_footer');
     }
 
     /**
@@ -958,7 +958,6 @@ class Profile_controller extends Home_Core_Controller
         if (!$this->auth_check) {
             redirect(lang_base_url());
         }
-
         $data['title'] = trans("social_media");
         $data['description'] = trans("social_media") . " - " . $this->app_name;
         $data['keywords'] = trans("social_media") . "," . $this->app_name;
@@ -970,8 +969,8 @@ class Profile_controller extends Home_Core_Controller
         $data["session"] = get_user_session();
         $this->load->view('dashboard/includes/_header_buyer', $data);
         $this->load->view('settings/social_media_dashboard', $data);
-        // $this->load->view('dashboard/includes/_footer');
-        $this->load->view('partials/_footer');
+        $this->load->view('dashboard/includes/_footer');
+        // $this->load->view('partials/_footer');
     }
     public function social_media_seller()
     {
@@ -979,7 +978,6 @@ class Profile_controller extends Home_Core_Controller
         if (!$this->auth_check) {
             redirect(lang_base_url());
         }
-
         $data['title'] = trans("social_media");
         $data['description'] = trans("social_media") . " - " . $this->app_name;
         $data['keywords'] = trans("social_media") . "," . $this->app_name;
@@ -1094,8 +1092,8 @@ class Profile_controller extends Home_Core_Controller
         $data["session"] = get_user_session();
         $this->load->view('dashboard/includes/_header_buyer', $data);
         $this->load->view('settings/change_password_dashboard', $data);
-        // $this->load->view('dashboard/includes/_footer');
-        $this->load->view('partials/_footer');
+        $this->load->view('dashboard/includes/_footer');
+        // $this->load->view('partials/_footer');
     }
 
     public function change_password_dashboard_seller()

@@ -176,8 +176,8 @@ class Dashboard_controller extends Home_Core_Controller
         $this->load->view('dashboard/includes/_header_buyer', $data);
         // $this->load->view('partials/_header', $data);
         $this->load->view('profile/buyer_profile', $data);
-        $this->load->view('partials/_footer');
-        // $this->load->view('dashboard/includes/_footer');
+        // $this->load->view('partials/_footer');
+        $this->load->view('dashboard/includes/_footer');
     }
 
 
@@ -375,8 +375,8 @@ class Dashboard_controller extends Home_Core_Controller
 
         $this->load->view('dashboard/includes/_header_buyer', $data);
         $this->load->view('dashboard/addresses', $data);
-        // $this->load->view('dashboard/includes/_footer');
-        $this->load->view('partials/_footer');
+        $this->load->view('dashboard/includes/_footer');
+        // $this->load->view('partials/_footer');
     }
 
     /**
@@ -393,7 +393,6 @@ class Dashboard_controller extends Home_Core_Controller
         $data["active_product_system_array"] = $this->get_activated_product_system();
         $data['main_settings'] = get_main_settings();
         $view = !$this->membership_model->is_allowed_adding_product() ? 'plan_expired' : 'add_product';
-
         $this->load->view('dashboard/includes/_header', $data);
         $this->load->view('dashboard/product/' . $view, $data);
         $this->load->view('dashboard/includes/_footer');
