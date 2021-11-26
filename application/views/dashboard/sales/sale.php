@@ -297,7 +297,7 @@ endif;
             <?php if (empty($shiprocket_order_details)) : ?>
                 <?php if ($item->order_status != 'cancelled_by_seller' || $item->order_status != 'cancelled_by_user') : ?>
                     <?php $product = get_product($item->product_id); ?>
-                    <?php $current_date = date('dS M Y'); ?>
+                    <?php $current_date = new DateTime(); ?>
                     <?php $order_date = strtotime($order->created_at); ?>
                     <?php $ordered_date = date("dS M Y", $order_date); ?>
                     <?php $shipping_time = $product->shipping_time; ?>
@@ -305,10 +305,14 @@ endif;
                     <?php if (substr_count($shipping_time, "_") > 2) : ?>
                         <?php $ship_time = intval($product->shipping_time[2]); ?>
                         <?php $created_at = strtotime($order->created_at); ?>
-                        <?php $order_create = strtotime("$ship_time day", $created_at); ?>
+
+                        <?php $order_create = strtotime("$ship_time day", strtotime($order->created_at)); ?>
 
                         <?php $ship_date = (date("dS M Y", $order_create)); ?>
-                        <?php if ($current_date >= $ship_date) : ?>
+                        <?php $shipping_date = new DateTime($ship_date); ?>
+
+
+                        <?php if ($shipping_date >= $current_date) : ?>
 
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $ship_date; ?></b></p>
 
@@ -325,8 +329,9 @@ endif;
                         <?php $created_at = strtotime($order->created_at); ?>
                         <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
                         <?php $shipped_date = (date("dS M Y", $order_create)); ?>
+                        <?php $shipp_date = new DateTime($shipped_date); ?>
 
-                        <?php if ($current_date >= $shipped_date) : ?>
+                        <?php if ($shipp_date >= $current_date) : ?>
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
 
                         <?php else : ?>
