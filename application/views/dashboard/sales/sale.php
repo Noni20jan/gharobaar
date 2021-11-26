@@ -308,30 +308,34 @@ endif;
                         <?php $order_create = strtotime("$ship_time day", $created_at); ?>
 
                         <?php $ship_date = (date("dS M Y", $order_create)); ?>
-                        <?php if ($current_date > $ship_date) : ?>
+                        <?php if ($current_date >= $ship_date) : ?>
+
+                            <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $ship_date; ?></b></p>
+
+                        <?php else : ?>
                             <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs. 200 for this order shall be charged as per the terms of the agreement.
 
                                 **<br />
 
                                 ** Kindly take note that the seller has to only schedule shipment on or before the due date. If the pickup was not done on time by the Shipping Partners, then no penalty will be levied on the seller.
                             </p>
-                        <?php else : ?>
-                            <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $ship_date; ?></b></p>
                         <?php endif; ?>
                     <?php elseif (substr_count($shipping_time, "_") == 2) : ?>
                         <?php $shipped_time = intval($product->shipping_time); ?>
                         <?php $created_at = strtotime($order->created_at); ?>
                         <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
                         <?php $shipped_date = (date("dS M Y", $order_create)); ?>
-                        <?php if ($current_date > $shipped_date) : ?>
-                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs. 200 for this order shall be charged as per the terms of the agreement.
-                                **
-                                <br />
-                                ** Kindly take note that the seller has to only schedule shipment on or before the due date. If the pickup was not done on time by the Shipping Partners, then no penalty will be levied on the seller.
-                            </p>
-                        <?php else : ?>
+
+                        <?php if ($current_date >= $shipped_date) : ?>
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
 
+                        <?php else : ?>
+                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs. 200 for this order shall be charged as per the terms of the agreement.
+
+                                **<br />
+
+                                ** Kindly take note that the seller has to only schedule shipment on or before the due date. If the pickup was not done on time by the Shipping Partners, then no penalty will be levied on the seller.
+                            </p>
                         <?php endif; ?>
                     <?php else : ?>
                         <p></p>
