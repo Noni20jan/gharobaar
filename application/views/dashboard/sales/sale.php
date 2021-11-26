@@ -322,7 +322,7 @@ endif;
                         <?php $shipped_time = intval($product->shipping_time); ?>
                         <?php $created_at = strtotime($order->created_at); ?>
                         <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
-                        <?php $shipped_date = (date("dS M Y", $h)); ?>
+                        <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                         <?php if ($current_date > $shipped_date) : ?>
                             <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs. 200 for this order shall be charged as per the terms of the agreement.
                                 **
