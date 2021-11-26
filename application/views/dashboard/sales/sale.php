@@ -297,18 +297,18 @@ endif;
             <?php if (empty($shiprocket_order_details)) : ?>
                 <?php if ($item->order_status != 'cancelled_by_seller' || $item->order_status != 'cancelled_by_user') : ?>
                     <?php $product = get_product($item->product_id); ?>
-                    <?php $z = date('dS M Y'); ?>
+                    <?php $current_date = date('dS M Y'); ?>
                     <?php $order_date = strtotime($order->created_at); ?>
                     <?php $ordered_date = date("dS M Y", $order_date); ?>
-                    <?php $x = $product->shipping_time; ?>
+                    <?php $shipping_time = $product->shipping_time; ?>
 
-                    <?php if (substr_count($x, "_") > 2) : ?>
-                        <?php $y = intval($product->shipping_time[2]); ?>
-                        <?php $h = strtotime($order->created_at); ?>
-                        <?php $h = strtotime("$y day", $h); ?>
+                    <?php if (substr_count($shipping_time, "_") > 2) : ?>
+                        <?php $ship_time = intval($product->shipping_time[2]); ?>
+                        <?php $created_at = strtotime($order->created_at); ?>
+                        <?php $order_create = strtotime("$ship_time day", $created_at); ?>
 
-                        <?php $k = (date("dS M Y", $h)); ?>
-                        <?php if ($z > $k) : ?>
+                        <?php $ship_date = (date("dS M Y", $order_create)); ?>
+                        <?php if ($current_date > $ship_date) : ?>
                             <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs. 200 for this order shall be charged as per the terms of the agreement.
 
                                 **<br />
@@ -316,21 +316,21 @@ endif;
                                 ** Kindly take note that the seller has to only schedule shipment on or before the due date. If the pickup was not done on time by the Shipping Partners, then no penalty will be levied on the seller.
                             </p>
                         <?php else : ?>
-                            <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $k; ?></b></p>
+                            <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $ship_date; ?></b></p>
                         <?php endif; ?>
-                    <?php elseif (substr_count($x, "_") == 2) : ?>
-                        <?php $j = intval($product->shipping_time); ?>
-                        <?php $h = strtotime($order->created_at); ?>
-                        <?php $h = strtotime("$j day", $h); ?>
-                        <?php $i = (date("dS M Y", $h)); ?>
-                        <?php if ($z > $i) : ?>
+                    <?php elseif (substr_count($shipping_time, "_") == 2) : ?>
+                        <?php $shipped_time = intval($product->shipping_time); ?>
+                        <?php $created_at = strtotime($order->created_at); ?>
+                        <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
+                        <?php $shipped_date = (date("dS M Y", $h)); ?>
+                        <?php if ($current_date > $shipped_date) : ?>
                             <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs. 200 for this order shall be charged as per the terms of the agreement.
                                 **
                                 <br />
                                 ** Kindly take note that the seller has to only schedule shipment on or before the due date. If the pickup was not done on time by the Shipping Partners, then no penalty will be levied on the seller.
                             </p>
                         <?php else : ?>
-                            <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $k; ?></b></p>
+                            <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
 
                         <?php endif; ?>
                     <?php else : ?>
