@@ -83,7 +83,7 @@ class Cart_model extends CI_Model
                 $item->expected_delivery_date = $expected_delivery_date;
             }
             array_push($cart, $item);
-            if ($this->auth_check) {
+            if ($this->auth_check && !empty($cart_id)) {
                 $this->add_cart_product_details($cart_id, $item);
             }
 
@@ -163,7 +163,11 @@ class Cart_model extends CI_Model
         $this->db->where('user_id', $user_id);
         $this->db->where('is_active', '1');
         $row = $this->db->get('cart')->row();
-        return $row->id;
+        if (!empty($row)) :
+            return $row->id;
+        else :
+            return $row;
+        endif;
     }
 
     public function check_for_cart_by_user_id($user_id)
@@ -310,7 +314,9 @@ class Cart_model extends CI_Model
                     $cart_item->shipping_cost = $sup->Supplier_Shipping_cost;
                 }
             }
-            $this->add_shipping_cost_to_cart_by_seller_db($cart_item->cart_item_id, $cart_item->shipping_cost);
+            if (auth_check()) :
+                $this->add_shipping_cost_to_cart_by_seller_db($cart_item->cart_item_id, $cart_item->shipping_cost);
+            endif;
             array_push($cart_with_shipping_cost_updated, $cart_item);
         }
         $this->session->set_userdata('mds_shopping_cart', $cart_with_shipping_cost_updated);
@@ -1197,7 +1203,9 @@ class Cart_model extends CI_Model
             }
         }
         $this->session->set_userdata('mds_cart_shipping_address', $std);
-        $this->save_session_shipping_address_db($cart_id, $user_id, $std);
+        if (!empty($cart_id)) :
+            $this->save_session_shipping_address_db($cart_id, $user_id, $std);
+        endif;
         $this->add_delivery_distance();
     }
 

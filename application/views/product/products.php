@@ -2017,9 +2017,13 @@ foreach ($sellers as $seller) {
     });
 
     function loadMoreData(page) {
+        var urlSearchParams = new URLSearchParams(window.location.search);
+        var params = Object.fromEntries(urlSearchParams.entries());
+        params.page = page;
         $.ajax({
-                url: base_url + "home_controller/infinite_scroll_products/" + page,
+                url: base_url + "load_more_products",
                 type: "get",
+                data: params,
                 beforeSend: function() {
 
                     // if (page == "2") {
