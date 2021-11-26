@@ -4522,6 +4522,7 @@
                             <div id="result-login" class="font-size-13"></div>
                             <div class="form-group">
                                 <input type="text" name="email" id="guest_email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
+                                <span id="email_span_error" style="color:red;"></span>
                             </div>
 
                             <div class="form-group">
@@ -5572,5 +5573,197 @@
         $("#wishlist-mobile-view-header").click(function() {
 
             $('#loginModal').modal('show');
-        })
+        });
+
+        $("#form_guest_login").submit(function(a) {
+            var email_address = document.getElementById("guest_email").value;
+            var phone_number = document.getElementById("guest_phone_number").value;
+            var b = $(this);
+            var url = "";
+            if (b[0].checkValidity() === false) {
+                a.preventDefault();
+                a.stopPropagation();
+            } else {
+                a.preventDefault();
+                var c = b.find("input, select, button, textarea");
+                var d = b.serializeArray();
+                d.push({
+                    name: csfr_token_name,
+                    value: $.cookie(csfr_cookie_name),
+                });
+                d.push({
+                    name: "sys_lang_id",
+                    value: sys_lang_id,
+                });
+                d.push({
+                    name: "email",
+                    value: email_address,
+                });
+                var emailcheck = "<?php echo $this->general_settings->check_email_validation; ?>";
+                if (emailcheck === "1") {
+                    // var data1 = {
+                    //     'email': email_address
+                    // }
+                    // data1[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: "POST",
+                        url: base_url + "api/email/verifyemail",
+                        data: d,
+                        success: function(response) {
+                            var email = email_address;
+                            var name = email.substring(0, email.lastIndexOf("@"));
+                            var domain = email.substring(email.lastIndexOf("@") + 1);
+                            var resp = $.parseJSON(response);
+                            if (domain == "gmail.com") {
+                                if (resp.status == 200) {
+                                    //gmail_login;
+                                    if ($("#guest_otp").val() == "") {
+                                        url = "auth_controller/send_otp_verification";
+                                    } else {
+                                        url =
+                                            "home_controller/session_otp_verification/" + $("#guest_otp").val();
+                                    }
+
+                                    document.getElementById("email_phn_exist_msg").innerHTML = "";
+
+
+                                    var data = b.serializeArray();
+                                    data.push({
+                                        name: csfr_token_name,
+                                        value: $.cookie(csfr_cookie_name),
+                                    });
+                                    data.push({
+                                        name: "sys_lang_id",
+                                        value: sys_lang_id,
+                                    });
+                                    data.push({
+                                        name: "email",
+                                        value: email_address,
+                                    });
+
+                                    //disable guest login otp functionality direct entry on continue
+                                    $.ajax({
+                                        url: base_url + "auth_controller/guest_register_post",
+                                        type: "post",
+                                        data: data,
+                                        success: function(f) {
+                                            var e = JSON.parse(f);
+                                            if (e.result == 1) {
+                                                window.location.href = base_url + "cart/shipping";
+                                            } else {
+                                                document.getElementById("email_phn_exist_msg").innerHTML =
+                                                    e.error_message;
+                                            }
+                                        },
+                                    });
+
+                                } else if (resp.status == 303) {
+                                    $('#email_span_error').html(resp.message);
+                                } else if (resp.status == 304) {
+                                    $('#email_span_error').html(resp.message);
+                                }
+                            } else {
+                                if (resp.status == 303) {
+                                    //other login
+                                    if ($("#guest_otp").val() == "") {
+                                        url = "auth_controller/send_otp_verification";
+                                    } else {
+                                        url =
+                                            "home_controller/session_otp_verification/" + $("#guest_otp").val();
+                                    }
+
+                                    document.getElementById("email_phn_exist_msg").innerHTML = "";
+                                    var data = b.serializeArray();
+                                    data.push({
+                                        name: csfr_token_name,
+                                        value: $.cookie(csfr_cookie_name),
+                                    });
+                                    data.push({
+                                        name: "sys_lang_id",
+                                        value: sys_lang_id,
+                                    });
+                                    data.push({
+                                        name: "email",
+                                        value: email_address,
+                                    });
+
+                                    //disable guest login otp functionality direct entry on continue
+                                    $.ajax({
+                                        url: base_url + "auth_controller/guest_register_post",
+                                        type: "post",
+                                        data: data,
+                                        success: function(f) {
+                                            var e = JSON.parse(f);
+                                            if (e.result == 1) {
+                                                window.location.href = base_url + "cart/shipping";
+                                            } else {
+                                                document.getElementById("email_phn_exist_msg").innerHTML =
+                                                    e.error_message;
+                                            }
+                                        },
+                                    });
+                                } else if (resp.status == 304) {
+                                    $('#email_span_error').html(resp.message);
+                                }
+                            }
+                        }
+                    });
+                }
+
+
+                //enable guest login otp functionality
+
+                // $.ajax({
+                //   url: base_url + url,
+                //   type: "post",
+                //   data: d,
+                //   success: function (f) {
+                //     var e = JSON.parse(f);
+                //     if (e.result) {
+                //       if (e.api == "SENT_OTP") {
+                //         $(".show_after_response").show();
+                //         $(".hide_after_response").hide();
+                //         $("#guest_otp").attr("required", true);
+                //       } else if (e.api == "CONFIRM_OTP") {
+                //         var data = b.serializeArray();
+                //         data.push({
+                //           name: csfr_token_name,
+                //           value: $.cookie(csfr_cookie_name),
+                //         });
+                //         data.push({
+                //           name: "sys_lang_id",
+                //           value: sys_lang_id,
+                //         });
+                //         $.ajax({
+                //           url: base_url + "auth_controller/guest_register_post",
+                //           type: "post",
+                //           data: data,
+                //           success: function (f) {
+                //             var e = JSON.parse(f);
+                //             if (e.result == 1) {
+                //               window.location.href = base_url + "cart/shipping";
+                //             } else {
+                //               document.getElementById("email_phn_exist_msg").innerHTML =
+                //                 e.error_message;
+                //             }
+                //           },
+                //         });
+                //       }
+                //     } else {
+                //       if (e.api == "CONFIRM_OTP") {
+                //         document.getElementById("email_phn_exist_msg").innerHTML =
+                //           e.html_content2;
+                //       } else if (e.api == "SENT_OTP") {
+                //         document.getElementById("email_phn_exist_msg").innerHTML =
+                //           e.html_content1;
+                //       } else {
+                //         document.getElementById("email_phn_exist_msg").innerHTML =
+                //           e.error_message;
+                //       }
+                //     }
+                //   },
+                // });
+            }
+            b[0].classList.add("was-validated");
+        });
     </script>
