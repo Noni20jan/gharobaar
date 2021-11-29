@@ -531,8 +531,23 @@
                                             <?php if ((empty($half_width_product_variations)) && (empty($full_width_product_variations))) :
                                             ?>
                                                 <p id="grams_btn">Net Weight&nbsp;:&nbsp;<?php echo $product->product_weight ?>g&nbsp;</p>
-                                                <?php elseif (!empty($half_width_product_variations) || (!empty($full_width_product_variations))) :
+                                                <?php elseif ((!empty($full_width_product_variations))) :
                                                 $variation = $this->variation_model->get_variation($full_width_product_variations[0]->id);
+
+                                                $label =  get_variation_label($variation->label_names, $this->selected_lang->id);
+                                                // var_dump($label);
+                                                // die();
+                                                if ($label == 'weight') : ?>
+                                                    <p id="grams_btn">Net Weight&nbsp;:&nbsp;<span id="grams_btn1"><?php echo $product->product_weight
+                                                                                                                    ?>g</span>&nbsp;</p>
+
+                                                    <!-- <input type="text" id="variation8777" readonly> -->
+
+                                                <?php else : ?>
+                                                    <p id="grams_btn">Net Weight&nbsp;:&nbsp;<?php echo $product->product_weight ?>g&nbsp;</p>
+                                                <?php endif; ?>
+                                                <?php elseif ((!empty($half_width_product_variations))) :
+                                                $variation = $this->variation_model->get_variation($half_width_product_variations[0]->id);
 
                                                 $label =  get_variation_label($variation->label_names, $this->selected_lang->id);
                                                 // var_dump($label);
