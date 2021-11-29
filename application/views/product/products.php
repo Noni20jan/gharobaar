@@ -1971,10 +1971,7 @@ foreach ($sellers as $seller) {
                             <?php endif; ?><h6> -->
                     </div>
                     <div class="row row-product" id="post-data" style="margin-top:20px">
-
                         <!--print products-->
-
-
                         <?php foreach ($products as $product) : ?>
                             <div class="col-6 col-sm-4 col-md-4 col-lg-3 col-product">
                                 <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
@@ -1982,7 +1979,7 @@ foreach ($sellers as $seller) {
                         <?php endforeach; ?>
                         <?php if (empty($products)) : ?>
                             <div class="col-12">
-                                <p class="no-records-found"><?php echo trans("no_more_products_to_show"); ?></p>
+                                <!-- <p class="no-records-found"><?php echo trans("no_more_products_to_show"); ?></p> -->
                             </div>
                         <?php endif; ?>
                     </div>
@@ -1992,7 +1989,6 @@ foreach ($sellers as $seller) {
                     <div class="ajax-load-2 text-center" style="display:none">
                     </div>
                 </div>
-
                 <div class="col-12">
                     <!--Include banner-->
                     <?php $this->load->view("partials/_ad_spaces", ["ad_space" => "products", "class" => "m-t-15"]); ?>
@@ -2025,7 +2021,6 @@ foreach ($sellers as $seller) {
                 type: "get",
                 data: params,
                 beforeSend: function() {
-
                     // if (page == "2") {
                     $('.ajax-load').show();
                     // } else {
@@ -2035,26 +2030,23 @@ foreach ($sellers as $seller) {
             })
             .done(function(data) {
                 if (data == " ") {
+
                     // $('.ajax-load-2').html("Fr");
                     $('.ajax-load-2').html("No more records found");
                     return;
+                } else {
+                    $('.ajax-load').hide();
+                    // $('.ajax-load-1').hide();
+                    // $('#no-more-products').html("");
+                    $("#post-data").append(data);
                 }
-                $('.ajax-load').hide();
-                // $('.ajax-load-1').hide();
-                $('#no-more-products').html("");
-                $("#post-data").append(data);
             })
             .fail(function(jqXHR, ajaxOptions, thrownError) {
                 alert('server not responding...');
             });
+
     }
 </script>
-
-
-
-
-
-
 
 <script type="text/javascript">
     $(document).ready(function() {

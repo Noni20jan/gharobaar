@@ -19,11 +19,13 @@
 <!-- <div id="container6565">
                             <div class="loadedcontent"></div>
                         </div> -->
-<?php if (empty($products)) : ?>
-    <div class="col-12" style="text-align: center;">
+<? //php if (empty($products)) : 
+?>
+<!-- <div class="col-12" style="text-align: center;">
         <span class="no-records-found" id="no-more-products"><?php echo trans("no_products_found"); ?></span>
-    </div>
-<?php endif; ?>
+    </div> -->
+<? //php endif; 
+?>
 <!-- </div>s -->
 <!-- <div class="ajax-load-1 text-center" style="display:none">
     <p><img class="more-products-loading" src="assets/img/dark-loader.gif"></p>

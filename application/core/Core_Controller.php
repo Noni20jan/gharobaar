@@ -88,7 +88,7 @@ class Core_Controller extends CI_Controller
 
         //update last seen time
         $this->auth_model->update_last_seen();
-        $this->product_per_page = 20;
+        $this->product_per_page = 32;
 
         //is sale active
         $this->is_sale_active = false;

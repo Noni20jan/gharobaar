@@ -712,9 +712,6 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('product/infinte_scroll_products', $data);
     }
 
-
-
-
     public function member_products()
     {
         get_method();

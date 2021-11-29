@@ -140,6 +140,7 @@ foreach ($languages as $language) {
         $route[$key . getr('search_pincode', $rts)]['GET'] = 'home_controller/search_pincode';
         $route[$key . getr('products', $rts)]['GET'] = 'home_controller/products';
         $route[$key . getr('load_more_products', $rts)]['GET'] = 'home_controller/infinite_scroll_products';
+        $route[$key . getr('products1', $rts)]['GET'] = 'home_controller/infinte_scroll_products';
         $route[$key . getr('member_products', $rts)]['GET'] = 'home_controller/member_products';
         $route[$key . getr('top_picks_products', $rts)]['GET'] = 'home_controller/top_pick_products';
         $route[$key . getr('shop_by_random', $rts) . '/(:any)']['GET'] = 'home_controller/products_shop_by_random/$1';
