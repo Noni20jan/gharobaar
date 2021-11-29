@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="row-custom">
                                             <a href="<?php echo generate_profile_url($review->user_slug); ?>">
-                                                <h5 class="username"><?php echo get_shop_name_by_user_id($review->user_id); ?></h5>
+                                                <h5 class="username"><?php echo get_first_last_name_by_user_id($review->user_id); ?></h5>
                                             </a>
                                         </div>
                                         <div class="row-custom">
