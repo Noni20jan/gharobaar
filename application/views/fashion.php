@@ -253,7 +253,7 @@
                     <div class=" col-2 two-for-mobile">
                         <a href="<?php echo generate_url("kids-corner/school-stationery"); ?>">
                             <img class="shop_by_seller_imgs" src="<?php echo base_url(); ?>assets/img/kids_corner_imgs/kids_corner_9.png" alt="School-Stationary">
-                            <p class="category_page_title">School Stationary</p>
+                            <p class="category_page_title">School Stationery</p>
                         </a>
                     </div>
                 </div>
@@ -282,7 +282,7 @@
                     <div class=" col-2 two-for-mobile">
                         <a href="<?php echo generate_url("art-stationery/stationery"); ?>">
                             <img class="shop_by_seller_imgs" src="<?php echo base_url(); ?>assets/img/stationary_gifts_imgs/stationary_gifts_4.png" alt="Stationary">
-                            <p class="category_page_title">Stationary</p>
+                            <p class="category_page_title">Stationery</p>
                         </a>
                     </div>
                     <div class=" col-2 two-for-mobile">

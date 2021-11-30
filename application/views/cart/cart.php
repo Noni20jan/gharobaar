@@ -339,6 +339,37 @@
         color: #007C05;
         padding: 2px 10px
     }
+
+    @media (max-width: 700px) {
+        .word-cut {
+
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 160px;
+            height: 1.2em;
+            white-space: nowrap;
+            display: block;
+        }
+
+        .cart-scroll-for-web {
+            overflow-y: inherit !important;
+            height: inherit !important;
+            /* display: block !important; */
+        }
+    }
+
+    .cart-scroll-for-web {
+        overflow-y: scroll;
+        width: 100%;
+        overflow-y: auto;
+        height: calc(100vh - 40px);
+
+    }
+
+    /* .cart-scroll-for-web {
+        overflow-y: hidden;
+
+    } */
 </style>
 <div id="wrapper" style="background:#fff;">
     <div class="container">
@@ -379,8 +410,6 @@
                                         <div class="col-sm-12"><b> Delivery Date </b></div>
                                     </div>
                                     <h1 id="total_products" class="cart-section-title">
-
-
                                         <input type="checkbox" name="checkbox1" id="checkbox1" checked="true" readonly>
                                         <?php echo get_cart_product_count(); ?>/<?php echo get_cart_product_count(); ?>
                                         <?php echo ("ITEMS SELECTED"); ?>
@@ -389,194 +418,196 @@
                                             <span><a onclick="wishlist_all()" style="cursor: pointer;"><?php echo trans("add_to_wishlist"); ?></a></span>
                                         </span>
                                     </h1>
-                                    <?php if (!empty($cart_items)) :
-                                        foreach ($cart_items as $cart_item) :
-                                            $stock_quantity = (int)get_product($cart_item->product_id)->stock;
-                                            $product = get_active_product($cart_item->product_id);
-                                            if (!empty($product)) :
-                                                $user_id_array = $product->user_id;
-                                                $user_products = get_user_products($user_id_array, $cart_item->product_id);
-                                    ?>
-                                                <div class="row" id='<?php echo $cart_item->cart_item_id; ?>' style="width:100%;">
-                                                    <div class="item white-box">
-                                                        <div class="cart-item-image">
-                                                            <div class="img-cart-product">
-                                                                <?php if (empty($cart_item->variation_option)) : ?>
-                                                                    <a href="<?php echo generate_product_url($product); ?>">
-                                                                        <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'">
-                                                                    </a>
-                                                                <?php else : ?>
-                                                                    <?php $variation_image = get_variation_main_option_image_url($cart_item->variation_option, null); ?>
-                                                                    <?php if (empty($variation_image)) : ?>
+                                    <div class="cart-scroll-for-web">
+                                        <?php if (!empty($cart_items)) :
+                                            foreach ($cart_items as $cart_item) :
+                                                $stock_quantity = (int)get_product($cart_item->product_id)->stock;
+                                                $product = get_active_product($cart_item->product_id);
+                                                if (!empty($product)) :
+                                                    $user_id_array = $product->user_id;
+                                                    $user_products = get_user_products($user_id_array, $cart_item->product_id);
+                                        ?>
+                                                    <div class="row" id='<?php echo $cart_item->cart_item_id; ?>' style="width:100%;">
+                                                        <div class="item white-box">
+                                                            <div class="cart-item-image">
+                                                                <div class="img-cart-product">
+                                                                    <?php if (empty($cart_item->variation_option)) : ?>
                                                                         <a href="<?php echo generate_product_url($product); ?>">
                                                                             <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'">
-                                                                            <!-- <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_variation_main_option_image_url($cart_item->variation_option, null); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'"> -->
                                                                         </a>
                                                                     <?php else : ?>
-                                                                        <a href="<?php echo generate_product_url($product); ?>">
-                                                                            <!-- <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'"> -->
-                                                                            <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_variation_main_option_image_url($cart_item->variation_option, null); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'">
-                                                                        </a>
+                                                                        <?php $variation_image = get_variation_main_option_image_url($cart_item->variation_option, null); ?>
+                                                                        <?php if (empty($variation_image)) : ?>
+                                                                            <a href="<?php echo generate_product_url($product); ?>">
+                                                                                <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'">
+                                                                                <!-- <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_variation_main_option_image_url($cart_item->variation_option, null); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'"> -->
+                                                                            </a>
+                                                                        <?php else : ?>
+                                                                            <a href="<?php echo generate_product_url($product); ?>">
+                                                                                <!-- <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'"> -->
+                                                                                <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_variation_main_option_image_url($cart_item->variation_option, null); ?>" alt="<?php echo html_escape($cart_item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo get_product_image($cart_item->product_id, 'image_small'); ?>'">
+                                                                            </a>
+                                                                        <?php endif; ?>
                                                                     <?php endif; ?>
-                                                                <?php endif; ?>
-                                                            </div>
-                                                        </div>
-                                                        <div class="cart-item-details">
-                                                            <?php if ($product->product_type == 'digital') : ?>
-                                                                <div class="list-item">
-                                                                    <label class="label-instant-download label-instant-download-sm"><i class="icon-download-solid"></i><?php echo trans("instant_download"); ?></label>
                                                                 </div>
-                                                            <?php endif; ?>
-                                                            <div class="list-item">
-                                                                <a href="<?php echo generate_product_url($product); ?>">
-                                                                    <?php echo html_escape($cart_item->product_title); ?>
-                                                                </a>
-                                                                <br>
-                                                                <a class="lone" data-toggle="modal" data-target="#Modal_info_<?php echo $cart_item->product_id; ?>">Add/Edit Customisation Detail</a>
-
-                                                                <?php if ($product->add_meet == "Made to stock") : ?>
-                                                                    <?php if (empty(check_product_stock($product))) : ?>
-                                                                        <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?></div>
-                                                                    <?php endif; ?>
-                                                                <?php else : ?>
-                                                                    <?php if (empty(check_product_stock($product))) : ?>
-                                                                        <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?></div>
-                                                                <?php endif;
-                                                                endif; ?>
-
                                                             </div>
-                                                            <div class="list-item seller">
-                                                                <?php echo trans("by"); ?>&nbsp;<a href="<?php echo generate_profile_url($product->user_slug); ?>"><?php echo get_brand_name_product($product); ?></a>
-                                                                <p style="margin-bottom:16px;"></p>
-                                                            </div>
-                                                            <div class="list-item">
-                                                                <label><?php echo trans("unit_price"); ?>:</label>
-                                                                <strong class="lbl-price-new">
-                                                                    <?php echo price_formatted($cart_item->unit_price, $cart_item->currency); ?>
-                                                                </strong>
-                                                            </div>
-                                                            <?php if (($cart_item->discount_rate) != 0) : ?>
+                                                            <div class="cart-item-details">
+                                                                <?php if ($product->product_type == 'digital') : ?>
+                                                                    <div class="list-item">
+                                                                        <label class="label-instant-download label-instant-download-sm"><i class="icon-download-solid"></i><?php echo trans("instant_download"); ?></label>
+                                                                    </div>
+                                                                <?php endif; ?>
                                                                 <div class="list-item">
+                                                                    <a href="<?php echo generate_product_url($product); ?>">
+                                                                        <?php echo html_escape($cart_item->product_title); ?>
+                                                                    </a>
+                                                                    <br>
+                                                                    <a class="lone" data-toggle="modal" data-target="#Modal_info_<?php echo $cart_item->product_id; ?>">Add/Edit Customisation Detail</a>
 
-                                                                    <label>Discount:</label>
-                                                                    <del class="discount-original-price-new">
-                                                                        <?php echo price_formatted($cart_item->listing_price, $product->currency); ?>
-                                                                    </del>
-                                                                    <?php if (!empty($cart_item->discount_rate)) : ?>
-                                                                        <span class="discount-rate-cart-new">
-                                                                            <?php echo discount_rate_format($cart_item->discount_rate); ?>
+                                                                    <?php if ($product->add_meet == "Made to stock") : ?>
+                                                                        <?php if (empty(check_product_stock($product))) : ?>
+                                                                            <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?></div>
+                                                                        <?php endif; ?>
+                                                                    <?php else : ?>
+                                                                        <?php if (empty(check_product_stock($product))) : ?>
+                                                                            <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?></div>
+                                                                    <?php endif;
+                                                                    endif; ?>
+
+                                                                </div>
+                                                                <div class="list-item seller">
+                                                                    <?php echo trans("by"); ?>&nbsp;<a href="<?php echo generate_profile_url($product->user_slug); ?>" title="<?php echo get_brand_name_product($product); ?>" class="word-cut"><?php echo get_brand_name_product($product); ?></a>
+                                                                    <p style="margin-bottom:16px;"></p>
+                                                                </div>
+                                                                <div class="list-item">
+                                                                    <label><?php echo trans("unit_price"); ?>:</label>
+                                                                    <strong class="lbl-price-new">
+                                                                        <?php echo price_formatted($cart_item->unit_price, $cart_item->currency); ?>
+                                                                    </strong>
+                                                                </div>
+                                                                <?php if (($cart_item->discount_rate) != 0) : ?>
+                                                                    <div class="list-item">
+
+                                                                        <label>Discount:</label>
+                                                                        <del class="discount-original-price-new">
+                                                                            <?php echo price_formatted($cart_item->listing_price, $product->currency); ?>
+                                                                        </del>
+                                                                        <?php if (!empty($cart_item->discount_rate)) : ?>
+                                                                            <span class="discount-rate-cart-new">
+                                                                                <?php echo discount_rate_format($cart_item->discount_rate); ?>
+                                                                            </span>
+                                                                        <?php endif; ?>
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                                <div class="list-item">
+                                                                    <label><?php echo trans("total"); ?>:</label>
+                                                                    <strong class="lbl-price-new" id="total_<?php echo $cart_item->cart_item_id; ?>">
+                                                                        <?php echo price_formatted($cart_item->unit_price * $cart_item->quantity, $cart_total->currency); ?>
+                                                                    </strong>
+                                                                </div>
+
+                                                                <?php if (!empty($cart_item->additional_info)) : ?>
+                                                                    <div class="list-item" style="margin-top: 2%;">
+                                                                        <p>
+                                                                            <strong><?php echo trans("customisation_detail"); ?></strong>
+                                                                            <?php echo ($cart_item->additional_info); ?>
+                                                                        </p>
+                                                                    </div>
+                                                                <?php endif; ?>
+
+
+                                                                <div class="list-item">
+                                                                    <a href="javascript:void(0)" id="remove_cart" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"> <i class="icon-close"></i><?php echo trans("remove"); ?> </a>
+                                                                    <?php
+                                                                    $whislist_button_class = "";
+                                                                    $whislist_button_class = (empty($product->demo_url) && $product->listing_type == 'ordinary_listing') ? "btn-wishlist-classified" : "";
+                                                                    if ($this->auth_check) :
+                                                                        if ($this->product_model->is_product_in_wishlist($product->id) == 0) : ?>
+                                                                            <a href="javascript:void(0)" id="add_to_wishlist" class="btn-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?> wishlist-all" data-product-id="<?php echo $product->id; ?>" data-reload="1" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><?php echo trans("add_to_wishlist"); ?></span></a>
+                                                                        <?php endif; ?>
+                                                                    <?php else : ?>
+                                                                        <a id="add_to_wishlist_1" onclick="cart_wishlist()" class="btn-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?> wishlist-all" data-product-id="<?php echo $product->id; ?>" );><?php echo trans("add_to_wishlist"); ?></span></a>
+
+                                                                    <?php endif; ?>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="cart-item-quantity" style="float:left;">
+                                                                <div class="number-spinner">
+                                                                    <div class="input-group">
+
+                                                                        <span class="input-group-btn">
+                                                                            <button type="button" class="btn btn-default btn-spinner-minus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="dwn">-</button>
                                                                         </span>
-                                                                    <?php endif; ?>
-                                                                </div>
-                                                            <?php endif; ?>
-                                                            <div class="list-item">
-                                                                <label><?php echo trans("total"); ?>:</label>
-                                                                <strong class="lbl-price-new" id="total_<?php echo $cart_item->cart_item_id; ?>">
-                                                                    <?php echo price_formatted($cart_item->unit_price * $cart_item->quantity, $cart_total->currency); ?>
-                                                                </strong>
-                                                            </div>
 
-                                                            <?php if (!empty($cart_item->additional_info)) : ?>
-                                                                <div class="list-item" style="margin-top: 2%;">
-                                                                    <p>
-                                                                        <strong><?php echo trans("customisation_detail"); ?></strong>
-                                                                        <?php echo ($cart_item->additional_info); ?>
-                                                                    </p>
-                                                                </div>
-                                                            <?php endif; ?>
+                                                                        <input type="text" id="q-<?php echo $cart_item->cart_item_id; ?>" class="form-control text-center" value="<?php echo $cart_item->quantity; ?>" data-product-id="<?php echo $cart_item->product_id; ?>" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>">
+                                                                        <span class="input-group-btn">
+                                                                            <?php if ((int)get_product($cart_item->product_id)->stock == 1) :
+                                                                            ?>
+                                                                                <button type="button" class="btn btn-default" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
+                                                                            <?php elseif ((int)$cart_item->quantity >= (int)get_product($cart_item->product_id)->stock) :
 
-
-                                                            <div class="list-item">
-                                                                <a href="javascript:void(0)" id="remove_cart" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"> <i class="icon-close"></i><?php echo trans("remove"); ?> </a>
-                                                                <?php
-                                                                $whislist_button_class = "";
-                                                                $whislist_button_class = (empty($product->demo_url) && $product->listing_type == 'ordinary_listing') ? "btn-wishlist-classified" : "";
-                                                                if ($this->auth_check) :
-                                                                    if ($this->product_model->is_product_in_wishlist($product->id) == 0) : ?>
-                                                                        <a href="javascript:void(0)" id="add_to_wishlist" class="btn-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?> wishlist-all" data-product-id="<?php echo $product->id; ?>" data-reload="1" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><?php echo trans("add_to_wishlist"); ?></span></a>
-                                                                    <?php endif; ?>
-                                                                <?php else : ?>
-                                                                    <a id="add_to_wishlist_1" onclick="cart_wishlist()" class="btn-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?> wishlist-all" data-product-id="<?php echo $product->id; ?>" );><?php echo trans("add_to_wishlist"); ?></span></a>
-
-                                                                <?php endif; ?>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="cart-item-quantity" style="float:left;">
-                                                            <div class="number-spinner">
-                                                                <div class="input-group">
-
-                                                                    <span class="input-group-btn">
-                                                                        <button type="button" class="btn btn-default btn-spinner-minus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="dwn">-</button>
-                                                                    </span>
-
-                                                                    <input type="text" id="q-<?php echo $cart_item->cart_item_id; ?>" class="form-control text-center" value="<?php echo $cart_item->quantity; ?>" data-product-id="<?php echo $cart_item->product_id; ?>" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>">
-                                                                    <span class="input-group-btn">
-                                                                        <?php if ((int)get_product($cart_item->product_id)->stock == 1) :
-                                                                        ?>
-                                                                            <button type="button" class="btn btn-default" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
-                                                                        <?php elseif ((int)$cart_item->quantity >= (int)get_product($cart_item->product_id)->stock) :
-
-                                                                        ?>
-                                                                            <button type="button" class="btn btn-default" disabled data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
-                                                                            <!-- <div> <span>
+                                                                            ?>
+                                                                                <button type="button" class="btn btn-default" disabled data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
+                                                                                <!-- <div> <span>
                                                                                                 <label style="color:red;">No More Stock to add</label></span>
                                                                                         </div> -->
-                                                                        <?php else : ?>
-                                                                            <button type="button" class="btn btn-default btn-spinner-plus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
-                                                                        <?php endif; ?>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-
-
-                                                        <!-- </div> -->
-                                                        <?php if (!$product->deliverable) : ?>
-                                                            <p class="not-avail-product">
-                                                                **Product is not available at your location.**
-                                                            </p>
-                                                        <?php endif; ?>
-                                                        <!-- </div> -->
-
-
-                                                    </div>
-
-                                                </div>
-                                            <?php endif; ?>
-                                            <div class="modal fade" id="Modal_info_<?php echo $cart_item->product_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content modal-custom">
-                                                        <!-- form start -->
-                                                        <?php echo form_open('cart_controller/set_sess_add_additional_info'); ?>
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title"><?php echo "Add/Edit Customisation Detail"; ?></h5>
-                                                            <button type="button" class="close" data-dismiss="modal">
-                                                                <span aria-hidden="true"><i class="icon-close"></i> </span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="row tracking-number-container">
-                                                                <div class="col-sm-12">
-                                                                    <input type="hidden" name="order_product_id" id="order_product_id" value="<?php echo $cart_item->product_id; ?>">
-                                                                    <div class="form-group" id="additional_info_<?php echo $cart_item->product_id; ?>">
-                                                                        <textarea class="form-control" id="additional_info_text_<?php echo $cart_item->product_id; ?>" name="additional_info_text_<?php echo $cart_item->product_id; ?>" value="<?php echo !empty($cart_item->additional_info) ? $cart_item->additional_info : ""; ?>" row='3'><?php echo !empty($cart_item->additional_info) ? $cart_item->additional_info : ""; ?></textarea>
+                                                                            <?php else : ?>
+                                                                                <button type="button" class="btn btn-default btn-spinner-plus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
+                                                                            <?php endif; ?>
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+
+
+                                                            <!-- </div> -->
+                                                            <?php if (!$product->deliverable) : ?>
+                                                                <p class="not-avail-product">
+                                                                    **Product is not available at your location.**
+                                                                </p>
+                                                            <?php endif; ?>
+                                                            <!-- </div> -->
+
+
                                                         </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-md btn-default" data-dismiss="modal" id="closer"><?php echo trans("close"); ?></button>
-                                                            <button type="submit" value="add_info" name="submit" class="btn btn-md btn-primary"><?php echo trans("submit"); ?></button>
+
+                                                    </div>
+                                                <?php endif; ?>
+                                                <div class="modal fade" id="Modal_info_<?php echo $cart_item->product_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content modal-custom">
+                                                            <!-- form start -->
+                                                            <?php echo form_open('cart_controller/set_sess_add_additional_info'); ?>
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title"><?php echo "Add/Edit Customisation Detail"; ?></h5>
+                                                                <button type="button" class="close" data-dismiss="modal">
+                                                                    <span aria-hidden="true"><i class="icon-close"></i> </span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row tracking-number-container">
+                                                                    <div class="col-sm-12">
+                                                                        <input type="hidden" name="order_product_id" id="order_product_id" value="<?php echo $cart_item->product_id; ?>">
+                                                                        <div class="form-group" id="additional_info_<?php echo $cart_item->product_id; ?>">
+                                                                            <textarea class="form-control" id="additional_info_text_<?php echo $cart_item->product_id; ?>" name="additional_info_text_<?php echo $cart_item->product_id; ?>" value="<?php echo !empty($cart_item->additional_info) ? $cart_item->additional_info : ""; ?>" row='3'><?php echo !empty($cart_item->additional_info) ? $cart_item->additional_info : ""; ?></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" id="closer"><?php echo trans("close"); ?></button>
+                                                                <button type="submit" value="add_info" name="submit" class="btn btn-md btn-primary"><?php echo trans("submit"); ?></button>
+                                                            </div>
+                                                            <?php echo form_close(); ?>
                                                         </div>
-                                                        <?php echo form_close(); ?>
                                                     </div>
                                                 </div>
-                                            </div>
-                                    <?php endforeach;
-                                    endif; ?>
+                                        <?php endforeach;
+                                        endif; ?>
 
+                                    </div>
                                 </div>
                                 <a href="<?php echo lang_base_url(); ?>" id="keep_shopping" class="btn btn-md btn-custom m-t-15"><i class="icon-arrow-left m-r-2"></i><?php echo trans("keep_shopping") ?></a>
                             </div>
@@ -614,105 +645,105 @@
                                         <p>
 
 
-                                                
-                                                <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span>
+
+                                            <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span>
                                         </p>
 
-                                <?php endif; ?>
-                                <p style="color:#007C05;" id="coupon-discount-tag" class="<?php echo ((!empty($this->session->userdata('mds_shopping_cart_coupon')))) ? '' : 'hide-coupon-discount' ?>">
-                                    <strong>
-                                        <?php echo "Coupon Discount"; ?>
-                                        <span class="float-right" id="coupon-discount-text">
-                                            <?php if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) :
-                                                $coupon_applied = $this->session->userdata('mds_shopping_cart_coupon'); ?>
-                                                <?php if ($cart_total->applied_coupon_discount > 0) : ?>
-                                                    <?php echo "- " . price_formatted_without_round($cart_total->applied_coupon_discount, $this->payment_settings->default_currency) . "/-"; ?>
-                                                <?php elseif (!empty($cart_total->applied_coupon_source_type)) :
-                                                    switch ($cart_total->applied_coupon_source_type):
-                                                        case "FREESHIP":
-                                                            echo "Less Shipping";
-                                                            break;
-                                                        case "EXHIBITION":
-                                                            echo "Less Shipping and COD";
-                                                            break;
-                                                    endswitch;
-                                                ?>
+                                    <?php endif; ?>
+                                    <p style="color:#007C05;" id="coupon-discount-tag" class="<?php echo ((!empty($this->session->userdata('mds_shopping_cart_coupon')))) ? '' : 'hide-coupon-discount' ?>">
+                                        <strong>
+                                            <?php echo "Coupon Discount"; ?>
+                                            <span class="float-right" id="coupon-discount-text">
+                                                <?php if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) :
+                                                    $coupon_applied = $this->session->userdata('mds_shopping_cart_coupon'); ?>
+                                                    <?php if ($cart_total->applied_coupon_discount > 0) : ?>
+                                                        <?php echo "- " . price_formatted_without_round($cart_total->applied_coupon_discount, $this->payment_settings->default_currency) . "/-"; ?>
+                                                    <?php elseif (!empty($cart_total->applied_coupon_source_type)) :
+                                                        switch ($cart_total->applied_coupon_source_type):
+                                                            case "FREESHIP":
+                                                                echo "Less Shipping";
+                                                                break;
+                                                            case "EXHIBITION":
+                                                                echo "Less Shipping and COD";
+                                                                break;
+                                                        endswitch;
+                                                    ?>
 
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                        </span>
-                                    </strong>
-                                </p>
-                                <p class="line-seperator"></p>
-                                <p>
-                                    <!-- <?php var_dump($_SESSION["mds_shopping_cart_total"]->subtotal);  ?> -->
-                                    <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong>
-                                </p>
-                                <p class="line-seperator"></p>
-                                <?php if (intval(secondsToTime($cart_total->min_dispatch_time)) > 1 || intval(secondsToTime($cart_total->max_dispatch_time)) > 1) :
-                                    $day = " days";
-                                else :
-                                    $day = " day";
-                                endif;
-                                ?>
-                                <?php if (secondsToTime($cart_total->min_dispatch_time) != secondsToTime($cart_total->max_dispatch_time)) : ?>
-                                    <p><?php echo trans("min_max_dispatch_days"); ?><?php echo (!empty(secondsToTime($cart_total->min_dispatch_time))) ? secondsToTime($cart_total->min_dispatch_time) . " - " : " "; ?><?php echo (!empty(secondsToTime($cart_total->max_dispatch_time))) ? secondsToTime($cart_total->max_dispatch_time) . $day : "" ?> </p>
-                                <?php else : ?>
-                                    <p><?php echo trans("min_max_dispatch_days"); ?><?php echo (!empty(secondsToTime($cart_total->max_dispatch_time))) ? secondsToTime($cart_total->max_dispatch_time) . $day : "" ?> </p>
-                                <?php endif; ?>
-                                <p class="m-t-30">
-                                    <?php if (empty($cart_total->is_all_product_available)) : ?>
-                                        <a href="#" class="btn btn-block" data-toggle="modal" data-target="#product_not_available"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                    <?php else : ?>
-                                        <?php if (empty($cart_total->is_stock_available)) : ?>
-                                            <a href="javascript:void(0)" class="btn btn-block"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                        <?php else : ?>
-                                            <?php if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
-                                                <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                            <?php elseif (!empty($this->auth_check)) : ?>
-                                                <?php if (($this->auth_user->phone_number) == '') : ?>
-                                                    <a href="#" class="btn btn-block" data-toggle="modal" data-target="#registerMobileModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                <?php elseif ($open_rating_modal && $this->general_settings->rate_previous_order) : ?>
-                                                    <?php $this->load->view('partials/_modal_rate_last_order'); ?>
-                                                    <a href="#" data-backdrop="static" data-keyboard="false" class="btn btn-block" data-toggle="modal" data-target="#rateProductModalorder"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                    <?php else :
-                                                    $is_made_to_order = false;
-                                                    foreach ($cart_items as $cart_item) :
-                                                        $product = get_product($cart_item->product_id); ?>
-
-                                                        <?php if ($product->add_meet == "Made to order") :
-                                                            $is_made_to_order = true;
-                                                        endif; ?>
-                                                    <?php endforeach; ?>
-                                                    <?php if ($is_made_to_order) : ?>
-                                                        <a href="#" class="btn btn-block" data-toggle="modal" data-target="#made_to_order_checkout"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                    <?php else : ?>
-                                                        <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
-                                                            <a href="<?php echo generate_url("cart", "shipping"); ?>" class="btn btn-block"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                        <?php else : ?>
-                                                            <a href="<?php echo generate_url("cart", "payment_method"); ?>" class="btn btn-block" onclick="checkreview()"> <strong><?php echo trans("continue_to_checkout"); ?> </strong>
-                                                            </a>
-                                                        <?php endif; ?>
                                                     <?php endif; ?>
                                                 <?php endif; ?>
-                                            <?php elseif ($this->general_settings->guest_checkout == 1) : ?>
-                                                <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo "Login to Continue"; ?> </strong></a>
-                                <div class="text-center m-b-15"><strong>OR</strong></div>
+                                            </span>
+                                        </strong>
+                                    </p>
+                                    <p class="line-seperator"></p>
+                                    <p>
+                                        <!-- <?php var_dump($_SESSION["mds_shopping_cart_total"]->subtotal);  ?> -->
+                                        <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong>
+                                    </p>
+                                    <p class="line-seperator"></p>
+                                    <?php if (intval(secondsToTime($cart_total->min_dispatch_time)) > 1 || intval(secondsToTime($cart_total->max_dispatch_time)) > 1) :
+                                        $day = " days";
+                                    else :
+                                        $day = " day";
+                                    endif;
+                                    ?>
+                                    <?php if (secondsToTime($cart_total->min_dispatch_time) != secondsToTime($cart_total->max_dispatch_time)) : ?>
+                                        <p><?php echo trans("min_max_dispatch_days"); ?><?php echo (!empty(secondsToTime($cart_total->min_dispatch_time))) ? secondsToTime($cart_total->min_dispatch_time) . " - " : " "; ?><?php echo (!empty(secondsToTime($cart_total->max_dispatch_time))) ? secondsToTime($cart_total->max_dispatch_time) . $day : "" ?> </p>
+                                    <?php else : ?>
+                                        <p><?php echo trans("min_max_dispatch_days"); ?><?php echo (!empty(secondsToTime($cart_total->max_dispatch_time))) ? secondsToTime($cart_total->max_dispatch_time) . $day : "" ?> </p>
+                                    <?php endif; ?>
+                                    <p class="m-t-30">
+                                        <?php if (empty($cart_total->is_all_product_available)) : ?>
+                                            <a href="#" class="btn btn-block" data-toggle="modal" data-target="#product_not_available"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                        <?php else : ?>
+                                            <?php if (empty($cart_total->is_stock_available)) : ?>
+                                                <a href="javascript:void(0)" class="btn btn-block"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                            <?php else : ?>
+                                                <?php if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
+                                                    <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                <?php elseif (!empty($this->auth_check)) : ?>
+                                                    <?php if (($this->auth_user->phone_number) == '') : ?>
+                                                        <a href="#" class="btn btn-block" data-toggle="modal" data-target="#registerMobileModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                    <?php elseif ($open_rating_modal && $this->general_settings->rate_previous_order) : ?>
+                                                        <?php $this->load->view('partials/_modal_rate_last_order'); ?>
+                                                        <a href="#" data-backdrop="static" data-keyboard="false" class="btn btn-block" data-toggle="modal" data-target="#rateProductModalorder"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                        <?php else :
+                                                        $is_made_to_order = false;
+                                                        foreach ($cart_items as $cart_item) :
+                                                            $product = get_product($cart_item->product_id); ?>
 
-                                <a href="#" class="btn btn-block" data-toggle="modal" data-target="#guestLoginModal"> <strong><?php echo "Continue Checkout as Guest"; ?> </strong></a>
+                                                            <?php if ($product->add_meet == "Made to order") :
+                                                                $is_made_to_order = true;
+                                                            endif; ?>
+                                                        <?php endforeach; ?>
+                                                        <?php if ($is_made_to_order) : ?>
+                                                            <a href="#" class="btn btn-block" data-toggle="modal" data-target="#made_to_order_checkout"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                        <?php else : ?>
+                                                            <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
+                                                                <a href="<?php echo generate_url("cart", "shipping"); ?>" class="btn btn-block"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                            <?php else : ?>
+                                                                <a href="<?php echo generate_url("cart", "payment_method"); ?>" class="btn btn-block" onclick="checkreview()"> <strong><?php echo trans("continue_to_checkout"); ?> </strong>
+                                                                </a>
+                                                            <?php endif; ?>
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                <?php elseif ($this->general_settings->guest_checkout == 1) : ?>
+                                                    <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo "Login to Continue"; ?> </strong></a>
+                                    <div class="text-center m-b-15"><strong>OR</strong></div>
 
+                                    <a href="#" class="btn btn-block" data-toggle="modal" data-target="#guestLoginModal"> <strong><?php echo "Continue Checkout as Guest"; ?> </strong></a>
+
+                                <?php endif; ?>
                             <?php endif; ?>
                         <?php endif; ?>
-                    <?php endif; ?>
-                    </p>
+                        </p>
 
-                    <div class="payment-icons">
-                        <img src="<?php echo base_url(); ?>assets/img/payment/visa.svg" alt="visa">
-                        <img src="<?php echo base_url(); ?>assets/img/payment/mastercard.svg" alt="mastercard">
-                        <img src="<?php echo base_url(); ?>assets/img/payment/maestro.svg" alt="maestro">
-                        <img src="<?php echo base_url(); ?>assets/img/payment/amex.svg" alt="amex">
-                        <img src="<?php echo base_url(); ?>assets/img/payment/discover.svg" alt="discover">
-                    </div>
+                        <div class="payment-icons">
+                            <img src="<?php echo base_url(); ?>assets/img/payment/visa.svg" alt="visa">
+                            <img src="<?php echo base_url(); ?>assets/img/payment/mastercard.svg" alt="mastercard">
+                            <img src="<?php echo base_url(); ?>assets/img/payment/maestro.svg" alt="maestro">
+                            <img src="<?php echo base_url(); ?>assets/img/payment/amex.svg" alt="amex">
+                            <img src="<?php echo base_url(); ?>assets/img/payment/discover.svg" alt="discover">
+                        </div>
                                 </div>
                             </div>
                         </div>
@@ -1144,3 +1175,36 @@
         // alert("ok");
     }
 </script>
+<script>
+    document.body.addEventListener('touchstart', function() {
+        document.body.classList.add('touched');
+    });
+</script>
+
+<style>
+    [title] {
+        border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+        border-radius: 2px;
+        position: relative;
+    }
+
+    body.touched [title]>* {
+        user-select: none;
+    }
+
+    body.touched [title]:hover>* {
+        user-select: auto
+    }
+
+    body.touched [title]:hover:after {
+        position: absolute;
+        top: 100%;
+        right: -10%;
+        content: attr(title);
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        background-color: white;
+        box-shadow: 1px 1px 3px;
+        padding: 0.3em;
+        z-index: 1;
+    }
+</style>

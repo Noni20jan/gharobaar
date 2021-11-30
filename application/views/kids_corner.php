@@ -70,7 +70,7 @@
             <div class=" col-2 two-for-mobile">
                 <a href="<?php echo generate_url("kids-corner/school-stationery"); ?>">
                     <img class="shop_by_seller_imgs" src="assets/img/kids_corner_imgs/kids_corner_9.png">
-                    <p>School Stationary</p>
+                    <p>School Stationery</p>
                 </a>
             </div>
         </div>
