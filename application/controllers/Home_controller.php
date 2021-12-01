@@ -691,26 +691,29 @@ class Home_controller extends Home_Core_Controller
 
 
 
-    public function infinite_scroll_products()
-    {
-        // var_dump("fhdfdg");
-        // die();
-        get_method();
-        $data['title'] = trans("products");
-        $data['description'] = trans("products") . " - " . $this->app_name;
-        $data['keywords'] = trans("products") . "," . $this->app_name;
-        $data["index_settings"] = get_index_settings();
-        $data['custom_filters'] = $this->field_model->get_custom_filters();
-        $data["query_string_array"] = get_query_string_array($data['custom_filters']);
-        $data["query_string_object_array"] = convert_query_string_to_object_array($data["query_string_array"]);
-        //get paginated posts
-        $pagination = $this->paginate(generate_url("products"), $this->product_model->get_paginated_filtered_products_count($data["query_string_array"], null), $this->product_per_page);
-        $data['products'] = $this->product_model->get_paginated_filtered_products($data["query_string_array"], null, $pagination['per_page'], $pagination['offset']);
-        $data['product_count'] = $this->product_model->get_paginated_filtered_products_count($data["query_string_array"]);
-        $data["categories"] = $this->parent_categories;
-        $data["all_category_selected"] = $this->product_model->get_category_selected_filters($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], true);
-        $this->load->view('product/infinte_scroll_products', $data);
-    }
+    // public function infinite_scroll_products()
+    // {
+    //     // var_dump("fhdfdg");
+    //     // die();
+    //     get_method();
+    //     $data['title'] = trans("products");
+    //     $data['description'] = trans("products") . " - " . $this->app_name;
+    //     $data['keywords'] = trans("products") . "," . $this->app_name;
+    //     $data["index_settings"] = get_index_settings();
+    //     $data['custom_filters'] = $this->field_model->get_custom_filters();
+    //     $data["query_string_array"] = get_query_string_array($data['custom_filters']);
+    //     $data["query_string_object_array"] = convert_query_string_to_object_array($data["query_string_array"]);
+    //     //get paginated posts
+    //     $pagination = $this->paginate(generate_url("products"), $this->product_model->get_paginated_filtered_products_count($data["query_string_array"], null), $this->product_per_page);
+    //     $data['products'] = $this->product_model->get_paginated_filtered_products($data["query_string_array"], null, $pagination['per_page'], $pagination['offset']);
+    //     $data['product_count'] = $this->product_model->get_paginated_filtered_products_count($data["query_string_array"]);
+    //     $data["categories"] = $this->parent_categories;
+    //     $data["all_category_selected"] = $this->product_model->get_category_selected_filters($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], true);
+    //     $this->load->view('product/infinte_scroll_products', $data);
+    // }
+
+
+
 
     public function member_products()
     {
@@ -2933,7 +2936,6 @@ class Home_controller extends Home_Core_Controller
         $data['keywords'] = trans("category_title") . "," . $this->app_name;
         $data["active_tab"] = "active_orders";
         $data['main_settings'] = get_main_settings();
-
         $this->load->view('partials/_header', $data);
         $this->load->view('categories');
         $this->load->view('partials/_footer');
