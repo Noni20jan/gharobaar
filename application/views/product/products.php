@@ -198,15 +198,30 @@ foreach ($sellers as $seller) {
         transition: .4s;
     }
 
-    input:checked+.slider {
+    .swch input:checked+.slider {
         background-color: #2ab934;
     }
 
-    input:focus+.slider {
+    .swch input:focus+.slider {
         box-shadow: 0 0 1px #2196F3;
     }
 
-    input:checked+.slider:before {
+    .swach input:checked+.slider {
+        background-color: red;
+    }
+
+    .swach input:focus+.slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    .swach input:checked+.slider:before {
+        -webkit-transform: translateX(55px);
+        -ms-transform: translateX(55px);
+        transform: translateX(55px);
+    }
+
+
+    .swch input:checked+.slider:before {
         -webkit-transform: translateX(55px);
         -ms-transform: translateX(55px);
         transform: translateX(55px);

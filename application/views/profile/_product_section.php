@@ -12,7 +12,7 @@
   .veg {
 
     position: absolute;
-    right: 73%;
+    right: 76%;
     top: 17%;
     font-size: 13px;
   }
@@ -20,8 +20,8 @@
   .swick {
     position: absolute;
     display: inline-block;
-    width: 75px;
-    height: 27px;
+    width: 84px;
+    height: 28px;
     right: 42%;
     top: 10%;
   }
@@ -47,7 +47,7 @@
     float: right;
     /* float: right; */
     /* left: 186px; */
-    right: 12%;
+    right: 15%;
     top: 22%;
     /* margin-left: 190px; */
     font-size: 13px;
@@ -126,13 +126,10 @@
   .switch {
     position: relative;
     display: inline-block;
-    width: 75px;
-    height: 27px;
-    /* left: 0; */
-    /* right: -10%; */
-    /* right: 1%; */
+    width: 84px;
+    height: 28px;
     right: -27%;
-    top: 17%;
+    top: 14%;
     float: right;
   }
 
@@ -186,15 +183,29 @@
     transition: .4s;
   }
 
-  input:checked+.slider {
+  .swick input:checked+.slider {
     background-color: #2ab934;
   }
 
-  input:focus+.slider {
+  .swick input:focus+.slider {
     box-shadow: 0 0 1px #2196F3;
   }
 
-  input:checked+.slider:before {
+  .swick input:checked+.slider:before {
+    -webkit-transform: translateX(55px);
+    -ms-transform: translateX(55px);
+    transform: translateX(55px);
+  }
+
+  .switch input:checked+.slider {
+    background-color: red;
+  }
+
+  .switch input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+
+  .switch input:checked+.slider:before {
     -webkit-transform: translateX(55px);
     -ms-transform: translateX(55px);
     transform: translateX(55px);
@@ -298,42 +309,40 @@ endforeach; ?>
       Featured Products
     </div>
     <div class="col-md-3">
-      <?php if ($category->id == 2) : ?>
-        <label class="switch">
-          <input type="checkbox" class="non_veg" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "non_Veg") ? "checked" : ""; ?>>
+      <label class="switch">
+        <input type="checkbox" class="Non" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "non_Veg") ? "checked" : ""; ?>>
 
-          <div class="slider round">
-            <!--ADDED HTML -->
+        <div class="slider round">
+          <!--ADDED HTML -->
 
-            <span class="on">YES</span>
+          <span class="on">YES</span>
 
-            <span class="off">NO</span>
-            <!--END-->
-          </div>
-          <!-- <label class="non_Veg">Non Veg</label> -->
-        </label>
-        <label class="veg">Veg</label>
+          <span class="off">NO</span>
+          <!--END-->
+        </div>
+        <!-- <label class="non_Veg">Non Veg</label> -->
+      </label>
+      <label class="veg">Veg</label>
 
-        <div class="non">Non Veg</div>
+      <div class="non">Non Veg</div>
 
-        <!-- <label class="veg">Veg</label> -->
-        <!-- <label class="cmd">Veg</label> -->
-        <!-- <label class=>Non Veg</label> -->
+      <!-- <label class="veg">Veg</label> -->
+      <!-- <label class="cmd">Veg</label> -->
+      <!-- <label class=>Non Veg</label> -->
 
-        <label class="swick">
+      <label class="swick">
 
-          <input type="checkbox" class="Veg" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "Veg") ? "checked" : ""; ?>>
+        <input type="checkbox" class="Veg" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "Veg") ? "checked" : ""; ?>>
 
-          <div class="slider round">
-            <!--ADDED HTML -->
+        <div class="slider round">
+          <!--ADDED HTML -->
 
-            <span class="on">YES</span>
+          <span class="on">YES</span>
 
-            <span class="off">NO</span>
-            <!--END-->
-          </div>
-        </label>
-      <?php endif; ?>
+          <span class="off">NO</span>
+          <!--END-->
+        </div>
+      </label>
 
     </div>
 
@@ -437,7 +446,7 @@ toggle between hiding and showing the dropdown content */
 </script>
 <script>
   $(".Veg").on('change', function() {
-    var x = "<?php echo current_url(); ?>"
+    var x = "<?php echo base_url() . 'profile' . '/' . get_user($product->user_id)->slug; ?>"
     var y = "<?php echo generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>";
     z = x + y;
     console.log($(this).val());
@@ -461,8 +470,8 @@ toggle between hiding and showing the dropdown content */
   });
 </script>
 <script>
-  $(".non_veg").on('change', function() {
-    var x = "<?php echo current_url(); ?>"
+  $(".Non").on('change', function() {
+    var x = "<?php echo base_url() . 'profile' . '/' . get_user($product->user_id)->slug; ?>"
     var y = "<?php echo generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>";
     z = x + y;
     console.log($(this).val());
