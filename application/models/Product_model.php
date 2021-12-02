@@ -1776,6 +1776,14 @@ class Product_model extends Core_Model
         $query = $this->db->get('products');
         return $query->result();
     }
+    public function get_paginated_filtered_user_products($user_id, $list_type, $query_string_array = null, $category_id = null, $per_page, $offset, $only_category = false)
+    {
+        $this->filter_products($query_string_array, $category_id, $only_category);
+        $this->db->where('products.user_id', clean_number($user_id));
+        $this->db->order_by('products.created_at', 'DESC')->limit($per_page, $offset);
+        $query = $this->db->get('products');
+        return $query->result();
+    }
 
     //function to fetch new products of user for sort-whats new
     public function get_new_products_of_user($user_id, $list_type)
@@ -2929,7 +2937,8 @@ order by id desc LIMIT 1";
         return $result->row()->name;
     }
 
-    public function save_batch_download($data){
+    public function save_batch_download($data)
+    {
         $this->db->insert('PRODUCT_BATCH', $data);
     }
 }
