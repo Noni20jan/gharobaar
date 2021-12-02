@@ -931,7 +931,7 @@
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: center;">
-                <button type="button" class="btn btn-md btn-default" id="confirm_remove_yes" style="background-color: green; color:white;">Yes</button>
+                <button type="button" class="btn btn-md btn-default" id="confirm_remove_yes" data-dismiss="modal" style="background-color: green; color:white;">Yes</button>
                 <button type="button" class="btn btn-md btn-default" data-dismiss="modal" id="confirm_remove_no" style="background-color: green; color:white;">No</button>
             </div>
 
