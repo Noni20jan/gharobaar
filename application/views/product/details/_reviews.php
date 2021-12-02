@@ -9,7 +9,7 @@
     @media screen and (max-width: 800px) {
         .flexed-reviews {
             display: block !important;
-            height: 21vh;
+            height: auto;
             overflow-y: scroll;
         }
 
