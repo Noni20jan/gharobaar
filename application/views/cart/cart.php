@@ -13,7 +13,6 @@
             top: 11px;
         }
     }
-
     .out_of_stock {
         width: 100%;
     }
@@ -141,12 +140,15 @@
         }
     }
 
-
+.whishlist-position{
+    bottom: 17px;
+    
+} 
 
     .cart-top .item-options {
         display: block;
         position: relative;
-        right: -16px;
+        right: 10px;
         width: 35px;
         height: 35px;
         line-height: 40px;
@@ -159,8 +161,10 @@
 
 
     }
-
-
+   
+.cart-size{
+    font-size:20px;
+}
     @media only screen and (max-width: 600px) {
 
         #empty_cart {

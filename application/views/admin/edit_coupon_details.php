@@ -20,6 +20,17 @@
         color: white;
     }
 </style>
+<script>
+    function coupontime() {
+        var fromstartdate = $("#couponstart-time").val();
+        var toenddate = $("#couponend-time").val();
+        if (fromstartdate > toenddate) {
+            document.getElementById("coupon_date1").style.display = "block";
+        } else {
+            document.getElementById("coupon_date1").style.display = "none";
+        }
+    }
+</script>
 <?php echo form_open('Coupon_controller/edit_details_coupon'); ?>
 <input type="hidden" name="id" value="<?php echo $offer->id; ?>">
 <div class="col-12 coupons-from-holder">
@@ -64,7 +75,7 @@
                 $date = strtotime($t);
                 $date_time = date("Y-m-d\TH:i:s", $date);
                 ?>
-                <input type="datetime-local" value="<?php echo $date_time; ?>" class="form-control" id="meeting-time" name="start_date" required>
+                <input type="datetime-local" id = "couponstart-time" onchange="coupontime()" value="<?php echo $date_time; ?>" class="form-control" name="start_date" required>
             </div>
         </div>
     </div>
@@ -80,7 +91,8 @@
             </div>
             <div class="col-sm-6">
 
-                <input type="datetime-local" id="meeting-time" value="<?php echo $date_time; ?>" class="form-control" name="end_date" required>
+                <input type="datetime-local" id="couponend-time" onchange="coupontime()" value="<?php echo $date_time; ?>" class="form-control" name="end_date" required>
+                <span id="coupon_date1" style="color:red;">Enter a valid date</span>
             </div>
         </div>
     </div>
@@ -199,6 +211,7 @@
 
 
     $(document).ready(function() {
+        document.getElementById("coupon_date1").style.display = "none";
         if (document.getElementById("offer-type").value == 'Flat') {
             document.getElementById("discount_percentage").style.display = "none";
             $('#discount_per').prop('required', false);

@@ -29,6 +29,21 @@
         color: white;
     }
 </style>
+<script>
+    function startend() {
+        var from = $("#start_date").val();
+        var to = $("#end_date").val();
+        if (from > to) {
+            document.getElementById("btn-submit").disabled = true;
+            document.getElementById("spanend_date1").style.display = "block";
+        } else {
+            document.getElementById("spanend_date1").style.display = "none";
+
+        }
+
+
+    }
+</script>
 <?php $this->load->view('admin/includes/_messages'); ?>
 <?php echo form_open('admin_controller/save_created_offers'); ?>
 <div class="col-12 coupons-from-holder">
@@ -70,7 +85,8 @@
                 <label for="meeting-time">Start date & Time:</label>
             </div>
             <div class="col-sm-6">
-                <input type="datetime-local" class="form-control" id="meeting-time" name="start_date" value="2000-01-12T19:30" required>
+                <input type="datetime-local" id="start_date" onchange="startent()" class="form-control" name="start_date" value="<?php $date_time = new DateTime();echo $date_time->format("Y-m-d\TH:i:s"); ?>" required>
+
             </div>
         </div>
     </div>
@@ -80,7 +96,8 @@
                 <label for="meeting-time">End date & Time:</label>
             </div>
             <div class="col-sm-6">
-                <input type="datetime-local" id="meeting-time" class="form-control" name="end_date" value="2000-06-12T19:30" required>
+                <span><input type="datetime-local" id="end_date" onchange="startend()" class="form-control" name="end_date" value="<?php $date_time = new DateTime(); echo $date_time->format("Y-m-d\TH:i:s"); ?>" required></span>
+                <span id="spanend_date1" style="color:red;">Enter a valid date</span>
             </div>
         </div>
     </div>
@@ -164,7 +181,7 @@
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-lg btn-custom float-right"><?php echo trans("submit"); ?></button>
+        <button type="submit" id="btn-submit" class="btn btn-lg btn-custom float-right"><?php echo trans("submit"); ?></button>
     </div>
 </div>
 
@@ -217,6 +234,7 @@
         document.getElementById("discount_amount").style.display = "block";
         document.getElementById("for-coupons").style.display = "none";
         document.getElementById("for-vouchers").style.display = "none";
+        document.getElementById("spanend_date1").style.display = "none";
     });
 
     function myFunction() {

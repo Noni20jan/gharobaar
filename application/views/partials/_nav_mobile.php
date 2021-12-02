@@ -49,7 +49,7 @@
                                 <?php endif; ?>
                                 <?php if (is_user_vendor()) : ?>
                                     <li>
-                                        <a href="<?= generate_dash_url("profile"); ?>">
+                                        <a href="<?= generate_dash_url("profile"); ?>" target="_blank">
                                             <i class="icon-dashboard"></i>
                                             Supplier Panel
                                         </a>

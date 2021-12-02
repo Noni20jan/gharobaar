@@ -31,6 +31,7 @@
         /* Safari 3-8 */
         transform: scale(1.25);
     }
+    
 </style>
 <div class="product-item">
     <div class="row-custom<?php echo (!empty($product->image_second)) ? ' product-multiple-image' : ''; ?>">
@@ -64,7 +65,7 @@
                         $disabled = " disabled"; ?>
 
                         <a href="javascript:void(0)" class="item-options btn-add-to-cart zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
-                            <i class="icon-cart "></i>
+                            <i class="icon-cart cart-size "></i>
                         </a>
                     <?php } ?>
 
@@ -84,9 +85,10 @@
 
             <div class="product-item-options">
                 <?php if ($this->auth_check) : ?>
-                    <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
+                
+                    <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist zoom whishlist-position" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
                         <?php if (is_product_in_wishlist($product) == 1) : ?>
-                            <i class="icon-heart"></i>
+                            <i class="icon-heart "></i>
                         <?php else : ?>
                             <i class="icon-heart-o"></i>
                         <?php endif; ?>

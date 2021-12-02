@@ -64,7 +64,7 @@
                 $date = strtotime($t);
                 $date_time = date("Y-m-d\TH:i:s", $date);
                 ?>
-                <input type="datetime-local" value="<?php echo $date_time; ?>" class="form-control" id="meeting-time" name="start_date" required>
+                <input type="datetime-local" value="<?php echo $date_time; ?>" class="form-control" id="voucherstart-time" onchange="vouchertime()"  name="start_date" required>
             </div>
         </div>
     </div>
@@ -79,7 +79,8 @@
                 $date = strtotime($t);
                 $date_time = date("Y-m-d\TH:i:s", $date);
                 ?>
-                <input type="datetime-local" id="meeting-time" value="<?php echo $date_time; ?>" class="form-control" name="end_date" required>
+                <input type="datetime-local" id="voucherend-time" onchange="vouchertime()" value="<?php echo $date_time; ?>" class="form-control" name="end_date" required>
+                <span id="voucher_date1" style="color:red;">Enter a valid date</span>
             </div>
         </div>
     </div>
@@ -168,6 +169,15 @@
 
 <?php echo form_close(); ?>
 <script>
+    function vouchertime() {
+        var fromstart = $("#voucherstart-time").val();
+        var toend = $("#voucherend-time").val();
+        if (fromstart > toend) {
+            document.getElementById("voucher_date1").style.display = "block";
+        } else {
+            document.getElementById("voucher_date1").style.display = "none";
+        }
+    }
     function myFunction() {
         var x = document.getElementById("offer-type").value;
         if (x == "Flat") {
@@ -193,6 +203,7 @@
 
 
     $(document).ready(function() {
+        document.getElementById("voucher_date1").style.display = "none";
         if (document.getElementById("offer-type").value == 'Flat') {
             document.getElementById("discount_percentage").style.display = "none";
             $('#discount_per').prop('required', false);
