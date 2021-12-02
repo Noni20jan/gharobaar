@@ -280,7 +280,7 @@
                             <div class="row">
                                 <div class="col-12 col-sm-4 col-custom-field">
                                     <label class="control-label">Product Weight(in grams)<span class="Validation_error"> *</span></label>
-                                    <input type="number" autocomplete="off" name="product_weight" class="form-control auth-form-input" placeholder="Enter actual product weight" required value="<?php echo (!empty($product->product_weight)) ? $product->product_weight : ''; ?>">
+                                    <input type="number" autocomplete="off" name="product_weight" class="form-control auth-form-input" placeholder="Enter actual product weight" required value="<?php echo (!empty($product->product_weight)) ? $product->product_weight : ''; ?>" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
                                 </div>
                             </div>
                             <div class="form-box-head">
@@ -293,7 +293,7 @@
                                 <div class="row">
                                     <div class="col-12 col-sm-3">
                                         <label class="barting tooltip-product-other-info tooltip-product">Package Weight(in grams) <span class="Validation_error"> *</span> &nbsp;<i class="fa fa-info-circle"></i><span class="tooltiptext">Please enter the packaged weight of your product after it has been packed completely for shipping. The delivery charges for the customer would be calculated basis this weight</span></label>
-                                        <input type="number" name="weight" id="weight_main" class="form-control auth-form-input" placeholder="Enter Product Weight After Packaging" value="<?php echo $product->weight; ?>" required>
+                                        <input type="number" name="weight" id="weight_main" class="form-control auth-form-input" placeholder="Enter Product Weight After Packaging" value="<?php echo $product->weight; ?>" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required >
                                         <!-- <div class="pull-right btn-select-dropdown" style="padding-right: 5px;margin-top: -36px;">
 
                                             <select name="weight_units" class="custom-select" required>
@@ -308,15 +308,15 @@
                                     </div>
                                     <div class="col-12 col-sm-3 m-b-15">
                                         <label class="control-label">Length (in cm)<span class="Validation_error"> *</span></label>
-                                        <input type="number" name="product_length" id="length_main" class="form-control auth-form-input" placeholder="Length (in cm)" value="<?php echo html_escape($product->packed_product_length); ?>" required>
+                                        <input type="number" name="product_length" id="length_main" class="form-control auth-form-input" placeholder="Length (in cm)" value="<?php echo html_escape($product->packed_product_length); ?>" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required>
                                     </div>
                                     <div class="col-12 col-sm-3 m-b-15">
                                         <label class="control-label">Width (in cm)<span class="Validation_error"> *</span></label>
-                                        <input type="number" name="product_width" id="width_main" class="form-control auth-form-input" placeholder="Width (in cm)" value="<?php echo html_escape($product->packed_product_width); ?>" required>
+                                        <input type="number" name="product_width" id="width_main" class="form-control auth-form-input" placeholder="Width (in cm)" value="<?php echo html_escape($product->packed_product_width); ?>"  oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required>
                                     </div>
                                     <div class="col-12 col-sm-3 m-b-15">
                                         <label class="control-label">Height (in cm)<span class="Validation_error"> *</span></label>
-                                        <input type="number" name="product_height" id="height_main" class="form-control auth-form-input" placeholder="Height (in cm)" value="<?php echo html_escape($product->packed_product_height); ?>" required>
+                                        <input type="number" name="product_height" id="height_main" class="form-control auth-form-input" placeholder="Height (in cm)" value="<?php echo html_escape($product->packed_product_height); ?>" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required>
 
                                     </div>
                                 </div>
