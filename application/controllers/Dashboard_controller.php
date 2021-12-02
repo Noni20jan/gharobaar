@@ -276,11 +276,15 @@ class Dashboard_controller extends Home_Core_Controller
         }
 
         $data["product_images"] = $this->file_model->get_story_images($data["user"]->id);
+        $data['custom_filters'] = $this->field_model->get_custom_filters();
+        $data["query_string_array"] = get_query_string_array($data['custom_filters']);
+        $data["query_string_object_array"] = convert_query_string_to_object_array($data["query_string_array"]);
+
 
         //set pagination
         $data['num_rows'] = $this->product_model->get_user_products_count($data["user"]->id, 'active');
         $pagination = $this->paginate(generate_profile_url($data["user"]->slug), $data['num_rows'], $this->product_per_page);
-        $data['products'] = $this->product_model->get_paginated_user_products($data["user"]->id, 'active', $pagination['per_page'], $pagination['offset']);
+        $data['products'] = $this->product_model->get_paginated_filtered_user_products($data["user"]->id, 'active', $data["query_string_array"], null, $pagination['per_page'], $pagination['offset']);
         $data['user_categories'] = $this->product_model->get_categories_array_with_products($data["user"]->id);
 
         $data["user_rating"] = calculate_user_rating($data["user"]->id);

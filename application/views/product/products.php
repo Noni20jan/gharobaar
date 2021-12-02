@@ -12,6 +12,100 @@ foreach ($sellers as $seller) {
 //var_dump($unique_state_array);
 ?>
 <style type="text/css">
+    .veg {
+        position: relative;
+        float: right;
+        right: 4%;
+        top: 19%;
+        font-weight: 600
+    }
+
+    @media(max-width:768px) {
+        .veg {
+            position: absolute;
+            right: 86%;
+            font-weight: 600;
+            top: 78%;
+        }
+    }
+
+    .non_veg {
+        position: relative;
+        /* right: -33%; */
+        right: 2%;
+        top: 17%;
+        float: right;
+        font-weight: 600;
+    }
+
+    @media(max-width:768px) {
+
+        .non_veg {
+            position: absolute;
+            /* right: -33%; */
+            right: 33%;
+            top: 80%;
+            float: right;
+            font-weight: 600;
+        }
+    }
+
+    .swach {
+
+        position: relative;
+        display: inline-block;
+        width: 90px;
+        height: 34px;
+        right: 1%;
+        float: right;
+
+    }
+
+    @media(max-width:768px) {
+        .swach {
+            position: absolute;
+            display: inline-block;
+            width: 84px;
+            height: 28px;
+            top: 77%;
+            right: 3%;
+            float: right;
+        }
+    }
+
+    .swach input {
+        display: none;
+    }
+
+    .swch {
+        position: relative;
+        display: inline-block;
+        width: 90px;
+        height: 34px;
+        right: 3%;
+        top: 0%;
+        float: right;
+
+    }
+
+    @media(max-width:768px) {
+        .swch {
+            position: absolute;
+            display: inline-block;
+            width: 84px;
+            height: 28px;
+            right: 59%;
+            top: 76%;
+
+        }
+    }
+
+
+
+    .swch input {
+        display: none;
+    }
+
     .ajax-load {
         /* background: #e1e1e1; */
         padding: 10px 0px;
@@ -62,6 +156,7 @@ foreach ($sellers as $seller) {
         font-weight: 600;
 
     }
+
 
 
 
@@ -150,6 +245,17 @@ foreach ($sellers as $seller) {
 
     .slider.round:before {
         border-radius: 50%;
+        /* width: 19px;
+        height: 20px; */
+    }
+
+    @media(max-width:768px) {
+        .slider.round:before {
+            border-radius: 50%;
+            width: 19px;
+            height: 20px;
+        }
+
     }
 
     @media (max-width: 768px) {
@@ -299,7 +405,7 @@ foreach ($sellers as $seller) {
             height: 36px;
             position: absolute;
             right: 2px;
-            top: 41px;
+            /* top: 41px; */
             border: 1px solid #e2e2e2;
         }
     }
@@ -383,46 +489,145 @@ foreach ($sellers as $seller) {
                         </select>
                     </div>
                 </div>
+                <!-- Veg Non Veg toggle -->
                 <?php if (!empty($parent_categories)) : ?>
                     <?php if (isset($category)) : ?>
-                        <div class="veg-non-veg">
-                            <?php if ($parent_categories[0]->id == 2) : ?>
+                        <?php if ($parent_categories[0]->id == 2) : ?>
+                            <label class="swach">
 
-                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only </a>
+                                <input type="checkbox" class="non_Veg" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "non_Veg") ? "checked" : ""; ?>>
 
+                                <div class="slider round">
+                                    <!--ADDED HTML -->
 
-                            <?php elseif (isset($parent_category)) : ?>
-                                <?php if ($parent_category->id == 2) : ?>
-                                    <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only
-                                    </a>
+                                    <span class="on">YES</span>
 
-                                <?php endif; ?>
+                                    <span class="off">NO</span>
+                                    <!--END-->
+                                </div>
+                            </label>
+                            <label class="non_veg">Non Veg</label>
+                            <label class="swch">
+
+                                <input type="checkbox" class="Veg" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "Veg") ? "checked" : ""; ?>>
+
+                                <div class="slider round">
+                                    <!--ADDED HTML -->
+
+                                    <span class="on">YES</span>
+
+                                    <span class="off">NO</span>
+                                    <!--END-->
+                                </div>
+                            </label>
+                            <label class="veg">Veg</label>
+
+                        <?php elseif (isset($parent_category)) : ?>
+                            <?php if ($parent_category->id == 2) : ?>
+                                <label class="swach">
+
+                                    <input type="checkbox" id="toggleBtn" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "non_Veg") ? "checked" : ""; ?>>
+
+                                    <div class="slider round">
+                                        <!--ADDED HTML -->
+
+                                        <span class="on">YES</span>
+
+                                        <span class="off">NO</span>
+                                        <!--END-->
+                                    </div>
+                                </label>
+                                <label class="non_veg">Non Veg</label>
+                                <label class="swch">
+
+                                    <input type="checkbox" id="toggBtn" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "Veg") ? "checked" : ""; ?>>
+
+                                    <div class="slider round">
+                                        <!--ADDED HTML -->
+
+                                        <span class="on">YES</span>
+
+                                        <span class="off">NO</span>
+                                        <!--END-->
+                                    </div>
+                                </label>
+                                <label class="veg">Veg</label>
                             <?php endif; ?>
-                        </div>
+                        <?php endif; ?>
                     <?php endif; ?>
                 <?php endif; ?>
 
                 <?php if (isset($user_categories)) : ?>
-                    <div class="veg-non-veg">
-                        <?php
-                        foreach ($user_categories as $cat_id => $cat_count) :
-                            $category = get_category_by_id($cat_id);
-                            break;
-                        endforeach;
-                        if ($category->id == 2) : ?>
+                    <?php
+                    foreach ($user_categories as $cat_id => $cat_count) :
+                        $category = get_category_by_id($cat_id);
+                        break;
+                    endforeach;
+                    if ($category->id == 2) : ?>
+                        <label class="switch" id="swach">
 
+                            <input type="checkbox" id="toggleBtn" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "non_Veg") ? "checked" : ""; ?>>
 
-                            <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only </a>
+                            <div class="slider round">
+                                <!--ADDED HTML -->
 
+                                <span class="on">YES</span>
 
-                        <?php elseif (isset($parent_category)) : ?>
-                            <?php if ($parent_category->id == 2) : ?>
-                                <a type="button" id="veg" class="<?= is_custom_field_option_selected($query_string_object_array, 'food_type', 'Veg') ? "active_veg" : "non-active_veg" ?>" href="<?= current_url() . generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>">Veg Only </a>
+                                <span class="off">NO</span>
+                                <!--END-->
+                            </div>
+                        </label>
+                        <label class="cmd">Non Veg</label>
+                        <label class="switch" id="swch">
 
-                            <?php endif; ?>
+                            <input type="checkbox" id="toggBtn" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "Veg") ? "checked" : ""; ?>>
+
+                            <div class="slider round">
+                                <!--ADDED HTML -->
+
+                                <span class="on">YES</span>
+
+                                <span class="off">NO</span>
+                                <!--END-->
+                            </div>
+                        </label>
+                        <label class="veg">Veg</label>
+
+                    <?php elseif (isset($parent_category)) : ?>
+                        <?php if ($parent_category->id == 2) : ?>
+                            <label class="switch" id="swach">
+
+                                <input type="checkbox" id="toggleBtn" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "non_Veg") ? "checked" : ""; ?>>
+
+                                <div class="slider round">
+                                    <!--ADDED HTML -->
+
+                                    <span class="on">YES</span>
+
+                                    <span class="off">NO</span>
+                                    <!--END-->
+                                </div>
+                            </label>
+                            <label class="cmd">Non Veg</label>
+                            <label class="switch" id="swch">
+
+                                <input type="checkbox" id="toggBtn" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "Veg") ? "checked" : ""; ?>>
+
+                                <div class="slider round">
+                                    <!--ADDED HTML -->
+
+                                    <span class="on">YES</span>
+
+                                    <span class="off">NO</span>
+                                    <!--END-->
+                                </div>
+                            </label>
+                            <label class="veg">Veg</label>
+
                         <?php endif; ?>
-                    </div>
+                    <?php endif; ?>
                 <?php endif; ?>
+                <!-- End Of Veg Non Veg toggle -->
 
                 <?php if (!empty($parent_categories) && $parent_categories[0]->id != 2) : ?>
                     <label class="switch">
@@ -474,7 +679,6 @@ foreach ($sellers as $seller) {
                     <label class="cod">Cash On Delivery</label>
 
                 <?php endif; ?>
-
 
                 <button class=" btn btn-filter-products-mobile" type="button" data-toggle="collapse" data-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
                     <i class="icon-filter"></i>&nbsp;<?php echo trans("filter_products"); ?>
@@ -2305,155 +2509,53 @@ foreach ($sellers as $seller) {
 
     });
 </script>
-<!-- <script>
-    $(document).ready(function() {
-        var length = $("#product_filter").height() - $("#insideFilter").height();
-        var insideLength = $("#insideFilter").height();
-        var len = $("#collapseFilters").height();
-        var foot = $('#wrapper').height();
-        var root = len + foot;
-        console.log("Collapse filter height", len);
-        // console.log("Inside filter height", foot);
+<script>
+    $(".Veg").on('change', function() {
+        var x = "<?php echo current_url(); ?>"
+        var y = "<?php echo generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>";
+        z = x + y;
+        console.log($(this).val());
+        if ($(this).is(':checked')) {
+            $(this).attr('value', 'true');
+            console.log($(this).val());
 
-        // console.log("Product filter height", length);
+            window.location.href = z;
 
-        $(window).scroll(function() {
-            var scroll = $(this).scrollTop();
-            var height = $('#insideFilter').height() + 'px';
 
-            if (scroll <= 0) {
-                $("#collapseFilters").css({
-                    position: 'absolute',
-                    top: '0',
-                    // width: '100%',
-                });
-            } else if (scroll >= length) {
-                $("#collapseFilters").css({
-                    position: 'absolute',
-                    top: 'auto',
-                    bottom: '0',
-                    // width: '100%'
-                });
-            } else {
-                $("#collapseFilters").css({
-                    position: 'fixed',
-                    top: '0',
 
-                });
-            }
-        });
-    });
-</script> -->
-<!-- <script>
-    $(document).ready(function() {
-        var total = 0;
-        // var length = $('#insideFilter').height() - $('#collapseFilters').height() + $('#collapseFilters').offset().top;
-        // console.log(length);
-        var z = $("#collapseFilters").height();
-        var x = $(".product-list-content").height();
-        console.log(z);
-        console.log(x);
-        // if (z < x) {
-        //     $("#collapseFilters").css({
-        //         'position': 'fixed',
-        //         'top': 'auto',
-        //         'minHeight': 'max-content',
-        //         'overflow-x': 'hidden'
-        //     });
 
-        // }
-        var chkbox = $("input[name='filter_checkbox[]']:checked");
-        console.log(chkbox['length']);
-        if ($("input[name='filter_checkbox[]']".checked)) {
-            for (var i = 0; i <= chkbox.length; i++) {
-                console.log("Total is", i + " " + total);
-            }
-            total += z;
-        } else if ($("input[name='filter_checkbox[]']".not(':checked').length == 0)) {
-            total += 326.667;
+
+
+        } else {
+            $(this).attr('value', 'false');
+            console.log($(this).val());
+            window.location.href = x;
         }
-        console.log(total);
-        $(window).scroll(function() {
-            var scroll = $(this).scrollTop();
-            var height = $('#collapseFilters').height() + 'px';
-            if (scroll <= 0) {
-                $("#collapseFilters").css({
-                    'position': 'relative',
-                    // 'top': '0',
-                    // 'bottom': 'auto',
-                    'float': 'left'
-                });
-                $('.product-filters .filter-item .price-filter-inputs').css({
-                    'display': 'block',
-                    'float': 'left',
-                    'position': 'relative',
-                    'width': '100%'
-                });
-
-            } else if (scroll > total) {
-                $("#collapseFilters").css({
-                    'position': 'relative',
-                    // 'top': 'auto',
-                    // 'bottom': '0',
-                    'float': 'left'
-
-                });
-                $('.product-filters .filter-item .price-filter-inputs').css({
-                    'display': 'block',
-                    'float': 'left',
-                    'position': 'relative',
-                    'width': '100%'
-                });
-            } else {
-                $("#collapseFilters").css({
-                    'position': 'fixed',
-                    // 'top': '0',
-                    // 'height': 'auto',
-                    'float': 'left'
-
-
-                });
-                $('.product-filters .filter-item .price-filter-inputs').css({
-                    'display': 'block',
-                    'float': 'left',
-                    'position': 'relative',
-                    'width': '19%'
-                });
-            }
-        });
-
-
 
     });
-</script> -->
-<!-- <script>
-    jQuery(function($) {
+</script>
+<script>
+    $(".non_Veg").on('change', function() {
+        var x = "<?php echo current_url(); ?>"
+        var y = "<?php echo generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>";
+        z = x + y;
+        console.log($(this).val());
+        if ($(this).is(':checked')) {
+            $(this).attr('value', 'true');
+            console.log($(this).val());
 
-        $(window).bind('scroll', function(e) {
-            if ($(window).scrollTop() + window.innerHeight >= $('#footer').offset().top) {
-                $('#collapseFilters').css({
-                    'position': 'relative',
-                    'zIndex': '0',
-                    'overflowY': 'hidden'
+            window.location.href = z;
 
-                });
-            } else {
-                $('#collapseFilters').css({
-                    'height': '100%',
-                    'width': '100%',
-                    'position': 'fixed',
-                    'zIndex': '1',
 
-                    'overflowX': 'hidden'
-                });
-                $('.product-filters .filter-item .price-filter-inputs').css({
-                    'display': 'block',
-                    'float': 'left',
-                    'position': 'relative',
-                    'width': '15%'
-                });
 
-            };
-        });
+
+
+
+        } else {
+            $(this).attr('value', 'false');
+            console.log($(this).val());
+            window.location.href = x;
+        }
+
     });
-</script> -->
+</script>
