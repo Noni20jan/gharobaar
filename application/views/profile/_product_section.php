@@ -308,8 +308,9 @@ endforeach; ?>
     <div class="col-md-4">
       Featured Products
     </div>
-    <?php if ($category->id == 2) : ?>
-      <div class="col-md-3">
+    <div class="col-md-3">
+      <?php if ($category->id == 2) : ?>
+
         <label class="switch">
           <input type="checkbox" class="Non" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "non_Veg") ? "checked" : ""; ?>>
 
@@ -345,30 +346,30 @@ endforeach; ?>
           </div>
         </label>
       <?php endif; ?>
-      </div>
+    </div>
 
-      <div class="col-md-2" id="now">
+    <div class="col-md-2" id="now">
 
-        <button class="round_button" id="in_stock" onclick="myFunction4()" style="font-size:13px;">Available now
-        </button>
-      </div>
-      <!-- <div class="col-md-2" id="time" style=left:3%;>
+      <button class="round_button" id="in_stock" onclick="myFunction4()" style="font-size:13px;">Available now
+      </button>
+    </div>
+    <!-- <div class="col-md-2" id="time" style=left:3%;>
       <button class="round_button" onclick="myFunction4()">Delivery Time
         <i class="fa fa-caret-down" onclick="myFunction4()"></i>
       </button>
     </div> -->
-      <div class="col-md-3" id="sort">
-        <button class="dropbtn round_button" onclick="myFunction4()">Sort
-          <a id="selected_tag" class="dropbtn">:<?php echo trans("whats_new"); ?></a>
-          <i class="fa fa-caret-down dropbtn"></i>
-        </button>
-        <div class="dropdown-content" id="myDropdown">
-          <a href="javascript:void(0);" id="whats_new"><?php echo trans("whats_new"); ?></a>
-          <a href="javascript:void(0);" id="better_discount"><?php echo trans("better_discount"); ?></a>
-          <a href="javascript:void(0);" id="low_to_high"><?php echo trans("price_low_high"); ?></a>
-          <a href="javascript:void(0);" id="high_to_low"><?php echo trans("price_high_low"); ?></a>
-        </div>
+    <div class="col-md-3" id="sort">
+      <button class="dropbtn round_button" onclick="myFunction4()">Sort
+        <a id="selected_tag" class="dropbtn">:<?php echo trans("whats_new"); ?></a>
+        <i class="fa fa-caret-down dropbtn"></i>
+      </button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="javascript:void(0);" id="whats_new"><?php echo trans("whats_new"); ?></a>
+        <a href="javascript:void(0);" id="better_discount"><?php echo trans("better_discount"); ?></a>
+        <a href="javascript:void(0);" id="low_to_high"><?php echo trans("price_low_high"); ?></a>
+        <a href="javascript:void(0);" id="high_to_low"><?php echo trans("price_high_low"); ?></a>
       </div>
+    </div>
 
   </div>
 </div>
