@@ -227,11 +227,19 @@
     font-family: Verdana, sans-serif;
   }
 
-  input:checked+.slider .on {
+  .swick input:checked+.slider .on {
     display: block;
   }
 
-  input:checked+.slider .off {
+  .switch input:checked+.slider .on {
+    display: block;
+  }
+
+  .switch input:checked+.slider .off {
+    display: none;
+  }
+
+  .swick input:checked+.slider .off {
     display: none;
   }
 
@@ -326,12 +334,7 @@ endforeach; ?>
         </label>
         <label class="veg">Veg</label>
 
-        <div class="non">Non Veg</div>
-
-        <!-- <label class="veg">Veg</label> -->
-        <!-- <label class="cmd">Veg</label> -->
-        <!-- <label class=>Non Veg</label> -->
-
+        <label class="non">Non Veg</label>
         <label class="swick">
 
           <input type="checkbox" class="Veg" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "Veg") ? "checked" : ""; ?>>
@@ -448,7 +451,7 @@ toggle between hiding and showing the dropdown content */
 </script>
 <script>
   $(".Veg").on('change', function() {
-    var x = "<?php echo base_url() . 'profile' . '/' . get_user($product->user_id)->slug; ?>"
+    var x = "<?php echo current_url(); ?>"
     var y = "<?php echo generate_filter_url($query_string_array, 'food_type', 'Veg'); ?>";
     z = x + y;
     console.log($(this).val());
@@ -473,7 +476,7 @@ toggle between hiding and showing the dropdown content */
 </script>
 <script>
   $(".Non").on('change', function() {
-    var x = "<?php echo base_url() . 'profile' . '/' . get_user($product->user_id)->slug; ?>"
+    var x = "<?php echo current_url(); ?>"
     var y = "<?php echo generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>";
     z = x + y;
     console.log($(this).val());
