@@ -126,9 +126,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
-                    <label class="control-label"><?php echo trans('image'); ?>(For Slide) (345x338)</label>
+                    <label class="control-label"><?php echo trans('image'); ?>(For Slide) (980x500)</label>
                     <div class="display-block">
                         <a class='btn btn-success btn-sm btn-file-upload'>
                             <?php echo trans('select_image'); ?>

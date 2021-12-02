@@ -46,7 +46,7 @@
 					<select class="form-control" name="feature_name" id="feature_name" onchange="get_feature_name(this.value);" required>
 						<!-- <option disabled selected>Select Feature name</option> -->
 						<?php foreach ($feature_group_names as $feature) : ?>
-							<option value="<?php echo $feature->lookup_code; ?>"<?php echo ($item->category_feature == $feature->lookup_code) ? 'selected' : ''; ?>><?php echo $feature->meaning; ?></option>
+							<option value="<?php echo $feature->lookup_code; ?>" <?php echo ($item->category_feature == $feature->lookup_code) ? 'selected' : ''; ?>><?php echo $feature->meaning; ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
@@ -128,7 +128,7 @@
 				</div>
 
 				<div class="form-group">
-					<label class="control-label"><?php echo trans('image'); ?> (For Slide) (345x338)</label>
+					<label class="control-label"><?php echo trans('image'); ?> (For Slide) (980x500)</label>
 					<div class="display-block m-b-15">
 						<img src="<?php echo base_url() . $item->slider_image; ?>" alt="" class="img-responsive" style="max-width: 345px; max-height: 338px;">
 					</div>

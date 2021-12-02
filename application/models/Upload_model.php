@@ -332,7 +332,7 @@ class Upload_model extends CI_Model
     {
         $new_path = 'uploads/slider/slider_' . generate_unique_id() . '.png';
         $img = Image::make($path)->orientate();
-        $img->fit(345, 338);
+        $img->fit(980, 500);
         $img->save(FCPATH . $new_path, $this->quality);
         return $new_path;
     }
