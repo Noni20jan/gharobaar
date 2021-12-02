@@ -2,7 +2,7 @@
 <style>
     .flexed-reviews {
         display: flex;
-        height: 21vh;
+        height: auto;
         overflow-y: scroll;
     }
 
