@@ -59,11 +59,20 @@
                 </div> -->
             <?php else : ?>
                 <div class="cart-top">
-                    <a href="javascript:void(0)" class="item-options btn-add-to-cart zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
-                        <i class="icon-cart "></i>
-                    </a>
+                    <?php $disabled = "";
+                    if (check_product_stock($product)) {
+                        $disabled = " disabled"; ?>
+
+                        <a href="javascript:void(0)" class="item-options btn-add-to-cart zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
+                            <i class="icon-cart "></i>
+                        </a>
+                    <?php } ?>
+
                 </div>
             <?php endif; ?>
+            <?php if (!check_product_stock($product)) { ?>
+                <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
+            <?php } ?>
             <?php if (get_vendor_shop_status($product->user_id) == 0) : ?>
 
                 <span class="badge badge-dark badge-promoted" id="cvl">Shop Closed</span>

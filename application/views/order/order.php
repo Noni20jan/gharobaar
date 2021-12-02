@@ -958,7 +958,6 @@
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="fullwidth">
-
                                                     <div class="container separator">
                                                         <h6 id="track_status">Tracking Status</h6>
                                                         <!-- <ul class="progress-tracker progress-tracker--text progress-tracker--center" style="position: relative; right: 42px;"> -->

@@ -14,6 +14,9 @@
         }
     }
 
+    .out_of_stock {
+        width: 100%;
+    }
 
     #remove_cart {
         background-color: #e4e4e4;
@@ -540,7 +543,7 @@
                                                                             <button type="button" class="btn btn-default btn-spinner-minus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="dwn">-</button>
                                                                         </span>
 
-                                                                        <input type="text" id="q-<?php echo $cart_item->cart_item_id; ?>" class="form-control text-center" value="<?php echo $cart_item->quantity; ?>" data-product-id="<?php echo $cart_item->product_id; ?>" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>">
+                                                                        <input type="text" disabled style="background: white;" id="q-<?php echo $cart_item->cart_item_id; ?>" class="form-control text-center" value="<?php echo $cart_item->quantity; ?>" data-product-id="<?php echo $cart_item->product_id; ?>" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>">
                                                                         <span class="input-group-btn">
                                                                             <?php if ((int)get_product($cart_item->product_id)->stock == 1) :
                                                                             ?>
@@ -696,7 +699,7 @@
                                             <a href="#" class="btn btn-block" data-toggle="modal" data-target="#product_not_available"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
                                         <?php else : ?>
                                             <?php if (empty($cart_total->is_stock_available)) : ?>
-                                                <a href="javascript:void(0)" class="btn btn-block"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                <strong class="btn btn-block " data-toggle="modal" data-target="#out_of_stock"><?php echo trans("continue_to_checkout"); ?> </strong>
                                             <?php else : ?>
                                                 <?php if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
                                                     <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
@@ -882,6 +885,54 @@
                 <?php endif; ?>
 
 
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="out_of_stock" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-custom">
+            <!-- form start -->
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true"><i class="icon-close"></i> </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row tracking-number-container">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <p class="details">Some of the items are not in stock. Please remove those to move forward.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: green; color:white;"><?php echo trans("close"); ?></button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="remove_product" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-custom">
+            <!-- form start -->
+            <div class="modal-body">
+                <div class="row tracking-number-container">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <input type="hidden" id="cart_item_modal_id">
+                            <p class="details">Are you sure you want to remove product from cart.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button type="button" class="btn btn-md btn-default" id="confirm_remove_yes" style="background-color: green; color:white;">Yes</button>
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" id="confirm_remove_no" style="background-color: green; color:white;">No</button>
             </div>
 
         </div>
