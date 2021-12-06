@@ -1893,4 +1893,19 @@ class Admin_controller extends Admin_Core_Controller
             // redirect($this->agent->referrer());
         }
     }
+
+    public function sales()
+    {
+        $data['title'] = trans("sale_data");
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/reports/sale_data');
+        $this->load->view('admin/includes/_footer');
+    }
+    public function seller_commission()
+    {
+        $data['title'] = trans("seller_commission_data");
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/reports/seller_commision_data');
+        $this->load->view('admin/includes/_footer');
+    }
 }

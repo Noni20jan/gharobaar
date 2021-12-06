@@ -651,6 +651,35 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li class="header text-uppercase"><?php echo trans("reports"); ?></li>
+                    <li class="treeview<?php is_admin_nav_active(['sale-data', 'seller-commission-data']); ?>">
+                        <a href="#">
+                            <img src="<?php echo base_url(); ?>assets/img/reports.jpg" alt="" style="width: 20px; height: 20px;" />
+                            <span><?php echo trans("reports"); ?></span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="nav-send-email-subscribers">
+                                <a href="<?php echo admin_url(); ?>sale-data"><?php echo trans("sale_data"); ?></a>
+                            </li>
+                            <li class="nav-system-settings"><a href="<?php echo admin_url(); ?>seller-commission-data"><?php echo trans("seller_commission_data"); ?></a></li>
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </ul>
             </section>
             <!-- /.sidebar -->

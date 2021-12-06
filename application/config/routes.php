@@ -556,6 +556,9 @@ $route[getr('admin', $rts) . '/bank-approve-details'] = 'membership_controller/b
 $route[getr('admin', $rts) . '/cache-system'] = 'admin_controller/cache_system';
 $route[getr('admin', $rts) . '/storage'] = 'admin_controller/storage';
 
+// reports
+$route[getr('admin', $rts) . '/sale-data'] = 'admin_controller/sales';
+$route[getr('admin', $rts) . '/seller-commission-data'] = 'admin_controller/seller_commission';
 
 /*offers routes*/
 $route[getr('admin', $rts) . '/coupons-dashboard'] = 'coupon_controller/coupon_dashboard';
