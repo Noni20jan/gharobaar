@@ -289,17 +289,19 @@ class Order_model extends CI_Model
                         if (!empty($pan_number)) {
                             if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                                 $object_product->tds_amount_product = 0;
+                                $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_total_price);
                             } else {
-                                $object_product->tds_amount_product = 0.01 * ($object->total_price);
+                                $object_product->tds_amount_product = 0.01 * ($object_product->product_total_price);
                             }
                         } else {
-                            $object_product->tds_amount_product = 0.05 * ($object->total_price);
+                            $object_product->tds_amount_product = 0.05 * ($object_product->product_total_price);
                         }
                     } elseif ($object_product->gst_rate != 0) {
                         $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
                         if (!empty($pan_number)) {
                             if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                                 $object_product->tds_amount_product = 0;
+                                $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_price_excluding_gst);
                             } else {
                                 $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
                             }
@@ -318,6 +320,7 @@ class Order_model extends CI_Model
 
                     $psd->total_tcs_amount_product += $object_product->tcs_amount_product;
                     $psd->total_tds_amount_product += $object_product->tds_amount_product;
+                    $psd->total_tds_amount_product_huf_ind += $object_product->tds_amount_product_huf_ind;
                     array_push($psd->products, $object_product);
                     $new = false;
                 }
@@ -359,17 +362,19 @@ class Order_model extends CI_Model
                     if (!empty($pan_number)) {
                         if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                             $object_product->tds_amount_product = 0;
+                            $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_total_price);
                         } else {
-                            $object_product->tds_amount_product = 0.01 * ($object->total_price);
+                            $object_product->tds_amount_product = 0.01 * ($object_product->product_total_price);
                         }
                     } else {
-                        $object_product->tds_amount_product = 0.05 * ($object->total_price);
+                        $object_product->tds_amount_product = 0.05 * ($object_product->product_total_price);
                     }
                 } elseif ($object_product->gst_rate != 0) {
                     $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
                     if (!empty($pan_number)) {
                         if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                             $object_product->tds_amount_product = 0;
+                            $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_price_excluding_gst);
                         } else {
                             $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
                         }
@@ -473,6 +478,8 @@ class Order_model extends CI_Model
                 if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                     $object->tds_amount_shipping = 0;
                     $object->total_tds_cod = 0;
+                    $object->tds_amount_shipping_huf_ind = 0.01 * ($object->shipping);
+                    $object->total_tds_cod_huf_ind = 0.01 * $object->cod_charges_without_gst;
                 } else {
                     $object->tds_amount_shipping = 0.01 * ($object->shipping);
                     $object->total_tds_cod = 0.01 * $object->cod_charges_without_gst;
@@ -4111,17 +4118,19 @@ class Order_model extends CI_Model
                         if (!empty($pan_number)) {
                             if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                                 $object_product->tds_amount_product = 0;
+                                $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_total_price);
                             } else {
-                                $object_product->tds_amount_product = 0.01 * ($object->total_price);
+                                $object_product->tds_amount_product = 0.01 * ($object_product->product_total_price);
                             }
                         } else {
-                            $object_product->tds_amount_product = 0.05 * ($object->total_price);
+                            $object_product->tds_amount_product = 0.05 * ($object_product->product_total_price);
                         }
                     } elseif ($object_product->gst_rate != 0) {
                         $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
                         if (!empty($pan_number)) {
                             if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                                 $object_product->tds_amount_product = 0;
+                                $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_price_excluding_gst);
                             } else {
                                 $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
                             }
@@ -4140,6 +4149,7 @@ class Order_model extends CI_Model
 
                     $psd->total_tcs_amount_product += $object_product->tcs_amount_product;
                     $psd->total_tds_amount_product += $object_product->tds_amount_product;
+                    $psd->total_tds_amount_product_huf_ind += $object_product->tds_amount_product_huf_ind;
                     array_push($psd->products, $object_product);
                     $new = false;
                 }
@@ -4181,17 +4191,19 @@ class Order_model extends CI_Model
                     if (!empty($pan_number)) {
                         if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                             $object_product->tds_amount_product = 0;
+                            $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_total_price);
                         } else {
-                            $object_product->tds_amount_product = 0.01 * ($object->total_price);
+                            $object_product->tds_amount_product = 0.01 * ($object_product->product_total_price);
                         }
                     } else {
-                        $object_product->tds_amount_product = 0.05 * ($object->total_price);
+                        $object_product->tds_amount_product = 0.05 * ($object_product->product_total_price);
                     }
                 } elseif ($object_product->gst_rate != 0) {
                     $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
                     if (!empty($pan_number)) {
                         if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                             $object_product->tds_amount_product = 0;
+                            $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_price_excluding_gst);
                         } else {
                             $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
                         }
@@ -4293,6 +4305,8 @@ class Order_model extends CI_Model
                 if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                     $object->tds_amount_shipping = 0;
                     $object->total_tds_cod = 0;
+                    $object->tds_amount_shipping_huf_ind = 0.01 * ($object->shipping);
+                    $object->total_tds_cod_huf_ind = 0.01 * $object->cod_charges_without_gst;
                 } else {
                     $object->tds_amount_shipping = 0.01 * ($object->shipping);
                     $object->total_tds_cod = 0.01 * $object->cod_charges_without_gst;
@@ -4459,17 +4473,19 @@ class Order_model extends CI_Model
                         if (!empty($pan_number)) {
                             if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                                 $object_product->tds_amount_product = 0;
+                                $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_total_price);
                             } else {
-                                $object_product->tds_amount_product = 0.01 * ($object->total_price);
+                                $object_product->tds_amount_product = 0.01 * ($object_product->product_total_price);
                             }
                         } else {
-                            $object_product->tds_amount_product = 0.05 * ($object->total_price);
+                            $object_product->tds_amount_product = 0.05 * ($object_product->product_total_price);
                         }
                     } elseif ($object_product->gst_rate != 0) {
                         $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
                         if (!empty($pan_number)) {
                             if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                                 $object_product->tds_amount_product = 0;
+                                $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_price_excluding_gst);
                             } else {
                                 $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
                             }
@@ -4480,6 +4496,7 @@ class Order_model extends CI_Model
 
                     $psd->total_tcs_amount_product += $object_product->tcs_amount_product;
                     $psd->total_tds_amount_product += $object_product->tds_amount_product;
+                    $psd->total_tds_amount_product_huf_ind += $object_product->tds_amount_product_huf_ind;
                     array_push($psd->products, $object_product);
                     $new = false;
                 }
@@ -4519,17 +4536,19 @@ class Order_model extends CI_Model
                     if (!empty($pan_number)) {
                         if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                             $object_product->tds_amount_product = 0;
+                            $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_total_price);
                         } else {
-                            $object_product->tds_amount_product = 0.01 * ($object->total_price);
+                            $object_product->tds_amount_product = 0.01 * ($object_product->product_total_price);
                         }
                     } else {
-                        $object_product->tds_amount_product = 0.05 * ($object->total_price);
+                        $object_product->tds_amount_product = 0.05 * ($object_product->product_total_price);
                     }
                 } elseif ($object_product->gst_rate != 0) {
                     $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
                     if (!empty($pan_number)) {
                         if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                             $object_product->tds_amount_product = 0;
+                            $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_price_excluding_gst);
                         } else {
                             $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
                         }
@@ -4623,6 +4642,7 @@ class Order_model extends CI_Model
                 if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                     // $object->tds_amount = 0;
                     $object->tds_amount_shipping = 0;
+                    $object->tds_amount_shipping_huf_ind = 0.01 * ($object->shipping);
                 } else {
                     // $object->tds_amount = 0.01 * ($psd->total_price_without_gst);
                     $object->tds_amount_shipping = 0.01 * ($object->shipping);
