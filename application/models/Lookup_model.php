@@ -60,4 +60,18 @@ class Lookup_model extends CI_Model
         $query = $this->db->get("images_function");
         return $query->row();
     }
+    public function get_lookup_feature_id($lookup_code)
+    {
+        $this->db->where('lookup_type', $lookup_code);
+        $this->db->select('id');
+        $query = $this->db->get("lookup_type");
+        return $query->row();
+    }
+    public function get_lookup_value_id($lookup_code)
+    {
+        $this->db->where('lookup_type', 'BANNER_BY_PRODUCT');
+        $this->db->select('id');
+        $query = $this->db->get("lookup_values");
+        return $query->row();
+    }
 }

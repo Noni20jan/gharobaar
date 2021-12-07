@@ -261,7 +261,31 @@ function delete_item(url, id, message) {
     });
 };
 //delete by name
-
+function delete_tagged_item(url, product_id,feature_id, message) {
+    swal({
+        text: message,
+        icon: "warning",
+        buttons: true,
+        buttons: [sweetalert_cancel, sweetalert_ok],
+        dangerMode: true,
+    }).then(function (willDelete) {
+        if (willDelete) {
+            var data = {
+                'product_id': product_id,
+                'feature_id':feature_id
+            };
+            data[csfr_token_name] = $.cookie(csfr_cookie_name);
+            $.ajax({
+                type: "POST",
+                url: base_url + url,
+                data: data,
+                success: function (response) {
+                    location.reload();
+                }
+            });
+        }
+    });
+};
 
 //confirm user email
 function confirm_user_email(id) {

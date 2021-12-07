@@ -465,6 +465,9 @@ $route[getr('admin', $rts) . '/featured-services-pricing'] = 'product_controller
 $route[getr('admin', $rts) . '/pending-services'] = 'product_controller/pending_services';
 $route[getr('admin', $rts) . '/hidden-services'] = 'product_controller/hidden_services';
 $route[getr('admin', $rts) . '/expired-services'] = 'product_controller/expired_services';
+$route[getr('admin', $rts) . '/approve_products'] = 'product_controller/approve_products';
+$route[getr('admin', $rts) . '/listed_products'] = 'product_controller/listed_products';
+
 
 $route[getr('admin', $rts) . '/deleted-services'] = 'product_controller/deleted_services';
 $route[getr('admin', $rts) . '/service-details/(:num)'] = 'product_controller/service_details/$1';

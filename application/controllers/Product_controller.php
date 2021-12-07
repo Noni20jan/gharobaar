@@ -23,10 +23,80 @@ class Product_controller extends Admin_Core_Controller
         //get paginated products
         $pagination = $this->paginate(admin_url() . 'products', $this->product_admin_model->get_paginated_products_count('products'));
         $data['products'] = $this->product_admin_model->get_paginated_products($pagination['per_page'], $pagination['offset'], 'products');
+
         $data['main_settings'] = get_main_settings();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/product/products', $data);
         $this->load->view('admin/includes/_footer');
+    }
+    public function approve_products()
+    {
+        $data['title'] = trans("products");
+        $data['form_action'] = admin_url() . "products";
+        $data['list_type'] = "products";
+        //get paginated products
+        $pagination = $this->paginate(admin_url() . 'approve_products', $this->product_admin_model->get_paginated_products_count('products'));
+        var_dump($this->product_admin_model->get_paginated_products_count('products'));
+        $data['products'] = $this->product_admin_model->get_paginated_product($pagination['per_page'], $pagination['offset'], 'products');
+        var_dump(sizeof($data['products']));
+        $data['main_settings'] = get_main_settings();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/product/approve_product', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+    public function listed_products()
+    {
+        $data['title'] = trans("products");
+        $data['form_action'] = admin_url() . "listed_products";
+        $data['list_type'] = "products";
+        //get paginated products
+        $pagination = $this->paginate(admin_url() . 'listed_products', $this->product_admin_model->get_paginated_list_product_count('products'));
+        $data['products'] = $this->product_admin_model->get_paginated_list_product($pagination['per_page'], $pagination['offset'], 'products');
+        $data['main_settings'] = get_main_settings();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/product/listed_products', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function tagged_products()
+    {
+        $product_ids = $this->input->post('product_id');
+
+        $user_data = array();
+        $group_feature_id = $this->input->post('grp_feature_id');
+        $feature_id = $this->input->post('feature_id');
+        for ($i = 0; $i < count($product_ids); $i++) {
+
+            $data = array(
+                'grp_feature_id' =>   $group_feature_id,
+                'feature_id' => $feature_id,
+                'product_id' => $product_ids[$i],
+                'is_active' => 1
+
+            );
+            array_push($user_data, $data);
+        }
+        $this->db->insert_batch('product_banner_tagging', $user_data);
+    }
+    public function products_tagging()
+    {
+        // $data['title'] = trans("users");
+        $data['title'] = trans("products");
+        $data['form_action'] = admin_url() . "approve_products";
+        $data['list_type'] = "products";
+        //get paginated products
+        $pagination = $this->paginate(admin_url() . 'products', $this->product_admin_model->get_paginated_products_count('products'));
+        $data['products'] = $this->product_admin_model->get_paginated_product_tagging('products');
+
+
+        echo json_encode($data["products"]);
+    }
+    public function delete_tagging_product()
+    {
+        $feature_id = $this->input->post('feature_id');
+        $product_id = $this->input->post('product_id');
+
+        $this->product_admin_model->delete_tagged_product($feature_id, $product_id);
     }
     public function services()
     {

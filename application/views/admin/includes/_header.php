@@ -356,6 +356,9 @@
                             <li class="nav-add-feature"><a href="<?php echo admin_url(); ?>add-feature"><?php echo trans("add_feature"); ?></a></li>
                             <li class="nav-category-feature-relation"><a href="<?php echo admin_url(); ?>category-feature-relation"><?php echo trans("category_feature_relation"); ?></a></li>
                             <li class="nav-add-category-feature-relation"><a href="<?php echo admin_url(); ?>add-category-feature-relation"><?php echo trans("add_category_feature_relation"); ?></a></li>
+                            <li class="nav-add-category-feature-relation"><a href="<?php echo admin_url(); ?>approve_products">Add Tagging Of Products</a></li>
+                            <li class="nav-add-category-feature-relation"><a href="<?php echo admin_url(); ?>listed_products">Tagged Products</a></li>
+
                         </ul>
 
                     </li>

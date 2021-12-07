@@ -414,8 +414,57 @@ class Product_admin_model extends CI_Model
         $this->db->where('products.status', 1);
         $this->db->where('products.is_service', "0");
         $this->db->where('products.stock>', '0');
-        // $this->db->limit(clean_number($per_page), clean_number($offset));
+        $this->db->limit(clean_number($per_page), clean_number($offset));
         return $this->db->get('products')->result();
+    }
+    public function get_paginated_list_product($per_page, $offset, $list)
+    {
+        $category_ids = $this->get_filter_category_ids();
+        $this->build_query();
+        $this->filter_products($list, $category_ids);
+        $this->db->join('product_banner_tagging', 'products.id=product_banner_tagging.product_id');
+        $this->db->where('products.status', 1);
+        $this->db->where('products.is_service', "0");
+        $this->db->where('products.stock>', '0');
+        $this->db->distinct();
+        $this->db->limit(clean_number($per_page), clean_number($offset));
+        return $this->db->get('products')->result();
+    }
+    public function get_paginated_list_product_count($list)
+    {
+        $category_ids = $this->get_filter_category_ids();
+        $this->build_query();
+        $this->filter_products($list, $category_ids);
+        $this->db->join('product_banner_tagging', 'products.id=product_banner_tagging.product_id');
+        $this->db->where('products.status', 1);
+        $this->db->where('products.is_service', "0");
+        $this->db->where('products.stock>', '0');
+        $this->db->distinct();
+        return $this->db->get('products')->num_rows();
+    }
+    public function get_paginated_product_tagging($list)
+    {
+        $category_ids = $this->get_filter_category_ids();
+        $this->build_query();
+        $this->filter_products($list, $category_ids);
+        $this->db->where('products.status', 1);
+        $this->db->where('products.is_service', "0");
+        $this->db->where('products.stock>', '0');
+        $this->db->where('is_deleted', '0');
+
+        $this->db->order_by('created_at', 'DESC');
+        return $this->db->get('products')->result();
+    }
+    public function get_paginated_product_tagging_count($list)
+    {
+        $category_ids = $this->get_filter_category_ids();
+        $this->build_query();
+        $this->filter_products($list, $category_ids);
+        $this->db->where('products.status', 1);
+        $this->db->where('products.is_service', "0");
+        $this->db->where('products.stock>', '0');
+        $this->db->where('is_deleted', '0');
+        return $this->db->get('products')->num_rows();
     }
     //get paginated products
     public function get_paginated_services($per_page, $offset, $list)
@@ -1052,5 +1101,15 @@ class Product_admin_model extends CI_Model
             return $price * 100;
         }
         return 0;
+    }
+    public function delete_tagged_product($feature_id, $product_id)
+    {
+        // $sql = "Delete from product_banner_tagging where feature_id=$feature_id and product_id=$product_id";
+        // $query = $this->db->query($sql);
+        // return $query;
+
+        $this->db->where('feature_id', $feature_id);
+        $this->db->where('product_id', $product_id);
+        return $this->db->delete('product_banner_tagging');
     }
 }

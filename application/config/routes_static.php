@@ -190,6 +190,10 @@ $route['add-product-coupon'] = 'coupon_controller/coupons_products_data';
 $route['load-source-view-post']['POST'] = 'coupon_controller/load_source_view';
 
 $route['delete-coupon-post']['POST'] = 'coupon_controller/delete_coupon';
+$route['add-product-banner'] = 'product_controller/tagged_products';
+$route['get-product-banner'] = 'product_controller/products_tagging';
+
+$route['delete-tagging-post']['POST'] = 'product_controller/delete_tagging_product';
 
 // Coupon Management
 $route['load-popup-coupon']['POST'] = 'coupon_controller/load_coupon_popup';
