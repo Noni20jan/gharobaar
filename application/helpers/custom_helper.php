@@ -1826,6 +1826,20 @@ if (!function_exists('get_lookup_values_by_type_custom')) {
         return $ci->lookup_model->get_lookup_values_by_type_name($lookup_type);
     }
 }
+if (!function_exists('get_lookup_feature_id')) {
+    function get_lookup_feature_id($lookup_type)
+    {
+        $ci = &get_instance();
+        return $ci->lookup_model->get_lookup_feature_id($lookup_type);
+    }
+}
+if (!function_exists('get_lookup_value_id')) {
+    function get_lookup_value_id($lookup_type)
+    {
+        $ci = &get_instance();
+        return $ci->lookup_model->get_lookup_value_id($lookup_type);
+    }
+}
 //get lookup type values for feature type
 if (!function_exists('get_list_lookup_value_predefined')) {
     function get_list_lookup_value_predefined($lookup_type)
