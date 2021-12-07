@@ -50,32 +50,30 @@ foreach ($sellers as $seller) {
         }
     }
 
-    .swach {
-
+    .switch {
         position: relative;
         display: inline-block;
         width: 90px;
         height: 34px;
         right: 1%;
         float: right;
-
     }
 
-    @media(max-width:768px) {
-        .swach {
-            position: absolute;
+
+    @media(max-width: 768px) {
+        .switch {
+            position: relative;
             display: inline-block;
-            width: 84px;
-            height: 28px;
-            top: 77%;
-            right: 3%;
+            width: 90px;
+            height: 34px;
+            right: 20%;
+            top: 42%;
             float: right;
+
+
         }
     }
 
-    .swach input {
-        display: none;
-    }
 
     .swch {
         position: relative;
@@ -121,29 +119,7 @@ foreach ($sellers as $seller) {
         min-height: 1200px;
     }
 
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 90px;
-        height: 34px;
-        right: 1%;
-        float: right;
-    }
 
-
-    @media(max-width: 768px) {
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 90px;
-            height: 34px;
-            right: 20%;
-            top: 42%;
-            float: right;
-
-
-        }
-    }
 
     .cod {
         position: relative;
@@ -204,15 +180,15 @@ foreach ($sellers as $seller) {
         box-shadow: 0 0 1px #2196F3;
     }
 
-    .swach input:checked+.slider {
-        background-color: red;
+    .switch input:checked+.slider {
+        background-color: #2ab934;
     }
 
-    .swach input:focus+.slider {
+    .switch input:focus+.slider {
         box-shadow: 0 0 1px #2196F3;
     }
 
-    .swach input:checked+.slider:before {
+    .switch input:checked+.slider:before {
         -webkit-transform: translateX(55px);
         -ms-transform: translateX(55px);
         transform: translateX(55px);
