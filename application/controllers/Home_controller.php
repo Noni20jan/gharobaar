@@ -2940,4 +2940,29 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('categories');
         $this->load->view('partials/_footer');
     }
+
+    //function to get the products tagged for a specific banner
+
+    public function products_for_banner($banner_code)
+    {
+        get_method();
+        $data['title'] = trans("products");
+        $data['description'] = trans("products") . " - " . $this->app_name;
+        $data['keywords'] = trans("products") . "," . $this->app_name;
+        $data["index_settings"] = get_index_settings();
+        $data['custom_filters'] = $this->field_model->get_custom_filters();
+        $data["query_string_array"] = get_query_string_array($data['custom_filters']);
+        $data["query_string_object_array"] = convert_query_string_to_object_array($data["query_string_array"]);
+        $data["lookup"] = $this->product_model->get_lookup_code(strtoupper($banner_code));
+        $type_id = $data["lookup"]->id;
+        //get paginated posts
+        $pagination = $this->paginate(generate_url("banner_by_product") . '/' . $banner_code, $this->product_model->get_paginated_filtered_products_count_category_feature($data["query_string_array"], null, $type_id), $this->product_per_page);
+        $data['products'] = $this->product_model->get_products_for_banner($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id);
+        $data['product_count'] = $this->product_model->get_paginated_filtered_products_count_category_feature($data["query_string_array"], null, $type_id);
+        $data["categories"] = $this->parent_categories;
+        $data["all_category_selected"] = $this->product_model->get_category_selected($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id, true);
+        $this->load->view('partials/_header', $data);
+        $this->load->view('product/products', $data);
+        $this->load->view('partials/_footer');
+    }
 }

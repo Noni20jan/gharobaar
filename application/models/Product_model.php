@@ -2941,4 +2941,43 @@ order by id desc LIMIT 1";
     {
         $this->db->insert('PRODUCT_BATCH', $data);
     }
+
+    // modal to get the tagged product for specific banner
+
+    public function get_products_for_banner($query_string_array = null, $category_id = null, $per_page, $offset, $type, $only_category = false)
+    {
+        if (!$only_category) :
+            $this->filter_products($query_string_array, $category_id);
+        else :
+            $this->filter_products($query_string_array, $category_id, $only_category);
+        endif;
+
+        $this->db->limit(clean_number($per_page), clean_number($offset));
+        $this->db->join('product_banner_tagging', 'products.id=product_banner_tagging.product_id');
+        // $this->db->where('category_feature.grp_feature_id',7);
+        if (!empty($type)) {
+
+            $this->db->where('product_banner_tagging.feature_id', $type);
+        }
+        $this->db->distinct();
+
+        if (!$only_category) :
+            return $this->db->get('products')->result();
+        else :
+            return $this->db->get('products')->result_array();
+        endif;
+    }
+
+    public function get_category_selected($query_string_array = null, $category_id = null, $per_page, $offset, $type, $only_category = false)
+    {
+        $categories = $this->get_products_for_banner($query_string_array, $category_id, $per_page, $offset, $type, $only_category);
+        $parent_cat_array = array();
+        foreach ($categories as $category) {
+            $id = $this->category_model->get_parent_categories_tree($category["cat_id"])[0]->id;
+            if (!in_array($id, $parent_cat_array)) {
+                array_push($parent_cat_array, $id);
+            }
+        }
+        return $parent_cat_array;
+    }
 }

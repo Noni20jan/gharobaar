@@ -146,6 +146,7 @@ foreach ($languages as $language) {
         $route[$key . getr('shop_by_random', $rts) . '/(:any)']['GET'] = 'home_controller/products_shop_by_random/$1';
         $route[$key . getr('downloads', $rts)]['GET'] = 'profile_controller/downloads';
         $route[$key . getr('shop_by_concern', $rts) . '/(:any)']['GET'] = 'home_controller/products_shop_by_concern/$1';
+        $route[$key . getr('banner_by_product', $rts) . '/(:any)']['GET'] = 'home_controller/products_for_banner/$1';
 
         $route[$key . getr('shop-by-concern', $rts)]['GET'] = 'home_controller/shop_by_concern';
         //for shop by seller

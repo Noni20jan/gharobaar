@@ -223,8 +223,8 @@
                                         if (!empty($shipping_options)) : ?>
                                             <div class="col-sm-12 col-md-6 m-b-sm-15">
                                                 <label><?php echo trans('shipping_cost'); ?></label>
-                                                <select id="select_shipping_cost" name="shipping_cost_type" class="form-control custom-select" <?php echo ($this->form_settings->shipping_required == 1) ? 'required' : ''; ?>>
-                                                    <option value=""><?php echo trans("select_option"); ?></option>
+                                                <select id="select_shipping_cost" name="shipping_cost_type" class="form-control custom-select" required>
+                                                    <option value="" disabled><?php echo trans("select_option"); ?></option>
                                                     <?php foreach ($shipping_options as $option) :
                                                         $shipping_option = get_shipping_option_by_lang($option->common_id, $this->selected_lang->id);
                                                         if ($shipping_option->is_visible == 1) : ?>
@@ -241,7 +241,7 @@
                                             <div class="col-sm-12 col-md-6">
                                                 <label>Dispatch Time</label>
                                                 <select id="shipping_time" name="shipping_time" class="form-control custom-select" <?php echo ($this->form_settings->shipping_required == 1) ? 'required' : ''; ?>>
-                                                    <option value=""><?php echo trans("select_option"); ?></option>
+                                                    <option value="" disabled><?php echo trans("select_option"); ?></option>
                                                     <option value="1_business_day" <?php echo ($product->shipping_time == "1_business_day") ? 'selected' : ''; ?>><?php echo trans("1_business_day"); ?></option>
                                                     <option value="2_3_business_days" <?php echo ($product->shipping_time == "2_3_business_days") ? 'selected' : ''; ?>><?php echo trans("2_3_business_days"); ?></option>
                                                     <option value="4_7_business_days" <?php echo ($product->shipping_time == "4_7_business_days") ? 'selected' : ''; ?>><?php echo trans("4_7_business_days"); ?></option>
@@ -293,7 +293,7 @@
                                 <div class="row">
                                     <div class="col-12 col-sm-3">
                                         <label class="barting tooltip-product-other-info tooltip-product">Package Weight(in grams) <span class="Validation_error"> *</span> &nbsp;<i class="fa fa-info-circle"></i><span class="tooltiptext">Please enter the packaged weight of your product after it has been packed completely for shipping. The delivery charges for the customer would be calculated basis this weight</span></label>
-                                        <input type="number" name="weight" id="weight_main" class="form-control auth-form-input" placeholder="Enter Product Weight After Packaging" value="<?php echo $product->weight; ?>" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required >
+                                        <input type="number" name="weight" id="weight_main" class="form-control auth-form-input" placeholder="Enter Product Weight After Packaging" value="<?php echo $product->weight; ?>" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required>
                                         <!-- <div class="pull-right btn-select-dropdown" style="padding-right: 5px;margin-top: -36px;">
 
                                             <select name="weight_units" class="custom-select" required>
@@ -312,7 +312,7 @@
                                     </div>
                                     <div class="col-12 col-sm-3 m-b-15">
                                         <label class="control-label">Width (in cm)<span class="Validation_error"> *</span></label>
-                                        <input type="number" name="product_width" id="width_main" class="form-control auth-form-input" placeholder="Width (in cm)" value="<?php echo html_escape($product->packed_product_width); ?>"  oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required>
+                                        <input type="number" name="product_width" id="width_main" class="form-control auth-form-input" placeholder="Width (in cm)" value="<?php echo html_escape($product->packed_product_width); ?>" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required>
                                     </div>
                                     <div class="col-12 col-sm-3 m-b-15">
                                         <label class="control-label">Height (in cm)<span class="Validation_error"> *</span></label>
