@@ -36,7 +36,6 @@ class Product_controller extends Admin_Core_Controller
         $data['list_type'] = "products";
         //get paginated products
         $pagination = $this->paginate(admin_url() . 'approve_products', $this->product_admin_model->get_paginated_products_count('products'));
-        var_dump($this->product_admin_model->get_paginated_products_count('products'));
         $data['products'] = $this->product_admin_model->get_paginated_product($pagination['per_page'], $pagination['offset'], 'products');
         var_dump(sizeof($data['products']));
         $data['main_settings'] = get_main_settings();

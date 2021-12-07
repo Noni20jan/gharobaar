@@ -17,7 +17,6 @@
         float: right;
     }
 </style>
-<h3 class="box-title"><?php echo $title; ?></h3>
 
 <div class="row">
     <form id="submit_val">
@@ -72,9 +71,10 @@
 
 </div>
 <?php $z = get_lookup_feature_id($feature->lookup_code)->id; ?>
-<?php $yes = get_lookup_value_id(($featur->lookup_code)->id); ?>
+<?php $yes = (get_lookup_value_id($featur->lookup_code)->id); ?>
 <div class="box">
     <div class="box-header with-border">
+        <h3 class="box-title"><?php echo $title; ?></h3>
     </div><!-- /.box-header -->
 
     <div class="box-body">
@@ -87,7 +87,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="table-responsive" style="overflow-x:hidden !important;">
-                    <!-- <?php $this->load->view('admin/product/_filter_products'); ?> -->
+                    <?php $this->load->view('admin/product/_filter_products'); ?>
                     <table id="example" class="table table-bordered table-striped">
 
                         <thead>
