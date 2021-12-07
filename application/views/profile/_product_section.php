@@ -12,8 +12,8 @@
   .veg {
 
     position: absolute;
-    right: 76%;
-    top: 17%;
+    right: 35%;
+    top: 20%;
     font-size: 13px;
   }
 
@@ -22,7 +22,7 @@
     display: inline-block;
     width: 84px;
     height: 28px;
-    right: 42%;
+    right: 0%;
     top: 10%;
   }
 
@@ -33,8 +33,8 @@
       width: 84px;
       height: 28px;
       /* right: 1%; */
-      top: 12%;
-      right: -11%;
+      top: 14%;
+      right: -24%;
     }
   }
 
@@ -70,9 +70,10 @@
     .veg {
       position: absolute;
       float: right;
-      right: 86%;
+      right: 76%;
       top: 22%;
       font-size: 18px;
+
     }
   }
 
@@ -319,22 +320,20 @@ endforeach; ?>
     <div class="col-md-3">
       <?php if ($category->id == 2) : ?>
 
-        <label class="switch">
+        <!-- <label class="switch">
           <input type="checkbox" class="Non" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "non_Veg") ? "checked" : ""; ?>>
 
           <div class="slider round">
-            <!--ADDED HTML -->
 
             <span class="on">YES</span>
 
             <span class="off">NO</span>
-            <!--END-->
           </div>
-          <!-- <label class="non_Veg">Non Veg</label> -->
-        </label>
+           <label class="non_Veg">Non Veg</label> -->
+        <!-- </label>  -->
         <label class="veg">Veg</label>
 
-        <label class="non">Non Veg</label>
+        <!-- <label class="non">Non Veg</label> -->
         <label class="swick">
 
           <input type="checkbox" class="Veg" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "Veg") ? "checked" : ""; ?>>
@@ -474,7 +473,7 @@ toggle between hiding and showing the dropdown content */
 
   });
 </script>
-<script>
+<!-- <script>
   $(".Non").on('change', function() {
     var x = "<?php echo current_url(); ?>"
     var y = "<?php echo generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>";
@@ -498,4 +497,4 @@ toggle between hiding and showing the dropdown content */
     }
 
   });
-</script>
+</script> -->

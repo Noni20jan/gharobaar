@@ -23,7 +23,7 @@ foreach ($sellers as $seller) {
     @media(max-width:768px) {
         .veg {
             position: absolute;
-            right: 86%;
+            right: 38%;
             font-weight: 600;
             top: 78%;
         }
@@ -94,7 +94,7 @@ foreach ($sellers as $seller) {
             display: inline-block;
             width: 84px;
             height: 28px;
-            right: 59%;
+            right: 6%;
             top: 76%;
 
         }
@@ -137,8 +137,6 @@ foreach ($sellers as $seller) {
             display: inline-block;
             width: 90px;
             height: 34px;
-            /* right: 72px;
-            top: 44px; */
             right: 20%;
             top: 42%;
             float: right;
@@ -508,20 +506,19 @@ foreach ($sellers as $seller) {
                 <?php if (!empty($parent_categories)) : ?>
                     <?php if (isset($category)) : ?>
                         <?php if ($parent_categories[0]->id == 2) : ?>
-                            <label class="swach">
+                            <!-- <label class="swach">
 
                                 <input type="checkbox" class="non_Veg" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "non_Veg") ? "checked" : ""; ?>>
 
                                 <div class="slider round">
-                                    <!--ADDED HTML -->
+                                    ADDED HTML
 
                                     <span class="on">YES</span>
 
                                     <span class="off">NO</span>
-                                    <!--END-->
                                 </div>
                             </label>
-                            <label class="non_veg">Non Veg</label>
+                            <label class="non_veg">Non Veg</label> -->
                             <label class="swch">
 
                                 <input type="checkbox" class="Veg" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "Veg") ? "checked" : ""; ?>>
@@ -1392,6 +1389,7 @@ foreach ($sellers as $seller) {
                                                     </div>
                                                 </a>
                                             </li>
+
                                             <li>
                                                 <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way2); ?>">
                                                     <div class="custom-control custom-checkbox">
@@ -1400,6 +1398,7 @@ foreach ($sellers as $seller) {
                                                     </div>
                                                 </a>
                                             </li>
+
 
                                         </ul>
                                     </div>
@@ -1481,6 +1480,8 @@ foreach ($sellers as $seller) {
                                     </div>
                                 <?php endif; ?>
                             <?php endif; ?>
+
+
 
 
                             <?php if (!empty($parent_categories)) : ?>
@@ -2549,7 +2550,7 @@ foreach ($sellers as $seller) {
 
     });
 </script>
-<script>
+<!-- <script>
     $(".non_Veg").on('change', function() {
         var x = "<?php echo current_url(); ?>"
         var y = "<?php echo generate_filter_url($query_string_array, 'food_type', 'non_Veg'); ?>";
@@ -2566,11 +2567,7 @@ foreach ($sellers as $seller) {
 
 
 
-        } else {
-            $(this).attr('value', 'false');
-            console.log($(this).val());
-            window.location.href = x;
         }
 
     });
-</script>
+</script> -->
