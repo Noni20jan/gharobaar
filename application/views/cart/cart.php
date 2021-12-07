@@ -428,6 +428,8 @@
                                     <div class="cart-scroll-for-web">
                                         <?php if (!empty($cart_items)) :
                                             foreach ($cart_items as $cart_item) :
+                                                // var_dump($cart_item);
+                                                // die();
                                                 $stock_quantity = (int)get_product($cart_item->product_id)->stock;
                                                 $product = get_active_product($cart_item->product_id);
                                                 if (!empty($product)) :
@@ -471,16 +473,28 @@
                                                                     <br>
                                                                     <a class="lone" data-toggle="modal" data-target="#Modal_info_<?php echo $cart_item->product_id; ?>">Add/Edit Customisation Detail</a>
 
-                                                                    <?php if ($product->add_meet == "Made to stock") : ?>
-                                                                        <?php if (empty(check_product_stock($product))) : ?>
-                                                                            <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?></div>
-                                                                        <?php endif; ?>
+                                                                    <?php if (empty($cart_item->variation_option)) : ?> <?php if ($product->add_meet == "Made to stock") : ?> <?php if (empty(check_product_stock($product))) : ?> <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?>
+                                                                                </div>
+                                                                            <?php endif; ?>
+                                                                        <?php else : ?>
+                                                                            <?php if (empty(check_product_stock($product))) : ?>
+                                                                                <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?></div>
+                                                                        <?php endif;
+                                                                                                                        endif; ?>
                                                                     <?php else : ?>
-                                                                        <?php if (empty(check_product_stock($product))) : ?>
-                                                                            <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?></div>
-                                                                    <?php endif;
-                                                                    endif; ?>
-
+                                                                        <?php if ($product->add_meet == "Made to stock") : ?>
+                                                                            <?php if ($cart_item->variation_option->stock == 0) : ?>
+                                                                                <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?></div>
+                                                                            <?php endif; ?>
+                                                                        <?php else : ?>
+                                                                            <?php if ($cart_item->variation_option->stock == 0) : ?>
+                                                                                <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?></div>
+                                                                        <?php endif;
+                                                                        endif; ?>
+                                                                    <?php endif; ?>
+                                                                    <div class="row">
+                                                                        <span id="maximum_stock_reached-<?php echo $cart_item->cart_item_id; ?>" style="color:red; margin-left:15px;"></span>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="list-item seller">
                                                                     <?php echo trans("by"); ?>&nbsp;<a href="<?php echo generate_profile_url($product->user_slug); ?>" title="<?php echo get_brand_name_product($product); ?>" class="word-cut"><?php echo get_brand_name_product($product); ?></a>
@@ -539,6 +553,11 @@
 
                                                                 </div>
                                                             </div>
+                                                            <?php if (empty($cart_item->variation_option)) : ?>
+                                                                <input type="hidden" id="s-<?php echo $cart_item->cart_item_id; ?>" value="<?php echo (int)get_product($cart_item->product_id)->stock; ?>">
+                                                            <?php else : ?>
+                                                                <input type="hidden" id="s-<?php echo $cart_item->cart_item_id; ?>" value="<?php echo (int)($cart_item->variation_option)->stock; ?>">
+                                                            <?php endif; ?>
                                                             <div class="cart-item-quantity" style="float:left;">
                                                                 <div class="number-spinner">
                                                                     <div class="input-group">
@@ -547,20 +566,29 @@
                                                                             <button type="button" class="btn btn-default btn-spinner-minus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="dwn">-</button>
                                                                         </span>
 
-                                                                        <input type="text" disabled style="background: white;" id="q-<?php echo $cart_item->cart_item_id; ?>" class="form-control text-center" value="<?php echo $cart_item->quantity; ?>" data-product-id="<?php echo $cart_item->product_id; ?>" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>">
+                                                                        <input type="text" disabled style="background: white;" id="q-<?php echo $cart_item->cart_item_id; ?>" class="form-control text-center" value="<?php echo (int)$cart_item->quantity; ?>" data-product-id="<?php echo $cart_item->product_id; ?>" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>">
                                                                         <span class="input-group-btn">
-                                                                            <?php if ((int)get_product($cart_item->product_id)->stock == 1) :
-                                                                            ?>
-                                                                                <button type="button" class="btn btn-default" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
-                                                                            <?php elseif ((int)$cart_item->quantity >= (int)get_product($cart_item->product_id)->stock) :
-
-                                                                            ?>
-                                                                                <button type="button" class="btn btn-default" disabled data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
-                                                                                <!-- <div> <span>
+                                                                            <?php if (empty($cart_item->variation_option)) : ?>
+                                                                                <?php if ((int)get_product($cart_item->product_id)->stock == 1) :
+                                                                                ?>
+                                                                                    <button type="button" class="btn btn-default" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
+                                                                                    <!-- <div> <span>
                                                                                                 <label style="color:red;">No More Stock to add</label></span>
                                                                                         </div> -->
+                                                                                <?php else : ?>
+                                                                                    <button type="button" class="btn btn-default btn-spinner-plus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
+                                                                                <?php endif; ?>
                                                                             <?php else : ?>
-                                                                                <button type="button" class="btn btn-default btn-spinner-plus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
+                                                                                <?php if ($cart_item->variation_option->stock == 1) :
+                                                                                ?>
+                                                                                    <button type="button" class="btn btn-default" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
+
+                                                                                    <!-- <div> <span>
+                                                                                                <label style="color:red;">No More Stock to add</label></span>
+                                                                                        </div> -->
+                                                                                <?php else : ?>
+                                                                                    <button type="button" class="btn btn-default btn-spinner-plus" data-cart-item-id="<?php echo $cart_item->cart_item_id; ?>" data-dir="up" data-cart-quantity="<?php echo $cart_item->is_stock_available; ?>">+</button>
+                                                                                <?php endif; ?>
                                                                             <?php endif; ?>
                                                                         </span>
                                                                     </div>

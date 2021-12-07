@@ -161,6 +161,9 @@
         margin-bottom: -13px !important;
     } */
 </style>
+<?php //var_dump($product);
+// die();
+?>
 <div class="row">
     <div class="col-12">
         <?php if ($product->product_type == 'digital') :
@@ -334,7 +337,7 @@
                                             <input type="text" class="form-control text-center" id="product_quantity" name="product_quantity" value="1" readonly="" style="background-color:white; height: calc(1.5em + 0.75rem + 0px);">
 
                                             <span class="input-group-btn for-height">
-                                                <button type="button" class="btn btn-default btn-spinner-plus" id="plus-btn" style=" padding: 6px 8px;" data-dir="up">+</button>
+                                                <button type="button" class="btn btn-default btn-product-plus" id="plus-btn" style=" padding: 6px 8px;border-left:1px solid #e4e4e4;" data-dir="up">+</button>
                                             </span>
                                         </div>
                                     </div>
@@ -355,7 +358,7 @@
                                         <input type="text" class="form-control text-center" id="product_quantity" name="product_quantity" value="1" readonly="" style="background-color:white; height: calc(1.5em + 0.75rem + 0px);">
 
                                         <span class="input-group-btn for-height">
-                                            <button type="button" class="btn btn-default btn-spinner-plus" id="plus-btn" style=" padding: 6px 8px;" data-dir="up">+</button>
+                                            <button type="button" class="btn btn-default btn-product-plus" id="plus-btn" style=" padding: 6px 8px;border-left:1px solid #e4e4e4;" data-dir="up">+</button>
                                         </span>
                                     </div>
                                 </div>
