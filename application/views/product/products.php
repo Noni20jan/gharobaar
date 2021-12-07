@@ -104,6 +104,10 @@ foreach ($sellers as $seller) {
         display: none;
     }
 
+    .switch input {
+        display: none;
+    }
+
     .ajax-load {
         /* background: #e1e1e1; */
         padding: 10px 0px;
