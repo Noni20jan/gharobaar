@@ -229,6 +229,7 @@
             <div class="align-middle float-right">
                 <?php if ($product->listing_type != 'ordinary_listing' && $product->product_type != 'digital' && $product->is_service != '1') : ?>
                     <div class="item-details">
+                        <input type="hidden" id="product_variation_stock" value="<?php echo $product->stock; ?>">
                         <div id="text_product_stock_status" class="right">
                             <?php if ($product->add_meet == "Made to stock") : ?>
                                 <?php if (check_product_stock($product)) : ?>
@@ -487,7 +488,7 @@ endif; ?>
 
 <script type="text/javascript">
     function quantity(qty) {
-        var stock = "<?php echo $product->stock; ?>";
+        var stock = document.getElementById('product_variation_stock').value;
         if (qty == parseInt(stock)) {
             return true;
         } else {

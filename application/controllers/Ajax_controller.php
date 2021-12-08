@@ -248,6 +248,7 @@ class Ajax_controller extends Home_Core_Controller
             'html_content_stock' => "",
             'html_net_weight' => $option_name,
             'stock_status' => 1,
+            'stock' => $option->stock,
         );
         if (!empty($variation) && !empty($option)) {
             $product = $this->product_model->get_product_by_id($variation->product_id);
