@@ -31,8 +31,25 @@
         /* Safari 3-8 */
         transform: scale(1.25);
     }
-    
 </style>
+<?php //var_dump($product);
+//die();
+?>
+<?php if ($product->add_meet == "Made to stock") : ?>
+    <?php $variation = $this->variation_model->get_product_variations($product->id);
+
+    if (!empty($variation)) { ?>
+
+        <?php $variations_stock = 0; //var_dump($variation);
+        foreach ($variation as $variations) :
+            $variation_option = $this->variation_model->get_variation_options($variations->id);
+
+            foreach ($variation_option as $variation_stock) :
+                $variations_stock = $variations_stock + $variation_stock->stock;
+            endforeach;
+        endforeach; ?>
+    <?php } ?>
+<?php endif; ?>
 <div class="product-item">
     <div class="row-custom<?php echo (!empty($product->image_second)) ? ' product-multiple-image' : ''; ?>">
         <a class="item-wishlist-button item-wishlist-enable <?php echo (is_product_in_wishlist($product) == 1) ? 'item-wishlist' : ''; ?>" data-product-id="<?php echo $product->id; ?>"></a>
@@ -61,18 +78,32 @@
             <?php else : ?>
                 <div class="cart-top">
                     <?php $disabled = "";
-                    if (check_product_stock($product)) {
-                        $disabled = " disabled"; ?>
+                    if (empty($variation)) { ?>
+                        <?php if (check_product_stock($product)) {
+                            $disabled = " disabled"; ?>
 
-                        <a href="javascript:void(0)" class="item-options btn-add-to-cart zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
-                            <i class="icon-cart cart-size "></i>
-                        </a>
+                            <a href="javascript:void(0)" class="item-options btn-add-to-cart zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
+                                <i class="icon-cart cart-size "></i>
+                            </a>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <?php if ($variations_stock != 0) { ?>
+                            <a href="javascript:void(0)" class="item-options btn-add-to-cart zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
+                                <i class="icon-cart cart-size "></i>
+                            </a>
+                        <?php } ?>
                     <?php } ?>
 
                 </div>
             <?php endif; ?>
-            <?php if (!check_product_stock($product)) { ?>
-                <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
+            <?php if (empty($variation)) { ?>
+                <?php if (!check_product_stock($product)) { ?>
+                    <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
+                <?php } ?>
+            <?php } else { ?>
+                <?php if ($variations_stock == 0) { ?>
+                    <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
+                <?php } ?>
             <?php } ?>
             <?php if (get_vendor_shop_status($product->user_id) == 0) : ?>
 
@@ -85,7 +116,7 @@
 
             <div class="product-item-options">
                 <?php if ($this->auth_check) : ?>
-                
+
                     <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist zoom whishlist-position" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
                         <?php if (is_product_in_wishlist($product) == 1) : ?>
                             <i class="icon-heart "></i>
