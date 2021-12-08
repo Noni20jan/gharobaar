@@ -48,8 +48,9 @@ class Product_controller extends Admin_Core_Controller
         $data['form_action'] = admin_url() . "listed_products";
         $data['list_type'] = "products";
         //get paginated products
-        $pagination = $this->paginate(admin_url() . 'listed_products', $this->product_admin_model->get_paginated_list_product_count('products'));
-        $data['products'] = $this->product_admin_model->get_paginated_list_product($pagination['per_page'], $pagination['offset'], 'products');
+        // $feature_id = $this;
+
+
         $data['main_settings'] = get_main_settings();
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/product/listed_products', $data);
@@ -139,7 +140,19 @@ class Product_controller extends Admin_Core_Controller
         $this->load->view('admin/service/pending_services', $data);
         $this->load->view('admin/includes/_footer');
     }
+    public function products_tagged()
+    {
+        // $data['title'] = trans("users");
+        $data['title'] = trans("products");
+        $data['form_action'] = admin_url() . "listed_products";
+        $data['list_type'] = "products";
+        $feature_id = $this->input->post('feature_id');
+        //get paginated products
+        $pagination = $this->paginate(admin_url() . 'listed_products', $this->product_admin_model->get_paginated_products_count('products', $feature_id));
+        $data['products'] = $this->product_admin_model->get_paginated_list_product($pagination['per_page'], $pagination['offset'], $feature_id, 'products');
 
+        echo json_encode($data["products"]);
+    }
     /**
      * Hidden Products
      */

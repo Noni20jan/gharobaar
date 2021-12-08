@@ -4,6 +4,10 @@
         width: 23%;
     }
 
+    .text-centre {
+        display: none;
+    }
+
     .nxt-cancel-styls {
         width: 100px;
         background: #185d8c;
@@ -51,7 +55,7 @@
         <select class="form-control" name="feature_value" id="feature_value" required>
             <option disabled selected>Select Feature value</option>
             <?php foreach ($featured as $featur) : ?>
-                <option value="<?php echo $featur->lookup_code; ?>"><?php echo $featur->meaning; ?></option>
+                <option value=<?php echo $featur->id; ?>><?php echo $featur->meaning; ?></option>
             <?php endforeach; ?>
 
 
@@ -62,7 +66,7 @@
 </div>
 
 </div>
-<?php $lookup_id = get_lookup_value_id($featur->lookup_code)->id; ?>
+<?php $lookup_id = $featur->id; ?>
 
 
 <div class="box">
@@ -79,27 +83,26 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="table-responsive" style="overflow-x:hidden !important;">
-                    <table class="table table-bordered table-striped" id="example" role="grid" style="display:none;">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="example" role="grid">
                         <?php $this->load->view('admin/product/_filter_products'); ?>
                         <thead>
                             <tr role="row">
                                 <!-- <th width="20"><input type="checkbox" class="checkbox-table" id="checkAll"></th> -->
+                                <!-- <th width="20"><input type="checkbox" class="checkbox-table" id="checkAll"></th> -->
                                 <th width="20"><?php echo trans('id'); ?></th>
-                                <th><?php echo trans('product'); ?></th>
+                                <th>Image</th>
+                                <th>Product</th>
                                 <th><?php echo trans('category'); ?></th>
-                                <th>Shop Name</th>
                                 <th><?php echo trans('stock'); ?></th>
                                 <th><?php echo trans('date'); ?></th>
-                                <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="insert_data">
 
-                            <?php if (!empty($products)) :
-                                foreach ($products as $item) : ?>
+                            <!-- <?php if (!empty($products)) :
+                                        foreach ($products as $item) : ?>
                                     <tr>
-                                        <!-- <td><input type="checkbox" name="checkbox-table" class="checkbox-table" id="product_checkbox" value="<?php echo $item->id; ?>"></td> -->
                                         <td><?php echo html_escape($item->id); ?></td>
                                         <td class="td-product">
                                             <?php if ($item->is_promoted == 1) : ?>
@@ -167,7 +170,7 @@
                                     <?php endforeach; ?>
                                     </tr>
 
-                                <?php endif; ?>
+                                <?php endif; ?> -->
 
                         </tbody>
                     </table>
@@ -237,12 +240,12 @@
         } else if ($('#feature_type').val() == "INDIVIDUAL_FEATURE") {
             $("#feature_name").prop("disabled", true);
             <?php foreach ($feature_individual_names as $feature) : ?>
-                $('#feature_value').append('<option value="<?php echo $feature->lookup_code; ?>"><?php echo $feature->meaning; ?></option>');
+                $('#feature_value').append('<option value=<?php echo $feature->id; ?>><?php echo $feature->meaning; ?></option>');
             <?php endforeach; ?>
         } else if ($('#feature_type').val() == "PICKS_FOR_YOU") {
             $("#feature_name").prop("disabled", true);
             <?php foreach ($feature_picks_for_you as $feature) : ?>
-                $('#feature_value').append('<option value="<?php echo $feature->lookup_code; ?>"><?php echo $feature->meaning; ?></option>');
+                $('#feature_value').append('<option value="<?php echo $feature->id; ?>"><?php echo $feature->meaning; ?></option>');
             <?php endforeach; ?>
         }
     });
@@ -330,6 +333,51 @@
     }); -->
 <script>
     $('#feature_value').change(function() {
-        document.getElementById("example").style.display = "block";
+        table = $('#example').DataTable();
+        table.clear().destroy();
+
+        var feature_id = ($('#feature_value').val());
+
+        var data = {
+            'feature_id': feature_id
+        }
+        console.log(data);
+        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+        $.ajax({
+
+            type: "POST",
+            url: base_url + "get-tagged-product",
+            data: data,
+            success: function(data) {
+                var Json_data = JSON.parse(data);
+                var len = Json_data.length;
+                console.log(Json_data);
+
+
+                for (var i = 0; i < len; i++) {
+                    var x = '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">';
+
+
+                    $('#insert_data').append("<tr><td>" + Json_data[i].id + "</td><td><div class='img-table'><img src=<?php echo base_url(); ?>uploads/images/" + Json_data[i].image_small + "></div></td><td>" + '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].slug + "</td><td>" + Json_data[i].category_id + "</td><td>" + Json_data[i].stock + "</td><td>" + Json_data[i].created_at + " </td></tr>");
+
+
+                }
+                var table = $('#example').DataTable({
+
+                    'columnDefs': [{
+                        'targets': 0,
+                        "bPaginate": false,
+                        "bFilter": false,
+                        'searchable': true,
+                        'orderable': false,
+                        'className': 'dt-body-center',
+
+                    }],
+                    'order': [1, 'asc']
+                });
+                // document.getElementsById('example_wrapper').style.display = "none";
+            }
+
+        });
     });
 </script>

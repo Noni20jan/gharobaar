@@ -192,6 +192,8 @@ $route['load-source-view-post']['POST'] = 'coupon_controller/load_source_view';
 $route['delete-coupon-post']['POST'] = 'coupon_controller/delete_coupon';
 $route['add-product-banner'] = 'product_controller/tagged_products';
 $route['get-product-banner'] = 'product_controller/products_tagging';
+$route['get-tagged-product'] = 'product_controller/products_tagged';
+
 
 $route['delete-tagging-post']['POST'] = 'product_controller/delete_tagging_product';
 

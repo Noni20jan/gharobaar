@@ -51,7 +51,6 @@
     </div>
     <div class="col-md-4">
         <?php $featured = get_lookup_values_by_type_custom('BANNER_BY_PRODUCT'); ?>
-
         <div class="form-group">
             <label class="control-label"><?php echo trans("feature_value"); ?>
 
@@ -59,19 +58,19 @@
             <select class="form-control" name="feature_value" id="feature_value" required>
                 <option disabled selected>Select Feature value</option>
                 <?php foreach ($featured as $featur) : ?>
-                    <option value="<?php echo $featur->lookup_code; ?>"><?php echo $featur->meaning; ?></option>
+                    <option value="<?php echo $featur->id; ?>"><?php echo $featur->meaning; ?></option>
+
                 <?php endforeach; ?>
 
 
 
-
             </select>
+
         </div>
     </div>
 
 </div>
 <?php $z = get_lookup_feature_id($feature->lookup_code)->id; ?>
-<?php $yes = (get_lookup_value_id($featur->lookup_code)->id); ?>
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title"><?php echo $title; ?></h3>
@@ -336,7 +335,7 @@
             $('#feature_value').append('<option disabled selected>Select Feature Value</option>');
             <?php foreach ($feature_group_names as $feature) : ?>
 
-                $('#feature_value').append('<option value="<?php echo $feature->lookup_code; ?>"><?php echo $feature->meaning; ?></option>');
+                $('#feature_value').append('<option value="<?php echo $feature->id; ?>"><?php echo $feature->meaning; ?></option>');
             <?php endforeach; ?>
         } else if ($('#feature_type').val() == "INDIVIDUAL_FEATURE") {
             $("#feature_name").prop("disabled", true);
@@ -369,7 +368,7 @@
         console.log(arr_source_id);
         var split_arr = arr_source_id.map(s => s.trim())
         var grp_feature_id = <?php echo $z; ?>;
-        var feature_id = <?php echo $yes; ?>;
+        var feature_id = parseInt($('#feature_value').val());
 
         var data = {
 
@@ -402,7 +401,7 @@
         table = $('#example').DataTable();
         table.clear().destroy();
 
-        var feature_id = <?php echo $yes; ?>;
+        var feature_id = parseInt($('#feature_value').val());
         var source_id = ($('#my_match').val());
         var z = source_id.trim();
         console.log(z);

@@ -417,12 +417,13 @@ class Product_admin_model extends CI_Model
         $this->db->limit(clean_number($per_page), clean_number($offset));
         return $this->db->get('products')->result();
     }
-    public function get_paginated_list_product($per_page, $offset, $list)
+    public function get_paginated_list_products($per_page, $offset, $feature_id, $list)
     {
         $category_ids = $this->get_filter_category_ids();
         $this->build_query();
         $this->filter_products($list, $category_ids);
-        $this->db->join('product_banner_tagging', 'products.id=product_banner_tagging.product_id');
+        $this->db->join('product_banner_tagging', 'product_banner_tagging.product_id=products.id');
+        $this->db->where('product_banner_tagging.feature_id', $feature_id);
         $this->db->where('products.status', 1);
         $this->db->where('products.is_service', "0");
         $this->db->where('products.stock>', '0');
@@ -430,12 +431,31 @@ class Product_admin_model extends CI_Model
         $this->db->limit(clean_number($per_page), clean_number($offset));
         return $this->db->get('products')->result();
     }
-    public function get_paginated_list_product_count($list)
+    public function get_paginated_list_product($per_page, $offset, $feature_id, $list)
     {
         $category_ids = $this->get_filter_category_ids();
-        $this->build_query();
+        // $this->build_query();
+        $this->filter_products($list, $category_ids);
+
+        $this->db->join('product_banner_tagging', 'product_banner_tagging.product_id=products.id');
+        $this->db->join('images', 'product_banner_tagging.product_id=images.product_id');
+        $this->db->where('product_banner_tagging.feature_id', $feature_id);
+
+        $this->db->where('products.status', 1);
+        $this->db->where('products.is_service', "0");
+        $this->db->where('products.stock>', '0');
+        $this->db->distinct();
+        $this->db->limit(clean_number($per_page), clean_number($offset));
+        return $this->db->get('products')->result();
+    }
+    public function get_paginated_list_product_count($list, $feature_id)
+    {
+        $category_ids = $this->get_filter_category_ids();
+        // $this->build_query();
         $this->filter_products($list, $category_ids);
         $this->db->join('product_banner_tagging', 'products.id=product_banner_tagging.product_id');
+        $this->db->join('images', 'product_banner_tagging.product_id=images.product_id');
+        $this->db->where('product_banner_tagging.feature_id', $feature_id);
         $this->db->where('products.status', 1);
         $this->db->where('products.is_service', "0");
         $this->db->where('products.stock>', '0');
