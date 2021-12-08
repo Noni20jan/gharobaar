@@ -752,7 +752,8 @@
             if (!empty($diff_prod)) :
                 foreach ($diff_prod as $product) :
                     if ($count < 5) : ?>
-                        <div class="col-6 col-sm-2 col-md-4 col-lg-2 col-product product-margin">
+                        <!-- <div class="col-6 col-sm-2 col-md-4 col-lg-2 col-product product-margin"> -->
+                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
                             <?php $this->load->view('product/_product_item', ['product' =>  $product]); ?>
                         </div>
                 <?php endif;
