@@ -1131,7 +1131,8 @@ class Product_model extends Core_Model
 
         //sort products
         if (!empty($sort) && $sort == "lowest_price") {
-            $this->db->order_by('products.listing_price');
+            $this->db->where('products.listing_price !=', 0);
+            $this->db->order_by('products.listing_price', 'ASC');
         } elseif (!empty($sort) && $sort == "highest_price") {
             $this->db->order_by('products.listing_price', 'DESC');
         } elseif (!empty($sort) && $sort == "oldest_first") {
