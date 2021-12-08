@@ -2958,7 +2958,7 @@ class Home_controller extends Home_Core_Controller
         //get paginated posts
         $pagination = $this->paginate(generate_url("banner_by_product") . '/' . $banner_code, $this->product_model->get_paginated_filtered_products_count_category_feature($data["query_string_array"], null, $type_id), $this->product_per_page);
         $data['products'] = $this->product_model->get_products_for_banner($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id);
-        $data['product_count'] = $this->product_model->get_paginated_filtered_products_count_category_feature($data["query_string_array"], null, $type_id);
+        $data['product_count'] = $this->product_model->get_banner_tagged_product_count($data["query_string_array"], null, $type_id);
         $data["categories"] = $this->parent_categories;
         $data["all_category_selected"] = $this->product_model->get_category_selected($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id, true);
         $this->load->view('partials/_header', $data);

@@ -2968,6 +2968,25 @@ order by id desc LIMIT 1";
         endif;
     }
 
+    public function get_banner_tagged_product_count($query_string_array = null, $category_id = null, $type)
+    {
+        $this->filter_products($query_string_array, $category_id);
+        $this->db->join('product_banner_tagging', 'products.id=product_banner_tagging.product_id');
+        if (!empty($type)) {
+            $tags = "SELECT tag_id FROM category_feature WHERE feature_id=$type AND tag_id is not null";
+            $query = $this->db->query($tags)->result();
+            if (!empty($query)) {
+                $this->db->group_start();
+                $this->db->where('product_banner_tagging.feature_id', $type);
+                $this->db->group_end();
+            } else {
+                $this->db->where('product_banner_tagging.feature_id', $type);
+            }
+        }
+        $this->db->distinct();
+        return $this->db->get('products')->num_rows();
+    }
+
     public function get_category_selected($query_string_array = null, $category_id = null, $per_page, $offset, $type, $only_category = false)
     {
         $categories = $this->get_products_for_banner($query_string_array, $category_id, $per_page, $offset, $type, $only_category);
