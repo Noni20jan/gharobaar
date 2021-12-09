@@ -471,14 +471,17 @@ class Product_admin_model extends CI_Model
     public function get_paginated_product_tagging($list)
     {
         $category_ids = $this->get_filter_category_ids();
-        $this->build_query();
+        // $this->build_query();
         $this->filter_products($list, $category_ids);
+        $this->db->join('images','images.product_id=products.id');
+        $this->db->join('product_details','product_details.product_id=products.id');
         $this->db->where('products.status', 1);
         $this->db->where('products.is_service', "0");
         $this->db->where('products.stock>', '0');
         $this->db->where('is_deleted', '0');
 
-        $this->db->order_by('created_at', 'DESC');
+        $this->db->group_by('products.id');
+        $this->db->order_by('products.created_at', 'DESC');
         return $this->db->get('products')->result();
     }
     public function get_paginated_product_tagging_count($list)

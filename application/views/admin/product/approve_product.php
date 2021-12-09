@@ -32,9 +32,7 @@
                     <label><?php echo trans("feature_type"); ?> (<?php echo $language->name; ?>)</label>
                     <select class="form-control" name="feature_type" id="feature_type" required>
                         <option disabled selected>Select Feature Type</option>
-                        <?php foreach ($features as $feature) : ?>
-                            <option value="<?php echo $feature->lookup_code; ?>"><?php echo $feature->meaning; ?></option>
-                        <?php endforeach; ?>
+                            <option value="GROUP_FEATURE"><?php echo 'Group Feature'; ?></option>
                     </select>
 
                 </div>
@@ -86,17 +84,17 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="table-responsive" style="overflow-x:hidden !important;">
-                    <!-- <?php $this->load->view('admin/product/_filter_products'); ?> -->
                     <table id="example" class="table table-bordered table-striped">
 
                         <thead>
                             <tr role="row">
-                                <!-- <th width="20"><input type="checkbox" class="checkbox-table" id="checkAll"></th> -->
-                                <th width="20"><?php echo trans('id'); ?></th>
-                                <th><?php echo trans('product'); ?></th>
+                            <th width="20"><?php echo trans('id'); ?></th>
+                                <th>Image</th>
+                                <th>Product</th>
                                 <th><?php echo trans('category'); ?></th>
                                 <th><?php echo trans('stock'); ?></th>
                                 <th><?php echo trans('date'); ?></th>
+
                                 <th><input name="select_all" value="1" id="example-select-all" type="checkbox" /></th>
 
                             </tr>
@@ -395,6 +393,30 @@
         return false;
     });
 </script>
+<script>
+    $(document).ready(function() {
+        var table = $('#example').DataTable({
+
+            'columnDefs': [{
+                'targets': 0,
+                "bPaginate": false,
+                "bFilter": false,
+                'searchable': true,
+                'orderable': false,
+                'className': 'dt-body-center',
+
+            }],
+            'order': [1, 'asc']
+        });
+
+
+
+
+
+
+
+    });
+</script>
 
 <script>
     $('#feature_value').change(function() {
@@ -425,11 +447,10 @@
 
                 for (var i = 0; i < len; i++) {
 
-                    $('#insert_data').append("<tr><td>" + Json_data[i].id + "</td><td>" + '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].slug + "</td><td>" + Json_data[i].category_id + "</td><td>" + Json_data[i].stock + "</td><td>" + Json_data[i].created_at + " </td><td>" + '<input type="checkbox" name="selected_id" id="product_checkbox" value="' + Json_data[i].id + '">' + "</td></tr>");
+                    $('#insert_data').append("<tr><td>" + Json_data[i].product_id + "</td><td> <div class='img-table'><img src=<?php echo base_url(); ?>uploads/images/" + Json_data[i].image_default + "> + </div></td><td>" + '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].title + "</td><td>" + Json_data[i].category_id + "</td><td>" + Json_data[i].stock + "</td><td>" + Json_data[i].created_at + "</td><td>"+ '<input type="checkbox" name="selected_id" id="product_checkbox" value="' + Json_data[i].product_id + '">'+"</td></tr>")
 
 
                 }
-                console.log(i);
                 var table = $('#example').DataTable({
 
                     'columnDefs': [{

@@ -33,7 +33,7 @@
                 <select class="form-control" name="feature_type" id="feature_type" required>
                     <option disabled selected>Select Feature Type</option>
           
-                        <option value="GROUP_FEATURE">GROUP FEATURE</option>
+                        <option value="GROUP_FEATURE">Group Feature</option>
                 </select>
 
             </div>
