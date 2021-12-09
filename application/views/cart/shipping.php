@@ -1,5 +1,25 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <script src="<?= base_url(); ?>assets/js/main-1.7.js"></script>
+
+<!-- <script type="text/javascript">
+    function preventBack() {
+        window.history.forward();
+    }
+    setTimeout("disableBack()", 0);
+    window.onunload = function() {
+        null
+    };
+</script> -->
+<!-- <script type="text/javascript">
+    var user_type=document.getElementById('role').value;
+    if(user_type=="guest"){
+    history.pushState(null, null, location.href);
+    window.onpopstate = function() {
+        history.go(1);
+    };
+} -->
+</script>
+
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/progress-tracker.css">
 
 
@@ -103,15 +123,15 @@
         background-color: #3cb371 !important;
     }
 
-  
 
-    
+
+
 
     .btn-custom {
         font-weight: 600 !important;
     }
 </style>
-
+<input type="hidden" id="role" value="<?php echo $this->auth_user->user_type; ?>">
 <!-- ------------------MODAL---------------------- -->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -1927,4 +1947,13 @@
 
         });
     });
+</script>
+<script type="text/javascript">
+    var user_type=document.getElementById('role').value;
+    if(user_type=="guest"){
+    history.pushState(null, null, location.href);
+    window.onpopstate = function() {
+        history.go(1);
+    };
+}
 </script>
