@@ -221,8 +221,8 @@
                                                 <select name="suitable_for_kids" id="suitable_for" class="form-control custom-select m-0" required>
                                                     <option disabled selected value> -- Select an option -- </option>
                                                     <option value="male" <?php echo ($product->suitable_for == "male") ? 'selected' : ''; ?>>Male</option>
-                                                    <option value="female" <?php echo ($product->delivery_area == "female") ? 'selected' : ''; ?>>Female</option>
-                                                    <option value="unisex" <?php echo ($product->delivery_area == "unisex") ? 'selected' : ''; ?>>Unisex</option>
+                                                    <option value="female" <?php echo ($product->suitable_for == "female") ? 'selected' : ''; ?>>Female</option>
+                                                    <option value="unisex" <?php echo ($product->suitable_for == "unisex") ? 'selected' : ''; ?>>Unisex</option>
                                                 </select>
                                             </div>
                                         
