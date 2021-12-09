@@ -32,9 +32,8 @@
                 <label><?php echo trans("feature_type"); ?> (<?php echo $language->name; ?>)</label>
                 <select class="form-control" name="feature_type" id="feature_type" required>
                     <option disabled selected>Select Feature Type</option>
-                    <?php foreach ($features as $feature) : ?>
-                        <option value="<?php echo $feature->lookup_code; ?>"><?php echo $feature->meaning; ?></option>
-                    <?php endforeach; ?>
+          
+                        <option value="GROUP_FEATURE">GROUP FEATURE</option>
                 </select>
 
             </div>

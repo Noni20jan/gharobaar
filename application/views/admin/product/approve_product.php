@@ -70,7 +70,7 @@
     </div>
 
 </div>
-<?php $z = get_lookup_feature_id($feature->lookup_code)->id; ?>
+<?php $z = get_lookup_feature_id('GROUP_FEATURE')->id; ?>
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title"><?php echo $title; ?></h3>
