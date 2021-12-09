@@ -13,6 +13,7 @@
             top: 11px;
         }
     }
+
     .out_of_stock {
         width: 100%;
     }
@@ -140,10 +141,10 @@
         }
     }
 
-.whishlist-position{
-    bottom: 17px;
-    
-} 
+    .whishlist-position {
+        bottom: 17px;
+
+    }
 
     .cart-top .item-options {
         display: block;
@@ -161,10 +162,11 @@
 
 
     }
-   
-.cart-size{
-    font-size:20px;
-}
+
+    .cart-size {
+        font-size: 20px;
+    }
+
     @media only screen and (max-width: 600px) {
 
         #empty_cart {
@@ -428,8 +430,6 @@
                                     <div class="cart-scroll-for-web">
                                         <?php if (!empty($cart_items)) :
                                             foreach ($cart_items as $cart_item) :
-                                                // var_dump($cart_item);
-                                                // die();
                                                 $stock_quantity = (int)get_product($cart_item->product_id)->stock;
                                                 $product = get_active_product($cart_item->product_id);
                                                 if (!empty($product)) :
@@ -952,7 +952,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom">
             <!-- form start -->
-            <div class="modal-body">
+            <div class="modal-body" style="text-align: center;">
                 <div class="row tracking-number-container">
                     <div class="col-sm-12">
                         <div class="form-group">
@@ -963,8 +963,8 @@
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: center;">
-                <button type="button" class="btn btn-md btn-default" id="confirm_remove_yes" data-dismiss="modal" style="background-color: green; color:white;">Yes</button>
                 <button type="button" class="btn btn-md btn-default" data-dismiss="modal" id="confirm_remove_no" style="background-color: green; color:white;">No</button>
+                <button type="button" class="btn btn-md btn-default" id="confirm_remove_yes" data-dismiss="modal" style="background-color: green; color:white;">Yes</button>
             </div>
 
         </div>
