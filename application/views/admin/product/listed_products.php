@@ -1,4 +1,9 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+</link>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
     .td-product {
         width: 23%;
@@ -55,7 +60,7 @@
         <select class="form-control" name="feature_value" id="feature_value" required>
             <option disabled selected>Select Feature value</option>
             <?php foreach ($featured as $featur) : ?>
-                <option value=<?php echo $featur->id; ?>><?php echo $featur->meaning; ?></option>
+                <option value="<?php echo $featur->id; ?>"><?php echo $featur->meaning; ?></option>
             <?php endforeach; ?>
 
 
@@ -84,102 +89,30 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped" id="example" role="grid">
-                        <?php $this->load->view('admin/product/_filter_products'); ?>
+                    <table id="example" class="table table-bordered table-striped">
+                        <!-- <?php $this->load->view('admin/product/_filter_products'); ?> -->
                         <thead>
                             <tr role="row">
-                                <!-- <th width="20"><input type="checkbox" class="checkbox-table" id="checkAll"></th> -->
-                                <!-- <th width="20"><input type="checkbox" class="checkbox-table" id="checkAll"></th> -->
+
                                 <th width="20"><?php echo trans('id'); ?></th>
                                 <th>Image</th>
                                 <th>Product</th>
                                 <th><?php echo trans('category'); ?></th>
                                 <th><?php echo trans('stock'); ?></th>
                                 <th><?php echo trans('date'); ?></th>
+                                <th>Options</th>
                             </tr>
                         </thead>
                         <tbody id="insert_data">
 
-                            <!-- <?php if (!empty($products)) :
-                                        foreach ($products as $item) : ?>
-                                    <tr>
-                                        <td><?php echo html_escape($item->id); ?></td>
-                                        <td class="td-product">
-                                            <?php if ($item->is_promoted == 1) : ?>
-                                                <label class="label label-success"><?php echo trans("featured"); ?></label>
-                                            <?php endif; ?>
-                                            <div class="img-table">
-                                                <a href="<?php echo generate_product_url($item); ?>" target="_blank">
-                                                    <img src="<?php echo get_product_image($item->id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
-                                                </a>
-                                            </div>
-                                            <a href="<?php echo generate_product_url($item); ?>" target="_blank" class="table-product-title">
-                                                <?php echo get_product_title($item); ?>
-                                            </a>
-                                        </td>
-
-                                        <td>
-                                            <?php $categories = get_parent_categories_tree($item->category_id, false);
-                                            if (!empty($categories)) {
-                                                foreach ($categories as $category) {
-                                                    echo html_escape($category->name) . "<br>";
-                                                }
-                                            } ?>
-                                        </td>
-                                        <td>
-                                            <?php $user = get_user($item->user_id);
-                                            if (!empty($user)) : ?>
-                                                <a href="<?php echo generate_profile_url($user->slug); ?>" target="_blank" class="table-username">
-                                                    <?php echo html_escape($user->shop_name); ?>
-                                                </a>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td class="white-space-nowrap">
-                                            <?php if ($item->product_type == "digital") : ?>
-                                                <span class="text-success"><?php echo trans("in_stock"); ?></span>
-                                                <?php else :
-                                                if ($item->stock < 1) : ?>
-                                                    <span class="text-danger"><?= $item->listing_type == 'ordinary_listing' ? trans("sold") : trans("out_of_stock"); ?></span>
-                                                <?php else : ?>
-                                                    <span class="text-success"><?php echo trans("in_stock"); ?>&nbsp;<?= $item->listing_type != 'ordinary_listing' ? "(" . $item->stock . ")" : ''; ?></span>
-                                            <?php endif;
-                                            endif; ?>
-                                        </td>
-                                        <td><?php echo formatted_date($item->created_at); ?></td>
-                                        <td>
-                                            <div class="dropdown" style="float:none;">
-                                                <button class="btn  dropdown-toggle btn-select-option btn-custom" type="button" data-toggle="dropdown"><?php echo trans('select_option'); ?>
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu options-dropdown">
-                                                    <li><a href="<?php echo admin_url(); ?>product-details/<?php echo html_escape($item->id); ?>"><i class="fa fa-info option-icon"></i><?php echo trans("view_details"); ?></a></li>
-                                                    <li>
-                                                    <li>
-                                                        <a href="javascript:void(0)" onclick="delete_tagged_item('product_controller/delete_tagging_product',<?php echo $item->id; ?>,<?php echo $lookup_id; ?>,'Are you sure you want to delete the tagged product');"><i class="fa fa-times option-icon"></i><?php echo trans('delete'); ?></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="<?php echo generate_dash_url("edit_product") . "/" . $item->id; ?>"><i class="fa fa-edit option-icon"></i><?php echo trans('edit'); ?></a>
-                                                    </li>
-
-
-                                                </ul>
-                                            </div>
-                                        </td>
-
-
-                                    <?php endforeach; ?>
-                                    </tr>
-
-                                <?php endif; ?> -->
-
                         </tbody>
                     </table>
 
-                    <?php if (empty($products)) : ?>
+                    <!-- <?php if (empty($products)) : ?>
                         <p class="text-center">
                             <?php echo trans("no_records_found"); ?>
                         </p>
-                    <?php endif; ?>
+                    <?php endif; ?> -->
                     <div class="col-sm-12 table-ft">
                         <div class="row">
 
@@ -240,12 +173,12 @@
         } else if ($('#feature_type').val() == "INDIVIDUAL_FEATURE") {
             $("#feature_name").prop("disabled", true);
             <?php foreach ($feature_individual_names as $feature) : ?>
-                $('#feature_value').append('<option value=<?php echo $feature->id; ?>><?php echo $feature->meaning; ?></option>');
+                $('#feature_value').append('<option value="<?php echo $feature->id; ?>"><?php echo $feature->meaning; ?></option>');
             <?php endforeach; ?>
         } else if ($('#feature_type').val() == "PICKS_FOR_YOU") {
             $("#feature_name").prop("disabled", true);
             <?php foreach ($feature_picks_for_you as $feature) : ?>
-                $('#feature_value').append('<option value="<?php echo $feature->id; ?>"><?php echo $feature->meaning; ?></option>');
+                $('#feature_value').append('<option value=<?php echo $feature->id; ?>><?php echo $feature->meaning; ?></option>');
             <?php endforeach; ?>
         }
     });
@@ -332,12 +265,36 @@
         oTable.$("input[type='checkbox']").attr('checked', $(this.checked));
     }); -->
 <script>
+    $(document).ready(function() {
+        var table = $('#example').DataTable({
+
+            'columnDefs': [{
+                'targets': 0,
+                "bPaginate": false,
+                "bFilter": false,
+                'searchable': true,
+                'orderable': false,
+                'className': 'dt-body-center',
+
+            }],
+            'order': [1, 'asc']
+        });
+
+
+
+
+
+
+
+    });
+</script>
+<script>
     $('#feature_value').change(function() {
         table = $('#example').DataTable();
         table.clear().destroy();
 
-        var feature_id = ($('#feature_value').val());
 
+        var feature_id = parseInt($('#feature_value').val());
         var data = {
             'feature_id': feature_id
         }
@@ -353,14 +310,13 @@
                 var len = Json_data.length;
                 console.log(Json_data);
 
-
                 for (var i = 0; i < len; i++) {
-                    var x = '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">';
 
 
-                    $('#insert_data').append("<tr><td>" + Json_data[i].id + "</td><td><div class='img-table'><img src=<?php echo base_url(); ?>uploads/images/" + Json_data[i].image_small + "></div></td><td>" + '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].slug + "</td><td>" + Json_data[i].category_id + "</td><td>" + Json_data[i].stock + "</td><td>" + Json_data[i].created_at + " </td></tr>");
+                    var dropdown = "<div class='dropdown' style='float:none;'><button class='btn  dropdown-toggle btn-select-option btn-custom' type='button' data-toggle='dropdown'>Select an Option<span class='caret'></span></button><ul class='dropdown-menu options-dropdown'>" + "<li><a href=<?php echo admin_url(); ?>product-details/" + Json_data[i].product_id + "><i class='fa fa-info option-icon'></i>View Details</a></li><li><a href=javascript:void(0); onclick=delete_tagged_item('product_controller/delete_tagging_product'," + feature_id + "," + Json_data[i].product_id + ",'Delete')><i class='fa fa-times option-icon'></i>Delete</a></li><li><a href = <?php echo generate_dash_url('edit_product'); ?>/" + Json_data[i].product_id + "> " +
+                        "<i class='fa fa-edit option-icon'></i>Edit</a></li></ul>";
 
-
+                    $('#insert_data').append("<tr><td>" + Json_data[i].product_id + "</td><td> <div class='img-table'><img src=<?php echo base_url(); ?>uploads/images/" + Json_data[i].image_small + "> + </div></td><td>" + '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].title + "</td><td>" + Json_data[i].category_id + "</td><td>" + Json_data[i].stock + "</td><td>" + Json_data[i].created_at + "</td><td>" + dropdown + "</td></tr>");
                 }
                 var table = $('#example').DataTable({
 
@@ -373,11 +329,13 @@
                         'className': 'dt-body-center',
 
                     }],
-                    'order': [1, 'asc']
-                });
-                // document.getElementsById('example_wrapper').style.display = "none";
-            }
 
+                });
+
+
+
+
+            }
         });
     });
 </script>

@@ -261,7 +261,7 @@ function delete_item(url, id, message) {
     });
 };
 //delete by name
-function delete_tagged_item(url, product_id,feature_id, message) {
+function delete_tagged_item(url,feature_id,product_id, message) {
     swal({
         text: message,
         icon: "warning",
@@ -271,8 +271,9 @@ function delete_tagged_item(url, product_id,feature_id, message) {
     }).then(function (willDelete) {
         if (willDelete) {
             var data = {
-                'product_id': product_id,
-                'feature_id':feature_id
+            
+                'feature_id':feature_id,
+                'product_id': product_id
             };
             data[csfr_token_name] = $.cookie(csfr_cookie_name);
             $.ajax({
@@ -280,7 +281,7 @@ function delete_tagged_item(url, product_id,feature_id, message) {
                 url: base_url + url,
                 data: data,
                 success: function (response) {
-                    location.reload();
+                     location.reload();
                 }
             });
         }

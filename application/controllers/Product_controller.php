@@ -95,7 +95,7 @@ class Product_controller extends Admin_Core_Controller
         $feature_id = $this->input->post('feature_id');
         $product_id = $this->input->post('product_id');
 
-        $this->product_admin_model->delete_tagged_product($feature_id, $product_id);
+        echo json_encode($this->product_admin_model->delete_tagged_product($feature_id, $product_id));
     }
     public function services()
     {
@@ -150,6 +150,7 @@ class Product_controller extends Admin_Core_Controller
         //get paginated products
         $pagination = $this->paginate(admin_url() . 'listed_products', $this->product_admin_model->get_paginated_products_count('products', $feature_id));
         $data['products'] = $this->product_admin_model->get_paginated_list_product($pagination['per_page'], $pagination['offset'], $feature_id, 'products');
+        // echo $data['products'];
 
         echo json_encode($data["products"]);
     }
