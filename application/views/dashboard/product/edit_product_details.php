@@ -209,6 +209,28 @@
                         <br>
                         <?php $this->load->view("dashboard/product/_edit_price", ['user' => $user]); ?>
 
+                        <?php
+                            $categories = get_parent_categories_tree($product->category_id, false);
+                            if ($categories[1]->id == 38 && $categories[1]->slug == 'apparel') :
+                            ?>
+                                <div class="form-box">
+                                    <div class="row ">
+                                        <div class="col-sm-12 col-md-6 m-b-sm-15">
+                                            <label><?php echo ('Product Suitable For'); ?></label><span class="Validation_error"> *</span>
+                                            
+                                                <select name="suitable_for_kids" id="suitable_for" class="form-control custom-select m-0" required>
+                                                    <option disabled selected value> -- Select an option -- </option>
+                                                    <option value="male" <?php echo ($product->suitable_for == "male") ? 'selected' : ''; ?>>Male</option>
+                                                    <option value="female" <?php echo ($product->delivery_area == "female") ? 'selected' : ''; ?>>Female</option>
+                                                    <option value="unisex" <?php echo ($product->delivery_area == "unisex") ? 'selected' : ''; ?>>Unisex</option>
+                                                </select>
+                                            </div>
+                                        
+                                    </div>
+                                </div>
+                            <?php endif;
+                            ?>
+
                         <?php if ($this->form_settings->shipping == 1 && $product->product_type == 'physical') : ?>
                             <div class="form-box">
                                 <div class="form-box-head">

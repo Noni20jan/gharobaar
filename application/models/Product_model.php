@@ -284,7 +284,8 @@ class Product_model extends Core_Model
             'other_delivery_area' => trim($this->input->post('other_delivery_area', true)),
 
             'status' => 0,
-            'is_draft' => 0
+            'is_draft' => 0,
+            'suitable_for' => $this->input->post('suitable_for_kids', true)
         );
 
         if ($product->status == 1) {
