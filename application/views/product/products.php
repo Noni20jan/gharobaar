@@ -703,7 +703,7 @@ foreach ($sellers as $seller) {
 
                             <!-- filter code for stock options -->
                             <div>
-                                <input type="checkbox" class="check-box-size" id="product_type" value="product_type" name="filter_checkbox[]" onclick="show_product_stock(this)">
+                                <input type="checkbox" checked class="check-box-size" id="product_type" value="product_type" name="filter_checkbox[]" onclick="show_product_stock(this)">
                                 <label for="product_type" style="margin: 10px;"><b><?php echo trans("product_stock_option"); ?></b></label>
                             </div>
                             <div class="filter-item" id="product_stock_option" style="display: none">
