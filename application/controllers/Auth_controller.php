@@ -25,11 +25,59 @@ class Auth_controller extends Home_Core_Controller
         }
         echo json_encode($data);
     }
+    public function check_for_mobile_register_user()
+    {
+        $phone_number = $this->input->post('phn_num', true);
+        // var_dump($phone_number); die();
+        $result = $this->auth_model->check_user_mobile_number_user($phone_number);
+        $data = array(
+            'result' => false,
+            'xyz' => $result
+        );
+        if ($result == null) {
+            $data["result"] = true;
+        } else {
+            $data["result"] = false;
+        }
+        echo json_encode($data);
+    }
+    public function check_for_guest_mobile_register()
+    {
+        $phone_number = $this->input->post('phn_num', true);
+        // var_dump($phone_number); die();
+        $result = $this->auth_model->check_guest_mobile_number($phone_number);
+        $data = array(
+            'result' => false,
+            'xyz' => $result
+        );
+        if ($result == null) {
+            $data["result"] = true;
+        } else {
+            $data["result"] = false;
+        }
+        echo json_encode($data);
+    }
     public function check_for_email_register()
     {
         $email_address = $this->input->post('email_address', true);
         // var_dump($phone_number); die();
         $result = $this->auth_model->check_user_email_register($email_address);
+        $data = array(
+            'result' => false,
+            'xyz' => $result
+        );
+        if ($result == null) {
+            $data["result"] = true;
+        } else {
+            $data["result"] = false;
+        }
+        echo json_encode($data);
+    }
+    public function check_for_email_register_user()
+    {
+        $email_address = $this->input->post('email_address', true);
+        // var_dump($phone_number); die();
+        $result = $this->auth_model->check_user_email_register_user($email_address);
         $data = array(
             'result' => false,
             'xyz' => $result
@@ -530,26 +578,9 @@ class Auth_controller extends Home_Core_Controller
             $email = $this->input->post('email', true);
             $phone_number = $this->input->post('phone_number', true);
             // $username = $this->input->post('username', true);
-
-            //is email unique
-            if (!$this->auth_model->is_unique_email($email)) {
-                $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-                $this->session->set_flashdata('error', trans("msg_email_unique_error"));
-                $data = array(
-                    'result' => 0,
-                    'error_message' => $this->load->view('partials/_messages', '', true)
-                );
-                echo json_encode($data);
-            } else if (!$this->auth_model->is_unique_phone($phone_number)) {
-                $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-                $this->session->set_flashdata('error', trans("msg_phone_unique_error"));
-                $data = array(
-                    'result' => 0,
-                    'error_message' => $this->load->view('partials/_messages', '', true)
-                );
-                echo json_encode($data);
-            } else {
-                //register
+            $unique_register = $this->auth_model->is_unique_register($email);
+            if (empty($unique_register)) {
+                // create
                 $user_id = $this->auth_model->register();
                 if ($user_id) {
                     $user = get_user($user_id);
@@ -577,7 +608,96 @@ class Auth_controller extends Home_Core_Controller
                     );
                     echo json_encode($data);
                 }
+            } else {
+                if ($unique_register->role == "guest" && $unique_register->user_type == "guest") {
+                    $user_id = $this->auth_model->guest_update();
+                    if ($user_id) {
+                        $user = get_user($user_id);
+                        if (!empty($user)) {
+                            //update slug
+                            $this->auth_model->update_slug($user->id);
+                            if ($this->general_settings->email_verification != 1) {
+                                $this->auth_model->login_direct($user);
+                                $this->session->set_flashdata('success', trans("msg_register_success"));
+                                // redirect(generate_url(""));
+                            }
+                        }
+                        $data = array(
+                            'result' => 1,
+                            'user' => $user
+                        );
+                        echo json_encode($data);
+                    } else {
+                        //error
+                        $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+                        $this->session->set_flashdata('error', trans("msg_error"));
+                        $data = array(
+                            'result' => 0,
+                            'error_message' => $this->load->view('partials/_messages', '', true)
+                        );
+                        echo json_encode($data);
+                    }
+                } else {
+                    //error message
+                    $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+                    $this->session->set_flashdata('error', trans("already_registered"));
+                    $data = array(
+                        'result' => 0,
+                        'error_message' => $this->load->view('partials/_messages', '', true)
+                    );
+                    echo json_encode($data);
+                }
             }
+
+            //
+
+            //is email unique
+            // if (!$this->auth_model->is_unique_email($email)) {
+            //     $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+            //     $this->session->set_flashdata('error', trans("msg_email_unique_error"));
+            //     $data = array(
+            //         'result' => 0,
+            //         'error_message' => $this->load->view('partials/_messages', '', true)
+            //     );
+            //     echo json_encode($data);
+            // } else if (!$this->auth_model->is_unique_phone($phone_number)) {
+            //     $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+            //     $this->session->set_flashdata('error', trans("msg_phone_unique_error"));
+            //     $data = array(
+            //         'result' => 0,
+            //         'error_message' => $this->load->view('partials/_messages', '', true)
+            //     );
+            //     echo json_encode($data);
+            // } else {
+            //register
+            // $user_id = $this->auth_model->register();
+            // if ($user_id) {
+            //     $user = get_user($user_id);
+            //     if (!empty($user)) {
+            //         //update slug
+            //         $this->auth_model->update_slug($user->id);
+            //         if ($this->general_settings->email_verification != 1) {
+            //             $this->auth_model->login_direct($user);
+            //             $this->session->set_flashdata('success', trans("msg_register_success"));
+            //             // redirect(generate_url(""));
+            //         }
+            //     }
+            //     $data = array(
+            //         'result' => 1,
+            //         'user' => $user
+            //     );
+            //     echo json_encode($data);
+            // } else {
+            //     //error
+            //     $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+            //     $this->session->set_flashdata('error', trans("msg_error"));
+            //     $data = array(
+            //         'result' => 0,
+            //         'error_message' => $this->load->view('partials/_messages', '', true)
+            //     );
+            //     echo json_encode($data);
+            // }
+            // }
             //is username unique
             // if (!$this->auth_model->is_unique_username($username)) {
             //     $this->session->set_flashdata('form_data', $this->auth_model->input_values());
@@ -600,6 +720,7 @@ class Auth_controller extends Home_Core_Controller
         // }
     }
 
+
     /**
      * Guest Register Post
      */
@@ -620,10 +741,10 @@ class Auth_controller extends Home_Core_Controller
         // }
 
         $email = $this->input->post('email', true);
-        $phone_number = $this->input->post('phone_number', true);
+        // $phone_number = $this->input->post('phone_number', true);
 
         //is email unique
-        if (!$this->auth_model->is_unique_email($email)) {
+        if (!$this->auth_model->is_unique_email_register($email)) {
             $this->session->set_flashdata('form_data', $this->auth_model->input_values());
             $this->session->set_flashdata('error', trans("msg_email_unique_error"));
             $data = array(
@@ -631,15 +752,46 @@ class Auth_controller extends Home_Core_Controller
                 'error_message' => $this->load->view('partials/_messages', '', true)
             );
             echo json_encode($data);
-        } else if (!$this->auth_model->is_unique_phone($phone_number)) {
-            $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-            $this->session->set_flashdata('error', trans("msg_phone_unique_error"));
-            $data = array(
-                'result' => 0,
-                'error_message' => $this->load->view('partials/_messages', '', true)
-            );
-            echo json_encode($data);
-        } else {
+        } else  if (!$this->auth_model->is_unique_email_guest($email)) {
+            $user_id = $this->auth_model->guest_login($email);
+            if ($user_id) {
+                $user = get_user($user_id);
+                if (!empty($user)) {
+                    //update slug
+                    $this->auth_model->update_slug($user->id);
+                    if ($this->general_settings->email_verification != 1) {
+                        // $this->auth_model->login_direct($user);
+
+                        $this->session->set_flashdata('success', trans("msg_register_success"));
+                        // redirect(generate_url(""));
+                    }
+                }
+                $data = array(
+                    'result' => 1,
+                    'user' => $user
+                );
+                echo json_encode($data);
+            } else {
+                //error
+                $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+                $this->session->set_flashdata('error', trans("msg_error"));
+                $data = array(
+                    'result' => 0,
+                    'error_message' => $this->load->view('partials/_messages', '', true)
+                );
+                echo json_encode($data);
+            }
+        }
+        //  else if (!$this->auth_model->is_unique_phone($phone_number)) {
+        //     $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+        //     $this->session->set_flashdata('error', trans("msg_phone_unique_error"));
+        //     $data = array(
+        //         'result' => 0,
+        //         'error_message' => $this->load->view('partials/_messages', '', true)
+        //     );
+        //     echo json_encode($data);
+        // } 
+        else {
             //guest register
             $user_id = $this->auth_model->guest_register();
             if ($user_id) {

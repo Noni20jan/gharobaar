@@ -1,28 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <script src="<?= base_url(); ?>assets/js/main-1.7.js"></script>
-
-<!-- <script type="text/javascript">
-    function preventBack() {
-        window.history.forward();
-    }
-    setTimeout("disableBack()", 0);
-    window.onunload = function() {
-        null
-    };
-</script> -->
-<!-- <script type="text/javascript">
-    var user_type=document.getElementById('role').value;
-    if(user_type=="guest"){
-    history.pushState(null, null, location.href);
-    window.onpopstate = function() {
-        history.go(1);
-    };
-} -->
-</script>
-
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/progress-tracker.css">
-
-
 <style>
     .checkout-steps .divider {
         display: inline-block;
@@ -1949,11 +1927,11 @@
     });
 </script>
 <script type="text/javascript">
-    var user_type=document.getElementById('role').value;
-    if(user_type=="guest"){
-    history.pushState(null, null, location.href);
-    window.onpopstate = function() {
-        history.go(1);
-    };
-}
+    var user_type = document.getElementById('role').value;
+    if (user_type == "guest") {
+        history.pushState(null, null, location.href);
+        window.onpopstate = function() {
+            history.go(1);
+        };
+    }
 </script>

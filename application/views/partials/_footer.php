@@ -528,10 +528,12 @@
                 </li>
                 <li>
                     <?php if ($this->auth_check) : ?>
-                        <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
-                            <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_profile.png">
-                            <p class="aap_bar_text">Profile</p>
-                        </a>
+                        <?php if ($this->auth_user->user_type != "guest") : ?>
+                            <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
+                                <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_profile.png">
+                                <p class="aap_bar_text">Profile</p>
+                            </a>
+                        <?php endif; ?>
                     <?php else : ?>
                         <a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal">
                             <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_profile.png">

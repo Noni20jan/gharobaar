@@ -130,7 +130,10 @@ $route['get-sub-variation-options']['POST'] = 'ajax_controller/get_sub_variation
 
 //profile
 $route['check-register-mobile']['POST'] = 'auth_controller/check_for_mobile_register';
+$route['check-register-user-mobile']['POST'] = 'auth_controller/check_for_mobile_register_user';
+$route['check-register-guest-mobile']['POST'] = 'auth_controller/check_for_guest_mobile_register';
 $route['check-register-email']['POST'] = 'auth_controller/check_for_email_register';
+$route['check-register-user-email']['POST'] = 'auth_controller/check_for_email_register_user';
 $route['follow-unfollow-user-post']['POST'] = 'profile_controller/follow_unfollow_user';
 $route['change-password-post']['POST'] = 'profile_controller/change_password_post';
 $route['personal-information-post']['POST'] = 'profile_controller/personal_information_post';

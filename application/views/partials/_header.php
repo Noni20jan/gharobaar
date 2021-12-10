@@ -4195,107 +4195,109 @@
                                             </li>
                                         <?php endif; ?>
                                         <?php if ($this->auth_check) : ?>
-                                            <li class="nav-item dropdown profile-dropdown p-r-0">
-                                                <a class="nav-link dropdown-toggle a-profile" data-toggle="dropdown" href="javascript:void(0)" aria-expanded="false">
-                                                    <img src="<?php echo get_user_avatar($this->auth_user); ?>" alt="<?php echo get_shop_name($this->auth_user); ?>"> <?php if ($unread_message_count > 0) : ?>
-                                                        <span class="notification"><?php echo $unread_message_count; ?></span>
-                                                    <?php endif; ?>
-                                                    <!-- <?php echo character_limiter(get_shop_name($this->auth_user), 15, '..'); ?> -->
-                                                    <i class="icon-arrow-down"></i>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <?php if ($this->auth_user->role == "admin") : ?>
-                                                        <li>
-                                                            <a href="<?php echo admin_url(); ?>">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                <?php echo trans("admin_panel"); ?>
-                                                            </a>
-                                                        </li>
-                                                    <?php endif; ?>
-                                                    <?php if (is_user_vendor()) : ?>
-                                                        <li>
-                                                            <!-- <a href="<?= dashboard_url(); ?>"> -->
-                                                            <a href="<?= generate_dash_url("profile"); ?>" target="_blank">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                <?php echo trans("supplier_panel"); ?>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                Buyer Panel
-                                                            </a>
-                                                        </li>
-                                                        <li>
-
-                                                            <a href="<?php echo generate_url("followers") . "/" . $this->auth_user->slug; ?>">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                Followers
-                                                            </a>
-                                                        </li>
-                                                    <?php endif; ?>
-                                                    <?php if ($this->auth_user->role == "member") { ?>
-                                                        <li>
-                                                            <a href="javascript:void(0);">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                <?php echo character_limiter(get_shop_name($this->auth_user), 15, '..'); ?>
-
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                Buyer Panel
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="<?php echo generate_url("following") . "/" . $this->auth_user->slug; ?>">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                Following
-                                                            </a>
-                                                        </li>
-                                                    <?php } ?>
-                                                    <?php if (!is_user_vendor()) : ?>
-                                                        <li>
-                                                            <a href="<?php echo generate_dash_url("profile"); ?>">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                <?php echo trans("profile"); ?>
-                                                            </a>
-                                                        </li>
-
-
-                                                    <?php endif; ?>
-                                                    <?php if ($this->is_sale_active) : ?>
-                                                        <?php if ($this->auth_user->role == "member") : ?>
+                                            <?php if ($this->auth_user->user_type != "guest") :
+                                            ?>
+                                                <li class="nav-item dropdown profile-dropdown p-r-0">
+                                                    <a class="nav-link dropdown-toggle a-profile" data-toggle="dropdown" href="javascript:void(0)" aria-expanded="false">
+                                                        <img src="<?php echo get_user_avatar($this->auth_user); ?>" alt="<?php echo get_shop_name($this->auth_user); ?>"> <?php if ($unread_message_count > 0) : ?>
+                                                            <span class="notification"><?php echo $unread_message_count; ?></span>
+                                                        <?php endif; ?>
+                                                        <!-- <?php echo character_limiter(get_shop_name($this->auth_user), 15, '..'); ?> -->
+                                                        <i class="icon-arrow-down"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <?php if ($this->auth_user->role == "admin") : ?>
                                                             <li>
-                                                                <a href="<?php echo generate_url("orders_dashboard"); ?>">
-                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/order-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                    <?php echo trans("orders"); ?>
+                                                                <a href="<?php echo admin_url(); ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    <?php echo trans("admin_panel"); ?>
+                                                                </a>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                        <?php if (is_user_vendor()) : ?>
+                                                            <li>
+                                                                <!-- <a href="<?= dashboard_url(); ?>"> -->
+                                                                <a href="<?= generate_dash_url("profile"); ?>" target="_blank">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    <?php echo trans("supplier_panel"); ?>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    Buyer Panel
+                                                                </a>
+                                                            </li>
+                                                            <li>
+
+                                                                <a href="<?php echo generate_url("followers") . "/" . $this->auth_user->slug; ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    Followers
+                                                                </a>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                        <?php if ($this->auth_user->role == "member") { ?>
+                                                            <li>
+                                                                <a href="javascript:void(0);">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    <?php echo character_limiter(get_shop_name($this->auth_user), 15, '..'); ?>
+
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    Buyer Panel
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="<?php echo generate_url("following") . "/" . $this->auth_user->slug; ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    Following
+                                                                </a>
+                                                            </li>
+                                                        <?php } ?>
+                                                        <?php if (!is_user_vendor()) : ?>
+                                                            <li>
+                                                                <a href="<?php echo generate_dash_url("profile"); ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    <?php echo trans("profile"); ?>
                                                                 </a>
                                                             </li>
 
 
                                                         <?php endif; ?>
-                                                        <?php if ($this->auth_user->role != "member") { ?>
-                                                            <?php if (is_bidding_system_active()) : ?>
+                                                        <?php if ($this->is_sale_active) : ?>
+                                                            <?php if ($this->auth_user->role == "member") : ?>
                                                                 <li>
-                                                                    <a href="<?php echo generate_url("quote_requests"); ?>">
-                                                                        <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/qoute-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                        <?php echo trans("quote_requests"); ?>
+                                                                    <a href="<?php echo generate_url("orders_dashboard"); ?>">
+                                                                        <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/order-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                        <?php echo trans("orders"); ?>
+                                                                    </a>
+                                                                </li>
+
+
+                                                            <?php endif; ?>
+                                                            <?php if ($this->auth_user->role != "member") { ?>
+                                                                <?php if (is_bidding_system_active()) : ?>
+                                                                    <li>
+                                                                        <a href="<?php echo generate_url("quote_requests"); ?>">
+                                                                            <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/qoute-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                            <?php echo trans("quote_requests"); ?>
+                                                                        </a>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                            <?php } ?>
+                                                            <?php if ($this->general_settings->digital_products_system == 1) : ?>
+                                                                <li>
+                                                                    <a href="<?php echo generate_url("downloads"); ?>">
+                                                                        <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/Downloads-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                        <?php echo trans("downloads"); ?>
                                                                     </a>
                                                                 </li>
                                                             <?php endif; ?>
-                                                        <?php } ?>
-                                                        <?php if ($this->general_settings->digital_products_system == 1) : ?>
-                                                            <li>
-                                                                <a href="<?php echo generate_url("downloads"); ?>">
-                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/Downloads-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                    <?php echo trans("downloads"); ?>
-                                                                </a>
-                                                            </li>
                                                         <?php endif; ?>
-                                                    <?php endif; ?>
-                                                    <!-- <li>
+                                                        <!-- <li>
                                     <a href="<?php echo generate_url("messages"); ?>">
                                         <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/comment-icon.jpg" alt="" style="width: 20px; height: 20px;" />
                                         <?php echo trans("messages"); ?>&nbsp;<?php if ($unread_message_count > 0) : ?>
@@ -4304,46 +4306,48 @@
                                     </a>
                                             </li> -->
 
-                                                    <?php if ($this->auth_user->role == "vendor") { ?>
-                                                        <!-- <li>
+                                                        <?php if ($this->auth_user->role == "vendor") { ?>
+                                                            <!-- <li>
                                         <a href="<?php echo generate_url("barter_requests"); ?>">
                                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-req-icon.png" alt="" style="width: 20px; height: 20px;" />
                                             Barter Requests
                                         </a>
                                     </li> -->
-                                                    <?php } ?>
-                                                    <?php if (is_user_vendor()) : ?>
-                                                        <li>
-                                                            <a href="<?php echo generate_url("password_settings_seller"); ?>">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                <?php echo trans("settings"); ?>
-                                                            </a>
-                                                        </li>
-                                                    <?php else : ?>
-                                                        <li>
-                                                            <a href="<?php echo generate_url("password_settings"); ?>">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                <?php echo trans("settings"); ?>
-                                                            </a>
-                                                        </li>
-                                                    <?php endif; ?>
-                                                    <?php if ($this->auth_check && $this->auth_user->is_active_shop_request == 1) : ?>
-                                                        <?php if ($this->auth_user->gst_issue == 1 || $this->auth_user->pan_issue == 1 || $this->auth_user->adhaar_issue == 1) : ?>
+                                                        <?php } ?>
+                                                        <?php if (is_user_vendor()) : ?>
                                                             <li>
-                                                                <a href="<?php echo generate_url("settings", "update_settings"); ?>">
-                                                                    Update Seller Info
+                                                                <a href="<?php echo generate_url("password_settings_seller"); ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    <?php echo trans("settings"); ?>
+                                                                </a>
+                                                            </li>
+                                                        <?php else : ?>
+                                                            <li>
+                                                                <a href="<?php echo generate_url("password_settings"); ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    <?php echo trans("settings"); ?>
                                                                 </a>
                                                             </li>
                                                         <?php endif; ?>
-                                                    <?php endif; ?>
-                                                    <li>
-                                                        <a href="<?php echo base_url(); ?>logout" class="logout">
-                                                            <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/logout.ico" alt="" style="width: 20px; height: 20px;" /> -->
-                                                            <?php echo trans("logout"); ?>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </li>
+                                                        <?php if ($this->auth_check && $this->auth_user->is_active_shop_request == 1) : ?>
+                                                            <?php if ($this->auth_user->gst_issue == 1 || $this->auth_user->pan_issue == 1 || $this->auth_user->adhaar_issue == 1) : ?>
+                                                                <li>
+                                                                    <a href="<?php echo generate_url("settings", "update_settings"); ?>">
+                                                                        Update Seller Info
+                                                                    </a>
+                                                                </li>
+                                                            <?php endif; ?>
+                                                        <?php endif; ?>
+                                                        <li>
+                                                            <a href="<?php echo base_url(); ?>logout" class="logout">
+                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/logout.ico" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                <?php echo trans("logout"); ?>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            <?php endif;
+                                            ?>
                                         <?php else : ?>
                                             <li>
                                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal" id="header-login">Sign in</a>
@@ -4525,33 +4529,33 @@
                                 <span id="email_span_error" style="color:red;"></span>
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <input type="text" name="phone_number" id="guest_phone_number" class="form-control auth-form-input" placeholder="Mobile Number" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
-                            </div>
+                            </div> -->
 
 
                             <p class="p-social-media m-0 m-t-5 hide_after_response"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>
 
 
-                            <div class="form-group show_after_response hideMe">
+                            <!-- <div class="form-group show_after_response hideMe">
                                 <hr>
                                 <input type="text" name="guest_otp" id="guest_otp" class="form-control auth-form-input" placeholder="Enter OTP" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="6" maxlength="6">
 
                                 <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" onclick="guest_resend_otp($('#guest_phone_number'),$('#guest_email'))"><?php echo trans("resend_otp"); ?></a></p>
 
-                            </div>
+                            </div> -->
                             <div id="email_phn_exist_msg">
                             </div>
                             <div class="form-group hide_after_response" style="text-align:center;">
                                 <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("continue"); ?></button>
                             </div>
-                            <div class="form-group show_after_response hideMe" style="text-align:center;">
+                            <!-- <div class="form-group show_after_response hideMe" style="text-align:center;">
                                 <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("confirm_otp"); ?></button>
-                            </div>
+                            </div> -->
                         </form>
                         <!-- form end -->
 
-
+                        <div class="login_to_avail" style="color:#aaaaa;"> <?php echo trans("login_to_avail"); ?></div>
                     </div>
 
                 </div>
@@ -5305,7 +5309,7 @@
                 document.getElementById("login_otp_check").innerHTML = "*Please enter registered mobile number !";
             } else if (phn_number != '' && phn_number.length <= 10) {
                 if (phn_number.length == 10) {
-                    var register_phn = check_for_mobile_register_js(phn_number);
+                    var register_phn = check_for_guest_mobile_register_js(phn_number);
                     if (register_phn == false) {
                         send_verification_otp(phn_number, "mobile_otp_login");
                         document.getElementById("OtpSendMsg").innerHTML = "OTP Send Successfully !";
@@ -5364,8 +5368,10 @@
                 if (email_address != "") {
                     document.getElementById("email_span_error").innerHTML = "";
                 }
-                var register_phn = check_for_mobile_register_js(phn_num);
-                var register_email = check_for_email_register_js(email_address);
+                var register_phn = check_for_mobile_registered_user_js(phn_num);
+                var register_email = check_for_email_registered_user_js(email_address);
+                // var register_phn = true;
+                // var register_email = true;
                 // console.log(register_phn);
                 if (register_email == true) {
                     if (register_phn == true) {
@@ -5577,7 +5583,7 @@
 
         $("#form_guest_login").submit(function(a) {
             var email_address = document.getElementById("guest_email").value;
-            var phone_number = document.getElementById("guest_phone_number").value;
+            // var phone_number = document.getElementById("guest_phone_number").value;
             var b = $(this);
             var url = "";
             if (b[0].checkValidity() === false) {
@@ -5766,4 +5772,25 @@
             }
             b[0].classList.add("was-validated");
         });
+
+        function check_for_guest_mobile_register_js(phn_num) {
+            var res;
+            var data = {
+                'sys_lang_id': sys_lang_id,
+                'phn_num': phn_num
+            };
+            data[csfr_token_name] = $.cookie(csfr_cookie_name);
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: base_url + "check-register-guest-mobile",
+                data: data,
+                success: function(response) {
+                    // console.log(response);
+                    var i = JSON.parse(response);
+                    res = i.result;
+                }
+            });
+            return res;
+        }
     </script>
