@@ -35,7 +35,7 @@
                                 <div class="follower-item">
                                     <a href="<?php echo generate_profile_url($item->slug); ?>">
                                         <img src="<?php echo get_user_avatar($item); ?>" alt="<?php echo get_shop_name($item); ?>" class="img-fluid img-profile lazyload">
-                                        <p class="username">
+                                        <p class="username" style="word-break:break-all;">
                                             <?php echo get_shop_name($item); ?>
                                         </p>
                                     </a>

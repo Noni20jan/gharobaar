@@ -276,8 +276,8 @@ class Profile_controller extends Home_Core_Controller
         $data["session"] = get_user_session();
         $this->load->view('dashboard/includes/_header_buyer', $data);
         $this->load->view('settings/update_profile_dashboard', $data);
-        $this->load->view('dashboard/includes/_footer');
-        // $this->load->view('partials/_footer');
+        // $this->load->view('dashboard/includes/_footer');
+        $this->load->view('partials/_footer');
     }
 
     /**
@@ -344,6 +344,7 @@ class Profile_controller extends Home_Core_Controller
             //     redirect($this->agent->referrer());
             //     exit();
             // }
+
 
             // var_dump($this->location_model->search_cities_name("Hisar"));
             // exit();
@@ -473,10 +474,6 @@ class Profile_controller extends Home_Core_Controller
         redirect($this->agent->referrer());
     }
 
-
-
-
-
     public function update_payout_account()
     {
         //check user
@@ -494,9 +491,6 @@ class Profile_controller extends Home_Core_Controller
             'bank_branch' => $this->input->post('bank_branch', true),
             'account_number' => $this->input->post('account_number', true),
             'is_bank_details_approved' => (int)$this->input->post('is_bank_details_aprroved', true),
-
-
-
         );
         $bank_details = $this->auth_user->is_bank_details_approved;
 

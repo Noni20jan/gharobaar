@@ -176,8 +176,8 @@ class Dashboard_controller extends Home_Core_Controller
         $this->load->view('dashboard/includes/_header_buyer', $data);
         // $this->load->view('partials/_header', $data);
         $this->load->view('profile/buyer_profile', $data);
-        // $this->load->view('partials/_footer');
-        $this->load->view('dashboard/includes/_footer');
+        $this->load->view('partials/_footer');
+        // $this->load->view('dashboard/includes/_footer');
     }
 
 
@@ -279,8 +279,6 @@ class Dashboard_controller extends Home_Core_Controller
         $data['custom_filters'] = $this->field_model->get_custom_filters();
         $data["query_string_array"] = get_query_string_array($data['custom_filters']);
         $data["query_string_object_array"] = convert_query_string_to_object_array($data["query_string_array"]);
-
-
         //set pagination
         $data['num_rows'] = $this->product_model->get_user_products_count($data["user"]->id, 'active');
         $pagination = $this->paginate(generate_profile_url($data["user"]->slug), $data['num_rows'], $this->product_per_page);
@@ -2630,6 +2628,30 @@ class Dashboard_controller extends Home_Core_Controller
         $this->load->view('dashboard/barter_requests', $data);
         $this->load->view('dashboard/includes/_footer');
     }
+
+
+
+    // public function requested_barter()
+    // {
+    //     $this->load->model('bidding_model');
+    //     // if (!is_bidding_system_active()) {
+    //     //     redirect(dashboard_url());
+    //     // }
+    //     $data['title'] = "Requested Barters";
+    //     $data['description'] = "Requested Barters" . " - " . $this->app_name;
+    //     $data['keywords'] = "Requested Barters" . "," . $this->app_name;
+
+    //     $data['num_rows'] = $this->bidding_model->get_vendor_barter_requests_count($this->auth_user->id);
+    //     $pagination = $this->paginate(generate_dash_url("barter_requests"), $data['num_rows'], $this->per_page);
+    //     $data['quote_requests'] = $this->bidding_model->get_paginated_vendor_barter_requests($this->auth_user->id, $pagination['per_page'], $pagination['offset']);
+    //     $data["session"] = get_user_session();
+
+    //     $this->load->view('dashboard/includes/_header', $data);
+    //     $this->load->view('dashboard/requested_barters', $data);
+    //     $this->load->view('dashboard/includes/_footer');
+    // }
+
+
 
     /**
      * Submit barter

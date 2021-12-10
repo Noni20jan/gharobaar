@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <style>
-      #wrapper{
-            background:#ffffff00;
-        }
+    #wrapper {
+        background: #ffffff00;
+    }
 </style>
 <!-- Wrapper -->
 <div id="wrapper">
@@ -15,7 +15,8 @@
                             <div class="row-custom">
                                 <div class="profile-tab-content">
                                     <!-- include message block -->
-                                    <?php $this->load->view('partials/_messages'); ?>
+                                    <?php //$this->load->view('partials/_messages'); 
+                                    ?>
                                     <?php echo form_open("social-media-post", ['id' => 'form_validate']); ?>
                                     <div class="form-group">
                                         <label class="control-label"><?php echo trans('facebook_url'); ?></label>

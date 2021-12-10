@@ -14,9 +14,9 @@
             background-clip: border-box;
             border: 1px solid #d2d2dc;
             border-radius: 4px;
-            -webkit-box-shadow: 0px 0px 5px 0px rgb(249, 249, 250);
-            -moz-box-shadow: 0px 0px 5px 0px rgba(212, 182, 212, 1);
-            box-shadow: 0px 0px 5px 0px rgb(161, 163, 164);
+            /* -webkit-box-shadow: 0px 0px 5px 0px rgb(249, 249, 250); */
+            /* -moz-box-shadow: 0px 0px 5px 0px rgba(212, 182, 212, 1); */
+            /* box-shadow: 0px 0px 5px 0px rgb(161, 163, 164) */
         }
 
         .card .card-body {
@@ -53,11 +53,11 @@
             background-color: #D32F2F !important
         }
 
-        /* .new-header-view {
+        .new-header-view {
             background-color: #dbd8d836;
             padding: 35px;
             border-radius: 20px;
-        } */
+        }
     </style>
 
     <link rel="stylesheet" type="text/css" href="dist/css/style.css">
@@ -71,8 +71,8 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/MultiStep.min.js"></script>
 
 </head>
-<div id="wrapper">
-    <div class="container">
+<div class="container">
+    <div id="wrapper">
         <div class="row">
             <div class="box box-primary">
                 <div class="col-sm-12 white-box">
@@ -215,33 +215,33 @@
         </div>
     </div>
 </div>
-<!-- <div id="wrapper">
+<div id="wrapper">
     <div class="container">
         <h3>Change Your Password</h3>
         <div class="profile-tab-content new-header-view">
-            <? //php $this->load->view('settings/change_password_dashboard'); 
+            <?php $this->load->view('settings/change_password_dashboard');
             ?>
         </div>
     </div>
-</div> -->
-<!-- <div id="wrapper">
+</div>
+<div id="wrapper">
     <div class="container">
         <h3>Social Media</h3>
         <div class="profile-tab-content new-header-view m-t-15">
-            <? //php $this->load->view('settings/social_media_dashboard'); 
+            <?php $this->load->view('settings/social_media_dashboard');
             ?>
         </div>
     </div>
-</div> -->
-<!-- <div id="wrapper">
+</div>
+<div id="wrapper">
     <div class="container">
         <h3>Edit Your Address</h3>
         <div class="profile-tab-content new-header-view m-t-15">
-            <? //php $this->load->view('dashboard/addresses'); 
+            <?php $this->load->view('dashboard/addresses');
             ?>
         </div>
     </div>
-</div> -->
+</div>
 <!-- Wrapper End-->
 
 <script>

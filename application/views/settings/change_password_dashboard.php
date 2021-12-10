@@ -53,8 +53,9 @@
             position: relative;
             z-index: 2;
         }
-        #wrapper{
-            background:#ffffff00;
+
+        #wrapper {
+            background: #ffffff00;
         }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -65,11 +66,13 @@
         <div class="row">
             <div class="box box-primary">
                 <!-- include message block -->
-                <?php $this->load->view('partials/_messages'); ?>
+                <?php //$this->load->view('partials/_messages'); 
+                ?>
                 <div class="box-body">
                     <div class="profile-tab-content">
                         <!-- include message block -->
-                        <?php $this->load->view('partials/_messages'); ?>
+                        <?php //$this->load->view('partials/_messages'); 
+                        ?>
 
                         <?php echo form_open_multipart("change-password-post", ['id' => 'form_validate']); ?>
                         <?php if (!empty($user->password)) : ?>
