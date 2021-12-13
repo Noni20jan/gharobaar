@@ -27,7 +27,6 @@
                 <div class="row-custom">
                     <div class="profile-tab-content">
                         <!-- include message block -->
-                        <?php $this->load->view('partials/_messages'); ?>
 
                         <?php echo form_open("social-media-post", ['id' => 'form_validate']); ?>
 

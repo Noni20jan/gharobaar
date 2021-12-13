@@ -4,6 +4,13 @@
     #wrapper {
         background: #ffffff00;
     }
+
+    @media(max-width:768px) {
+        .scroll-for-mobile {
+            overflow-y: scroll;
+            height: 90vh;
+        }
+    }
 </style>
 <div id="wrapper">
     <div class="container">
@@ -23,7 +30,7 @@
                                     <!-- <div class="col-md-6" style="margin-bottom:15px;"> -->
                                     <!-- <div class="col-sm-12" style="background-color: #fefefe85;border-radius: 20px;"> -->
                                     <!-- <div class="col-sm-12" style="padding-top: 10px;"> -->
-                                    <div class="col-6" style="background-color: #fefefe85;border-radius: 20px;">
+                                    <div class="col-md-6" style="background-color: #fefefe85;border-radius: 20px;">
                                         <label id="formlabel2"><?php echo $address->f_name; ?></label><br>
                                         <label id="formlabel2"><?php echo $address->h_no; ?> , <?php echo $address->area; ?></label>
                                         <label id="formlabel2"><?php echo $address->landmark; ?></label><br>
@@ -53,7 +60,7 @@
 </div>
 <div id="addaddress-modal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-content scroll-for-mobile">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
                 <h3>Add New Address</h3>
