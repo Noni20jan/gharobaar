@@ -930,10 +930,41 @@ class Product_model extends Core_Model
         }
         $array_days_available = @explode(',', $availability);
         if (!empty($array_days_available) && !empty($array_days_available[0])) {
+
             $this->db->group_start();
             $this->db->where_in("products.availability", $array_days_available);
-            $this->db->group_end();
+
+            $this->db->or_where('products.availability', 'All Days');
+            $z = date('dS M Y');
+            $day = strtotime($z . "+1 Days");
+            $day_2 = strtotime($z . "+2 Days");
+            $way2 = date('l', $day_2);
+            $a = '%';
+            $way = date('l', $day);
+            if (in_array($way, $array_days_available) && in_array($way2, $array_days_available)) {
+                $a = '%';
+                $way2 = date('l', $day_2);
+                $way = date('l', $day);
+                $days = $a . $way . $a;
+                $day2 = $a . $way2 . $a;
+                $this->db->or_where("products.availability like", $days);
+                $this->db->or_where("products.availability like", $day2);
+                $this->db->group_end();
+            } else if (in_array($way, $array_days_available)) {
+                $way = date('l', $day);
+                $days = $a . $way . $a;
+                $this->db->or_where("products.availability like", $days);
+
+                $this->db->group_end();
+            } else if (in_array($way2, $array_days_available)) {
+                $way2 = date('l', $day_2);
+                $day2 = $a . $way2 . $a;
+                $this->db->or_where("products.availability like", $day2);
+
+                $this->db->group_end();
+            }
         }
+
         //pet age
         $array_pet_age = @explode(',', $pet_age);
         if (!empty($array_pet_age) && !empty($array_pet_age[0])) {
@@ -1454,6 +1485,7 @@ class Product_model extends Core_Model
         $this->filter_products($query_string_array, $category_id, $only_category);
         if (!$only_category) :
             $this->db->limit(clean_number($per_page), clean_number($offset));
+
             return $this->db->get('products')->result();
         else :
             return $this->db->get('products')->result_array();

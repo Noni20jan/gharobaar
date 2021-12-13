@@ -1361,6 +1361,8 @@ foreach ($sellers as $seller) {
                                             <?php $day_2 = strtotime($z . "+2 Days"); ?>
                                             <?php $way = date('l', $day); ?>
                                             <?php $way2 = date('l', $day_2); ?>
+
+                                            <?php $all_days = "All Days"; ?>
                                             <li>
                                                 <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way); ?>">
                                                     <div class="custom-control custom-checkbox">
@@ -1391,7 +1393,6 @@ foreach ($sellers as $seller) {
                                         <label for="days_available" style="margin: 10px;"><b>Available Delivery Days</b></label>
                                     </div>
                                     <div class="filter-item" id="days_filter" style="display: none">
-
                                         <div class="filter-list-container">
                                             <ul class="filter-list">
                                                 <?php $z = date('dS M Y'); ?>
@@ -1399,14 +1400,16 @@ foreach ($sellers as $seller) {
                                                 <?php $day_2 = strtotime($z . "+2 Days"); ?>
                                                 <?php $way = date('l', $day); ?>
                                                 <?php $way2 = date('l', $day_2); ?>
+                                                <?php $all_days = "All Days"; ?>
                                                 <li>
                                                     <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way); ?>">
                                                         <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $way) ? 'checked' : ''; ?>>
+                                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'availability', $day1) ? 'checked' : ''; ?>>
                                                             <label class="custom-control-label">Delivery in 1 day</label>
                                                         </div>
                                                     </a>
                                                 </li>
+
                                                 <li>
                                                     <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way2); ?>">
                                                         <div class="custom-control custom-checkbox">
@@ -1415,6 +1418,7 @@ foreach ($sellers as $seller) {
                                                         </div>
                                                     </a>
                                                 </li>
+
 
                                             </ul>
                                         </div>
@@ -1430,7 +1434,6 @@ foreach ($sellers as $seller) {
                                         <label for="days_available" style="margin: 10px;"><b>Available Delivery Days</b></label>
                                     </div>
                                     <div class="filter-item" id="days_filter" style="display: none">
-
                                         <div class="filter-list-container">
                                             <ul class="filter-list">
                                                 <?php $z = date('dS M Y'); ?>
@@ -1438,6 +1441,7 @@ foreach ($sellers as $seller) {
                                                 <?php $day_2 = strtotime($z . "+2 Days"); ?>
                                                 <?php $way = date('l', $day); ?>
                                                 <?php $way2 = date('l', $day_2); ?>
+                                                <?php $all_days = "All Days"; ?>
                                                 <li>
                                                     <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way); ?>">
                                                         <div class="custom-control custom-checkbox">
@@ -1446,6 +1450,7 @@ foreach ($sellers as $seller) {
                                                         </div>
                                                     </a>
                                                 </li>
+
                                                 <li>
                                                     <a href="<?= current_url() . generate_filter_url($query_string_array, 'availability', $way2); ?>">
                                                         <div class="custom-control custom-checkbox">
@@ -1454,6 +1459,8 @@ foreach ($sellers as $seller) {
                                                         </div>
                                                     </a>
                                                 </li>
+
+
 
                                             </ul>
                                         </div>
