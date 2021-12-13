@@ -703,7 +703,7 @@ foreach ($sellers as $seller) {
 
                             <!-- filter code for stock options -->
                             <div>
-                                <input type="checkbox" checked class="check-box-size" id="product_type" value="product_type" name="filter_checkbox[]" onclick="show_product_stock(this)">
+                                <input type="checkbox" class="check-box-size" id="product_type" value="product_type" name="filter_checkbox[]" checked>
                                 <label for="product_type" style="margin: 10px;"><b><?php echo trans("product_stock_option"); ?></b></label>
                             </div>
                             <div class="filter-item" id="product_stock_option" style="display: none">
@@ -2255,6 +2255,23 @@ foreach ($sellers as $seller) {
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#product_type').prop('checked', true);
+        $('#category').prop('checked', true);
+        $('#price').prop('checked', true);
+        $('#availability').prop('checked', true);
+        $('#discounts').prop('checked', true);
+        $('#rating').prop('checked', true);
+        $('#return_exchange').prop('checked', true);
+        $('#seller_type').prop('checked', true);
+        $('#blouse_detail').prop('checked', true);
+        $('#pet_age').prop('checked', true);
+        $('#jewellery_type').prop('checked', true);
+        $('#origin_of_product').prop('checked', true);
+        $('#gender').prop('checked', true);
+        $('#days_available').prop('checked', true);
+        $('#food').prop('checked', true);
+        $('#dynamic1').prop('checked', true);
+        $('#dynamic2').prop('checked', true);
         if ($('#product_type').is(":checked")) {
             document.getElementById("product_stock_option").style.display = "block";
         } else if ($('#product_type').is(":not(:checked)")) {
