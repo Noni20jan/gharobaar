@@ -37,6 +37,9 @@ class Review_model extends CI_Model
             'ip_address' => 0,
             'created_at' => date("Y-m-d H:i:s")
         );
+        $this->load->model('upload_model');
+        $temp_path = $this->upload_model->upload_review_image('file');
+        $data["review_image"] = $this->upload_model->review_image_upload($temp_path);
         $ip = $this->input->ip_address();
         if (!empty($ip)) {
             $data['ip_address'] = $ip;

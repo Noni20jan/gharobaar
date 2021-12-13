@@ -72,6 +72,10 @@
                                             </div>
                                         </div>
                                         <div class="row-custom">
+
+                                            <img id="review_image" class="review-image" src="<?php echo base_url() . $review->review_image; ?> " style="border-radius:10%" />
+                                        </div>
+                                        <div class="row-custom">
                                             <span class="date"><?php echo time_ago($review->created_at); ?></span>
                                         </div>
                                     </div>
@@ -118,6 +122,10 @@
                                             </div>
                                         </div>
                                         <div class="row-custom">
+
+                                            <img id="review_image1" class="review-image" src="<?php echo base_url() . $review->review_image; ?> " style="border-radius:10%" />
+                                        </div>
+                                        <div class="row-custom">
                                             <span class="date"><?php echo time_ago($review->created_at); ?></span>
                                         </div>
                                     </div>
@@ -130,5 +138,22 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        var small = {
+            width: "200px",
+            height: "116px"
+        };
+        var large = {
+            width: "200px",
+            height: "232px"
+        };
+        var count = 1;
+        $("#review_image1").css(small).on('click', function() {
+            $(this).animate((count == 1) ? large : small);
+            count = 1 - count;
+        });
+    });
+</script>
 
 <?php $this->load->view('partials/_modal_rate_product'); ?>

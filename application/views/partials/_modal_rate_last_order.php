@@ -20,13 +20,19 @@
             overflow-y: scroll !important;
             height: 70vh;
         }
+
+    }
+
+    .upload_image {
+        margin-left: 20px;
+
     }
 </style>
 <div class="modal fade" id="rateProductModalorder" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom scroll-for-mobile">
             <!-- form start -->
-            <?php echo form_open('cart_controller/save_rate_last_order'); ?>
+            <?php echo form_open_multipart('cart_controller/save_rate_last_order'); ?>
             <div class="modal-header">
                 <h5 class="modal-title"><?php echo trans("rate_last_order"); ?></h5>
                 <!-- <button type="button" class="close" data-dismiss="modal">
@@ -63,6 +69,7 @@
                                 </div>
                             </div>
 
+
                             <div class="form-group">
                                 <textarea name="review[]" id="user_review" class="form-control form-input form-textarea" placeholder="<?php echo trans("write_review"); ?>"></textarea>
                                 <input type="hidden" name="rating[]" id="user_rating_<?php echo $i ?>" value="5">
@@ -92,7 +99,11 @@
                         <?php endforeach; ?>
 
                     </div>
+                    <div class="upload_image">
 
+                        <input type="file" class="upload_product_image" name="file" id="upload_review_image" accept=".png, .jpg, .jpeg, .gif" onchange=imageShow(this)>
+                        <span class='badge badge-info' id="upload-file-info"></span>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -104,10 +115,9 @@
         </div>
     </div>
 </div>
-<!-- <script>
-    function hello() {
-   id = 1 ;
-document.getElementById('hello').value = id
-     
-    }
-</script> -->
+<script>
+    function imageShow(input) {
+        $('#upload-file-info').html($(input).val().replace(/.*[\/\\]/, ''));
+        readURL(input);
+    };
+</script>

@@ -39,6 +39,38 @@ class Upload_model extends CI_Model
         }
     }
 
+    public function upload_review_image($file_name)
+    {
+        if (isset($_FILES[$file_name])) {
+            if (empty($_FILES[$file_name]['name'])) {
+                return null;
+            }
+        }
+        $config['upload_path'] = './uploads/reviews/';
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $config['file_name'] = 'img_temp_' . generate_unique_id();
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload($file_name)) {
+            $data = array('upload_data' => $this->upload->data());
+            if (isset($data['upload_data']['full_path'])) {
+                return $data['upload_data']['full_path'];
+            }
+            return null;
+        } else {
+            return null;
+        }
+    }
+
+    public function review_image_upload($path)
+    {
+        $new_path = 'uploads/profile/' . generate_unique_id() . '.jpg';
+        $img = Image::make($path)->orientate();
+        $img->fit(240, 240);
+        $img->save(FCPATH . $new_path, $this->quality);
+        return $new_path;
+    }
+
+
     //upload temp file
     public function upload_temp_file($file_name)
     {
