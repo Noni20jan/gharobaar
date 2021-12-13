@@ -139,13 +139,22 @@ if (!empty($product_images)) {
 
                 <div class="product-item-options" style="margin-right:11%">
                     <?php if ($this->auth_check) : ?>
-                        <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist" id="heart-icon-1" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
-                            <?php if (is_product_in_wishlist($product) == 1) : ?>
-                                <i class="icon-heart"></i>
-                            <?php else : ?>
-                                <i class="icon-heart-o"></i>
-                            <?php endif; ?>
-                        </a>
+                        <?php if ($this->auth_user->user_type != "guest") : ?>
+                            <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist" id="heart-icon-1" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
+                                <?php if (is_product_in_wishlist($product) == 1) : ?>
+                                    <i class="icon-heart"></i>
+                                <?php else : ?>
+                                    <i class="icon-heart-o"></i>
+                                <?php endif; ?>
+                            </a>
+                        <?php else : ?>
+                            <!-- hide wishlist for guest user -->
+                            <!-- <li class="icon-bg">
+                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                                        <i class="icon-heart-o"></i>
+                                                    </a>
+                                                </li> -->
+                        <?php endif; ?>
                     <?php else : ?>
                         <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist" id="heart-icon-1-2" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>"><i class="icon-heart-o"></i></a>
                     <?php endif; ?>

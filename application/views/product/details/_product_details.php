@@ -458,7 +458,13 @@
                             <a href="javascript:void(0)" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="<?php echo $product->id; ?>" data-reload="1">Remove from Wishlist</a>
                         <?php else : ?>
                             <?php if ($this->auth_check) : ?>
-                                <a href="javascript:void(0)" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="<?php echo $product->id; ?>" data-reload="1">Add to Wishlist</i></a>
+                                <?php if ($this->auth_user->user_type != "guest") : ?>
+                                    <a href="javascript:void(0)" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="<?php echo $product->id; ?>" data-reload="1">Add to Wishlist</i></a>
+                                <?php else : ?>
+                                    <!-- hide wishlist for guest user -->
+                                    <!-- <a href="javascript:void(0)" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="<?php echo $product->id; ?>" data-reload="1">Add to Wishlist</i></a> -->
+
+                                <?php endif; ?>
                             <?php else : ?>
                                 <a id="wishlist_btn" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="0">Add to Wishlist</i></a>
                             <?php endif; ?>

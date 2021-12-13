@@ -14,6 +14,10 @@
         }
     }
 
+    .login-modal .auth-box {
+        width: 100%;
+    }
+
     .out_of_stock {
         width: 100%;
     }

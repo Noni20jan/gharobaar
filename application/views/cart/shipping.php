@@ -492,8 +492,14 @@
                                                             </div>
                                                             <div class="col-12 col-md-6">
                                                                 <label><?php echo trans("phone_number"); ?>*</label>
+
                                                                 <?php if (empty($shipping_address->shipping_phone_number)) : ?>
-                                                                    <input type="text" name="shipping_phone_number" onkeypress="return(event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="login_number" class="form-control form-input" value="<?php echo $this->auth_user->phone_number; ?>" minlength="10" maxlength="10" required>
+                                                                    <?php if ($this->auth_user->user_type != "guest") : ?>
+                                                                        <input type="text" name="shipping_phone_number" onkeypress="return(event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="login_number" class="form-control form-input" value="<?php echo $this->auth_user->phone_number; ?>" minlength="10" maxlength="10" required>
+                                                                    <?php else : ?>
+                                                                        <input type="text" name="shipping_phone_number" onkeypress="return(event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="login_number" class="form-control form-input" value="" minlength="10" maxlength="10" required>
+
+                                                                    <?php endif; ?>
                                                                 <?php else : ?>
                                                                     <input type="text" name="shipping_phone_number" onkeypress="return(event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="login_number" class="form-control form-input" value="<?php echo $shipping_address->shipping_phone_number; ?>" minlength="10" maxlength="10" required>
                                                                 <?php endif; ?>

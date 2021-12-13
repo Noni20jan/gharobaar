@@ -31,63 +31,63 @@
         <div class="row">
             <div class="col-sm-12">
                 <ul id="navbar_mobile_links" class="navbar-nav">
-
                     <?php if ($this->auth_check) : ?>
-                        <li class="dropdown profile-dropdown nav-item">
-                            <a href="#" class="dropdown-toggle image-profile-drop nav-link" data-toggle="dropdown" aria-expanded="false">
-                                <img src="<?php echo get_user_avatar($this->auth_user); ?>" alt="<?php echo html_escape($this->auth_user->username); ?>">
-                                <?php echo get_shop_name($this->auth_user); ?> <span class="icon-arrow-down"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <?php if ($this->auth_user->role == "admin") : ?>
-                                    <li>
-                                        <a href="<?php echo admin_url(); ?>">
-                                            <i class="icon-admin"></i>
-                                            <?php echo trans("admin_panel"); ?>
-                                        </a>
-                                    </li>
-                                <?php endif; ?>
-                                <?php if (is_user_vendor()) : ?>
-                                    <li>
-                                        <a href="<?= generate_dash_url("profile"); ?>" target="_blank">
-                                            <i class="icon-dashboard"></i>
-                                            Supplier Panel
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
-                                            <i class="icon-user"></i>
-                                            Buyer Panel
-                                        </a>
-                                    </li>
-                                <?php else : ?>
-                                    <li>
-                                        <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
-                                            <i class="icon-dashboard"></i>
-                                            Buyer Panel
-                                        </a>
-                                    </li>
-                                <?php endif; ?>
-                                <!-- <li>
+                        <?php if ($this->auth_user->user_type != "guest") : ?>
+                            <li class="dropdown profile-dropdown nav-item">
+                                <a href="#" class="dropdown-toggle image-profile-drop nav-link" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="<?php echo get_user_avatar($this->auth_user); ?>" alt="<?php echo html_escape($this->auth_user->username); ?>">
+                                    <?php echo get_shop_name($this->auth_user); ?> <span class="icon-arrow-down"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <?php if ($this->auth_user->role == "admin") : ?>
+                                        <li>
+                                            <a href="<?php echo admin_url(); ?>">
+                                                <i class="icon-admin"></i>
+                                                <?php echo trans("admin_panel"); ?>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php if (is_user_vendor()) : ?>
+                                        <li>
+                                            <a href="<?= generate_dash_url("profile"); ?>" target="_blank">
+                                                <i class="icon-dashboard"></i>
+                                                Supplier Panel
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
+                                                <i class="icon-user"></i>
+                                                Buyer Panel
+                                            </a>
+                                        </li>
+                                    <?php else : ?>
+                                        <li>
+                                            <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
+                                                <i class="icon-dashboard"></i>
+                                                Buyer Panel
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+                                    <!-- <li>
                                     <a href="<?php echo generate_dash_url("profile"); ?>">
                                         <i class="icon-user"></i>
                                         <?php echo trans("profile"); ?>
                                     </a>
                                 </li> -->
-                                <?php if ($this->is_sale_active) : ?>
-                                    <?php if (!is_user_vendor()) : ?>
-                                        <li>
-                                            <a href="<?php echo generate_url("orders_dashboard"); ?>">
+                                    <?php if ($this->is_sale_active) : ?>
+                                        <?php if (!is_user_vendor()) : ?>
+                                            <li>
+                                                <a href="<?php echo generate_url("orders_dashboard"); ?>">
 
-                                                <i class="icon-shopping-basket"></i>
-                                                <?php echo trans("orders"); ?>
-                                            </a>
-                                        </li>
+                                                    <i class="icon-shopping-basket"></i>
+                                                    <?php echo trans("orders"); ?>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+
+
                                     <?php endif; ?>
-
-
-                                <?php endif; ?>
-                                <!-- <li>
+                                    <!-- <li>
                                     <a href="<?php echo generate_url("messages"); ?>">
                                         <i class="icon-mail"></i>
                                         <?php echo trans("messages"); ?>&nbsp;<?php if ($unread_message_count > 0) : ?>
@@ -96,21 +96,24 @@
                                     </a>
                                 </li> -->
 
-                                <li>
-                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
-                                        <i class="icon-heart-o"></i>
-                                        <?php echo trans("wishlist"); ?>
-                                    </a>
-                                </li>
+                                    <li>
+                                        <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                            <i class="icon-heart-o"></i>
+                                            <?php echo trans("wishlist"); ?>
+                                        </a>
+                                    </li>
 
-                                <li>
-                                    <a href="<?php echo base_url(); ?>logout" class="logout">
-                                        <i class="icon-logout"></i>
-                                        <?php echo trans("logout"); ?>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>logout" class="logout">
+                                            <i class="icon-logout"></i>
+                                            <?php echo trans("logout"); ?>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li> <?php else : ?>
+                            <!-- hide panel for guest user -->
+
+                        <?php endif; ?>
                     <?php else : ?>
                         <li class="nav-item"><a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal" class="nav-link close-menu-click" id="cta_color"><?php echo trans("login"); ?></a></li>
                         <li class="nav-item"><a href="javascript:void(0)" data-toggle="modal" data-target="#registerModal" class="nav-link close-menu-click" id="cta_color"><?php echo trans("register"); ?></a></li>

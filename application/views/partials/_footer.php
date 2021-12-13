@@ -512,10 +512,19 @@
                     </li>
                     <li>
                         <?php if ($this->auth_check) : ?>
-                            <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
-                                <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_whishlist.png">
-                                <p class="aap_bar_text">Wishlist</p>
-                            </a>
+                            <?php if ($this->auth_user->user_type != "guest") : ?>
+                                <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                    <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_whishlist.png">
+                                    <p class="aap_bar_text">Wishlist</p>
+                                </a>
+                            <?php else : ?>
+                                <!-- hide wishlist for guest user -->
+                                <!-- <li class="icon-bg">
+                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                                        <i class="icon-heart-o"></i>
+                                                    </a>
+                                                </li> -->
+                            <?php endif; ?>
                         <?php else : ?>
                             <a style="font-weight: bold" id='wishlist-mobile-view'>
                                 <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_whishlist.png">

@@ -4182,12 +4182,22 @@
                                             </li>
                                         <?php endif; ?>
                                         <?php if ($this->auth_check) : ?>
-                                            <li class="icon-bg">
-                                                <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
-                                                    <i class="icon-heart-o"></i>
-                                                </a>
-                                            </li>
+                                            <?php if ($this->auth_user->user_type != "guest") : ?>
+                                                <li class="icon-bg">
+                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                                        <i class="icon-heart-o"></i>
+                                                    </a>
+                                                </li>
+                                            <?php else : ?>
+                                                <!-- hide wishlist for guest user -->
+                                                <!-- <li class="icon-bg">
+                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                                        <i class="icon-heart-o"></i>
+                                                    </a>
+                                                </li> -->
+                                            <?php endif; ?>
                                         <?php else : ?>
+
                                             <li class="icon-bg">
                                                 <a id='wishlist'>
                                                     <i class="icon-heart-o"></i>
@@ -4397,9 +4407,18 @@
                             </div>
                             <div class="mobile-cart<?= !$this->is_sale_active ? ' visibility-hidden' : ''; ?>">
                                 <?php if ($this->auth_check) : ?>
-                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
-                                        <i class="icon-heart-o"></i>
-                                    </a>
+                                    <?php if ($this->auth_user->user_type != "guest") : ?>
+                                        <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                            <i class="icon-heart-o"></i>
+                                        </a>
+                                    <?php else : ?>
+                                        <!-- hide wishlist for guest user -->
+                                        <!-- <li class="icon-bg">
+                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                                        <i class="icon-heart-o"></i>
+                                                    </a>
+                                                </li> -->
+                                    <?php endif; ?>
                                 <?php else : ?>
                                     <a id='wishlist-mobile-view-header' ?>
                                         <i class="icon-heart-o"></i>
