@@ -1,7 +1,15 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
 <!--print error messages-->
-<?php if ($this->session->flashdata('errors')): ?>
+<style>
+    .error_font {
+
+        font-size: 15px !important;
+        color: red;
+
+    }
+</style>
+<?php if ($this->session->flashdata('errors')) : ?>
     <div class="form-group">
         <div class="error-message">
             <?php echo $this->session->flashdata('errors'); ?>
@@ -10,8 +18,8 @@
 <?php endif; ?>
 
 <!--print custom error message-->
-<?php if ($this->session->flashdata('error')): ?>
-    <?php if ($this->session->flashdata('error') == "Address in mailbox given [] does not comply with RFC 2822, 3.6.2."): ?>
+<?php if ($this->session->flashdata('error')) : ?>
+    <?php if ($this->session->flashdata('error') == "Address in mailbox given [] does not comply with RFC 2822, 3.6.2.") : ?>
         <div class="form-group">
             <div class="error-message">
                 <p>
@@ -19,17 +27,17 @@
                 </p>
             </div>
         </div>
-    <?php else: ?>
+    <?php else : ?>
         <div class="form-group">
             <div class="error-message">
-                <p>
+                <p class="error_font">
                     <?php echo $this->session->flashdata('error'); ?>
                 </p>
             </div>
         </div>
     <?php endif; ?>
     <!--print custom success message-->
-<?php elseif ($this->session->flashdata('success')): ?>
+<?php elseif ($this->session->flashdata('success')) : ?>
     <div class="form-group">
         <div class="success-message">
             <p>

@@ -4224,10 +4224,25 @@
 
                                                             </a>
                                                         </li>
-                                                        <li>
+                                                        <!-- <li>
                                                             <a href="<?php echo dashboard_url(); ?>">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                 <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" />
                                                                 Buyer Panel
+                                                            </a>
+                                                        </li> -->
+                                                        <?php if (!is_user_vendor()) : ?>
+                                                            <li>
+                                                                <a href="<?php echo generate_dash_url("profile"); ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    <?php echo trans("profile"); ?>
+                                                                </a>
+                                                            </li>
+
+                                                        <?php endif; ?>
+                                                        <li>
+                                                            <a href="<?php echo generate_url("profile_settings"); ?>">
+                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                <span>Update Profile</span>
                                                             </a>
                                                         </li>
                                                         <li>
@@ -4237,15 +4252,7 @@
                                                             </a>
                                                         </li>
                                                     <?php } ?>
-                                                    <?php if (!is_user_vendor()) : ?>
-                                                        <li>
-                                                            <a href="<?php echo generate_dash_url("profile"); ?>">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                <?php echo trans("profile"); ?>
-                                                            </a>
-                                                        </li>
 
-                                                    <?php endif; ?>
                                                     <?php if (is_user_vendor()) : ?>
                                                         <li>
                                                             <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
@@ -4267,12 +4274,7 @@
                                                         <!-- <span class="childtext">Account<i class="fa fa-sort-desc" aria-hidden="true"></i> -->
                                                         <!-- </span> -->
 
-                                                        <li>
-                                                            <a href="<?php echo generate_url("profile_settings"); ?>">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                <span>Update Profile</span>
-                                                            </a>
-                                                        </li>
+
                                                         <!-- <li> -->
                                                         <!-- <a href="<?php echo generate_dash_url("addresses"); ?>"> -->
                                                         <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/location.png" alt="" style="width: 20px; height: 20px;" /> -->

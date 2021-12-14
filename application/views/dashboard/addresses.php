@@ -27,24 +27,24 @@
                         <?php if (!empty($addresses)) : ?>
                             <?php foreach ($addresses as $address) : ?>
                                 <?php if ($address->is_active == "1") : ?>
-                                    <!-- <div class="col-md-6" style="margin-bottom:15px;"> -->
-                                    <!-- <div class="col-sm-12" style="background-color: #fefefe85;border-radius: 20px;"> -->
-                                    <!-- <div class="col-sm-12" style="padding-top: 10px;"> -->
-                                    <div class="col-md-6" style="background-color: #fefefe85;border-radius: 20px;">
-                                        <label id="formlabel2"><?php echo $address->f_name; ?></label><br>
-                                        <label id="formlabel2"><?php echo $address->h_no; ?> , <?php echo $address->area; ?></label>
-                                        <label id="formlabel2"><?php echo $address->landmark; ?></label><br>
-                                        <label id="formlabel2"><?php echo $address->city; ?> , <?php echo $address->state; ?></label>
-                                        <br> <label id="formlabel2"><?php echo $address->zip_code; ?></label>
-                                        <br> <label id="formlabel2">Phone number: <?php echo $address->ph_number; ?></label>
-                                        <br> <label id="formlabel2">Email : <?php echo $address->email; ?></label>
-                                        <br> <label id="formlabel2"><?php echo $address->address_type; ?></label>
-                                        <br>
-                                        <hr> <label id="formlabel2"> <a class="passingID" onclick="edit_address('<?php echo $address->id; ?>')" data-id="<?php echo $address->id; ?>"><i class="icon-edit"></i> &nbsp;<?php echo trans('edit'); ?></a> | <a href="javascript:void(0)" onclick="delete_item('dashboard_controller/delete_address','<?php echo $address->id; ?>','Are you sure you want to delete this address?');"><i class="fa fa-times option-icon"></i>&nbsp;<?php echo trans('delete'); ?></a></label>
+                                    <div class="col-md-6" style="margin-bottom:15px;">
+                                        <div class="col-sm-12" style="background-color: #fefefe85;border-radius: 20px;">
+                                            <div class="col-sm-12" style="padding-top: 10px;">
+                                                <!-- <div class="col-md-6" style="background-color: #fefefe85;border-radius: 20px;"> -->
+                                                <label id="formlabel2"><?php echo $address->f_name; ?></label><br>
+                                                <label id="formlabel2"><?php echo $address->h_no; ?> , <?php echo $address->area; ?></label>
+                                                <label id="formlabel2"><?php echo $address->landmark; ?></label><br>
+                                                <label id="formlabel2"><?php echo $address->city; ?> , <?php echo $address->state; ?></label>
+                                                <br> <label id="formlabel2"><?php echo $address->zip_code; ?></label>
+                                                <br> <label id="formlabel2">Phone number: <?php echo $address->ph_number; ?></label>
+                                                <br> <label id="formlabel2">Email : <?php echo $address->email; ?></label>
+                                                <br> <label id="formlabel2"><?php echo $address->address_type; ?></label>
+                                                <br>
+                                                <hr> <label id="formlabel2"> <a class="passingID" onclick="edit_address('<?php echo $address->id; ?>')" data-id="<?php echo $address->id; ?>"><i class="icon-edit"></i> &nbsp;<?php echo trans('edit'); ?></a> | <a href="javascript:void(0)" onclick="delete_item('dashboard_controller/delete_address','<?php echo $address->id; ?>','Are you sure you want to delete this address?');"><i class="fa fa-times option-icon"></i>&nbsp;<?php echo trans('delete'); ?></a></label>
+                                                <!-- </div> -->
+                                            </div>
+                                        </div>
                                     </div>
-                                    <!-- </div> -->
-                                    <!-- </div> -->
-                                    <!-- </div> -->
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         <?php endif; ?>
