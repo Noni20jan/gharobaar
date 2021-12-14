@@ -845,6 +845,8 @@ if (!function_exists('get_query_string_array')) {
         array_push($array_filter_keys, "saree_length");
         array_push($array_filter_keys, "pet_age");
         array_push($array_filter_keys, "available_for_return_or_exchange");
+        array_push($array_filter_keys, "suitable_for");
+
         array_push($array_filter_keys, "availability");
 
         $queries = array();

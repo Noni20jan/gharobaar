@@ -415,7 +415,6 @@ foreach ($sellers as $seller) {
         }
     }
 </style>
-
 <link rel="stylesheet" href="<?= base_url(); ?>assets/css/custom.css">
 <div id="wrapper">
     <div class="container">
@@ -455,6 +454,7 @@ foreach ($sellers as $seller) {
         if (!empty($search)) : ?>
             <input type="hidden" name="search" value="<?= $search; ?>">
         <?php endif; ?>
+
         <div class="row">
             <div class="col-12 product-list-header">
                 <?php if (!empty($category)) : ?>
@@ -484,6 +484,7 @@ foreach ($sellers as $seller) {
                 </div>
                 <!-- Veg Non Veg toggle -->
                 <?php if (!empty($parent_categories)) : ?>
+
                     <?php if (isset($category)) : ?>
                         <?php if ($parent_categories[0]->id == 2) : ?>
                             <!-- <label class="swach">
@@ -1089,6 +1090,83 @@ foreach ($sellers as $seller) {
                                     </ul>
                                 </div>
                             </div>
+                            <?php if (empty($parent_categories)) : ?>
+                                <div>
+                                    <input type="checkbox" class="check-box-size" id="kids_corner" value="kids_corner" name="filter_checkbox[]" onclick="show_kids_corner(this)">
+                                    <label for="kids_corner" style="margin: 10px;"><b>Suitable For</b></label>
+                                </div>
+
+                                <div class="filter-item" id="kids_filter" style="display: none">
+
+                                    <div class="filter-list-container">
+                                        <ul class="filter-list">
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'suitable_for', 'male'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'suitable_for', 'male') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Male</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'suitable_for', 'female'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'suitable_for', 'female') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Female</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'suitable_for', 'unisex'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'suitable_for', 'unisex') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Unisex</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            <?php elseif (!empty($parent_categories) && $parent_categories[0]->id == 6) : ?>
+                                <div>
+                                    <input type="checkbox" class="check-box-size" id="kids_corner" value="kids_corner" name="filter_checkbox[]" onclick="show_kids_corner(this)">
+                                    <label for="kids_corner" style="margin: 10px;"><b>Suitable For</b></label>
+                                </div>
+
+                                <div class="filter-item" id="kids_filter" style="display: none">
+
+                                    <div class="filter-list-container">
+                                        <ul class="filter-list">
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'suitable_for', 'male'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'suitable_for', 'male') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Male</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'suitable_for', 'female'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'suitable_for', 'female') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Female</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'suitable_for', 'unisex'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'suitable_for', 'unisex') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Unisex</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                             <?php if (!empty($user_categories)) : ?>
                                 <?php if ($cat_id != 2) : ?>
                                     <div>
@@ -1914,6 +1992,16 @@ foreach ($sellers as $seller) {
                                             <span><?= html_escape($filter->value); ?></span>
                                         </div>
                                     </div>
+                                <?php elseif ($filter->key == "suitable_for") : ?>
+                                    <div class="filter-reset-tag">
+                                        <div class="left">
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                        </div>
+                                        <div class="right">
+                                            <span class="reset-tag-title">Suitable For</span>
+                                            <span><?= html_escape($filter->value); ?></span>
+                                        </div>
+                                    </div>
                                 <?php elseif ($filter->key == "origin_of_product") : ?>
                                     <div class="filter-reset-tag">
                                         <div class="left">
@@ -2342,7 +2430,11 @@ foreach ($sellers as $seller) {
         } else if ($('#origin_of_product').is(":not(:checked)")) {
             document.getElementById("origin_of_product_filter").style.display = "none";
         }
-
+        if ($('#kids_corner').is(":checked")) {
+            document.getElementById("kids_filter").style.display = "block";
+        } else if ($('#kids_corner').is(":not(:checked)")) {
+            document.getElementById("kids_filter").style.display = "none";
+        }
         if ($('#gender').is(":checked")) {
             document.getElementById("gender_filter").style.display = "block";
         } else if ($('#gender').is(":not(:checked)")) {
@@ -2421,6 +2513,11 @@ foreach ($sellers as $seller) {
 
     function show_return_or_exchange(check) {
         var dvPassport = document.getElementById("return_exchange_filter");
+        dvPassport.style.display = check.checked ? "block" : "none";
+    }
+
+    function show_kids_corner(check) {
+        var dvPassport = document.getElementById("kids_filter");
         dvPassport.style.display = check.checked ? "block" : "none";
     }
 

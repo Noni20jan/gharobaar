@@ -792,12 +792,11 @@ class Product_model extends Core_Model
         $blouse_details =  str_replace('_', ' ', $this->input->get("blouse_details", true));
         $available_for_return_or_exchange = $this->input->get("available_for_return_or_exchange", true);
         $availability = $this->input->get("availability", true);
+        $suitable_for = $this->input->get("suitable_for", true);
         $add_meet = str_replace('_', ' ', $this->input->get("product_type", true));
         $rating = remove_special_characters($this->input->get("rating", true));
         $seller_type = remove_special_characters($this->input->get("seller_type", true));
         $search = remove_special_characters(trim($this->input->get('search', true)));
-
-
 
 
 
@@ -835,7 +834,7 @@ class Product_model extends Core_Model
 
 
             foreach ($query_string_array as $key => $array_values) {
-                if ($key != "product_type" && $key != "meal_type" && $key != "cash_on_delivery" && $key != "blouse_details" && $key != "pet_age" && $key != "available"  && $key != "gender" && $key != "discount"  && $key != "food_type" && $key != "jewellery_type"  && $key != "rating"  && $key != "p_min" && $key != "p_max" && $key != "sort" && $key != "search" && $key != "seller_type" && $key != "origin_of_product" && $key != "food_preference" && $key != "available_for_return_or_exchange" && $key != "availability") {
+                if ($key != "product_type" && $key != "meal_type" && $key != "cash_on_delivery" && $key != "blouse_details" && $key != "pet_age" && $key != "available"  && $key != "gender" && $key != "discount"  && $key != "food_type" && $key != "jewellery_type"  && $key != "rating"  && $key != "p_min" && $key != "p_max" && $key != "sort" && $key != "search" && $key != "seller_type" && $key != "origin_of_product" && $key != "food_preference" && $key != "available_for_return_or_exchange" && $key != "availability" && $key != "suitable_for") {
                     $item = new stdClass();
                     $item->key = $key;
                     $updated_array_values = array();
@@ -928,6 +927,14 @@ class Product_model extends Core_Model
             $this->db->where_in("products.available_for_return_or_exchange", $array_available_for_return_or_exchange);
             $this->db->group_end();
         }
+        //Kids Corner
+        $array_kids_corner = @explode(',', $suitable_for);
+        if (!empty($array_kids_corner) && !empty($array_kids_corner[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.suitable_for", $array_kids_corner);
+            $this->db->group_end();
+        }
+
         $array_days_available = @explode(',', $availability);
         if (!empty($array_days_available) && !empty($array_days_available[0])) {
 
