@@ -266,6 +266,10 @@
         right: 0;
     }
 </style>
+<!-- instagram plugin slider -->
+<script src="https://apps.elfsight.com/p/platform.js" defer></script>
+<div class="elfsight-app-0614bea4-b49d-4255-97d0-6f35255bd82e"></div>
+<!-- instagram slider end -->
 <footer id="footer">
     <div class="container">
         <div class="row">
