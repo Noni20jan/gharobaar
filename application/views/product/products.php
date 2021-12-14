@@ -2363,6 +2363,8 @@ foreach ($sellers as $seller) {
         $('#jewellery_type').prop('checked', true);
         $('#origin_of_product').prop('checked', true);
         $('#gender').prop('checked', true);
+        $('#kids_corner').prop('checked', true);
+
         $('#days_available').prop('checked', true);
         $('#food').prop('checked', true);
         $('#dynamic1').prop('checked', true);
