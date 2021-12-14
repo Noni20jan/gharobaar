@@ -1788,11 +1788,11 @@ foreach ($sellers as $seller) {
                                 <?php if ($parent_categories[0]->id == 2) : ?>
                                     <div>
 
-                                        <input type="checkbox" id="type_meal" value="type_meal" name="filter_checkbox[]" onclick="show_food(this)">
+                                        <input type="checkbox" id="type_meal" value="type_meal" name="filter_checkbox[]" onclick="show_food(this)" checked>
                                         <label for="type_meal" style="margin: 10px;"><b>Type of Meal</b></label>
                                     </div>
                                     <br>
-                                    <div class="filter-item" id="food_pref" style="display: none">
+                                    <div class="filter-item" id="food_pref" style="display: block">
                                         <h4 class="title">Food Preference</h4>
                                         <div class="filter-list-container">
                                             <ul class="filter-list">
@@ -1842,7 +1842,7 @@ foreach ($sellers as $seller) {
                                         </div>
                                     </div>
 
-                                    <div class="filter-item" id="food_type" style="display: none">
+                                    <div class="filter-item" id="food_type" style="display: block">
                                         <h4 class="title">Food Type</h4>
                                         <div class="filter-list-container">
                                             <ul class="filter-list">
@@ -1881,7 +1881,7 @@ foreach ($sellers as $seller) {
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="filter-item" id="meal_type" style="display: none">
+                                    <div class="filter-item" id="meal_type" style="display: block">
                                         <h4 class="title">Meal Type</h4>
                                         <div class="filter-list-container">
                                             <ul class="filter-list">
