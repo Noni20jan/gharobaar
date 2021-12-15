@@ -174,7 +174,7 @@
 							</div>
 						</div>
 						<div class="row-custom m-t-15">
-							<div class="float-right">
+							<div class="text-center">
 								<?php echo $this->pagination->create_links(); ?>
 							</div>
 						</div>
@@ -289,7 +289,7 @@
 						</div>
 					</div>
 					<div class="row-custom m-t-15">
-						<div class="float-right" style="float: right;">
+						<div class="text-center">
 							<?php echo $this->pagination->create_links(); ?>
 						</div>
 					</div>
