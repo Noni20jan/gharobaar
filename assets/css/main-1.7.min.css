@@ -16886,6 +16886,19 @@ img {
   font-size: 25px;
 }
 
+@media (max-width: 768px) {
+  .user-profile-follower .username {
+    display: block;
+    width: 100%;
+    float: left;
+    position: relative;
+    text-align: center;
+    font-weight: 800;
+    margin-top: 15px;
+    font-size: 17px !important;
+  }
+}
+
 .follower-item .username {
   display: block;
   width: 100%;

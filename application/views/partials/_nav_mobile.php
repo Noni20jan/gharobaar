@@ -64,7 +64,17 @@
                                         <li>
                                             <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
                                                 <i class="icon-dashboard"></i>
-                                                Buyer Panel
+                                                Profile
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="<?php echo generate_url("profile_settings"); ?>">
+                                                <i class="fas fa-edit" style="color:#838383"></i> <span>Update Profile</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="<?php echo generate_url("following") . "/" . $this->auth_user->slug; ?>">
+                                                <i class="fas fa-user-plus" style="color:#838383"></i> <span>Following</span>
                                             </a>
                                         </li>
                                     <?php endif; ?>

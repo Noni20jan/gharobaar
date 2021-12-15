@@ -23,7 +23,6 @@ class Order_admin_controller extends Admin_Core_Controller
 		$pagination = $this->paginate(admin_url() . 'orders', $this->order_admin_model->get_orders_count());
 		$data['orders'] = $this->order_admin_model->get_paginated_orders($pagination['per_page'], $pagination['offset']);
 		$data["session"] = get_user_session();
-
 		$this->load->view('admin/includes/_header', $data);
 		$this->load->view('admin/order/orders', $data);
 		$this->load->view('admin/includes/_footer');
@@ -42,9 +41,9 @@ class Order_admin_controller extends Admin_Core_Controller
 		}
 		$data['order_products'] = $this->order_admin_model->get_order_products($id);
 		$data["session"] = get_user_session();
-
 		$this->load->view('admin/includes/_header', $data);
 		$this->load->view('admin/order/order_details', $data);
+		// $this->load->view('partials/_footer', $data);
 		$this->load->view('admin/includes/_footer');
 	}
 
@@ -61,7 +60,8 @@ class Order_admin_controller extends Admin_Core_Controller
 
 		$this->load->view('admin/includes/_header', $data);
 		$this->load->view('admin/order/order_details', $data);
-		$this->load->view('admin/includes/_footer');
+		// $this->load->view('admin/includes/_footer');
+		$this->load->view('partials/_footer');
 	}
 
 	/**

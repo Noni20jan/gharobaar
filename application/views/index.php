@@ -510,6 +510,13 @@
 
     }
 
+
+    .for-two-rows {
+        max-width: 100% !important;
+    }
+
+
+
     .pickgradient {
         display: inline-block;
         border-radius: 10px;
@@ -793,13 +800,13 @@
                 <!--print products-->
                 <?php if (($this->auth_check) && (count($top_picks) >= 5)) : ?>
                     <?php foreach ($top_picks as $product) : ?>
-                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">
                             <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
                         </div>
                     <?php endforeach; ?>
                 <?php else : ?>
                     <?php foreach ($latest_products as $product) : ?>
-                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">
                             <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
                         </div>
                     <?php endforeach; ?>
@@ -855,7 +862,7 @@
                 <div class="row row-product shop-by" id="top-discounts-container">
                     <!--print products-->
                     <?php foreach ($product_clothing as $product) : ?>
-                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">
                             <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
                         </div>
                     <?php endforeach; ?>

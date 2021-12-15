@@ -4047,6 +4047,7 @@
     </style>
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/fselect.css">
     <script src="<?= base_url(); ?>assets/js/fselect.js"></script>
+    <script src="<?= base_url(); ?>assets/js/jssor.slider-28.1.0.min.js"></script>
 
 </head>
 
@@ -4405,7 +4406,6 @@
                         <div class="nav-mobile-header-container">
                             <div class="menu-icon">
                                 <a href="javascript:void(0)" class="btn-open-mobile-nav"><i class="icon-menu"></i></a>
-
                             </div>
                             <div class="mobile-map">
                                 <?php if (!empty($_SESSION["modesy_sess_user_location"])) : ?>
@@ -4427,11 +4427,20 @@
                             </div>
                             <div class="mobile-cart<?= !$this->is_sale_active ? ' visibility-hidden' : ''; ?>">
                                 <?php if ($this->auth_check) : ?>
-                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
-                                        <i class="icon-heart-o"></i>
-                                    </a>
+                                    <?php if ($this->auth_user->user_type != "guest") : ?>
+                                        <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                            <i class="icon-heart-o"></i>
+                                        </a>
+                                    <?php else : ?>
+                                        <!-- hide wishlist for guest user -->
+                                        <!-- <li class="icon-bg">
+                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                                        <i class="icon-heart-o"></i>
+                                                    </a>
+                                                </li> -->
+                                    <?php endif; ?>
                                 <?php else : ?>
-                                    <a href="<?php echo generate_url("wishlist"); ?>">
+                                    <a id='wishlist-mobile-view-header' ?>
                                         <i class="icon-heart-o"></i>
                                     </a>
                                 <?php endif; ?>
