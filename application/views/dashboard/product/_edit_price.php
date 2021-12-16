@@ -289,6 +289,7 @@
                 val = 0;
             }
             $(this).val(val);
+
             $('#input_discount_rate').val(parseFloat(((base_price - val) / base_price) * 100).toFixed(2));
             if (Math.round(((base_price - val) / base_price) * 100) > 0) {
                 $("#checkbox_discount_rate")[0].checked = false;
@@ -391,9 +392,14 @@
             $(".calculated_gst_container").hide();
         }
     });
-    // $('#product_listing_price_input').change(function() {
-    //     console.log($('#product_price_input').val());
-    // });
+</script>
+<script>
+    $('#product_price_input').keyup(function() {
+        var base_price = $('#product_price_input').val();
+        var discount_rate = $('#input_discount_rate').val();
+        var listing_price = $('#product_listing_price_input').val(Math.round(base_price - (discount_rate / 100) * base_price));
+
+    });
 </script>
 <script>
     function updateTextField() {
