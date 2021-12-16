@@ -3909,7 +3909,7 @@
 
     <!-- whatsapp chat integration -->
     <script src="https://apps.elfsight.com/p/platform.js" defer></script>
-<div class="elfsight-app-ea81e6d9-8acb-46f0-b369-7d8e27154e3c"></div>
+    <div class="elfsight-app-ea81e6d9-8acb-46f0-b369-7d8e27154e3c"></div>
     <!-- whatsapp chat integration end -->
 
     <script>
@@ -4065,6 +4065,85 @@
             font-size: 15px;
             line-height: 0px;
         }
+
+        .promo-bar-offset {
+            top: 40px;
+        }
+
+        #announcement-bar {
+            width: 100%;
+            position: relative;
+            height: 58px;
+        }
+
+        @media(max-width:700px) {
+            #announcement-bar {
+                width: 100%;
+                position: relative;
+                /* display: none; */
+                height: 58px;
+            }
+        }
+
+        #announcement-mobile-bar {
+            width: 100%;
+            position: relative;
+            display: none;
+            height: 58px;
+        }
+
+        @media(max-width:768px) {
+            #announcement-mobile-bar {
+                width: 100%;
+                position: relative;
+                display: block;
+                height: 58px;
+            }
+        }
+
+        .animationbar {
+
+            position: relative;
+            animation-name: example;
+            animation-duration: 2s;
+            animation-delay: 2s;
+            margin: 15px;
+            animation-iteration-count: infinite;
+        }
+
+
+
+        .sliding_content {
+            display: flow-root;
+            text-align: center;
+            background-color: #f3f999;
+        }
+
+        /* @keyframes example {
+            0% {
+                left: 0px;
+            }
+
+            50% {
+                left: 100%;
+            }
+
+            100% {
+                left: 0;
+            }
+
+        } */
+
+        @media screen and (max-width:768px) {
+            .sticky-header {
+                top: 40px;
+            }
+
+            .promo-content-wrapper,
+            .promo-bar {
+                opacity: 1;
+            }
+        }
     </style>
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/fselect.css">
     <script src="<?= base_url(); ?>assets/js/fselect.js"></script>
@@ -4072,15 +4151,29 @@
 </head>
 
 <body>
+    <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
+        <div id="announcement-bar">
+            <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
+
+                <div class="animationbar">
+                    <marquee behaviour="scroll" direction="right">
+                        <p><strong><?php echo trans("free_ship_message"); ?> </strong></p>
+                    </marquee>
+                </div>
+            </article>
+        </div>
+    <?php endif; ?>
     <header id="header">
         <?php //$this->load->view("partials/_top_bar"); 
         ?>
         <div class="main-menu" id="myHeader">
             <div class="container-fluid">
                 <div class="row">
+
                     <div class="padding_1 nav-top">
                         <div class="container">
                             <div class="row align-items-center">
+
                                 <div class="top_logo_margin col-md-7 nav-top-left">
                                     <div class="row-align-items-center">
                                         <div class="top_logo_adjust logo">
@@ -4382,6 +4475,18 @@
                 </div>
             </div>
         </div>
+        <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
+            <div id="announcement-mobile-bar">
+                <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
+
+                    <div class="animation-mobile-bar">
+                        <marquee behaviour="scroll" direction="right">
+                            <p><strong><?php echo trans("free_ship_message"); ?> </strong></p>
+                        </marquee>
+                    </div>
+                </article>
+            </div>
+        <?php endif; ?>
         <div class="mobile-nav-container" id="myMobileHeader">
             <div class="nav-mobile-header">
 
