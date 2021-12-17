@@ -3907,10 +3907,7 @@
     <!-- chat system end -->
 
 
-    <!-- whatsapp chat integration -->
-    <script src="https://apps.elfsight.com/p/platform.js" defer></script>
-    <div class="elfsight-app-ea81e6d9-8acb-46f0-b369-7d8e27154e3c"></div>
-    <!-- whatsapp chat integration end -->
+
 
     <script>
         var def_tawk_bottom = "20px"; /*This is their default style that I want to change*/
