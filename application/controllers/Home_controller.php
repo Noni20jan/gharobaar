@@ -2962,6 +2962,7 @@ class Home_controller extends Home_Core_Controller
     public function products_for_banner($banner_code)
     {
         get_method();
+        $page = $this->input->get('urlpage', true);
         $data['title'] = trans("products");
         $data['description'] = trans("products") . " - " . $this->app_name;
         $data['keywords'] = trans("products") . "," . $this->app_name;
@@ -2977,8 +2978,12 @@ class Home_controller extends Home_Core_Controller
         $data['product_count'] = $this->product_model->get_banner_tagged_product_count($data["query_string_array"], null, $type_id);
         $data["categories"] = $this->parent_categories;
         $data["all_category_selected"] = $this->product_model->get_category_selected($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id, true);
-        $this->load->view('partials/_header', $data);
-        $this->load->view('product/products', $data);
-        $this->load->view('partials/_footer');
+        if (empty($page)) {
+            $this->load->view('partials/_header', $data);
+            $this->load->view('product/products', $data);
+            $this->load->view('partials/_footer');
+        } else {
+            $this->load->view('product/infinte_scroll_products', $data);
+        }
     }
 }
