@@ -2265,7 +2265,7 @@ foreach ($sellers as $seller) {
                                 <?= trans("products"); ?>
                             <?php endif; ?><h6> -->
                     </div>
-                    <div class="row row-product" style="margin-top:20px">
+                    <div class="row row-product" id="post-data" style="margin-top:20px">
                         <!--print products-->
                         <?php foreach ($products as $product) : ?>
                             <div class="col-6 col-sm-4 col-md-4 col-lg-3 col-product">
@@ -2274,19 +2274,15 @@ foreach ($sellers as $seller) {
                         <?php endforeach; ?>
                         <?php if (empty($products)) : ?>
                             <div class="col-12">
-                                <p class="no-records-found"><?php echo trans("no_more_products_to_show"); ?></p>
+                                <!-- <p class="no-records-found"><?php echo trans("no_more_products_to_show"); ?></p> -->
                             </div>
                         <?php endif; ?>
                     </div>
-
-                    <!-- <div class="ajax-load text-center" style="display:none">
+                    <div class="ajax-load text-center" style="display:none">
                         <p><img class="more-products-loading" src="assets/img/dark-loader.gif"></p>
                     </div>
                     <div class="ajax-load-2 text-center" style="display:none">
-                    </div> -->
-                </div>
-                <div class="row product-list-pagination">
-                    <?php echo $this->pagination->create_links(); ?>
+                    </div>
                 </div>
                 <div class="col-12">
                     <!--Include banner-->
@@ -2299,10 +2295,15 @@ foreach ($sellers as $seller) {
 <!-- Wrapper End-->
 
 
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
-<!-- <script type="text/javascript"></script> -->
-<!-- <script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+<script type="text/javascript"></script>
+<script>
+
+
+</script>
+<script>
+    var urlpage = 1;
     var page = 1;
     $(window).scroll(function() {
         if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
@@ -2315,11 +2316,17 @@ foreach ($sellers as $seller) {
         var urlSearchParams = new URLSearchParams(window.location.search);
         var params = Object.fromEntries(urlSearchParams.entries());
         params.page = page;
-
+        let url = document.URL;
+        console.log(url);
+        urlpage++;
+        params.urlpage = urlpage;
+        params[csfr_token_name] = $.cookie(csfr_cookie_name);
+        console.log(url + "?page=" + urlpage);
         $.ajax({
-                url: base_url + "load_more_products",
-                type: "get",
+                url: url + "?page=" + urlpage,
+                method: "get",
                 data: params,
+
                 beforeSend: function() {
                     // if (page == "2") {
                     $('.ajax-load').show();
@@ -2346,10 +2353,11 @@ foreach ($sellers as $seller) {
             });
 
     }
-</script> -->
+</script>
 
 <script type="text/javascript">
     $(document).ready(function() {
+
         $('#product_type').prop('checked', true);
         $('#category').prop('checked', true);
         $('#price').prop('checked', true);

@@ -4047,7 +4047,7 @@
     </style>
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/fselect.css">
     <script src="<?= base_url(); ?>assets/js/fselect.js"></script>
-    <script src="<?= base_url(); ?>assets/js/jssor.slider-28.1.0.min.js"></script>
+    <!-- <script src="<?= base_url(); ?>assets/js/jssor.slider-28.1.0.min.js"></script> -->
 
 </head>
 
@@ -4203,17 +4203,10 @@
                                                                 <?php echo trans("supplier_panel"); ?>
                                                             </a>
                                                         </li>
-                                                        <!-- <li>
-                                                            <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
-                                                                 <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" />
-                                                                Buyer panel
-                                                            </a>
-                                                        </li> -->
                                                         <li>
-
-                                                            <a href="<?php echo generate_url("followers") . "/" . $this->auth_user->slug; ?>">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                Followers
+                                                            <a href="<?php echo generate_dash_url("profile"); ?>">
+                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                <?php echo trans("profile"); ?>
                                                             </a>
                                                         </li>
                                                         <li>
@@ -4222,72 +4215,70 @@
                                                                 <span>Update Profile</span>
                                                             </a>
                                                         </li>
+                                                        <li>
+                                                            <a href="<?php echo generate_url("followers") . "/" . $this->auth_user->slug; ?>">
+                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                Followers
+                                                            </a>
+                                                        </li>
+
                                                     <?php endif; ?>
                                                     <?php if ($this->auth_user->role == "member") { ?>
                                                         <li>
                                                             <a href="javascript:void(0);">
                                                                 <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
                                                                 <?php echo character_limiter(get_shop_name($this->auth_user), 15, '..'); ?>
-
                                                             </a>
                                                         </li>
+                                                        <li>
+                                                            <a href="<?php generate_dash_url("profile"); ?>">
+                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                Profile
+                                                            </a>
+                                                        </li>
+
+                                                        <?php //if (!is_user_vendor()) : 
+                                                        ?>
                                                         <!-- <li>
-                                                            <a href="<?php echo dashboard_url(); ?>"> -->
-                                                        <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" />
-                                                        Buyer Panel
-                                                        </a>
-                                            </li> -->
-                                            <?php if (!is_user_vendor()) : ?>
-                                                <li>
-                                                    <a href="<?php echo generate_dash_url("profile"); ?>">
-                                                        <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                        <?php echo trans("profile"); ?>
-                                                    </a>
-                                                </li>
+                                                                <a href="<?php echo generate_dash_url("profile"); ?>">
+                                                                    <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" />
+                                                                    <?php echo trans("profile"); ?>
+                                                                </a>
+                                                            </li> -->
+                                                        <?php //endif; 
+                                                        ?>
+                                                        <li>
+                                                            <a href="<?php echo generate_url("profile_settings"); ?>">
+                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                <span>Update Profile</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="<?php echo generate_url("following") . "/" . $this->auth_user->slug; ?>">
+                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                Following
+                                                            </a>
+                                                        </li>
+                                                    <?php } ?>
+                                                    <?php if ($this->is_sale_active) : ?>
+                                                        <li>
+                                                            <a href="<?php echo generate_url("orders_dashboard"); ?>">
+                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/order-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                <?php echo trans("orders"); ?>
+                                                            </a>
+                                                        </li>
 
-                                            <?php endif; ?>
-                                            <li>
-                                                <a href="<?php echo generate_url("profile_settings"); ?>">
-                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
-                                                    <span>Update Profile</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="<?php echo generate_url("following") . "/" . $this->auth_user->slug; ?>">
-                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                    Following
-                                                </a>
-                                            </li>
-                                        <?php } ?>
-
-                                        <?php if (is_user_vendor()) : ?>
-                                            <li>
-                                                <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
-                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                    <?php echo trans("profile"); ?>
-                                                </a>
-                                            </li>
-
-                                        <?php endif; ?>
-                                        <?php if ($this->is_sale_active) : ?>
-                                            <li>
-                                                <a href="<?php echo generate_url("orders_dashboard"); ?>">
-                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/order-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                    <?php echo trans("orders"); ?>
-                                                </a>
-                                            </li>
-
-                                            <!-- <li class="tree-view-dropdown subclass-view"> -->
-                                            <!-- <span class="childtext">Account<i class="fa fa-sort-desc" aria-hidden="true"></i> -->
-                                            <!-- </span> -->
+                                                        <!-- <li class="tree-view-dropdown subclass-view"> -->
+                                                        <!-- <span class="childtext">Account<i class="fa fa-sort-desc" aria-hidden="true"></i> -->
+                                                        <!-- </span> -->
 
 
-                                            <!-- <li> -->
-                                            <!-- <a href="<?php echo generate_dash_url("addresses"); ?>"> -->
-                                            <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/location.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                            <!-- <span>Address</span> -->
-                                            <!-- </a> -->
-                                            <!-- </li> -->
+                                                        <!-- <li> -->
+                                                        <!-- <a href="<?php echo generate_dash_url("addresses"); ?>"> -->
+                                                        <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/location.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                        <!-- <span>Address</span> -->
+                                                        <!-- </a> -->
+                                                        <!-- </li> -->
 
                                             </li>
                                             <?php if ($this->auth_user->role != "member") { ?>

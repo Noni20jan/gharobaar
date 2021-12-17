@@ -4336,11 +4336,10 @@
                                                             <li>
                                                                 <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
                                                                     <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                    Buyer Panel
+                                                                    Buyer Profile
                                                                 </a>
                                                             </li>
                                                             <li>
-
                                                                 <a href="<?php echo generate_url("followers") . "/" . $this->auth_user->slug; ?>">
                                                                     <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
                                                                     Followers
@@ -4352,13 +4351,12 @@
                                                                 <a href="javascript:void(0);">
                                                                     <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
                                                                     <?php echo character_limiter(get_shop_name($this->auth_user), 15, '..'); ?>
-
                                                                 </a>
                                                             </li>
                                                             <li>
                                                                 <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
                                                                     <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                    Buyer Panel
+                                                                    profile
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -4369,14 +4367,12 @@
                                                             </li>
                                                         <?php } ?>
                                                         <?php if (!is_user_vendor()) : ?>
-                                                            <li>
+                                                            <!-- <li>
                                                                 <a href="<?php echo generate_dash_url("profile"); ?>">
-                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" />
                                                                     <?php echo trans("profile"); ?>
                                                                 </a>
-                                                            </li>
-
-
+                                                            </li> -->
                                                         <?php endif; ?>
                                                         <?php if ($this->is_sale_active) : ?>
                                                             <?php if ($this->auth_user->role == "member") : ?>
@@ -4386,8 +4382,6 @@
                                                                         <?php echo trans("orders"); ?>
                                                                     </a>
                                                                 </li>
-
-
                                                             <?php endif; ?>
                                                             <?php if ($this->auth_user->role != "member") { ?>
                                                                 <?php if (is_bidding_system_active()) : ?>
@@ -4498,7 +4492,6 @@
                         <div class="nav-mobile-header-container">
                             <div class="menu-icon">
                                 <a href="javascript:void(0)" class="btn-open-mobile-nav"><i class="icon-menu"></i></a>
-
                             </div>
                             <div class="mobile-map">
                                 <?php if (!empty($_SESSION["modesy_sess_user_location"])) : ?>

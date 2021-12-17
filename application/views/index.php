@@ -796,7 +796,7 @@
 
         <div class="col-12 sides-gap-equal section section-latest-products">
             <h3 class="find-your-seller" id="top_picks">Top Picks</h3>
-            <div class="row row-product shop-by" id="top-picks-container">
+            <div class="row row-product shop-by" id="top-picks-container-2">
                 <!--print products-->
                 <?php if (($this->auth_check) && (count($top_picks) >= 5)) : ?>
                     <?php foreach ($top_picks as $product) : ?>
@@ -812,13 +812,11 @@
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
-            <div id="top-picks-container_nav" class="index-products-slider-nav">
+            <!-- <div id="top-picks-container_nav" class="index-products-slider-nav">
                 <button class="prev"><i class="icon-arrow-left"></i></button>
                 <button class="next"><i class="icon-arrow-right"></i></button>
-            </div>
+            </div> -->
         </div>
-
-
 
         <!-- <div class="col-12 sides-gap-equal">
             <h3 class="find-your-seller">Shop By Occasion</h3>
@@ -875,9 +873,9 @@
                     </div>
                 </div>
                 <div id="top-discounts-container_nav" class="index-products-slider-nav">
-                    <button class="prev"><i class="icon-arrow-left"></i></button>
+                    <!-- <button class="prev"><i class="icon-arrow-left"></i></button>
 
-                    <button class="next"><i class="icon-arrow-right"></i></button>
+                    <button class="next"><i class="icon-arrow-right"></i></button> -->
                 </div>
             </div>
         <?php endif; ?>

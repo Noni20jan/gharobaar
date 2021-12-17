@@ -669,6 +669,7 @@ class Home_controller extends Home_Core_Controller
     {
         // var_dump($pagination['per_page']);
         get_method();
+        $page = $this->input->get('urlpage', true);
         $data['title'] = trans("products");
         $data['description'] = trans("products") . " - " . $this->app_name;
         $data['keywords'] = trans("products") . "," . $this->app_name;
@@ -684,36 +685,37 @@ class Home_controller extends Home_Core_Controller
         $data['product_count'] = $this->product_model->get_paginated_filtered_products_count($data["query_string_array"]);
         $data["categories"] = $this->parent_categories;
         $data["all_category_selected"] = $this->product_model->get_category_selected_filters($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], true);
-        $this->load->view('partials/_header', $data);
-        $this->load->view('product/products', $data);
-        $this->load->view('partials/_footer');
+        if (empty($page)) {
+            $this->load->view('partials/_header', $data);
+            $this->load->view('product/products', $data);
+            $this->load->view('partials/_footer');
+        } else {
+            $this->load->view('product/infinte_scroll_products', $data);
+        }
     }
 
 
 
-    // public function infinite_scroll_products()
-    // {
-    //     // var_dump("fhdfdg");
-    //     // die();
-    //     get_method();
-    //     $data['title'] = trans("products");
-    //     $data['description'] = trans("products") . " - " . $this->app_name;
-    //     $data['keywords'] = trans("products") . "," . $this->app_name;
-    //     $data["index_settings"] = get_index_settings();
-    //     $data['custom_filters'] = $this->field_model->get_custom_filters();
-    //     $data["query_string_array"] = get_query_string_array($data['custom_filters']);
-    //     $data["query_string_object_array"] = convert_query_string_to_object_array($data["query_string_array"]);
-    //     //get paginated posts
-    //     $pagination = $this->paginate(generate_url("products"), $this->product_model->get_paginated_filtered_products_count($data["query_string_array"], null), $this->product_per_page);
-    //     $data['products'] = $this->product_model->get_paginated_filtered_products($data["query_string_array"], null, $pagination['per_page'], $pagination['offset']);
-    //     $data['product_count'] = $this->product_model->get_paginated_filtered_products_count($data["query_string_array"]);
-    //     $data["categories"] = $this->parent_categories;
-    //     $data["all_category_selected"] = $this->product_model->get_category_selected_filters($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], true);
-    //     $this->load->view('product/infinte_scroll_products', $data);
-    // }
-
-
-
+    public function infinite_scroll_products()
+    {
+        // var_dump("fhdfdg");
+        // die();
+        get_method();
+        $data['title'] = trans("products");
+        $data['description'] = trans("products") . " - " . $this->app_name;
+        $data['keywords'] = trans("products") . "," . $this->app_name;
+        $data["index_settings"] = get_index_settings();
+        $data['custom_filters'] = $this->field_model->get_custom_filters();
+        $data["query_string_array"] = get_query_string_array($data['custom_filters']);
+        $data["query_string_object_array"] = convert_query_string_to_object_array($data["query_string_array"]);
+        //get paginated posts
+        $pagination = $this->paginate(generate_url("products"), $this->product_model->get_paginated_filtered_products_count($data["query_string_array"], null), $this->product_per_page);
+        $data['products'] = $this->product_model->get_paginated_filtered_products($data["query_string_array"], null, $pagination['per_page'], $pagination['offset']);
+        $data['product_count'] = $this->product_model->get_paginated_filtered_products_count($data["query_string_array"]);
+        $data["categories"] = $this->parent_categories;
+        $data["all_category_selected"] = $this->product_model->get_category_selected_filters($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], true);
+        $this->load->view('product/infinte_scroll_products', $data);
+    }
 
     public function member_products()
     {
@@ -777,10 +779,9 @@ class Home_controller extends Home_Core_Controller
     // Single function for categories
     public function top_categories($slug)
     {
+
         $category = $this->category_model->get_parent_category_by_slug($slug);
         $subcategories = get_subcategories($category->id);
-
-        get_method();
         $data['title'] = !empty($category->title_meta_tag) ? $category->title_meta_tag : $category->name;
         $data['description'] = $category->description;
         $data['keywords'] = $category->keywords;
@@ -800,7 +801,6 @@ class Home_controller extends Home_Core_Controller
 
 
         // $data["latest_products"] = get_latest_products($this->general_settings->index_latest_products_count);
-
         $this->load->view('partials/_header', $data);
         $this->load->view('fashion', $data);
         $this->load->view('partials/_footer');
@@ -967,10 +967,9 @@ class Home_controller extends Home_Core_Controller
     // home cooks
     public function home_cooks()
     {
+        get_method();
         $slug = "home-cooks";
         $category = $this->category_model->get_parent_category_by_slug($slug);
-
-        get_method();
         $data['title'] = !empty($category->title_meta_tag) ? $category->title_meta_tag : $category->name;
         $data['description'] = $category->description;
         $data['keywords'] = $category->keywords;
@@ -987,11 +986,12 @@ class Home_controller extends Home_Core_Controller
 
 
         // $data["latest_products"] = get_latest_products($this->general_settings->index_latest_products_count);
-
         $this->load->view('partials/_header', $data);
         $this->load->view('home_cooks', $data);
         $this->load->view('partials/_footer');
     }
+
+
     /*end for home cooks*/
 
 
@@ -1160,6 +1160,7 @@ class Home_controller extends Home_Core_Controller
     public function products_shop_by_concern($concern_code)
     {
         get_method();
+        $page = $this->input->get('urlpage', true);
         $data['title'] = trans("products");
         $data['description'] = trans("products") . " - " . $this->app_name;
         $data['keywords'] = trans("products") . "," . $this->app_name;
@@ -1181,10 +1182,13 @@ class Home_controller extends Home_Core_Controller
 
         $data["all_category_selected"] = $this->product_model->get_category_selected_concerned_occasion($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id, true);
 
-
-        $this->load->view('partials/_header', $data);
-        $this->load->view('product/products', $data);
-        $this->load->view('partials/_footer');
+        if (empty($page)) {
+            $this->load->view('partials/_header', $data);
+            $this->load->view('product/products', $data);
+            $this->load->view('partials/_footer');
+        } else {
+            $this->load->view('product/infinte_scroll_products', $data);
+        }
     }
 
 
@@ -1247,10 +1251,13 @@ class Home_controller extends Home_Core_Controller
      */
     private function category($category)
     {
+        get_method();
+
         if (empty($category)) {
             redirect($this->agent->referrer());
         }
-
+        $page = $this->input->get('urlpage', true);
+        // var_dump($page);
         $data['title'] = !empty($category->title_meta_tag) ? $category->title_meta_tag : $category->name;
         $data['description'] = $category->description;
         $data['keywords'] = $category->keywords;
@@ -1271,9 +1278,13 @@ class Home_controller extends Home_Core_Controller
         $data['product_count'] = $this->product_model->get_paginated_filtered_products_count($data["query_string_array"], $category->id);
         $data["parent_categories"] = $this->category_model->get_parent_categories_tree($category->id);
 
-        $this->load->view('partials/_header', $data);
-        $this->load->view('product/products', $data);
-        $this->load->view('partials/_footer');
+        if (empty($page)) {
+            $this->load->view('partials/_header', $data);
+            $this->load->view('product/products', $data);
+            $this->load->view('partials/_footer');
+        } else {
+            $this->load->view('product/infinte_scroll_products', $data);
+        }
     }
 
     /**
@@ -2856,6 +2867,7 @@ class Home_controller extends Home_Core_Controller
     public function products_shop_by_occassion($occassion_code)
     {
         get_method();
+        $page = $this->input->get('urlpage', true);
         $data['title'] = trans("products");
         $data['description'] = trans("products") . " - " . $this->app_name;
         $data['keywords'] = trans("products") . "," . $this->app_name;
@@ -2874,10 +2886,13 @@ class Home_controller extends Home_Core_Controller
 
         $data["all_category_selected"] = $this->product_model->get_category_selected_concerned_occasion($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id, true);
 
-
-        $this->load->view('partials/_header', $data);
-        $this->load->view('product/products', $data);
-        $this->load->view('partials/_footer');
+        if (empty($page)) {
+            $this->load->view('partials/_header', $data);
+            $this->load->view('product/products', $data);
+            $this->load->view('partials/_footer');
+        } else {
+            $this->load->view('product/infinte_scroll_products', $data);
+        }
     }
     public function products_shop_by_random($random_code)
     {
@@ -2936,6 +2951,7 @@ class Home_controller extends Home_Core_Controller
         $data['keywords'] = trans("category_title") . "," . $this->app_name;
         $data["active_tab"] = "active_orders";
         $data['main_settings'] = get_main_settings();
+
         $this->load->view('partials/_header', $data);
         $this->load->view('categories');
         $this->load->view('partials/_footer');
