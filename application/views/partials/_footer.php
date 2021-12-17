@@ -523,11 +523,14 @@
                                 </a>
                             <?php else : ?>
                                 <!-- hide wishlist for guest user -->
-                                <!-- <li class="icon-bg">
-                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
-                                                        <i class="icon-heart-o"></i>
-                                                    </a>
-                                                </li> -->
+                                <!-- <li class="icon-bg"> -->
+                                <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal">
+                                    <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_whishlist.png">
+                                    <!-- <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>"> -->
+                                    <p class="aap_bar_text">Wishlist</p>
+                                    <!-- <i class="icon-heart-o"></i> -->
+                                </a>
+                                <!-- </li> -->
                             <?php endif; ?>
                         <?php else : ?>
                             <a style="font-weight: bold" id='wishlist-mobile-view'>

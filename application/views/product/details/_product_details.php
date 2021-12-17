@@ -457,12 +457,13 @@
 
                             <a href="javascript:void(0)" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="<?php echo $product->id; ?>" data-reload="1">Remove from Wishlist</a>
                         <?php else : ?>
-                            <?php if ($this->auth_check) : ?>
+                            <?php if (!empty($this->auth_check)) : ?>
                                 <?php if ($this->auth_user->user_type != "guest") : ?>
                                     <a href="javascript:void(0)" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="<?php echo $product->id; ?>" data-reload="1">Add to Wishlist</i></a>
                                 <?php else : ?>
                                     <!-- hide wishlist for guest user -->
-                                    <!-- <a href="javascript:void(0)" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="<?php echo $product->id; ?>" data-reload="1">Add to Wishlist</i></a> -->
+                                    <a href="javascript:void(0)" data-toggle="modal" style="width:100%;" data-id="0" class="btn btn-md btn-product-wishlist" data-target=" #registerModal" class="link"><?php echo trans("add_to_wishlist"); ?></a>
+                                    <!-- <a id="wishlist_btn" style="width:100%;" class="btn btn-md btn-product-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?>" data-product-id="0">Add to Wishlist</i></a> -->
 
                                 <?php endif; ?>
                             <?php else : ?>

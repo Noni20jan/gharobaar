@@ -117,7 +117,7 @@
             <div class="product-item-options">
                 <?php if ($this->auth_check) : ?>
                     <?php if ($this->auth_user->user_type != "guest") : ?>
-                        <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist zoom whishlist-position" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
+                        <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist zoom whishlist-position" onclick="wishlist_login();" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
                             <?php if (is_product_in_wishlist($product) == 1) : ?>
                                 <i class="icon-heart "></i>
                             <?php else : ?>
@@ -126,15 +126,21 @@
                         </a>
                     <?php else : ?>
                         <!-- hide wishlist for guest user -->
-                        <!-- <li class="icon-bg">
-                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
-                                                        <i class="icon-heart-o"></i>
-                                                    </a>
-                                                </li> -->
-                    <?php endif; ?>
-                <?php else : ?>
-                    <a onclick='wishlist_login();' class="item-option btn-add-remove-wishlist" data-toggle="tooltip" data-placement="left" title="<?php echo trans("wishlist"); ?>"><i class="icon-heart-o"></i></a>
-                <?php endif; ?>
+                        <a href="javascript:void(0)" class="item-option zoom whishlist-position" data-toggle="modal" data-id="0" data-target="#registerModal" title="<?php echo trans("wishlist"); ?>">
+                            <?php if (is_product_in_wishlist($product) == 0) : ?>
+
+                                <i class="icon-heart-o"></i>
+                            <?php endif; ?>
+                            <!-- <li class=" icon-bg">
+                            <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                <i class="icon-heart-o"></i>
+                            </a>
+                            </li> -->
+                        <?php endif; ?>
+                    <?php else : ?>
+                        <a href="javascript:void(0)" class="item-option btn-add-remove-wishlist zoom whishlist-position" onclick="wishlist_login();" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("wishlist"); ?>">
+                            <i class="icon-heart-o"></i>
+                        <?php endif; ?>
             </div>
 
             <?php if (!empty($product->discount_rate) && !empty($discount_label)) : ?>
@@ -168,7 +174,6 @@
         </div>
     </div>
 </div>
-
 <script>
     function wishlist_login() {
         $(this).find('i').toggleClass('icon-heart-o')

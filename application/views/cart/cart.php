@@ -548,7 +548,17 @@
                                                                     $whislist_button_class = (empty($product->demo_url) && $product->listing_type == 'ordinary_listing') ? "btn-wishlist-classified" : "";
                                                                     if ($this->auth_check) :
                                                                         if ($this->product_model->is_product_in_wishlist($product->id) == 0) : ?>
-                                                                            <a href="javascript:void(0)" id="add_to_wishlist" class="btn-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?> wishlist-all" data-product-id="<?php echo $product->id; ?>" data-reload="1" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><?php echo trans("add_to_wishlist"); ?></span></a>
+                                                                            <?php if (isset($this->auth_check)) : ?>
+                                                                                <?php if ($this->auth_user->user_type != "guest") : ?>
+                                                                                    <a href="javascript:void(0)" id="add_to_wishlist" class="btn-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?> wishlist-all" data-product-id="<?php echo $product->id; ?>" data-reload="1" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><?php echo trans("add_to_wishlist"); ?></span></a>
+                                                                                <?php else : ?>
+                                                                                    <a href="javascript:void(0)" id="add_to_wishlist" class="btn-wishlist" data-toggle="modal" data-id="0" data-target="#registerModal"><?php echo trans("add_to_wishlist"); ?></a>
+
+                                                                                    <!-- <a href="javascript:void(0)" id="add_to_wishlist" class="btn-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?> wishlist-all" data-product-id="<?php echo $product->id; ?>" data-reload="1" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><?php echo trans("add_to_wishlist"); ?></span></a> -->
+                                                                                <?php endif; ?>
+                                                                            <?php else : ?>
+                                                                                <a href="javascript:void(0)" id="add_to_wishlist" class="btn-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?> wishlist-all" data-product-id="<?php echo $product->id; ?>" data-reload="1" onclick="remove_from_cart('<?php echo $cart_item->cart_item_id; ?>');"><?php echo trans("add_to_wishlist"); ?></span></a>
+                                                                            <?php endif; ?>
                                                                         <?php endif; ?>
                                                                     <?php else : ?>
                                                                         <a id="add_to_wishlist_1" onclick="cart_wishlist()" class="btn-wishlist btn-add-remove-wishlist <?php echo $whislist_button_class; ?> wishlist-all" data-product-id="<?php echo $product->id; ?>" );><?php echo trans("add_to_wishlist"); ?></span></a>
@@ -1062,7 +1072,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Wrapper End-->
 <?php $this->load->view("partials/_modal_send_message", ["subject" => null]); ?>
