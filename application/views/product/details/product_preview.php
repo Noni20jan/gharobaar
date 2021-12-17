@@ -8,6 +8,16 @@
         padding: 20px
     }
 
+    #check_pincode {
+        position: absolute;
+        background-color: green;
+        color: #fff;
+        border: none;
+        top: 12px;
+        left: 86%;
+        font-weight: bold;
+    }
+
     .star-rating input[type=radio] {
         display: none
     }
@@ -178,8 +188,207 @@
         margin-left: 5%;
     }
 
+
+
     #reviewbutton {
         width: 47%;
+    }
+
+    @media(max-width:768px) {
+
+        #reviewbutton {
+            width: 47%;
+            padding: 2%;
+        }
+
+    }
+
+    #offers {
+        background-color: #ffffff82;
+        padding: 3%;
+        border-radius: 2em;
+        width: 515px;
+        height: 142px;
+        margin-left: 6%;
+    }
+
+    @media(max-width:1073px) {
+
+        #offers {
+            background-color: #ffffff82;
+            padding: 3%;
+            border-radius: 2em;
+            width: 89%;
+            margin-left: 5%;
+        }
+
+    }
+
+    .morecontent span {
+        display: none;
+
+    }
+
+    .morelink {
+        display: block;
+        color: green;
+        font-family: 'Montserrat';
+        text-decoration: underline;
+    }
+
+    .morelink:hover {
+        display: block;
+        /* color: green; */
+        font-family: 'Montserrat';
+        text-decoration: underline;
+    }
+
+    .see_more {
+        color: green !important;
+    }
+
+    /* 
+    .gluten-vegan-sustainable {
+        float: left;
+        margin-top: 15px;
+        margin-bottom: 10px;
+        margin-left: -16px;
+    } */
+
+
+    #gluten-vegan-sustainable-responsive {
+        float: left;
+        display: inline-flex;
+        width: 22%;
+        flex-wrap: wrap;
+        text-align: center;
+        padding: 12px 0;
+        transition: all 0.3s ease;
+        font-size: 36px;
+
+    }
+
+    @media(max-width:768px) {
+
+        #gluten-vegan-sustainable-responsive {
+            margin-left: 1% !important;
+            float: left;
+            display: inline-flex;
+            width: 22%;
+            text-align: center;
+            padding: 12px 0;
+            transition: all 0.3s ease;
+            font-size: 36px;
+
+
+        }
+
+        #vegan {
+            margin-left: 2px;
+        }
+
+        #lead_time {
+            margin-left: 0%;
+        }
+
+    }
+
+    #allergens {
+        margin-left: 16%;
+    }
+
+    .return-for-mobile-view {
+        width: 55px;
+        height: 55px;
+    }
+
+    .delivery-for-mobile-view {
+        width: 55px;
+        height: 55px;
+    }
+
+    .COD-for-mobile {
+        width: 55px;
+        height: 55px;
+    }
+
+    @media(max-width:768px) {
+        .for-mobile-in-a-line {
+            font-size: 16px;
+        }
+
+        .for-mobile-view {
+            width: 128px;
+        }
+
+        #for-mobile-allergen {
+            width: 104px;
+        }
+
+        .return-for-mobile-view {
+            width: 32px;
+            height: 32px;
+        }
+
+        .delivery-for-mobile-view {
+            width: 32px;
+            height: 32px;
+        }
+
+        .COD-for-mobile {
+            width: 32px;
+            height: 32px;
+        }
+
+        .dispatch-COD-return {
+            font-size: 13px;
+            text-align: center;
+            margin: 0;
+        }
+    }
+
+    .dispatch-COD-return {
+        text-align: center;
+        margin: 0;
+    }
+
+    .product_description {
+        font-size: 16px;
+    }
+
+    .COD-dispatch-date {
+        width: 116px;
+    }
+
+    .return-aviable-width {
+        width: 127px;
+    }
+
+    #grams_btn {
+        font-weight: bold;
+    }
+
+    #shelf_life {
+        font-weight: bold;
+
+    }
+
+    .overflow-text {
+        overflow-y: scroll;
+        max-height: 70px;
+    }
+
+    .overflow-text::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    .overflow-text::-webkit-scrollbar {
+        width: 6px;
+        background-color: transparent;
+    }
+
+    .overflow-text::-webkit-scrollbar-thumb {
+        background-color: #f5f2f200;
     }
 </style>
 <!-- Wrapper -->
@@ -210,55 +419,264 @@
                         </div>
                         <div class="col-12 col-sm-12 col-md-5">
                             <div id="response_product_details" class="product-content-details">
-                                <?php $this->load->view("product/details/_product_details_preview"); ?>
+                                <?php $this->load->view("product/details/_product_details"); ?>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-7">
-                        <div class="col-12 add_to_cart_buy_now">
-                            <h4>Description</h4>
-                            <p style="text-align:justify;"><?php echo $product_details->description; ?></p>
+                        <div class="col-12 col-sm-12 col-md-7">
+                            <div class="product-description">
+                                <h3 class="product_description">Description</h3>
+                                <pre style="margin-top: 3px; white-space:pre-line; font-weight:500; text-align:justify; font-size: 100%; font-family:'Montserrat';" class="more"><?php echo $product_details->description; ?></pre>
+                                <?php if ($product->add_meet == "Made to order") : ?>
+                                    <div class="summary-section-disclaimer" style="max-width:100%;">
+                                        <h5 style="padding:2%; font-size: 15px;"><?php echo get_content("made_to_order"); ?></h5>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-12 col-sm-12 col-md-5">
+                            <?php if ($parent_categories_tree[0]->id == 15) : ?>
+                                <div class="summary-section-disclaimer" style="width: 100%;">
+                                    <h5 style="padding:2%; font-family:'Montserrat'; font-size: 15px;"><b style="color:red; font-family:'Montserrat';">DISCLAIMER: </b><?php echo get_content("note_homecook"); ?></h5>
+                                </div>
+                            <?php endif; ?>
+                            <div class="product-content-details">
+                                <?php //$this->load->view("product/details/_product_details"); 
+                                ?>
+                                <div class="row">
+                                    <div class="col-12" id="gluten-vegan-sustainable-responsive">
+                                        <?php if ($product->is_gluten_Free == 'Y') : ?>
+                                            <div class="col-4 gluten-vegan-sustainable">
+                                                <div class="product-description-img">
+                                                    <img src="<?php echo base_url(); ?>assets/img/product_image/gluten-free.png" alt="" />
+                                                </div>
+                                                <p class="product-decription-text">Gluten free</p>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if ($product->is_allergens == 'N') : ?>
+                                            <div class=" col-4 gluten-vegan-sustainable">
+                                                <div class="product-description-img">
+                                                    <img src="<?php echo base_url(); ?>assets/img/product_image/no-allergen.png" alt="" />
+                                                </div>
+                                                <p class="product-decription-text">No allergen</p>
+                                            </div>
+                                        <?php elseif ($product->is_allergens == 'Y') : ?>
+                                        <?php endif; ?>
+                                        <?php if ($product->is_sustainable == 'Y') : ?>
+                                            <div class="col-4 gluten-vegan-sustainable">
+                                                <div class="product-description-img">
+                                                    <img src="<?php echo base_url(); ?>assets/img/product_image/sustainable.png" alt="" />
+                                                </div>
+                                                <p class="product-decription-text">Sustainable</p>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if ($product->is_vegan == 'Y') : ?>
+                                            <div class="col-4 gluten-vegan-sustainable">
+                                                <div class="product-description-img">
+                                                    <img src="<?php echo base_url(); ?>assets/img/product_image/vegan.png" alt="" />
+                                                </div>
+                                                <p class="product-decription-text">Vegan</p>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if ($product->is_veg_nonveg_jain == 'Veg') : ?>
+                                            <div class="col-4 gluten-vegan-sustainable">
+                                                <div class="product-description-img">
+                                                    <img src="<?php echo base_url(); ?>assets/img/product_image/veg.png" alt="" />
+                                                </div>
+                                                <p class="product-decription-text">Veg</p>
+                                            </div>
+                                        <?php elseif ($product->is_veg_nonveg_jain == 'non_Veg') : ?>
+                                            <div class="col-4 gluten-vegan-sustainable">
+                                                <div class="product-description-img">
+                                                    <img src="<?php echo base_url(); ?>assets/img/product_image/Non-veg.png" alt="" />
+                                                </div>
+                                                <p class="product-decription-text">Non-veg</p>
+                                            </div>
+                                        <?php elseif ($product->is_veg_nonveg_jain == 'jain') : ?>
+                                            <div class="col-4 gluten-vegan-sustainable">
+                                                <div class="product-description-img">
+                                                    <img src="<?php echo base_url(); ?>assets/img/product_image/Non-veg.png" alt="" />
+                                                </div>
+                                                <p class="product-decription-text">Jain</p>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if ($product->is_organic == 'Y') : ?>
+                                            <div class="col-4 gluten-vegan-sustainable">
+                                                <div class="product-description-img">
+                                                    <img src="<?php echo base_url(); ?>assets/img/product_image/organic.png" alt="" />
+                                                </div>
+                                                <p class="product-decription-text">Organic</p>
+                                            </div>
+                                        <?php endif; ?>
 
-                    <div class="col-12 col-sm-12 col-md-5">
-                        <div class="row">
-                            <div class="col-sm-7 add_to_cart_buy_now">
-                                <h4>Net Weight <i class="fa fa-info-circle"></i></h4>
-                            </div>
-                            <div class="col-sm-5 add_to_cart_buy_now">
-                                <h4>Materials</h4>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="col-sm-4 add_to_cart_buy_now">
-                                        <img src="<?php echo base_url(); ?>assets/img/product_image/delivery.png" alt="" style="width: 50px; height: 50px;" />
-                                        <h5>Delivery Date</h5>
                                     </div>
-                                    <div class="col-sm-4 add_to_cart_buy_now">
-                                        <img src="<?php echo base_url(); ?>assets/img/product_image/C-O-D.png" alt="" style="width: 50px; height: 50px;" />
-                                        <h5>COD Available</h5>
+                                </div>
+                                <div class="row">
+
+                                    <?php if ($product->add_meet == 'Made to order') :
+                                        $home_cook = get_parent_categories_tree($product->category_id);
+                                        if ($home_cook[0]->id == 2) : ?>
+                                        <?php else : ?>
+                                            <div class="col-6 product-details-text for-mobile-view">
+                                                <!-- <p id="grams_btn">Net Weight&nbsp;:&nbsp;<?php echo $product->product_weight ?>gms&nbsp;</p> -->
+
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php else : ?>
+                                        <div class="col-6 product-details-text for-mobile-view">
+                                            <?php
+                                            // var_dump($get_full_width_product_variations);
+                                            //   var_dump($get_full_width_product_variations);
+                                            // die();
+                                            ?>
+                                            <?php if ((empty($half_width_product_variations)) && (empty($full_width_product_variations))) :
+                                            ?>
+                                                <p id="grams_btn">Net Weight&nbsp;:&nbsp;<?php echo $product->product_weight ?>g&nbsp;</p>
+                                                <?php elseif ((!empty($full_width_product_variations))) :
+                                                $variation = $this->variation_model->get_variation($full_width_product_variations[0]->id);
+
+                                                $label =  get_variation_label($variation->label_names, $this->selected_lang->id);
+                                                // var_dump($label);
+                                                // die();
+                                                if ($label == 'weight') : ?>
+                                                    <p id="grams_btn">Net Weight&nbsp;:&nbsp;<span id="grams_btn1"><?php echo $product->product_weight
+                                                                                                                    ?>g</span>&nbsp;</p>
+
+                                                    <!-- <input type="text" id="variation8777" readonly> -->
+
+                                                <?php else : ?>
+                                                    <p id="grams_btn">Net Weight&nbsp;:&nbsp;<?php echo $product->product_weight ?>g&nbsp;</p>
+                                                <?php endif; ?>
+                                                <?php elseif ((!empty($half_width_product_variations))) :
+                                                $variation = $this->variation_model->get_variation($half_width_product_variations[0]->id);
+
+                                                $label =  get_variation_label($variation->label_names, $this->selected_lang->id);
+                                                // var_dump($label);
+                                                // die();
+                                                if ($label == 'weight') : ?>
+                                                    <p id="grams_btn">Net Weight&nbsp;:&nbsp;<span id="grams_btn1"><?php echo $product->product_weight
+                                                                                                                    ?>g</span>&nbsp;</p>
+
+                                                    <!-- <input type="text" id="variation8777" readonly> -->
+
+                                                <?php else : ?>
+                                                    <p id="grams_btn">Net Weight&nbsp;:&nbsp;<?php echo $product->product_weight ?>g&nbsp;</p>
+                                                <?php endif; ?>
+                                            <?php endif;
+                                            ?>
+                                            <!-- <input type="text" id="variation8777" readonly> -->
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <?php if ($product->add_meet == "Made to order" && !empty($product->shelf_life_from_date_of_manufacture)) : ?>
+                                        <div class="col-6 product-details-text for-mobile-view">
+                                            <p id="shelf_life">Shelf Life&nbsp;:&nbsp;<?php echo $product->shelf_life_from_date_of_manufacture ?><?php echo ($product->shelf_units) ?></p>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if ($product->add_meet == "Made to stock" && $product->is_expire == 'Y') {
+                                        if (!empty($product->manufacturing_date) && !empty($product->expiry_date)) {
+                                            $manufacture = $product->manufacturing_date;
+                                            $expiry = $product->expiry_date;
+                                            $diff = strtotime($expiry) - strtotime($manufacture); ?>
+                                            <div class="col-6 product-details-text for-mobile-view">
+                                                <p>Shelf Life&nbsp;:&nbsp;<?php echo abs(round($diff / 86400)); ?> Days</p>
+                                            </div>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+
+                                    <?php if (!($product->allergance == 'NULL' or $product->allergance == '')) : ?>
+                                        <div class="col-6 product-details-text overflow-text" id="for-mobile-allergen">
+                                            <p>Allergens&nbsp;:&nbsp;<?php echo $product->allergance ?></p>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <?php if (!($product->storage_instruction == 'NULL' or $product->storage_instruction == '')) : ?>
+                                        <div class="col-6 product-details-text">
+                                            <p>Storage Instructions&nbsp;:&nbsp;<?php echo $product->storage_instruction ?></p>
+                                        </div>
+                                    <?php endif; ?>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 add_to_cart_buy_now COD-dispatch-date">
+                                        <div class="text-center">
+                                            <img src="<?php echo base_url(); ?>assets/img/product_image/delivery.png" alt="" class="delivery-for-mobile-view" />
+                                        </div>
+                                        <p class="dispatch-COD-return"><?php echo trans("dispatch_date"); ?></p>
+                                        <?php if ($product->add_meet == 'Made to order') : ?>
+                                            <p class="dispatch-COD-return"><?php echo trans("within") . " " . get_transit_time_for_home_cook($product, "string"); ?></p>
+                                        <?php else : ?>
+                                            <?php if (check_for_days($product) == 0) : ?>
+                                                <p class="dispatch-COD-return"><?php echo trans("arriving_soon"); ?></p>
+                                            <?php elseif (check_for_days($product) == 1) : ?>
+                                                <p class="dispatch-COD-return"><?php echo trans("within") . " " . check_for_days($product) . " day"; ?></p>
+                                            <?php else : ?>
+                                                <p class="dispatch-COD-return"><?php echo trans("within") . " " . check_for_days($product) . " days"; ?></p>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
                                     </div>
-                                    <div class="col-sm-4 add_to_cart_buy_now">
-                                        <img src="<?php echo base_url(); ?>assets/img/product_image/return.png" alt="" style="width: 50px; height: 50px;" />
-                                        <h5>Return Available</h5>
-                                    </div>
+                                    <?php if ($product->cod_accepted == 'Y') : ?>
+                                        <div class="col-4 add_to_cart_buy_now COD-dispatch-date">
+                                            <div class="text-center">
+                                                <img src="<?php echo base_url(); ?>assets/img/product_image/C-O-D.png" alt="" class="COD-for-mobile" />
+                                            </div>
+                                            <p class="dispatch-COD-return">COD Available</p>
+                                            <p class="dispatch-COD-return"><?php echo $product->cod_accepted ?>es</p>
+                                        </div>
+                                    <?php elseif ($product->cod_accepted == 'N') : ?>
+                                        <div class="col-4 add_to_cart_buy_now COD-dispatch-date">
+                                            <div class="text-center">
+                                                <img src="<?php echo base_url(); ?>assets/img/product_image/C-O-D.png" alt="" class="COD-for-mobile" />
+                                            </div>
+                                            <p class="dispatch-COD-return">COD Available</p>
+                                            <p class="dispatch-COD-return"><?php echo $product->cod_accepted ?>o</p>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if ($product->available_for_return_or_exchange == 'return') : ?>
+                                        <div class="col-4 add_to_cart_buy_now return-aviable-width">
+                                            <div class="text-center">
+                                                <img src="<?php echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
+                                            </div>
+                                            <p class="dispatch-COD-return">Return/Exchange</p>
+                                            <p class="dispatch-COD-return">Returnable</p>
+                                        </div>
+                                    <?php elseif ($product->available_for_return_or_exchange == 'exchange') : ?>
+                                        <div class="col-4 add_to_cart_buy_now return-aviable-width">
+                                            <div class="text-center">
+                                                <img src="<?php echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
+                                            </div>
+                                            <p class="dispatch-COD-return">Return/Exchange</p>
+                                            <p class="dispatch-COD-return">Exchangeable</p>
+                                        </div>
+                                    <?php elseif ($product->available_for_return_or_exchange == 'both') : ?>
+                                        <div class="col-4 add_to_cart_buy_now return-aviable-width">
+                                            <div class="text-center">
+                                                <img src="<?php echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
+                                            </div>
+                                            <p class="dispatch-COD-return">Return/Exchange</p>
+                                            <p class="dispatch-COD-return">Yes</p>
+                                        </div>
+                                    <?php else : ?>
+                                        <div class="col-4 add_to_cart_buy_now return-aviable-width">
+                                            <div class="text-center">
+                                                <img src="<?php echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
+                                            </div>
+                                            <p class="dispatch-COD-return">Return/Exchange</p>
+                                            <p class="dispatch-COD-return">No</p>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
 
+
                         </div>
-                        <?php //$this->load->view("product/details/_product_share"); 
-                        ?>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 
@@ -274,15 +692,6 @@
     </script>
 <?php endif; ?>
 
-<div class="footer_image">
-    <div class="container" style="text-align:center;">
-        <p style="margin-bottom:0em;">
-            <span class="journey">Start Your Journery With Us!</span>
-        </p>
-        <span class="journey" style="font-weight:bolder; font-size:42px;">#Gharseghartak</span>
-    </div>
-    <img style="width: 100%;" src="./assets/img/footer2.png">
-</div>
 
 
 <!-- Plyr JS-->
