@@ -192,6 +192,17 @@
                             <span><?php echo trans("homepage_manager"); ?></span>
                         </a>
                     </li>
+
+
+                    <li>
+                        <a href="<?php echo($this->general_settings->google_analytics_login_link) ?>" target="_blank">
+                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/redirect_icon.png" alt="" style="width: 20px; height: 20px;" />
+                            <span><?php echo trans("google_analytics_link"); ?></span>
+                        </a>
+                    </li>
+
+
+
                     <li class="header"><?php echo trans("membership"); ?></li>
                     <li class="treeview<?php is_admin_nav_active(['membership-plans', 'transactions-membership']); ?>">
                         <a href="#">
