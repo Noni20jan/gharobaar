@@ -2998,7 +2998,7 @@ order by id desc LIMIT 1";
         // $this->db->where('category_feature.grp_feature_id',7);
         if (!empty($type)) {
 
-            $this->db->where('product_banner_tagging.feature_id', $type);
+            $this->db->where('product_banner_tagging.feature_id', intval($type));
         }
         $this->db->distinct();
 
