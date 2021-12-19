@@ -4114,6 +4114,14 @@
             display: flow-root;
             text-align: center;
             background-color: #f3f999;
+            font-weight: normal;
+            font-style: normal;
+            font-family: "Montserrat", Helvetica, sans-serif;
+            box-shadow: 0 0 1em 1px rgb(0 0 0 / 25%);
+            color: #006;
+            margin: 0em;
+            max-width: 100em;
+            padding: 0em;
         }
 
         /* @keyframes example {
