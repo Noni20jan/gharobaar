@@ -393,14 +393,14 @@
         }
     });
 </script>
-<!-- <script>
+<script>
     $('#product_price_input').keyup(function() {
         var base_price = $('#product_price_input').val();
         var discount_rate = $('#input_discount_rate').val();
         var listing_price = $('#product_listing_price_input').val(Math.round(base_price - (discount_rate / 100) * base_price));
 
     });
-</script> -->
+</script>
 <script>
     function updateTextField() {
         var select = document.getElementById('input_gst_rate_dropdown');
