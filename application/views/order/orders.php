@@ -1,6 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/main-1.7.css">
 <style>
 	.row-custom {
 		padding-right: 15px;
@@ -212,7 +213,7 @@
 												<tr>
 													<td style="padding-left:0px;background-color: #ebebeb;border-bottom: 1px solid grey;border-top:none;">
 														<a href="<?php echo generate_url("order_details") . "/" . get_order($order->order_id)->order_number; ?>">
-															<div class="table-item-product">
+															<div class="table-item-product" style="width:100%;">
 
 																<div class="left">
 																	<div class="img-table">
@@ -224,7 +225,7 @@
 																		<!-- </a> -->
 																	</div>
 																</div>
-																<div class="left">
+																<div class="left" style="text-align:center;">
 
 																	<?php if ($order->order_status == 'completed') : ?>
 																		<p style="color: black;">&emsp;Your item is <strong class="font-600">Delivered</strong></p>

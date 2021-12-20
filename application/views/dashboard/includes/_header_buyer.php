@@ -5109,7 +5109,7 @@
 
                         <div class="form-group m-b-20">
                             <div class="input-group input-group-location">
-                                <input type="text" name="search_pincode" class="form-control enter_p clearable_search" id="pincodeSearchField" maxlength="6" minlength="6" pattern="[0-9]+" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="Enter pincode" autocomplete="off">
+                                <input type="text" name="search_pincode" class="form-control enter_p clearable_search" id="pincodeSearchField" maxlength="6" minlength="6" pattern="[0-9]+" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="Enter pincode" autocomplete="off" style="width:75%">
                                 <input type="hidden" class="search_type_input_pincode" name="search_type_pincode" value="pincode">
                                 <button class="check_pincode">Go!</button>
                                 <div id="response_pincode_search_results" class="search-results-ajax">
