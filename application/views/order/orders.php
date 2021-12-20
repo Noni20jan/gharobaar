@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/main-1.7.css">
+<!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/main-1.7.css"> -->
 <style>
 	.row-custom {
 		padding-right: 15px;

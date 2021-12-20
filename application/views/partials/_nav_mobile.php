@@ -56,10 +56,26 @@
                                         </li>
                                         <li>
                                             <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
+                                                <i class="fa fa-user" style="color:#838383" aria-hidden="true"></i>
+                                                Buyer Profile
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="<?php echo generate_url("profile_settings"); ?>">
+                                                <i class="fas fa-edit" style="color:#838383"></i> <span>Update Profile</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="<?php echo generate_url("following") . "/" . $this->auth_user->slug; ?>">
+                                                <i class="fas fa-user-plus" style="color:#838383"></i> <span>Following</span>
+                                            </a>
+                                        </li>
+                                        <!-- <li>
+                                            <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
                                                 <i class="icon-user"></i>
                                                 Buyer Panel
                                             </a>
-                                        </li>
+                                        </li> -->
                                     <?php else : ?>
                                         <li>
                                             <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
