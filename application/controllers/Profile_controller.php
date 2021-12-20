@@ -498,8 +498,10 @@ class Profile_controller extends Home_Core_Controller
         $ifsc_code = $this->auth_user->ifsc_code;
         $account_number = $this->auth_user->account_number;
         $cheque_image_url = $this->auth_user->cheque_image_url;
+
         $account_holder_name = $this->auth_user->acc_holder_name;
-        if ($data['bank_branch'] != $bank_branch || $data['ifsc_code'] != $ifsc_code || $data['account_number'] != $account_number || $data['account_holder_name'] != $account_holder_name) {
+        if ($data['bank_branch'] != $bank_branch || $data['ifsc_code'] != $ifsc_code || $data['account_number'] != $account_number || $data['acc_holder_name'] != $account_holder_name) {
+
             $data['is_bank_details_approved'] = 0;
             $this->load->model("email_model");
             $this->email_model->seller_bank_account_detail($user_id);
@@ -520,7 +522,7 @@ class Profile_controller extends Home_Core_Controller
             $this->session->set_flashdata('error', trans("msg_error"));
             redirect($this->agent->referrer());
         }
-        // } 
+        // }
     }
 
 

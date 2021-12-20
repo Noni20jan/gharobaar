@@ -73,7 +73,7 @@ class Profile_model extends CI_Model
 
         $this->session->set_userdata('modesy_user_old_email', $this->auth_user->email);
         $this->db->where('id', $user_id);
-       
+
         return $this->db->update('users', $data);
     }
 
@@ -137,11 +137,11 @@ class Profile_model extends CI_Model
         $this->db->where('id', $user_id);
 
         $this->load->model('upload_model');
-        $temp_path = $this->upload_model->upload_temp_image('cheque-image');
-        if (!empty($temp_path)) {
-            //delete old avatar        
-            $data["cheque_image_url"] = $this->upload_model->cheque_upload($temp_path);
+        if ($this->upload_model->upload_cheque_image('cheque-image') != null) {
+            delete_file_from_server($this->auth_user->cheque_image_url);
+            $data["cheque_image_url"] = $this->upload_model->upload_cheque_image('cheque-image');
         }
+
 
         return $this->db->update('users', $data);
     }

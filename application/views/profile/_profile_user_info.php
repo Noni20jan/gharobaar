@@ -58,17 +58,16 @@
     }
 
     .upload-documents {
-      position: relative;
-      width: 200px;
-      height: 180px;
-      text-align: center;
-      background: white;
-      border: 2px dashed #eeeff1;
-      padding: 1px;
-      cursor: pointer;
-      margin: 20px;
+        position: relative;
+        width: 200px;
+        height: 180px;
+        text-align: center;
+        background: white;
+        border: 2px dashed #eeeff1;
+        padding: 1px;
+        cursor: pointer;
+        margin: 20px;
     }
-
 </style>
 <!--user profile info-->
 <div class="row-custom">
@@ -315,10 +314,14 @@
                                         <?php if (empty($this->auth_user->cheque_image_url)) : ?>
                                             <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
                                         <?php else : ?>
-                                            <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/certificate.png'; ?>" style="border-radius:10%" />
+                                            <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/cheque_image.jpeg'; ?>" style="border-radius:10%" />
                                         <?php endif; ?>
-                                        <input type="file" name="cheque-image"  id="cheque-logo" required=""  style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>" />
+                                        <input type="file" name="cheque-image" id="cheque-logo" required="" style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>" />
                                         <p id="file-upload-filename" style="margin-bottom:0;"></p>
+
+                                        <?php if (!empty($this->auth_user->cheque_image_url)) : ?>
+                                            <small> <a href="<?php echo base_url() . $this->auth_user->cheque_image_url; ?>" target="_blank">View Cheque Image</a></small>
+                                        <?php endif; ?>
                                         <span style="color: red;" id="cheque_error"></span>
 
                                         <script>
@@ -333,7 +336,6 @@
                                                 }
                                                 $('#cheque_error').html("");
                                             }
-                           
                                         </script>
 
                                     </div>
@@ -622,36 +624,36 @@
     //     }
     // }
 </script>
- <script>
-  var input1 = document.getElementById('cheque-logo');
-  // var infoArea = document.getElementById('file-upload-filename');
+<script>
+    var input1 = document.getElementById('cheque-logo');
+    // var infoArea = document.getElementById('file-upload-filename');
 
-  input1.addEventListener('change', showFileName1);
+    input1.addEventListener('change', showFileName1);
 
-  function showFileName1(event) {
-    $("#cheque-image-delete").show();
-    // the change event gives us the input it occurred in 
-    var input1 = event.srcElement;
+    function showFileName1(event) {
+        $("#cheque-image-delete").show();
+        // the change event gives us the input it occurred in 
+        var input1 = event.srcElement;
 
-    // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
-    var fileName1 = input1.files[0].name;
-    var id1 = 'cheque-image';
-    // use fileName however fits your app best, i.e. add it into a div
+        // the input has an array of files in the `files` property, each one has a name that you can use. We're just using the name here.
+        var fileName1 = input1.files[0].name;
+        var id1 = 'cheque-image';
+        // use fileName however fits your app best, i.e. add it into a div
 
-    extension1 = fileName1.split('.').pop();
-    var reader1 = new FileReader();
-    if (extension1 == 'pdf' || extension1 == 'docx') {
-      console.log("test")
-      reader1.onload = function(e) {
-        $('#' + id1).attr('src', '<?php echo base_url() . 'assets/img/certificate.png'; ?>');
-      }
-      reader1.readAsDataURL(input1.files[0]);
-    } else {
-      console.log("image")
-      reader1.onload = function(e) {
-        $('#' + id1).attr('src', e.target.result);
-      }
-      reader1.readAsDataURL(input1.files[0]);
+        extension1 = fileName1.split('.').pop();
+        var reader1 = new FileReader();
+        if (extension1 == 'pdf' || extension1 == 'docx') {
+            console.log("test")
+            reader1.onload = function(e) {
+                $('#' + id1).attr('src', '<?php echo base_url() . 'assets/img/certificate.png'; ?>');
+            }
+            reader1.readAsDataURL(input1.files[0]);
+        } else {
+            console.log("image")
+            reader1.onload = function(e) {
+                $('#' + id1).attr('src', e.target.result);
+            }
+            reader1.readAsDataURL(input1.files[0]);
+        }
     }
-  }
-</script> 
+</script>
