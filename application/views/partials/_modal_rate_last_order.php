@@ -101,8 +101,8 @@
                     </div>
                     <div class="upload_image">
 
-                        <input type="file" class="upload_product_image" name="file" id="upload_review_image" accept=".png, .jpg, .jpeg, .gif" onchange=imageShow(this)>
-                        <span class='badge badge-info' id="upload-file-info"></span>
+                        <!-- <input type="file" class="upload_product_image" name="file" id="upload_review_image" accept=".png, .jpg, .jpeg, .gif" onchange=imageShow(this)> -->
+                        <!-- <span class='badge badge-info' id="upload-file-info"></span> -->
                     </div>
                 </div>
             </div>
