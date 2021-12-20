@@ -565,7 +565,11 @@
         display: none;
     }
 </style>
-
+<?php if ($this->auth_check) {
+    if ($this->auth_user->user_type == "guest") {
+        redirect(base_url() . 'logout');
+    }
+} ?>
 
 <div class="section-slider web-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :

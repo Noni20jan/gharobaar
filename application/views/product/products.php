@@ -415,6 +415,11 @@ foreach ($sellers as $seller) {
         }
     }
 </style>
+<?php if ($this->auth_check) {
+    if ($this->auth_user->user_type == "guest") {
+        redirect(base_url() . 'logout');
+    }
+} ?>
 <link rel="stylesheet" href="<?= base_url(); ?>assets/css/custom.css">
 <div id="wrapper">
     <div class="container">

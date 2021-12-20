@@ -9,6 +9,11 @@
         scrollbar-color: #fff0 #fff0;
     }
 </style>
+<?php if ($this->auth_check) {
+    if ($this->auth_user->user_type == "guest") {
+        redirect(base_url() . 'logout');
+    }
+} ?>
 <div id="wrapper">
     <div class="container">
         <div class="row categories-for-mobile" id="only-for-mobile">

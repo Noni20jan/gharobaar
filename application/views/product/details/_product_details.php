@@ -164,6 +164,11 @@
 <?php //var_dump($product);
 // die();
 ?>
+<?php if ($this->auth_check) {
+    if ($this->auth_user->user_type == "guest") {
+        redirect(base_url() . 'logout');
+    }
+} ?>
 <div class="row">
     <div class="col-12">
         <?php if ($product->product_type == 'digital') :

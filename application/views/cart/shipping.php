@@ -782,7 +782,7 @@
                                                                 </div>
                                                                 <div class="col-12 col-md-6">
                                                                     <label><?php echo trans("phone_number"); ?>*</label>
-                                                                    <input type="tel" id="bill_mobile" name="billing_phone_number" class="form-control form-input" required onkeyup="check_mobile()">
+                                                                    <input type="number" id="bill_mobile" name="billing_phone_number" class="form-control form-input" onkeyup="check_mobile()" required>
                                                                     <p class="Validation_error" id="mobile_p"></p>
 
                                                                 </div>
@@ -923,7 +923,7 @@
     }
 
     function get_location1(pincode) {
-
+        $('input[name^="bill"]').prop('required', true);
         document.getElementById('billing_state').value = "";
         document.getElementById('billing_city').value = "";
         document.getElementById('billing_area').value = "";
@@ -1011,9 +1011,12 @@
     }
 </script>
 <script>
+    // $('.cart-form-billing-address').on("click", function() {
+    //     $('input[name^="bill"]').prop('required', true);
+    // })
     $(document).ready(function() {
 
-
+        $('input[name^="bill"]').prop('required', false);
         $("#login_number").on("blur", function() {
             var mobNum = $(this).val();
             var filter = /[1-9]{1}[0-9]{9}/;
@@ -1091,6 +1094,7 @@
 </script>
 <script>
     function check_email() {
+        $('input[name^="bill"]').prop('required', true);
         var email_bill = document.getElementById("bill_email").value;
         var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
         if (reg.test(email_bill) == false) {
@@ -1121,8 +1125,9 @@
     function check_mobile() {
         var mobile = document.getElementById("bill_mobile").value;
         var reg = /^[7-9][0-9]{9}$/;
-
-        if (reg.test(mobile) == false) {
+        $('input[name^="bill"]').prop('required', true);
+        // $('#bill_mobile').attr('maxlength', '10');
+        if (reg.test(mobile) == false || mobile.length != 10) {
             $("#mobile_p")[0].innerHTML = "Please enter valid mobile";
             $('#bill_mobile').css({
                 'borderColor': 'red'
@@ -1149,7 +1154,7 @@
     function check_fname() {
         var name = document.getElementById("billing_name").value;
         var letter = /^[A-Za-z]+$/;
-
+        $('input[name^="bill"]').prop('required', true);
         if (letter.test(name) == false) {
             $("#fname_p")[0].innerHTML = "Please enter only alphabets";
             $('#billing_name').css({
@@ -1207,7 +1212,7 @@
     function check_lname() {
         var lname = document.getElementById("last_name").value;
         var reg = /^[A-Za-z]+$/;
-
+        $('input[name^="bill"]').prop('required', true);
         if (reg.test(lname) == false) {
             $("#lname_p")[0].innerHTML = "Please enter only alphabets";
             $('#last_name').css({
