@@ -2284,7 +2284,7 @@ foreach ($sellers as $seller) {
                         <?php endif; ?>
                     </div>
                     <div class="ajax-load text-center" style="display:none">
-                        <p><img class="more-products-loading" src="assets/img/dark-loader.gif"></p>
+                        <p><img class="more-products-loading" src="<?php echo base_url(); ?>assets/img/dark-loader.gif"></p>
                     </div>
                     <div class="ajax-load-2 text-center" style="display:none">
                     </div>
