@@ -32,7 +32,7 @@
                     <label><?php echo trans("feature_type"); ?> (<?php echo $language->name; ?>)</label>
                     <select class="form-control" name="feature_type" id="feature_type" required>
                         <option disabled selected>Select Feature Type</option>
-                            <option value="GROUP_FEATURE"><?php echo 'Group Feature'; ?></option>
+                        <option value="GROUP_FEATURE"><?php echo 'Group Feature'; ?></option>
                     </select>
 
                 </div>
@@ -88,12 +88,11 @@
 
                         <thead>
                             <tr role="row">
-                            <th width="20"><?php echo trans('id'); ?></th>
+                                <th width="20"><?php echo trans('id'); ?></th>
                                 <th>Image</th>
                                 <th>Product</th>
                                 <th><?php echo trans('category'); ?></th>
                                 <th><?php echo trans('stock'); ?></th>
-                                <th><?php echo trans('date'); ?></th>
 
                                 <th><input name="select_all" value="1" id="example-select-all" type="checkbox" /></th>
 
@@ -447,7 +446,7 @@
 
                 for (var i = 0; i < len; i++) {
 
-                    $('#insert_data').append("<tr><td>" + Json_data[i].product_id + "</td><td> <div class='img-table'><img src=<?php echo base_url(); ?>uploads/images/" + Json_data[i].image_default + "> + </div></td><td>" + '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].title + "</td><td>" + Json_data[i].category_id + "</td><td>" + Json_data[i].stock + "</td><td>" + Json_data[i].created_at + "</td><td>"+ '<input type="checkbox" name="selected_id" id="product_checkbox" value="' + Json_data[i].product_id + '">'+"</td></tr>")
+                    $('#insert_data').append("<tr><td>" + Json_data[i].product_id + "</td><td> <div class='img-table'><img src=<?php echo base_url(); ?>uploads/images/" + Json_data[i].image_default + "> + </div></td><td>" + '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].title + "</td><td>" + Json_data[i].category_id + "</td><td>" + Json_data[i].stock + "</td><td>" + '<input type="checkbox" name="selected_id" id="product_checkbox" value="' + Json_data[i].product_id + '">' + "</td></tr>")
 
 
                 }
