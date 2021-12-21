@@ -14,7 +14,7 @@
 </style>
 <div id="wrapper">
     <div class="container">
-        <div class="row" style="justify-content:center;">
+        <div class="row-2" style="justify-content:center;">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Your Address</h3>
