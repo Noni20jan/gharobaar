@@ -34,6 +34,15 @@
                         <?php } ?>
                     </select>
                 </div>
+                <div class="form-group" id="event">
+                    <label><?php echo trans('event'); ?></label>
+                    <select name="event" id="event_selection" class="selectpicker" data-live-search=" true">
+                        <?php $data['content'] = $this->page_model->get_event_content(); ?>
+                        <?php foreach ($data['content'] as $content) { ?>
+                            <option value="<?php echo $content->label; ?>"><?php echo $content->event; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label><?php echo trans('coupon_code'); ?></label>
                     <input type="text" name="coupon_code" id="coupon_code" class="form-control" placeholder="<?php echo trans('coupon_code'); ?>" required>

@@ -202,6 +202,18 @@ if (!function_exists('is_admin')) {
         return false;
     }
 }
+// if (!function_exists('is_guest')) {
+//     function is_guest()
+//     {
+//         $ci = &get_instance();
+//         if ($ci->auth_check) {
+//             if ($ci->auth_user->role == "guest") {
+//                 return true;
+//             }
+//         }
+//         return false;
+//     }
+// }
 
 //get logged user
 if (!function_exists('user')) {
@@ -1258,7 +1270,15 @@ if (!function_exists('get_content')) {
         return $ci->page_model->get_content($label);
     }
 }
-
+// get call model to get the sms event description
+//get call model to get the description
+if (!function_exists('get_sms_content')) {
+    function get_sms_content($label)
+    {
+        $ci = &get_instance();
+        return $ci->page_model->get_sms_content($label);
+    }
+}
 
 //get settings
 if (!function_exists('get_settings')) {

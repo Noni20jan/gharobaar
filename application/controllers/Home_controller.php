@@ -19,6 +19,7 @@ class Home_controller extends Home_Core_Controller
         $emailall = $this->input->post('emailall', true);
         $coupon_code = $this->input->post('coupon_code', true);
         $discount = $this->input->post('discount', true);
+        $label_content = $this->input->post('event', true);
         // $phoneall1 = array();
         if ($emailall == 'individual') {
             $where = "";
@@ -59,10 +60,9 @@ class Home_controller extends Home_Core_Controller
                 $i++;
             }
         }
-        $label_content = 'coupon_code';
         $result = $this->send_bulk_sms($where, $coupon_code, $discount, $label_content);
         $this->session->set_flashdata('success', trans("msg_sms_sent"));
-
+        $data["html_content1"] = $this->load->view('partials/_messages', null, true);
         redirect($this->agent->referrer());
     }
     public function send_bulk_sms($phone, $coupon_code, $discount, $label_content)
@@ -76,8 +76,14 @@ class Home_controller extends Home_Core_Controller
         // Data for text message. This is the text message data.
         $sender = "GHRBAR"; // This is who the message appears to be from.
         $numbers = "$phone"; // A single number or a comma-seperated list of numbers
-        $msg_content = get_content($label_content);
+        $msg_content = get_sms_content($label_content);
+
         if ($label_content == "coupon_code") {
+            $token = array(
+                'code'  => $coupon_code,
+                'discount' => $discount
+            );
+        } else if ($label_content == "christmas_code") {
             $token = array(
                 'code'  => $coupon_code,
                 'discount' => $discount
@@ -89,31 +95,31 @@ class Home_controller extends Home_Core_Controller
         }
         $apikey = "8hnKwcSmxnU-wlltbtQanStuagBcFtJoZBcHG6sQfB";
         $message = strtr($msg_content, $varMap);
-        // $message = "Hi there ! We have not seen you on Gharobaar for long, and would love to have you back. Use coupon welcome on your next purchase to avail a flat discount (T&Cs apply). Visit https://gharobaar.com.";
+
         // $data = "username=" . ($username) . "&hash=" . ($hash) . "&message=" . $message . "&sender=" . $sender . "&numbers=" . $numbers . "&test=" . $test;
         $data = array('apikey' => $apikey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
-        // var_dump($data);
-        // die();
+
         $ch = curl_init('https://api.textlocal.in/send/?');
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch); // This is the result from the API
         curl_close($ch);
-        if ($label_content == "coupon_code1") {
-            $data = array(
-                'html_content1' => "",
-                'code'  => $coupon_code,
-                'discount' => $discount,
-                'message' => $message,
-                'result' => $result,
-                'numbers' => $numbers
-            );
-            // $this->session->set_flashdata('success', "SMS Sent Successfully !");
-            // $data["html_content1"] = $this->load->view('partials/_messages', null, true);
-            // reset_flash_data();
-            return true;
-        }
+
+        $data = array(
+            'html_content1' => "",
+            'code'  => $coupon_code,
+            'discount' => $discount,
+            'message' => $message,
+            'result' => $result,
+            'numbers' => $numbers
+        );
+
+
+        $this->session->set_flashdata('success', "SMS Sent Successfully !");
+        $data["html_content1"] = $this->load->view('partials/_messages', null, true);
+        reset_flash_data();
+        return true;
     }
     //send otp function
     public function send_otp_verification($phn_num)

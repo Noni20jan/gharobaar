@@ -165,4 +165,30 @@ class Page_model extends CI_Model
             return false;
         }
     }
+    //model to get the sms content from the  database
+    public function get_sms_content($label)
+    {
+        $this->db->select('description');
+        $this->db->from('sms_event');
+        $this->db->where('label', $label);
+        $row = $this->db->get()->row();
+        if (isset($row)) {
+            return $row->description;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_event_content()
+    {
+        // $this->db->select('description');
+        $this->db->from('sms_event');
+        // $this->db->where('label', $label);
+        $row = $this->db->get()->result();
+        if (isset($row)) {
+            return $row;
+        } else {
+            return false;
+        }
+    }
 }
