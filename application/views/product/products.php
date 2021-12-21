@@ -2311,7 +2311,8 @@ foreach ($sellers as $seller) {
     var urlpage = 1;
     var page = 1;
     $(window).scroll(function() {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+        if ($(window).scrollTop() >= ($(document).height() - $(window).height()) * 0.7) {
+            // if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
             page++;
             loadMoreData(page);
         }
