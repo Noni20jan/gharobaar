@@ -388,7 +388,7 @@
           <div class="row Brand-1">
             <div class="col-md-3"><label id="formlabel2">Account Number<span class="Validation_error"> *</span></label></div>
             <div class="col-md-9 Brand-name">
-              <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" minlength="9" value="<?php echo html_escape($user->account_number); ?>" required onkeyup="checkLength()">
+              <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" minlength="9" value="<?php echo html_escape($this->auth_user->account_number); ?>" required onkeyup="checkLength()">
               <span style="color: red;" id="acc_number"></span>
 
             </div>
