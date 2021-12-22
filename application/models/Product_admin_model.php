@@ -468,21 +468,15 @@ class Product_admin_model extends CI_Model
         $this->db->where('products.stock>', '0');
         return $this->db->get('products')->num_rows();
     }
-    public function get_paginated_product_tagging($list)
+    public function get_paginated_product_tagging($list, $feature_id)
     {
-        $category_ids = $this->get_filter_category_ids();
+        // $category_ids = $this->get_filter_category_ids();
         // $this->build_query();
-        $this->filter_products($list, $category_ids);
-        $this->db->join('images','images.product_id=products.id');
-        $this->db->join('product_details','product_details.product_id=products.id');
-        $this->db->where('products.status', 1);
-        $this->db->where('products.is_service', "0");
-        $this->db->where('products.stock>', '0');
-        $this->db->where('is_deleted', '0');
-
-        $this->db->group_by('products.id');
-        $this->db->order_by('products.created_at', 'DESC');
-        return $this->db->get('products')->result();
+        // $this->filter_products($list, $category_ids);
+        $featured_id = intval($feature_id);
+        $sql = "SELECT * FROM products JOIN images ON images.product_id=products.id JOIN product_details ON product_details.product_id=products.id JOIN categories_lang ON categories_lang.category_id=products.category_id  JOIN users ON products.user_id=users.id WHERE products.visibility = 1 AND products.is_draft = 0 AND products.is_deleted = 0  AND products.id NOT IN(SELECT product_banner_tagging.product_id from product_banner_tagging where feature_id=$feature_id) AND products.status = 1 AND products.is_service = 0 AND products.stock > 0 AND is_deleted = 0 GROUP BY products.id ORDER BY products.created_at DESC";
+        $query = $this->db->query($sql);
+        return $query->result();
     }
     public function get_paginated_product_tagging_count($list)
     {

@@ -114,6 +114,11 @@
         text-align: center;
     }
 
+    .display-mobile {
+        text-align: center;
+        padding-top: 4%;
+    }
+
     @media(max-width:800px) {
         .locate-modal-description {
             margin-bottom: 17px;
@@ -4070,14 +4075,15 @@
         #announcement-bar {
             width: 100%;
             position: relative;
+            display: block;
             height: 58px;
         }
 
-        @media(max-width:700px) {
+        @media(max-width:768px) {
             #announcement-bar {
                 width: 100%;
                 position: relative;
-                /* display: none; */
+                display: none;
                 height: 58px;
             }
         }
@@ -4105,6 +4111,16 @@
             animation-duration: 2s;
             animation-delay: 2s;
             margin: 15px;
+            animation-iteration-count: infinite;
+        }
+
+        .animation-mobile-bar {
+
+            position: relative;
+            animation-name: example;
+            animation-duration: 2s;
+            animation-delay: 2s;
+            margin: 6px;
             animation-iteration-count: infinite;
         }
 
@@ -4138,6 +4154,9 @@
             }
 
         } */
+        .display {
+            text-align: center;
+        }
 
         @media screen and (max-width:768px) {
             .sticky-header {
@@ -4162,7 +4181,7 @@
 
                 <div class="animationbar">
                     <marquee behaviour="scroll" direction="right">
-                        <p><strong><?php echo trans("free_ship_message"); ?> </strong></p>
+                        <p class="display"><strong><?php echo trans("free_ship_message"); ?> </strong></p>
                     </marquee>
                 </div>
             </article>
@@ -4475,18 +4494,7 @@
                 </div>
             </div>
         </div>
-        <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
-            <div id="announcement-mobile-bar">
-                <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
 
-                    <div class="animation-mobile-bar">
-                        <marquee behaviour="scroll" direction="right">
-                            <p><strong><?php echo trans("free_ship_message"); ?> </strong></p>
-                        </marquee>
-                    </div>
-                </article>
-            </div>
-        <?php endif; ?>
         <div class="mobile-nav-container" id="myMobileHeader">
             <div class="nav-mobile-header">
 
@@ -4592,7 +4600,18 @@
             </div>
         </div>
     </header>
+    <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
+        <div id="announcement-mobile-bar">
+            <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
 
+                <div class="animation-mobile-bar">
+                    <marquee behaviour="scroll" direction="right">
+                        <p class="display-mobile"><strong><?php echo trans("free_ship_message"); ?> </strong></p>
+                    </marquee>
+                </div>
+            </article>
+        </div>
+    <?php endif; ?>
     <div id="overlay_bg" class="overlay-bg"></div>
     <!--include mobile menu-->
     <?php $this->load->view("partials/_nav_mobile"); ?>

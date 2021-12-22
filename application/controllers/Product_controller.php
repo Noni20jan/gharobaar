@@ -35,6 +35,7 @@ class Product_controller extends Admin_Core_Controller
         $data['form_action'] = admin_url() . "products";
         $data['list_type'] = "products";
         //get paginated products
+
         $pagination = $this->paginate(admin_url() . 'approve_products', $this->product_admin_model->get_paginated_products_count('products'));
         $data['products'] = $this->product_admin_model->get_paginated_product($pagination['per_page'], $pagination['offset'], 'products');
         $data['main_settings'] = get_main_settings();
@@ -83,10 +84,13 @@ class Product_controller extends Admin_Core_Controller
         $data['title'] = trans("products");
         $data['form_action'] = admin_url() . "approve_products";
         $data['list_type'] = "products";
+        $feature_id = intval($this->input->post('feature_id'));
+
         //get paginated products
         $pagination = $this->paginate(admin_url() . 'products', $this->product_admin_model->get_paginated_products_count('products'));
-        $data['products'] = $this->product_admin_model->get_paginated_product_tagging('products');
+        $data['products'] = $this->product_admin_model->get_paginated_product_tagging('products', $feature_id);
 
+        // var_dump($data['products']);
 
         echo json_encode($data["products"]);
     }
