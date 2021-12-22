@@ -517,6 +517,10 @@
         }
     }
 
+    .caFLbO {
+        bottom: 50px !important;
+    }
+
     /* .mustang img {
         width: 220px;
         height: auto;
