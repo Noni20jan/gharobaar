@@ -3911,9 +3911,12 @@
     <?php endif; ?>
     <!-- chat system end -->
 
-
-
-
+    <!-- whatsaap chat -->
+    <?php if ($this->general_settings->is_whatsapp_enable == 1) : ?>
+        <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+        <div class="elfsight-app-d7fdd3c2-f5cd-4c43-9351-85fc2f13684f"></div>
+    <?php endif; ?>
+    <!-- whatsapp end -->
     <script>
         var def_tawk_bottom = "20px"; /*This is their default style that I want to change*/
         var def_tawk_right = "16px"; /*This is their default style that I want to change*/
