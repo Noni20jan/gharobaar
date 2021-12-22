@@ -792,6 +792,7 @@ class Product_model extends Core_Model
         $blouse_details =  str_replace('_', ' ', $this->input->get("blouse_details", true));
         $available_for_return_or_exchange = $this->input->get("available_for_return_or_exchange", true);
         $availability = $this->input->get("availability", true);
+        $personalised = $this->input->get("is_personalised", true);
         $suitable_for = $this->input->get("suitable_for", true);
         $add_meet = str_replace('_', ' ', $this->input->get("product_type", true));
         $rating = remove_special_characters($this->input->get("rating", true));
@@ -834,7 +835,7 @@ class Product_model extends Core_Model
 
 
             foreach ($query_string_array as $key => $array_values) {
-                if ($key != "product_type" && $key != "meal_type" && $key != "cash_on_delivery" && $key != "blouse_details" && $key != "pet_age" && $key != "available"  && $key != "gender" && $key != "discount"  && $key != "food_type" && $key != "jewellery_type"  && $key != "rating"  && $key != "p_min" && $key != "p_max" && $key != "sort" && $key != "search" && $key != "seller_type" && $key != "origin_of_product" && $key != "food_preference" && $key != "available_for_return_or_exchange" && $key != "availability" && $key != "suitable_for") {
+                if ($key != "product_type" && $key != "meal_type" && $key != "cash_on_delivery" && $key != "blouse_details" && $key != "pet_age" && $key != "available"  && $key != "gender" && $key != "discount"  && $key != "food_type" && $key != "jewellery_type"  && $key != "rating"  && $key != "p_min" && $key != "p_max" && $key != "sort" && $key != "search" && $key != "seller_type" && $key != "origin_of_product" && $key != "food_preference" && $key != "available_for_return_or_exchange" && $key != "availability" && $key != "suitable_for" && $key != "is_personalised") {
                     $item = new stdClass();
                     $item->key = $key;
                     $updated_array_values = array();
@@ -932,6 +933,12 @@ class Product_model extends Core_Model
         if (!empty($array_kids_corner) && !empty($array_kids_corner[0])) {
             $this->db->group_start();
             $this->db->where_in("products.suitable_for", $array_kids_corner);
+            $this->db->group_end();
+        }
+        $array_is_personalised = @explode(',', $personalised);
+        if (!empty($array_is_personalised) && !empty($array_is_personalised[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.is_personalised", $array_is_personalised);
             $this->db->group_end();
         }
 

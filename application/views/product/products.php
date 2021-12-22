@@ -734,15 +734,45 @@ foreach ($sellers as $seller) {
                                     </ul>
                                 </div>
                             </div>
-                            <!-- end of stock filter -->
+                            <div>
 
-                            <!-- commented code for state filter -->
-                            <?php if (false) : ?>
-                                <?php if (!empty($parent_categories)) : ?>
-                                    <?php if ($parent_categories[0]->id != 15) : ?>
+                                <input type="checkbox" class="check-box-size" id="origin_of_product" value="origin_of_product" name="filter_checkbox[]" onclick="show_origin_of_product(this)">
+                                <label for="origin_of_product" style="margin: 10px;"><b>State of Origin</b></label>
+                            </div>
+                            <div class="filter-item" id="origin_of_product_filter" style="display: none">
+                                <!-- end of stock filter -->
 
+                                <!-- commented code for state filter -->
+                                <?php if (false) : ?>
+                                    <?php if (!empty($parent_categories)) : ?>
+                                        <?php if ($parent_categories[0]->id != 15) : ?>
+
+                                            <div>
+
+                                                <input type="checkbox" class="check-box-size" id="origin_of_product" value="origin_of_product" name="filter_checkbox[]" onclick="show_origin_of_product(this)">
+                                                <label for="origin_of_product" style="margin: 10px;"><b>State of Origin</b></label>
+                                            </div>
+                                            <div class="filter-item" id="origin_of_product_filter" style="display: none">
+
+                                                <div class="filter-list-container">
+                                                    <ul class="filter-list filter-custom-scrollbar">
+                                                        <?php foreach ($unique_state_array as $state) : ?>
+                                                            <li>
+                                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'origin_of_product', $state); ?>">
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'origin_of_product', $state) ? 'checked' : ''; ?>>
+                                                                        <label class="custom-control-label"><?php echo ucfirst($state); ?></label>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                        <?php endforeach; ?>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php else : ?>
                                         <div>
-
                                             <input type="checkbox" class="check-box-size" id="origin_of_product" value="origin_of_product" name="filter_checkbox[]" onclick="show_origin_of_product(this)">
                                             <label for="origin_of_product" style="margin: 10px;"><b>State of Origin</b></label>
                                         </div>
@@ -765,171 +795,147 @@ foreach ($sellers as $seller) {
                                             </div>
                                         </div>
                                     <?php endif; ?>
-                                <?php else : ?>
+                                <?php endif; ?>
+                                <!-- end of state filter -->
+
+                                <?php if (!empty($categories)) : ?>
                                     <div>
-                                        <input type="checkbox" class="check-box-size" id="origin_of_product" value="origin_of_product" name="filter_checkbox[]" onclick="show_origin_of_product(this)">
-                                        <label for="origin_of_product" style="margin: 10px;"><b>State of Origin</b></label>
+                                        <input type="checkbox" class="check-box-size" id="category" value="category" name="filter_checkbox[]" onclick="show_category(this)">
+                                        <label for="category" style="margin: 10px;"><b>Category</b></label>
                                     </div>
-                                    <div class="filter-item" id="origin_of_product_filter" style="display: none">
 
+                                    <div class="filter-item" id="category_filter" style="display: none">
+
+                                        <?php if (!empty($category)) :
+                                            $url = generate_url("products");
+                                            if ($category->parent_id != 0) :
+                                                $url = generate_category_url($parent_category);
+                                            endif; ?>
+                                            <a href="<?= $url . generate_filter_url($query_string_array, '', ''); ?>" class="filter-list-categories-parent">
+                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
+                                                </svg>
+                                                <span><?= !empty($parent_category) ? category_name($parent_category) : trans("categories_all"); ?></span>
+                                            </a>
+                                        <?php endif; ?>
                                         <div class="filter-list-container">
-                                            <ul class="filter-list filter-custom-scrollbar">
-                                                <?php foreach ($unique_state_array as $state) : ?>
+                                            <ul class="filter-list filter-custom-scrollbar<?= !empty($category) ? ' filter-list-subcategories' : ' filter-list-categories'; ?>">
+                                                <?php if (!empty($category->has_subcategory)) : ?>
                                                     <li>
-                                                        <a href="<?= current_url() . generate_filter_url($query_string_array, 'origin_of_product', $state); ?>">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'origin_of_product', $state) ? 'checked' : ''; ?>>
-                                                                <label class="custom-control-label"><?php echo ucfirst($state); ?></label>
-                                                            </div>
-                                                        </a>
+                                                        <a href="<?= generate_category_url($category) . generate_filter_url($query_string_array, '', ''); ?>" <?= !empty($category) && $category ?>><span class="font-600"><?= category_name($category); ?></span></a>
                                                     </li>
-                                                <?php endforeach; ?>
+                                                <?php endif; ?>
+                                                <?php foreach ($categories as $item) :
+                                                    if ($item->actionable_status) :
+                                                        if (empty($all_category_selected)) :
+                                                ?>
+                                                            <li<?= !empty($category->has_subcategory) ? ' class="li-sub"' : ''; ?>>
+                                                                <a href="<?= generate_category_url($item) . generate_filter_url($query_string_array, '', ''); ?>" <?= !empty($category) && $category->id == $item->id ? 'class="active"' : ''; ?>><?= category_name($item); ?></a>
+                                                                </li>
+                                                                <?php
+                                                            else :
+                                                                if (in_array($item->id, $all_category_selected)) :
+                                                                ?>
 
+                                                                    <li<?= !empty($category->has_subcategory) ? ' class="li-sub"' : ''; ?>>
+                                                                        <a href="<?= generate_category_url($item) . generate_filter_url($query_string_array, '', ''); ?>" <?= !empty($category) && $category->id == $item->id ? 'class="active"' : ''; ?>><?= category_name($item); ?></a>
+                                                                        </li>
+                                                        <?php
+                                                                endif;
+                                                            endif;
+                                                        endif;
+                                                    endforeach; ?>
                                             </ul>
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                            <?php endif; ?>
-                            <!-- end of state filter -->
 
-                            <?php if (!empty($categories)) : ?>
-                                <div>
-                                    <input type="checkbox" class="check-box-size" id="category" value="category" name="filter_checkbox[]" onclick="show_category(this)">
-                                    <label for="category" style="margin: 10px;"><b>Category</b></label>
-                                </div>
+                                <?php if (!empty($parent_categories)) :
+                                    $all_cat_filter = get_catg_filter(); ?>
+                                    <?php foreach ($all_cat_filter as $single_filter) : ?>
+                                        <?php if ($parent_categories[count($parent_categories) - 1]->id == $single_filter->category_id) :
 
-                                <div class="filter-item" id="category_filter" style="display: none">
+                                            $filter_ids = get_filter_id_by_cat_id($single_filter->category_id);
+                                            // var_dump($filter_ids);
+                                            // die();
+                                            foreach ($filter_ids as $filter_id) :
+                                                $filter = get_filters_by_id($filter_id->filter_id);
+                                                // var_dump($filter);
+                                                // die(); 
+                                        ?>
+                                                <?php if ($filter->filter_group == 1) : ?>
+                                                    <div>
 
-                                    <?php if (!empty($category)) :
-                                        $url = generate_url("products");
-                                        if ($category->parent_id != 0) :
-                                            $url = generate_category_url($parent_category);
-                                        endif; ?>
-                                        <a href="<?= $url . generate_filter_url($query_string_array, '', ''); ?>" class="filter-list-categories-parent">
-                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
-                                            </svg>
-                                            <span><?= !empty($parent_category) ? category_name($parent_category) : trans("categories_all"); ?></span>
-                                        </a>
-                                    <?php endif; ?>
-                                    <div class="filter-list-container">
-                                        <ul class="filter-list filter-custom-scrollbar<?= !empty($category) ? ' filter-list-subcategories' : ' filter-list-categories'; ?>">
-                                            <?php if (!empty($category->has_subcategory)) : ?>
-                                                <li>
-                                                    <a href="<?= generate_category_url($category) . generate_filter_url($query_string_array, '', ''); ?>" <?= !empty($category) && $category ?>><span class="font-600"><?= category_name($category); ?></span></a>
-                                                </li>
-                                            <?php endif; ?>
-                                            <?php foreach ($categories as $item) :
-                                                if ($item->actionable_status) :
-                                                    if (empty($all_category_selected)) :
-                                            ?>
-                                                        <li<?= !empty($category->has_subcategory) ? ' class="li-sub"' : ''; ?>>
-                                                            <a href="<?= generate_category_url($item) . generate_filter_url($query_string_array, '', ''); ?>" <?= !empty($category) && $category->id == $item->id ? 'class="active"' : ''; ?>><?= category_name($item); ?></a>
-                                                            </li>
-                                                            <?php
-                                                        else :
-                                                            if (in_array($item->id, $all_category_selected)) :
-                                                            ?>
-
-                                                                <li<?= !empty($category->has_subcategory) ? ' class="li-sub"' : ''; ?>>
-                                                                    <a href="<?= generate_category_url($item) . generate_filter_url($query_string_array, '', ''); ?>" <?= !empty($category) && $category->id == $item->id ? 'class="active"' : ''; ?>><?= category_name($item); ?></a>
+                                                        <input type="checkbox" class="check-box-size" id="dynamic1" value="dynamic1" name="filter_checkbox[]" onclick="show_dynamic1(this)">
+                                                        <label for="dynamic1" style="margin: 10px;"><b><?php echo ucfirst(str_replace('_', ' ', $filter->name)); ?></b></label>
+                                                    </div>
+                                                    <div class="filter-item" id="dynamic_filter1" style="display: none">
+                                                        <h4 class="title"></h4>
+                                                        <div class="filter-list-container">
+                                                            <ul class="filter-list filter-custom-scrollbar">
+                                                                <?php $values = get_filtervalues_by_filterid_filtergroupid($filter->id, $single_filter->filter_group_id);
+                                                                ?>
+                                                                <?php foreach ($values as $value) :
+                                                                    @$array_option_names[$filter->name . "_" . $value->option_name] = $value->option_name; ?>
+                                                                    <li>
+                                                                        <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->name,  $value->option_name); ?>">
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, $filter->name,  $value->option_name) ? 'checked' : ''; ?>>
+                                                                                <label class="custom-control-label"><?php echo $value->option_name; ?></label>
+                                                                            </div>
+                                                                        </a>
                                                                     </li>
-                                                    <?php
-                                                            endif;
-                                                        endif;
-                                                    endif;
-                                                endforeach; ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
+                                                                <?php endforeach; ?>
 
-                            <?php if (!empty($parent_categories)) :
-                                $all_cat_filter = get_catg_filter(); ?>
-                                <?php foreach ($all_cat_filter as $single_filter) : ?>
-                                    <?php if ($parent_categories[count($parent_categories) - 1]->id == $single_filter->category_id) :
-
-                                        $filter_ids = get_filter_id_by_cat_id($single_filter->category_id);
-                                        // var_dump($filter_ids);
-                                        // die();
-                                        foreach ($filter_ids as $filter_id) :
-                                            $filter = get_filters_by_id($filter_id->filter_id);
-                                            // var_dump($filter);
-                                            // die(); 
-                                    ?>
-                                            <?php if ($filter->filter_group == 1) : ?>
-                                                <div>
-
-                                                    <input type="checkbox" class="check-box-size" id="dynamic1" value="dynamic1" name="filter_checkbox[]" onclick="show_dynamic1(this)">
-                                                    <label for="dynamic1" style="margin: 10px;"><b><?php echo ucfirst(str_replace('_', ' ', $filter->name)); ?></b></label>
-                                                </div>
-                                                <div class="filter-item" id="dynamic_filter1" style="display: none">
-                                                    <h4 class="title"></h4>
-                                                    <div class="filter-list-container">
-                                                        <ul class="filter-list filter-custom-scrollbar">
-                                                            <?php $values = get_filtervalues_by_filterid_filtergroupid($filter->id, $single_filter->filter_group_id);
-                                                            ?>
-                                                            <?php foreach ($values as $value) :
-                                                                @$array_option_names[$filter->name . "_" . $value->option_name] = $value->option_name; ?>
-                                                                <li>
-                                                                    <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->name,  $value->option_name); ?>">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, $filter->name,  $value->option_name) ? 'checked' : ''; ?>>
-                                                                            <label class="custom-control-label"><?php echo $value->option_name; ?></label>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            <?php endforeach; ?>
-
-                                                        </ul>
+                                                            </ul>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            <?php else : ?>
-                                                <div>
+                                                <?php else : ?>
+                                                    <div>
 
-                                                    <input type="checkbox" class="check-box-size" id="dynamic2" value="dynamic2" name="filter_checkbox[]" onclick="show_dynamic2(this)">
-                                                    <label for="dynamic2" style="margin: 10px;"><b><?php echo ucfirst(str_replace('_', ' ', $filter->name)); ?></b></label>
-                                                </div>
-                                                <div class="filter-item" id="dynamic_filter2" style="display: none">
-
-                                                    <div class="filter-list-container">
-                                                        <ul class="filter-list filter-custom-scrollbar">
-                                                            <?php $values = get_filtervalues_by_filterid($filter->id);
-                                                            ?>
-                                                            <?php foreach ($values as $value) :
-                                                                @$array_option_names[$filter->name . "_" . $value->option_name] = $value->option_name; ?>
-
-                                                                <li>
-                                                                    <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->name,  $value->option_name); ?>">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, $filter->name,  $value->option_name) ? 'checked' : ''; ?>>
-                                                                            <label class="custom-control-label"><?php echo $value->option_name; ?></label>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            <?php endforeach; ?>
-
-                                                        </ul>
+                                                        <input type="checkbox" class="check-box-size" id="dynamic2" value="dynamic2" name="filter_checkbox[]" onclick="show_dynamic2(this)">
+                                                        <label for="dynamic2" style="margin: 10px;"><b><?php echo ucfirst(str_replace('_', ' ', $filter->name)); ?></b></label>
                                                     </div>
-                                                </div>
+                                                    <div class="filter-item" id="dynamic_filter2" style="display: none">
 
-                                            <?php endif; ?>
-                                        <?php endforeach; ?>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                                                        <div class="filter-list-container">
+                                                            <ul class="filter-list filter-custom-scrollbar">
+                                                                <?php $values = get_filtervalues_by_filterid($filter->id);
+                                                                ?>
+                                                                <?php foreach ($values as $value) :
+                                                                    @$array_option_names[$filter->name . "_" . $value->option_name] = $value->option_name; ?>
 
-                            <?php if (!empty($parent_categories)) : ?>
-                                <?php if ($parent_categories[0]->id != 2) : ?>
-                                    <!-- <div>
+                                                                    <li>
+                                                                        <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->name,  $value->option_name); ?>">
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, $filter->name,  $value->option_name) ? 'checked' : ''; ?>>
+                                                                                <label class="custom-control-label"><?php echo $value->option_name; ?></label>
+                                                                            </div>
+                                                                        </a>
+                                                                    </li>
+                                                                <?php endforeach; ?>
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+
+                                <?php if (!empty($parent_categories)) : ?>
+                                    <?php if ($parent_categories[0]->id != 2) : ?>
+                                        <!-- <div>
                                         <input type="checkbox" class="check-box-size" id="availability" value="availability" name="filter_checkbox[]" onclick="show_availability(this)">
                                         <label for="availability" style="margin: 10px;"><b>Availability</b></label>
                                     </div> -->
-                                    <div class="filter-item" id="availability_filter" style="display: none">
+                                        <div class="filter-item" id="availability_filter" style="display: none">
 
-                                        <div class="filter-list-container">
-                                            <ul class="filter-list">
-                                                <!-- <li>
+                                            <div class="filter-list-container">
+                                                <ul class="filter-list">
+                                                    <!-- <li>
                                     <a href="<?= current_url() . generate_filter_url($query_string_array, 'available', 'in_stock'); ?>">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'available', 'in_stock') ? 'checked' : ''; ?>>
@@ -937,7 +943,7 @@ foreach ($sellers as $seller) {
                                         </div>
                                     </a>
                                 </li> -->
-                                                <!-- <li>
+                                                    <!-- <li>
                                                     <a href="<?= current_url() . generate_filter_url($query_string_array, 'cash_on_delivery', 'Y'); ?>">
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'cash_on_delivery', 'Y') ? 'checked' : ''; ?>>
@@ -947,12 +953,38 @@ foreach ($sellers as $seller) {
                                                 </li> -->
 
 
-                                                <!-- </ul> -->
+                                                    <!-- </ul> -->
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php endif; ?>
                                 <?php endif; ?>
-                            <?php endif; ?>
-
+                                <div>
+                                    <input type="checkbox" class="check-box-size" id="is_personalised" value="product_type" name="filter_checkbox[]" onclick="show_is_personalised(this)">
+                                    <label for="product_type" style="margin: 10px;"><b>Is Personalised</b></label>
+                                </div>
+                                <div class="filter-item" id="is_personalised_filter" style="display: none">
+                                    <div class="filter-list-container">
+                                        <ul class="filter-list">
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'is_personalised', 'Y'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'is_personalised', 'Y') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Personalised</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'is_personalised', 'N'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input " <?= is_custom_field_option_selected($query_string_object_array, 'is_personalised', 'N') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Not Personalised</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                             <div>
                                 <input type="checkbox" class="check-box-size" id="price" value="price" name="filter_checkbox[]" onclick="show_price(this)">
                                 <label for="price" style="margin: 10px;"><b>Price</b></label>
@@ -1109,7 +1141,7 @@ foreach ($sellers as $seller) {
                                                 <a href="<?= current_url() . generate_filter_url($query_string_array, 'suitable_for', 'male'); ?>">
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'suitable_for', 'male') ? 'checked' : ''; ?>>
-                                                        <label class="custom-control-label">Male</label>
+                                                        <label class="custom-control-label">Boys</label>
                                                     </div>
                                                 </a>
                                             </li>
@@ -1117,7 +1149,7 @@ foreach ($sellers as $seller) {
                                                 <a href="<?= current_url() . generate_filter_url($query_string_array, 'suitable_for', 'female'); ?>">
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'suitable_for', 'female') ? 'checked' : ''; ?>>
-                                                        <label class="custom-control-label">Female</label>
+                                                        <label class="custom-control-label">Girls</label>
                                                     </div>
                                                 </a>
                                             </li>
@@ -1147,7 +1179,7 @@ foreach ($sellers as $seller) {
                                                 <a href="<?= current_url() . generate_filter_url($query_string_array, 'suitable_for', 'male'); ?>">
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'suitable_for', 'male') ? 'checked' : ''; ?>>
-                                                        <label class="custom-control-label">Male</label>
+                                                        <label class="custom-control-label">Boys</label>
                                                     </div>
                                                 </a>
                                             </li>
@@ -1155,7 +1187,7 @@ foreach ($sellers as $seller) {
                                                 <a href="<?= current_url() . generate_filter_url($query_string_array, 'suitable_for', 'female'); ?>">
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'suitable_for', 'female') ? 'checked' : ''; ?>>
-                                                        <label class="custom-control-label">Female</label>
+                                                        <label class="custom-control-label">Girls</label>
                                                     </div>
                                                 </a>
                                             </li>
@@ -1997,16 +2029,48 @@ foreach ($sellers as $seller) {
                                             <span><?= html_escape($filter->value); ?></span>
                                         </div>
                                     </div>
-                                <?php elseif ($filter->key == "suitable_for") : ?>
+                                <?php elseif ($filter->key == "is_personalised") : ?>
                                     <div class="filter-reset-tag">
                                         <div class="left">
                                             <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
                                         </div>
                                         <div class="right">
-                                            <span class="reset-tag-title">Suitable For</span>
+                                            <span class="reset-tag-title">Personalised</span>
                                             <span><?= html_escape($filter->value); ?></span>
                                         </div>
                                     </div>
+                                <?php elseif ($filter->key == "suitable_for") : ?>
+                                    <?php if ($filter->value == "male") : ?>
+                                        <div class="filter-reset-tag">
+                                            <div class="left">
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                            </div>
+                                            <div class="right">
+                                                <span class="reset-tag-title">Suitable For</span>
+                                                <span>Boys</span>
+                                            </div>
+                                        </div>
+                                    <?php elseif ($filter->value == "female") : ?>
+                                        <div class="filter-reset-tag">
+                                            <div class="left">
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                            </div>
+                                            <div class="right">
+                                                <span class="reset-tag-title">Suitable For</span>
+                                                <span>Girls</span>
+                                            </div>
+                                        </div>
+                                    <?php elseif ($filter->value == "unisex") : ?>
+                                        <div class="filter-reset-tag">
+                                            <div class="left">
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                            </div>
+                                            <div class="right">
+                                                <span class="reset-tag-title">Suitable For</span>
+                                                <span>Unisex</span>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
                                 <?php elseif ($filter->key == "origin_of_product") : ?>
                                     <div class="filter-reset-tag">
                                         <div class="left">
@@ -2187,6 +2251,16 @@ foreach ($sellers as $seller) {
                                             <span><?= html_escape($filter->value); ?></span>
                                         </div>
                                     </div>
+                                <?php elseif ($filter->key == "is_personalised") : ?>
+                                    <div class="filter-reset-tag">
+                                        <div class="left">
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                        </div>
+                                        <div class="right">
+                                            <span class="reset-tag-title">Is Personalised</span>
+                                            <span><?= html_escape($filter->value); ?></span>
+                                        </div>
+                                    </div>
                                 <?php elseif ($filter->key == "meal_type") : ?>
                                     <div class="filter-reset-tag">
                                         <div class="left">
@@ -2285,6 +2359,7 @@ foreach ($sellers as $seller) {
                     </div>
                     <div class="ajax-load text-center" style="display:none">
                         <p><img class="more-products-loading" src="<?php echo base_url(); ?>assets/img/dark-loader.gif"></p>
+
                     </div>
                     <div class="ajax-load-2 text-center" style="display:none">
                     </div>
@@ -2378,6 +2453,7 @@ foreach ($sellers as $seller) {
         $('#origin_of_product').prop('checked', true);
         $('#gender').prop('checked', true);
         $('#kids_corner').prop('checked', true);
+        $('#personalised').prop('checked', true);
 
         $('#days_available').prop('checked', true);
         $('#food').prop('checked', true);
@@ -2393,6 +2469,11 @@ foreach ($sellers as $seller) {
             document.getElementById("category_filter").style.display = "block";
         } else if ($('#category').is(":not(:checked)")) {
             document.getElementById("category_filter").style.display = "none";
+        }
+        if ($('#is_personalised').is(":checked")) {
+            document.getElementById("is_personalised_filter").style.display = "block";
+        } else if ($('#price').is(":not(:checked)")) {
+            document.getElementById("is_personalised_filter").style.display = "none";
         }
         if ($('#price').is(":checked")) {
             document.getElementById("price_filter").style.display = "block";
@@ -2499,6 +2580,11 @@ foreach ($sellers as $seller) {
 
     function show_price(check) {
         var dvPassport = document.getElementById("price_filter");
+        dvPassport.style.display = check.checked ? "block" : "none";
+    }
+
+    function show_is_personalised(check) {
+        var dvPassport = document.getElementById("is_personalised_filter");
         dvPassport.style.display = check.checked ? "block" : "none";
     }
 
