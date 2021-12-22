@@ -154,7 +154,7 @@
                                         <div class="row Brand-1" style="margin-bottom: 3%;">
                                             <div class="col-md-3"><label id="formlabel2">Account Number<span class="Validation_error"> *</span></label></div>
                                             <div class="col-md-9 Brand-name">
-                                                <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" minlength="9" value="<?php echo html_escape($user->account_number); ?>" required onkeyup="checkLength()">
+                                                <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" minlength="9" required onkeyup="checkLength()">
                                                 <span style="color: red;" id="acc_number"></span>
                                             </div>
                                         </div>
@@ -192,17 +192,29 @@
                                                     <?php else : ?>
                                                         <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/cheque_image.jpeg'; ?>" style="border-radius:10%" />
                                                     <?php endif; ?>
-                                                    <input type="file" name="cheque-image" id="cheque-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>" />
+                                                    <input type="file" name="cheque-image" id="cheque-logo" required="" style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>required" />
+
                                                     <p id="file-upload-filename" style="margin-bottom:0;"></p>
 
                                                     <?php if (!empty($this->auth_user->cheque_image_url)) : ?>
                                                         <small> <a href="<?php echo base_url() . $this->auth_user->cheque_image_url; ?>" target="_blank">View Cheque Image</a></small>
                                                     <?php endif; ?>
+                                                    <span style="color: red;" id="cheque_error"></span>
 
                                                     <script>
                                                         $('#cheque-image').click(function() {
                                                             $('#cheque-logo').click()
                                                         })
+                                                    </script>
+                                                    <script>
+                                                        function cheque_image() {
+                                                            let cheque_image = $('#cheque-logo').val();
+                                                            if (cheque_image.length == 0) {
+                                                                $('#cheque_error').html("Please enter cheque image.");
+                                                            } else {
+                                                                $('#cheque_error').html("");
+                                                            }
+                                                        }
                                                     </script>
 
                                                 </div>
@@ -214,7 +226,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" id="submit" value="update" class="btn btn-md btn-success"><?php echo trans("save_changes"); ?></button>
+                                <button type="submit" id="submit" value="update" onclick="cheque_image();" class="btn btn-md btn-success"><?php echo trans("save_changes"); ?></button>
                             </div>
                             <?php echo form_close(); ?>
                         </div>

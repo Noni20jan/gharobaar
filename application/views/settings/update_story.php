@@ -427,8 +427,10 @@
                 <?php else : ?>
                   <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/cheque_image.jpeg'; ?>" style="border-radius:10%" />
                 <?php endif; ?>
-                <input type="file" name="cheque-image" id="cheque-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>required" />
+                <input type="file" name="cheque-image" id="cheque-logo" required="" style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>required" />
+
                 <p id="file-upload-filename" style="margin-bottom:0;"></p>
+                <span style="color: red;" id="cheque_error"></span>
 
                 <?php if (!empty($this->auth_user->cheque_image_url)) : ?>
                   <small> <a href="<?php echo base_url() . $this->auth_user->cheque_image_url; ?>" target="_blank">View Cheque Image</a></small>
@@ -438,6 +440,16 @@
                   $('#cheque-image').click(function() {
                     $('#cheque-logo').click()
                   })
+                </script>
+                <script>
+                  function cheque_image() {
+                    let cheque_image = $('#cheque-logo').val();
+                    if (cheque_image.length == 0) {
+                      $('#cheque_error').html("Please enter cheque image.");
+                    } else {
+                      $('#cheque_error').html("");
+                    }
+                  }
                 </script>
 
               </div>
@@ -922,10 +934,10 @@
     </div>
   </div>
   <?php if ($this->auth_user->update_profile == 1) : ?>
-    <button type="submit" name="submit" value="update" class="btn btn-lg btn-success pull-right"><?php echo trans("save_changes") ?></button>
+    <button type="submit" name="submit" value="update" onclick="cheque_image();" class="btn btn-lg btn-success pull-right"><?php echo trans("save_changes") ?></button>
   <?php endif; ?>
   <?php if ($this->auth_user->update_profile == 0) : ?>
-    <button type="submit" name="submit" value="save_and_next_details" class="btn btn-lg btn-success pull-right">Save and Next</button>
+    <button type="submit" name="submit" value="save_and_next_details" onclick="cheque_image();" class="btn btn-lg btn-success pull-right">Save and Next</button>
   <?php endif; ?>
   <?php echo form_close(); ?>
 </div>

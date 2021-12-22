@@ -331,11 +331,12 @@
                                             })
 
                                             function cheque_image() {
-
-                                                if (!$('#cheque-logo').val()) {
+                                                let cheque_image = $('#cheque-logo').val();
+                                                if (cheque_image.length == 0) {
                                                     $('#cheque_error').html("Please enter cheque image.");
+                                                } else {
+                                                    $('#cheque_error').html("");
                                                 }
-                                                $('#cheque_error').html("");
                                             }
                                         </script>
 
