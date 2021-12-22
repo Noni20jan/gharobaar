@@ -1,4 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<!-- <link rel="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 <style>
     .shop-by {
         display: flex;
@@ -31,6 +34,15 @@
             flex-direction: row;
             flex-wrap: nowrap;
             justify-content: space-between;
+            padding: 0px;
+            overflow-x: scroll;
+        }
+
+        .cards-space {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between !important;
             padding: 0px;
             overflow-x: scroll;
         }
@@ -564,12 +576,84 @@
     .mobile-slider {
         display: none;
     }
-</style>
-<?php if ($this->auth_check) {
-    if ($this->auth_user->user_type == "guest") {
-        redirect(base_url() . 'logout');
+
+    .cards-space {
+        justify-content: space-around;
+        padding-top: 15px;
     }
-} ?>
+</style>
+<!-- <style>
+    .home-testimonial {
+        background-color: #231834;
+        height: 380px
+    }
+
+    .home-testimonial-bottom {
+        background-color: #f8f8f8;
+        transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+        margin-top: 20px;
+        margin-bottom: 0px;
+        position: relative;
+        height: 130px;
+        top: 190px
+    }
+
+    .home-testimonial h3 {
+        color: var(--orange);
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase
+    }
+
+    .home-testimonial h2 {
+        color: white;
+        font-size: 28px;
+        font-weight: 700
+    }
+
+    .testimonial-inner {
+        position: relative;
+        top: -174px
+    }
+
+    .testimonial-pos {
+        position: relative;
+        top: 24px
+    }
+
+    .testimonial-inner .tour-desc {
+        border-radius: 5px;
+        padding: 40px
+    }
+
+    .color-grey-3 {
+        font-family: "Montserrat", Sans-serif;
+        font-size: 14px;
+        color: #6c83a2
+    }
+
+    .testimonial-inner img.tm-people {
+        width: 60px;
+        height: 60px;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        -o-object-fit: cover;
+        object-fit: cover;
+        max-width: none
+    }
+
+    .link-name {
+        font-family: "Montserrat", Sans-serif;
+        font-size: 14px;
+        color: #6c83a2
+    }
+
+    .link-position {
+        font-family: "Montserrat", Sans-serif;
+        font-size: 12px;
+        color: #6c83a2
+    }
+</style> -->
 
 <div class="section-slider web-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
@@ -584,7 +668,7 @@
 <!-- Wrapper -->
 <div class="index-wrapper" id="wrapper">
     <div class="container">
-        <div class="row shop-by">
+        <div class="row cards-space">
             <div class="col-sm-2">
                 <a href="<?php echo lang_base_url() . 'shop-by-concern'; ?>">
                     <img class="top-picks-new-ui" src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/assets/img/landing-page-img/new-ui-img-1.png" alt="shop-by-concern">
@@ -625,7 +709,54 @@
                     </p>
                 </a>
             </div>
-        </div> <?php if (!empty($promoted_products)) : ?>
+        </div>
+        <!-- <section class="home-testimonial">
+            <div class="container-fluid">
+                <div class="row d-flex justify-content-center testimonial-pos">
+                    <div class="col-md-12 pt-4 d-flex justify-content-center">
+                        <h3>Testimonials</h3>
+                    </div>
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <h2>Explore the students experience</h2>
+                    </div>
+                </div>
+                <section class="home-testimonial-bottom">
+                    <div class="container testimonial-inner">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-4 style-3">
+                                <div class="tour-item ">
+                                    <div class="tour-desc bg-white">
+                                        <div class="tour-text color-grey-3 text-center">“At this School, our mission is to balance a rigorous comprehensive college preparatory curriculum with healthy social and emotional development.”</div>
+                                        <div class="d-flex justify-content-center pt-2 pb-2"><img class="tm-people" src="https://images.pexels.com/photos/6625914/pexels-photo-6625914.jpeg" alt=""></div>
+                                        <div class="link-name d-flex justify-content-center">Balbir Kaur</div>
+                                        <div class="link-position d-flex justify-content-center">Student</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 style-3">
+                                <div class="tour-item ">
+                                    <div class="tour-desc bg-white">
+                                        <div class="tour-text color-grey-3 text-center">“At this School, our mission is to balance a rigorous comprehensive college preparatory curriculum with healthy social and emotional development.”</div>
+                                        <div class="d-flex justify-content-center pt-2 pb-2"><img class="tm-people" src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></div>
+                                        <div class="link-name d-flex justify-content-center">Balbir Kaur</div>
+                                        <div class="link-position d-flex justify-content-center">Student</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 style-3">
+                                <div class="tour-item ">
+                                    <div class="tour-desc bg-white">
+                                        <div class="tour-text color-grey-3 text-center">“At this School, our mission is to balance a rigorous comprehensive college preparatory curriculum with healthy social and emotional development.”</div>
+                                        <div class="d-flex justify-content-center pt-2 pb-2"><img class="tm-people" src="https://images.pexels.com/photos/4946604/pexels-photo-4946604.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></div>
+                                        <div class="link-name d-flex justify-content-center">Balbir Kaur</div>
+                                        <div class="link-position d-flex justify-content-center">Student</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </section>
+        </section> -->
+        <?php if (!empty($promoted_products)) : ?>
             <?php if ($this->general_settings->index_promoted_products == 1 && $this->general_settings->promoted_products == 1 && !empty($promoted_products)) : ?>
                 <div class="col-12 sides-gap-equal section section-promoted">
                     <!-- promoted products -->
@@ -800,7 +931,7 @@
 
         <div class="col-12 sides-gap-equal section section-latest-products">
             <h3 class="find-your-seller" id="top_picks">Top Picks</h3>
-            <div class="row row-product shop-by" id="top-picks-container-2">
+            <div class="row row-product shop-by" id="top-picks-container">
                 <!--print products-->
                 <?php if (($this->auth_check) && (count($top_picks) >= 5)) : ?>
                     <?php foreach ($top_picks as $product) : ?>
@@ -816,11 +947,13 @@
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
-            <!-- <div id="top-picks-container_nav" class="index-products-slider-nav">
+            <div id="top-picks-container_nav" class="index-products-slider-nav">
                 <button class="prev"><i class="icon-arrow-left"></i></button>
                 <button class="next"><i class="icon-arrow-right"></i></button>
-            </div> -->
+            </div>
         </div>
+
+
 
         <!-- <div class="col-12 sides-gap-equal">
             <h3 class="find-your-seller">Shop By Occasion</h3>
@@ -877,9 +1010,9 @@
                     </div>
                 </div>
                 <div id="top-discounts-container_nav" class="index-products-slider-nav">
-                    <!-- <button class="prev"><i class="icon-arrow-left"></i></button>
+                    <button class="prev"><i class="icon-arrow-left"></i></button>
 
-                    <button class="next"><i class="icon-arrow-right"></i></button> -->
+                    <button class="next"><i class="icon-arrow-right"></i></button>
                 </div>
             </div>
         <?php endif; ?>
