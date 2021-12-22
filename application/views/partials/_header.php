@@ -4120,7 +4120,7 @@
             animation-name: example;
             animation-duration: 2s;
             animation-delay: 2s;
-            margin: 6px;
+            margin: 0px;
             animation-iteration-count: infinite;
         }
 
@@ -4133,8 +4133,8 @@
             font-weight: normal;
             font-style: normal;
             font-family: "Montserrat", Helvetica, sans-serif;
-            box-shadow: 0 0 1em 1px rgb(0 0 0 / 25%);
-            color: #006;
+            /* box-shadow: 0 0 1em 1px rgb(0 0 0 / 25%);
+            color: #006; */
             /* margin: 0em;
             /* max-width: 100em; */
             /* padding: 0em; */
