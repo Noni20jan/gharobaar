@@ -1,5 +1,9 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+</link>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
     #boxbg {
         background-position: center;
@@ -101,9 +105,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="table-responsive">
-                        <table class="even table table-striped table-products">
+                        <table class="even table table-striped table-products" id="myTable">
                             <thead>
                                 <tr class="rock">
+                                    <!-- <th></th> -->
                                     <th width="20"><?php echo trans('id'); ?></th>
                                     <th><?php echo trans('product'); ?></th>
                                     <th><?php echo trans('sku'); ?></th>
@@ -123,6 +128,7 @@
                                         ?>
                                             <tr>
                                                 <?php $i++; ?>
+                                                <!-- <td><input type='checkbox' onchange='checkbox(this,<?php echo $item->id ?>)'></td> -->
                                                 <td><?php echo html_escape($item->id); ?></td>
                                                 <td class="td-product">
                                                     <?php if ($item->is_promoted == 1) : ?>
@@ -165,7 +171,7 @@
                                                             <input type="number" name="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>" required>
                                                         </div>
                                                         <div style="float:left;">
-                                                            <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('edit'); ?></button>
+                                                            <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('save'); ?></button>
                                                         </div>
                                                     </div>
 
@@ -188,7 +194,10 @@
                                             ?>
                                                     <?php $i++; ?>
                                                     <tr>
+
+                                                        <!-- <td><input type='checkbox' onchange='checkbox(this,<?php echo $item->id ?>)'></td> -->
                                                         <td><?php echo html_escape($item->id); ?></td>
+
                                                         <td class="td-product">
                                                             <?php if ($item->is_promoted == 1) : ?>
                                                                 <label class="label label-success"><?php echo trans("featured"); ?></label>
@@ -231,7 +240,7 @@
                                                                     <input type="number" name="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>" required>
                                                                 </div>
                                                                 <div style="float:left;">
-                                                                    <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('edit'); ?></button>
+                                                                    <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('save'); ?></button>
                                                                 </div>
                                                             </div>
 
@@ -257,6 +266,7 @@
                                                     $option_name = get_variation_option_name($options->option_names, $this->selected_lang->id);
                                         ?> <?php $i++; ?>
                                                     <tr>
+                                                        <!-- <td><input type='checkbox' onchange='checkbox(this,<?php echo $item->id ?>)'></td> -->
                                                         <td><?php echo html_escape($item->id); ?></td>
                                                         <td class="td-product">
                                                             <?php if ($item->is_promoted == 1) : ?>
@@ -300,7 +310,7 @@
                                                                     <input type="number" name="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>" required>
                                                                 </div>
                                                                 <div style="float:left;">
-                                                                    <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('edit'); ?></button>
+                                                                    <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('save'); ?></button>
                                                                 </div>
                                                             </div>
 
@@ -383,3 +393,146 @@
 
     });
 </script>
+<script>
+    $(document).ready(function() {
+        // Setup - add a text input to each footer cell
+        $('#myTable thead tr')
+            .clone(true)
+            .addClass('filters')
+        // .appendTo('#myTable thead');
+
+        var table = $('#myTable').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true,
+            initComplete: function() {
+                var api = this.api();
+
+                // For each column
+                api
+                    .columns()
+                    .eq(0)
+                    .each(function(colIdx) {
+                        // Set the header cell to contain the input element
+                        var cell = $('.filters th').eq(
+                            $(api.column(colIdx + 1).header()).index()
+                        );
+                        var title = $(cell).text();
+                        $(cell).html('<input type="text" style="width:100%" placeholder="' + title + '" />');
+
+                        // On every keypress in this input
+                        $(
+                                'input',
+                                $('.filters th').eq($(api.column(colIdx).header()).index())
+                            )
+                            .off('keyup change')
+                            .on('keyup change', function(e) {
+                                e.stopPropagation();
+
+                                // Get the search value
+                                $(this).attr('title', $(this).val());
+                                var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                var cursorPosition = this.selectionStart;
+                                // Search the column for that value
+                                api
+                                    .column(colIdx)
+                                    .search(
+                                        this.value != '' ?
+                                        regexr.replace('{search}', '(((' + this.value + ')))') :
+                                        '',
+                                        this.value != '',
+                                        this.value == ''
+                                    )
+                                    .draw();
+
+                                $(this)
+                                    .focus()[0]
+                                    .setSelectionRange(cursorPosition, cursorPosition);
+                            });
+                    });
+            },
+        });
+    });
+</script>
+<!-- <script>
+    var arr = [];
+    var fullDataArr = [];
+    var duplicateArr = [];
+    var data_cal = [];
+
+
+
+
+    function checkbox(ele, data) {
+        var obj = {};
+        console.log(data);
+        obj.id = data;
+        // obj.seller_id = data.id;
+        // obj.phone = data.phone_number;
+        // obj.email = data.email;
+        // obj.acc_no = data.account_number;
+        // obj.acc_name = data.acc_holder_name;
+        // obj.ifsc = data.ifsc_code;
+        // obj.seller_pay = parseInt(data.net_seller_payable);
+
+
+        if (ele.checked) {
+
+            if (data_cal.length > 0) {
+                var is_exists = 0;
+                for (var i = 0; i < data_cal.length; i++) {
+                    var exist_obj = data_cal[i];
+                    if (exist_obj.seller_id == obj.seller_id) {
+                        exist_obj.seller_pay += parseInt(obj.seller_pay);
+                        is_exists = 1;
+                    } else {
+                        is_exists = 0;
+                    }
+                }
+                if (!is_exists) {
+                    data_cal.push(obj);
+                }
+            } else {
+                data_cal.push(obj);
+            }
+
+
+        } else {
+            if (data_cal.length > 0) {
+                var index_obj = 0;
+                for (var i = 0; i < data_cal.length; i++) {
+                    var exist_obj = data_cal[i];
+                    if (exist_obj.seller_id == obj.seller_id) {
+                        exist_obj.seller_pay -= parseInt(obj.seller_pay);
+                        if (exist_obj.seller_pay == 0) {
+                            index_obj = i;
+                            data_cal.splice(index_obj, 1);
+                        }
+                    }
+                }
+
+            }
+        }
+
+        console.log(data_cal);
+    }
+
+    // function checkallchecks(ele) {
+    //     if (ele.checked) {
+    //         $("input[type='checkbox']").prop("checked", true);
+    //         $('input[type=checkbox]').attr('disabled', true);
+    //         document.getElementById("allCheck").disabled = false;
+
+    //         for (i = 0; i < fullDataArr.length; i++) {
+    //             duplicateArr[i] = fullDataArr[i];
+    //         }
+    //     } else {
+    //         $('input[type=checkbox]').attr('disabled', false);
+    //         $("input[type='checkbox']").prop("checked", false);
+
+    //         duplicateArr = [];
+    //         arr = [];
+    //     }
+    //     console.log(duplicateArr);
+    // }
+</script> -->
