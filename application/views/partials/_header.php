@@ -4155,7 +4155,7 @@
 
         } */
         .display {
-            text-align: center;
+            /* text-align: center; */
         }
 
         @media screen and (max-width:768px) {
