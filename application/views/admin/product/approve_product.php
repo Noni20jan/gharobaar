@@ -385,7 +385,6 @@
 
             success: function(data) {
                 location.reload();
-
             },
             error: function() {
                 alert("error"); //error occurs
@@ -448,7 +447,7 @@
 
                 for (var i = 0; i < len; i++) {
 
-                    $('#insert_data').append("<tr><td>" + Json_data[i].id + "</td><td> <div class='img-table'><img src=<?php echo base_url(); ?>uploads/images/" + Json_data[i].image_default + "> + </div></td><td>" + '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].title + "</td><td>" + Json_data[i].name + "</td><td>" + Json_data[i].stock + "</td><td>" + Json_data[i].shop_name + "</td><td>" + Json_data[i].brand_name + "</td><td>" + '<input type="checkbox" name="selected_id" id="product_checkbox" value="' + Json_data[i].product_id + '">' + "</td></tr>")
+                    $('#insert_data').append("<tr><td>" + Json_data[i].id + "</td><td> <div class='img-table'><img src=<?php echo base_url(); ?>uploads/images/" + Json_data[i].image_default + "> + </div></td><td>" + '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].title + "</td><td>" + Json_data[i].name + "</td><td>" + Json_data[i].stock + "</td><td>" + Json_data[i].shop_name + "</td><td>" + Json_data[i].brand_name + "</td><td>" + '<input type="checkbox" name="selected_id" id="product_checkbox" value="' + Json_data[i].id + '">' + "</td></tr>")
 
 
                 }
