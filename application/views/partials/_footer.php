@@ -400,7 +400,7 @@
                                         <p class="mobile-view-links-padding dott-between"><a href="<?php echo lang_base_url() . 'privacy'; ?>"><?php echo trans("privacy") ?></a></p>
                                         <p class="mobile-view-links-padding dott-between"><a href="<?php echo lang_base_url() . 'terms-conditions'; ?>"><?php echo trans("terms_conditions") ?></a></p>
                                         <p class="mobile-view-links-padding dott-between"><a href="<?php echo lang_base_url() . 'shipping_policy' ?>"><?php echo trans("shipping_policy") ?></a></p>
-                                        <p class="mobile-view-links-padding dott-between" style="padding: 0px 5px;"><a href="<?php echo lang_base_url() . 'user_blog' ?>"><?php echo trans("blog") ?></a></p>
+                                        <p class="mobile-view-links-padding dott-between" style="padding: 0px 5px;"><a href="<?php echo lang_base_url() . 'blog' ?>"><?php echo trans("blog") ?></a></p>
                                         <p class="nav-item mobile-view-links-padding" style="padding: 0px 5px;"><a href="<?php echo lang_base_url() . 'return_and_exchange'; ?>"><?php echo trans("return_and_exchange"); ?></a></p>
 
 
