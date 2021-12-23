@@ -736,8 +736,8 @@ foreach ($sellers as $seller) {
                             </div>
                             <div>
 
-                                <input type="checkbox" class="check-box-size" id="origin_of_product" value="origin_of_product" name="filter_checkbox[]" onclick="show_origin_of_product(this)">
-                                <label for="origin_of_product" style="margin: 10px;"><b>State of Origin</b></label>
+                                <input type="checkbox" class="check-box-size" id="origin_of_product" value="origin_of_product" name="filter_checkbox[]" onclick="show_origin_of_product(this)" style="display:none;">
+                                <label for="origin_of_product" style="margin: 10px;display:none;"><b>State of Origin</b></label>
                             </div>
                             <div class="filter-item" id="origin_of_product_filter" style="display: none">
                                 <!-- end of stock filter -->
@@ -749,8 +749,8 @@ foreach ($sellers as $seller) {
 
                                             <div>
 
-                                                <input type="checkbox" class="check-box-size" id="origin_of_product" value="origin_of_product" name="filter_checkbox[]" onclick="show_origin_of_product(this)">
-                                                <label for="origin_of_product" style="margin: 10px;"><b>State of Origin</b></label>
+                                                <input type="checkbox" class="check-box-size" id="origin_of_product" value="origin_of_product" name="filter_checkbox[]" onclick="show_origin_of_product(this)" style="display:none;">
+                                                <label for="origin_of_product" style="margin: 10px;display:none;"><b>State of Origin</b></label>
                                             </div>
                                             <div class="filter-item" id="origin_of_product_filter" style="display: none">
 
@@ -773,8 +773,8 @@ foreach ($sellers as $seller) {
                                         <?php endif; ?>
                                     <?php else : ?>
                                         <div>
-                                            <input type="checkbox" class="check-box-size" id="origin_of_product" value="origin_of_product" name="filter_checkbox[]" onclick="show_origin_of_product(this)">
-                                            <label for="origin_of_product" style="margin: 10px;"><b>State of Origin</b></label>
+                                            <input type="checkbox" class="check-box-size" id="origin_of_product" value="origin_of_product" name="filter_checkbox[]" onclick="show_origin_of_product(this)" style="display:none;">
+                                            <label for="origin_of_product" style="margin: 10px;display:none;"><b>State of Origin</b></label>
                                         </div>
                                         <div class="filter-item" id="origin_of_product_filter" style="display: none">
 
