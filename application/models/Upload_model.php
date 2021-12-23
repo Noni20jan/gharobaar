@@ -370,13 +370,21 @@ class Upload_model extends CI_Model
     }
 
     //slider image upload
-    public function slider_image_upload($path)
+    public function slider_image_upload($path, $feature_name)
     {
-        $new_path = 'uploads/slider/slider_' . generate_unique_id() . '.png';
-        $img = Image::make($path)->orientate();
-        $img->fit(1920, 600);
-        $img->save(FCPATH . $new_path, $this->quality);
-        return $new_path;
+        if ($feature_name == "SECOND_MAIN_BANNER") {
+            $new_path = 'uploads/slider/slider_' . generate_unique_id() . '.png';
+            $img = Image::make($path)->orientate();
+            $img->fit(450, 460);
+            $img->save(FCPATH . $new_path, $this->quality);
+            return $new_path;
+        } else {
+            $new_path = 'uploads/slider/slider_' . generate_unique_id() . '.png';
+            $img = Image::make($path)->orientate();
+            $img->fit(1920, 600);
+            $img->save(FCPATH . $new_path, $this->quality);
+            return $new_path;
+        }
     }
 
     //slider image mobile upload

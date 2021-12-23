@@ -2353,7 +2353,7 @@ foreach ($sellers as $seller) {
                         <?php endforeach; ?>
                         <?php if (empty($products)) : ?>
                             <div class="col-12">
-                                <!-- <p class="no-records-found"><?php echo trans("no_more_products_to_show"); ?></p> -->
+                                <p class="no-records-found"><?php echo trans("no_more_products_to_show"); ?></p>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -2420,13 +2420,14 @@ foreach ($sellers as $seller) {
                 if (data == " ") {
 
                     // $('.ajax-load-2').html("Fr");
-                    $('.ajax-load-2').html("No more records found");
+                    // $('.ajax-load-2').html("That's all for now !");
                     return;
                 } else {
                     $('.ajax-load').hide();
                     // $('.ajax-load-1').hide();
-                    // $('#no-more-products').html("");
+                    $('#no-more-products').html("That's all for now !");
                     $("#post-data").append(data);
+
                 }
             })
             .fail(function(jqXHR, ajaxOptions, thrownError) {

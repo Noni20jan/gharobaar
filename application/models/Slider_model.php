@@ -32,7 +32,7 @@ class Slider_model extends CI_Model
 
         $temp_path = $this->upload_model->upload_temp_image('file');
         if (!empty($temp_path)) {
-            $data["image"] = $this->upload_model->slider_image_upload($temp_path);
+            $data["image"] = $this->upload_model->slider_image_upload($temp_path, $data['category_feature']);
             $this->upload_model->delete_temp_image($temp_path);
         }
 
@@ -75,7 +75,7 @@ class Slider_model extends CI_Model
             $temp_path = $this->upload_model->upload_temp_image('file');
             if (!empty($temp_path)) {
                 delete_file_from_server($item->image);
-                $data["image"] = $this->upload_model->slider_image_upload($temp_path);
+                $data["image"] = $this->upload_model->slider_image_upload($temp_path, $data['category_feature']);
                 $this->upload_model->delete_temp_image($temp_path);
             }
             $temp_path_mobile = $this->upload_model->upload_temp_image('file_mobile');
