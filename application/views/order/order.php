@@ -447,8 +447,8 @@
                                             <?php if ($item->order_status == "payment_received" || $item->order_status == "awaiting_payment" || $item->order_status == "processing" || $item->order_status == "waiting") : ?>
                                                 <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
                                                     <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
-                                                <?php elseif (get_product($item->product_id)->add_meet == "Made to order" && $item->order_status == "waiting") : ?>
-                                                    <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
+                                                <?php elseif (get_product($item->product_id)->add_meet == "Made to order") : ?>
+                                                    <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>" style="visibility:hidden;"><?php echo trans("cancel_item"); ?></button>
                                                 <?php else : ?>
                                                     <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_made_to_order"><?php echo trans("cancel_item"); ?></button>
                                                 <?php endif; ?>
@@ -907,8 +907,8 @@
                                                 <?php if ($item->order_status == "payment_received" || $item->order_status == "awaiting_payment" || $item->order_status == "processing" || $item->order_status == "waiting") : ?>
                                                     <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
                                                         <button class="btn btn-sm btn-custom" id="cancel" style="border-color:green;background-color:#fff;" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
-                                                    <?php elseif (get_product($item->product_id)->add_meet == "Made to order" && $item->order_status == "waiting") : ?>
-                                                        <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
+                                                    <?php elseif (get_product($item->product_id)->add_meet == "Made to order") : ?>
+                                                        <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>" style="visibility:hidden;"><?php echo trans("cancel_item"); ?></button>
                                                     <?php else : ?>
                                                         <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_made_to_order"><?php echo trans("cancel_item"); ?></button>
                                                     <?php endif; ?>

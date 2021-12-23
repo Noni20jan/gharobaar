@@ -32,8 +32,8 @@
                 <label><?php echo trans("feature_type"); ?> (<?php echo $language->name; ?>)</label>
                 <select class="form-control" name="feature_type" id="feature_type" required>
                     <option disabled selected>Select Feature Type</option>
-          
-                        <option value="GROUP_FEATURE">Group Feature</option>
+
+                    <option value="GROUP_FEATURE">Group Feature</option>
                 </select>
 
             </div>
@@ -315,7 +315,7 @@
                     var dropdown = "<div class='dropdown' style='float:none;'><button class='btn  dropdown-toggle btn-select-option btn-custom' type='button' data-toggle='dropdown'>Select an Option<span class='caret'></span></button><ul class='dropdown-menu options-dropdown'>" + "<li><a href=<?php echo admin_url(); ?>product-details/" + Json_data[i].product_id + "><i class='fa fa-info option-icon'></i>View Details</a></li><li><a href=javascript:void(0); onclick=delete_tagged_item('product_controller/delete_tagging_product'," + feature_id + "," + Json_data[i].product_id + ",'Delete')><i class='fa fa-times option-icon'></i>Delete</a></li><li><a href = <?php echo generate_dash_url('edit_product'); ?>/" + Json_data[i].product_id + "> " +
                         "<i class='fa fa-edit option-icon'></i>Edit</a></li></ul>";
 
-                    $('#insert_data').append("<tr><td>" + Json_data[i].product_id + "</td><td> <div class='img-table'><img src=<?php echo base_url(); ?>uploads/images/" + Json_data[i].image_small + "> + </div></td><td>" + '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].title + "</td><td>" + Json_data[i].category_id + "</td><td>" + Json_data[i].stock + "</td><td>" + Json_data[i].created_at + "</td><td>" + dropdown + "</td></tr>");
+                    $('#insert_data').append("<tr><td>" + Json_data[i].product_id + "</td><td> <div class='img-table'><img src=<?php echo base_url(); ?>uploads/images/" + Json_data[i].image_small + "> + </div></td><td>" + '<a href="<?php echo base_url(); ?>' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].title + "</td><td>" + Json_data[i].name + "</td><td>" + Json_data[i].stock + "</td><td>" + Json_data[i].created_at + "</td><td>" + dropdown + "</td></tr>");
                 }
                 var table = $('#example').DataTable({
 

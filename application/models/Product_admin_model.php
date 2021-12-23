@@ -435,6 +435,7 @@ class Product_admin_model extends CI_Model
     {
         $category_ids = $this->get_filter_category_ids();
         $this->db->join('images', 'images.product_id=products.id');
+        $this->db->join('categories_lang', 'categories_lang.category_id=products.category_id');
 
         $this->db->join('product_banner_tagging', 'product_banner_tagging.product_id=products.id');
         $this->db->join('product_details', 'product_details.product_id=products.id');
