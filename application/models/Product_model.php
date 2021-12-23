@@ -1045,7 +1045,15 @@ class Product_model extends Core_Model
         $array_rating = @explode(',', $rating);
         if (!empty($array_rating) && !empty($array_rating[0])) {
             $this->db->group_start();
-            $this->db->where_in("products.rating", $array_rating);
+            foreach ($array_rating as $ar) {
+                // $this->db->where("products.rating <", $ar + 1);
+                // $this->db->where("products.rating >=", $ar);
+                $this->db->or_group_start();
+                $this->db->where("products.rating <", $ar + 1);
+                $this->db->where("products.rating >=", $ar);
+                $this->db->group_end();
+            }
+            // $this->db->where_in("products.rating", $array_rating);
             $this->db->group_end();
         }
 
