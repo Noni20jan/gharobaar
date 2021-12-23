@@ -12,7 +12,7 @@
     }
 
 
-    #textEmail {
+    #textEmail1 {
         background-color: #d1d1d1 !important;
 
     }
@@ -61,6 +61,7 @@
     }
 
     #footer .newsletter .newsletter-inner input {
+        border-radius: 20px;
         border-bottom: 1px solid #e0e0e2;
         border-top: 0;
         border-left: 0;
@@ -453,20 +454,20 @@
                                 <form id="form_validate_newsletter">
                                     <div class="newsletter-inner">
                                         <div class="d-table-cell">
-                                            <input type="text" id="textEmail" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("type_email"); ?>">
-                                            <p id="demo"></p>
+                                            <input type="text" id="textEmail1" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("type_email"); ?>">
+                                            <p id="demo1"></p>
                                         </div><br />
 
 
 
                                         <div class="d-table-cell">
                                             <!-- <button class="btn btn-default" type="submit" onclick="validateEmail()"><?php echo trans("subscribe"); ?> -->
-                                            <button type="button" class="btn btn-default" id="subscribe"><?php echo trans("subscribe"); ?></button>
+                                            <button type="button" class="btn btn-default" id="subscribe1"><?php echo trans("subscribe"); ?></button>
                                             </button>
 
                                         </div>
                                     </div>
-                                    <p id="demo" style="color: red;display:inline-block"></p>
+                                    <p id="demo1" style="color: red;display:inline-block"></p>
                                 </form>
 
                                 <div id="newsletter" class="m-t-5">
@@ -685,40 +686,42 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
 
 </html>
 <script>
-    function validateEmail() {
-        // $("#newsletter").hide();
+    // function validateEmail() {
+    //     // $("#newsletter").hide();
 
-        var email;
+    //     var email;
 
-        email = document.getElementById("textEmail").value;
+    //     email = document.getElementById("textEmail").value;
 
-        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-        console.log(reg.test(textEmail.value));
+    //     var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    //     console.log(reg.test(textEmail.value));
 
-        if (reg.test(textEmail.value) == false) {
-            document.getElementById("demo").style.color = "red";
-            document.getElementById("demo").innerHTML = "Please enter valid email address";
-            // alert('Invalid Email Address ->' + email);
-            return false;
-        } else {
+    //     if (reg.test(textEmail.value) == false) {
+    //         document.getElementById("demo").style.color = "red";
+    //         document.getElementById("demo").innerHTML = "Please enter valid email address";
+    //         // alert('Invalid Email Address ->' + email);
+    //         return false;
+    //     } else {
 
-            // document.getElementById("demo").innerHTML = "Valid Email ->" + email;
+    //         // document.getElementById("demo").innerHTML = "Valid Email ->" + email;
 
-        }
-        return true;
+    //     }
+    //     return true;
 
 
-    }
+    // }
 </script>
 <script>
     $(document).ready(function() {
         $('#subscribe').click(function(e) {
             e.preventDefault();
             var email = document.getElementById("textEmail").value;
-            var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-            if (reg.test(textEmail.value) == false) {
+            console.log(email);
+            var reg = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if (reg.test(email) == false) {
                 document.getElementById("demo").style.color = "red";
                 document.getElementById("demo").innerHTML = "Please enter valid email address";
+                $("demo").hide();
                 // alert('Invalid Email Address ->' + email);
                 return false;
             } else {
@@ -739,8 +742,11 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
                         if (response.status == '1') {
                             $('#form_validate_newsletter')[0].reset();
                             $('#demo')[0].style.color = "green";
+                            $('#demo')[0].innerText = response.message;
                         } else {
                             $('#demo')[0].style.color = "red";
+                            $('#demo')[0].innerText = response.message;
+
                         }
                     }
                 });
@@ -748,32 +754,51 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
         });
     })
 </script>
-<!-- <script>
+<script>
     $(document).ready(function() {
-        $('#subscribe').click(function(e) {
+        $('#subscribe1').click(function(e) {
             e.preventDefault();
-            var email = document.getElementById("textEmail").value;
-            var base_url = '<?php echo base_url() ?>';
-            var data = {
-                "email": email
-            };
-            data[csfr_token_name] = $.cookie(csfr_cookie_name);
-            $.ajax({
-                type: "POST",
-                url: base_url + "home_controller/add_to_subscribers",
-                data: data,
-                dataType: 'json',
-                async: false,
-                success: function(response) {
-                    console.log(response)
-                    $('#form_validate_newsletter')[0].reset();
-                    $('#demo')[0].innerText=response.message;
-                }
-            });
+            var email = document.getElementById("textEmail1").value;
+            console.log(email);
+            var reg = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
+            if (reg.test(email) ==
+                false) {
+                console.log(reg.test(email));
+                document.getElementById("demo1").style.color = "red";
+                document.getElementById("demo1").innerHTML = "Please enter valid email address";
+                $("demo1").hide();
+                // alert('Invalid Email Address ->' + email);
+                return false;
+            } else {
+                var base_url = '<?php echo base_url() ?>';
+                var data = {
+                    "email": email
+                };
+                data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    type: "POST",
+                    url: base_url + "home_controller/add_to_subscribers",
+                    data: data,
+                    dataType: 'json',
+                    async: false,
+                    success: function(response) {
+
+                        $('#demo1')[0].innerText = response.message;
+                        if (response.status == '1') {
+                            $('#form_validate_newsletter')[0].reset();
+                            $('#demo1')[0].style.color = "green";
+                            $('#demo1')[0].innerText = response.message;
+                        } else {
+                            $('#demo1')[0].style.color = "red";
+                            $('#demo1')[0].innerText = response.message;
+                        }
+                    }
+                });
+            }
         });
     })
-</script> -->
+</script>
 
 <script>
     $("#wishlist-mobile-view").click(function() {
