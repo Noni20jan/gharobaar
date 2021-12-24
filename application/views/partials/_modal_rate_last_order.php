@@ -134,22 +134,20 @@
 <script>
     $(function() {
 
-        var // Define maximum number of files.
+        var
             max_file_number = 4,
-            // Define your form id or class or just tag.
+
             $form = $('form'),
-            // Define your upload field class or id or tag.
+
             $file_upload = $('#fileuploadbasic', $form),
-            // Define your submit class or id or tag.
+
             $button = $('.submit', $form);
 
-        // Disable submit button on page ready.
-        $button.prop('disabled', 'disabled');
+        // $button.prop('disabled', 'disabled');
 
         $file_upload.on('change', function() {
             var number_of_images = $(this)[0].files.length;
             if (number_of_images > max_file_number) {
-                // alert(`You can upload maximum ${max_file_number} images.`);
                 $(this).val('');
                 $button.prop('disabled', 'disabled');
             } else {
