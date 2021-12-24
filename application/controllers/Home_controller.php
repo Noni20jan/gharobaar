@@ -1366,11 +1366,10 @@ class Home_controller extends Home_Core_Controller
 
 
             $data['reviews'] = $this->review_model->get_reviews($data["product"]->id);
+            $data['review_images'] = $this->review_model->get_review_images($data["product"]->id);
             $data['reviews_supplier'] = $this->review_model->get_seller_reviews($data["product"]->user_id);
-
             $data['review_count'] = item_count($data['reviews']);
             $data['review_supplier_count'] = item_count($data['reviews_supplier']);
-
             $data['comment_count'] = $this->comment_model->get_product_comment_count($data["product"]->id);
             $data['comments'] = $this->comment_model->get_comments($data["product"]->id, $this->comment_limit);
             $data['comment_limit'] = $this->comment_limit;
@@ -1378,7 +1377,6 @@ class Home_controller extends Home_Core_Controller
             $data["half_width_product_variations"] = $this->variation_model->get_half_width_product_variations($data["product"]->id);
             $data["full_width_product_variations"] = $this->variation_model->get_full_width_product_variations($data["product"]->id);
             $data["index_settings"] = get_index_settings();
-
             $data["video"] = $this->file_model->get_product_video($data["product"]->id);
             $data["audio"] = $this->file_model->get_product_audio($data["product"]->id);
 

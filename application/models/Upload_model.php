@@ -39,31 +39,45 @@ class Upload_model extends CI_Model
         }
     }
 
-    public function upload_review_image($file_name)
+    public function upload_review_image($file_name, $last_id, $product_id1)
     {
         if (isset($_FILES[$file_name])) {
             if (empty($_FILES[$file_name]['name'])) {
                 return null;
             }
         }
-        $config['upload_path'] = './uploads/reviews/';
-        $config['allowed_types'] = 'gif|jpg|jpeg|png';
-        $config['file_name'] = 'img_temp_' . generate_unique_id();
-        $this->load->library('upload', $config);
-        if ($this->upload->do_upload($file_name)) {
-            $data = array('upload_data' => $this->upload->data());
-            if (isset($data['upload_data']['full_path'])) {
-                return $data['upload_data']['full_path'];
+        $dataInfo = array();
+        $files = $_FILES;
+        $cpt = count($_FILES['file_' . $product_id1]['name']);
+        // var_dump($cpt);
+        // die();
+        for ($i = 0; $i < $cpt; $i++) {
+            $_FILES['file1']['name'] = $files['file_' . $product_id1]['name'][$i];
+            $_FILES['file1']['type'] = $files['file_' . $product_id1]['type'][$i];
+            $_FILES['file1']['tmp_name'] = $files['file_' . $product_id1]['tmp_name'][$i];
+            $_FILES['file1']['error'] = $files['file_' . $product_id1]['error'][$i];
+            $_FILES['file1']['size'] = $files['file_' . $product_id1]['size'][$i];
+            $config['upload_path'] = './uploads/reviews/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['file_name'] = 'reviews' . generate_unique_id();
+            $this->load->library('upload', $config);
+            if ($this->upload->do_upload('file1')) {
+                $data = array('upload_data' => $this->upload->data());
+                if (isset($data['upload_data']['full_path'])) {
+                    $temp_path = $data['upload_data']['full_path'];
+                    $img_path = $this->upload_model->review_image_upload($temp_path);
+                    $this->review_model->upload_review_images($last_id, $img_path, $product_id1);
+                }
+                // return null;
+            } else {
+                return null;
             }
-            return null;
-        } else {
-            return null;
         }
     }
 
     public function review_image_upload($path)
     {
-        $new_path = 'uploads/profile/' . generate_unique_id() . '.jpg';
+        $new_path = 'uploads/reviews/reviews_' . generate_unique_id() . '.jpg';
         $img = Image::make($path)->orientate();
         $img->fit(240, 240);
         $img->save(FCPATH . $new_path, $this->quality);

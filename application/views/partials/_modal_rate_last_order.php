@@ -24,8 +24,14 @@
     }
 
     .upload_image {
-        margin-left: 20px;
+        margin-left: 8px;
 
+    }
+
+    .upload_image_span {
+        margin-left: 8px;
+        font-size: 10px;
+        color: grey;
     }
 </style>
 <div class="modal fade" id="rateProductModalorder" tabindex="-1" role="dialog" aria-hidden="true">
@@ -75,6 +81,13 @@
                                 <input type="hidden" name="rating[]" id="user_rating_<?php echo $i ?>" value="5">
                                 <input type="hidden" name="product_id[]" value="<?php echo $get_last_order->product_id ?>" id="review_product_id">
                             </div>
+                            <div class="upload_image">
+
+                                <input type="file" id="fileuploadbasic" name="file_<?php echo $get_last_order->product_id ?>[]" size="40" multiple="multiple" accept=".jpg, .jpeg,.png">
+
+                            </div>
+                            <span class="upload_image_span">*Maximun 4 images allowed</span>
+
                             <script>
                                 $(document).on("click", ".rating-stars-<?php echo $i ?> .label-star", function() {
                                     $("#user_rating_<?php echo $i ?>").val($(this).attr("data-star"));
@@ -99,25 +112,49 @@
                         <?php endforeach; ?>
 
                     </div>
-                    <div class="upload_image">
 
-                        <!-- <input type="file" class="upload_product_image" name="file" id="upload_review_image" accept=".png, .jpg, .jpeg, .gif" onchange=imageShow(this)> -->
-                        <!-- <span class='badge badge-info' id="upload-file-info"></span> -->
-                    </div>
+                    <!-- <input type="file" class="upload_product_image" name="file" id="upload_review_image" accept=".png, .jpg, .jpeg, .gif" onchange=imageShow(this)> -->
+                    <!-- <span class='badge badge-info' id="upload-file-info"></span> -->
                 </div>
             </div>
+
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-md btn-red" data-dismiss="modal"><?php echo trans("close"); ?></button> -->
-                <button type="submit" class="btn btn-md btn-custom"><?php echo trans("submit"); ?></button>
+                <button type="submit" class="btn btn-md btn-custom submit"><?php echo trans("submit"); ?></button>
             </div>
             <?php echo form_close(); ?>
 
+
         </div>
+
+
     </div>
 </div>
+</div>
 <script>
-    function imageShow(input) {
-        $('#upload-file-info').html($(input).val().replace(/.*[\/\\]/, ''));
-        readURL(input);
-    };
+    $(function() {
+
+        var // Define maximum number of files.
+            max_file_number = 4,
+            // Define your form id or class or just tag.
+            $form = $('form'),
+            // Define your upload field class or id or tag.
+            $file_upload = $('#fileuploadbasic', $form),
+            // Define your submit class or id or tag.
+            $button = $('.submit', $form);
+
+        // Disable submit button on page ready.
+        $button.prop('disabled', 'disabled');
+
+        $file_upload.on('change', function() {
+            var number_of_images = $(this)[0].files.length;
+            if (number_of_images > max_file_number) {
+                // alert(`You can upload maximum ${max_file_number} images.`);
+                $(this).val('');
+                $button.prop('disabled', 'disabled');
+            } else {
+                $button.prop('disabled', false);
+            }
+        });
+    });
 </script>

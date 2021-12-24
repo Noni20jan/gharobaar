@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <style>
     .flexed-reviews {
         display: flex;
@@ -72,8 +73,9 @@
                                             </div>
                                         </div>
                                         <div class="row-custom">
-
-                                            <img id="review_image" class="review-image" src="<?php echo base_url() . $review->review_image; ?> " style="border-radius:10%" />
+                                            <?php foreach ($review_images as $image) : ?>
+                                                <img id="review_image1" class="review_image small" src="<?php echo base_url() . $image->image_url; ?> " style="border-radius:10%;width:100px;height:100px" />
+                                            <?php endforeach; ?>
                                         </div>
                                         <div class="row-custom">
                                             <span class="date"><?php echo time_ago($review->created_at); ?></span>
@@ -122,8 +124,9 @@
                                             </div>
                                         </div>
                                         <div class="row-custom">
-
-                                            <img id="review_image1" class="review-image" src="<?php echo base_url() . $review->review_image; ?> " style="border-radius:10%" />
+                                            <?php foreach ($review_images as $image) : ?>
+                                                <img id="review_image1" class="review_image small" src="<?php echo base_url() . $image->image_url; ?> " style="border-radius:10%;width:100px;height:100px" />
+                                            <?php endforeach; ?>
                                         </div>
                                         <div class="row-custom">
                                             <span class="date"><?php echo time_ago($review->created_at); ?></span>
@@ -141,15 +144,15 @@
 <script>
     $(document).ready(function() {
         var small = {
-            width: "200px",
-            height: "116px"
+            width: "100px",
+            height: "100px"
         };
         var large = {
             width: "200px",
             height: "232px"
         };
         var count = 1;
-        $("#review_image1").css(small).on('click', function() {
+        $(".review_image").css(small).on('click', function() {
             $(this).animate((count == 1) ? large : small);
             count = 1 - count;
         });

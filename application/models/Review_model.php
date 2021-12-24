@@ -37,21 +37,39 @@ class Review_model extends CI_Model
             'ip_address' => 0,
             'created_at' => date("Y-m-d H:i:s")
         );
-        $this->load->model('upload_model');
-        $temp_path = $this->upload_model->upload_review_image('file');
-        // $data["review_image"] = $this->upload_model->review_image_upload($temp_path);
+
+
         $ip = $this->input->ip_address();
         if (!empty($ip)) {
             $data['ip_address'] = $ip;
         }
         if (!empty($data['product_id']) && !empty($data['user_id']) && !empty($data['rating'])) {
-            $this->db->insert('reviews', $data);
+            if ($this->db->insert('reviews', $data)) {
+                $last_id = $this->db->insert_id();
+            }
             //update product rating
             // $this->update_product_rating($product_id);
         }
         unset($data);
+        return $last_id;
     }
+    public function upload_review_images($last_id, $path, $product_id1)
+    {
+        // $seller_id = get_seller_id_by_product_id($product_id);
+        $data = array(
 
+            'review_id' => $last_id,
+            'image_url' => $path,
+            'created_at' => date("Y-m-d H:i:s"),
+            'product_id' => $product_id1
+        );
+
+        if ($this->db->insert('review_images', $data)) {
+        }
+
+        unset($data);
+        return $last_id;
+    }
     //update review
     public function update_review($review_id, $rating, $product_id, $review_text)
     {
@@ -115,6 +133,13 @@ class Review_model extends CI_Model
         return $this->db->get('reviews')->result();
     }
 
+    public function get_review_images($product_id)
+    {
+        $this->db->join('review_images', 'review_images.review_id= reviews.id');
+        $this->db->select('reviews.*,review_images.image_url');
+        $this->db->where('reviews.product_id', clean_number($product_id));
+        return $this->db->get('reviews')->result();
+    }
     //get seller review
     public function get_seller_reviews($supplier_id)
     {

@@ -1966,6 +1966,7 @@ class Cart_controller extends Home_Core_Controller
             $rating = $this->input->post('rating', true);
             $product_id = $this->input->post('product_id', true);
             $review_text = $this->input->post('review', true);
+
             $rating2 = array();
             foreach ($rating as $rating1) {
 
@@ -1978,17 +1979,23 @@ class Cart_controller extends Home_Core_Controller
             }
             $i = 0;
             foreach ($product_id as $product_id1) {
-
                 $product = $this->product_model->get_product_by_id($product_id);
                 $review = $this->review_model->get_review($product_id1, $this->auth_user->id);
                 if (!empty($review)) {
                     $this->review_model->update_review1($review->id, $rating2[$i], $product_id1, $review_text2[$i]);
                 } else {
-                    $this->review_model->add_review1($rating2[$i], $product_id1, $review_text2[$i]);
+                    $last_id = $this->review_model->add_review1($rating2[$i], $product_id1, $review_text2[$i]);
+                    if (!empty($last_id)) {
+
+                        $this->load->model('upload_model');
+                        $img_path = $this->upload_model->upload_review_image('file_' . $product_id1, $last_id, $product_id1);
+                    }
                 }
                 $i++;
             }
         }
+
+
         redirect($this->agent->referrer());
     }
 }
