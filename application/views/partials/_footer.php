@@ -17,6 +17,8 @@
 
     }
 
+
+
     @media only screen and (max-width: 1024px) {
         #footer .newsletter .footer-title {
             color: #222;
@@ -40,12 +42,23 @@
     #textEmail {
         border-radius: 20px;
         background-color: transparent;
+        width: 96%;
         border: 0;
         background-color: #d1d1d1;
 
     }
 
-    footer .newsletter .newsletter-inner button {
+    @media only screen and (max-width: 700px) {
+        #textEmail {
+            border-radius: 20px;
+            background-color: transparent;
+            border: 0;
+
+            background-color: #d1d1d1;
+        }
+    }
+
+    #footer .newsletter .newsletter-inner button {
         /* border-radius: 10px 10px 0px 0; */
         /* border-radius: 10px 10px 0px 0; */
         border-radius: 20px;
@@ -74,6 +87,7 @@
     #subscribe {
         border-radius: 20px;
         min-height: 40px;
+        width: 100%;
         min-width: 40px;
         background-color: green;
         /* background-color: #c582b5; */
@@ -87,6 +101,24 @@
         right: 0px;
     }
 
+    @media(max-width:700px) {
+        #subscribe {
+            border-radius: 20px;
+            min-height: 40px;
+
+            min-width: 40px;
+            background-color: green;
+            /* background-color: #c582b5; */
+            color: #fff;
+            white-space: nowrap;
+            position: relative;
+            top: 13px;
+            /* left: 227px; */
+            /* top: 0px; */
+            float: right;
+            visibility: visible;
+        }
+    }
 
     @media only screen and (max-width: 700px) {
         #footer .newsletter .newsletter-inner button {
@@ -99,8 +131,8 @@
             white-space: nowrap;
 
             position: absolute;
-            right: 2%;
-            display: none;
+            right: 0px;
+
         }
 
         .onlyweb {
@@ -119,8 +151,7 @@
 
     @media only screen and (max-width: 800px) {
         #footer .footer-social-links ul {
-            padding: 0;
-            margin: 0;
+
             float: left;
 
             margin-top: 0%;
@@ -381,7 +412,6 @@
                                     </div>
                                     <div class="d-table-cell">
                                         <button type="button" class="btn btn-default" id="subscribe"><?php echo trans("subscribe"); ?></button>
-                                        </button>
                                     </div>
                                 </div>
                                 <p id="demo" style="color: red;display:inline-block"></p>
@@ -430,6 +460,7 @@
 
 
 
+
                         <div class="col-12 col-sm-2 footer-widget" id="contact-hidden">
                             <div class="nav-footer">
                                 <div class="row-custom">
@@ -438,13 +469,13 @@
 
                                 <div class="row-custom">
                                     <ul>
-                                        <li><a href="mailto:contact@gharobaar.com" id=response>
-                                                <?php echo trans("contact_gharobaar"); ?></a></li>
+                                        <li><a href="mailto:contact@gharobaar.com" id=response> <?php echo trans("contact_gharobaar"); ?></a></li>
                                         <li><a href="tel:+91-<?php echo $this->settings->contact_phone; ?>" id="respond"><?php echo trans("customer_care"); ?><?php echo $this->settings->contact_phone; ?></a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-12 col-sm-2 footer-widget onlyweb">
                             <div class="newsletter">
                                 <h4 class="footer-title"><?php echo trans("newsletter"); ?></h4><br />
@@ -762,8 +793,7 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
             console.log(email);
             var reg = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-            if (reg.test(email) ==
-                false) {
+            if (reg.test(email) == false) {
                 console.log(reg.test(email));
                 document.getElementById("demo1").style.color = "red";
                 document.getElementById("demo1").innerHTML = "Please enter valid email address";
@@ -789,9 +819,11 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
                             $('#form_validate_newsletter')[0].reset();
                             $('#demo1')[0].style.color = "green";
                             $('#demo1')[0].innerText = response.message;
+                            // $('#demo1').show();
                         } else {
                             $('#demo1')[0].style.color = "red";
                             $('#demo1')[0].innerText = response.message;
+                            // $('#demo1').hide();
                         }
                     }
                 });
