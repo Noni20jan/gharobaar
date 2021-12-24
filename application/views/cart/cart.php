@@ -379,6 +379,15 @@
 
     }
 
+    @media (max-width: 767px) {
+        .shopping-cart .item .img-cart-product {
+            width: 116px !important;
+            height: 116px !important;
+            margin: 0;
+        }
+    }
+
+
     /* .cart-scroll-for-web {
         overflow-y: hidden;
 

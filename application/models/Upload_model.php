@@ -386,7 +386,7 @@ class Upload_model extends CI_Model
     //slider image upload
     public function slider_image_upload($path, $feature_name)
     {
-        if ($feature_name == "SECOND_MAIN_BANNER") {
+        if ($feature_name == "SECOND_MAIN_BANNER" || $feature_name == "SHOP_BY_CONCERN") {
             $new_path = 'uploads/slider/slider_' . generate_unique_id() . '.png';
             $img = Image::make($path)->orientate();
             $img->fit(450, 460);
