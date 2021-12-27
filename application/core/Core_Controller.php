@@ -68,7 +68,7 @@ class Core_Controller extends CI_Controller
         //application name
         $this->app_name = $this->general_settings->application_name;
         //aws base url
-        $this->aws_base_url = $this->storage_settings->aws_base_url . $this->storage_settings->aws_bucket . "/";
+        $this->aws_base_url = $this->storage_settings->aws_base_url;
         if (empty($this->storage_settings->aws_bucket)) {
             $this->aws_base_url = $this->storage_settings->aws_base_url;
         }
