@@ -17,7 +17,15 @@
 
     }
 
-
+    #footer .footer-social-links {
+        width: 100%;
+        display: block;
+        position: relative;
+        float: left;
+        right: 42px;
+        bottom: 0px;
+        
+    }
 
     @media only screen and (max-width: 1024px) {
         #footer .newsletter .footer-title {
@@ -45,6 +53,8 @@
         width: 96%;
         border: 0;
         background-color: #d1d1d1;
+        margin-left: -21px;
+        width: 200px;
 
     }
 
@@ -108,7 +118,7 @@
         /* top: 0px; */
         float: right;
         visibility: visible;
-        right: 0px;
+        right: 9px;
     }
 
     @media(max-width:700px) {
@@ -126,6 +136,7 @@
             /* left: 227px; */
             /* top: 0px; */
             float: right;
+            left:10px;
             visibility: visible;
         }
     }
@@ -156,9 +167,6 @@
         float: right;
         margin-top: 1%;
         display: inline-flex;
-
-
-
     }
 
     @media only screen and (max-width: 800px) {
@@ -425,18 +433,19 @@
                                         <p id="demo"></p>
                                     </div>
                                     <div class="d-table-cell">
+                                        <!-- <a class="button" id="subscribe"><?php echo trans("subscribe"); ?></a> -->
                                         <button type="button" class="btn btn-default" id="subscribe"><?php echo trans("subscribe"); ?></button>
                                     </div>
                                 </div>
-                                <p id="demo" style="color: red;display:inline-block"></p>
+                                <p id="demo" style="color: red;display:none"></p>
                             </form>
 
                             <div id="newsletter" class="m-t-5">
                                 <?php if ($this->session->flashdata('news_error')) :
-                                    echo '<span class="text-danger">' . $this->session->flashdata('news_error') . '</span>';
+                                    // echo '<span class="text-danger">' . $this->session->flashdata('news_error') . '</span>';
                                 endif;
                                 if ($this->session->flashdata('news_success')) :
-                                    echo '<span class="text-success">' . $this->session->flashdata('news_success') . '</span>';
+                                    // echo '<span class="text-success">' . $this->session->flashdata('news_success') . '</span>';
                                 endif; ?>
                             </div>
                             <div class="nav-footer">
@@ -474,8 +483,7 @@
 
 
 
-
-                        <div class="col-12 col-sm-2 footer-widget" id="contact-hidden">
+                        <div class="col-12 col-sm-2 footer-widget onlyweb" id="contact-hidden">
                             <div class="nav-footer">
                                 <div class="row-custom">
                                     <h4 class="footer-title"><?php echo trans("contact"); ?></h4>
@@ -487,7 +495,7 @@
                                         <li><a href="tel:+91-<?php echo $this->settings->contact_phone; ?>" id="respond"><?php echo trans("customer_care"); ?><?php echo $this->settings->contact_phone; ?></a></li>
                                     </ul>
                                 </div>
-                                <div class="footer-social-links">
+                                <div class="footer-social-links" style="margin-top: 0px;text-align:center;">
 
                                     <?php $this->load->view('partials/_social_links', ['show_rss' => true]); ?>
 
@@ -499,7 +507,7 @@
                             <div class="newsletter">
                                 <h4 class="footer-title"><?php echo trans("newsletter"); ?></h4><br />
                                 <!-- <?php echo form_open('add-to-subscribers-post', [
-                                            'id' => 'form_validate_newsletter', 'onsubmit' => "return  validateEmail();"
+                                            'id' => 'form_validate_newsletter'
                                         ]); ?> -->
                                 <form id="form_validate_newsletter">
                                     <div class="newsletter-inner">
@@ -513,22 +521,20 @@
                                         <div class="d-table-cell">
                                             <!-- <button class="btn btn-default" type="submit" onclick="validateEmail()"><?php echo trans("subscribe"); ?> -->
                                             <button type="button" class="btn btn-default" id="subscribe1"><?php echo trans("subscribe"); ?></button>
-                                            </button>
 
                                         </div>
                                     </div>
-                                    <p id="demo1" style="color: red;display:inline-block"></p>
+                                    <p id="demo1" style="color: red;display:none"></p>
                                 </form>
 
                                 <div id="newsletter" class="m-t-5">
                                     <?php if ($this->session->flashdata('news_error')) :
-                                        echo '<span class="text-danger">' . $this->session->flashdata('news_error') . '</span>';
+                                        // echo '<span class="text-danger">' . $this->session->flashdata('news_error') . '</span>';
                                     endif;
                                     if ($this->session->flashdata('news_success')) :
-                                        echo '<span class="text-success">' . $this->session->flashdata('news_success') . '</span>';
+                                        // echo '<span class="text-success">' . $this->session->flashdata('news_success') . '</span>';
                                     endif; ?>
                                 </div>
-
 
                             </div>
                         </div>
@@ -726,32 +732,32 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
 </body>
 
 </html>
-<script>
-    // function validateEmail() {
-    //     // $("#newsletter").hide();
+<!-- <script>
+    function validateEmail() {
+        // $("#newsletter").hide();
 
-    //     var email;
+        var email;
+        email = document.getElementById("textEmail").value;
 
-    //     email = document.getElementById("textEmail").value;
+        var reg = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        console.log(reg.test(textEmail.value));
 
-    //     var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-    //     console.log(reg.test(textEmail.value));
+        if (reg.test(textEmail.value) == false) {
+            document.getElementById("demo").style.color = "red";
+            document.getElementById("demo").innerHTML = "Please enter valid email address";
+            // alert('Invalid Email Address ->' + email);
+            return false;
+        } else if (reg.test(textEmail.value) == true){
 
-    //     if (reg.test(textEmail.value) == false) {
-    //         document.getElementById("demo").style.color = "red";
-    //         document.getElementById("demo").innerHTML = "Please enter valid email address";
-    //         // alert('Invalid Email Address ->' + email);
-    //         return false;
-    //     } else {
+            document.getElementById("demo").innerHTML = "";
 
-    //         // document.getElementById("demo").innerHTML = "Valid Email ->" + email;
+        }
 
-    //     }
-    //     return true;
+        return true;
 
 
-    // }
-</script>
+    }
+</script> -->
 <script>
     $(document).ready(function() {
         $('#subscribe').click(function(e) {
@@ -784,9 +790,11 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
                             $('#form_validate_newsletter')[0].reset();
                             $('#demo')[0].style.color = "green";
                             $('#demo')[0].innerText = response.message;
+                            // $('#demo').show();
                         } else {
                             $('#demo')[0].style.color = "red";
                             $('#demo')[0].innerText = response.message;
+                            // $('#demo').hide();
 
                         }
                     }
@@ -804,6 +812,56 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
             var reg = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
             if (reg.test(email) == false) {
+                console.log(reg.test(email));
+                document.getElementById("demo1").style.color = "red";
+                document.getElementById("demo1").innerHTML = "Please enter valid email address";
+                // $("demo1").hide();
+                // alert('Invalid Email Address ->' + email);
+                return false;
+            } else {
+                var base_url = '<?php echo base_url() ?>';
+                var data = {
+                    "email": email
+                };
+                data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    type: "POST",
+                    url: base_url + "home_controller/add_to_subscribers",
+                    data: data,
+                    dataType: 'json',
+                    async: false,
+                    success: function(response) {
+
+                        $('#demo1')[0].innerText = response.message;
+                        if (response.status == '1') {
+                            $('#form_validate_newsletter')[0].reset();
+                            $('#demo1')[0].style.color = "green";
+                            $('#demo1')[0].innerText = response.message;
+                             $('#demo1').show();
+                            console.log(response.message);
+                        } else {
+                            $('#demo1')[0].style.color = "red";
+                            $('#demo1')[0].innerText = response.message;
+                            $('#demo1').show();
+                            console.log(response.message);
+
+                        }
+                    }
+                });
+            }
+        });
+    })
+</script>
+<!-- <script>
+    $(document).ready(function() {
+        $('#subscribe1').click(function(e) {
+            e.preventDefault();
+            var email = document.getElementById("textEmail1").value;
+            console.log(email);
+            var reg = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+            if (reg.test(email) ==
+                false) {
                 console.log(reg.test(email));
                 document.getElementById("demo1").style.color = "red";
                 document.getElementById("demo1").innerHTML = "Please enter valid email address";
@@ -840,7 +898,7 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
             }
         });
     })
-</script>
+</script> -->
 
 <script>
     $("#wishlist-mobile-view").click(function() {
