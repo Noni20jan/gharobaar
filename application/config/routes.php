@@ -105,6 +105,8 @@ foreach ($languages as $language) {
         $route[$key . getr('following', $rts) . '/(:any)']['GET'] = 'profile_controller/following/$1';
         $route[$key . getr('stories', $rts) . '/(:any)']['GET'] = 'profile_controller/stories/$1';
         $route[$key . getr('reviews', $rts) . '/(:any)']['GET'] = 'profile_controller/reviews/$1';
+        // $route[$key . getr('referral', $rts) . '/(:any)']['GET'] = 'dashboard_controller/code_referral';
+        $route[$key . getr('referral', $rts)]['GET'] = 'dashboard_controller/code_referral';
         /*settings*/
 
         $route[$key . getr('settings', $rts)]['GET'] = 'profile_controller/update_profile';
@@ -509,7 +511,9 @@ $route[getr('admin', $rts) . '/penalties'] = 'earnings_controller/penalties';
 $route[getr('admin', $rts) . '/completed-payouts'] = 'earnings_controller/completed_payouts';
 $route[getr('admin', $rts) . '/payout-requests'] = 'earnings_controller/payout_requests';
 $route[getr('admin', $rts) . '/initiate-payout-cod'] = 'earnings_controller/initiate_payout';
+$route[getr('admin', $rts) . '/initiated-payout-cod'] = 'earnings_controller/initiated_payout_cod';
 $route[getr('admin', $rts) . '/initiate-payout-prepaid'] = 'earnings_controller/initiate_payout_prepaid';
+$route[getr('admin', $rts) . '/prepaid-payout-initiated'] = 'earnings_controller/prepaid_payout_initiated';
 $route[getr('admin', $rts) . '/payout-settings'] = 'earnings_controller/payout_settings';
 $route[getr('admin', $rts) . '/add-payout'] = 'earnings_controller/add_payout';
 $route[getr('admin', $rts) . '/seller-balances'] = 'earnings_controller/seller_balances';

@@ -291,7 +291,9 @@
                             <!-- <li class="nav-add-payout"><a href="<?php echo admin_url(); ?>add-payout"> <?php echo trans("add_payout"); ?></a></li> -->
                             <!-- <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>payout-requests"> <?php echo trans("payout_requests"); ?></a></li> -->
                             <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>initiate-payout-cod"> <?php echo trans("cod_payouts"); ?></a></li>
+                            <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>initiated-payout-cod"> <?php echo trans("cod_payout_initiated"); ?></a></li>
                             <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>initiate-payout-prepaid"> <?php echo trans("prepaid_payouts"); ?></a></li>
+                            <li class="nav-payout-requests"><a href="<?php echo admin_url(); ?>prepaid-payout-initiated"> <?php echo trans("prepaid_payout_initiated"); ?></a></li>
                             <!-- <li class="nav-completed-payouts"><a href="<?php echo admin_url(); ?>completed-payouts"> <?php echo trans("completed_payouts"); ?></a></li>
                             <li class="nav-payout-settings"><a href="<?php echo admin_url(); ?>payout-settings"> <?php echo trans("payout_settings"); ?></a></li> -->
                         </ul>

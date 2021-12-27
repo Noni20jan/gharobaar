@@ -3945,6 +3945,69 @@ class Order_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
+    
+    //cod payout initiated
+    public function fetch_cod_payout_inititated($from_date, $to_date)
+    {
+        $to_date = $to_date . " 23:59:59";
+
+        $sql = "SELECT distinct
+        `a`.`order_id`,
+        `a`.`net_seller_payable`,
+        `a`.`referenceId`,
+        `a`.`message`,
+        `a`.`status`,
+        `a`.`subCode`,
+        `a`.`batch_transfer_id`,
+        `e`.`grand_total_amount`,
+        `e`.`Sup_Shipping_gst`,
+        `e`.`Sup_cod_gst`,
+        `e`.`Sup_subtotal_prd_gst`,
+        `a`.`shipping_charge_to_gharobaar`,
+        `a`.`cod_charge`,
+        `b`.`shop_name`,
+        `b`.`id`,
+
+        `b`.`phone_number`,
+        `b`.`email`,
+        `b`.`account_number`,
+        `b`.`acc_holder_name`,
+        `b`.`ifsc_code`,
+
+        `c`.`created_at`,
+        `c`.`created_at`,
+        (  
+         CASE 
+        WHEN `c`.`status` = 0  THEN 'Pending'
+        WHEN `c`.`status` = 1  THEN 'Completed'
+        WHEN `c`.`status` = 2  THEN 'Rejected'
+        
+        END)as 'order_status'
+     
+    FROM
+        `cod_seller_payable` `a`
+            JOIN
+        `users` `b` ON `b`.`id` = `a`.`vendorId`
+            JOIN
+        `orders` `c` ON `c`.`id` = `a`.`order_id`
+            
+        JOIN
+        `order_supplier` `e` ON `a`.`order_id` = `e`.`order_id`
+        WHERE
+        `a`.`vendorId` = `e`.`seller_id`
+        AND `c`.`created_at` >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
+            AND `c`.`created_at` <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
+            AND `a`.`payout_initiated`='1' AND `a`.`is_active`='1'";
+
+
+
+        // $this->db->get();
+        // return $this->db->last_query();
+
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
 
 
     public function update_status_payouts($seller_id, $order_id, $status_code, $refrence_id, $message, $status, $batchid, $payout_charge, $mode)
@@ -3989,6 +4052,11 @@ class Order_model extends CI_Model
         $sql = "SELECT distinct
         `a`.`order_id`,
         `a`.`net_seller_payable`,
+        `a`.`referenceId`,
+        `a`.`message`,
+        `a`.`status`,
+        `a`.`subCode`,
+        `a`.`batch_transfer_id`,
         `a`.`gateway_amount_gst`,
         `a`.`gateway_amount`,
         `e`.`grand_total_amount`,
@@ -4028,6 +4096,55 @@ class Order_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
+
+    //prepaide payout initiated
+    public function fetch_prepaid_payout_initiated($from_date, $to_date)
+    {
+        $to_date = $to_date . " 23:59:59";
+
+        $sql = "SELECT distinct
+        `a`.`order_id`,
+        `a`.`net_seller_payable`,
+        `a`.`gateway_amount_gst`,
+        `a`.`gateway_amount`,
+        `e`.`grand_total_amount`,
+        `e`.`Sup_Shipping_gst`,
+        `e`.`Sup_subtotal_prd_gst`,
+        `a`.`shipping_charge_to_gharobaar`,
+        `b`.`shop_name`,
+        `b`.`id`,
+
+        `b`.`phone_number`,
+        `b`.`email`,
+        `b`.`account_number`,
+        `b`.`acc_holder_name`,
+        `b`.`ifsc_code`,
+
+        `c`.`created_at`,
+        (CASE
+        WHEN `c`.`status` = 0 THEN 'Pending'
+        WHEN `c`.`status` = 1 THEN 'Completed'
+        WHEN `c`.`status` = 2 THEN 'Rejected'
+    END) AS 'order_status'
+    FROM
+        `cashfree_seller_payout` `a`
+            JOIN
+        `users` `b` ON `b`.`id` = `a`.`vendorId`
+            JOIN
+        `orders` `c` ON `c`.`id` = `a`.`order_id`
+            
+        JOIN
+        `order_supplier` `e` ON `a`.`order_id` = `e`.`order_id`
+        WHERE
+        `a`.`vendorId` = `e`.`seller_id`
+        AND `c`.`created_at` >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
+            AND `c`.`created_at` <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
+            AND `a`.`payout_initiated`='1' AND `a`.`is_completed`='1' AND `a`.`is_active`='1'";
+
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
 
     //get order status count for a perticular order id
     public function get_order_item_count($order_id)
