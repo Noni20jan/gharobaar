@@ -48,6 +48,16 @@
 
     }
 
+    #footer .footer-social-links {
+        width: 100%;
+        display: block;
+        position: relative;
+        float: left;
+        right: 42px;
+        bottom: 0px;
+
+    }
+
     @media only screen and (max-width: 700px) {
         #textEmail {
             border-radius: 20px;
@@ -145,6 +155,8 @@
         margin: 0;
         float: right;
         margin-top: 1%;
+        display: inline-flex;
+
 
 
     }
@@ -181,6 +193,8 @@
         background-color: transparent;
         border-radius: 20px !important;
         border: 1px solid black;
+        margin-right: 10px;
+        left: 10px;
     }
 
     #footer .footer-social-links-mobile ul li a {
@@ -473,6 +487,11 @@
                                         <li><a href="tel:+91-<?php echo $this->settings->contact_phone; ?>" id="respond"><?php echo trans("customer_care"); ?><?php echo $this->settings->contact_phone; ?></a></li>
                                     </ul>
                                 </div>
+                                <div class="footer-social-links">
+
+                                    <?php $this->load->view('partials/_social_links', ['show_rss' => true]); ?>
+
+                                </div>
                             </div>
                         </div>
 
@@ -509,16 +528,7 @@
                                         echo '<span class="text-success">' . $this->session->flashdata('news_success') . '</span>';
                                     endif; ?>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12" id="footer-follow-us">
-                                        <!-- <h4 class="footer-title"><?php echo trans("follow_us"); ?></h4> -->
-                                        <div class="footer-social-links">
 
-                                            <?php $this->load->view('partials/_social_links', ['show_rss' => true]); ?>
-
-                                        </div>
-                                    </div>
-                                </div>
 
                             </div>
                         </div>
