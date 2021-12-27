@@ -250,7 +250,7 @@ $(document).ready(function () {
             $('#overlay_bg').hide();
         } else {
             $("#navMobile").addClass('nav-mobile-open');
-            $('#overlay_bg').hide();
+            $('#overlay_bg').show();
         }
     });
     $(document).on('click', '#overlay_bg', function () {
