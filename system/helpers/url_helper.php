@@ -87,7 +87,7 @@ if (!function_exists('base_url')) {
 	}
 }
 
-
+//this base URL only for AWS S3 storage
 if (!function_exists('other_base_url')) {
 	/**
 
