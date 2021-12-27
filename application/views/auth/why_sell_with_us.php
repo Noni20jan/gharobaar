@@ -18,6 +18,11 @@
         font-weight: 100
     }
 
+    .contact-email {
+        text-decoration: underline;
+        font-weight: 500;
+    }
+
     .for-center {
         justify-content: center;
         padding-top: 25px;
@@ -551,7 +556,9 @@
 
                 <b class="FAQ-heading">2. I do not have a GST number, can I still sell on Gharobaar?
                 </b>
-                <li class="FAQ-content">No, as per guidelines, a GST number is mandatory for you to list any taxable product on an online platform</li>
+                <li class="FAQ-content">If your primary state of business is Delhi, Haryana, Uttar Pradesh, West Bengal, Maharashtra or Karnataka, then you do not necessarily need a GST number. However, for all other states, having a GST no. is mandatory at the moment.
+                    For more information contact us at <a class="contact-email" href="sellerhelp@gharobaar.com">sellerhelp@gharobaar.com</a>
+                </li>
 
                 <b class="FAQ-heading">3. Am I liable to accept every return request placed by a buyer?
                 </b>
