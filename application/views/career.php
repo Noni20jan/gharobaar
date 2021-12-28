@@ -80,9 +80,28 @@
     }
 
     .btn {
-        display: none;
+        display: block;
         margin-left: 4%;
         margin-bottom: 2%;
+    }
+
+    @media (max-width: 700px) {
+
+        #subscribe {
+            border-radius: 20px;
+            min-height: 40px;
+            min-width: 93px;
+            background-color: green;
+            /* background-color: #c582b5; */
+            color: #fff;
+            white-space: nowrap;
+            position: relative;
+            top: 15px;
+            /* left: 227px; */
+            /* top: 0px; */
+            float: right;
+            visibility: visible;
+        }
     }
 </style>
 
