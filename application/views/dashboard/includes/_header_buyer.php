@@ -579,6 +579,8 @@
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-manager/file-manager.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/slick-theme.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/speech-input.css" />
+
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/slick.css" />
 
     <meta property="og:locale" content="en-US" />
@@ -4103,9 +4105,9 @@
                                                         <?php endif; ?>
                                                     </div>
                                                     <div>
-                                                        <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_exp"); ?>" required autocomplete="off">
-                                                        <input type="hidden" class="search_type_input" name="search_type" value="product">
-                                                        <button class="btn btn-default btn-search" style="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? 'top:17px' : ''; ?>"><i class="icon-search"></i></button>
+                                                        <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search speech-input" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_exp"); ?>" required onchange="search_input();" autocomplete="off">
+                                                        <input type="hidden" class="search_type_input " name="search_type" value="product">
+                                                        <button class="btn btn-default btn-search" style="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? 'top:17px' : '';  ?> margin-left:10px;"><i class="icon-search"></i></button>
                                                         <div id="response_search_results" class="search-results-ajax"></div>
                                                     </div>
                                                 </div>
@@ -4479,15 +4481,15 @@
                                         <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="product">
                                     <?php endif; ?>
                                 </div> -->
-                                <div class="search_bar">
+                                <div class="search_bar" style="width: 95%;">
                                     <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="product">
-                                    <input type="text" id="input_search_mobile" name="search" maxlength="300" pattern=".*\S+.*" class="form-control input-search" style="width: 100%;" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search"); ?>" required>
+                                    <input type="text" id="input_search_mobile" name="search" maxlength="300" pattern=".*\S+.*" class="form-control input-search speech-input" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search"); ?>" onchange="search_input();" required>
                                     <button class="btn btn-default btn-search"><i class="icon-search"></i></button>
                                     <div id="response_search_results_mobile" class="search-results-ajax"></div>
                                 </div>
                             <?php else : ?>
                                 <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="product">
-                                <input type="text" id="input_search_mobile" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_products"); ?>" required autocomplete="off">
+                                <input type="text" id="input_search_mobile" name="search" maxlength="300" pattern=".*\S+.*" id="input_search_mobile" class="form-control input-search speech-input" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_products"); ?>" onchange="search_input();" required autocomplete="off">
                                 <button class="btn btn-default btn-search btn-search-single-vendor-mobile"><i class="icon-search"></i></button>
                                 <div id="response_search_results_mobile" class="search-results-ajax"></div>
                             <?php endif; ?>
