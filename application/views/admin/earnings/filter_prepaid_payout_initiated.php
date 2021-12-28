@@ -79,7 +79,7 @@
 
         var url = form.attr('action');
 
-        table = $('#offer_dashboard').DataTable();
+        table = $('#prepaid_offer_dashboard').DataTable();
         table.clear().destroy();
 
         $.ajax({
@@ -93,10 +93,10 @@
                 var len = Json_data.length;
                 if (len != 0) {
                     for (var i = 0; i < len; i++) {
-                        $('#payouts_data').append("<tr><td>" + (j = i + 1) + "</td><td>" + Json_data[i].order_id + "</td><td>" + Json_data[i].shop_name + "</td><td>" + Json_data[i].created_at + "</td><td>" + Json_data[i].order_status + "</td><td>" + ((Json_data[i].grand_total_amount) / 100).toFixed(2) + "</td><td>" + ((Json_data[i].shipping_charge_to_gharobaar) / 100).toFixed(2) + "</td><td>" + ((Json_data[i].gateway_amount) / 100).toFixed(2) + "</td><td>" + (((Json_data[i].Sup_Shipping_gst / 100) + (Json_data[i].gateway_amount_gst / 100) + (Json_data[i].Sup_subtotal_prd_gst / 100))).toFixed(2) + "</td><td>" + ((Json_data[i].net_seller_payable) / 100).toFixed(2) + "</td><td>" + (Json_data[i].referenceId) + "</td><td>" + (Json_data[i].message) + "</td><td>" + (Json_data[i].status) + "</td><td>" + (Json_data[i].subCode) + "</td><td>" + (Json_data[i].batch_transfer_id) + "</td></tr>")
+                        $('#payouts_data').append("<tr><td>" + (j = i + 1) + "</td><td>" + Json_data[i].order_id + "</td><td>" + Json_data[i].shop_name + "</td><td>" + Json_data[i].created_at + "</td><td>" + Json_data[i].status + "</td><td>" + ((Json_data[i].grand_total_amount) / 100).toFixed(2) + "</td><td>" + ((Json_data[i].shipping_charge_to_gharobaar) / 100).toFixed(2) + "</td><td>" + ((Json_data[i].gateway_amount) / 100).toFixed(2) + "</td><td>" + (((Json_data[i].Sup_Shipping_gst / 100) + (Json_data[i].gateway_amount_gst / 100) + (Json_data[i].Sup_subtotal_prd_gst / 100))).toFixed(2) + "</td><td>" + ((Json_data[i].net_seller_payable) / 100).toFixed(2) + "</td><td>" + (Json_data[i].referenceId) + "</td><td>" + (Json_data[i].message) + "</td><td>" + (Json_data[i].subCode) + "</td><td>" + (Json_data[i].batch_transfer_id) + "</td></tr>")
                     }
                 }
-                $('#offer_dashboard').dataTable({
+                $('#prepaid_offer_dashboard').dataTable({
                     orderCellsTop: true,
                     fixedHeader: true,
                     initComplete: function() {

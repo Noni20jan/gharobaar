@@ -4105,6 +4105,11 @@ class Order_model extends CI_Model
         $sql = "SELECT distinct
         `a`.`order_id`,
         `a`.`net_seller_payable`,
+        `a`.`referenceId`,
+        `a`.`message`,
+        `a`.`status`,
+        `a`.`subCode`,
+        `a`.`batch_transfer_id`,
         `a`.`gateway_amount_gst`,
         `a`.`gateway_amount`,
         `e`.`grand_total_amount`,

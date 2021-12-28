@@ -32,15 +32,15 @@
                                 <th><?php echo trans('order_id'); ?></th>
                                 <th><?php echo trans('seller') ?></th>
                                 <th><?php echo trans('order_date'); ?></th>
-                                <th><?php echo trans('status'); ?></th>
+                                <!-- <th><?php echo trans('status'); ?></th> -->
+                                <th><?php echo ('order status'); ?></th>
                                 <th><?php echo ('Order Value'); ?></th>
                                 <th><?php echo ('Shipping'); ?></th>
-                                <th><?php echo ('Gateway(ex. GST)'); ?></th>
+                                <th><?php echo ('COD'); ?></th>
                                 <th><?php echo ('Total GST'); ?></th>
                                 <th><?php echo ('Seller Payable'); ?></th>
                                 <th><?php echo ('ReferenceId'); ?></th>
                                 <th><?php echo ('Message'); ?></th>
-                                <th><?php echo ('Status'); ?></th>
                                 <th><?php echo ('SubCode'); ?></th>
                                 <th><?php echo ('Batch_transfer_id'); ?></th>
                             </tr>
@@ -73,12 +73,12 @@
 <script>
     $(document).ready(function() {
         // Setup - add a text input to each footer cell
-        $('#offer_dashboard thead tr')
+        $('#prepaid_offer_dashboard thead tr')
             .clone(true)
             .addClass('filters')
-            .appendTo('#offer_dashboard thead');
+            .appendTo('#prepaid_offer_dashboard thead');
 
-        var table = $('#offer_dashboard').DataTable({
+        var table = $('#prepaid_offer_dashboard').DataTable({
             orderCellsTop: true,
             fixedHeader: true,
             initComplete: function() {
