@@ -948,7 +948,6 @@ class Product_model extends Core_Model
             $this->db->group_start();
             $this->db->where_in("products.availability", $array_days_available);
 
-            $this->db->or_where('products.availability', 'All Days');
             $z = date('dS M Y');
             $day = strtotime($z . "+1 Days");
             $day_2 = strtotime($z . "+2 Days");
@@ -961,19 +960,37 @@ class Product_model extends Core_Model
                 $way = date('l', $day);
                 $days = $a . $way . $a;
                 $day2 = $a . $way2 . $a;
+                $this->db->or_where('products.availability', 'All Days');
+                $this->db->where('lead_days', 1);
+                $this->db->or_where('products.availability', 'All Days');
+                $this->db->where('lead_days', 2);
                 $this->db->or_where("products.availability like", $days);
+                $this->db->where('lead_days', 1);
+
                 $this->db->or_where("products.availability like", $day2);
+                $this->db->where('lead_days', 2);
+
                 $this->db->group_end();
             } else if (in_array($way, $array_days_available)) {
                 $way = date('l', $day);
                 $days = $a . $way . $a;
+                $this->db->or_where('products.availability', 'All Days');
+                // $this->db->or_where("products.availability like", $days);
+                $this->db->where('lead_days', 1);
                 $this->db->or_where("products.availability like", $days);
+                $this->db->where('lead_days', 1);
+
+
 
                 $this->db->group_end();
             } else if (in_array($way2, $array_days_available)) {
                 $way2 = date('l', $day_2);
                 $day2 = $a . $way2 . $a;
+                $this->db->or_where('products.availability', 'All Days');
+                $this->db->where('lead_days', 2);
                 $this->db->or_where("products.availability like", $day2);
+                $this->db->where('lead_days', 2);
+
 
                 $this->db->group_end();
             }
