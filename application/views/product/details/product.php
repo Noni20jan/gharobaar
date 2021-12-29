@@ -8,6 +8,28 @@
         padding: 20px
     }
 
+    .ask-seller {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+
+    }
+
+    .ask-seller:active,
+    .ask-seller:focus {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+
+    }
+
+    .ask-seller:hover {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+
+    }
+
     #check_pincode {
         position: absolute;
         background-color: green;
@@ -487,10 +509,10 @@
                                             <?php if ($this->auth_check) : ?>
                                                 <?php if ($this->auth_user->id != $user->id) : ?>
 
-                                                    <p class="question">Have a question? <a href="javascript:void(0)" id="ask-seller" data-toggle="modal" data-target="#messageModal">Contact the Seller.</a>
+                                                    <p class="question">Have a question? <a class="ask-seller" data-toggle="modal" data-target="#messageModal">Contact the Seller.</a>
                                                     <?php endif; ?>
                                                 <?php else : ?>
-                                                    <p>Have a question? <a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal">Contact the Seller.</a>
+                                                    <p>Have a question? <a class="ask-seller" data-toggle="modal" data-target="#loginModal">Contact the Seller.</a>
                                                     <?php endif; ?>
                                         </div>
                                     </div>
@@ -533,7 +555,7 @@
                                                     <!-- Modal footer -->
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-md btn-red" data-dismiss="modal"><i class="icon-times"></i>&nbsp;<?php echo trans("close"); ?></button>
-                                                        <button type="submit" class="btn btn-md btn-custom"><i class="icon-send"></i>&nbsp;<?php echo trans("send"); ?></button>
+                                                        <button type="submit" class="btn btn-md btn-custom" data-dismiss="modal"><i class="icon-send"></i>&nbsp;<?php echo trans("send"); ?></button>
                                                     </div>
                                                 </form>
                                                 <!-- form end -->
