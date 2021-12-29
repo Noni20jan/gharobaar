@@ -57,8 +57,8 @@
 
 			// size and position mic and input
 			micBtn.style.cursor = 'pointer';
-			micBtn.style.top = 0.125 * buttonSize + 'px';
-			micBtn.style.height = micBtn.style.width = 30 + 'px';
+			micBtn.style.top = 0.250 * buttonSize + 'px';
+			micBtn.style.height = micBtn.style.width = 22 + 'px';
 			inputEl.style.paddingRight = buttonSize - inputRightBorder + 'px';
 		}
 

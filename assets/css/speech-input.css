@@ -33,7 +33,7 @@
 .si-holder:before,
 .si-holder:after {
 	position: absolute;
-	background: #333;
+	background: rgba(51, 51, 51, 0.452);
 }
 
 /* Microphone icon */
