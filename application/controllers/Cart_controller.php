@@ -138,7 +138,7 @@ class Cart_controller extends Home_Core_Controller
             $data['product_id'] =  $this->input->post('product_id', true);
             $data['quantity'] = $this->input->post('product_quantity', true);
             $product = $this->product_model->get_active_product($product_id);
-            $data['price'] = $product->price_exclude_gst;
+            $data['price'] = $product->listing_price;
             $data['title'] = $product->slug;
             $data['seller_id'] = $product->user_id;
             $data['created_by'] = $this->input->ip_address();;
@@ -178,7 +178,13 @@ class Cart_controller extends Home_Core_Controller
             // redirect($this->agent->referrer());
         } else if ($action == "add_to_cart_from_icon") {
             $product_id = $this->input->post('product_id', true);
+            $data['product_id'] =  $product_id;
+            $data['quantity'] = 1;
+            $data['created_by'] = $this->input->ip_address();
             $product = $this->product_model->get_active_product($product_id);
+            $data['price'] = $product->listing_price;
+            $data['title'] = $product->slug;
+            $data['seller_id'] = $product->user_id;
             $shop_status = $this->product_model->get_user_shop_status($product->user_id);
             if (!empty($product)) {
                 if ($product->status != 1) {
@@ -193,6 +199,9 @@ class Cart_controller extends Home_Core_Controller
                         echo json_encode($response);
                     } else {
                         $this->cart_model->add_to_cart($product);
+                        if (!$this->auth_check) {
+                            $this->product_model->add_to_cart_without_auth($data);
+                        }
                         $response = array(
                             "status" => 1,
                             "msg" => "Successfully added to cart",
@@ -285,6 +294,33 @@ class Cart_controller extends Home_Core_Controller
             "cart_view" => $cart_view_html
         );
         echo json_encode($response);
+    }
+
+    /**
+     * Remove from Cart guest
+     */
+    public function remove_from_cart_guest()
+    {
+        $user_id = $this->input->post('user_id', true);
+        $this->cart_model->remove_from_cart_guest($user_id);
+        // $this->cart_model->calculate_cart_total();
+        // $cart_items = $this->cart_model->get_sess_cart_items();
+        // $cart_total = $this->cart_model->get_sess_cart_total();
+        // $cart_view_html = $this->load->view("cart/_cart_product_response", ['cart_items' => $cart_items, 'cart_total' => $this->cart_model->get_sess_cart_total(), 'cart_has_physical_product' => $this->cart_model->check_cart_has_physical_product()], true);
+        $response = array(
+            //     "cart_item_id" => $cart_item_id,
+            //     "cart_count" => get_cart_product_count_ajax(),
+            //     "total_mrp" => ($_SESSION["mds_shopping_cart_total"]->subtotal) / 100,
+            //     "discount" => $_SESSION["mds_shopping_cart_total"]->discount,
+            //     "total" => ($_SESSION["mds_shopping_cart_total"]->total_price) / 100,
+            //     "subtotal" => ($cart_total->total) / 100,
+            //     "shipping_cost" => ($cart_total->shipping_cost) / 100,
+            //     "order_total" => ($cart_total->order_total) / 100,
+            //     "cart_view" => $cart_view_html
+            "sucess" => "true"
+        );
+
+        // echo json_encode($response);
     }
 
     /**
