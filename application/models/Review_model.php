@@ -128,6 +128,7 @@ class Review_model extends CI_Model
     {
         $this->db->join('users', 'users.id = reviews.user_id');
         $this->db->select('reviews.*, users.username as user_username, users.slug as user_slug');
+        $this->db->where('reviews.is_approved', '1');
         $this->db->where('reviews.product_id', clean_number($product_id));
         $this->db->order_by('reviews.created_at', 'DESC');
         return $this->db->get('reviews')->result();
@@ -137,6 +138,7 @@ class Review_model extends CI_Model
     {
         $this->db->join('review_images', 'review_images.review_id= reviews.id');
         $this->db->select('reviews.*,review_images.image_url');
+        $this->db->where('reviews.is_approved', '1');
         $this->db->where('reviews.product_id', clean_number($product_id));
         return $this->db->get('reviews')->result();
     }
@@ -291,6 +293,31 @@ class Review_model extends CI_Model
         }
         return false;
     }
+    public function approve_review($id, $product_id = null)
+    {
+
+        $id = clean_number($id);
+        $this->db->where('id', $id);
+        $query = $this->db->get('reviews');
+        $row = $query->row();
+        if (empty($row)) {
+            return false;
+        }
+        $product = get_product($row->product_id);
+        if (empty($product)) {
+            return false;
+        }
+        $data = array(
+            'is_approved' => 1
+        );
+        $this->db->where('id', $id);
+        if ($this->db->update('reviews', $data)) {
+
+            return true;
+        }
+        return false;
+    }
+
 
     //delete multi reviews
     public function delete_multi_reviews($review_ids)

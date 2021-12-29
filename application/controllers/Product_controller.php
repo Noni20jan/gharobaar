@@ -800,6 +800,15 @@ class Product_controller extends Admin_Core_Controller
             $this->session->set_flashdata('error', trans("msg_error"));
         }
     }
+    public function approve_review()
+    {
+        $id = $this->input->post('id', true);
+        if ($this->review_model->approve_review($id)) {
+            $this->session->set_flashdata('success', trans("msg_review_approved"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+    }
 
     /**
      * Delete Selected Reviews
