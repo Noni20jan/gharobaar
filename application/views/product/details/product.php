@@ -18,6 +18,30 @@
         font-weight: bold;
     }
 
+    .seller {
+        width: 100%;
+        height: 100px;
+        /* border-width: 1px; */
+        border-color: #aaaaaa;
+        /* padding: 1px 45px; */
+        border-style: solid;
+        background-color: white;
+        font-size: 13px;
+        font-family: "Georgia";
+    }
+
+    .question {
+        position: relative;
+        left: 19px;
+    }
+
+    @media(max-width:700px) {
+        .question {
+            position: relative;
+            left: 21px;
+        }
+    }
+
     .star-rating input[type=radio] {
         display: none
     }
@@ -443,6 +467,66 @@
                                 <?php //$this->load->view("product/details/_product_details"); 
                                 ?>
                                 <div class="row">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <?php if ($this->auth_check) : ?>
+                                                <?php if ($this->auth_user->id != $user->id) : ?>
+
+                                                    <p class="question">Have a question? <a href="javascript:void(0)" id="ask-seller" data-toggle="modal" data-target="#messageModal">Contact the Seller.</a>
+                                                    <?php endif; ?>
+                                                <?php else : ?>
+                                                    <p>Have a question? <a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal">Contact the Seller.</a>
+                                                    <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog modal-dialog-centered modal-send-message" role="document">
+                                            <div class="modal-content">
+                                                <!-- form start -->
+                                                <form id="form_send_message" novalidate="novalidate">
+                                                    <input type="hidden" name="receiver_id" id="message_receiver_id" value="<?php echo $user->id; ?>">
+                                                    <input type="hidden" id="message_send_em" value="<?php echo $user->send_email_new_message; ?>">
+
+                                                    <div class="modal-header">
+                                                        <h4 class="title"><?php echo trans("send_message"); ?></h4>
+                                                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                                                    </div>
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div id="send-message-result"></div>
+                                                                <div class="form-group m-b-sm-0">
+                                                                    <div class="row justify-content-center m-0">
+                                                                        <div class="user-contact-modal text-center">
+                                                                            <img src="<?php echo get_user_avatar($user); ?>" alt="<?php echo get_shop_name($user); ?>">
+                                                                            <p><?php echo get_shop_name($user); ?></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label"><?php echo trans("subject"); ?></label>
+                                                                    <input type="text" name="subject" id="message_subject" value="<?php echo (!empty($subject)) ? html_escape($subject) : ''; ?>" class="form-control form-input" placeholder="<?php echo trans("subject"); ?>" required>
+                                                                </div>
+                                                                <div class="form-group m-b-sm-0">
+                                                                    <label class="control-label"><?php echo trans("message"); ?></label>
+                                                                    <textarea name="message" id="message_text" class="form-control form-textarea" placeholder="<?php echo trans("write_a_message"); ?>" required></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Modal footer -->
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-md btn-red" data-dismiss="modal"><i class="icon-times"></i>&nbsp;<?php echo trans("close"); ?></button>
+                                                        <button type="submit" class="btn btn-md btn-custom"><i class="icon-send"></i>&nbsp;<?php echo trans("send"); ?></button>
+                                                    </div>
+                                                </form>
+                                                <!-- form end -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                     <div class="col-12" id="gluten-vegan-sustainable-responsive">
                                         <?php if ($product->is_gluten_Free == 'Y') : ?>
                                             <div class="col-4 gluten-vegan-sustainable">
@@ -849,7 +933,6 @@
         });
     });
 </script>
-
 
 <style>
     .product-slider-content {

@@ -11,6 +11,7 @@
         cursor: pointer;
     }
 
+
     .childtext {
         cursor: pointer;
     }
@@ -4302,16 +4303,28 @@
                                                 </li>
                                             <?php endif; ?>
                                         <?php endif; ?>
-                                        <!-- <li>
-                                                                            <a href="<?php echo generate_url("messages"); ?>">
-                                                                                <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/comment-icon.jpg" alt="" style="width: 20px; height: 20px;" />
-                                                                                <?php echo trans("messages"); ?>&nbsp;<?php if ($unread_message_count > 0) : ?>
-                                                                                <span class="span-message-count"><?php echo $unread_message_count; ?></span>
-                                                                            <?php endif; ?>
-                                                                            </a>
-                                                                            </li> -->
+                                        <li>
+                                            <a href="<?php echo generate_url("messages"); ?>">
+                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/comment-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
+                                                <?php echo trans("messages"); ?>&nbsp;<?php if ($unread_message_count > 0) : ?>
+                                                <span class="span-message-count"><?php echo $unread_message_count; ?></span>
+
+                                            <?php endif; ?>
+
+                                            </a>
+                                        </li>
 
                                         <?php if ($this->auth_user->role == "vendor") { ?>
+
+                                            <!-- <li>
+                                                <a href="<?php echo generate_url("messages"); ?>">
+                                                    <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/comment-icon.jpg" alt="" style="width: 20px; height: 20px;" />
+                                                    <?php echo trans("messages"); ?>&nbsp;<?php if ($unread_message_count > 0) : ?>
+                                                    <span class="span-message-count"><?php echo $unread_message_count; ?></span>
+                                                <?php endif; ?>
+                                                </a>
+                                            </li> -->
+
                                             <!-- <li>
                                                                         <a href="<?php echo generate_url("barter_requests"); ?>">
                                                                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-req-icon.png" alt="" style="width: 20px; height: 20px;" />
