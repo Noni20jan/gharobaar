@@ -45,9 +45,9 @@
         color: #006;
         font-family: cursive;
         font-style: italic;
-        margin: 4em;
+        /* margin: 4em;
         max-width: 30em;
-        padding: 2em;
+        padding: 2em; */
     }
 
     *,
