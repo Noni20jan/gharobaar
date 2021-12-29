@@ -18,6 +18,21 @@
         font-weight: bold;
     }
 
+    #messageModal .modal-content {
+        position: relative;
+        display: -ms-flexbox;
+        /* display: flex; */
+        -ms-flex-direction: column;
+        /* flex-direction: column; */
+        width: 100%;
+        pointer-events: auto;
+        background-color: #fff;
+        background-clip: padding-box;
+        /* border: 1px solid rgba(0, 0, 0, 0.2); */
+        border-radius: 0.3rem;
+        outline: 0;
+    }
+
     .seller {
         width: 100%;
         height: 100px;
