@@ -8,11 +8,35 @@
         padding: 20px
     }
 
+    .question {
+        position: relative;
+        left: 19px;
+    }
+
+    @media(max-width:700px) {
+        .question {
+            position: relative;
+            left: 14px;
+        }
+    }
+
+
     .ask-seller {
         color: blue;
         text-decoration: underline;
         cursor: pointer;
 
+
+    }
+
+    @media(max-width:700px) {
+        .ask-seller {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+            position: relative;
+
+        }
     }
 
     .ask-seller:active,
@@ -67,17 +91,6 @@
         font-family: "Georgia";
     }
 
-    .question {
-        position: relative;
-        left: 19px;
-    }
-
-    @media(max-width:700px) {
-        .question {
-            position: relative;
-            left: 21px;
-        }
-    }
 
     .star-rating input[type=radio] {
         display: none
@@ -512,7 +525,7 @@
                                                     <p class="question">Have a question? <a class="ask-seller" data-toggle="modal" data-target="#messageModal">Contact the Seller.</a>
                                                     <?php endif; ?>
                                                 <?php else : ?>
-                                                    <p>Have a question? <a class="ask-seller" data-toggle="modal" data-target="#loginModal">Contact the Seller.</a>
+                                                    <p class="question">Have a question? <a class="ask-seller" data-toggle="modal" data-target="#loginModal">Contact the Seller.</a>
                                                     <?php endif; ?>
                                         </div>
                                     </div>
