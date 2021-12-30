@@ -946,7 +946,7 @@ class Product_model extends Core_Model
         if (!empty($array_days_available) && !empty($array_days_available[0])) {
 
             $this->db->group_start();
-            $this->db->where_in("products.availability", $array_days_available);
+            // $this->db->where_in("products.availability", $array_days_available);
 
             $z = date('dS M Y');
             $day = strtotime($z . "+1 Days");
@@ -990,7 +990,6 @@ class Product_model extends Core_Model
                 $this->db->where('lead_days', 2);
                 $this->db->or_where("products.availability like", $day2);
                 $this->db->where('lead_days', 2);
-
 
                 $this->db->group_end();
             }
