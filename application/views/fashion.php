@@ -67,6 +67,7 @@
             case 2: ?>
                 <div class="row shop-by-center">
                     <div class="col-2 two-for-mobile">
+                        <input type="hidden" id="category_modal" value="home_cooks_product">
                         <a href="<?php echo generate_url("home-cooks/fresh-baked-items"); ?>">
                             <img class="shop_by_seller_imgs" src="<?php echo base_url(); ?>assets/img/home_cooks_imgs/home_cooks_1.png" alt="Fresh-Baked-Items">
                             <p class="category_page_title">Fresh Baked Items</p>
@@ -264,7 +265,6 @@
                 </div>
             <?php break;
             case 7: ?>
-
                 <div class="row shop-by-center">
                     <div class="col-2 two-for-mobile">
                         <a href="<?php echo generate_url("art-stationery/drawings-paintings"); ?>">
@@ -349,3 +349,11 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        var category = $('#category_modal').val();
+        if (category == "home_cooks_product") {
+            $('#locateModal').modal('show');
+        }
+    });
+</script>
