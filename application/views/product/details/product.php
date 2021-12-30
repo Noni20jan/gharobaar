@@ -464,6 +464,16 @@
     .overflow-text::-webkit-scrollbar-thumb {
         background-color: #f5f2f200;
     }
+
+    .net-weight-alignment {
+        padding-left: 23px;
+    }
+
+    @media(max-width:768px) {
+        .net-weight-alignment {
+            padding-left: 23px;
+        }
+    }
 </style>
 <!-- Wrapper -->
 <div id="wrapper">
@@ -644,7 +654,7 @@
 
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row net-weight-alignment">
 
                                     <?php if ($product->add_meet == 'Made to order') :
                                         $home_cook = get_parent_categories_tree($product->category_id);
@@ -946,21 +956,45 @@
     }
 </script> -->
 <script>
+    var str = "your long string with many words.";
+    var wordCount = str.match(/(\w+)/g).length;
+    console.log(wordCount);
+</script>
+<script>
     $(document).ready(function() {
         // Configure/customize these variables.
-        var showChar = 500; // How many characters are shown by default
+        var showChar = 4; // How many characters are shown by default
         var ellipsestext = "";
         var moretext = "See More";
         var lesstext = "See Less";
 
-
         $('.more').each(function() {
             var content = $(this).html();
 
-            if (content.length > showChar) {
+            var content_length = content.split(' ').length;
 
-                var c = content.substr(0, showChar);
-                var h = content.substr(showChar, content.length - showChar);
+
+            const splitWords = (text, numWords) => {
+                const words = text.split(' ')
+                let part1 = '',
+                    part2 = ''
+                words.forEach((word, idx) => {
+                    if (idx < numWords) {
+                        part1 += ' ' + word
+                    } else {
+                        part2 += ' ' + word
+                    }
+                })
+                return [part1.trim(), part2.trim()]
+            }
+
+            const [part1, part2] = splitWords(content, showChar);
+
+
+            if (content_length > showChar) {
+
+                var c = part1;
+                var h = part2;
 
                 var html = c + '<span class="moreellipses">' + ellipsestext + '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="see_more morelink" >' + moretext + '</a></span>';
 
@@ -968,7 +1002,6 @@
             }
 
         });
-
         $(".morelink").click(function() {
             if ($(this).hasClass("less")) {
                 $(this).removeClass("less");

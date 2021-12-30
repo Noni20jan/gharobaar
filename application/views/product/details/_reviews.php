@@ -3,8 +3,8 @@
 <style>
     .flexed-reviews {
         display: flex;
-        height: auto;
-        overflow-y: scroll;
+        max-height: 150px;
+        overflow-y: auto;
     }
 
     @media screen and (max-width: 800px) {
@@ -35,6 +35,18 @@
 
     #reviews-for-web {
         display: block;
+    }
+
+    /* for see more on reviews */
+    .more-review {
+        display: none;
+    }
+
+    .readmore {
+        margin: 0 5px;
+        color: green;
+        font-size: 13px;
+        cursor: pointer;
     }
 </style>
 <div class="container">
@@ -69,7 +81,7 @@
                                         </div>
                                         <div class="row-custom">
                                             <div class="review">
-                                                <?php echo html_escape($review->review); ?>
+                                                <p class="content"><?php echo html_escape($review->review); ?></p>
                                             </div>
                                         </div>
                                         <div class="row-custom">
@@ -158,5 +170,30 @@
         });
     });
 </script>
+<!-- see more script -->
+<script>
+    $(function() {
 
+        var maxL = 40;
+
+        $('.content').each(function() {
+
+            var text = $(this).text();
+            if (text.length > maxL) {
+                var begin = text.substr(0, maxL),
+                    end = text.substr(maxL);
+
+                $(this).html(begin)
+                    .append($('<a class="readmore"/>').html(' ...more'))
+                    .append($('<div class="more-review" />').html(end));
+            }
+        });
+
+        $(document).on('click', '.readmore', function() {
+            // $(this).next('.readmore').fadeOut("400");
+            $(this).next('.more-review').slideToggle(400);
+        })
+    })
+</script>
+<!-- end for see more -->
 <?php $this->load->view('partials/_modal_rate_product'); ?>

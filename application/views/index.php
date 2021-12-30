@@ -2,7 +2,25 @@
 <!-- <link rel="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<!-- slick Carousel CDN -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
+
 <style>
+    /* The width of each slide */
+    .slick-slide {
+        width: 350px;
+    }
+
+    /* Color of the arrows */
+    .slick-next::before,
+    .slick-prev::before {
+        color: black;
+    }
+
+
+
     .shop-by {
         display: flex;
         flex-direction: row;
@@ -581,6 +599,42 @@
         justify-content: space-around;
         padding-top: 15px;
     }
+
+    .testimonial-background {
+        background-image: url('assets/img/bg 1.png');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding: 15px 0px;
+        border-radius: 10px;
+    }
+
+    .testimonial-header {
+        text-align: center;
+        padding-top: 2%;
+    }
+
+    .sub-heading-text {
+        font-weight: 700;
+        font-family: 'chloe';
+        margin-bottom: 25px;
+    }
+
+    .carousel-cell {
+        text-align: center;
+        padding: 1%;
+    }
+
+    .who-are-we-style {
+        font-family: 'chloe';
+        font-weight: 800;
+    }
+
+    .testimonial-content {
+        font-weight: 500;
+        font-family: 'poppins';
+        font-size: 17px;
+    }
 </style>
 <!-- <style>
     .home-testimonial {
@@ -837,6 +891,28 @@
                 </p>
             </div> -->
         </div>
+        <section class="testimonial-background">
+            <header class="testimonial-header">
+                <h3 class="who-are-we-style">Who Are We?</h3>
+            </header>
+
+            <div class="slick-carousel-testimonial">
+                <!-- Inside the containing div, add one div for each slide -->
+                <div class="carousel-cell">
+                    <!-- You can put an image or text inside each slide div -->
+                    <h5 class="sub-heading-text">Stand Tall, Promote Small</h5>
+                    <p class="testimonial-content">Each product is made by a small business, with lots of love and dedication. Every purchase on Gharobaar would encourage them to keep their dream alive</p>
+                </div>
+                <div class="carousel-cell">
+                    <h5 class="sub-heading-text">Homepreneurs</h5>
+                    <p class="testimonial-content">Our supplier partners operate from home, pursuing their passion, creating high quality products by hand. Each product is a masterpiece in itself, made with all their love & hard work.</p>
+                </div>
+                <div class="carousel-cell">
+                    <h5 class="sub-heading-text">Ghar se Ghar Tak</h5>
+                    <p class="testimonial-content">Gharobaar is not only a marketplace, it is an attempt to connect your home to others, sharing the exceptional talent in each one of us and spreading love & happiness.</p>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
 
@@ -856,11 +932,6 @@
         $this->load->view("partials/_main_slider_2", ["second_slider_items" => $second_slider_items]);
     endif; ?>
 </div>
-
-
-
-
-
 
 <div class="index-wrapper" id="wrapper">
     <div class="container">
@@ -1055,6 +1126,47 @@
             }, 1000);
             return false;
         }
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $(".slick-carousel-testimonial").slick({
+            autoplay: false,
+            dots: true,
+            autoplaySpeed: 4900,
+            infinite: true,
+            speed: 200,
+            swipeToSlide: true,
+            rtl: rtl,
+            cssEase: "linear",
+            lazyLoad: "progressive",
+            prevArrow: $("#slider_special_offers_nav .prev"),
+            nextArrow: $("#slider_special_offers_nav .next"),
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            responsive: [{
+                    breakpoint: 992,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                    },
+                },
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                    },
+                },
+                {
+                    breakpoint: 576,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                    },
+                },
+            ],
+        });
     });
 </script>
 
