@@ -2687,6 +2687,9 @@ class Order_model extends CI_Model
         $i = 0;
 
         //==================================== New calculation for shipping =====================================
+
+        //creating product list seller wise
+
         $product_seller_details = array();
         foreach ($cart_items as $cart_item) {
             $object = new stdClass();
@@ -2801,6 +2804,8 @@ class Order_model extends CI_Model
         endif;
 
         //==================================== New calculation for shipping=====================================
+
+        //check the cart items are deliverable or not
         $whole_order_deliverable = 1;
         foreach ($product_seller_details as $psd) {
             if (!$psd->total_order_deliverable) {
@@ -2812,6 +2817,8 @@ class Order_model extends CI_Model
             return false;
         }
 
+
+        //calculation of shipping charges as per different sellers
         $supp_data_array_copy = array();
         foreach ($product_seller_details as $psd) {
             $actual_shipping_charges = 0;

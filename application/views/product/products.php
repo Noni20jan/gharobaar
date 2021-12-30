@@ -1089,7 +1089,7 @@ foreach ($sellers as $seller) {
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'rating', '4') ? 'checked' : ''; ?>>
                                                     <label class="custom-control-label">
-                                                        <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>&nbsp;4
+                                                        <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>&nbsp;4 & Above
                                                     </label>
                                                 </div>
                                             </a>
@@ -1099,7 +1099,7 @@ foreach ($sellers as $seller) {
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'rating', '3') ? 'checked' : ''; ?>>
                                                     <label class="custom-control-label">
-                                                        <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>&nbsp;3
+                                                        <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>&nbsp;3 & Above
                                                     </label>
                                                 </div>
                                             </a>
@@ -1109,7 +1109,7 @@ foreach ($sellers as $seller) {
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'rating', '2') ? 'checked' : ''; ?>>
                                                     <label class="custom-control-label">
-                                                        <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i></div>&nbsp;2
+                                                        <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i></div>&nbsp;2 & Above
                                                     </label>
                                                 </div>
                                             </a>
@@ -1119,7 +1119,7 @@ foreach ($sellers as $seller) {
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'rating', '1') ? 'checked' : ''; ?>>
                                                     <label class="custom-control-label">
-                                                        <div class="rating"><i class="fa fa-star"></i></div>&nbsp;1
+                                                        <div class="rating"><i class="fa fa-star"></i></div>&nbsp;1 & Above
                                                     </label>
                                                 </div>
                                             </a>
