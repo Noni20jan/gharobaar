@@ -354,8 +354,11 @@
 <script>
     $(document).ready(function() {
         var category = $('#category_modal').val();
-        if (category == "home_cooks_product") {
-            $('#locateModal').modal('show');
+        var already_pincode = $('#show_pincode_modal').val();
+        if (already_pincode == "") {
+            if (category == "home_cooks_product") {
+                $('#locateModal').modal('show');
+            }
         }
     });
 </script>

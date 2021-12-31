@@ -4244,7 +4244,9 @@
                                                     <div class="pincode" style="text-align:center;font-weight:bold;">
                                                         <?php if (!empty($_SESSION["modesy_sess_user_location"])) : ?>
                                                             Showing results for products deliverable at pincode <?php echo $_SESSION["modesy_sess_user_location"]; ?>
-
+                                                        <?php endif; ?>
+                                                        <?php if (empty($_SESSION["modesy_sess_user_location"])) : ?>
+                                                            <input type="hidden" id="show_pincode_modal" value="">
                                                         <?php endif; ?>
                                                     </div>
                                                     <div>
