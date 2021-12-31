@@ -164,7 +164,7 @@ $route['bank-transfer-payment-report-post']['POST'] = 'order_controller/bank_tra
 $route['pricing-post']['POST'] = 'dashboard_controller/pricing_post';
 //home
 $route['contact-post']['POST'] = 'home_controller/contact_post';
-
+$route['sla-agree-seller']['POST'] = 'home_controller/sla_agree_seller';
 $route['add-to-subscribers-post']['POST'] = 'home_controller/add_to_subscribers';
 $route['set-default-location-post']['POST'] = 'home_controller/set_default_location';
 

@@ -165,6 +165,20 @@ class Page_model extends CI_Model
             return false;
         }
     }
+
+    //model to get the content ID from the  database
+    public function get_content_id($label)
+    {
+        $this->db->select('id');
+        $this->db->from('ui_content');
+        $this->db->where('label', $label);
+        $row = $this->db->get()->row();
+        if (isset($row)) {
+            return $row->id;
+        } else {
+            return false;
+        }
+    }
     //model to get the sms content from the  database
     public function get_sms_content($label)
     {

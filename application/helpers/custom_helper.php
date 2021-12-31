@@ -1270,6 +1270,15 @@ if (!function_exists('get_content')) {
         return $ci->page_model->get_content($label);
     }
 }
+
+//get call model to get the id
+if (!function_exists('get_content_id')) {
+    function get_content_id($label)
+    {
+        $ci = &get_instance();
+        return $ci->page_model->get_content_id($label);
+    }
+}
 // get call model to get the sms event description
 //get call model to get the description
 if (!function_exists('get_sms_content')) {

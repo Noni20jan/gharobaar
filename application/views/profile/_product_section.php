@@ -308,19 +308,23 @@
   }
 </style>
 <?php
-foreach ($user_categories as $cat_id => $cat_count) :
-  $category = get_category_by_id($cat_id);
-  break;
-endforeach; ?>
+if (!empty($user_categories)) :
+  foreach ($user_categories as $cat_id => $cat_count) :
+    $category = get_category_by_id($cat_id);
+    break;
+  endforeach;
+endif; ?>
 <div class="product-heading">
   <div class="row">
     <div class="col-md-4">
       Featured Products
     </div>
     <div class="col-md-3">
-      <?php if ($category->id == 2) : ?>
+      <?php
+      if (isset($category)) :
+        if ($category->id == 2) : ?>
 
-        <!-- <label class="switch">
+          <!-- <label class="switch">
           <input type="checkbox" class="Non" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "non_Veg") ? "checked" : ""; ?>>
 
           <div class="slider round">
@@ -330,24 +334,25 @@ endforeach; ?>
             <span class="off">NO</span>
           </div>
            <label class="non_Veg">Non Veg</label> -->
-        <!-- </label>  -->
-        <label class="veg">Veg</label>
+          <!-- </label>  -->
+          <label class="veg">Veg</label>
 
-        <!-- <label class="non">Non Veg</label> -->
-        <label class="swick">
+          <!-- <label class="non">Non Veg</label> -->
+          <label class="swick">
 
-          <input type="checkbox" class="Veg" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "Veg") ? "checked" : ""; ?>>
+            <input type="checkbox" class="Veg" <?= is_custom_field_option_selected($query_string_object_array, "food_type", "Veg") ? "checked" : ""; ?>>
 
-          <div class="slider round">
-            <!--ADDED HTML -->
+            <div class="slider round">
+              <!--ADDED HTML -->
 
-            <span class="on">YES</span>
+              <span class="on">YES</span>
 
-            <span class="off">NO</span>
-            <!--END-->
-          </div>
-        </label>
-      <?php endif; ?>
+              <span class="off">NO</span>
+              <!--END-->
+            </div>
+          </label>
+      <?php endif;
+      endif; ?>
     </div>
 
     <div class="col-md-2" id="now">

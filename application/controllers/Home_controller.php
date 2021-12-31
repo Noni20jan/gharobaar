@@ -385,6 +385,18 @@ class Home_controller extends Home_Core_Controller
             }
         }
     }
+
+
+    public function sla_agree_seller(){
+        $user_id=$this->auth_user->id;
+        $data["sla_accepted"] =1;
+        $data["sla_content_id"]= $this->input->post('sla_content_id', true);
+        if ($this->profile_model->save_sla_agree($data,$user_id)) {
+            redirect($this->agent->referrer());
+        }
+    }
+
+    
     public function any_barter($slug)
     {
         get_method();

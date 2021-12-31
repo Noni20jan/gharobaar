@@ -12,6 +12,15 @@
         width: 60%;
     }
 
+    .close2 {
+        border: none;
+        padding: 0;
+        background: none;
+        position: absolute;
+        right: 15px;
+        top: 15px;
+    }
+
     @media(max-width:768px) {
         .button-follow-followers {
             border-color: #DF911E;
@@ -359,6 +368,36 @@
     <?php endif; ?>
 <?php endif; ?>
 
+
+<?php if ($this->auth_check) : ?>
+    <?php if (($this->auth_user->sla_accepted == '' || $this->auth_user->sla_accepted == 0) && $this->auth_user->role == 'vendor' && $this->auth_user->username == $user->username) : ?>
+        <div class="modal" id="sla_agree" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog new-width-bank" role="document" style="max-width:50%;top: 15%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ModalLongTitle">Please Accept Below SLA</h5>
+                        <button type="button" id="close_sla" class="close2" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="icon-close"></i> </span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <?php echo form_open('sla-agree-seller'); ?>
+                        <?php echo get_content("sla_agreement"); ?>
+                        <input type="hidden" name="sla_content_id" value="<?php echo get_content_id("sla_agreement"); ?>">
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-md btn-success"><a href=" <?php echo base_url() ?>/assets/file/Supplier_Sla_gharobaar.pdf" download>Download SLA</a></button>
+                            <button type="submit" class="btn btn-md btn-success"><?php echo trans("i_agree"); ?></button>
+                        </div>
+                        <?php echo form_close(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+
 <div class="row-custom">
     <div class="profile-details" id="profile-for-mobile">
 
@@ -516,6 +555,11 @@
             $("#bankaccount").hide();
 
         });
+        $("#sla_agree").modal('show');
+        $(".close2").click(function() {
+            $("#sla_agree").hide();
+
+        });
     });
 </script>
 <script>
@@ -670,4 +714,38 @@
             $("#acc_number").html("");
         }
     }
+</script>
+
+<script type="text/javascript">
+    function DownloadFile() {
+        //Set the File URL.
+        var url = "uploads/temp/Supplier_Sla_gharobaar.pdf";
+
+        //Create XMLHTTP Request.
+        var req = new XMLHttpRequest();
+        req.open("GET", url, true);
+        req.responseType = "blob";
+        req.onload = function() {
+            //Convert the Byte Data to BLOB object.
+            var blob = new Blob([req.response], {
+                type: "application/octetstream"
+            });
+
+            //Check the Browser type and download the File.
+            var isIE = false || !!document.documentMode;
+            if (isIE) {
+                window.navigator.msSaveBlob(blob, fileName);
+            } else {
+                var url = window.URL || window.webkitURL;
+                link = url.createObjectURL(blob);
+                var a = document.createElement("a");
+                a.setAttribute("download", fileName);
+                a.setAttribute("href", link);
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        };
+        req.send();
+    };
 </script>

@@ -738,4 +738,14 @@ class Profile_model extends CI_Model
             return true;
         }
     }
+
+
+
+     //save seller sla agree
+     public function save_sla_agree($data,$user_id)
+     {
+        $this->db->where('id', $user_id);
+        return $this->db->update('users', $data);
+     }
+ 
 }
