@@ -375,7 +375,7 @@
             <div class="modal-dialog new-width-bank" role="document" style="max-width:50%;top: 15%;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="ModalLongTitle">Please Accept Below SLA</h5>
+                        <h5 class="modal-title" id="ModalLongTitle">Please accept the Terms & Condition</h5>
                         <button type="button" id="close_sla" class="close2" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><i class="icon-close"></i> </span>
                         </button>
