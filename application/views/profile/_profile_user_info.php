@@ -371,14 +371,14 @@
 
 <?php if ($this->auth_check) : ?>
     <?php if (($this->auth_user->sla_accepted == '' || $this->auth_user->sla_accepted == 0) && $this->auth_user->role == 'vendor' && $this->auth_user->username == $user->username) : ?>
-        <div class="modal" id="sla_agree" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal" id="sla_agree" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop='static' data-keyboard='false'>
             <div class="modal-dialog new-width-bank" role="document" style="max-width:50%;top: 15%;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="ModalLongTitle">Please accept the Terms & Condition</h5>
-                        <button type="button" id="close_sla" class="close2" data-dismiss="modal" aria-label="Close">
+                        <!-- <button type="button" id="close_sla" class="close2" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true"><i class="icon-close"></i> </span>
-                        </button>
+                        </button> -->
                     </div>
                     <div class="modal-body">
                         <?php echo form_open('sla-agree-seller'); ?>
