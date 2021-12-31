@@ -415,11 +415,40 @@ foreach ($sellers as $seller) {
         }
     }
 </style>
-<?php if ($this->auth_check) {
-    if ($this->auth_user->user_type == "guest") {
-        redirect(base_url() . 'logout');
-    }
-} ?>
+<!-- <?php //if ($this->auth_check) {
+        // if ($this->auth_user->user_type == "guest") { 
+        ?>
+        <input type="hidden" id="role" value="<?php //echo $this->auth_user->user_type; 
+                                                ?>">
+        <input type="hidden" id="user_id" value="<?php //echo $this->auth_user->id; 
+                                                    ?>">
+<?php //}
+//} 
+?>
+
+<script>
+    $(document).ready(function() {
+        var user_type = document.getElementById("role").value;
+        var user_id = document.getElementById("user_id").value;
+
+        if (user_type == "guest") {
+            var id = user_id;
+            var data = {
+                "user_id": id,
+                "sys_lang_id": sys_lang_id
+            };
+            data[csfr_token_name] = $.cookie(csfr_cookie_name);
+            $.ajax({
+                type: "POST",
+                url: base_url + "cart_controller/remove_from_cart_guest",
+                data: data,
+                success: function(response) {
+                    window.location.href = base_url + "logout";
+                }
+            });
+        }
+    })
+</script> -->
 <link rel="stylesheet" href="<?= base_url(); ?>assets/css/custom.css">
 <div id="wrapper">
     <div class="container">
@@ -2347,9 +2376,11 @@ foreach ($sellers as $seller) {
                     <div class="row row-product" id="post-data" style="margin-top:20px">
                         <!--print products-->
                         <?php foreach ($products as $product) : ?>
-                            <div class="col-6 col-sm-4 col-md-4 col-lg-3 col-product">
-                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
-                            </div>
+                            <?php if ($product->is_shop_open == "1") : ?>
+                                <div class="col-6 col-sm-4 col-md-4 col-lg-3 col-product">
+                                    <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
+                                </div>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                         <?php if (empty($products)) : ?>
                             <div class="col-12">

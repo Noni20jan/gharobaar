@@ -610,7 +610,7 @@ class Product_model extends Core_Model
     {
 
         $select = "products.*,
-            users.username AS user_username,users.brand_name AS brand_name,users.supplier_speciality AS user_supplier_speciality,users.id AS user_id, users.shop_name AS shop_name, users.role AS user_role, users.slug AS user_slug,
+            users.username AS user_username,users.brand_name AS brand_name,users.supplier_speciality AS user_supplier_speciality,users.id AS user_id, users.shop_name AS shop_name, users.role AS user_role, users.slug AS user_slug,users.is_shop_open AS is_shop_open,
             (SELECT title FROM product_details WHERE product_details.product_id = products.id AND product_details.lang_id = " . clean_number($this->selected_lang->id) . " LIMIT 1) AS title,
             (SELECT CONCAT(storage, '::', image_small) FROM images WHERE products.id = images.product_id ORDER BY is_main DESC LIMIT 1) AS image,
             (SELECT CONCAT(storage, '::', image_small) FROM images WHERE products.id = images.product_id ORDER BY is_main DESC LIMIT 1, 1) AS image_second,
@@ -657,6 +657,7 @@ class Product_model extends Core_Model
         $this->db->where('products.visibility', $visibility);
         $this->db->where('products.is_draft', $is_draft);
         $this->db->where('products.is_deleted', 0);
+        // $this->db->where('is_shop_open', 1);
         // $this->db->order_by('products.id', 'random');
         if ($type == 'promoted') {
             $this->db->where('products.is_promoted', 1);
@@ -1648,6 +1649,7 @@ class Product_model extends Core_Model
     {
 
         $this->filter_products($query_string_array, $category_id);
+        $this->db->where('is_shop_open', 1);
         // var_dump($this->db->count_all_results('products'));
 
         return $this->db->count_all_results('products');
@@ -2126,7 +2128,8 @@ class Product_model extends Core_Model
     //get product by id
     public function get_product_by_id($id)
     {
-        $this->db->where('id', clean_number($id));
+        $this->build_query();
+        // $this->db->where('products.id', clean_number($id));
         return $this->db->get('products')->row();
     }
 
@@ -2985,7 +2988,7 @@ order by id desc LIMIT 1";
             if ($i < $count) {
                 $soundword = $results->word;
                 // echo $soundword;
-                $where .= "title like '%$soundword%' OR ";
+                $where .= "title ='$soundword' OR ";
             } else {
                 $soundword = $results->word;
                 // echo $soundword;

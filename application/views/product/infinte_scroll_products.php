@@ -12,11 +12,13 @@
 <!-- <div class="row row-product" style="margin-top:20px"> -->
 <!--print products-->
 <?php foreach ($products as $product) : ?>
+    <?php if ($product->is_shop_open == "1") : ?>
 
-    <input type="hidden" id="empty_data" value="">
-    <div class="col-6 col-sm-4 col-md-4 col-lg-3 col-product">
-        <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
-    </div>
+        <input type="hidden" id="empty_data" value="">
+        <div class="col-6 col-sm-4 col-md-4 col-lg-3 col-product">
+            <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
+        </div>
+    <?php endif; ?>
 <?php endforeach; ?>
 <!-- <div id="container6565">
                             <div class="loadedcontent"></div>

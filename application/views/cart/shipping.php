@@ -1025,7 +1025,7 @@
             if (filter.test(mobNum)) {
 
                 if (mobNum.length == 10) {
-                    $("#number_login")[0].innerHTML = "Verified";
+                    $("#number_login")[0].innerHTML = "Valid";
                     $("#number_login").css({
                         'color': 'green'
                     });;

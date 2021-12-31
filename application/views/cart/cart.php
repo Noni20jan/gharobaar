@@ -441,10 +441,16 @@
                                         </span>
                                     </h1>
                                     <div class="cart-scroll-for-web">
-                                        <?php if (!empty($cart_items)) :
+                                        <?php $is_shop_open = 1;
+                                        if (!empty($cart_items)) :
                                             foreach ($cart_items as $cart_item) :
                                                 $stock_quantity = (int)get_product($cart_item->product_id)->stock;
+
                                                 $product = get_active_product($cart_item->product_id);
+
+                                                if ($product->is_shop_open == 0) {
+                                                    $is_shop_open = 0;
+                                                }
                                                 if (!empty($product)) :
                                                     $user_id_array = $product->user_id;
                                                     $user_products = get_user_products($user_id_array, $cart_item->product_id);
@@ -486,21 +492,24 @@
                                                                     <br>
                                                                     <a class="lone" data-toggle="modal" data-target="#Modal_info_<?php echo $cart_item->product_id; ?>">Add/Edit Customisation Detail</a>
 
-                                                                    <?php if (empty($cart_item->variation_option)) : ?> <?php if ($product->add_meet == "Made to stock") : ?> <?php if (empty(check_product_stock($product))) : ?> <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?>
+                                                                    <?php if (empty($cart_item->variation_option)) : ?>
+                                                                        <?php if ($product->add_meet == "Made to stock") : ?>
+                                                                            <?php if (empty(check_product_stock($product)) || $is_shop_open == 0) : ?>
+                                                                                <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?>
                                                                                 </div>
                                                                             <?php endif; ?>
                                                                         <?php else : ?>
-                                                                            <?php if (empty(check_product_stock($product))) : ?>
+                                                                            <?php if (empty(check_product_stock($product)) || $is_shop_open == 0) : ?>
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?></div>
                                                                         <?php endif;
-                                                                                                                        endif; ?>
+                                                                        endif; ?>
                                                                     <?php else : ?>
                                                                         <?php if ($product->add_meet == "Made to stock") : ?>
-                                                                            <?php if ($cart_item->variation_option->stock == 0) : ?>
+                                                                            <?php if ($cart_item->variation_option->stock == 0 || $is_shop_open == 0) : ?>
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?></div>
                                                                             <?php endif; ?>
                                                                         <?php else : ?>
-                                                                            <?php if ($cart_item->variation_option->stock == 0) : ?>
+                                                                            <?php if ($cart_item->variation_option->stock == 0 || $is_shop_open == 0) : ?>
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?></div>
                                                                         <?php endif;
                                                                         endif; ?>
@@ -753,7 +762,7 @@
                                         <?php if (empty($cart_total->is_all_product_available)) : ?>
                                             <a href="#" class="btn btn-block" data-toggle="modal" data-target="#product_not_available"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
                                         <?php else : ?>
-                                            <?php if (empty($cart_total->is_stock_available)) : ?>
+                                            <?php if (empty($cart_total->is_stock_available) || $is_shop_open == 0) : ?>
                                                 <strong class="btn btn-block " data-toggle="modal" data-target="#out_of_stock"><?php echo trans("continue_to_checkout"); ?> </strong>
                                             <?php else : ?>
                                                 <?php if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
@@ -840,9 +849,11 @@
                 <div class="row row-product-items row-product">
                     <?php if (!empty($products)) :
                         foreach ($products as $product) : ?>
-                            <div class="col-4 col-sm-2 col-md-4 col-lg-2 col-product product-margin">
-                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
-                            </div>
+                            <?php if ($product->is_shop_open == "1") : ?>
+                                <div class="col-4 col-sm-2 col-md-4 col-lg-2 col-product product-margin">
+                                    <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
+                                </div>
+                            <?php endif; ?>
                     <?php endforeach;
                     endif; ?>
 
@@ -871,12 +882,14 @@
                     if (!empty($user_id_array)) :
                         if (!empty($user_products)) :
                             foreach ($user_products as $item) :
-                                if ($count < 5) : ?>
-                                    <div class="col-6 col-sm-2 col-md-4 col-lg-2 col-product product-margin">
-                                        <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
-                                    </div>
+                                if ($item->is_shop_open == "1") :
+                                    if ($count < 5) : ?>
+                                        <div class="col-6 col-sm-2 col-md-4 col-lg-2 col-product product-margin">
+                                            <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
+                                        </div>
                     <?php endif;
-                                $count++;
+                                    $count++;
+                                endif;
                             endforeach;
                         endif;
                     endif; ?>

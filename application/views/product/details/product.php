@@ -835,12 +835,14 @@
                 <!--print related posts-->
                 <?php $count = 0;
                 foreach ($user_products as $item) :
-                    if ($count < 5) : ?>
-                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                            <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
-                        </div>
+                    if ($item->is_shop_open == "1") :
+                        if ($count < 5) : ?>
+                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                                <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
+                            </div>
                 <?php endif;
-                    $count++;
+                        $count++;
+                    endif;
                 endforeach; ?>
             </div>
             <?php if (item_count($user_products) > 5) : ?>
@@ -857,9 +859,11 @@
             <div class="row row-product">
                 <!--print related posts-->
                 <?php foreach ($related_products as $item) : ?>
-                    <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                        <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
-                    </div>
+                    <?php if ($item->is_shop_open == "1") : ?>
+                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                            <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
+                        </div>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -879,9 +883,11 @@
             <div class="row row-product">
                 <!--print products-->
                 <?php foreach ($latest_products as $product) : ?>
-                    <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                        <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
-                    </div>
+                    <?php if ($product->is_shop_open == "1") : ?>
+                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                            <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                        </div>
+                    <?php endif; ?>
                 <?php endforeach; ?>
                 <div class="btn btn-md btn-custom m-t-15" id="view-products">View More Products</div>
             </div>
@@ -895,13 +901,15 @@
             <?php $count = 0;
             if (!empty($diff_prod)) :
                 foreach ($diff_prod as $product) :
-                    if ($count < 5) : ?>
-                        <!-- <div class="col-6 col-sm-2 col-md-4 col-lg-2 col-product product-margin"> -->
-                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                            <?php $this->load->view('product/_product_item', ['product' =>  $product]); ?>
-                        </div>
+                    if ($product->is_shop_open == "1") :
+                        if ($count < 5) : ?>
+                            <!-- <div class="col-6 col-sm-2 col-md-4 col-lg-2 col-product product-margin"> -->
+                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                                <?php $this->load->view('product/_product_item', ['product' =>  $product]); ?>
+                            </div>
                 <?php endif;
-                    $count++;
+                        $count++;
+                    endif;
                 endforeach;
             else : ?>
                 <div class="m-t-15" id="view-products">No products to display !</div>

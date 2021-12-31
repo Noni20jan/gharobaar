@@ -2,12 +2,17 @@
 <?php if (!empty($products)) :
     $count = 1; ?>
     <?php foreach ($products as $product) :
-        if ($count <= 10) : ?>
-            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
-            </div>
+        if ($product->is_shop_open == "1") :
+            if ($count <= 10) : ?>
+
+                <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                    <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
+                </div>
+                <?php $count++; ?>
     <?php endif;
-        $count++;
+
+        endif;
+
     endforeach; ?>
 <?php else : ?>
     <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">

@@ -205,7 +205,9 @@
                                 <th><?php echo trans('product_type'); ?></th>
                                 <th><?php echo trans('category'); ?></th>
                                 <?php if ($this->general_settings->promoted_products == 1) : ?>
-                                    <th><?php echo trans('purchased_plan'); ?></th>
+                                    <!-- disabled promotion of products -->
+                                    <!-- <th><?php //echo trans('purchased_plan'); 
+                                                ?></th> -->
                                 <?php endif; ?>
                                 <th><?php echo trans('stock'); ?></th>
                                 <th><?php echo trans('page_views'); ?></th>
@@ -241,17 +243,22 @@
                                                 }
                                             } ?>
                                         </td>
-                                        <?php if ($this->general_settings->promoted_products == 1) : ?>
+                                        <!-- disabled promotion of products -->
+                                        <!-- <?php //if ($this->general_settings->promoted_products == 1) : 
+                                                ?>
                                             <td>
-                                                <?php if ($item->is_draft != 1) :
-                                                    if ($item->is_promoted == 1 && $item->promote_plan != "none") :
-                                                        echo $item->promote_plan;
-                                                    else : ?>
+                                                <?php //if ($item->is_draft != 1) :
+                                                //if ($item->is_promoted == 1 && $item->promote_plan != "none") :
+                                                //  echo $item->promote_plan;
+                                                //else : 
+                                                ?>
                                                         <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modalPricing" onclick="$('.pricing_product_id').val(<?= $item->id; ?>);"><i class="fa fa-plus"></i>&nbsp;<?= trans("promote"); ?></button>
-                                                <?php endif;
-                                                endif; ?>
+                                                <?php //endif;
+                                                //endif; 
+                                                ?>
                                             </td>
-                                        <?php endif; ?>
+                                        <?php //endif; 
+                                        ?> -->
                                         <td class="white-space-nowrap">
                                             <?php if ($item->product_type == "digital" && $item->add_meet == "Made to stock") : ?>
                                                 <span class="text-success"><?php echo trans("in_stock"); ?></span>
