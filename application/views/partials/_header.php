@@ -3,6 +3,93 @@
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->selected_lang->short_form ?>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/jquery.dm-uploader.min.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/styles.css" />
+
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-manager/file-manager.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/slick-theme.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/speech-input.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/slick.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/font-icons/css/mds-icons.min.css" />
+<?php echo !empty($this->fonts->font_url) ? $this->fonts->font_url : ''; ?>
+<link rel="stylesheet" href="<?= base_url(); ?>assets/css/fselect.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main-1.7.min.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom.css" />
+<?php if (!empty($this->general_settings->site_color)) : ?>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/<?php echo $this->general_settings->site_color; ?>.min.css" />
+<?php else : ?>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/default.min.css" />
+<?php endif; ?>
+<style>
+    #message {
+        display: none;
+        background: #f1f1f1;
+        color: #000;
+        position: relative;
+        padding: 3px;
+        margin-top: 5px;
+    }
+
+    #message p {
+        /* padding: 3px 5; */
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    /* Add a green text color and a checkmark when the requirements are right */
+    .valid {
+        color: green;
+    }
+
+    .valid:before {
+        position: relative;
+        left: -35px;
+        content: "✔";
+    }
+
+    /* Add a red text color and an "x" when the requirements are wrong */
+    .invalid {
+        color: red;
+    }
+
+    .invalid:before {
+        position: relative;
+        left: -35px;
+        content: "✖";
+    }
+
+    .Validation_error {
+        color: red;
+        font-size: 15px;
+    }
+
+    .field-icon {
+        float: right;
+        margin-right: 15px;
+        margin-top: -26px;
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .image-1 {
+            width: 100%;
+        }
+
+    }
+
+    /* .image2 img {
+            width: 220px;
+            height: auto;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            height: 770px;
+            width: 100%;
+
+        } */
+</style>
 <style>
     .clearable_search {
         background: #fff url("assets/img/cross_icon_red.svg") no-repeat right -20px center;
@@ -563,14 +650,7 @@
     <meta name="keywords" content="<?php echo xss_clean($keywords); ?>" />
     <meta name="author" content="Codingest" />
     <link rel="shortcut icon" type="image/png" href="<?php echo get_favicon($this->general_settings); ?>" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/jquery.dm-uploader.min.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/styles.css" />
 
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-manager/file-manager.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/slick-theme.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/speech-input.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/slick.css" />
 
     <meta property="og:locale" content="en-US" />
     <meta property="og:site_name" content="<?php echo xss_clean($this->general_settings->application_name); ?>" />
@@ -629,17 +709,1308 @@
     <?php endif;
         endforeach;
     endif; ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/font-icons/css/mds-icons.min.css" />
-    <?php echo !empty($this->fonts->font_url) ? $this->fonts->font_url : ''; ?>
 
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main-1.7.min.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom.css" />
-    <?php if (!empty($this->general_settings->site_color)) : ?>
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/<?php echo $this->general_settings->site_color; ?>.min.css" />
-    <?php else : ?>
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/default.min.css" />
-    <?php endif; ?>
     <?php $this->load->view("partials/_css_header"); ?>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+     
+    
+    <![endif]-->
+    <?php echo $this->general_settings->google_adsense_code; ?>
+    <style>
+        .switch-field {
+            display: flex;
+            margin-bottom: 36px;
+            overflow: hidden;
+            border-radius: 25px 0 0 25px;
+        }
+
+        .switch-field input {
+            position: absolute !important;
+            clip: rect(0, 0, 0, 0);
+            height: 1px;
+            width: 1px;
+            border: 0;
+            overflow: hidden;
+        }
+
+        .switch-field label {
+            background-color: #f6f6f6;
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 14px;
+            min-height: 37px;
+            text-align: center;
+            padding: 8px 16px;
+            margin-right: -1px;
+
+            transition: all 0.1s ease-in-out;
+        }
+
+        .switch-field label:hover {
+            cursor: pointer;
+        }
+
+        .switch-field input:checked+label {
+            width: 110px;
+
+            box-shadow: none;
+            min-height: 37px;
+        }
+
+        .switch-field label:first-of-type {
+            border-radius: 4px 0 0 4px;
+        }
+
+        .switch-field label:last-of-type {
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* This is just for CodePen. */
+
+
+
+
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .top_logo_margin {
+            margin-top: 3% !important;
+        }
+
+        .top_logo_adjust {
+            width: 185px !important;
+            height: 161px !important;
+            margin-top: -8% !important;
+        }
+
+        @media(max-width:1024px) {
+            .top_logo_adjust {
+                width: 185px !important;
+                height: 80px !important;
+                margin-top: -9% !important;
+            }
+        }
+
+        .padding_1 {
+            padding: 0px !important;
+        }
+
+        .logo_size {
+            max-width: 186px !important;
+            max-height: 80px !important;
+            /* margin-top: -9% !important; */
+        }
+
+        .icon-bg {
+            background-color: green;
+            border-radius: 50%;
+            color: white;
+            font-size: 15px;
+            line-height: 0px;
+        }
+
+        .promo-bar-offset {
+            top: 40px;
+        }
+
+        #announcement-bar {
+            width: 100%;
+            position: relative;
+            display: block;
+            height: 58px;
+        }
+
+        @media(max-width:768px) {
+            #announcement-bar {
+                width: 100%;
+                position: relative;
+                display: none;
+                height: 58px;
+            }
+        }
+
+        #announcement-mobile-bar {
+            width: 100%;
+            position: relative;
+            display: none;
+            height: 58px;
+        }
+
+        @media(max-width:768px) {
+            #announcement-mobile-bar {
+                width: 100%;
+                position: relative;
+                display: block;
+                height: 58px;
+            }
+        }
+
+        .animationbar {
+
+            position: relative;
+            animation-name: example;
+            animation-duration: 2s;
+            animation-delay: 2s;
+            margin: 15px;
+            animation-iteration-count: infinite;
+        }
+
+        .animation-mobile-bar {
+
+            position: relative;
+            animation-name: example;
+            animation-duration: 2s;
+            animation-delay: 2s;
+            margin: 0px;
+            animation-iteration-count: infinite;
+        }
+
+
+
+        .sliding_content {
+            display: flow-root;
+            text-align: center;
+            background-color: #f3f999;
+            font-weight: normal;
+            font-style: normal;
+            font-family: "Montserrat", Helvetica, sans-serif;
+            /* box-shadow: 0 0 1em 1px rgb(0 0 0 / 25%);
+            color: #006; */
+            /* margin: 0em;
+            /* max-width: 100em; */
+            /* padding: 0em; */
+        }
+
+        /* @keyframes example {
+            0% {
+                left: 0px;
+            }
+
+            50% {
+                left: 100%;
+            }
+
+            100% {
+                left: 0;
+            }
+
+        } */
+        .display {
+            /* text-align: center; */
+        }
+
+        @media screen and (max-width:768px) {
+            .sticky-header {
+                top: 40px;
+            }
+
+            .promo-content-wrapper,
+            .promo-bar {
+                opacity: 1;
+            }
+        }
+    </style>
+    <script src="<?= base_url(); ?>assets/js/fselect.js"></script>
+
+</head>
+
+<body>
+    <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
+        <div id="announcement-bar">
+            <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
+
+                <div class="animationbar">
+                    <marquee behaviour="scroll" direction="right">
+                        <p class="display"><strong><?php echo trans("free_ship_message"); ?> </strong></p>
+                    </marquee>
+                </div>
+            </article>
+        </div>
+    <?php endif; ?>
+    <header id="header">
+        <?php //$this->load->view("partials/_top_bar"); 
+        ?>
+        <div class="main-menu" id="myHeader">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="padding_1 nav-top">
+                        <div class="container">
+                            <div class="row align-items-center">
+
+                                <div class="top_logo_margin col-md-7 nav-top-left">
+                                    <div class="row-align-items-center">
+                                        <div class="top_logo_adjust logo">
+                                            <a href="<?php echo lang_base_url(); ?>"><img src="<?php echo get_logo($this->general_settings); ?>" alt="logo" class="logo_size"></a>
+                                        </div>
+                                        <div class="top-search-bar<?= $this->general_settings->multi_vendor_system != 1 ? ' top-search-bar-single-vendor' : ''; ?>">
+                                            <?php echo form_open(generate_url('search'), ['id' => 'form_validate_search', 'class' => 'form_search_main', 'method' => 'get']); ?>
+                                            <?php if ($this->general_settings->multi_vendor_system == 1) : ?>
+                                                <!-- <div class="left">
+                                                    <div class="dropdown search-select">
+                                                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                                            <?php if (isset($search_type)) : ?>
+                                                                <?php echo trans("supplier"); ?>
+                                                            <?php else : ?>
+                                                                <?php echo trans("product"); ?>
+                                                            <?php endif; ?>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                        <div class="switch-field ">
+                                                            <a data-value="product" href="javascript:void(0)"><input type="radio" id="radio-one" name="switch-one" value="yes" checked />
+                                                                <label for="radio-one"></label></a>
+                                                            <a data-value="member" href="javascript:void(0)"><input type="radio" id="radio-two" name="switch-one" value="no" />
+                                                                <label for="radio-two"><?php echo trans("supplier"); ?></label></a>
+                                                        </div>
+                                                        <a class="dropdown-item" data-value="product" href="javascript:void(0)"><?php echo trans("product"); ?></a>
+                                                        <a class="dropdown-item" data-value="member" href="javascript:void(0)"><?php echo trans("supplier"); ?></a>
+                                                        </div>
+                                                    </div>
+                                                    <?php if (isset($search_type)) : ?>
+                                                        <input type="hidden" class="search_type_input" name="search_type" value="member">
+                                                    <?php else : ?>
+                                                        <input type="hidden" class="search_type_input" name="search_type" value="product">
+                                                    <?php endif; ?>
+                                                </div> -->
+                                                <div class="right">
+                                                    <div class="pincode" style="text-align:center;font-weight:bold;">
+                                                        <?php if (!empty($_SESSION["modesy_sess_user_location"])) : ?>
+                                                            Showing results for products deliverable at pincode <?php echo $_SESSION["modesy_sess_user_location"]; ?>
+                                                        <?php endif; ?>
+                                                        <?php if (empty($_SESSION["modesy_sess_user_location"])) : ?>
+                                                            <input type="hidden" id="show_pincode_modal" value="">
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <div>
+                                                        <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search speech-input" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_exp"); ?>" required onchange="search_input();" autocomplete="off">
+                                                        <input type="hidden" class="search_type_input " name="search_type" value="product">
+                                                        <button class="btn btn-default btn-search" style="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? 'top:17px' : '';  ?> margin-left:10px;"><i class="icon-search"></i></button>
+                                                        <div id="response_search_results" class="search-results-ajax"></div>
+                                                    </div>
+                                                </div>
+                                            <?php else : ?>
+                                                <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search speech-input" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_products"); ?>" required onchange="search_input();" autocomplete="off">
+                                                <input type="hidden" class="search_type_input" name="search_type" value="product">
+                                                <button class="btn btn-default btn-search"><i class="icon-search"></i></button>
+                                                <div id="response_search_results" class="search-results-ajax"></div>
+                                            <?php endif; ?>
+                                            <?php echo form_close(); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 nav-top-right">
+                                    <ul class="nav align-items-center" style="flex-wrap:nowrap; justify-content:space-evenly; float:none !important;">
+                                        <?php if (!empty($_SESSION["modesy_sess_user_location"])) : ?>
+                                            <li class="icon-bg" style="background-color:red;">
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
+
+                                                    <i class="icon-map-marker"></i></a>
+
+                                            </li>
+                                        <?php else : ?>
+                                            <li class="icon-bg">
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
+
+                                                    <i class="icon-map-marker"></i></a>
+
+                                            </li>
+                                        <?php endif; ?>
+                                        <?php if ($this->auth_check) : ?>
+                                            <?php if (is_multi_vendor_active()) : ?>
+                                                <?php if (!is_user_vendor()) : ?>
+                                                    <?php if (!is_user_applied_for_shop()) : ?>
+                                                        <li><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
+                                                    <?php else : ?>
+                                                        <li><a href="<?php echo generate_url("start-selling"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
+                                                    <?php endif; ?>
+                                                <?php else : ?>
+                                                    <?php if ($this->auth_user->supplier_type == "Goods") { ?>
+                                                        <li><a href="<?php echo generate_dash_url("add_product"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
+                                                    <?php } else { ?>
+                                                        <li><a href="<?php echo generate_dash_url("add_service"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
+                                                    <?php } ?>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        <?php else : ?>
+                                            <?php if (is_multi_vendor_active()) : ?>
+                                                <li><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                        <?php if ($this->is_sale_active) : ?>
+                                            <li class="icon-bg cart-icon-number">
+                                                <a class="cart_a" href="<?php echo generate_url("cart"); ?>">
+                                                    <i class="icon-cart"></i>
+                                                    <?php $cart_product_count = get_cart_product_count();
+                                                    if ($cart_product_count > 0) : ?>
+                                                        <span class="notification"><?php echo $cart_product_count; ?></span>
+                                                    <?php endif; ?>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+                                        <?php if ($this->auth_check) : ?>
+                                            <?php if ($this->auth_user->user_type != "guest") : ?>
+                                                <li class="icon-bg">
+                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                                        <i class="icon-heart-o"></i>
+                                                    </a>
+                                                </li>
+                                            <?php else : ?>
+                                                <!-- hide wishlist for guest user -->
+                                                <li class="icon-bg">
+                                                    <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal">
+                                                        <!-- <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>"> -->
+                                                        <i class="icon-heart-o"></i>
+                                                    </a>
+                                                </li>
+                                            <?php endif; ?>
+                                        <?php else : ?>
+
+                                            <li class="icon-bg">
+                                                <a id='wishlist'>
+                                                    <i class="icon-heart-o"></i>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+                                        <?php if ($this->auth_check) : ?>
+                                            <?php if ($this->auth_user->user_type != "guest") :
+                                            ?>
+                                                <li class="nav-item dropdown profile-dropdown p-r-0">
+                                                    <a class="nav-link dropdown-toggle a-profile" data-toggle="dropdown" href="javascript:void(0)" aria-expanded="false">
+                                                        <img src="<?php echo get_user_avatar($this->auth_user); ?>" alt="<?php echo get_shop_name($this->auth_user); ?>"> <?php if ($unread_message_count > 0) : ?>
+                                                            <span class="notification"><?php echo $unread_message_count; ?></span>
+                                                        <?php endif; ?>
+                                                        <!-- <?php echo character_limiter(get_shop_name($this->auth_user), 15, '..'); ?> -->
+                                                        <i class="icon-arrow-down"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <?php if ($this->auth_user->role == "admin") : ?>
+                                                            <li>
+                                                                <a href="<?php echo admin_url(); ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    <?php echo trans("admin_panel"); ?>
+                                                                </a>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                        <?php if (is_user_vendor()) : ?>
+                                                            <li>
+                                                                <!-- <a href="<?= dashboard_url(); ?>"> -->
+                                                                <a href="<?= generate_dash_url("profile"); ?>" target="_blank">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    <?php echo trans("supplier_panel"); ?>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    Buyer Profile
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="<?php echo generate_url("followers") . "/" . $this->auth_user->slug; ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    Followers
+                                                                </a>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                        <?php if ($this->auth_user->role == "member") { ?>
+                                                            <li>
+                                                                <a href="javascript:void(0);">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    <?php echo character_limiter(get_shop_name($this->auth_user), 15, '..'); ?>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    Profile
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="<?php echo generate_url("following") . "/" . $this->auth_user->slug; ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    Following
+                                                                </a>
+                                                            </li>
+                                                        <?php } ?>
+                                                        <?php if (!is_user_vendor()) : ?>
+                                                            <!-- <li>
+                                                                <a href="<?php echo generate_dash_url("profile"); ?>">
+                                                                    <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" />
+                                                                    <?php echo trans("profile"); ?>
+                                                                </a>
+                                                            </li> -->
+                                                        <?php endif; ?>
+                                                        <?php if ($this->is_sale_active) : ?>
+                                                            <?php if ($this->auth_user->role == "member") : ?>
+                                                                <li>
+                                                                    <a href="<?php echo generate_url("orders_dashboard"); ?>">
+                                                                        <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/order-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                        <?php echo trans("orders"); ?>
+                                                                    </a>
+                                                                </li>
+                                                            <?php endif; ?>
+                                                            <?php if ($this->auth_user->role != "member") { ?>
+                                                                <?php if (is_bidding_system_active()) : ?>
+                                                                    <li>
+                                                                        <a href="<?php echo generate_url("quote_requests"); ?>">
+                                                                            <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/qoute-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                            <?php echo trans("quote_requests"); ?>
+                                                                        </a>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                            <?php } ?>
+                                                            <?php if ($this->general_settings->digital_products_system == 1) : ?>
+                                                                <li>
+                                                                    <a href="<?php echo generate_url("downloads"); ?>">
+                                                                        <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/Downloads-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                        <?php echo trans("downloads"); ?>
+                                                                    </a>
+                                                                </li>
+                                                            <?php endif; ?>
+                                                        <?php endif; ?>
+                                                        <li>
+                                                            <a href="<?php echo generate_url("messages"); ?>">
+                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/comment-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                <?php echo trans("messages"); ?>&nbsp;<?php if ($unread_message_count > 0) : ?>
+                                                                <span class="span-message-count"><?php echo $unread_message_count; ?></span>
+                                                            <?php endif; ?>
+                                                            </a>
+                                                        </li>
+
+                                                        <?php if ($this->auth_user->role == "vendor") { ?>
+                                                            <!-- <li>
+                                        <a href="<?php echo generate_url("barter_requests"); ?>">
+                                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-req-icon.png" alt="" style="width: 20px; height: 20px;" />
+                                            Barter Requests
+                                        </a>
+                                    </li> -->
+                                                        <?php } ?>
+                                                        <?php if (is_user_vendor()) : ?>
+                                                            <li>
+                                                                <a href="<?php echo generate_url("password_settings_seller"); ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    <?php echo trans("settings"); ?>
+                                                                </a>
+                                                            </li>
+                                                        <?php else : ?>
+                                                            <li>
+                                                                <a href="<?php echo generate_url("password_settings"); ?>">
+                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                    <?php echo trans("settings"); ?>
+                                                                </a>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                        <?php if ($this->auth_check && $this->auth_user->is_active_shop_request == 1) : ?>
+                                                            <?php if ($this->auth_user->gst_issue == 1 || $this->auth_user->pan_issue == 1 || $this->auth_user->adhaar_issue == 1) : ?>
+                                                                <li>
+                                                                    <a href="<?php echo generate_url("settings", "update_settings"); ?>">
+                                                                        Update Seller Info
+                                                                    </a>
+                                                                </li>
+                                                            <?php endif; ?>
+                                                        <?php endif; ?>
+                                                        <li>
+                                                            <a href="<?php echo base_url(); ?>logout" class="logout">
+                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/logout.ico" alt="" style="width: 20px; height: 20px;" /> -->
+                                                                <?php echo trans("logout"); ?>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            <?php endif;
+                                            ?>
+                                        <?php else : ?>
+                                            <li>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal" id="header-login">Sign in</a>
+                                            </li>
+
+                                        <?php endif; ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav-main">
+                        <?php $this->load->view("partials/_nav_main"); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-nav-container" id="myMobileHeader">
+            <div class="nav-mobile-header">
+
+                <?php //$this->load->view("partials/_top_bar_mobile"); 
+                ?>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="nav-mobile-header-container">
+                            <div class="menu-icon">
+                                <a href="javascript:void(0)" class="btn-open-mobile-nav"><i class="icon-menu"></i></a>
+                            </div>
+                            <div class="mobile-map">
+                                <?php if (!empty($_SESSION["modesy_sess_user_location"])) : ?>
+
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" style="color:red;">
+                                        <span class="pincode_text"> Showing results for products deliverable at pincode <?php echo $_SESSION["modesy_sess_user_location"]; ?>
+                                        </span>
+                                    <?php else : ?>
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal">
+
+
+                                        <?php endif; ?>
+                                        <i class="icon-map-marker"></i></a>
+
+                            </div>
+
+                            <div class="mobile-logo">
+                                <a href="<?php echo lang_base_url(); ?>"><img src="<?php echo get_logo($this->general_settings); ?>" alt="logo" class="logo"></a>
+                            </div>
+                            <div class="mobile-cart<?= !$this->is_sale_active ? ' visibility-hidden' : ''; ?>">
+                                <?php if ($this->auth_check) : ?>
+                                    <?php if ($this->auth_user->user_type != "guest") : ?>
+                                        <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                            <i class="icon-heart-o"></i>
+                                        </a>
+                                    <?php else : ?>
+                                        <!-- hide wishlist for guest user -->
+                                        <!-- <li class="icon-bg">
+                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
+                                                        <i class="icon-heart-o"></i>
+                                                    </a>
+                                                </li> -->
+                                    <?php endif; ?>
+                                <?php else : ?>
+                                    <a id='wishlist-mobile-view-header' ?>
+                                        <i class="icon-heart-o"></i>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                            <div class="mobile-cart">
+                                <a class="cart_a" href="<?php echo generate_url("cart"); ?>"><i class="icon-cart"></i>
+                                    <?php $cart_product_count = get_cart_product_count();
+                                    if ($cart_product_count > 0) : ?>
+                                        <span class="notification"><?php echo $cart_product_count; ?></span>
+                                    <?php endif; ?>
+                                </a>
+                            </div>
+                            <div class="mobile-search">
+                                <a class="search-icon"><i class="icon-search"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="top-search-bar mobile-search-form <?= $this->general_settings->multi_vendor_system != 1 ? ' top-search-bar-single-vendor' : ''; ?>">
+                            <?php echo form_open(generate_url('search'), ['id' => 'form_validate_search_mobile', 'method' => 'get']); ?>
+                            <?php if ($this->general_settings->multi_vendor_system == 1) : ?>
+                                <!-- <div class="left">
+                                    <div class="dropdown search-select">
+                                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                            <?php if (isset($search_type)) : ?>
+                                                <?php echo trans("member"); ?>
+                                            <?php else : ?>
+                                                <?php echo trans("product"); ?>
+                                            <?php endif; ?>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" data-value="product" href="javascript:void(0)"><?php echo trans("product"); ?></a>
+                                            <a class="dropdown-item" data-value="member" href="javascript:void(0)"><?php echo trans("member"); ?></a>
+                                        </div>
+                                    </div>
+                                    <?php if (isset($search_type)) : ?>
+                                        <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="member">
+                                    <?php else : ?>
+                                        <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="product">
+                                    <?php endif; ?>
+                                </div> -->
+                                <div class="search_bar" style="width: 95%;">
+                                    <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="product">
+                                    <input type="text" id="input_search_mobile" name="search" maxlength="300" pattern=".*\S+.*" class="form-control input-search speech-input" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search"); ?>" onchange="search_input();" required>
+                                    <button class="btn btn-default btn-search"><i class="icon-search"></i></button>
+                                    <div id="response_search_results_mobile" class="search-results-ajax"></div>
+                                </div>
+                            <?php else : ?>
+                                <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="product">
+                                <input type="text" id="input_search" name="search" maxlength="300" pattern=".*\S+.*" id="input_search_mobile" class="form-control input-search speech-input" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_products"); ?>" onchange="search_input();" required autocomplete="off">
+                                <button class="btn btn-default btn-search btn-search-single-vendor-mobile"><i class="icon-search"></i></button>
+                                <div id="response_search_results_mobile" class="search-results-ajax"></div>
+                            <?php endif; ?>
+                            <?php echo form_close(); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
+        <div id="announcement-mobile-bar">
+            <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
+
+                <div class="animation-mobile-bar">
+                    <marquee behaviour="scroll" direction="right">
+                        <p class="display-mobile"><strong><?php echo trans("free_ship_message"); ?> </strong></p>
+                    </marquee>
+                </div>
+            </article>
+        </div>
+    <?php endif; ?>
+    <div id="overlay_bg" class="overlay-bg"></div>
+    <!--include mobile menu-->
+    <?php $this->load->view("partials/_nav_mobile"); ?>
+    <input type="hidden" class="search_type_input" name="search_type" value="product">
+    <?php if (!$this->auth_check || $this->auth_user->user_type == "guest") : ?>
+        <!-- Login Modal -->
+        <div class="modal fade" id="loginModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
+                <div class="modal-content">
+                    <div class="auth-box">
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                        <h4 class="title"><?php echo trans("login"); ?></h4>
+                        <!-- form start -->
+                        <form id="form_login">
+                            <div class="social-login-cnt">
+                                <?php $this->load->view("partials/_social_login", ["or_text" => trans("login_with_email")]); ?>
+                            </div>
+                            <!-- include message block -->
+                            <div id="result-login" class="font-size-13"></div>
+                            <div class="form-group">
+                                <input type="text" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("email_mobile"); ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" id="password_login" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" minlength="4" required>
+                                <span class="far fa-eye field-icon" id="togglePassword_login"></span>
+                            </div>
+                            <div class="form-group text-right">
+                                <a href="<?php echo generate_url("forgot_password"); ?>" class="link-forgot-password"><?php echo trans("forgot_password"); ?></a>
+                            </div>
+                            <?php if ($this->general_settings->enable_otp_login) : ?>
+                                <div style="text-align:center;  margin-bottom:5px">
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class="logintoOtp" style="text-decoration: underline; color:blue !important">Login using OTP</a>
+                                </div>
+                            <?php endif; ?>
+                            <div class="form-group" style="text-align:center;">
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login_with_pwd"); ?></button>
+                            </div>
+
+                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>
+                        </form>
+                        <!-- form end -->
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Guest Login Modal -->
+        <div class="modal fade" id="guestLoginModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
+                <div class="modal-content">
+                    <div class="auth-box">
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                        <h4 class="title"><?php echo trans("guest_login"); ?></h4>
+                        <!-- form start -->
+                        <form id="form_guest_login">
+                            <!-- include message block -->
+                            <div id="result-login" class="font-size-13"></div>
+                            <div class="form-group">
+                                <input type="text" name="email" id="guest_email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
+                                <span id="email_span_error" style="color:red;"></span>
+                            </div>
+
+                            <!-- <div class="form-group">
+                                <input type="text" name="phone_number" id="guest_phone_number" class="form-control auth-form-input" placeholder="Mobile Number" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
+                            </div> -->
+
+
+                            <p class="p-social-media m-0 m-t-5 hide_after_response"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>
+
+
+                            <!-- <div class="form-group show_after_response hideMe">
+                                <hr>
+                                <input type="text" name="guest_otp" id="guest_otp" class="form-control auth-form-input" placeholder="Enter OTP" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="6" maxlength="6">
+
+                                <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" onclick="guest_resend_otp($('#guest_phone_number'),$('#guest_email'))"><?php echo trans("resend_otp"); ?></a></p>
+
+                            </div> -->
+                            <div id="email_phn_exist_msg">
+                            </div>
+                            <div class="form-group hide_after_response" style="text-align:center;">
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("continue"); ?></button>
+                            </div>
+                            <!-- <div class="form-group show_after_response hideMe" style="text-align:center;">
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("confirm_otp"); ?></button>
+                            </div> -->
+                        </form>
+                        <!-- form end -->
+
+                        <div class="login_to_avail" style="color:#aaaaa;"> <?php echo trans("login_to_avail"); ?></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- login with OTP model start -->
+        <div class="modal fade" id="OtploginModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
+                <div class="modal-content">
+                    <div class="auth-box" style="width: 370px;">
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close" onclick="reloadPage()"></i></button>
+                        <h4 class="title"><?php echo trans("login"); ?></h4>
+                        <!-- form start -->
+                        <form id="form_login_otp">
+                            <div class="social-login-cnt">
+                                <?php $this->load->view("partials/_social_login", ["or_text" => trans("login_with_email")]); ?>
+                            </div>
+                            <!-- include message block -->
+                            <div id="result-login" class="font-size-13"></div>
+                            <div class="OtpSendMsg">
+                                <span id="OtpSendMsg"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="registeredNumber" class="form-control auth-form-input" placeholder="<?php echo trans("register_mobile"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
+                                <span id="login_otp_check" style="color: red;"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="loginOtp" id="loginOtp" class="form-control auth-form-input" placeholder="Enter Otp" required maxlength="6">
+                                <span id="login_otp_span" style="color: red;"></span>
+                            </div>
+
+                            <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" id="resend_login_otp" class="link" style="text-decoration: underline; color:blue !important">Resend OTP</a></p>
+
+                            <div class="form-group" style="text-align:center;">
+                                <button type="button" id="sendLoginOtp" class="btn btn-md btn-custom btn-block-new-ui">Send OTP</button>
+                            </div>
+                            <div class="form-group" style="text-align:center;">
+                                <button type="button" id="verify_login_otp" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login"); ?></button>
+                            </div>
+                        </form>
+                        <!-- form end -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- login using OTP model end  -->
+
+
+
+
+
+        <div class="modal fade" id="registerModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered login-modal modal-dialog" role="document" style="justify-content: center;">
+                <div class="modal-content">
+
+                    <div class="register-box">
+                        <button type="button" class="close above-all" data-dismiss="modal"><i class="icon-close"></i></button>
+                        <h1 class="title">Register</h1>
+                        <!-- form start -->
+                        <?php
+                        if ($recaptcha_status) {
+                            echo form_open('register-post', [
+                                'id' => 'form_validate', 'class' => 'validate_terms',
+                                'onsubmit' => "var serializedData = $(this).serializeArray();var recaptcha = ''; $.each(serializedData, function (i, field) { if (field.name == 'g-recaptcha-response') {recaptcha = field.value;}});if (recaptcha.length < 5) { $('.g-recaptcha>div').addClass('is-invalid');return false;} else { $('.g-recaptcha>div').removeClass('is-invalid');}"
+                            ]);
+                        } else {
+                            // echo form_open('register-post', ['id' => 'form_validate', 'class' => 'validate_terms']);
+                        ?>
+                            <form name="register-form" id="form_validate" class="validate_terms" method="post" accept-charset="utf-8" novalidate="novalidate">
+                            <?php }
+                            ?>
+                            <div class="social-login-cnt">
+                                <?php $this->load->view("partials/_social_login", ['or_text' => 'Or Register with email']); ?>
+                            </div>
+                            <!-- include message block -->
+                            <div id="result-register-popup">
+                                <?php //$this->load->view('partials/_messages'); 
+                                ?>
+                            </div>
+                            <div class="spinner display-none spinner-activation-register">
+                                <div class="bounce1"></div>
+                                <div class="bounce2"></div>
+                                <div class="bounce3"></div>
+                            </div>
+                            <input type="hidden" id="via_sell_now" name="via_sell_now" style="text-transform: capitalize;" class="form-control auth-form-input" value="0">
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+
+                                        <label class="control-label">First Name<span class="Validation_error"> *</span></label>
+
+                                    </div> -->
+                                    <div class="col-12 col-sm-12 m-b-15">
+                                        <input type="text" name="first_name" style="text-transform: capitalize;" class="form-control auth-form-input" placeholder="<?php echo trans("first_name"); ?>" value="<?php echo old("first_name"); ?>" maxlength="255" required>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+
+                                        <label class="control-label">Last Name<span class="Validation_error"> *</span></label>
+
+                                    </div> -->
+                                    <div class="col-12 col-sm-12 m-b-15">
+                                        <input type="text" name="last_name" style="text-transform: capitalize;" class="form-control auth-form-input" placeholder="<?php echo trans("last_name"); ?>" value="<?php echo old("last_name"); ?>" maxlength="255" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+
+                                        <label class="control-label">Email<span class="Validation_error"> *</span></label>
+
+                                    </div> -->
+                                    <div class="col-12 col-sm-12 m-b-15">
+                                        <input type="email" name="email" id="email_new" class="form-control auth-form-input" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old("email"); ?>" required>
+                                        <span id="email_span_error" style="color:red;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+
+                                        <label class="control-label">Phone <br> Number<span class="Validation_error"> *</span></label>
+
+                                    </div> -->
+                                    <div class="col-12 col-sm-12 m-b-15">
+                                        <input type="text" name="phone_number" id="phone_number" class="form-control auth-form-input" placeholder="Mobile Number" value="<?php echo old("phone_number"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption" minlength="10" maxlength="10" required>
+                                        <strong id="verify_otp" class="btn btn-md btn-custom btn-block-new-ui">Verify Mobile</strong>
+                                        <br><span id="verify_mobile_span" style="color:red;">*You cannot register without Mobile Verification!</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+
+                                        <label class="control-label">Gender<span class="Validation_error"> *</span></label>
+
+                                    </div> -->
+                                    <div class="col-12 col-sm-12 m-b-15">
+                                        <select name="gender" class="form-control auth-form-input" placeholder="Gender" required>
+                                            <option value="" selected disabled>Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+
+                                        <label class="control-label">Password<span class="Validation_error"> *</span></label>
+
+                                    </div> -->
+                                    <div class="col-12 col-sm-12 m-b-15">
+                                        <input type="password" name="password" id="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" value="<?php echo old("password"); ?>" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,25}$" minlength="8" maxlength="25">
+                                        <span class="far fa-eye field-icon" id="togglePassword"></span>
+                                        <label id="Passwordvalidate" style="color:red;"></label>
+                                        <div id="message">
+                                            <p>Password must contain the following:
+                                            <p>
+                                            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                                            <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                                            <p id="number" class="invalid">A <b>number</b></p>
+                                            <p id="special_character" class="invalid">A <b>Special Character</b></p>
+                                            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+
+                                        <label class="control-label">Confirm Password<span class="Validation_error"> *</span></label>
+
+                                    </div> -->
+                                    <div class="col-12 col-sm-12 m-b-15">
+                                        <input type="password" name="confirm_password" id="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" required>
+                                        <span class="far fa-eye field-icon" id="togglePassword1"></span>
+
+                                        <label id="CheckPasswordMatch" style="color:red;"></label>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-t-5 m-b-20">
+                                <div class="custom-control custom-checkbox custom-control-validate-input">
+                                    <input type="checkbox" class="custom-control-input" name="terms" id="checkbox_terms" readonly="readonly" required>
+                                    <label for="checkbox_terms" class="custom-control-label"><?php echo trans("terms_conditions_exp"); ?>&nbsp;
+                                        <?php $page_terms = get_page_by_default_name("terms_conditions", $this->selected_lang->id);
+                                        if (!empty($page_terms)) : ?>
+                                            <strong data-toggle="modal" data-target="#termsConditionRegister"><u style="color: blue;">(<?= html_escape($page_terms->title); ?>)</u></strong>
+                                        <?php endif; ?>
+                                    </label>
+                                    <small id="small-text-header" style="display:none;color:red;">(<?php echo trans("terms_condition_msg"); ?>)</small>
+                                </div>
+                            </div>
+                            <?php if ($recaptcha_status) : ?>
+                                <div class="recaptcha-cnt">
+                                    <?php generate_recaptcha(); ?>
+                                </div>
+                            <?php endif; ?>
+                            <div class="form-group">
+                                <button type="submit" id="btnsubmit_register" class="btn btn-md btn-custom btn-block-new-ui" disabled><?php echo trans("register"); ?></button>
+                            </div>
+                            <p class="p-social-media m-0 m-t-15"><?php echo trans("have_account"); ?>&nbsp;<a href="javascript:void(0)" class="register_color registertologin" data-toggle="modal" data-target="#loginModal"><?php echo trans("login"); ?></a></p>
+
+                            <?php echo form_close(); ?>
+                            <!-- form end -->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    <?php endif; ?>
+
+    <div class="modal fade" id="verifyMobileModal" role="dialog" data-backdrop="static">
+        <div class="modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-lg verifyModalWidth" id="mobile_otp">
+                <div class="modal-body-new" style="border-radius:20px;">
+                    <div class="modal-content">
+                        <div class="modal-header" style="border:none; text-align:center;">
+                            <button type="button" class="close" id="cross-btn" data-dismiss="modal" aria-label="Close" onclick="">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h5 class="modal-title">Verify Mobile Number</h5>
+                        </div>
+                        <div class="modal-body text-center">
+                            <div class="text-center" id="send-otp-result"></div>
+                            <center>
+                                <input type="text" name="otp_field" id="otp_field" class="form-control auth-form-input otp_field_width" placeholder="Enter OTP" value="" maxlength="255" required="">
+                                <span id="otp_field_span" style="color:red;"></span>
+                            </center><br>
+                            <div class="row text-center" id="verification" style="justify-content:center;">
+
+                                <button type="button" id="verify_btn" class="btn btn-custom verify_btn_margin">Verify OTP</button>
+
+
+                                <button type="button" id="resend_otp" class="btn btn-custom verify_btn_margin" onclick="send_verification_otp()">Resend OTP</button>
+
+                            </div>
+                            <center><button type="button" id="close_btn" data-dismiss="modal" class="btn btn-custom" style="display:none;">Close</button></center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="termsConditionRegister" role="dialog" data-backdrop="static">
+        <div class="modal-dialog-centered terms-condition-modal" role="document">
+            <div class="modal-dialog modal-lg" id="buyer_t_c">
+                <div class="modal-content">
+                    <div class="modal-header" style="border:none; text-align:center;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title">Gharobaar Terms of Use</h5>
+                    </div>
+                    <div class="modal-body" id="terms-of-use">
+                        <?php echo get_content("buyer_terms_conditions"); ?><?php echo get_content("buyer_terms_conditions1"); ?>
+                        <center><button type="button" class="btn btn-custom" data-dismiss="modal" onclick="register_popup_t_c()">Accept</button></center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="modal fade" id="locationModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered login-modal location-modal" role="document">
+            <div class="modal-content">
+                <div class="auth-box">
+                    <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                    <h4 class="title"><?php echo trans("select_location"); ?></h4>
+                    <p class="location-modal-description"><?php echo trans("location_exp"); ?></p>
+                    <div class="form-group m-b-20">
+                        <div class="input-group input-group-location">
+                            <i class="icon-map-marker"></i>
+                            <input type="text" id="input_location" class="form-control form-input" value="<?php echo get_default_location_input(); ?>" placeholder="<?php echo trans("enter_location") ?>" autocomplete="off">
+                            <a href="javascript:void(0)" class="btn-reset-location-input<?= (empty($this->default_location->country_id)) ? ' hidden' : ''; ?>"><i class="icon-close"></i></a>
+                        </div>
+                        <div class="search-results-ajax">
+                            <div class="search-results-location">
+                                <div id="response_search_location"></div>
+                            </div>
+                        </div>
+                        <div id="location_id_inputs">
+                            <input type="hidden" name="country" value="<?= $this->default_location->country_id; ?>" class="input-location-filter">
+                            <input type="hidden" name="state" value="<?= $this->default_location->state_id; ?>" class="input-location-filter">
+                            <input type="hidden" name="city" value="<?= $this->default_location->city_id; ?>" class="input-location-filter">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="btn_submit_location" class="btn btn-md btn-custom btn-block"><?php echo trans("update_location"); ?></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="locateModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered login-modal locate-modal" role="document">
+            <div class="modal-content">
+                <div class="auth-box">
+                    <button type="button" class="close" data-dismiss="modal" id="close-pin"><i class="icon-close"></i></button>
+                    <?php echo form_open(generate_url('search_pincode'), ['id' => 'form_validate_pincode_search', 'class' => 'form_search_pincode_main form-inline', 'method' => 'get']); ?>
+
+                    <div id="location">
+                        <p class="locate-modal-description">Enter pincode to check availability in your area</p>
+
+                        <div class="form-group m-b-20">
+                            <div class="input-group input-group-location">
+                                <input type="text" name="search_pincode" class="form-control enter_p clearable_search" id="pincodeSearchField" maxlength="6" minlength="6" pattern="[0-9]+" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="Enter pincode" autocomplete="off">
+                                <input type="hidden" class="search_type_input_pincode" name="search_type_pincode" value="pincode">
+                                <button class="check_pincode">Go!</button>
+                                <div id="response_pincode_search_results" class="search-results-ajax">
+                                </div>
+
+                                <?php echo form_close(); ?>
+                            </div>
+                            <div class="search-results-ajax">
+                                <div class="search-results-location">
+                                    <div id="response_search_location"></div>
+                                </div>
+                            </div>
+                            <div id="location_id_inputs">
+                                <input type="hidden" name="country" value="<?= $this->default_location->country_id; ?>" class="input-location-filter">
+                                <input type="hidden" name="state" value="<?= $this->default_location->state_id; ?>" class="input-location-filter">
+                                <input type="hidden" name="city" value="<?= $this->default_location->city_id; ?>" class="input-location-filter">
+                            </div>
+                        </div>
+                        <div class="form-group" style="visibility:hidden;">
+                            <button type="button" id="btn_submit_location" class="btn btn-md btn-custom btn-block"><?php echo trans("update_location"); ?></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php if ($this->auth_check) : ?>
+        <?php if (!get_fssai_action($this->auth_user->id)) : ?>
+            <div class="modal fade" data-backdrop="static" id="fssai_undertakingModal" role="dialog">
+                <div class="modal-dialog modal-dialog-centered fssai-modal">
+                    <!-- Modal content-->
+                    <?php echo form_open("agree-fssai-undertaking", ['name' => 'agree_fssai_undertaking']); ?>
+                    <input type="hidden" name="action" value="1">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <h3 class="text_center">Seller Undertaking</h3>
+                            <p>SAI order & its directions for Labelling and Display regulation shall be enforced from November 16, 2021.</p>
+                            <ol>
+                                <li>Change in Non-veg Logo (from circular shape to triangular shape)</li>
+                                <li>llergen Declaration is mandatory on the food product label</li>
+                                <li>Additional nutritional information for food with more than one ingredient (added Sugar, Salt, etc.)</li>
+                                <li>Symbol (X) for food materials sold on retail that are not meant for human consumption (E.g: Pooja oil, Ghee for diyas, Pooja water, etc.)</li>
+                                <li>Expiry Date and Use by Date declaration on the Label.</li>
+
+                            </ol>
+                            <p class="text_center fssai_link"><a href="<?php echo base_url() . 'assets/file/fssai_undertaking_doc.pdf'; ?>" target="_blank">Click here for more details</a></p>
+                            <p>By clicking on the Accept button, I agree that I have read and acknowledged the FSSAI order & its directions for Labelling and Display regulation.</p>
+                            <div class="text_center">
+                                <button id="submit-fssai-btn" type="button" class="btn btn-custom">I Accept</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <script>
+                $(function() {
+                    $('#fssai_undertakingModal').modal('show');
+                })
+                $("#submit-fssai-btn").click(function() {
+                    $("form[name='agree_fssai_undertaking']").submit();
+                })
+            </script>
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php if ($this->auth_check && $this->general_settings->rate_previous_order) : ?>
+        <?php $order_id['order_id'] =  $this->product_model->get_order_id($this->auth_user->id); ?>
+        <?php if (!empty($order_id['order_id'])) : ?>
+            <?php $order['product_id'] = $this->product_model->get_order_product_id($order_id['order_id']->order_id, $this->auth_user->id); ?>
+            <?php foreach ($order['product_id'] as $order1) : ?>
+                <?php $not_rating['exist'] = $this->product_model->get_not_rating_product($order1->product_id, $this->auth_user->id); ?>
+                <?php if (empty($not_rating['exist'])) : ?>
+                    <?php $this->load->view('partials/_modal_rate_last_order');
+                    break;
+                    ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    <?php endif; ?>
+    <!-- <style>
+        #pageloader {
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            height: 100%;
+            position: fixed;
+            width: 100%;
+            z-index: 9999;
+        }
+
+        #pageloader img {
+            left: 50%;
+            margin-left: -32px;
+            margin-top: -32px;
+            position: absolute;
+            top: 50%;
+        }
+    </style> -->
+
+    <!-- <div id="pageloader">
+        <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif" alt="processing..." />
+    </div> -->
+
+    <div id="menu-overlay"></div>
+
+    <script>
+        const toggleP = document.querySelector('#togglePassword_login');
+        const passw = document.querySelector('#password_login');
+        toggleP.addEventListener('click', function(e) {
+            // toggle the type attribute
+            console.log("click");
+            const type = passw.getAttribute('type') === 'password' ? 'text' : 'password';
+            passw.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+    <script>
+        var myInput = document.getElementById("password");
+        var letter = document.getElementById("letter");
+        var capital = document.getElementById("capital");
+        var number = document.getElementById("number");
+        var length = document.getElementById("length");
+        var special_character = document.getElementById("special_character");
+
+        // When the user clicks on the password field, show the message box
+        myInput.onfocus = function() {
+            document.getElementById("message").style.display = "block";
+        }
+
+        // When the user clicks outside of the password field, hide the message box
+        myInput.onblur = function() {
+            document.getElementById("message").style.display = "none";
+        }
+
+        // When the user starts to type something inside the password field
+        myInput.onkeyup = function() {
+            // Validate lowercase letters
+            var lowerCaseLetters = /[a-z]/g;
+            if (myInput.value.match(lowerCaseLetters)) {
+                letter.classList.remove("invalid");
+                letter.classList.add("valid");
+            } else {
+                letter.classList.remove("valid");
+                letter.classList.add("invalid");
+            }
+
+            // Validate capital letters
+            var upperCaseLetters = /[A-Z]/g;
+            if (myInput.value.match(upperCaseLetters)) {
+                capital.classList.remove("invalid");
+                capital.classList.add("valid");
+            } else {
+                capital.classList.remove("valid");
+                capital.classList.add("invalid");
+            }
+
+            // Validate numbers
+            var numbers = /[0-9]/g;
+            if (myInput.value.match(numbers)) {
+                number.classList.remove("invalid");
+                number.classList.add("valid");
+            } else {
+                number.classList.remove("valid");
+                number.classList.add("invalid");
+            }
+
+            // Validate length
+            if (myInput.value.length >= 8) {
+                length.classList.remove("invalid");
+                length.classList.add("valid");
+            } else {
+                length.classList.remove("valid");
+                length.classList.add("invalid");
+            }
+
+            //validate special characters
+            var numbers = /[!@#$%^&*_=+-]/g;
+            if (myInput.value.match(numbers)) {
+                special_character.classList.remove("invalid");
+                special_character.classList.add("valid");
+            } else {
+                special_character.classList.remove("valid");
+                special_character.classList.add("invalid");
+            }
+        }
+    </script>
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+        togglePassword.addEventListener('click', function(e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+    <script>
+        const togglePassword1 = document.querySelector('#togglePassword1');
+        const password1 = document.querySelector('#confirm_password');
+        togglePassword1.addEventListener('click', function(e) {
+            // toggle the type attribute
+            const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
+            password1.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+    <script>
+        $('#checkbox_terms').click(function() {
+            var isReadOnly = $(this).attr("readonly") === undefined ? false : true;
+
+            if (isReadOnly) {
+                console.log("test");
+                $(this).prop('checked', false);
+                $("#small-text-header").show();
+            }
+        });
+    </script>
+    <script>
+        function register_popup_t_c() {
+            $('#small-text-header').hide();
+            $('#checkbox_terms').removeAttr('readonly');
+            $('#checkbox_terms')[0].checked = true;
+        }
+    </script>
     <script>
         var rtl = false;
     </script>
@@ -3959,1384 +5330,6 @@
             }
         };
     </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-     
-    
-    <![endif]-->
-    <?php echo $this->general_settings->google_adsense_code; ?>
-    <style>
-        .switch-field {
-            display: flex;
-            margin-bottom: 36px;
-            overflow: hidden;
-            border-radius: 25px 0 0 25px;
-        }
-
-        .switch-field input {
-            position: absolute !important;
-            clip: rect(0, 0, 0, 0);
-            height: 1px;
-            width: 1px;
-            border: 0;
-            overflow: hidden;
-        }
-
-        .switch-field label {
-            background-color: #f6f6f6;
-            color: rgba(0, 0, 0, 0.6);
-            font-size: 14px;
-            min-height: 37px;
-            text-align: center;
-            padding: 8px 16px;
-            margin-right: -1px;
-
-            transition: all 0.1s ease-in-out;
-        }
-
-        .switch-field label:hover {
-            cursor: pointer;
-        }
-
-        .switch-field input:checked+label {
-            width: 110px;
-
-            box-shadow: none;
-            min-height: 37px;
-        }
-
-        .switch-field label:first-of-type {
-            border-radius: 4px 0 0 4px;
-        }
-
-        .switch-field label:last-of-type {
-            border-radius: 0 4px 4px 0;
-        }
-
-        /* This is just for CodePen. */
-
-
-
-
-        .sticky {
-            position: fixed;
-            top: 0;
-            width: 100%;
-        }
-
-        .top_logo_margin {
-            margin-top: 3% !important;
-        }
-
-        .top_logo_adjust {
-            width: 185px !important;
-            height: 161px !important;
-            margin-top: -8% !important;
-        }
-
-        @media(max-width:1024px) {
-            .top_logo_adjust {
-                width: 185px !important;
-                height: 80px !important;
-                margin-top: -9% !important;
-            }
-        }
-
-        .padding_1 {
-            padding: 0px !important;
-        }
-
-        .logo_size {
-            max-width: 186px !important;
-            max-height: 80px !important;
-            /* margin-top: -9% !important; */
-        }
-
-        .icon-bg {
-            background-color: green;
-            border-radius: 50%;
-            color: white;
-            font-size: 15px;
-            line-height: 0px;
-        }
-
-        .promo-bar-offset {
-            top: 40px;
-        }
-
-        #announcement-bar {
-            width: 100%;
-            position: relative;
-            display: block;
-            height: 58px;
-        }
-
-        @media(max-width:768px) {
-            #announcement-bar {
-                width: 100%;
-                position: relative;
-                display: none;
-                height: 58px;
-            }
-        }
-
-        #announcement-mobile-bar {
-            width: 100%;
-            position: relative;
-            display: none;
-            height: 58px;
-        }
-
-        @media(max-width:768px) {
-            #announcement-mobile-bar {
-                width: 100%;
-                position: relative;
-                display: block;
-                height: 58px;
-            }
-        }
-
-        .animationbar {
-
-            position: relative;
-            animation-name: example;
-            animation-duration: 2s;
-            animation-delay: 2s;
-            margin: 15px;
-            animation-iteration-count: infinite;
-        }
-
-        .animation-mobile-bar {
-
-            position: relative;
-            animation-name: example;
-            animation-duration: 2s;
-            animation-delay: 2s;
-            margin: 0px;
-            animation-iteration-count: infinite;
-        }
-
-
-
-        .sliding_content {
-            display: flow-root;
-            text-align: center;
-            background-color: #f3f999;
-            font-weight: normal;
-            font-style: normal;
-            font-family: "Montserrat", Helvetica, sans-serif;
-            /* box-shadow: 0 0 1em 1px rgb(0 0 0 / 25%);
-            color: #006; */
-            /* margin: 0em;
-            /* max-width: 100em; */
-            /* padding: 0em; */
-        }
-
-        /* @keyframes example {
-            0% {
-                left: 0px;
-            }
-
-            50% {
-                left: 100%;
-            }
-
-            100% {
-                left: 0;
-            }
-
-        } */
-        .display {
-            /* text-align: center; */
-        }
-
-        @media screen and (max-width:768px) {
-            .sticky-header {
-                top: 40px;
-            }
-
-            .promo-content-wrapper,
-            .promo-bar {
-                opacity: 1;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="<?= base_url(); ?>assets/css/fselect.css">
-    <script src="<?= base_url(); ?>assets/js/fselect.js"></script>
-
-</head>
-
-<body>
-    <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
-        <div id="announcement-bar">
-            <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
-
-                <div class="animationbar">
-                    <marquee behaviour="scroll" direction="right">
-                        <p class="display"><strong><?php echo trans("free_ship_message"); ?> </strong></p>
-                    </marquee>
-                </div>
-            </article>
-        </div>
-    <?php endif; ?>
-    <header id="header">
-        <?php //$this->load->view("partials/_top_bar"); 
-        ?>
-        <div class="main-menu" id="myHeader">
-            <div class="container-fluid">
-                <div class="row">
-
-                    <div class="padding_1 nav-top">
-                        <div class="container">
-                            <div class="row align-items-center">
-
-                                <div class="top_logo_margin col-md-7 nav-top-left">
-                                    <div class="row-align-items-center">
-                                        <div class="top_logo_adjust logo">
-                                            <a href="<?php echo lang_base_url(); ?>"><img src="<?php echo get_logo($this->general_settings); ?>" alt="logo" class="logo_size"></a>
-                                        </div>
-                                        <div class="top-search-bar<?= $this->general_settings->multi_vendor_system != 1 ? ' top-search-bar-single-vendor' : ''; ?>">
-                                            <?php echo form_open(generate_url('search'), ['id' => 'form_validate_search', 'class' => 'form_search_main', 'method' => 'get']); ?>
-                                            <?php if ($this->general_settings->multi_vendor_system == 1) : ?>
-                                                <!-- <div class="left">
-                                                    <div class="dropdown search-select">
-                                                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                                                            <?php if (isset($search_type)) : ?>
-                                                                <?php echo trans("supplier"); ?>
-                                                            <?php else : ?>
-                                                                <?php echo trans("product"); ?>
-                                                            <?php endif; ?>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                        <div class="switch-field ">
-                                                            <a data-value="product" href="javascript:void(0)"><input type="radio" id="radio-one" name="switch-one" value="yes" checked />
-                                                                <label for="radio-one"></label></a>
-                                                            <a data-value="member" href="javascript:void(0)"><input type="radio" id="radio-two" name="switch-one" value="no" />
-                                                                <label for="radio-two"><?php echo trans("supplier"); ?></label></a>
-                                                        </div>
-                                                        <a class="dropdown-item" data-value="product" href="javascript:void(0)"><?php echo trans("product"); ?></a>
-                                                        <a class="dropdown-item" data-value="member" href="javascript:void(0)"><?php echo trans("supplier"); ?></a>
-                                                        </div>
-                                                    </div>
-                                                    <?php if (isset($search_type)) : ?>
-                                                        <input type="hidden" class="search_type_input" name="search_type" value="member">
-                                                    <?php else : ?>
-                                                        <input type="hidden" class="search_type_input" name="search_type" value="product">
-                                                    <?php endif; ?>
-                                                </div> -->
-                                                <div class="right">
-                                                    <div class="pincode" style="text-align:center;font-weight:bold;">
-                                                        <?php if (!empty($_SESSION["modesy_sess_user_location"])) : ?>
-                                                            Showing results for products deliverable at pincode <?php echo $_SESSION["modesy_sess_user_location"]; ?>
-                                                        <?php endif; ?>
-                                                        <?php if (empty($_SESSION["modesy_sess_user_location"])) : ?>
-                                                            <input type="hidden" id="show_pincode_modal" value="">
-                                                        <?php endif; ?>
-                                                    </div>
-                                                    <div>
-                                                        <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search speech-input" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_exp"); ?>" required onchange="search_input();" autocomplete="off">
-                                                        <input type="hidden" class="search_type_input " name="search_type" value="product">
-                                                        <button class="btn btn-default btn-search" style="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? 'top:17px' : '';  ?> margin-left:10px;"><i class="icon-search"></i></button>
-                                                        <div id="response_search_results" class="search-results-ajax"></div>
-                                                    </div>
-                                                </div>
-                                            <?php else : ?>
-                                                <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search" class="form-control input-search speech-input" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_products"); ?>" required onchange="search_input();" autocomplete="off">
-                                                <input type="hidden" class="search_type_input" name="search_type" value="product">
-                                                <button class="btn btn-default btn-search"><i class="icon-search"></i></button>
-                                                <div id="response_search_results" class="search-results-ajax"></div>
-                                            <?php endif; ?>
-                                            <?php echo form_close(); ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 nav-top-right">
-                                    <ul class="nav align-items-center" style="flex-wrap:nowrap; justify-content:space-evenly; float:none !important;">
-                                        <?php if (!empty($_SESSION["modesy_sess_user_location"])) : ?>
-                                            <li class="icon-bg" style="background-color:red;">
-                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
-
-                                                    <i class="icon-map-marker"></i></a>
-
-                                            </li>
-                                        <?php else : ?>
-                                            <li class="icon-bg">
-                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
-
-                                                    <i class="icon-map-marker"></i></a>
-
-                                            </li>
-                                        <?php endif; ?>
-                                        <?php if ($this->auth_check) : ?>
-                                            <?php if (is_multi_vendor_active()) : ?>
-                                                <?php if (!is_user_vendor()) : ?>
-                                                    <?php if (!is_user_applied_for_shop()) : ?>
-                                                        <li><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
-                                                    <?php else : ?>
-                                                        <li><a href="<?php echo generate_url("start-selling"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
-                                                    <?php endif; ?>
-                                                <?php else : ?>
-                                                    <?php if ($this->auth_user->supplier_type == "Goods") { ?>
-                                                        <li><a href="<?php echo generate_dash_url("add_product"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
-                                                    <?php } else { ?>
-                                                        <li><a href="<?php echo generate_dash_url("add_service"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
-                                                    <?php } ?>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                        <?php else : ?>
-                                            <?php if (is_multi_vendor_active()) : ?>
-                                                <li><a href="<?php echo generate_url("why_sell_with_us"); ?>" class="btn btn-md btn-custom btn-sell-now m-r-0" style="margin:0px;"><?= trans("sell_now"); ?></a></li>
-                                            <?php endif; ?>
-                                        <?php endif; ?>
-                                        <?php if ($this->is_sale_active) : ?>
-                                            <li class="icon-bg cart-icon-number">
-                                                <a class="cart_a" href="<?php echo generate_url("cart"); ?>">
-                                                    <i class="icon-cart"></i>
-                                                    <?php $cart_product_count = get_cart_product_count();
-                                                    if ($cart_product_count > 0) : ?>
-                                                        <span class="notification"><?php echo $cart_product_count; ?></span>
-                                                    <?php endif; ?>
-                                                </a>
-                                            </li>
-                                        <?php endif; ?>
-                                        <?php if ($this->auth_check) : ?>
-                                            <?php if ($this->auth_user->user_type != "guest") : ?>
-                                                <li class="icon-bg">
-                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
-                                                        <i class="icon-heart-o"></i>
-                                                    </a>
-                                                </li>
-                                            <?php else : ?>
-                                                <!-- hide wishlist for guest user -->
-                                                <li class="icon-bg">
-                                                    <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal">
-                                                        <!-- <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>"> -->
-                                                        <i class="icon-heart-o"></i>
-                                                    </a>
-                                                </li>
-                                            <?php endif; ?>
-                                        <?php else : ?>
-
-                                            <li class="icon-bg">
-                                                <a id='wishlist'>
-                                                    <i class="icon-heart-o"></i>
-                                                </a>
-                                            </li>
-                                        <?php endif; ?>
-                                        <?php if ($this->auth_check) : ?>
-                                            <?php if ($this->auth_user->user_type != "guest") :
-                                            ?>
-                                                <li class="nav-item dropdown profile-dropdown p-r-0">
-                                                    <a class="nav-link dropdown-toggle a-profile" data-toggle="dropdown" href="javascript:void(0)" aria-expanded="false">
-                                                        <img src="<?php echo get_user_avatar($this->auth_user); ?>" alt="<?php echo get_shop_name($this->auth_user); ?>"> <?php if ($unread_message_count > 0) : ?>
-                                                            <span class="notification"><?php echo $unread_message_count; ?></span>
-                                                        <?php endif; ?>
-                                                        <!-- <?php echo character_limiter(get_shop_name($this->auth_user), 15, '..'); ?> -->
-                                                        <i class="icon-arrow-down"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <?php if ($this->auth_user->role == "admin") : ?>
-                                                            <li>
-                                                                <a href="<?php echo admin_url(); ?>">
-                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                    <?php echo trans("admin_panel"); ?>
-                                                                </a>
-                                                            </li>
-                                                        <?php endif; ?>
-                                                        <?php if (is_user_vendor()) : ?>
-                                                            <li>
-                                                                <!-- <a href="<?= dashboard_url(); ?>"> -->
-                                                                <a href="<?= generate_dash_url("profile"); ?>" target="_blank">
-                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                    <?php echo trans("supplier_panel"); ?>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
-                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                    Buyer Profile
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="<?php echo generate_url("followers") . "/" . $this->auth_user->slug; ?>">
-                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                    Followers
-                                                                </a>
-                                                            </li>
-                                                        <?php endif; ?>
-                                                        <?php if ($this->auth_user->role == "member") { ?>
-                                                            <li>
-                                                                <a href="javascript:void(0);">
-                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                    <?php echo character_limiter(get_shop_name($this->auth_user), 15, '..'); ?>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="<?php echo generate_dash_url("buyer_panel"); ?>">
-                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                    Profile
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="<?php echo generate_url("following") . "/" . $this->auth_user->slug; ?>">
-                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/house.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                    Following
-                                                                </a>
-                                                            </li>
-                                                        <?php } ?>
-                                                        <?php if (!is_user_vendor()) : ?>
-                                                            <!-- <li>
-                                                                <a href="<?php echo generate_dash_url("profile"); ?>">
-                                                                    <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/profile-icon.png" alt="" style="width: 20px; height: 20px;" />
-                                                                    <?php echo trans("profile"); ?>
-                                                                </a>
-                                                            </li> -->
-                                                        <?php endif; ?>
-                                                        <?php if ($this->is_sale_active) : ?>
-                                                            <?php if ($this->auth_user->role == "member") : ?>
-                                                                <li>
-                                                                    <a href="<?php echo generate_url("orders_dashboard"); ?>">
-                                                                        <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/order-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                        <?php echo trans("orders"); ?>
-                                                                    </a>
-                                                                </li>
-                                                            <?php endif; ?>
-                                                            <?php if ($this->auth_user->role != "member") { ?>
-                                                                <?php if (is_bidding_system_active()) : ?>
-                                                                    <li>
-                                                                        <a href="<?php echo generate_url("quote_requests"); ?>">
-                                                                            <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/qoute-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                            <?php echo trans("quote_requests"); ?>
-                                                                        </a>
-                                                                    </li>
-                                                                <?php endif; ?>
-                                                            <?php } ?>
-                                                            <?php if ($this->general_settings->digital_products_system == 1) : ?>
-                                                                <li>
-                                                                    <a href="<?php echo generate_url("downloads"); ?>">
-                                                                        <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/Downloads-icon.png" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                        <?php echo trans("downloads"); ?>
-                                                                    </a>
-                                                                </li>
-                                                            <?php endif; ?>
-                                                        <?php endif; ?>
-                                                        <li>
-                                                            <a href="<?php echo generate_url("messages"); ?>">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/comment-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                <?php echo trans("messages"); ?>&nbsp;<?php if ($unread_message_count > 0) : ?>
-                                                                <span class="span-message-count"><?php echo $unread_message_count; ?></span>
-                                                            <?php endif; ?>
-                                                            </a>
-                                                        </li>
-
-                                                        <?php if ($this->auth_user->role == "vendor") { ?>
-                                                            <!-- <li>
-                                        <a href="<?php echo generate_url("barter_requests"); ?>">
-                                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-req-icon.png" alt="" style="width: 20px; height: 20px;" />
-                                            Barter Requests
-                                        </a>
-                                    </li> -->
-                                                        <?php } ?>
-                                                        <?php if (is_user_vendor()) : ?>
-                                                            <li>
-                                                                <a href="<?php echo generate_url("password_settings_seller"); ?>">
-                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                    <?php echo trans("settings"); ?>
-                                                                </a>
-                                                            </li>
-                                                        <?php else : ?>
-                                                            <li>
-                                                                <a href="<?php echo generate_url("password_settings"); ?>">
-                                                                    <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/update-profile-icon.jpg" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                    <?php echo trans("settings"); ?>
-                                                                </a>
-                                                            </li>
-                                                        <?php endif; ?>
-                                                        <?php if ($this->auth_check && $this->auth_user->is_active_shop_request == 1) : ?>
-                                                            <?php if ($this->auth_user->gst_issue == 1 || $this->auth_user->pan_issue == 1 || $this->auth_user->adhaar_issue == 1) : ?>
-                                                                <li>
-                                                                    <a href="<?php echo generate_url("settings", "update_settings"); ?>">
-                                                                        Update Seller Info
-                                                                    </a>
-                                                                </li>
-                                                            <?php endif; ?>
-                                                        <?php endif; ?>
-                                                        <li>
-                                                            <a href="<?php echo base_url(); ?>logout" class="logout">
-                                                                <!-- <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/logout.ico" alt="" style="width: 20px; height: 20px;" /> -->
-                                                                <?php echo trans("logout"); ?>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            <?php endif;
-                                            ?>
-                                        <?php else : ?>
-                                            <li>
-                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal" id="header-login">Sign in</a>
-                                            </li>
-
-                                        <?php endif; ?>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nav-main">
-                        <?php $this->load->view("partials/_nav_main"); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="mobile-nav-container" id="myMobileHeader">
-            <div class="nav-mobile-header">
-
-                <?php //$this->load->view("partials/_top_bar_mobile"); 
-                ?>
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="nav-mobile-header-container">
-                            <div class="menu-icon">
-                                <a href="javascript:void(0)" class="btn-open-mobile-nav"><i class="icon-menu"></i></a>
-                            </div>
-                            <div class="mobile-map">
-                                <?php if (!empty($_SESSION["modesy_sess_user_location"])) : ?>
-
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" style="color:red;">
-                                        <span class="pincode_text"> Showing results for products deliverable at pincode <?php echo $_SESSION["modesy_sess_user_location"]; ?>
-                                        </span>
-                                    <?php else : ?>
-                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal">
-
-
-                                        <?php endif; ?>
-                                        <i class="icon-map-marker"></i></a>
-
-                            </div>
-
-                            <div class="mobile-logo">
-                                <a href="<?php echo lang_base_url(); ?>"><img src="<?php echo get_logo($this->general_settings); ?>" alt="logo" class="logo"></a>
-                            </div>
-                            <div class="mobile-cart<?= !$this->is_sale_active ? ' visibility-hidden' : ''; ?>">
-                                <?php if ($this->auth_check) : ?>
-                                    <?php if ($this->auth_user->user_type != "guest") : ?>
-                                        <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
-                                            <i class="icon-heart-o"></i>
-                                        </a>
-                                    <?php else : ?>
-                                        <!-- hide wishlist for guest user -->
-                                        <!-- <li class="icon-bg">
-                                                    <a href="<?php echo generate_url("wishlist") . "/" . $this->auth_user->slug; ?>">
-                                                        <i class="icon-heart-o"></i>
-                                                    </a>
-                                                </li> -->
-                                    <?php endif; ?>
-                                <?php else : ?>
-                                    <a id='wishlist-mobile-view-header' ?>
-                                        <i class="icon-heart-o"></i>
-                                    </a>
-                                <?php endif; ?>
-                            </div>
-                            <div class="mobile-cart">
-                                <a class="cart_a" href="<?php echo generate_url("cart"); ?>"><i class="icon-cart"></i>
-                                    <?php $cart_product_count = get_cart_product_count();
-                                    if ($cart_product_count > 0) : ?>
-                                        <span class="notification"><?php echo $cart_product_count; ?></span>
-                                    <?php endif; ?>
-                                </a>
-                            </div>
-                            <div class="mobile-search">
-                                <a class="search-icon"><i class="icon-search"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="top-search-bar mobile-search-form <?= $this->general_settings->multi_vendor_system != 1 ? ' top-search-bar-single-vendor' : ''; ?>">
-                            <?php echo form_open(generate_url('search'), ['id' => 'form_validate_search_mobile', 'method' => 'get']); ?>
-                            <?php if ($this->general_settings->multi_vendor_system == 1) : ?>
-                                <!-- <div class="left">
-                                    <div class="dropdown search-select">
-                                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                                            <?php if (isset($search_type)) : ?>
-                                                <?php echo trans("member"); ?>
-                                            <?php else : ?>
-                                                <?php echo trans("product"); ?>
-                                            <?php endif; ?>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" data-value="product" href="javascript:void(0)"><?php echo trans("product"); ?></a>
-                                            <a class="dropdown-item" data-value="member" href="javascript:void(0)"><?php echo trans("member"); ?></a>
-                                        </div>
-                                    </div>
-                                    <?php if (isset($search_type)) : ?>
-                                        <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="member">
-                                    <?php else : ?>
-                                        <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="product">
-                                    <?php endif; ?>
-                                </div> -->
-                                <div class="search_bar" style="width: 95%;">
-                                    <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="product">
-                                    <input type="text" id="input_search_mobile" name="search" maxlength="300" pattern=".*\S+.*" class="form-control input-search speech-input" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search"); ?>" onchange="search_input();" required>
-                                    <button class="btn btn-default btn-search"><i class="icon-search"></i></button>
-                                    <div id="response_search_results_mobile" class="search-results-ajax"></div>
-                                </div>
-                            <?php else : ?>
-                                <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="product">
-                                <input type="text" id="input_search" name="search" maxlength="300" pattern=".*\S+.*" id="input_search_mobile" class="form-control input-search speech-input" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search_products"); ?>" onchange="search_input();" required autocomplete="off">
-                                <button class="btn btn-default btn-search btn-search-single-vendor-mobile"><i class="icon-search"></i></button>
-                                <div id="response_search_results_mobile" class="search-results-ajax"></div>
-                            <?php endif; ?>
-                            <?php echo form_close(); ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
-        <div id="announcement-mobile-bar">
-            <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
-
-                <div class="animation-mobile-bar">
-                    <marquee behaviour="scroll" direction="right">
-                        <p class="display-mobile"><strong><?php echo trans("free_ship_message"); ?> </strong></p>
-                    </marquee>
-                </div>
-            </article>
-        </div>
-    <?php endif; ?>
-    <div id="overlay_bg" class="overlay-bg"></div>
-    <!--include mobile menu-->
-    <?php $this->load->view("partials/_nav_mobile"); ?>
-    <input type="hidden" class="search_type_input" name="search_type" value="product">
-    <?php if (!$this->auth_check || $this->auth_user->user_type == "guest") : ?>
-        <!-- Login Modal -->
-        <div class="modal fade" id="loginModal" role="dialog">
-            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
-                <div class="modal-content">
-                    <div class="auth-box">
-                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
-                        <h4 class="title"><?php echo trans("login"); ?></h4>
-                        <!-- form start -->
-                        <form id="form_login">
-                            <div class="social-login-cnt">
-                                <?php $this->load->view("partials/_social_login", ["or_text" => trans("login_with_email")]); ?>
-                            </div>
-                            <!-- include message block -->
-                            <div id="result-login" class="font-size-13"></div>
-                            <div class="form-group">
-                                <input type="text" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("email_mobile"); ?>" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="password" name="password" id="password_login" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" minlength="4" required>
-                                <span class="far fa-eye field-icon" id="togglePassword_login"></span>
-                            </div>
-                            <div class="form-group text-right">
-                                <a href="<?php echo generate_url("forgot_password"); ?>" class="link-forgot-password"><?php echo trans("forgot_password"); ?></a>
-                            </div>
-                            <?php if ($this->general_settings->enable_otp_login) : ?>
-                                <div style="text-align:center;  margin-bottom:5px">
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class="logintoOtp" style="text-decoration: underline; color:blue !important">Login using OTP</a>
-                                </div>
-                            <?php endif; ?>
-                            <div class="form-group" style="text-align:center;">
-                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login_with_pwd"); ?></button>
-                            </div>
-
-                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>
-                        </form>
-                        <!-- form end -->
-
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Guest Login Modal -->
-        <div class="modal fade" id="guestLoginModal" role="dialog">
-            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
-                <div class="modal-content">
-                    <div class="auth-box">
-                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
-                        <h4 class="title"><?php echo trans("guest_login"); ?></h4>
-                        <!-- form start -->
-                        <form id="form_guest_login">
-                            <!-- include message block -->
-                            <div id="result-login" class="font-size-13"></div>
-                            <div class="form-group">
-                                <input type="text" name="email" id="guest_email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
-                                <span id="email_span_error" style="color:red;"></span>
-                            </div>
-
-                            <!-- <div class="form-group">
-                                <input type="text" name="phone_number" id="guest_phone_number" class="form-control auth-form-input" placeholder="Mobile Number" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
-                            </div> -->
-
-
-                            <p class="p-social-media m-0 m-t-5 hide_after_response"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>
-
-
-                            <!-- <div class="form-group show_after_response hideMe">
-                                <hr>
-                                <input type="text" name="guest_otp" id="guest_otp" class="form-control auth-form-input" placeholder="Enter OTP" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="6" maxlength="6">
-
-                                <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" onclick="guest_resend_otp($('#guest_phone_number'),$('#guest_email'))"><?php echo trans("resend_otp"); ?></a></p>
-
-                            </div> -->
-                            <div id="email_phn_exist_msg">
-                            </div>
-                            <div class="form-group hide_after_response" style="text-align:center;">
-                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("continue"); ?></button>
-                            </div>
-                            <!-- <div class="form-group show_after_response hideMe" style="text-align:center;">
-                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("confirm_otp"); ?></button>
-                            </div> -->
-                        </form>
-                        <!-- form end -->
-
-                        <div class="login_to_avail" style="color:#aaaaa;"> <?php echo trans("login_to_avail"); ?></div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <!-- login with OTP model start -->
-        <div class="modal fade" id="OtploginModal" role="dialog">
-            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
-                <div class="modal-content">
-                    <div class="auth-box" style="width: 370px;">
-                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close" onclick="reloadPage()"></i></button>
-                        <h4 class="title"><?php echo trans("login"); ?></h4>
-                        <!-- form start -->
-                        <form id="form_login_otp">
-                            <div class="social-login-cnt">
-                                <?php $this->load->view("partials/_social_login", ["or_text" => trans("login_with_email")]); ?>
-                            </div>
-                            <!-- include message block -->
-                            <div id="result-login" class="font-size-13"></div>
-                            <div class="OtpSendMsg">
-                                <span id="OtpSendMsg"></span>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="registeredNumber" class="form-control auth-form-input" placeholder="<?php echo trans("register_mobile"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
-                                <span id="login_otp_check" style="color: red;"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <input type="text" name="loginOtp" id="loginOtp" class="form-control auth-form-input" placeholder="Enter Otp" required maxlength="6">
-                                <span id="login_otp_span" style="color: red;"></span>
-                            </div>
-
-                            <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" id="resend_login_otp" class="link" style="text-decoration: underline; color:blue !important">Resend OTP</a></p>
-
-                            <div class="form-group" style="text-align:center;">
-                                <button type="button" id="sendLoginOtp" class="btn btn-md btn-custom btn-block-new-ui">Send OTP</button>
-                            </div>
-                            <div class="form-group" style="text-align:center;">
-                                <button type="button" id="verify_login_otp" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login"); ?></button>
-                            </div>
-                        </form>
-                        <!-- form end -->
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- login using OTP model end  -->
-
-
-        <script>
-            const toggleP = document.querySelector('#togglePassword_login');
-            const passw = document.querySelector('#password_login');
-            toggleP.addEventListener('click', function(e) {
-                // toggle the type attribute
-                console.log("click");
-                const type = passw.getAttribute('type') === 'password' ? 'text' : 'password';
-                passw.setAttribute('type', type);
-                // toggle the eye slash icon
-                this.classList.toggle('fa-eye-slash');
-            });
-        </script>
-
-        <style>
-            #message {
-                display: none;
-                background: #f1f1f1;
-                color: #000;
-                position: relative;
-                padding: 3px;
-                margin-top: 5px;
-            }
-
-            #message p {
-                /* padding: 3px 5; */
-                font-size: 12px;
-                margin-bottom: 5px;
-            }
-
-            /* Add a green text color and a checkmark when the requirements are right */
-            .valid {
-                color: green;
-            }
-
-            .valid:before {
-                position: relative;
-                left: -35px;
-                content: "✔";
-            }
-
-            /* Add a red text color and an "x" when the requirements are wrong */
-            .invalid {
-                color: red;
-            }
-
-            .invalid:before {
-                position: relative;
-                left: -35px;
-                content: "✖";
-            }
-
-            .Validation_error {
-                color: red;
-                font-size: 15px;
-            }
-
-            .field-icon {
-                float: right;
-                margin-right: 15px;
-                margin-top: -26px;
-                position: relative;
-                z-index: 2;
-                cursor: pointer;
-            }
-
-            @media only screen and (max-width: 600px) {
-                .image-1 {
-                    width: 100%;
-                }
-
-            }
-
-            /* .image2 img {
-            width: 220px;
-            height: auto;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-            height: 770px;
-            width: 100%;
-
-        } */
-        </style>
-
-        <div class="modal fade" id="registerModal" role="dialog">
-            <div class="modal-dialog modal-dialog-centered login-modal modal-dialog" role="document" style="justify-content: center;">
-                <div class="modal-content">
-
-                    <div class="register-box">
-                        <button type="button" class="close above-all" data-dismiss="modal"><i class="icon-close"></i></button>
-                        <h1 class="title">Register</h1>
-                        <!-- form start -->
-                        <?php
-                        if ($recaptcha_status) {
-                            echo form_open('register-post', [
-                                'id' => 'form_validate', 'class' => 'validate_terms',
-                                'onsubmit' => "var serializedData = $(this).serializeArray();var recaptcha = ''; $.each(serializedData, function (i, field) { if (field.name == 'g-recaptcha-response') {recaptcha = field.value;}});if (recaptcha.length < 5) { $('.g-recaptcha>div').addClass('is-invalid');return false;} else { $('.g-recaptcha>div').removeClass('is-invalid');}"
-                            ]);
-                        } else {
-                            // echo form_open('register-post', ['id' => 'form_validate', 'class' => 'validate_terms']);
-                        ?>
-                            <form name="register-form" id="form_validate" class="validate_terms" method="post" accept-charset="utf-8" novalidate="novalidate">
-                            <?php }
-                            ?>
-                            <div class="social-login-cnt">
-                                <?php $this->load->view("partials/_social_login", ['or_text' => 'Or Register with email']); ?>
-                            </div>
-                            <!-- include message block -->
-                            <div id="result-register-popup">
-                                <?php //$this->load->view('partials/_messages'); 
-                                ?>
-                            </div>
-                            <div class="spinner display-none spinner-activation-register">
-                                <div class="bounce1"></div>
-                                <div class="bounce2"></div>
-                                <div class="bounce3"></div>
-                            </div>
-                            <input type="hidden" id="via_sell_now" name="via_sell_now" style="text-transform: capitalize;" class="form-control auth-form-input" value="0">
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <!-- <div class="col-12 col-sm-4 m-b-15">
-
-                                        <label class="control-label">First Name<span class="Validation_error"> *</span></label>
-
-                                    </div> -->
-                                    <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="text" name="first_name" style="text-transform: capitalize;" class="form-control auth-form-input" placeholder="<?php echo trans("first_name"); ?>" value="<?php echo old("first_name"); ?>" maxlength="255" required>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <!-- <div class="col-12 col-sm-4 m-b-15">
-
-                                        <label class="control-label">Last Name<span class="Validation_error"> *</span></label>
-
-                                    </div> -->
-                                    <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="text" name="last_name" style="text-transform: capitalize;" class="form-control auth-form-input" placeholder="<?php echo trans("last_name"); ?>" value="<?php echo old("last_name"); ?>" maxlength="255" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <!-- <div class="col-12 col-sm-4 m-b-15">
-
-                                        <label class="control-label">Email<span class="Validation_error"> *</span></label>
-
-                                    </div> -->
-                                    <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="email" name="email" id="email_new" class="form-control auth-form-input" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old("email"); ?>" required>
-                                        <span id="email_span_error" style="color:red;"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <!-- <div class="col-12 col-sm-4 m-b-15">
-
-                                        <label class="control-label">Phone <br> Number<span class="Validation_error"> *</span></label>
-
-                                    </div> -->
-                                    <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="text" name="phone_number" id="phone_number" class="form-control auth-form-input" placeholder="Mobile Number" value="<?php echo old("phone_number"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption" minlength="10" maxlength="10" required>
-                                        <strong id="verify_otp" class="btn btn-md btn-custom btn-block-new-ui">Verify Mobile</strong>
-                                        <br><span id="verify_mobile_span" style="color:red;">*You cannot register without Mobile Verification!</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <!-- <div class="col-12 col-sm-4 m-b-15">
-
-                                        <label class="control-label">Gender<span class="Validation_error"> *</span></label>
-
-                                    </div> -->
-                                    <div class="col-12 col-sm-12 m-b-15">
-                                        <select name="gender" class="form-control auth-form-input" placeholder="Gender" required>
-                                            <option value="" selected disabled>Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                            <option value="Others">Others</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <!-- <div class="col-12 col-sm-4 m-b-15">
-
-                                        <label class="control-label">Password<span class="Validation_error"> *</span></label>
-
-                                    </div> -->
-                                    <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="password" name="password" id="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" value="<?php echo old("password"); ?>" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,25}$" minlength="8" maxlength="25">
-                                        <span class="far fa-eye field-icon" id="togglePassword"></span>
-                                        <label id="Passwordvalidate" style="color:red;"></label>
-                                        <div id="message">
-                                            <p>Password must contain the following:
-                                            <p>
-                                            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-                                            <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-                                            <p id="number" class="invalid">A <b>number</b></p>
-                                            <p id="special_character" class="invalid">A <b>Special Character</b></p>
-                                            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <!-- <div class="col-12 col-sm-4 m-b-15">
-
-                                        <label class="control-label">Confirm Password<span class="Validation_error"> *</span></label>
-
-                                    </div> -->
-                                    <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="password" name="confirm_password" id="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" required>
-                                        <span class="far fa-eye field-icon" id="togglePassword1"></span>
-
-                                        <label id="CheckPasswordMatch" style="color:red;"></label>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group m-t-5 m-b-20">
-                                <div class="custom-control custom-checkbox custom-control-validate-input">
-                                    <input type="checkbox" class="custom-control-input" name="terms" id="checkbox_terms" readonly="readonly" required>
-                                    <label for="checkbox_terms" class="custom-control-label"><?php echo trans("terms_conditions_exp"); ?>&nbsp;
-                                        <?php $page_terms = get_page_by_default_name("terms_conditions", $this->selected_lang->id);
-                                        if (!empty($page_terms)) : ?>
-                                            <strong data-toggle="modal" data-target="#termsConditionRegister"><u style="color: blue;">(<?= html_escape($page_terms->title); ?>)</u></strong>
-                                        <?php endif; ?>
-                                    </label>
-                                    <small id="small-text-header" style="display:none;color:red;">(<?php echo trans("terms_condition_msg"); ?>)</small>
-                                </div>
-                            </div>
-                            <?php if ($recaptcha_status) : ?>
-                                <div class="recaptcha-cnt">
-                                    <?php generate_recaptcha(); ?>
-                                </div>
-                            <?php endif; ?>
-                            <div class="form-group">
-                                <button type="submit" id="btnsubmit_register" class="btn btn-md btn-custom btn-block-new-ui" disabled><?php echo trans("register"); ?></button>
-                            </div>
-                            <p class="p-social-media m-0 m-t-15"><?php echo trans("have_account"); ?>&nbsp;<a href="javascript:void(0)" class="register_color registertologin" data-toggle="modal" data-target="#loginModal"><?php echo trans("login"); ?></a></p>
-
-                            <?php echo form_close(); ?>
-                            <!-- form end -->
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <script>
-            var myInput = document.getElementById("password");
-            var letter = document.getElementById("letter");
-            var capital = document.getElementById("capital");
-            var number = document.getElementById("number");
-            var length = document.getElementById("length");
-            var special_character = document.getElementById("special_character");
-
-            // When the user clicks on the password field, show the message box
-            myInput.onfocus = function() {
-                document.getElementById("message").style.display = "block";
-            }
-
-            // When the user clicks outside of the password field, hide the message box
-            myInput.onblur = function() {
-                document.getElementById("message").style.display = "none";
-            }
-
-            // When the user starts to type something inside the password field
-            myInput.onkeyup = function() {
-                // Validate lowercase letters
-                var lowerCaseLetters = /[a-z]/g;
-                if (myInput.value.match(lowerCaseLetters)) {
-                    letter.classList.remove("invalid");
-                    letter.classList.add("valid");
-                } else {
-                    letter.classList.remove("valid");
-                    letter.classList.add("invalid");
-                }
-
-                // Validate capital letters
-                var upperCaseLetters = /[A-Z]/g;
-                if (myInput.value.match(upperCaseLetters)) {
-                    capital.classList.remove("invalid");
-                    capital.classList.add("valid");
-                } else {
-                    capital.classList.remove("valid");
-                    capital.classList.add("invalid");
-                }
-
-                // Validate numbers
-                var numbers = /[0-9]/g;
-                if (myInput.value.match(numbers)) {
-                    number.classList.remove("invalid");
-                    number.classList.add("valid");
-                } else {
-                    number.classList.remove("valid");
-                    number.classList.add("invalid");
-                }
-
-                // Validate length
-                if (myInput.value.length >= 8) {
-                    length.classList.remove("invalid");
-                    length.classList.add("valid");
-                } else {
-                    length.classList.remove("valid");
-                    length.classList.add("invalid");
-                }
-
-                //validate special characters
-                var numbers = /[!@#$%^&*_=+-]/g;
-                if (myInput.value.match(numbers)) {
-                    special_character.classList.remove("invalid");
-                    special_character.classList.add("valid");
-                } else {
-                    special_character.classList.remove("valid");
-                    special_character.classList.add("invalid");
-                }
-            }
-        </script>
-
-        <script>
-            const togglePassword = document.querySelector('#togglePassword');
-            const password = document.querySelector('#password');
-            togglePassword.addEventListener('click', function(e) {
-                // toggle the type attribute
-                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                password.setAttribute('type', type);
-                // toggle the eye slash icon
-                this.classList.toggle('fa-eye-slash');
-            });
-        </script>
-        <script>
-            const togglePassword1 = document.querySelector('#togglePassword1');
-            const password1 = document.querySelector('#confirm_password');
-            togglePassword1.addEventListener('click', function(e) {
-                // toggle the type attribute
-                const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
-                password1.setAttribute('type', type);
-                // toggle the eye slash icon
-                this.classList.toggle('fa-eye-slash');
-            });
-        </script>
-        <script>
-            $('#checkbox_terms').click(function() {
-                var isReadOnly = $(this).attr("readonly") === undefined ? false : true;
-
-                if (isReadOnly) {
-                    console.log("test");
-                    $(this).prop('checked', false);
-                    $("#small-text-header").show();
-                }
-            });
-        </script>
-    <?php endif; ?>
-
-    <div class="modal fade" id="verifyMobileModal" role="dialog" data-backdrop="static">
-        <div class="modal-dialog-centered" role="document">
-            <div class="modal-dialog modal-lg verifyModalWidth" id="mobile_otp">
-                <div class="modal-body-new" style="border-radius:20px;">
-                    <div class="modal-content">
-                        <div class="modal-header" style="border:none; text-align:center;">
-                            <button type="button" class="close" id="cross-btn" data-dismiss="modal" aria-label="Close" onclick="">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h5 class="modal-title">Verify Mobile Number</h5>
-                        </div>
-                        <div class="modal-body text-center">
-                            <div class="text-center" id="send-otp-result"></div>
-                            <center>
-                                <input type="text" name="otp_field" id="otp_field" class="form-control auth-form-input otp_field_width" placeholder="Enter OTP" value="" maxlength="255" required="">
-                                <span id="otp_field_span" style="color:red;"></span>
-                            </center><br>
-                            <div class="row text-center" id="verification" style="justify-content:center;">
-
-                                <button type="button" id="verify_btn" class="btn btn-custom verify_btn_margin">Verify OTP</button>
-
-
-                                <button type="button" id="resend_otp" class="btn btn-custom verify_btn_margin" onclick="send_verification_otp()">Resend OTP</button>
-
-                            </div>
-                            <center><button type="button" id="close_btn" data-dismiss="modal" class="btn btn-custom" style="display:none;">Close</button></center>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="termsConditionRegister" role="dialog" data-backdrop="static">
-        <div class="modal-dialog-centered terms-condition-modal" role="document">
-            <div class="modal-dialog modal-lg" id="buyer_t_c">
-                <div class="modal-content">
-                    <div class="modal-header" style="border:none; text-align:center;">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h5 class="modal-title">Gharobaar Terms of Use</h5>
-                    </div>
-                    <div class="modal-body" id="terms-of-use">
-                        <?php echo get_content("buyer_terms_conditions"); ?><?php echo get_content("buyer_terms_conditions1"); ?>
-                        <center><button type="button" class="btn btn-custom" data-dismiss="modal" onclick="register_popup_t_c()">Accept</button></center>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function register_popup_t_c() {
-            $('#small-text-header').hide();
-            $('#checkbox_terms').removeAttr('readonly');
-            $('#checkbox_terms')[0].checked = true;
-        }
-    </script>
-
-
-    <div class="modal fade" id="locationModal" role="dialog">
-        <div class="modal-dialog modal-dialog-centered login-modal location-modal" role="document">
-            <div class="modal-content">
-                <div class="auth-box">
-                    <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
-                    <h4 class="title"><?php echo trans("select_location"); ?></h4>
-                    <p class="location-modal-description"><?php echo trans("location_exp"); ?></p>
-                    <div class="form-group m-b-20">
-                        <div class="input-group input-group-location">
-                            <i class="icon-map-marker"></i>
-                            <input type="text" id="input_location" class="form-control form-input" value="<?php echo get_default_location_input(); ?>" placeholder="<?php echo trans("enter_location") ?>" autocomplete="off">
-                            <a href="javascript:void(0)" class="btn-reset-location-input<?= (empty($this->default_location->country_id)) ? ' hidden' : ''; ?>"><i class="icon-close"></i></a>
-                        </div>
-                        <div class="search-results-ajax">
-                            <div class="search-results-location">
-                                <div id="response_search_location"></div>
-                            </div>
-                        </div>
-                        <div id="location_id_inputs">
-                            <input type="hidden" name="country" value="<?= $this->default_location->country_id; ?>" class="input-location-filter">
-                            <input type="hidden" name="state" value="<?= $this->default_location->state_id; ?>" class="input-location-filter">
-                            <input type="hidden" name="city" value="<?= $this->default_location->city_id; ?>" class="input-location-filter">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button type="button" id="btn_submit_location" class="btn btn-md btn-custom btn-block"><?php echo trans("update_location"); ?></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="locateModal" role="dialog">
-        <div class="modal-dialog modal-dialog-centered login-modal locate-modal" role="document">
-            <div class="modal-content">
-                <div class="auth-box">
-                    <button type="button" class="close" data-dismiss="modal" id="close-pin"><i class="icon-close"></i></button>
-                    <?php echo form_open(generate_url('search_pincode'), ['id' => 'form_validate_pincode_search', 'class' => 'form_search_pincode_main form-inline', 'method' => 'get']); ?>
-
-                    <div id="location">
-                        <p class="locate-modal-description">Enter pincode to check availability in your area</p>
-
-                        <div class="form-group m-b-20">
-                            <div class="input-group input-group-location">
-                                <input type="text" name="search_pincode" class="form-control enter_p clearable_search" id="pincodeSearchField" maxlength="6" minlength="6" pattern="[0-9]+" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="Enter pincode" autocomplete="off">
-                                <input type="hidden" class="search_type_input_pincode" name="search_type_pincode" value="pincode">
-                                <button class="check_pincode">Go!</button>
-                                <div id="response_pincode_search_results" class="search-results-ajax">
-                                </div>
-
-                                <?php echo form_close(); ?>
-                            </div>
-                            <div class="search-results-ajax">
-                                <div class="search-results-location">
-                                    <div id="response_search_location"></div>
-                                </div>
-                            </div>
-                            <div id="location_id_inputs">
-                                <input type="hidden" name="country" value="<?= $this->default_location->country_id; ?>" class="input-location-filter">
-                                <input type="hidden" name="state" value="<?= $this->default_location->state_id; ?>" class="input-location-filter">
-                                <input type="hidden" name="city" value="<?= $this->default_location->city_id; ?>" class="input-location-filter">
-                            </div>
-                        </div>
-                        <div class="form-group" style="visibility:hidden;">
-                            <button type="button" id="btn_submit_location" class="btn btn-md btn-custom btn-block"><?php echo trans("update_location"); ?></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php if ($this->auth_check) : ?>
-        <?php if (!get_fssai_action($this->auth_user->id)) : ?>
-            <div class="modal fade" data-backdrop="static" id="fssai_undertakingModal" role="dialog">
-                <div class="modal-dialog modal-dialog-centered fssai-modal">
-                    <!-- Modal content-->
-                    <?php echo form_open("agree-fssai-undertaking", ['name' => 'agree_fssai_undertaking']); ?>
-                    <input type="hidden" name="action" value="1">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <h3 class="text_center">Seller Undertaking</h3>
-                            <p>SAI order & its directions for Labelling and Display regulation shall be enforced from November 16, 2021.</p>
-                            <ol>
-                                <li>Change in Non-veg Logo (from circular shape to triangular shape)</li>
-                                <li>llergen Declaration is mandatory on the food product label</li>
-                                <li>Additional nutritional information for food with more than one ingredient (added Sugar, Salt, etc.)</li>
-                                <li>Symbol (X) for food materials sold on retail that are not meant for human consumption (E.g: Pooja oil, Ghee for diyas, Pooja water, etc.)</li>
-                                <li>Expiry Date and Use by Date declaration on the Label.</li>
-
-                            </ol>
-                            <p class="text_center fssai_link"><a href="<?php echo base_url() . 'assets/file/fssai_undertaking_doc.pdf'; ?>" target="_blank">Click here for more details</a></p>
-                            <p>By clicking on the Accept button, I agree that I have read and acknowledged the FSSAI order & its directions for Labelling and Display regulation.</p>
-                            <div class="text_center">
-                                <button id="submit-fssai-btn" type="button" class="btn btn-custom">I Accept</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <script>
-                $(function() {
-                    $('#fssai_undertakingModal').modal('show');
-                })
-                $("#submit-fssai-btn").click(function() {
-                    $("form[name='agree_fssai_undertaking']").submit();
-                })
-            </script>
-        <?php endif; ?>
-    <?php endif; ?>
-    <?php if ($this->auth_check && $this->general_settings->rate_previous_order) : ?>
-        <?php $order_id['order_id'] =  $this->product_model->get_order_id($this->auth_user->id); ?>
-        <?php if (!empty($order_id['order_id'])) : ?>
-            <?php $order['product_id'] = $this->product_model->get_order_product_id($order_id['order_id']->order_id, $this->auth_user->id); ?>
-            <?php foreach ($order['product_id'] as $order1) : ?>
-                <?php $not_rating['exist'] = $this->product_model->get_not_rating_product($order1->product_id, $this->auth_user->id); ?>
-                <?php if (empty($not_rating['exist'])) : ?>
-                    <?php $this->load->view('partials/_modal_rate_last_order');
-                    break;
-                    ?>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    <?php endif; ?>
-    <!-- <style>
-        #pageloader {
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            height: 100%;
-            position: fixed;
-            width: 100%;
-            z-index: 9999;
-        }
-
-        #pageloader img {
-            left: 50%;
-            margin-left: -32px;
-            margin-top: -32px;
-            position: absolute;
-            top: 50%;
-        }
-    </style> -->
-
-    <!-- <div id="pageloader">
-        <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif" alt="processing..." />
-    </div> -->
-
-    <div id="menu-overlay"></div>
     <script>
         window.onscroll = function() {
             keepTheHeaderOntop()

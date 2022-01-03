@@ -2,10 +2,7 @@
 <!-- <link rel="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<!-- slick Carousel CDN -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
+
 
 <style>
     /* The width of each slide */
@@ -860,6 +857,28 @@
                 <!-- </div> -->
             <?php endif; ?>
         <?php endif; ?>
+        <section class="testimonial-background">
+            <header class="testimonial-header">
+                <h3 class="who-are-we-style">Who Are We?</h3>
+            </header>
+
+            <div class="slick-carousel-testimonial">
+                <!-- Inside the containing div, add one div for each slide -->
+                <div class="carousel-cell">
+                    <!-- You can put an image or text inside each slide div -->
+                    <h5 class="sub-heading-text">Stand Tall, Promote Small</h5>
+                    <p class="testimonial-content">Each product is made by a small business, with lots of love and dedication. Every purchase on Gharobaar would encourage them to keep their dream alive</p>
+                </div>
+                <div class="carousel-cell">
+                    <h5 class="sub-heading-text">Homepreneurs</h5>
+                    <p class="testimonial-content">Our supplier partners operate from home, pursuing their passion, creating high quality products by hand. Each product is a masterpiece in itself, made with all their love & hard work.</p>
+                </div>
+                <div class="carousel-cell">
+                    <h5 class="sub-heading-text">Ghar se Ghar Tak</h5>
+                    <p class="testimonial-content">Gharobaar is not only a marketplace, it is an attempt to connect your home to others, sharing the exceptional talent in each one of us and spreading love & happiness.</p>
+                </div>
+            </div>
+        </section>
         <?php $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); ?>
 
 
@@ -925,28 +944,7 @@
                 </p>
             </div> -->
         </div>
-        <section class="testimonial-background">
-            <header class="testimonial-header">
-                <h3 class="who-are-we-style">Who Are We?</h3>
-            </header>
 
-            <div class="slick-carousel-testimonial">
-                <!-- Inside the containing div, add one div for each slide -->
-                <div class="carousel-cell">
-                    <!-- You can put an image or text inside each slide div -->
-                    <h5 class="sub-heading-text">Stand Tall, Promote Small</h5>
-                    <p class="testimonial-content">Each product is made by a small business, with lots of love and dedication. Every purchase on Gharobaar would encourage them to keep their dream alive</p>
-                </div>
-                <div class="carousel-cell">
-                    <h5 class="sub-heading-text">Homepreneurs</h5>
-                    <p class="testimonial-content">Our supplier partners operate from home, pursuing their passion, creating high quality products by hand. Each product is a masterpiece in itself, made with all their love & hard work.</p>
-                </div>
-                <div class="carousel-cell">
-                    <h5 class="sub-heading-text">Ghar se Ghar Tak</h5>
-                    <p class="testimonial-content">Gharobaar is not only a marketplace, it is an attempt to connect your home to others, sharing the exceptional talent in each one of us and spreading love & happiness.</p>
-                </div>
-            </div>
-        </section>
     </div>
 </div>
 
@@ -1155,6 +1153,10 @@
         <?php endif; ?>
     </div>
 </div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<!-- slick Carousel CDN -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 <script>
     var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ? true : false;
 
