@@ -2129,7 +2129,7 @@ class Product_model extends Core_Model
     public function get_product_by_id($id)
     {
         $this->build_query();
-        // $this->db->where('products.id', clean_number($id));
+        $this->db->where('products.id', clean_number($id));
         return $this->db->get('products')->row();
     }
 
@@ -2992,7 +2992,7 @@ order by id desc LIMIT 1";
             } else {
                 $soundword = $results->word;
                 // echo $soundword;
-                $where .= "title like '%$soundword%')";
+                $where .= "title = '%$soundword%')";
             }
             $i++;
         }
