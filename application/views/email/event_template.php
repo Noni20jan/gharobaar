@@ -1,259 +1,108 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<!doctype html>
+<?php $this->load->view('email/_event_header', ['title' => $subject]); ?>
+<table role="presentation" class="main">
+    <tr>
+        <td class="wrapper">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <!-- <h1 style="text-decoration: none; font-size: 24px;line-height: 28px;font-weight: bold"><?php echo $subject; ?></h1> -->
+                        <div class="mailcontent" style="line-height: 26px;font-size: 14px;">
+                            <div class="mailcontent" style="line-height: 26px;font-size: 14px;">
+                                <?php echo $message; ?>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
-<html lang="en">
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin-top: 10px;">
+    <tr>
+        <td class="content-block" style="text-align: center;width: 100%;">
+            <?php if (!empty($this->settings->facebook_url)) : ?>
+                <a href="<?php echo html_escape($this->settings->facebook_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
+                    <img src="<?php echo base_url(); ?>assets/img/social-icons/facebook.png" alt="" style="width: 28px; height: 28px;" />
+                </a>
+            <?php endif; ?>
+            <?php if (!empty($this->settings->twitter_url)) : ?>
+                <a href="<?php echo html_escape($this->settings->twitter_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
+                    <img src="<?php echo base_url(); ?>assets/img/social-icons/twitter.png" alt="" style="width: 28px; height: 28px;" />
+                </a>
+            <?php endif; ?>
+            <?php if (!empty($this->settings->pinterest_url)) : ?>
+                <a href="<?php echo html_escape($this->settings->pinterest_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
+                    <img src="<?php echo base_url(); ?>assets/img/social-icons/pinterest.png" alt="" style="width: 28px; height: 28px;" />
+                </a>
+            <?php endif; ?>
+            <?php if (!empty($this->settings->instagram_url)) : ?>
+                <a href="<?php echo html_escape($this->settings->instagram_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
+                    <img src="<?php echo base_url(); ?>assets/img/social-icons/instagram.png" alt="" style="width: 28px; height: 28px;" />
+                </a>
+            <?php endif; ?>
+            <?php if (!empty($this->settings->linkedin_url)) : ?>
+                <a href="<?php echo html_escape($this->settings->linkedin_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
+                    <img src="<?php echo base_url(); ?>assets/img/social-icons/linkedin.png" alt="" style="width: 28px; height: 28px;" />
+                </a>
+            <?php endif; ?>
+            <?php if (!empty($this->settings->vk_url)) : ?>
+                <a href="<?php echo html_escape($this->settings->vk_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
+                    <img src="<?php echo base_url(); ?>assets/img/social-icons/vk.png" alt="" style="width: 28px; height: 28px;" />
+                </a>
+            <?php endif; ?>
+            <?php if (!empty($this->settings->youtube_url)) : ?>
+                <a href="<?php echo html_escape($this->settings->youtube_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
+                    <img src="<?php echo base_url(); ?>assets/img/social-icons/youtube.png" alt="" style="width: 28px; height: 28px;" />
+                </a>
+            <?php endif; ?>
+        </td>
+    </tr>
+</table>
 
-<head>
-    <meta charset="utf-8">
-
-    <title>Newsletter</title>
-    <meta name="description" content="Newsletter">
-    <meta name="author" content="Agnii">
-
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-
-</head>
-
-<body style="margin: 0; padding: 0;">
-
-    <table cellspacing="0" cellpadding="0" width="650" border="0" align="center" style="background:#F07604; margin: 0 auto; font-family: 'Roboto', sans-serif; font-weight: 400; border-collapse: collapse; color: #000000;">
+<div class="footer">
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
         <tr>
-            <td style="padding: 21px 25px">
-
-                <table cellspacing="0" cellpadding="0" width="100%" border="0" style="width: 100%; border-collapse: collapse;">
-                    <tr>
-                        <td>
-                            <table cellspacing="0" cellpadding="0" width="100%" height="70" border="0" style="background: #ffffff; border-collapse: collapse; -moz-border-radius: 5px 5px 0 0; -webkit-border-radius: 5px 5px 0 0; border-radius: 5px 5px 0 0; vertical-align: middle;">
-                                <tr>
-                                    <td style=" text-align: right;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/newupload/diwali_img.png" alt="logo-agnii"></td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table cellspacing="0" cellpadding="0" width="100%" border="0" style="background: #ffffff; border-collapse: collapse;">
-                                <tr>
-                                    <td style="color:#F07604;font-style:italic;padding: 10px 20px;">
-                                        Hello!</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table cellspacing="0" cellpadding="0" width="100%" border="0" style="background: #ffffff; border-collapse: collapse;">
-                                <tr>
-                                    <td style="padding: 10px 20px;">
-                                        <?php echo $message; ?></td>
-                                </tr>
-
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table cellspacing="0" cellpadding="0" width="100%" border="0" style="background: #ffffff; border-collapse: collapse;">
-                                <tr>
-                                    <td style="padding: 0 15px 17px;">
-                                        <table cellspacing="0" cellpadding="0" width="100%" border="0" style="background: #ffffff; border-collapse: collapse;">
-                                            <tr>
-                                                <td align="center" valign="middle">
-                                                    <a href="https://www.gharobaar.com/song-birds-cushion-cover-with-dori-piping-799">
-                                                        <img src="https://www.gharobaar.com/uploads/images/202104/img_x500_608ac5f59c0808-66592408-22178524.jpg" alt="pic" width="176">
-                                                    </a>
-                                                </td>
-                                                <td align="center" valign="middle" style="padding: 0 5px;">
-                                                    <a href="https://www.gharobaar.com/golden-round-pillar-candle-large-5409">
-                                                        <img src="https://www.gharobaar.com/uploads/images/202110/img_x500_615abe49066c41-85595582-88886265.jpg" alt="pic" width="176">
-                                                    </a>
-                                                </td>
-                                                <td align="center" valign="middle">
-                                                    <a href="https://www.gharobaar.com/advaita-handicrafts-bunched-brass-spiral-disc-necklace-set-2917">
-                                                        <img src="https://www.gharobaar.com/uploads/images/202106/img_x500_60bcbc8d0ddc97-33902717-65587122.jpg" alt="pic" width="176">
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" valign="top">
-                                                    <div style="width: 178px; margin: 0 auto;">
-                                                        <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; padding: 15px 0 12px;">
-                                                            <a href="https://www.gharobaar.com/song-birds-cushion-cover-with-dori-piping-799" style="color:#000000">
-                                                                Song Birds cushion cover with dori piping
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td align="center" valign="top">
-                                                    <div style="width: 178px; margin: 0 auto;">
-                                                        <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; padding: 15px 0 12px;">
-                                                            <a href="https://www.gharobaar.com/golden-round-pillar-candle-large-5409" style="color:#000000">
-                                                                Golden Round Pillar Candle - Large
-                                                            </a>
-                                                        </div>
-
-                                                    </div>
-                                                </td>
-                                                <td align="center" valign="top">
-                                                    <div style="width: 178px; margin: 0 auto;">
-                                                        <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; padding: 15px 0 12px;">
-                                                            <a href="https://www.gharobaar.com/advaita-handicrafts-bunched-brass-spiral-disc-necklace-set-2917" style="color: #000000;">
-                                                                Bunched brass spiral disc necklace set
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" valign="middle">
-                                                    <a href="https://www.gharobaar.com/song-birds-cushion-cover-with-dori-piping-799" target="_blank" style="width: 106px; height: 30px; line-height: 30px; display: block; margin: 0 auto; background: #f07604; color: #ffffff; font-size: 12px; font-weight: 500; text-transform: uppercase; text-decoration: none; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;">
-                                                        Read More
-                                                    </a>
-                                                </td>
-                                                <td align="center" valign="middle">
-                                                    <a href="https://www.gharobaar.com/golden-round-pillar-candle-large-5409" target="_blank" style="width: 106px; height: 30px; line-height: 30px; display: block; margin: 0 auto; background: #f07604; color: #ffffff; font-size: 12px; font-weight: 500; text-transform: uppercase; text-decoration: none; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;">
-                                                        Read More
-                                                    </a>
-                                                </td>
-                                                <td align="center" valign="middle">
-                                                    <a href="https://www.gharobaar.com/advaita-handicrafts-bunched-brass-spiral-disc-necklace-set-2917" target="_blank" style="width: 106px; height: 30px; line-height: 30px; display: block; margin: 0 auto; background: #f07604; color: #ffffff; font-size: 12px; font-weight: 500; text-transform: uppercase; text-decoration: none; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;">
-                                                        Read More
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table cellspacing="0" cellpadding="0" width="100%" border="0" style="background: #ffffff; border-collapse: collapse;">
-                                <tr>
-                                    <td style="padding: 0 15px 17px;">
-                                        <table cellspacing="0" cellpadding="0" width="100%" border="0" style="background: #ffffff; border-collapse: collapse;">
-                                            <tr>
-                                                <td align="center" valign="middle">
-                                                    <a href="https://www.gharobaar.com/wall-hanging-ganesha-big-sun-shaped-antique-golden-finish-in-metal-by-handicrafts-paradise-5611">
-                                                        <img src="https://www.gharobaar.com/uploads/images/202109/img_x500_614d74828848f2-63696101-23018276.jpg" alt="pic" width="176">
-                                                    </a>
-                                                </td>
-                                                <td align="center" valign="middle" style="padding: 0 5px;">
-                                                    <a href="https://www.gharobaar.com/blue-lotus-set-4816">
-                                                        <img src="https://www.gharobaar.com/uploads/images/202108/img_x500_6126552f57fd41-88549025-84949430.jpg" alt="pic" width="176">
-                                                    </a>
-                                                </td>
-                                                <td align="center" valign="middle">
-                                                    <a href="https://www.gharobaar.com/ksamah-eco-friendly-home-box-lite-5029">
-                                                        <img src="https://www.gharobaar.com/uploads/images/202109/img_x500_61331a23452045-26512732-67793040.jpg" alt="pic" width="176">
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" valign="top">
-                                                    <div style="width: 178px; margin: 0 auto;">
-                                                        <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; padding: 15px 0 12px;">
-                                                            <a href="https://www.gharobaar.com/wall-hanging-ganesha-big-sun-shaped-antique-golden-finish-in-metal-by-handicrafts-paradise-5611" style="color: #000000;">
-                                                                Wall hanging ganesha big sun shaped antique golden finish in metal by Handicrafts Paradise
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td align="center" valign="top">
-                                                    <div style="width: 178px; margin: 0 auto;">
-                                                        <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; padding: 15px 0 12px;">
-                                                            <a href="https://www.gharobaar.com/blue-lotus-set-4816" style="color: #000000;">
-                                                                BLUE LOTUS SET
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td align="center" valign="top">
-                                                    <div style="width: 178px; margin: 0 auto;">
-                                                        <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; padding: 15px 0 12px;">
-                                                            <a href="https://www.gharobaar.com/ksamah-eco-friendly-home-box-lite-5029" style="color: #000000;">
-                                                                KSAMAH Eco-Friendly Home Box Lite
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center" valign="middle">
-                                                    <a href="https://www.gharobaar.com/wall-hanging-ganesha-big-sun-shaped-antique-golden-finish-in-metal-by-handicrafts-paradise-5611" target="_blank" style="width: 106px; height: 30px; line-height: 30px; display: block; margin: 0 auto; background: #f07604; color: #ffffff; font-size: 12px; font-weight: 500; text-transform: uppercase; text-decoration: none; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;">
-                                                        Read More
-                                                    </a>
-                                                </td>
-                                                <td align="center" valign="middle">
-                                                    <a href="https://www.gharobaar.com/blue-lotus-set-4816" target="_blank" style="width: 106px; height: 30px; line-height: 30px; display: block; margin: 0 auto; background: #f07604; color: #ffffff; font-size: 12px; font-weight: 500; text-transform: uppercase; text-decoration: none; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;">
-                                                        Read More
-                                                    </a>
-                                                </td>
-                                                <td align="center" valign="middle">
-                                                    <a href="https://www.gharobaar.com/ksamah-eco-friendly-home-box-lite-5029" target="_blank" style="width: 106px; height: 30px; line-height: 30px; display: block; margin: 0 auto; background: #f07604; color: #ffffff; font-size: 12px; font-weight: 500; text-transform: uppercase; text-decoration: none; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;">
-                                                        Read More
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                </table>
-
-
-
-                <table cellspacing="0" cellpadding="0" width="100%" border="0">
-                    <tr>
-                        <td align="center" valign="middle">
-                            <h3 style="color: #ffffff; text-decoration: none; height: 16px; line-height: 16px; display: inline-block;">
-                                Like what you see here?</h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" valign="middle">
-                            <a href="https://www.gharobaar.com/" target="_blank" style="width: 106px; line-height: 16px; display: block; margin: 0 auto; background:#ffffff ; color:#f07604; font-size: 12px; font-weight: 500; text-transform: uppercase; text-decoration: none; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;">
-                                Click Here
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" valign="middle">
-                            <div style="text-align:center;">
-                                <h5 style="color: #ffffff; text-decoration: none; height: 16px; line-height: 16px; display: inline-block;">
-                                    to explore a whole world of homemade wonders from homegrown experts.</h5>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" valign="middle">
-                            <div style="text-align:center;">
-                                <a href="https://www.facebook.com/gharobaar.official" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 16px; line-height: 16px;">
-                                    <img src="https://gharobaar.com/assets/img/social-icons/facebook.png" width="16">
-                                </a>
-                                <a href="https://www.instagram.com/gharobaar_official/" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 16px; line-height: 16px;">
-                                    <img src="https://gharobaar.com/assets/img/social-icons/instagram.png" width="16">
-                                </a>
-                                <a href="https://www.youtube.com/channel/UC2jOkQl0OR1cIJgo2WJZWqw" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 16px; line-height: 16px;">
-                                    <img src="https://gharobaar.com/assets/img/social-icons/youtube.png" width="16">
-                                </a>
-                                <a href="https://in.pinterest.com/gharobaar_official/_created/" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 16px; line-height: 16px;">
-                                    <img src="https://gharobaar.com/assets/img/social-icons/pinterest.png" width="16">
-                                </a>
-                            </div>
-                        </td>
-
-                    </tr>
-                </table>
-
-
+            <td class="content-block powered-by">
+                <span class="apple-link"><?php echo html_escape($this->settings->contact_address); ?></span><br>
+                <?php echo html_escape($this->settings->copyright); ?>
             </td>
         </tr>
+        <tr>
+            <!-- <td class="content-block">
+                <?php echo trans("dont_want_receive_emails"); ?> <a href="<?php echo base_url(); ?>unsubscribe?token=<?php echo !empty($subscriber->token) ? $subscriber->token : ''; ?>"><?php echo trans("unsubscribe"); ?></a>.
+            </td> -->
+        </tr>
     </table>
+</div>
+
+<style>
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    table tr td img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    .table-products {
+        border-bottom: 1px solid #d1d1d1;
+        padding-bottom: 30px;
+        margin-top: 20px;
+    }
+
+    .table-products th,
+    td {
+        padding: 8px 5px;
+    }
+
+    .wrapper table tr td img {
+        height: auto !important;
+    }
+</style>
 </body>
 
 </html>

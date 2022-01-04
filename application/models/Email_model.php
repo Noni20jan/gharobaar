@@ -96,6 +96,23 @@ class Email_model extends CI_Model
             return $this->send_email($data);
         }
     }
+    //mail for send refferal
+    // public function refferal_mail($email, $name, $user_name)
+    // {
+    //     $subject = "Refferal Mail!";
+
+    //     $message = "Dear " . $name . "<br>" . $user_name . " invited you to join gharobaar. Register Yourself by clicking <a href='" . base_url() . "'>here </a><br>Love<br>Team Gharobaar.";
+    //     if (!empty($email)) {
+    //         $data = array(
+    //             'subject' => $subject,
+    //             'message' => $message,
+    //             'to' => $email,
+    //             'template_path' => "email/email_newsletter",
+    //             'subscriber' => "",
+    //         );
+    //         return $this->send_email($data);
+    //     }
+    // }
 
     //open shop Email to supplier.
     public function send_open_shopmail($email, $name)
@@ -451,7 +468,7 @@ class Email_model extends CI_Model
                     'subject' => $subject,
                     'message' => $message,
                     'to' =>  $this->general_settings->mail_username,
-                    'template_path' => "email/email_newsletter",
+                    'template_path' => "email/event_template",
 
 
                 );
@@ -468,7 +485,7 @@ class Email_model extends CI_Model
                     'subject' => $subject,
                     'message' => $message,
                     'to' => $this->general_settings->mail_username,
-                    'template_path' => "email/email_newsletter",
+                    'template_path' => "email/event_template",
                 );
                 $bcc = array();
                 foreach ($emailtoall as $emailtoall) {
