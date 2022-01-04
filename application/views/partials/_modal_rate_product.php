@@ -26,7 +26,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <textarea name="review" id="user_review" class="form-control form-input form-textarea" placeholder="<?php echo trans("write_review"); ?>" required></textarea>
+                            <textarea name="review" id="user_review" class="form-control form-input form-textarea" placeholder="<?php echo trans("write_review"); ?>"></textarea>
                             <input type="hidden" name="rating" id="user_rating">
                             <input type="hidden" name="product_id" id="review_product_id">
                         </div>
