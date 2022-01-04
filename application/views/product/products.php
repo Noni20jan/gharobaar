@@ -2481,7 +2481,7 @@ foreach ($sellers as $seller) {
         $('#origin_of_product').prop('checked', true);
         $('#gender').prop('checked', true);
         $('#kids_corner').prop('checked', true);
-        $('#personalised').prop('checked', true);
+        $('#is_personalised').prop('checked', true);
 
         $('#days_available').prop('checked', true);
         $('#food').prop('checked', true);
