@@ -989,7 +989,7 @@ foreach ($sellers as $seller) {
                                 <?php endif; ?>
                                 <div>
                                     <input type="checkbox" class="check-box-size" id="is_personalised" value="product_type" name="filter_checkbox[]" onclick="show_is_personalised(this)">
-                                    <label for="product_type" style="margin: 10px;"><b>Is Personalised</b></label>
+                                    <label for="product_type" style="margin: 10px;"><b><?php echo trans("customisable"); ?></b></label>
                                 </div>
                                 <div class="filter-item" id="is_personalised_filter" style="display: none">
                                     <div class="filter-list-container">
@@ -998,15 +998,7 @@ foreach ($sellers as $seller) {
                                                 <a href="<?= current_url() . generate_filter_url($query_string_array, 'is_personalised', 'Y'); ?>">
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'is_personalised', 'Y') ? 'checked' : ''; ?>>
-                                                        <label class="custom-control-label">Personalised</label>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'is_personalised', 'N'); ?>">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input " <?= is_custom_field_option_selected($query_string_object_array, 'is_personalised', 'N') ? 'checked' : ''; ?>>
-                                                        <label class="custom-control-label">Not Personalised</label>
+                                                        <label class="custom-control-label">Customizable</label>
                                                     </div>
                                                 </a>
                                             </li>
@@ -2064,7 +2056,7 @@ foreach ($sellers as $seller) {
                                             <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
                                         </div>
                                         <div class="right">
-                                            <span class="reset-tag-title">Personalised</span>
+                                            <span class="reset-tag-title">Customizable Only</span>
                                             <span><?= html_escape($filter->value); ?></span>
                                         </div>
                                     </div>

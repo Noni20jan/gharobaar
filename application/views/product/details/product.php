@@ -1,6 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <style>
     .star-rating {
         direction: rtl;
@@ -532,10 +533,10 @@
                                             <?php if ($this->auth_check) : ?>
                                                 <?php if ($this->auth_user->id != $user->id) : ?>
 
-                                                    <p class="question">Have a question? <a class="ask-seller" data-toggle="modal" data-target="#messageModal">Contact the Seller.</a>
+                                                    <p class="question">Have a question? <a class="ask-seller" data-toggle="modal" data-target="#messageModal">For any customization queries, Contact Seller</a>
                                                     <?php endif; ?>
                                                 <?php else : ?>
-                                                    <p class="question">Have a question? <a class="ask-seller" data-toggle="modal" data-target="#loginModal">Contact the Seller.</a>
+                                                    <p class="question">Have a question? <a class="ask-seller" data-toggle="modal" data-target="#loginModal">For any customization queries, Contact Seller</a>
                                                     <?php endif; ?>
                                         </div>
                                     </div>
