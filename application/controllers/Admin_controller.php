@@ -397,6 +397,47 @@ class Admin_controller extends Admin_Core_Controller
     }
 
 
+    // public function view_qualification()
+    // {
+    //     // $this->load->model("Offer_model");
+    //     $data['title'] = trans("view-qualification");
+    //     $data['qualification'] = $this->offer_model->view_qualification();
+    //     $this->load->view('admin/includes/_header', $data);
+    //     $this->load->view('admin/loyalty/view_qualification', $data);
+    //     $this->load->view('admin/includes/_footer');
+    // }
+    // public function editdata($id)
+    // {
+    //     // var_dump($id);
+    //     // die();
+    //     // $this->load->model('Offer_model');
+    //     $data['title'] = trans("qualifying_criteria");
+    //     $result['data'] = $this->offer_model->edit_qualifying_criteria_model($id);
+    //     $this->load->view('admin/includes/_header', $data);
+    //     $this->load->view('admin/loyalty/update_qualifying_criteria', $result);
+    //     $this->load->view('admin/includes/_footer');
+    // }
+
+    // public function update_qualifying_data()
+    // {
+    //     $id = $this->input->post('id', true);
+    //     $data['min_value'] = $this->input->post('min_value', true);
+    //     $data['max_value'] = $this->input->post('max_value', true);
+    //     $this->load->model('offer_model');
+    //     $this->offer_model->update_qualifying_data($data, $id);
+    //     $result = "true";
+    //     if ($result == true) {
+    //         $this->session->set_flashdata('success', trans("edit_successfully_qualified"));
+    //     } else {
+    //         $this->session->set_flashdata('error', trans("msg_error"));
+    //     }
+    //     redirect(admin_url() . "view-qualification");
+    // }
+
+
+
+
+
     public function qualify_criteria()
     {
         $this->load->model("Offer_model");
@@ -1897,9 +1938,11 @@ class Admin_controller extends Admin_Core_Controller
     public function sales()
     {
         $data['title'] = trans("sale_data");
+        $data['seller'] = $this->reports_model->sale_data();
+
         $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/reports/sale_data');
-        $this->load->view('admin/includes/_footer');
+        $this->load->view('admin/reports/sale_data', $data);
+        $this->load->view('admin/includes/_footer',);
     }
     public function seller_commission()
     {

@@ -24,7 +24,7 @@
         float: left;
         right: 42px;
         bottom: 0px;
-        
+
     }
 
     @media only screen and (max-width: 1024px) {
@@ -136,7 +136,7 @@
             /* left: 227px; */
             /* top: 0px; */
             float: right;
-            left:10px;
+            left: 10px;
             visibility: visible;
         }
     }
@@ -427,7 +427,7 @@
                         <div class="col-12 col-sm-2 footer-widget" id="support-footer-view">
                             <form id="form_validate_newsletter">
                                 <div class="newsletter-inner">
-                                    <h4 class="footer-title"><?php echo trans("newsletter"); ?></h4>
+                                    <h4 class="footer-title" style="font-size: 14px; left: 100px;"><?php echo trans("newsletter"); ?></h4>
                                     <div class="d-table-cell">
                                         <input type="text" id="textEmail" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("type_email"); ?>">
                                         <p id="demo"></p>
@@ -442,10 +442,10 @@
 
                             <div id="newsletter" class="m-t-5">
                                 <?php if ($this->session->flashdata('news_error')) :
-                                    // echo '<span class="text-danger">' . $this->session->flashdata('news_error') . '</span>';
+                                // echo '<span class="text-danger">' . $this->session->flashdata('news_error') . '</span>';
                                 endif;
                                 if ($this->session->flashdata('news_success')) :
-                                    // echo '<span class="text-success">' . $this->session->flashdata('news_success') . '</span>';
+                                // echo '<span class="text-success">' . $this->session->flashdata('news_success') . '</span>';
                                 endif; ?>
                             </div>
                             <div class="nav-footer">
@@ -505,7 +505,7 @@
 
                         <div class="col-12 col-sm-2 footer-widget onlyweb">
                             <div class="newsletter">
-                                <h4 class="footer-title"><?php echo trans("newsletter"); ?></h4><br />
+                                <h4 class="footer-title" style="font-size: 14px; left: 100px;"><?php echo trans("newsletter"); ?></h4><br />
                                 <!-- <?php echo form_open('add-to-subscribers-post', [
                                             'id' => 'form_validate_newsletter'
                                         ]); ?> -->
@@ -529,10 +529,10 @@
 
                                 <div id="newsletter" class="m-t-5">
                                     <?php if ($this->session->flashdata('news_error')) :
-                                        // echo '<span class="text-danger">' . $this->session->flashdata('news_error') . '</span>';
+                                    // echo '<span class="text-danger">' . $this->session->flashdata('news_error') . '</span>';
                                     endif;
                                     if ($this->session->flashdata('news_success')) :
-                                        // echo '<span class="text-success">' . $this->session->flashdata('news_success') . '</span>';
+                                    // echo '<span class="text-success">' . $this->session->flashdata('news_success') . '</span>';
                                     endif; ?>
                                 </div>
 
@@ -838,7 +838,7 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
                             $('#form_validate_newsletter')[0].reset();
                             $('#demo1')[0].style.color = "green";
                             $('#demo1')[0].innerText = response.message;
-                             $('#demo1').show();
+                            $('#demo1').show();
                             console.log(response.message);
                         } else {
                             $('#demo1')[0].style.color = "red";

@@ -2402,6 +2402,7 @@ class Order_model extends CI_Model
         $this->db->where('buyer_id', $buyer_id);
         // $this->db->where("(order_products.order_status = 'completed' OR order_products.order_status = 'cancelled')");
         $this->db->where("(order_products.order_status = 'completed')");
+        $this->db->order_by('order_products.created_at', 'DESC');
         $query = $this->db->get('order_products');
         return $query->result();
     }
@@ -2891,33 +2892,33 @@ class Order_model extends CI_Model
                             $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
                             $actual_shipping_charges["tax_charges"] = $tax_charges;
                         }
-                        // if ($psd->total_price >= 100000) {
-                        //     $actual_shipping_charges = array(
-                        //         "freight_charges" => 0
-                        //     );
-                        //     if (!$cod) {
-                        //         $actual_shipping_charges["cod_charges"] = 0;
-                        //     } else {
-                        //         $actual_shipping_charges["cod_charges"] = (50) * 100;
-                        //     }
-                        //     $tax_charges = intval((($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100)));
-                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
-                        // } elseif ($psd->total_price >= 0 && $psd->total_price < 100000) {
-                        //     $actual_shipping_charges = array(
-                        //         "freight_charges" => 10000
-                        //     );
-                        //     if (!$cod) {
-                        //         $actual_shipping_charges["cod_charges"] = 0;
-                        //     } else {
-                        //         $actual_shipping_charges["cod_charges"] = (50) * 100;
-                        //     }
-                        //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
-                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
-                        // } else {
-                        //     $actual_shipping_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
-                        //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
-                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
-                        // }
+                    // if ($psd->total_price >= 100000) {
+                    //     $actual_shipping_charges = array(
+                    //         "freight_charges" => 0
+                    //     );
+                    //     if (!$cod) {
+                    //         $actual_shipping_charges["cod_charges"] = 0;
+                    //     } else {
+                    //         $actual_shipping_charges["cod_charges"] = (50) * 100;
+                    //     }
+                    //     $tax_charges = intval((($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100)));
+                    //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                    // } elseif ($psd->total_price >= 0 && $psd->total_price < 100000) {
+                    //     $actual_shipping_charges = array(
+                    //         "freight_charges" => 10000
+                    //     );
+                    //     if (!$cod) {
+                    //         $actual_shipping_charges["cod_charges"] = 0;
+                    //     } else {
+                    //         $actual_shipping_charges["cod_charges"] = (50) * 100;
+                    //     }
+                    //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                    //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                    // } else {
+                    //     $actual_shipping_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
+                    //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                    //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                    // }
                     else :
                         $actual_shipping_charges = array(
                             "freight_charges" => 0,
@@ -3223,33 +3224,33 @@ class Order_model extends CI_Model
                             $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
                             $actual_shipping_charges["tax_charges"] = $tax_charges;
                         }
-                        // if ($psd->total_price >= 100000) {
-                        //     $actual_shipping_charges = array(
-                        //         "freight_charges" => 0
-                        //     );
-                        //     if (!$cod) {
-                        //         $actual_shipping_charges["cod_charges"] = 0;
-                        //     } else {
-                        //         $actual_shipping_charges["cod_charges"] = (50) * 100;
-                        //     }
-                        //     $tax_charges = intval((($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100)));
-                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
-                        // } elseif ($psd->total_price >= 0 && $psd->total_price < 100000) {
-                        //     $actual_shipping_charges = array(
-                        //         "freight_charges" => 10000
-                        //     );
-                        //     if (!$cod) {
-                        //         $actual_shipping_charges["cod_charges"] = 0;
-                        //     } else {
-                        //         $actual_shipping_charges["cod_charges"] = (50) * 100;
-                        //     }
-                        //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
-                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
-                        // } else {
-                        //     $actual_shipping_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
-                        //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
-                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
-                        // }
+                    // if ($psd->total_price >= 100000) {
+                    //     $actual_shipping_charges = array(
+                    //         "freight_charges" => 0
+                    //     );
+                    //     if (!$cod) {
+                    //         $actual_shipping_charges["cod_charges"] = 0;
+                    //     } else {
+                    //         $actual_shipping_charges["cod_charges"] = (50) * 100;
+                    //     }
+                    //     $tax_charges = intval((($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100)));
+                    //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                    // } elseif ($psd->total_price >= 0 && $psd->total_price < 100000) {
+                    //     $actual_shipping_charges = array(
+                    //         "freight_charges" => 10000
+                    //     );
+                    //     if (!$cod) {
+                    //         $actual_shipping_charges["cod_charges"] = 0;
+                    //     } else {
+                    //         $actual_shipping_charges["cod_charges"] = (50) * 100;
+                    //     }
+                    //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                    //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                    // } else {
+                    //     $actual_shipping_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
+                    //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                    //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                    // }
                     else :
                         $actual_shipping_charges = array(
                             "freight_charges" => 0,
@@ -3952,7 +3953,7 @@ class Order_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
-    
+
     //cod payout initiated
     public function fetch_cod_payout_inititated($from_date, $to_date)
     {
