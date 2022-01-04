@@ -971,7 +971,7 @@
 <script>
     $(document).ready(function() {
         // Configure/customize these variables.
-        var showChar = 4; // How many characters are shown by default
+        var showChar = 30; // How many characters are shown by default
         var ellipsestext = "";
         var moretext = "See More";
         var lesstext = "See Less";

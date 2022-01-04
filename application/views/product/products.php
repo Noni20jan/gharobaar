@@ -2390,7 +2390,6 @@ foreach ($sellers as $seller) {
                     </div>
                     <div class="ajax-load text-center" style="display:none">
                         <p><img class="more-products-loading" src="<?php echo base_url(); ?>assets/img/dark-loader.gif"></p>
-
                     </div>
                     <div class="ajax-load-2 text-center" style="display:none">
                     </div>
@@ -2417,10 +2416,16 @@ foreach ($sellers as $seller) {
     var urlpage = 1;
     var page = 1;
     $(window).scroll(function() {
-        if ($(window).scrollTop() >= ($(document).height() - $(window).height()) * 0.7) {
-            // if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-            page++;
-            loadMoreData(page);
+        var end = document.getElementsByClassName('no-records-found');
+        if (end.length > 0) {
+            return false;
+        } else {
+            if ($(window).scrollTop() >= ($(document).height() - $(window).height()) * 0.7) {
+                // if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+                page++;
+                loadMoreData(page);
+
+            }
         }
     });
 
@@ -2434,7 +2439,7 @@ foreach ($sellers as $seller) {
         params.urlpage = urlpage;
         params[csfr_token_name] = $.cookie(csfr_cookie_name);
         console.log(url + "?page=" + urlpage);
-        $.ajax({
+        var test = $.ajax({
                 url: url + "?page=" + urlpage,
                 method: "get",
                 data: params,
@@ -2449,9 +2454,6 @@ foreach ($sellers as $seller) {
             })
             .done(function(data) {
                 if (data == " ") {
-
-                    // $('.ajax-load-2').html("Fr");
-                    // $('.ajax-load-2').html("That's all for now !");
                     return;
                 } else {
                     $('.ajax-load').hide();
@@ -2459,10 +2461,12 @@ foreach ($sellers as $seller) {
                     $('#no-more-products').html("That's all for now !");
                     $("#post-data").append(data);
 
+
+
                 }
             })
             .fail(function(jqXHR, ajaxOptions, thrownError) {
-                alert('server not responding...');
+                // alert('server not responding...');
             });
 
     }

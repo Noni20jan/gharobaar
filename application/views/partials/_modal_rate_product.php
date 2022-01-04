@@ -17,11 +17,11 @@
                             <div class="rate-product">
                                 <span><?php echo trans("your_rating"); ?></span>
                                 <div class="rating-stars">
-                                    <label class="label-star" data-star="1" for="star1"><i class="icon-star-o"></i></label>
-                                    <label class="label-star" data-star="2" for="star2"><i class="icon-star-o"></i></label>
-                                    <label class="label-star" data-star="3" for="star3"><i class="icon-star-o"></i></label>
-                                    <label class="label-star" data-star="4" for="star4"><i class="icon-star-o"></i></label>
                                     <label class="label-star" data-star="5" for="star5"><i class="icon-star-o"></i></label>
+                                    <label class="label-star" data-star="4" for="star4"><i class="icon-star-o"></i></label>
+                                    <label class="label-star" data-star="3" for="star3"><i class="icon-star-o"></i></label>
+                                    <label class="label-star" data-star="2" for="star2"><i class="icon-star-o"></i></label>
+                                    <label class="label-star" data-star="1" for="star1"><i class="icon-star-o"></i></label>
                                 </div>
                             </div>
                         </div>

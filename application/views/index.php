@@ -866,16 +866,16 @@
                 <!-- Inside the containing div, add one div for each slide -->
                 <div class="carousel-cell">
                     <!-- You can put an image or text inside each slide div -->
-                    <h5 class="sub-heading-text">Stand Tall, Promote Small</h5>
-                    <p class="testimonial-content">Each product is made by a small business, with lots of love and dedication. Every purchase on Gharobaar would encourage them to keep their dream alive</p>
+                    <h5 class="sub-heading-text"><?php echo trans("first_heading"); ?></h5>
+                    <p class="testimonial-content"><?php echo trans("first_heading_content"); ?></p>
                 </div>
                 <div class="carousel-cell">
-                    <h5 class="sub-heading-text">Homepreneurs</h5>
-                    <p class="testimonial-content">Our supplier partners operate from home, pursuing their passion, creating high quality products by hand. Each product is a masterpiece in itself, made with all their love & hard work.</p>
+                    <h5 class="sub-heading-text"><?php echo trans("second_heading"); ?></h5>
+                    <p class="testimonial-content"><?php echo trans("second_heading_content"); ?></p>
                 </div>
                 <div class="carousel-cell">
-                    <h5 class="sub-heading-text">Ghar se Ghar Tak</h5>
-                    <p class="testimonial-content">Gharobaar is not only a marketplace, it is an attempt to connect your home to others, sharing the exceptional talent in each one of us and spreading love & happiness.</p>
+                    <h5 class="sub-heading-text"><?php echo trans("third_heading"); ?></h5>
+                    <p class="testimonial-content"><?php echo trans("third_heading_content"); ?></p>
                 </div>
             </div>
         </section>
