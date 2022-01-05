@@ -318,9 +318,6 @@ $user = get_user($this->auth_user->id);
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
 
-
-
-
                 <ul class="nav_bar_color sidebar-menu" data-widget="tree">
                     <?php if ($this->general_settings->seller_dashboard_navigation == 1) : ?>
                         <li class="header_color header">Dashboard</li>
@@ -404,8 +401,6 @@ $user = get_user($this->auth_user->id);
                         </a>
                     </li>
 
-
-
                     <li class="nav-earnings">
                         <a href="<?= generate_dash_url("penalties"); ?>">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/earnings.jpg" alt="" style="width: 20px; height: 20px;" />
@@ -420,9 +415,6 @@ $user = get_user($this->auth_user->id);
                             <span><?php echo "Total Earnings"; ?></span>
                         </a>
                     </li>
-
-
-
 
                     <li class="treeview<?php is_admin_nav_active(['withdraw-money', 'payouts', 'set-payout-account']); ?>">
                         <a href="#">
@@ -459,19 +451,20 @@ $user = get_user($this->auth_user->id);
                                 <span>Barter System</span>
                             </a>
                         </li>
+
+                        <li class="nav-barter-requests">
+                            <a href="<?= generate_dash_url("barter_requests"); ?>">
+                                <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-req-icon.png" alt="" style="width: 20px; height: 20px;" />
+                                <span>Barter Requests</span>
+                                <?php $new_quote_requests_count = get_new_barter_requests_count($this->auth_user->id);
+                                if (!empty($new_quote_requests_count)) : ?>
+                                    <span class="pull-right-container">
+                                        <small class="label label-success pull-right"><?= $new_quote_requests_count; ?></small>
+                                    </span>
+                                <?php endif; ?>
+                            </a>
+                        </li>
                     <?php } ?>
-                    <li class="nav-barter-requests">
-                        <a href="<?= generate_dash_url("barter_requests"); ?>">
-                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/barter-req-icon.png" alt="" style="width: 20px; height: 20px;" />
-                            <span>Barter Requests</span>
-                            <?php $new_quote_requests_count = get_new_barter_requests_count($this->auth_user->id);
-                            if (!empty($new_quote_requests_count)) : ?>
-                                <span class="pull-right-container">
-                                    <small class="label label-success pull-right"><?= $new_quote_requests_count; ?></small>
-                                </span>
-                            <?php endif; ?>
-                        </a>
-                    </li>
                     <?php if (is_bidding_system_active()) : ?>
                         <li class="nav-quote-requests">
                             <a href="<?= generate_dash_url("quote_requests"); ?>">
@@ -630,7 +623,6 @@ $user = get_user($this->auth_user->id);
                         </li>
                     <?php } ?>
 
-
                     <!-- <li class="header_color header"><?php echo trans("comments"); ?></li>
                     <li class="nav-comments">
                         <a href="<?= generate_dash_url("comments"); ?>">
@@ -644,6 +636,25 @@ $user = get_user($this->auth_user->id);
                             <span><?php echo trans("reviews"); ?></span>
                         </a>
                     </li>
+                    <!-- Reports section started -->
+                    <?php if ($this->general_settings->seller_reports == 1) : ?>
+                        <li class="header_color header"><?php echo trans("reports"); ?></li>
+                        <li class="treeview">
+                            <a href="#">
+                                <img src="<?php echo base_url(); ?>assets/img/reports.jpg" alt="" style="width: 20px; height: 20px;" />
+                                <!-- <i class="fa fa-credit-card-alt" style="font-size: 14px;"></i> -->
+                                <span><?php echo trans("reports"); ?></span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="nav-payouts"><a href="<?= generate_dash_url("payouts"); ?>"><?= trans("sales_data"); ?></a></li>
+                                <li class="nav-payouts"><a href="<?= generate_dash_url("payouts"); ?>"><?= trans("payment_reports"); ?></a></li>
+                                <li class="nav-payouts"><a href="<?= generate_dash_url("payouts"); ?>"><?= trans("commission_bill"); ?></a></li>
+                                <li class="nav-payouts"><a href="<?= generate_dash_url("payouts"); ?>"><?= trans("sellers_ledgers"); ?></a></li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+                    <!-- Report section end -->
                     <li class="header_color header"><?php echo trans("settings"); ?></li>
                     <li class="nav-shop-settings">
                         <a href="<?= generate_dash_url("shop_settings"); ?>">

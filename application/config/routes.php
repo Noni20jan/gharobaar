@@ -87,19 +87,15 @@ foreach ($languages as $language) {
 
         //dashboard
         $route[$key . getr('dashboard', $rts)]['GET'] = 'dashboard_controller/index';
-
         $route[$key . getr('barterproduct', $rts) . '/(:any)']['GET'] = 'home_controller/any_barter/$1';
 
         //profile
         $route[$key . getr('barter_product', $rts) . '/(:any)']['GET'] = 'profile_controller/barter_product/$1';
-
         $route[$key . getr('profile', $rts) . '/(:any)']['GET'] = 'profile_controller/profile/$1';
         $route[$key . getr('profile-buyer', $rts) . '/(:any)']['GET'] = 'profile_controller/buyer_profile/$1';
         $route[$key . getr('update_profile1', $rts) . '/(:any)']['GET'] = 'membership_controller/update_profile1/$1';
         $route[$key . getr('wishlist', $rts) . '/(:any)']['GET'] = 'profile_controller/wishlist/$1';
-
         $route[$key . getr('pincode', $rts) . '/(:any)']['GET'] = 'auth_controller/pincode/$1';
-
         $route[$key . getr('wishlist', $rts)]['GET'] = 'home_controller/guest_wishlist/$1';
         $route[$key . getr('followers', $rts) . '/(:any)']['GET'] = 'profile_controller/followers/$1';
         $route[$key . getr('following', $rts) . '/(:any)']['GET'] = 'profile_controller/following/$1';
@@ -118,10 +114,7 @@ foreach ($languages as $language) {
         $route[$key . getr('settings', $rts) . '/' . getr('change_password', $rts)]['GET'] = 'profile_controller/change_password';
         $route[$key . getr('settings', $rts) . '/' . getr('shipping_address', $rts)]['GET'] = 'profile_controller/shipping_address';
         $route[$key . getr('settings', $rts) . '/' . getr('update_seller_info', $rts)]['GET'] = 'profile_controller/update_seller_info';
-
         $route[$key . getr('order_test', $rts) . '/(:num)']['GET'] = 'order_controller/order_test/$1';
-
-
         $route[$key . getr('profile_settings', $rts)]['GET'] = 'profile_controller/update_profile_dashboard';
         $route[$key . getr('social_media_settings', $rts)]['GET'] = 'profile_controller/social_media_dashboard';
         $route[$key . getr('password_settings', $rts)]['GET'] = 'profile_controller/change_password_dashboard';
@@ -149,7 +142,6 @@ foreach ($languages as $language) {
         $route[$key . getr('downloads', $rts)]['GET'] = 'profile_controller/downloads';
         $route[$key . getr('shop_by_concern', $rts) . '/(:any)']['GET'] = 'home_controller/products_shop_by_concern/$1';
         $route[$key . getr('banner_by_product', $rts) . '/(:any)']['GET'] = 'home_controller/products_for_banner/$1';
-
         $route[$key . getr('shop-by-concern', $rts)]['GET'] = 'home_controller/shop_by_concern';
         //for shop by seller
         $route[getr('shop-by-seller', $rts)] = 'home_controller/shop_by_seller';
@@ -191,11 +183,7 @@ foreach ($languages as $language) {
         //$route[$key . getr('edible-cutlery', $rts)]['GET'] = 'home_controller/user_blog_16';
 
         $route[getr('admin', $rts) . '/bank-approve-details'] = 'membership_controller/bank_details_approve_requests';
-
-
         $route[getr('dashboard', $rts) . '/loyalty-level'] = 'dashboard_controller/loyalty_level';
-
-
         //  categories
         $route[getr('category', $rts)] = 'home_controller/categories';
         // personal_care
@@ -252,15 +240,11 @@ foreach ($languages as $language) {
         $route[$key . getr('cart', $rts) . '/' . getr('payment', $rts)]['GET'] = 'cart_controller/payment';
         /*orders*/
         $route[$key . getr('orders', $rts)]['GET'] = 'order_controller/orders';
-
         $route[$key . getr('orders', $rts) . '/' . getr('completed_orders', $rts)]['GET'] = 'order_controller/completed_orders';
         $route[$key . getr('orders_dashboard', $rts)]['GET'] = 'order_controller/orders_dashboard';
         $route[$key . getr('orders_dashboard_mobile', $rts)]['GET'] = 'order_controller/orders_dashboard_mobile';
-
         $route[$key . getr('orders', $rts) . '/' . getr('trackstatus', $rts) . '/(:num)']['GET'] = 'order_controller/trackstatus/$1';
         $route[$key . getr('order_test_2', $rts) . '/(:num)']['GET'] = 'order_controller/order_test_2/$1';
-
-
         $route[$key . getr('orders', $rts) . '/' . getr('completed_orders_dashboard', $rts)]['GET'] = 'order_controller/completed_orders_dashboard';
         $route[$key . getr('order_details', $rts) . '/(:num)']['GET'] = 'order_controller/order/$1';
 
@@ -273,7 +257,6 @@ foreach ($languages as $language) {
         $route[$key . getr('promote_payment_completed', $rts)]['GET'] = 'cart_controller/promote_payment_completed';
         $route[$key . getr('membership_payment_completed', $rts)]['GET'] = 'cart_controller/membership_payment_completed';
         $route[$key . 'invoice/(:num)']['GET'] = 'common_controller/invoice/$1';
-
         $route[$key . 'invoice_order/(:num)']['GET'] = 'common_controller/invoice_order/$1';
         $route[$key . 'invoice-promotion/(:num)']['GET'] = 'common_controller/invoice_promotion/$1';
         $route[$key . 'invoice-membership/(:num)']['GET'] = 'common_controller/invoice_membership/$1';
@@ -301,7 +284,6 @@ foreach ($languages as $language) {
         $route[$key . getr('shop-by-occasion', $rts)]['GET'] = 'home_controller/shop_by_occasion';
         $route[$key . getr('shop_by_occasion', $rts) . '/(:any)']['GET'] = 'home_controller/products_shop_by_occassion/$1';
         // last product get route
-
         $route[$key . getr('last_product', $rts)]['GET'] = 'product_controller/last_product_id';
         // $route[$key . getr('last_product', $rts)]['GET'] = 'product_controller/last_product_id';
 
@@ -317,27 +299,16 @@ foreach ($languages as $language) {
         $route[$key . getr('dashboard', $rts) . '/' . getr('product', $rts) . '/' . getr('product_details', $rts) . '/(:num)']['GET'] = 'dashboard_controller/edit_product_details/$1';
         $route[$key . getr('dashboard', $rts) . '/' . getr('service', $rts) . '/' . getr('service_details', $rts) . '/(:num)']['GET'] = 'dashboard_controller/edit_service_details/$1';
         $route[$key . getr('dashboard', $rts) . '/' . getr('edit_product', $rts) . '/(:num)']['GET'] = 'dashboard_controller/edit_product/$1';
-
         //dashboard get product image count
         $route[$key . getr('dashboard', $rts) . '/check_image_upload_product']['GET'] = 'dashboard_controller/check_image_upload_product';
-
-
-
         $route[$key . getr('dashboard', $rts) . '/' . getr('coupans', $rts)]['GET'] = 'dashboard_controller/coupans';
-
         $route[$key . getr('dashboard', $rts) . '/' . getr('credits', $rts)]['GET'] = 'dashboard_controller/credits';
-
         $route[$key . getr('dashboard', $rts) . '/' . getr('saved_cards', $rts)]['GET'] = 'dashboard_controller/saved_cards';
-
         $route[$key . getr('dashboard', $rts) . '/' . getr('addresses', $rts)]['GET'] = 'dashboard_controller/addresses';
-
         $route[$key . getr('dashboard', $rts) . '/' . getr('products', $rts)]['GET'] = 'dashboard_controller/products';
         //$route[$key . getr('dashboard', $rts) . '/' . getr('bulk_product', $rts)]['GET'] = 'dashboard_controller/bulk_products';
-
         $route[$key . getr('dashboard', $rts) . '/' . getr('pending_products', $rts)]['GET'] = 'dashboard_controller/pending_products';
-
         $route[$key . getr('dashboard', $rts) . '/' . getr('edit_service', $rts) . '/(:num)']['GET'] = 'dashboard_controller/edit_service/$1';
-
         $route[$key . getr('dashboard', $rts) . '/' . getr('services', $rts)]['GET'] = 'dashboard_controller/services';
         $route[$key . getr('dashboard', $rts) . '/' . getr('pending_services', $rts)]['GET'] = 'dashboard_controller/pending_services';
         $route[$key . getr('dashboard', $rts) . '/' . getr('bulk_product_upload', $rts)]['GET'] = 'dashboard_controller/bulk_product_upload';
@@ -356,8 +327,6 @@ foreach ($languages as $language) {
         $route[$key . getr('dashboard', $rts) . '/' . getr('track_status', $rts) . '/(:num)']['GET'] = 'dashboard_controller/track_status/$1';
         // $route[$key . getr('dashboard', $rts) . '/' . getr('cancelorder', $rts) . '/(:num)']['GET'] = 'dashboard_controller/cancelorder/$1';
         $route[$key . getr('dashboard', $rts) . '/' . getr('return_orders', $rts)]['GET'] = 'dashboard_controller/return_orders';
-
-
         $route[$key . getr('dashboard', $rts) . '/' . getr('hidden_products', $rts)]['GET'] = 'dashboard_controller/hidden_products';
         $route[$key . getr('dashboard', $rts) . '/' . getr('expired_products', $rts)]['GET'] = 'dashboard_controller/expired_products';
         $route[$key . getr('dashboard', $rts) . '/' . getr('hidden_services', $rts)]['GET'] = 'dashboard_controller/hidden_services';
@@ -377,14 +346,10 @@ foreach ($languages as $language) {
         $route[$key . getr('dashboard', $rts) . '/' . getr('comments', $rts)]['GET'] = 'dashboard_controller/comments';
         $route[$key . getr('dashboard', $rts) . '/' . getr('reviews', $rts)]['GET'] = 'dashboard_controller/reviews';
         $route[$key . getr('dashboard', $rts) . '/' . getr('shop_settings', $rts)]['GET'] = 'dashboard_controller/shop_settings';
-
-
-        $route[$key . getr('admin', $rts) . '/' . 'edit_bank_details/(:num)'] = 'membership_controller/edit_vendor_bank_details/$1';
-
         $route[$key . getr('dashboard', $rts) . '/' . getr('last_product', $rts)]['GET'] = 'dashboard_controller/last_product';
-
-
+        $route[$key . getr('admin', $rts) . '/' . 'edit_bank_details/(:num)'] = 'membership_controller/edit_vendor_bank_details/$1';
         $route[$key . 'calculate-loyality-values']['GET'] = 'coupon_controller/calculate_loyality_values';
+        /*reports for seller*/
 
 
         /*any*/
@@ -440,11 +405,8 @@ $route[getr('admin', $rts) . '/products_offers'] = 'coupon_controller/coupons_pr
 $route[getr('admin', $rts) . '/products_coupons'] = 'coupon_controller/get_coupon_data';
 $route[getr('admin', $rts) . '/user_vouchers'] = 'coupon_controller/get_voucher_data';
 $route[getr('admin', $rts) . '/services'] = 'product_controller/services';
-
 $route[getr('admin', $rts) . '/pending-products'] = 'product_controller/pending_products';
 $route[getr('admin', $rts) . '/hidden-products'] = 'product_controller/hidden_products';
-
-
 $route[getr('admin', $rts) . '/barter-products'] = 'product_controller/barter_products';
 $route[getr('admin', $rts) . '/pending-barter'] = 'product_controller/pending_barter';
 $route[getr('admin', $rts) . '/expired-products'] = 'product_controller/expired_products';
@@ -469,8 +431,6 @@ $route[getr('admin', $rts) . '/hidden-services'] = 'product_controller/hidden_se
 $route[getr('admin', $rts) . '/expired-services'] = 'product_controller/expired_services';
 $route[getr('admin', $rts) . '/approve_products'] = 'product_controller/approve_products';
 $route[getr('admin', $rts) . '/listed_products'] = 'product_controller/listed_products';
-
-
 $route[getr('admin', $rts) . '/deleted-services'] = 'product_controller/deleted_services';
 $route[getr('admin', $rts) . '/service-details/(:num)'] = 'product_controller/service_details/$1';
 /*featured product routes*/
@@ -483,7 +443,6 @@ $route[getr('admin', $rts) . '/edit-voucher-details/(:num)'] = 'coupon_controlle
 
 /*bidding system*/
 $route[getr('admin', $rts) . '/quote-requests'] = 'admin_controller/quote_requests';
-
 $route[getr('admin', $rts) . '/barter-requests'] = 'admin_controller/barter_requests';
 /*page routes*/
 $route[getr('admin', $rts) . '/pages'] = 'page_controller/pages';
@@ -507,7 +466,6 @@ $route[getr('admin', $rts) . '/custom-field-options/(:num)'] = 'category_control
 /*earnings*/
 $route[getr('admin', $rts) . '/earnings'] = 'earnings_controller/earnings';
 $route[getr('admin', $rts) . '/penalties'] = 'earnings_controller/penalties';
-
 $route[getr('admin', $rts) . '/completed-payouts'] = 'earnings_controller/completed_payouts';
 $route[getr('admin', $rts) . '/payout-requests'] = 'earnings_controller/payout_requests';
 $route[getr('admin', $rts) . '/initiate-payout-cod'] = 'earnings_controller/initiate_payout';
@@ -560,7 +518,6 @@ $route[getr('admin', $rts) . '/membership-plans'] = 'membership_controller/membe
 $route[getr('admin', $rts) . '/transactions-membership'] = 'membership_controller/transactions_membership';
 $route[getr('admin', $rts) . '/edit-plan/(:num)'] = 'membership_controller/edit_plan/$1';
 $route[getr('admin', $rts) . '/bank-approve-details'] = 'membership_controller/bank_details_approve_requests';
-
 $route[getr('admin', $rts) . '/cache-system'] = 'admin_controller/cache_system';
 $route[getr('admin', $rts) . '/storage'] = 'admin_controller/storage';
 
@@ -605,9 +562,7 @@ $route[getr('admin', $rts) . '/edit-loyalty-program/(:num)'] = 'admin_controller
 $route[getr('admin', $rts) . '/kpi-form'] = 'admin_controller/kpi_form';
 $route[getr('admin', $rts) . '/qualified-user'] = 'admin_controller/qualified_user';
 $route[getr('admin', $rts) . '/qualified-user-details/(:num)'] = 'admin_controller/qualified_user_details/$1';
-
 $route[getr('admin', $rts) . '/qualify-criteria'] = 'admin_controller/qualify_criteria';
-
 $route[getr('admin', $rts) . '/contact-messages'] = 'admin_controller/contact_messages';
 $route[getr('admin', $rts) . '/preferences'] = 'admin_controller/preferences';
 
