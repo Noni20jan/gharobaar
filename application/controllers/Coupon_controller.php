@@ -632,7 +632,7 @@ class Coupon_controller extends Admin_Core_Controller
         else :
             $data["error"] = "Coupon not found";
             $data["status"] = false;
-            $data["msg"] = trans("failure_coupon");
+            $data["msg"] = trans("invalid_coupon");
         endif;
 
         echo json_encode($data);
