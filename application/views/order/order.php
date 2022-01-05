@@ -605,8 +605,8 @@
 
 
                 <div class="table-responsive">
-                    <h3 class="page-title" style="margin-left:12px;
-                    ">Other Items In This Order</h3>
+                    <h3 class="page-title t" style="margin-left:12px; margin-top:30px;
+                    ">Other Orders</h3>
                     <table class="table table-orders summary-section" style="padding: 0 15px;">
                         <!-- 
                             <thead>
