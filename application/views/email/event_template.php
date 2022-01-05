@@ -1,108 +1,149 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php $this->load->view('email/_event_header', ['title' => $subject]); ?>
-<table role="presentation" class="main">
-    <tr>
-        <td class="wrapper">
-            <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td>
-                        <!-- <h1 style="text-decoration: none; font-size: 24px;line-height: 28px;font-weight: bold"><?php echo $subject; ?></h1> -->
-                        <div class="mailcontent" style="line-height: 26px;font-size: 14px;">
-                            <div class="mailcontent" style="line-height: 26px;font-size: 14px;">
-                                <?php echo $message; ?>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-
-<table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin-top: 10px;">
-    <tr>
-        <td class="content-block" style="text-align: center;width: 100%;">
-            <?php if (!empty($this->settings->facebook_url)) : ?>
-                <a href="<?php echo html_escape($this->settings->facebook_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
-                    <img src="<?php echo base_url(); ?>assets/img/social-icons/facebook.png" alt="" style="width: 28px; height: 28px;" />
-                </a>
-            <?php endif; ?>
-            <?php if (!empty($this->settings->twitter_url)) : ?>
-                <a href="<?php echo html_escape($this->settings->twitter_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
-                    <img src="<?php echo base_url(); ?>assets/img/social-icons/twitter.png" alt="" style="width: 28px; height: 28px;" />
-                </a>
-            <?php endif; ?>
-            <?php if (!empty($this->settings->pinterest_url)) : ?>
-                <a href="<?php echo html_escape($this->settings->pinterest_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
-                    <img src="<?php echo base_url(); ?>assets/img/social-icons/pinterest.png" alt="" style="width: 28px; height: 28px;" />
-                </a>
-            <?php endif; ?>
-            <?php if (!empty($this->settings->instagram_url)) : ?>
-                <a href="<?php echo html_escape($this->settings->instagram_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
-                    <img src="<?php echo base_url(); ?>assets/img/social-icons/instagram.png" alt="" style="width: 28px; height: 28px;" />
-                </a>
-            <?php endif; ?>
-            <?php if (!empty($this->settings->linkedin_url)) : ?>
-                <a href="<?php echo html_escape($this->settings->linkedin_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
-                    <img src="<?php echo base_url(); ?>assets/img/social-icons/linkedin.png" alt="" style="width: 28px; height: 28px;" />
-                </a>
-            <?php endif; ?>
-            <?php if (!empty($this->settings->vk_url)) : ?>
-                <a href="<?php echo html_escape($this->settings->vk_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
-                    <img src="<?php echo base_url(); ?>assets/img/social-icons/vk.png" alt="" style="width: 28px; height: 28px;" />
-                </a>
-            <?php endif; ?>
-            <?php if (!empty($this->settings->youtube_url)) : ?>
-                <a href="<?php echo html_escape($this->settings->youtube_url); ?>" target="_blank" style="color: transparent;margin-right: 5px;">
-                    <img src="<?php echo base_url(); ?>assets/img/social-icons/youtube.png" alt="" style="width: 28px; height: 28px;" />
-                </a>
-            <?php endif; ?>
-        </td>
-    </tr>
-</table>
-
-<div class="footer">
-    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+<!--?php defined('BASEPATH') or exit('No direct script access allowed'); ?-->
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1" width="274" height="60">
+    <tbody>
         <tr>
-            <td class="content-block powered-by">
-                <span class="apple-link"><?php echo html_escape($this->settings->contact_address); ?></span><br>
-                <?php echo html_escape($this->settings->copyright); ?>
+            <td style="padding-top: 21px; padding-right: 25px; padding-bottom: 21px;"></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td>
+                <table cellspacing="0" cellpadding="0" width="100%" height="70" border="0" style="background: #f1f1f1; border-collapse: collapse; -moz-border-radius: 5px 5px 0 0; -webkit-border-radius: 5px 5px 0 0; border-radius: 5px 5px 0 0; vertical-align: middle;">
+                    <tbody>
+                        <tr></tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center; width: 637px;"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; width: 272px;">
+                                <div style="height: 70px; width: 100%; text-align: center; margin-bottom: 10px;"><img src="https://gharobaar.com/assets/img/logo.png" alt="" style="max-width: 180px; max-height: 70px;" width="308" height="127" /></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: right;"><img src="https://gharobaar.com/uploads/blog/202201/img_61d5472aea4837-50746828-19809929.jpg" alt="logo-agnii" style="display: block; margin-left: auto; margin-right: auto;" /></td>
+                        </tr>
+                    </tbody>
+                </table>
             </td>
         </tr>
         <tr>
-            <!-- <td class="content-block">
-                <?php echo trans("dont_want_receive_emails"); ?> <a href="<?php echo base_url(); ?>unsubscribe?token=<?php echo !empty($subscriber->token) ? $subscriber->token : ''; ?>"><?php echo trans("unsubscribe"); ?></a>.
-            </td> -->
+            <td>
+                <table cellspacing="0" cellpadding="0" width="100%" border="0" style="background: #f1f1f1; border-collapse: collapse;">
+                    <tbody>
+                        <tr>
+                            <td style="color: #f07604; font-style: italic; padding: 10px 20px;"><img src="https://gharobaar.com/uploads/blog/202201/img_61d3eab9a122c4-32191643-84192496.jpg" alt="logo-agnii" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
         </tr>
-    </table>
-</div>
-
-<style>
-    img {
-        max-width: 100% !important;
-        height: auto !important;
-    }
-
-    table tr td img {
-        max-width: 100% !important;
-        height: auto !important;
-    }
-
-    .table-products {
-        border-bottom: 1px solid #d1d1d1;
-        padding-bottom: 30px;
-        margin-top: 20px;
-    }
-
-    .table-products th,
-    td {
-        padding: 8px 5px;
-    }
-
-    .wrapper table tr td img {
-        height: auto !important;
-    }
-</style>
-</body>
-
-</html>
+        <tr>
+            <td>
+                <table cellspacing="0" cellpadding="0" width="100%" border="0" style="background: #f1f1f1; border-collapse: collapse;">
+                    <tbody>
+                        <tr>
+                            <td style="padding-top: 10px; padding-right: 20px; padding-bottom: 10px;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table cellspacing="0" cellpadding="0" width="100%" border="0" style="background: #f1f1f1; border-collapse: collapse;">
+                    <tbody>
+                        <tr>
+                            <td style="padding: 0 15px 17px;">
+                                <table cellspacing="0" cellpadding="0" width="100%" border="0" style="background: #f1f1f1; border-collapse: collapse;">
+                                    <tbody>
+                                        <tr>
+                                            <td align="center" valign="middle"><a href="https://gharobaar.com/cocoacraft-premium-hot-cocoa-drinking-chocolate-300-g-215"> <img src="https://gharobaar.com/uploads/blog/202201/img_61d45bbc1dc255-94919324-97983721.jpg" alt="pic" width="176" /> </a></td>
+                                            <td align="center" valign="middle" style="padding: 0 5px;"><a href="https://www.gharobaar.com/ganesha-showpiece-carved-in-metal-antique-golden-finish-by-handicrafts-paradise-8-inch-5688"> <img src="https://gharobaar.com/uploads/blog/202201/img_61d45bbbc447a1-37337832-67311895.jpg" alt="pic" width="176" /> </a></td>
+                                            <td align="center" valign="middle"><a href="https://www.gharobaar.com/erum-4477"> <img src="https://gharobaar.com/uploads/blog/202201/img_61d45bbac63733-85428265-81346324.jpg" alt="pic" width="176" /> </a></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" valign="top">
+                                                <div style="width: 178px; margin: 0 auto;">
+                                                    <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; padding: 15px 0 12px;"><a href="https://gharobaar.com/cocoacraft-premium-hot-cocoa-drinking-chocolate-300-g-215" style="color: #000000;"> Premium Hot Cocoa, Drinking Chocolate, 300 g </a></div>
+                                                </div>
+                                            </td>
+                                            <td align="center" valign="top">
+                                                <div style="width: 178px; margin: 0 auto;">
+                                                    <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; padding: 15px 0 12px;"><a href="https://www.gharobaar.com/ganesha-showpiece-carved-in-metal-antique-golden-finish-by-handicrafts-paradise-8-inch-5688" style="color: #000000;"> Ganesha Showpiece Carved in Metal Antique Golden Finish by Handicrafts Paradise - 8 inch </a></div>
+                                                </div>
+                                            </td>
+                                            <td align="center" valign="top">
+                                                <div style="width: 178px; margin: 0 auto;">
+                                                    <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; padding: 15px 0 12px;"><a href="https://www.gharobaar.com/erum-4477" style="color: #000000;"> Erum </a></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" valign="middle"><a href="https://gharobaar.com/cocoacraft-premium-hot-cocoa-drinking-chocolate-300-g-215" target="_blank" rel="noopener"><img src="https://gharobaar.com/uploads/blog/202201/img_61d56a72ed1c32-74185622-67577176.jpg" alt="" /> </a></td>
+                                            <td align="center" valign="middle"><a href="https://www.gharobaar.com/ganesha-showpiece-carved-in-metal-antique-golden-finish-by-handicrafts-paradise-8-inch-5688" target="_blank" rel="noopener"><img src="https://gharobaar.com/uploads/blog/202201/img_61d56a72ed1c32-74185622-67577176.jpg" alt="" /></a></td>
+                                            <td align="center" valign="middle"><a href="https://www.gharobaar.com/erum-4477" target="_blank" rel="noopener"><img src="https://gharobaar.com/uploads/blog/202201/img_61d56a72ed1c32-74185622-67577176.jpg" alt="" /></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table cellspacing="0" cellpadding="0" width="100%" border="0" style="background: #f1f1f1; border-collapse: collapse;">
+                    <tbody>
+                        <tr>
+                            <td style="padding: 0 15px 17px;">
+                                <table cellspacing="0" cellpadding="0" width="100%" border="0" style="background: #f1f1f1; border-collapse: collapse;">
+                                    <tbody>
+                                        <tr>
+                                            <td align="center" valign="middle"><a href="https://www.gharobaar.com/afghan-black-seedless-raisin-6212"> <img src="https://gharobaar.com/uploads/blog/202201/img_61d45bbb2141a3-77337770-97181696.jpg" alt="pic" width="176" /> </a></td>
+                                            <td align="center" valign="middle" style="padding: 0 5px;"><a href="https://www.gharobaar.com/mohraj-glass-pot-candle-362"> <img src="https://gharobaar.com/uploads/blog/202201/img_61d45bbb6ee717-08098798-41492260.jpg" alt="pic" width="176" /> </a></td>
+                                            <td align="center" valign="middle"><a href="https://www.gharobaar.com/bottle-ful-light-61"> <img src="https://gharobaar.com/uploads/blog/202201/img_61d45bba794810-16552490-54173909.jpg" alt="pic" width="176" /> </a></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" valign="top">
+                                                <div style="width: 178px; margin: 0 auto;">
+                                                    <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; padding: 15px 0 12px;"><a href="https://www.gharobaar.com/afghan-black-seedless-raisin-6212" style="color: #000000;"> AFGHAN BLACK SEEDLESS RAISIN</a></div>
+                                                </div>
+                                            </td>
+                                            <td align="center" valign="top">
+                                                <div style="width: 178px; margin: 0 auto;">
+                                                    <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; padding: 15px 0 12px;"><a href="https://www.gharobaar.com/mohraj-glass-pot-candle-362" style="color: #000000;"> Mohraj Glass Pot Candle </a></div>
+                                                </div>
+                                            </td>
+                                            <td align="center" valign="top">
+                                                <div style="width: 178px; margin: 0 auto;">
+                                                    <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; padding: 15px 0 12px;"><a href="https://www.gharobaar.com/bottle-ful-light-61" style="color: #000000;"> Bottle-Ful Light </a></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" valign="middle"><a href="https://www.gharobaar.com/afghan-black-seedless-raisin-6212" target="_blank" rel="noopener"><img src="https://gharobaar.com/uploads/blog/202201/img_61d56a72ed1c32-74185622-67577176.jpg" alt="" /></a></td>
+                                            <td align="center" valign="middle"><a href="https://www.gharobaar.com/mohraj-glass-pot-candle-362" target="_blank" rel="noopener"><img src="https://gharobaar.com/uploads/blog/202201/img_61d56a72ed1c32-74185622-67577176.jpg" alt="" /></a></td>
+                                            <td align="center" valign="middle" f1f1f1=""><a href="https://www.gharobaar.com/bottle-ful-light-61" target="_blank" rel="noopener"><span style="color: #95a5a6;"><img src="https://gharobaar.com/uploads/blog/202201/img_61d56a72ed1c32-74185622-67577176.jpg" alt="" /></span></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p><a href="https://gharobaar.com/"><img src="https://gharobaar.com/uploads/blog/202201/img_61d3eabda38a48-66824894-42633567.jpg" width="603" height="187" alt="" /></a></p>
+                            </td>
+                        </tr>
+                        <tr style="height: 19px;">
+                            <td align="center" valign="middle" style="height: 19px;">
+                                <div style="text-align: center;"><a href="https://www.facebook.com/gharobaar.official" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 16px; line-height: 16px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/facebook.png" width="16" /> </a> <a href="https://www.instagram.com/gharobaar_official/" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 16px; line-height: 16px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/instagram.png" width="16" /> </a> <a href="https://www.youtube.com/channel/UC2jOkQl0OR1cIJgo2WJZWqw" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 16px; line-height: 16px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/youtube.png" width="16" /> </a> <a href="https://in.pinterest.com/gharobaar_official/_created/" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 16px; line-height: 16px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/pinterest.png" width="16" /> </a></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p></p>
