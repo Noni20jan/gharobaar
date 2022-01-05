@@ -1942,7 +1942,7 @@ class Admin_controller extends Admin_Core_Controller
 
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/reports/sale_data', $data);
-        $this->load->view('admin/includes/_footer',);
+        $this->load->view('admin/includes/_footer');
     }
     public function seller_commission()
     {
