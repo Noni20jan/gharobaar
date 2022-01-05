@@ -918,7 +918,6 @@
         }
     </style>
     <script src="<?= base_url(); ?>assets/js/fselect.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
 
 </head>
 
@@ -5271,6 +5270,8 @@
     </script>
 
     <!-- chat systems  -->
+    <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
+
     <?php if ($this->general_settings->is_tawkto_enable == 1) : ?>
         <script type="text/javascript">
             var Tawk_API = Tawk_API || {},

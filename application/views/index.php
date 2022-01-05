@@ -4,6 +4,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 
 
+
 <style>
     /* The width of each slide */
     .slick-slide {
@@ -1153,8 +1154,10 @@
         <?php endif; ?>
     </div>
 </div>
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<!-- <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
+<script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
+
 <!-- slick Carousel CDN -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 <script>
