@@ -647,10 +647,10 @@ $user = get_user($this->auth_user->id);
                                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li class="nav-payouts"><a href="<?= generate_dash_url("payouts"); ?>"><?= trans("sales_data"); ?></a></li>
-                                <li class="nav-payouts"><a href="<?= generate_dash_url("payouts"); ?>"><?= trans("payment_reports"); ?></a></li>
-                                <li class="nav-payouts"><a href="<?= generate_dash_url("payouts"); ?>"><?= trans("commission_bill"); ?></a></li>
-                                <li class="nav-payouts"><a href="<?= generate_dash_url("payouts"); ?>"><?= trans("sellers_ledgers"); ?></a></li>
+                                <li class="nav-payouts"><a href="<?= generate_dash_url("sales_data"); ?>"><?= trans("sales_data"); ?></a></li>
+                                <li class="nav-payouts"><a href="<?= generate_dash_url("payment_reports"); ?>"><?= trans("payment_reports"); ?></a></li>
+                                <li class="nav-payouts"><a href="<?= generate_dash_url("commission_bill"); ?>"><?= trans("commission_bill"); ?></a></li>
+                                <li class="nav-payouts"><a href="<?= generate_dash_url("seller_ledgers"); ?>"><?= trans("sellers_ledgers"); ?></a></li>
                             </ul>
                         </li>
                     <?php endif; ?>
