@@ -526,15 +526,15 @@
                                 <?php //$this->load->view("product/details/_product_details"); 
                                 ?>
                                 <div class="row">
+
                                     <div class="row">
                                         <div class="col-12">
                                             <?php if ($this->auth_check) : ?>
                                                 <?php if ($this->auth_user->id != $user->id) : ?>
-
-                                                    <p class="question">Have a question? <a class="ask-seller" data-toggle="modal" data-target="#messageModal">For any customization queries, Contact Seller</a>
+                                                    <p class="question">Have a question? <a href="javascript:void(0)" class="ask-seller" data-toggle="modal" data-target="#messageModal">For any customization queries, Contact Seller</a>
                                                     <?php endif; ?>
                                                 <?php else : ?>
-                                                    <p class="question">Have a question? <a class="ask-seller" data-toggle="modal" data-target="#loginModal">For any customization queries, Contact Seller</a>
+                                                    <p class="question">Have a question? <a href="javascript:void(0)" class="ask-seller" data-toggle="modal" data-target="#loginModal">For any customization queries, Contact Seller</a>
                                                     <?php endif; ?>
                                         </div>
                                     </div>
@@ -545,7 +545,6 @@
                                                 <form id="form_send_message" novalidate="novalidate">
                                                     <input type="hidden" name="receiver_id" id="message_receiver_id" value="<?php echo $user->id; ?>">
                                                     <input type="hidden" id="message_send_em" value="<?php echo $user->send_email_new_message; ?>">
-
                                                     <div class="modal-header">
                                                         <h4 class="title"><?php echo trans("send_message"); ?></h4>
                                                         <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
@@ -577,14 +576,13 @@
                                                     <!-- Modal footer -->
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-md btn-red" data-dismiss="modal"><i class="icon-times"></i>&nbsp;<?php echo trans("close"); ?></button>
-                                                        <button type="submit" class="btn btn-md btn-custom" data-dismiss="modal"><i class="icon-send"></i>&nbsp;<?php echo trans("send"); ?></button>
+                                                        <button type="submit" class="btn btn-md btn-custom"><i class="icon-send"></i>&nbsp;<?php echo trans("send"); ?></button>
                                                     </div>
                                                 </form>
                                                 <!-- form end -->
                                             </div>
                                         </div>
                                     </div>
-
 
                                     <div class="col-12" id="gluten-vegan-sustainable-responsive">
                                         <?php if ($product->is_gluten_Free == 'Y') : ?>
