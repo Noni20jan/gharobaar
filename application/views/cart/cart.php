@@ -710,10 +710,11 @@
                                     <?php endif; ?>
                                     <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
                                         <p>
-
-
-
-                                            <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span>
+                                            <?php if ($this->general_settings->flat_ship_enable == 1) : ?>
+                                                <?php echo trans("shipping"); ?><span class="float-right"><?php echo (price_formatted(($this->general_settings->flat_ship_amount), $cart_total->currency)); ?></span>
+                                            <?php else : ?>
+                                                <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span>
+                                            <?php endif; ?>
                                         </p>
 
                                     <?php endif; ?>
@@ -744,7 +745,17 @@
                                     <p class="line-seperator"></p>
                                     <p>
                                         <!-- <?php var_dump($_SESSION["mds_shopping_cart_total"]->subtotal);  ?> -->
-                                        <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong>
+
+
+                                        <?php if ($this->general_settings->flat_ship_enable == 1) : ?>
+                                            <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo (price_formatted(($cart_total->total_price + (($this->general_settings->flat_ship_amount))), $cart_total->currency)); ?>/-</span></strong>
+                                        <?php else : ?>
+                                            <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong>
+                                        <?php endif; ?>
+
+
+
+
                                     </p>
                                     <p class="line-seperator"></p>
                                     <?php if (intval(secondsToTime($cart_total->min_dispatch_time)) > 1 || intval(secondsToTime($cart_total->max_dispatch_time)) > 1) :

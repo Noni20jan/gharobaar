@@ -63,6 +63,16 @@ class Order_model extends CI_Model
             //     $data["status"] = 10;
             // }
 
+
+            if ($this->general_settings->flat_ship_enable == 1) {
+                $data['is_flat_ship'] = 1;
+                $data['flat_ship_amount'] = 0;
+            }
+            if ($this->general_settings->flat_cod_enable == 1) {
+                $data['total_cod_charges'] = 0;
+            }
+
+
             if ($this->auth_check) {
                 $data["buyer_type"] = "registered";
                 $data["buyer_id"] = $this->auth_user->id;
@@ -174,6 +184,14 @@ class Order_model extends CI_Model
             }
             // //cod seller payable
             // $this->calc_seller_payable(1);die();
+            if ($this->general_settings->flat_ship_enable == 1) {
+                $data['is_flat_ship'] = 1;
+                $data['flat_ship_amount'] = 0;
+            }
+            if ($this->general_settings->flat_cod_enable == 1) {
+                $data['is_flat_cod'] = 1;
+                $data['flat_cod_amount'] = 0;
+            }
             if ($this->db->insert('orders', $data)) {
                 $order_id = $this->db->insert_id();
 
@@ -868,9 +886,33 @@ class Order_model extends CI_Model
                     }
                     $price_shipping = 0;
 
-                    // $data["product_total_price"] = $cart_item->unit_price + $price_shipping;
 
-                    $this->db->insert('order_products', $data);
+
+                    if ($this->general_settings->flat_ship_enable == 1) {
+
+                        $data2 = array();
+                        $data2['order_id'] = $order_id;
+                        $data2['seller_id'] = $product->user_id;
+                        $data2['product_shipping_cost'] = $data['product_shipping_cost'];
+                        $data2['shipping_igst'] = $data['shipping_igst'];
+                        $data2['shipping_cgst'] = $data['shipping_cgst'];
+                        $data2['shipping_sgst'] = $data['shipping_sgst'];
+
+                        $data['product_shipping_cost'] = 0;
+                        $data['shipping_igst'] = 0;
+                        $data['shipping_cgst'] = 0;
+                        $data['shipping_sgst'] = 0;
+
+
+                        $data['is_order_flat_ship'] = 1;
+                    }
+                }
+
+                // $data["product_total_price"] = $cart_item->unit_price + $price_shipping;
+
+                $this->db->insert('order_products', $data);
+                if ($this->general_settings->flat_ship_enable == 1) {
+                    $this->db->insert('applicable_cod_ship_charge', $data2);
                 }
             }
         }
@@ -2486,6 +2528,48 @@ class Order_model extends CI_Model
                 $data["total_shipping_cost"] = $data["product_shipping_cost"] + $data['shipping_igst'] + $data['shipping_cgst'] + $data['shipping_sgst'];
 
                 $data["total_cod_charges"] = $data["product_cod_charges"] + $data['cod_igst'] + $data['cod_cgst'] + $data['cod_sgst'];
+
+
+
+                if ($this->general_settings->flat_ship_enable == 1) {
+
+                    $data2['product_shipping_cost'] = $data['product_shipping_cost'];
+                    $data2['shipping_igst'] = $data['shipping_igst'];
+                    $data2['shipping_cgst'] = $data['shipping_cgst'];
+                    $data2['shipping_sgst'] = $data['shipping_sgst'];
+                    $data2["total_shipping_cost"] = $data["total_shipping_cost"];
+                    $data2['product_shipping_cost'] = $data['product_shipping_cost'];
+
+                    $data['shipping_igst'] = 0;
+                    $data['shipping_cgst'] = 0;
+                    $data['shipping_sgst'] = 0;
+                    $data["total_shipping_cost"] = 0;
+                    $data['product_shipping_cost'] = 0;
+
+                    $this->db->where("seller_id", $sup->SupplierId);
+                    $this->db->where("order_id", $order_id);
+                    $this->db->update("applicable_cod_ship_charge", $data2);
+                }
+
+                if ($this->general_settings->flat_cod_enable == 1) {
+                    $data2['cod_igst'] =  $data['cod_igst'];
+                    $data2['cod_cgst'] = $data['cod_cgst'];
+                    $data2['cod_sgst'] = $data['cod_sgst'];
+                    $data2["total_cod_charges"] = $data["total_cod_charges"];
+                    $data2['product_cod_charges'] = $data['product_cod_charges'];
+
+
+
+                    $data['cod_igst'] = 0;
+                    $data['cod_cgst'] = 0;
+                    $data['cod_sgst'] = 0;
+                    $data["total_cod_charges"] = 0;
+                    $data['product_cod_charges'] = 0;
+
+                    $this->db->where("seller_id", $sup->SupplierId);
+                    $this->db->where("order_id", $order_id);
+                    $this->db->update("applicable_cod_ship_charge", $data2);
+                }
 
 
                 $this->db->where("seller_id", $sup->SupplierId);
@@ -4825,5 +4909,13 @@ class Order_model extends CI_Model
                 $this->order_model->save_cashfree_seller_payable_payouts($sp);
             }
         }
+    }
+
+
+    public function check_order_exists($user_id)
+    {
+        $sql = "SELECT count(id) as 'count' from orders where buyer_id=$user_id";
+        $query = $this->db->query($sql);
+        return $query->row();
     }
 }
