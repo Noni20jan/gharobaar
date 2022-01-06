@@ -3080,7 +3080,7 @@ order by id desc LIMIT 1";
             $i++;
         }
         $where1 = "title = '$soundword' ) ";
-        $wherecon = " and users.banned ='0' and products.is_draft='0' and products.is_deleted='0' and products.visibility='1' and status='1' order by products.is_promoted desc limit 5) ";
+        $wherecon = " and users.is_shop_open='1' and users.banned ='0' and products.is_draft='0' and products.is_deleted='0' and products.visibility='1' and status='1' order by products.is_promoted desc limit 5) ";
         $sselect = " UNION (SELECT title,brand_name,products.slug FROM product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where (";
         $union = " (select title,brand_name,products.slug from product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where title like ('%$word%') OR brand_name = ('$word')  ";
         $sql5 = $union . $wherecon .  $sselect . $where . $where1 . $wherecon;
