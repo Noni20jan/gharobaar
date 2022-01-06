@@ -288,35 +288,42 @@ endif;
         ?>
         <div class="row">
             <div class="pull-right">
-                <?php if ($show) : ?>
-                    <button class="btn btn-md btn-block btn-info btn-table-delete" id="schedule_sipment" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
+                <?php if ($item->product_delivery_partner == "SHIPROCKET") : ?>
+                    <?php if ($show && $item->order_status == "processing") : ?>
+                        <button class="btn btn-md btn-block btn-info btn-table-delete" id="schedule_sipment" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
+                    <?php endif; ?>
+                <?php elseif ($item->product_delivery_partner == "NOW-BIKES") : ?>
+                    <?php if ($show) : ?>
+                        <button class="btn btn-md btn-block btn-info btn-table-delete" id="schedule_sipment" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
         </div>
         <?php if (($item->product_delivery_partner) == "SHIPROCKET") : ?>
             <?php if (empty($shiprocket_order_details)) : ?>
-                <?php if ($item->order_status != 'cancelled_by_seller' || $item->order_status != 'cancelled_by_user') : ?>
-                    <?php $product = get_product($item->product_id); ?>
-                    <?php $current_date = new DateTime(); ?>
-                    <?php $order_date = strtotime($order->created_at); ?>
-                    <?php $ordered_date = date("dS M Y", $order_date); ?>
-                    <?php $shipping_time = $product->shipping_time; ?>
+                <?php $product = get_product($item->product_id); ?>
+                <?php $current_date = new DateTime(); ?>
+                <?php $order_date = strtotime($order->created_at); ?>
+                <?php $ordered_date = date("dS M Y", $order_date); ?>
+                <?php $shipping_time = $product->shipping_time; ?>
 
-                    <?php if (substr_count($shipping_time, "_") > 2) : ?>
-                        <?php $ship_time = intval($product->shipping_time[2]); ?>
-                        <?php $created_at = strtotime($order->created_at); ?>
+                <?php if (substr_count($shipping_time, "_") > 2) : ?>
+                    <?php $ship_time = intval($product->shipping_time[2]); ?>
+                    <?php $created_at = strtotime($order->created_at); ?>
 
-                        <?php $order_create = strtotime("$ship_time day", strtotime($order->created_at)); ?>
+                    <?php $order_create = strtotime("$ship_time day", strtotime($order->created_at)); ?>
 
-                        <?php $ship_date = (date("dS M Y", $order_create)); ?>
-                        <?php $shipping_date = new DateTime($ship_date); ?>
+                    <?php $ship_date = (date("dS M Y", $order_create)); ?>
+                    <?php $shipping_date = new DateTime($ship_date); ?>
 
+                    <?php if ($item->order_status == 'processing') : ?>
 
-                        <?php if ($shipping_date >= $current_date) : ?>
+                        <?php if ($shipping_date > $current_date) : ?>
 
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $ship_date; ?></b></p>
 
                         <?php else : ?>
+
                             <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs. 200 for this order shall be charged as per the terms of the agreement.
 
                                 **<br />
@@ -324,17 +331,20 @@ endif;
                                 ** Kindly take note that the seller has to only schedule shipment on or before the due date. If the pickup was not done on time by the Shipping Partners, then no penalty will be levied on the seller.
                             </p>
                         <?php endif; ?>
-                    <?php elseif (substr_count($shipping_time, "_") == 2) : ?>
-                        <?php $shipped_time = intval($product->shipping_time); ?>
-                        <?php $created_at = strtotime($order->created_at); ?>
-                        <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
-                        <?php $shipped_date = (date("dS M Y", $order_create)); ?>
-                        <?php $shipp_date = new DateTime($shipped_date); ?>
+                    <?php endif; ?>
+                <?php elseif (substr_count($shipping_time, "_") == 2) : ?>
+                    <?php $shipped_time = intval($product->shipping_time); ?>
+                    <?php $created_at = strtotime($order->created_at); ?>
+                    <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
+                    <?php $shipped_date = (date("dS M Y", $order_create)); ?>
+                    <?php $shipp_date = new DateTime($shipped_date); ?>
+                    <?php if ($item->order_status == 'processing') : ?>
 
                         <?php if ($shipp_date >= $current_date) : ?>
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
 
                         <?php else : ?>
+
                             <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs. 200 for this order shall be charged as per the terms of the agreement.
 
                                 **<br />
@@ -342,12 +352,13 @@ endif;
                                 ** Kindly take note that the seller has to only schedule shipment on or before the due date. If the pickup was not done on time by the Shipping Partners, then no penalty will be levied on the seller.
                             </p>
                         <?php endif; ?>
-                    <?php else : ?>
-                        <p></p>
                     <?php endif; ?>
-                <?php endif; ?>
 
+                <?php else : ?>
+                    <p></p>
+                <?php endif; ?>
             <?php endif; ?>
+
         <?php endif; ?>
 
         <div class="row">
