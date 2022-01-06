@@ -20,9 +20,10 @@ class Review_model extends CI_Model
         }
         if (!empty($data['product_id']) && !empty($data['user_id']) && !empty($data['rating'])) {
             $this->db->insert('reviews', $data);
-            //update product rating
-            // $this->update_product_rating($product_id);
+            $last_id = $this->db->insert_id();
         }
+        unset($data);
+        return $last_id;
     }
 
     public function add_review1($rating, $product_id, $review_text)

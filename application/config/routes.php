@@ -397,6 +397,7 @@ $route[getr('admin', $rts) . '/order-product-details/(:num)'] = 'order_admin_con
 $route[getr('admin', $rts) . '/transactions'] = 'order_admin_controller/transactions';
 $route[getr('admin', $rts) . '/order-bank-transfers'] = 'order_admin_controller/order_bank_transfers';
 $route[getr('admin', $rts) . '/refunds'] = 'order_admin_controller/refunds';
+$route[getr('admin', $rts) . '/return_exchange'] = 'order_admin_controller/return_exchange';
 $route[getr('admin', $rts) . '/invoices'] = 'order_admin_controller/invoices';
 $route[getr('admin', $rts) . '/digital-sales'] = 'order_admin_controller/digital_sales';
 /*product routes*/
@@ -523,6 +524,11 @@ $route[getr('admin', $rts) . '/storage'] = 'admin_controller/storage';
 
 // reports
 $route[getr('admin', $rts) . '/sale-data'] = 'admin_controller/sales';
+$route[getr('admin', $rts) . '/seller-profile-data'] = 'admin_controller/seller_profile_data';
+$route[getr('admin', $rts) . '/shipping-cod-charges'] = 'admin_controller/shipping_cod_charges';
+$route[getr('admin', $rts) . '/tcs-report'] = 'admin_controller/tcs_report';
+$route[getr('admin', $rts) . '/tds-report'] = 'admin_controller/tds_report';
+$route[getr('admin', $rts) . '/cash-free-charges-report'] = 'admin_controller/cash_free_charges_report';
 $route[getr('admin', $rts) . '/seller-commission-data'] = 'admin_controller/seller_commission';
 
 //seller pannel reports
@@ -570,6 +576,8 @@ $route[getr('admin', $rts) . '/edit-loyalty-program/(:num)'] = 'admin_controller
 $route[getr('admin', $rts) . '/kpi-form'] = 'admin_controller/kpi_form';
 $route[getr('admin', $rts) . '/qualified-user'] = 'admin_controller/qualified_user';
 $route[getr('admin', $rts) . '/qualified-user-details/(:num)'] = 'admin_controller/qualified_user_details/$1';
+$route[getr('admin', $rts) . '/view-qualification'] = 'admin_controller/view_qualification';
+$route[getr('admin', $rts) . '/view-qualification-details/(:num)'] = 'admin_controller/editdata/$1';
 $route[getr('admin', $rts) . '/qualify-criteria'] = 'admin_controller/qualify_criteria';
 $route[getr('admin', $rts) . '/contact-messages'] = 'admin_controller/contact_messages';
 $route[getr('admin', $rts) . '/preferences'] = 'admin_controller/preferences';

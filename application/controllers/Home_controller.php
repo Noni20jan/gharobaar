@@ -387,16 +387,17 @@ class Home_controller extends Home_Core_Controller
     }
 
 
-    public function sla_agree_seller(){
-        $user_id=$this->auth_user->id;
-        $data["sla_accepted"] =1;
-        $data["sla_content_id"]= $this->input->post('sla_content_id', true);
-        if ($this->profile_model->save_sla_agree($data,$user_id)) {
+    public function sla_agree_seller()
+    {
+        $user_id = $this->auth_user->id;
+        $data["sla_accepted"] = 1;
+        $data["sla_content_id"] = $this->input->post('sla_content_id', true);
+        if ($this->profile_model->save_sla_agree($data, $user_id)) {
             redirect($this->agent->referrer());
         }
     }
 
-    
+
     public function any_barter($slug)
     {
         get_method();
@@ -2649,7 +2650,12 @@ class Home_controller extends Home_Core_Controller
                 if (!empty($review)) {
                     $this->review_model->update_review($review->id, $rating, $product_id, $review_text);
                 } else {
-                    $this->review_model->add_review($rating, $product_id, $review_text);
+                    $last_id = $this->review_model->add_review($rating, $product_id, $review_text);
+                    if (!empty($last_id)) {
+
+                        $this->load->model('upload_model');
+                        $img_path = $this->upload_model->upload_buyer_image('file_' . $product_id, $last_id, $product_id);
+                    }
                 }
             }
         }

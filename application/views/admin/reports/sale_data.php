@@ -33,77 +33,201 @@
                 <h3 class="box-title"><?php echo trans('sale-data'); ?></h3>
             </div>
         </div>
-        <div class="box-body">
-            <div class="row">
-                <div class="table-responsive">
-                    <div class="col-sm-12">
-                        <table class="table table-bordered table-striped " id="extend_datatable" role="grid">
-                            <thead>
-                                <tr role="row">
-                                    <th>Seller Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Shop</th>
-                                    <th>Pan</th>
-                                    <th>GST</th>
-                                    <th>Address</th>
-                                    <th>Account Number</th>
-                                    <th>Account Holder</th>
-                                    <th>IFSC Code</th>
-                                    <th>Branch Name</th>
-                                    <th>Profile Created At</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (isset($seller)) : ?>
-                                    <?php foreach ($seller as $data) :
-                                    ?>
-                                        <tr>
-                                            <td><?php echo html_escape($data->Seller); ?></td>
-                                            <td><?php echo html_escape($data->Seller_Email); ?></td>
-                                            <td><?php echo html_escape($data->Seller_Phone); ?></td>
-                                            <td><?php echo html_escape($data->Shop_Name); ?></td>
-                                            <td><?php echo html_escape($data->Pan); ?></td>
-                                            <td><?php echo html_escape($data->GST); ?></td>
-                                            <td><?php echo html_escape($data->Address); ?></td>
-                                            <td><?php echo html_escape($data->Account_No); ?></td>
-                                            <td><?php echo html_escape($data->Account_Holder); ?></td>
-                                            <td><?php echo html_escape($data->IFSC_Code); ?></td>
-                                            <td><?php echo html_escape($data->Bank_Branch); ?></td>
-                                            <td><?php echo html_escape($data->Profile_Created_Date); ?></td>
-
-                                        </tr>
 
 
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="table-responsive">
+                <div class="col-sm-12">
 
-                                    <?php endforeach; ?>
+                    <form name="sale_data" id="sale_data" action="admin_controller/format_sale_data">
+                        <div class="item-table-filter">
+                            <label><?php echo trans("from_date"); ?></label>
+                            <input name="from_date" class="form-control" type="date" id="my_date_picker1" autocomplete="off">
+                        </div>
+                        <div class="item-table-filter">
+                            <label><?php echo trans("to_date"); ?></label>
+                            <input name="to_date" class="form-control" type="date" id="my_date_picker2" autocomplete="off">
+                        </div>
+                        <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
+                            <label style="display: block">&nbsp;</label>
+                            <button type="submit" class="btn bg-purple"><?php echo trans("submit"); ?></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-striped button" id="extend_datatable" role="grid">
+                        <thead>
+                            <tr role="row">
+                                <th><?php echo ('order_no'); ?></th>
+                                <th><?php echo ('order_date'); ?></th>
+                                <th><?php echo ('seller_id'); ?></th>
+                                <th><?php echo ('seller_name'); ?></th>
+                                <th><?php echo ('seller_email'); ?></th>
+                                <th><?php echo ('seller_phone'); ?></th>
+                                <th><?php echo ('shop_name'); ?></th>
+                                <th><?php echo ('pan_no'); ?></th>
+                                <th><?php echo ('gst_no'); ?></th>
+                                <th><?php echo ('seller_address'); ?></th>
+                                <th><?php echo ('account_no'); ?></th>
+                                <th><?php echo ('acc_holder_name'); ?></th>
+                                <th><?php echo ('ifsc_code'); ?></th>
+                                <th><?php echo ('bank_branch'); ?></th>
+                                <th><?php echo ('product_title'); ?></th>
+                                <th><?php echo ('product_quantity'); ?></th>
+                                <th><?php echo ('order_status'); ?></th>
+                                <th><?php echo ('commission_rate'); ?></th>
+                                <th><?php echo ('commission_amount'); ?></th>
+                                <th><?php echo ('actual_product_gst_rate'); ?></th>
+                                <th><?php echo ('seller_gst_rate'); ?></th>
+                                <th><?php echo ('subtotal_excluding_gst'); ?></th>
+                                <th><?php echo ('seller_tprd_gst'); ?></th>
+                                <th><?php echo ('seller_tprd_cgst'); ?></th>
+                                <th><?php echo ('seller_tprd_sgst'); ?></th>
+                                <th><?php echo ('seller_tprd_igst'); ?></th>
+                                <th><?php echo ('seller_ship_cost'); ?></th>
+                                <th><?php echo ('seller_ship_gst'); ?></th>
+                                <th><?php echo ('seller_ship_cgst'); ?></th>
+                                <th><?php echo ('seller_ship_sgst'); ?></th>
+                                <th><?php echo ('seller_ship_igst'); ?></th>
+                                <th><?php echo ('seller_tship_cost'); ?></th>
+                                <th><?php echo ('seller_cod_cost'); ?></th>
+                                <th><?php echo ('seller_cod_gst'); ?></th>
+                                <th><?php echo ('seller_cod_cgst'); ?></th>
+                                <th><?php echo ('seller_cod_sgst'); ?></th>
+                                <th><?php echo ('seller_cod_igst'); ?></th>
+                                <th><?php echo ('seller_tcod'); ?></th>
+                                <th><?php echo ('grand_total_amount'); ?></th>
+                                <th><?php echo ('buyer'); ?></th>
+                                <th><?php echo ('buyer_email'); ?></th>
+                                <th><?php echo ('buyer_phone'); ?></th>
+                                <th><?php echo ('buyer_state'); ?></th>
+                                <th><?php echo ('payment_method'); ?></th>
+                                <th><?php echo ('payment_mode'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody id="sale_data_seller">
 
-                                <?php endif; ?>
-
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
 <script>
     $(document).ready(function() {
-        table = $('#extend_datatable').DataTable({
-            dom: 'lBfrtip',
-            buttons: [
-                'excel', 'pdf'
-            ],
-            "aLengthMenu": [
-                [15, 30, 60, 100],
-                [15, 30, 60, 100, "All"]
-            ],
-            "order": [
-                [0, "desc"]
-            ],
+        table = $('.button').DataTable({
+
 
         });
+
+    });
+
+    $("#sale_data").submit(function(e) {
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+        var form = $(this);
+
+        var d = form.serializeArray();
+        d.push({
+            name: csfr_token_name,
+            value: $.cookie(csfr_cookie_name)
+        });
+        d.push({
+            name: "sys_lang_id",
+            value: sys_lang_id
+        });
+
+        var url = form.attr('action');
+
+        table = $('#extend_datatable').DataTable();
+        table.clear().destroy();
+
+        $.ajax({
+            type: "POST",
+            url: base_url + url,
+            data: d, // serializes the form's elements.
+            success: function(data) {
+                // console.log("test",data);
+                var Json_data = JSON.parse(data);
+                console.log(Json_data.length);
+                var len = Json_data.length;
+                if (len != 0) {
+                    for (var i = 0; i < len; i++) {
+                        $('#sale_data_seller').append("<tr><td>" + Json_data[i].order_no + "</td><td>" + Json_data[i].order_date + "</td><td>" + Json_data[i].seller_id + "</td><td>" + Json_data[i].seller_name + "</td><td>" + Json_data[i].seller_email + "</td><td>" + Json_data[i].seller_phone + "</td><td>" + Json_data[i].shop_name + "</td><td>" + Json_data[i].pan_no + "</td><td>" + Json_data[i].gst_no + "</td><td>" + Json_data[i].seller_address + "</td><td>" + Json_data[i].account_no + "</td><td>" + Json_data[i].acc_holder_name + "</td><td>" + Json_data[i].ifsc_code + "</td><td>" + Json_data[i].bank_branch + "</td><td>" + Json_data[i].product_title + "</td><td>" + Json_data[i].product_quantity + "</td><td>" + Json_data[i].order_status + "</td><td>" + Json_data[i].commission_rate + "</td><td>" + Json_data[i].commission_amount + "</td><td>" + Json_data[i].actual_product_gst_rate + "</td><td>" + Json_data[i].seller_gst_rate + "</td><td>" + Json_data[i].subtotal_excluding_gst + "</td><td>" + Json_data[i].seller_tprd_gst + "</td><td>" + Json_data[i].seller_tprd_cgst + "</td><td>" + Json_data[i].seller_tprd_sgst + "</td><td>" + Json_data[i].seller_tprd_igst + "</td><td>" + Json_data[i].seller_ship_cost + "</td><td>" + Json_data[i].seller_ship_gst + "</td><td>" + Json_data[i].seller_ship_cgst + "</td><td>" + Json_data[i].seller_ship_sgst + "</td><td>" + Json_data[i].seller_ship_igst + "</td><td>" + Json_data[i].seller_tship_cost + "</td><td>" + Json_data[i].seller_cod_cost + "</td><td>" + Json_data[i].seller_cod_gst + "</td><td>" + Json_data[i].seller_cod_cgst + "</td><td>" + Json_data[i].seller_cod_sgst + "</td><td>" + Json_data[i].seller_cod_igst + "</td><td>" + Json_data[i].seller_tcod + "</td><td>" + Json_data[i].grand_total_amount + "</td><td>" + Json_data[i].buyer + "</td><td>" + Json_data[i].buyer_email + "</td><td>" + Json_data[i].buyer_phone + "</td><td>" + Json_data[i].buyer_state + "</td><td>" + Json_data[i].payment_method + "</td><td>" + Json_data[i].payment_mode + "</td></tr>")
+                    }
+                }
+                $('#extend_datatable').dataTable({
+
+                    orderCellsTop: true,
+                    fixedHeader: true,
+                    initComplete: function() {
+                        var api = this.api();
+
+                        // For each column
+                        api
+                            .columns()
+                            .eq(0)
+                            .each(function(colIdx) {
+                                // Set the header cell to contain the input element
+                                var cell = $('.filters th').eq(
+                                    $(api.column(colIdx + 1).header()).index()
+                                );
+                                var title = $(cell).text();
+                                $(cell).html('<input type="text" style="width:100%" placeholder="' + title + '" />');
+
+                                // On every keypress in this input
+                                $(
+                                        'input',
+                                        $('.filters th').eq($(api.column(colIdx).header()).index())
+                                    )
+                                    .off('keyup change')
+                                    .on('keyup change', function(e) {
+                                        e.stopPropagation();
+
+                                        // Get the search value
+                                        $(this).attr('title', $(this).val());
+                                        var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                        var cursorPosition = this.selectionStart;
+                                        // Search the column for that value
+                                        api
+                                            .column(colIdx)
+                                            .search(
+                                                this.value != '' ?
+                                                regexr.replace('{search}', '(((' + this.value + ')))') :
+                                                '',
+                                                this.value != '',
+                                                this.value == ''
+                                            )
+                                            .draw();
+
+                                        $(this)
+                                            .focus()[0]
+                                            .setSelectionRange(cursorPosition, cursorPosition);
+                                    });
+                            });
+                    },
+                    dom: 'lBfrtip',
+                    buttons: [
+                        'excel',
+                    ],
+                    "aLengthMenu": [
+                        [15, 30, 60, 100],
+                        [15, 30, 60, 100, "All"]
+                    ],
+                    "order": [
+                        [0, "desc"]
+                    ],
+                });
+            }
+
+        });
+
 
     });
 </script>

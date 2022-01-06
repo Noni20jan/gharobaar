@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom">
             <!-- form start -->
-            <?php echo form_open('add-review-post'); ?>
+            <?php echo form_open_multipart('add-review-post'); ?>
             <div class="modal-header">
                 <h5 class="modal-title"><?php echo trans("rate_this_product"); ?></h5>
                 <button type="button" class="close" data-dismiss="modal">
@@ -30,6 +30,12 @@
                             <input type="hidden" name="rating" id="user_rating">
                             <input type="hidden" name="product_id" id="review_product_id">
                         </div>
+                        <div class="upload_image">
+
+                            <input type="file" id="fileuploadbasic" name="file_[]" size="40" multiple="multiple" accept=".jpg, .jpeg,.png">
+
+                        </div>
+                        <span class="upload_image_span">*Maximun 4 images allowed</span>
                     </div>
                 </div>
             </div>

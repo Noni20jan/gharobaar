@@ -1938,17 +1938,88 @@ class Admin_controller extends Admin_Core_Controller
     public function sales()
     {
         $data['title'] = trans("sale_data");
-        $data['seller'] = $this->reports_model->sale_data();
+        // $data['seller'] = $this->reports_model->sale_data();
 
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/reports/sale_data', $data);
         $this->load->view('admin/includes/_footer');
     }
-    public function seller_commission()
+
+
+
+    public function seller_profile_data()
     {
-        $data['title'] = trans("seller_commission_data");
+        $data['title'] = trans("seller_profile_data");
         $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/reports/seller_commision_data');
+        $this->load->view('admin/reports/seller_profile_data', $data);
         $this->load->view('admin/includes/_footer');
+    }
+
+
+
+    public function shipping_cod_charges()
+    {
+        $data['title'] = trans("shipping_cod_charges");
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/reports/shipping_cod_charges');
+        $this->load->view('admin/includes/_footer');
+    }
+    public function tcs_report()
+    {
+        $data['title'] = trans("tcs_report");
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/reports/tcs_report');
+        $this->load->view('admin/includes/_footer');
+    }
+    public function tds_report()
+    {
+        $data['title'] = trans("tds_report");
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/reports/tds_report');
+        $this->load->view('admin/includes/_footer');
+    }
+    public function cash_free_charges_report()
+    {
+        $data['title'] = trans("cash_free_charges_report");
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/reports/cash_free_charges_report');
+        $this->load->view('admin/includes/_footer');
+    }
+
+
+    public function format_sale_data()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $format_sale_data = $this->reports_model->format_sale_data($from_date, $to_date);
+        echo json_encode($format_sale_data);
+    }
+    public function format_seller_profile_data()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $format_sale_data = $this->reports_model->seller_profile_data($from_date, $to_date);
+        echo json_encode($format_sale_data);
+    }
+    public function format_shipping_cod_charges()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $format_cod_charge = $this->reports_model->format_shipping_cod_charges($from_date, $to_date);
+        echo json_encode($format_cod_charge);
+    }
+    public function format_tds()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $format_tds = $this->reports_model->tds_report($from_date, $to_date);
+        echo json_encode($format_tds);
     }
 }

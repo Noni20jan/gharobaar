@@ -108,6 +108,79 @@ class Upload_model extends CI_Model
         }
     }
 
+
+
+
+    public function upload_buyer_image($file_name, $last_id, $product_id)
+    {
+        if (isset($_FILES[$file_name])) {
+            if (empty($_FILES[$file_name]['name'])) {
+                return null;
+            }
+        }
+        $dataInfo = array();
+        $files = $_FILES;
+        $cpt = count($_FILES['file_']['name']);
+        for ($i = 0; $i < $cpt; $i++) {
+            $_FILES['file1']['name'] = $files['file_']['name'][$i];
+            $_FILES['file1']['type'] = $files['file_']['type'][$i];
+            $_FILES['file1']['tmp_name'] = $files['file_']['tmp_name'][$i];
+            $_FILES['file1']['error'] = $files['file_']['error'][$i];
+            $_FILES['file1']['size'] = $files['file_']['size'][$i];
+            $config['upload_path'] = './uploads/reviews/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['file_name'] = 'reviews' . generate_unique_id();
+            $this->load->library('upload', $config);
+            if ($this->upload->do_upload('file1')) {
+                $data = array('upload_data' => $this->upload->data());
+                if (isset($data['upload_data']['full_path'])) {
+                    $temp_path = $data['upload_data']['full_path'];
+                    $img_path = $this->upload_model->review_buyer_image($temp_path);
+                    $this->review_model->upload_review_images($last_id, $img_path, $product_id);
+                }
+                // return null;
+            } else {
+                return null;
+            }
+        }
+    }
+
+    public function review_buyer_image($path)
+    {
+        $new_path = 'uploads/reviews/reviews_' . generate_unique_id() . '.jpg';
+        $img = Image::make($path)->orientate();
+        $img->fit(240, 240);
+        $img->save(FCPATH . $new_path, $this->quality);
+        return $new_path;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function upload_pdf_file($file_name)
     {
         if (isset($_FILES[$file_name])) {
