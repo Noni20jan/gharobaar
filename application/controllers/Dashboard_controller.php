@@ -161,6 +161,45 @@ class Dashboard_controller extends Home_Core_Controller
             $this->load->view('dashboard/includes/_footer');
         }
     }
+    public function code_referral()
+    {
+        // $this->order_admin_model->create_referral_code();
+        $data['title'] = "Referral";
+        $data["description"] = "";
+        $data["keywords"] = "";
+        $data["user"] = $this->auth_user;
+        $this->load->view('dashboard/includes/_header_buyer', $data);
+        $this->load->view('dashboard/referral', $data);
+        $this->load->view('dashboard/includes/_footer');
+    }
+    public function submit_code_referral()
+    {
+        $referred_by = $this->auth_user->id;
+        $referrer_user_id = $this->auth_user->id;
+        $referral = $this->order_admin_model->details_referral_code($referred_by);
+        $email = $this->input->post('person_email', true);
+        $mobile = $this->input->post('person_phone', true);
+
+        $sl = $this->input->post('sl', true);
+
+
+
+        for ($i = 0; $i <= $sl; $i++) {
+            $data = array(
+                'email' =>  $email[$i],
+                'mobile' => $mobile[$i],
+                'referral_id' =>$referral,
+                'referral_user_id' =>$referrer_user_id
+                // 'status' => "A",
+                // 'created_by' => $this->auth_user->id,
+            );
+            
+    
+            $this->order_admin_model->create_referral_code($data);
+        }
+        redirect($this->agent->referrer());
+    }
+
     public function buyer_panel()
     {
         $data['title'] = get_shop_name($this->auth_user);
@@ -3060,4 +3099,89 @@ class Dashboard_controller extends Home_Core_Controller
         );
         $this->order_model->save_penalty_details($data, $seller_id, $penalty_amount_for_db);
     }
+
+    //seller reports
+    public function sales_data_report()
+    {
+       
+        $data['title'] = trans("sales_data");
+        $data['description'] = trans("sales_data") . " - " . $this->app_name;
+        $data['keywords'] = trans("sales_data") . "," . $this->app_name;
+        // $data['sales_data'] = $this->earnings_model->get_sales_data_reports();
+        $this->load->view('dashboard/includes/_header', $data);
+        $this->load->view('dashboard/reports/sales_data', $data);
+        $this->load->view('dashboard/includes/_footer');
+    }
+
+    public function sales_data_date()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+        $sales_data_date = $this->earnings_model->get_sales_data_reports($from_date, $to_date);
+        echo json_encode($sales_data_date);
+
+
+    }
+
+    public function payment_report()
+    {
+       
+        $data['title'] = trans("payment_reports");
+        $data['description'] = trans("payment_reports") . " - " . $this->app_name;
+        $data['keywords'] = trans("payment_reports") . "," . $this->app_name;
+        // $data['payment_reports'] = $this->earnings_model->get_payment_report();
+        $this->load->view('dashboard/includes/_header', $data);
+        $this->load->view('dashboard/reports/payment_reports', $data);
+        $this->load->view('dashboard/includes/_footer');
+    }
+
+    public function payment_report_date()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+        $payment_report_date = $this->earnings_model->get_payment_report($from_date, $to_date);
+        echo json_encode($payment_report_date);
+    }
+
+    public function commission_bill_report()
+    {
+       
+        $data['title'] = trans("commission_bill");
+        $data['description'] = trans("commission_bill") . " - " . $this->app_name;
+        $data['keywords'] = trans("commission_bill") . "," . $this->app_name;
+        // $data['commission_bill'] = $this->earnings_model->get_commission_bill_report();
+        $this->load->view('dashboard/includes/_header', $data);
+        $this->load->view('dashboard/reports/commission_bill', $data);
+        $this->load->view('dashboard/includes/_footer');
+    }
+
+    public function commission_bill_date()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+        $commission_bill_date = $this->earnings_model->get_commission_bill_report($from_date, $to_date);
+        echo json_encode($commission_bill_date);
+    }
+
+    public function seller_ledgers_report()
+    {
+       
+        $data['title'] = trans("sellers_ledgers");
+        $data['description'] = trans("sellers_ledgers") . " - " . $this->app_name;
+        $data['keywords'] = trans("sellers_ledgers") . "," . $this->app_name;
+        // $data['seller_ledgers'] = $this->earnings_model->get_seller_ledgers_report();
+        // var_dump($data['seller_ledgers']);
+        $this->load->view('dashboard/includes/_header', $data);
+        $this->load->view('dashboard/reports/seller_ledgers', $data);
+        $this->load->view('dashboard/includes/_footer');
+       
+    }
+    public function seller_ledgers_date()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+        $seller_ledgers_date = $this->earnings_model->get_seller_ledgers_report($from_date, $to_date);
+        echo json_encode($seller_ledgers_date);
+    }
 }
+
