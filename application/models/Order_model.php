@@ -674,7 +674,7 @@ class Order_model extends CI_Model
                 if ($this->general_settings->send_email_order_shipped == 1) {
                     $message = "Dear " . get_user($order_product->seller_id)->first_name . ", 
                     <br> Thanks you for accepting the order   <br> 
-                    <b>order number</b> : #" . $order_product->id . " <br>
+                    <b>order number</b> : #" . $order_id . " <br>
                     <b> Product</b> : " . $order_product->product_title . "<br> 
 
 <b>Quantity</b> :" . $order_product->product_quantity . "<br>
@@ -697,10 +697,10 @@ class Order_model extends CI_Model
                     $email_data = array(
                         'email_type' => 'email_general',
                         'to' => get_user($order_product->buyer_id)->email,
-                        'subject' => "Thank you for your order",
+                        'subject' => "Your order has been accepted",
                         'email_content' => "Dear " . get_user($order_product->buyer_id)->first_name . ", 
                         <br> Thanks you for placing the following order <br> 
-                         <b>order number</b> : #" . $order_product->id . " <br>
+                         <b>order number</b> : #" . $order_id . " <br>
                         <b> Product</b> : " . $order_product->product_title . "<br> 
    
     <b>Quantity</b> :" . $order_product->product_quantity . "<br>

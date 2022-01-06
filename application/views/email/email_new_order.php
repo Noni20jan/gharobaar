@@ -26,12 +26,12 @@
                                     endif;
                                 endforeach; ?>
                                 <?php if ($is_mto > 0 && $is_mts > 0) : ?>
-                                    <small> <br>We'd like to share again with you that your order contains product(s) from suppliers who are small scale homeprenuers making these products at home with limited means, hence we give them an option to accept/ reject the order within 2 hours of receiving it. Please note that this product cannot be returned or exchanged, however you may get an exchange or return based on the supplier's discretion. </small>
-                                    <small><br>Please note that the order for the product can be cancelled before the dispatch date or only if the dispatch is after the committed date of delivery. </small>
+                                    <br>We'd like to share again with you that your order contains product(s) from suppliers who are small scale homeprenuers making these products at home with limited means, hence we give them an option to accept/ reject the order within 2 hours of receiving it. Please note that this product cannot be returned or exchanged, however you may get an exchange or return based on the supplier's discretion.
+                                    <br>Please note that the order for the product can be cancelled before the dispatch date or only if the dispatch is after the committed date of delivery.
                                 <?php elseif ($is_mts > 0) : ?>
-                                    <small><br>Please note that the order for the product can be cancelled before the dispatch date or only if the dispatch is after the committed date of delivery. </small>
+                                    <br>Please note that the order for the product can be cancelled before the dispatch date or only if the dispatch is after the committed date of delivery.
                                 <?php elseif ($is_mto > 0) : ?>
-                                    <small> <br>We'd like to share again with you that your order contains product(s) from suppliers who are small scale homeprenuers making these products at home with limited means, hence we give them an option to accept/ reject the order within 2 hours of receiving it. Please note that this product cannot be returned or exchanged, however you may get an exchange or return based on the supplier's discretion. </small>
+                                    <br>We'd like to share again with you that your order contains product(s) from suppliers who are small scale homeprenuers making these products at home with limited means, hence we give them an option to accept/ reject the order within 2 hours of receiving it. Please note that this product cannot be returned or exchanged, however you may get an exchange or return based on the supplier's discretion.
                                 <?php endif; ?>
                                 <br>Your order shall also bring rewards to you, please visit the Gharobaar website to learn more about the loyalty program. We would love to get your feedback about the product, service and the seller, your appreciation would encourage us & our partners to continue serving you to the best of our ability, and your criticism would make us learn and improve.
                                 We look forward to serving you again and continue to get your patronage.<br>
@@ -142,6 +142,8 @@
                                         <?php echo trans("see_order_details"); ?>
                                     </a>
                                 </p>
+                            <?php else : ?>
+                                <p style='text-align: center;margin-top: 40px;'> In order to track your order, please register on the website or write to contact@gharobaar.com</p>
                             <?php endif; ?>
 
                             <br>

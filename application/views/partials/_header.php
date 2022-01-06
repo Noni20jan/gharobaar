@@ -1381,7 +1381,7 @@
                             <!-- include message block -->
                             <div id="result-login" class="font-size-13"></div>
                             <div class="form-group">
-                                <input type="text" name="email" class="form-control auth-form-input" placeholder="<?php echo trans("email_mobile"); ?>" required>
+                                <input type="text" name="email" class="form-control auth-form-input" id="guest_email_fill" placeholder="<?php echo trans("email_mobile"); ?>" required>
                             </div>
                             <div class="form-group">
                                 <input type="password" name="password" id="password_login" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" minlength="4" required>
@@ -1430,7 +1430,9 @@
                             <!-- <div class="form-group">
                                 <input type="text" name="phone_number" id="guest_phone_number" class="form-control auth-form-input" placeholder="Mobile Number" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
                             </div> -->
+                            <div id="email_phn_exist_msg">
 
+                            </div>
 
                             <p class="p-social-media m-0 m-t-5 hide_after_response"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>
 
@@ -1441,10 +1443,13 @@
 
                                 <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" onclick="guest_resend_otp($('#guest_phone_number'),$('#guest_email'))"><?php echo trans("resend_otp"); ?></a></p>
 
+                            
                             </div> -->
-                            <div id="email_phn_exist_msg">
+
+                            <div id="email_phn_exist_msg_login">
+                                <a href="#" class="hideguestmodal btn btn-block" data-toggle="modal" data-target="#loginModal">Login</a>
                             </div>
-                            <div class="form-group hide_after_response" style="text-align:center;">
+                            <div class="form-group hide_after_response" id="continue_guest_hide" style="text-align:center;">
                                 <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("continue"); ?></button>
                             </div>
                             <!-- <div class="form-group show_after_response hideMe" style="text-align:center;">
@@ -5429,6 +5434,14 @@
         $(document).ready(function() {
             $("#confirm_password").keyup(checkPasswordMatch);
         });
+        $(document).ready(function() {
+            $("#email_phn_exist_msg_login").hide();
+        });
+        $('.hideguestmodal').click(function(e) {
+            var email = $('#guest_email').val();
+            $('#guest_email_fill').val(email);
+            $('#guestLoginModal').hide();
+        })
 
         function Passwordvalidate() {
             var password = $("#password").val();
@@ -5823,6 +5836,9 @@
                                             } else {
                                                 document.getElementById("email_phn_exist_msg").innerHTML =
                                                     e.error_message;
+                                                $('#email_phn_exist_msg_login').show();
+                                                $('#continue_guest_hide').hide();
+
                                             }
                                         },
                                     });
