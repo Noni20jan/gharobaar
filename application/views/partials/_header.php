@@ -1430,7 +1430,7 @@
                             <!-- <div class="form-group">
                                 <input type="text" name="phone_number" id="guest_phone_number" class="form-control auth-form-input" placeholder="Mobile Number" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
                             </div> -->
-                            <div id="email_phn_exist_msg">
+                            <div id="email_phn_exist_msg" style="color: red;">
 
                             </div>
 
