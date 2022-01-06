@@ -490,7 +490,8 @@
                                                     <?php if ($message != "") : ?>
 
                                                         <strong>(<?php echo $message->message ?>)</strong>
-                                                    <?php endif; ?></div>
+                                                    <?php endif; ?>
+                                                </div>
                                             </td>
                                             <td>
                                                 <?php if ($item->product_type == 'physical') :
@@ -637,16 +638,18 @@
                     <strong class="font-right"><?php echo price_formatted($order->price_subtotal, $order->price_currency); ?></strong>
                 </div>
             </div>
-            <?php if (!empty($order->price_gst)) : ?>
-                <div class="row row-details">
+            <?php //if (!empty($order->price_gst)) : 
+            ?>
+            <!-- <div class="row row-details">
                     <div class="col-xs-12 col-sm-6 col-right">
                         <strong> <?php echo trans("vat"); ?></strong>
                     </div>
                     <div class="col-sm-6">
                         <strong class="font-right"><?php echo price_formatted($order->price_gst, $order->price_currency); ?></strong>
                     </div>
-                </div>
-            <?php endif; ?>
+                </div> -->
+            <?php //endif; 
+            ?>
             <?php if ($is_order_has_physical_product) : ?>
                 <div class="row row-details">
                     <div class="col-xs-12 col-sm-6 col-right">
@@ -654,6 +657,54 @@
                     </div>
                     <div class="col-sm-6">
                         <strong class="font-right"><?php echo price_formatted($order->price_shipping, $order->price_currency); ?></strong>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <?php if ($order->total_tax_charges > 0) : ?>
+                <div class="row row-details">
+                    <div class="col-xs-12 col-sm-6 col-right">
+                        <strong><?php echo "Taxes"; ?></strong>
+                    </div>
+                    <div class="col-sm-6">
+                        <strong><span class="float-right"><?php echo price_formatted_without_round($order->total_tax_charges, $this->payment_settings->default_currency); ?>/-</span></strong>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <?php if ($order->payment_method == "Cash On Delivery") : ?>
+                <div class="row row-details">
+                    <div class="col-xs-12 col-sm-6 col-right">
+                        <strong><?php echo "COD Charges"; ?></strong>
+                    </div>
+                    <div class="col-sm-6">
+                        <strong><span class="float-right"><?php echo price_formatted_without_round($order->total_cod_charges, $this->payment_settings->default_currency); ?>/-</span></strong>
+                    </div>
+                </div>
+            <?php else : ?>
+                <!-- <div class="row row-details">
+                    <div class="col-xs-12 col-sm-6 col-right">
+                        <strong><?php echo "COD Charges"; ?></strong>
+                    </div>
+                    <div class="col-sm-6">
+                        <strong><span class="float-right"><?php echo price_formatted_without_round($order->total_cod_charges, $this->payment_settings->default_currency); ?>/-</span></strong>
+                    </div>
+                </div> -->
+            <?php endif; ?>
+            <?php if ($order->coupon_discount == 0) : ?>
+                <!-- <div class="row">
+                    <div class="col-sm-6 col-xs-6 col-left">
+                        <strong><?php echo "Coupon Discount"; ?></strong>
+                    </div>
+                    <div class="col-sm-6 col-xs-6 col-right">
+                        <strong>-<?php echo price_formatted($order->coupon_discount, $order->price_currency); ?></strong>
+                    </div>
+                </div> -->
+            <?php else : ?>
+                <div class="row">
+                    <div class="col-sm-6 col-xs-6 col-left">
+                        <strong><?php echo "Coupon Discount"; ?></strong>
+                    </div>
+                    <div class="col-sm-6 col-xs-6 col-right">
+                        <strong>-<?php echo price_formatted($order->coupon_discount, $order->price_currency); ?></strong>
                     </div>
                 </div>
             <?php endif; ?>

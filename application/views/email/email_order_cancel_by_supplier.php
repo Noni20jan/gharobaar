@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php $this->load->view('email/_header', ['title' => trans("email_text_thank_for_order")]); ?>
 <table role="presentation" class="main">
-    <?php if (!empty($order)): ?>
+    <?php if (!empty($order)) : ?>
         <tr>
             <td class="wrapper">
                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
@@ -9,11 +9,11 @@
                         <td>
                             <h1 style="text-decoration: none; font-size: 24px;line-height: 28px;font-weight: bold"><?php echo trans("email_text_thank_for_order"); ?></h1>
                             <div class="mailcontent" style="line-height: 26px;font-size: 14px;">
-                           
+
                                 <p style='text-align: left;color: #555;'>
                                     <?php echo trans("email_text_new_order"); ?>
                                 </p><br>
-                                Dear &nbsp;<?php echo get_user($order->buyer_id)->first_name; ?>,  Thank you placing an order. Every order placed by you helps the homeprenuers realise their dreams and promotes them to create high quality products and provide exceptional service to you. Following is your order summary: 
+                                Dear &nbsp;<?php echo get_user($order->buyer_id)->first_name; ?>, Thank you placing an order. Every order placed by you helps the homeprenuers realise their dreams and promotes them to create high quality products and provide exceptional service to you. Following is your order summary:
                                 <h2 style="margin-bottom: 10px; font-size: 16px;font-weight: 600;"><?php echo trans("order_information"); ?></h2>
                                 <p style="color: #555;">
                                     <?php echo trans("order"); ?>:&nbsp;#<?php echo $order->order_number; ?><br>
@@ -25,7 +25,7 @@
                             </div>
 
                             <?php $shipping = get_order_shipping($order->id);
-                            if (!empty($shipping)):?>
+                            if (!empty($shipping)) : ?>
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin-top: 30px;">
                                     <tr>
                                         <td>
@@ -71,19 +71,19 @@
                                     <th style="padding: 10px 0; border-bottom: 2px solid #ddd;"><?php echo trans("vat"); ?></th>
                                     <th style="padding: 10px 0; border-bottom: 2px solid #ddd;"><?php echo trans("total"); ?></th>
                                 </tr>
-                                <?php foreach ($order_products as $item): ?>
+                                <?php foreach ($order_products as $item) : ?>
                                     <tr>
                                         <td style="width: 40%; padding: 15px 0; border-bottom: 1px solid #ddd;"><?php echo $item->product_title; ?></td>
                                         <td style="padding: 10px 2px; border-bottom: 1px solid #ddd;"><?php echo price_formatted($item->product_unit_price, $item->product_currency); ?></td>
                                         <td style="padding: 10px 2px; border-bottom: 1px solid #ddd;"><?php echo $item->product_quantity; ?></td>
                                         <td style="padding: 10px 2px; border-bottom: 1px solid #ddd;"><?php echo price_formatted($item->product_shipping_cost, $item->product_currency); ?></td>
-                                        <?php if (!empty($order->price_gst)): ?>
+                                        <?php if (!empty($order->price_gst)) : ?>
                                             <td style="padding: 10px 2px; border-bottom: 1px solid #ddd;">
-                                                <?php if (!empty($item->product_gst)): ?>
+                                                <?php if (!empty($item->product_gst)) : ?>
                                                     <?php echo price_formatted($item->product_gst, $item->product_currency); ?>&nbsp;(<?php echo $item->product_gst_rate; ?>%)
                                                 <?php endif; ?>
                                             </td>
-                                        <?php else: ?>
+                                        <?php else : ?>
                                             <td style="padding: 10px 2px; border-bottom: 1px solid #ddd;">-</td>
                                         <?php endif; ?>
                                         <td style="padding: 10px 2px; border-bottom: 1px solid #ddd;"><?php echo price_formatted($item->product_total_price, $item->product_currency); ?></td>
@@ -95,7 +95,7 @@
                                     <td style="width: 70%"><?php echo trans("subtotal"); ?></td>
                                     <td style="width: 30%;padding-right: 15px;font-weight: 600;"><?php echo price_formatted($order->price_subtotal, $order->price_currency); ?></td>
                                 </tr>
-                                <?php if (!empty($order->price_gst)): ?>
+                                <?php if (!empty($order->price_gst)) : ?>
                                     <tr>
                                         <td style="width: 70%"><?php echo trans("vat"); ?></td>
                                         <td style="width: 30%;padding-right: 15px;font-weight: 600;"><?php echo price_formatted($order->price_gst, $order->price_currency); ?></td>
@@ -110,20 +110,22 @@
                                     <td style="width: 30%;padding-right: 15px;font-weight: 600;"><?php echo price_formatted($order->price_total, $order->price_currency); ?></td>
                                 </tr>
                             </table>
-                            <?php if ($order->buyer_type != 'guest'): ?>
+                            <?php if ($order->buyer_type != 'guest') : ?>
                                 <p style='text-align: center;margin-top: 40px;'>
                                     <a href="<?php echo generate_url("order_details") . '/' . $order->order_number; ?>" style='font-size: 14px;text-decoration: none;padding: 14px 40px;background-color: #DF911E;color: #000000 !important; border-radius: 3px;'>
                                         <?php echo trans("see_order_details"); ?>
                                     </a>
                                 </p>
+                            <?php else : ?>
+                                <p style='text-align: center;margin-top: 40px;'> In order to track your order, please register on the website or write to contact@gharobaar.com</p>
                             <?php endif; ?>
-                           <small> In case of MTO - We'd like to share again with you that your order contains product(s) from suppliers who are small scale homeprenuers making these products at home with limited means, hence we give them an option to accept/ reject the order within 2 hours of receiving it. Please note that this product cannot be returned or exchanged, however you may get an exchange or return based on the supplier's discretion. / or In case of MTS - Please note that this product can be returned or exchanged within CCC days or before the dispatch date or only if the dispatch is after the committed date of delivery </small>                                                                              
-                            <br>Your order shall also bring rewards to you, please visit the Gharobaar website to learn more about the loyalty program. We would love to get your feedback about the product, service and the seller, your appreciation would encourage us & our partners to continue serving you to the best of our ability, and your criticism would make us learn and improve.                                 
-                            We look forward to serving you again and continue to get your patronage.                    
+                            In case of MTO - We'd like to share again with you that your order contains product(s) from suppliers who are small scale homeprenuers making these products at home with limited means, hence we give them an option to accept/ reject the order within 2 hours of receiving it. Please note that this product cannot be returned or exchanged, however you may get an exchange or return based on the supplier's discretion. / or In case of MTS - Please note that this product can be returned or exchanged within CCC days or before the dispatch date or only if the dispatch is after the committed date of delivery
+                            <br>Your order shall also bring rewards to you, please visit the Gharobaar website to learn more about the loyalty program. We would love to get your feedback about the product, service and the seller, your appreciation would encourage us & our partners to continue serving you to the best of our ability, and your criticism would make us learn and improve.
+                            We look forward to serving you again and continue to get your patronage.
                             <br>
-                              <br>
-                              
-                              <b>Team Gharobaar </b>
+                            <br>
+
+                            <b>Team Gharobaar </b>
                         </td>
                     </tr>
                 </table>

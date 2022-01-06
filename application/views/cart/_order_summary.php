@@ -158,15 +158,20 @@
         <?php if ($is_physical && $this->form_settings->shipping == 1) : ?>
             <?php if (!is_null($address)) : ?>
                 <p>
-                    <strong><?php echo trans("shipping"); ?><span id="shipping_cost" class="float-right"><?php echo price_formatted_without_round($cart_total->shipping_cost, $this->payment_settings->default_currency); ?>/-</span></strong>
+                    <strong><?php echo trans("shipping"); ?><span id="shipping_cost" class="float-right"><?php echo price_formatted_without_round($cart_total->shipping_cost, $this->payment_settings->default_currency); ?>/-</span></strong>         
                 </p>
             <?php else : ?>
                 <p>
                     <!-- <?php echo trans("shipping"); ?> -->
-                    <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span>
+                    <!-- <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span> -->
+                    <?php if ($this->general_settings->flat_ship_enable == 1) : ?>
+                        <?php echo trans("shipping"); ?><span class="float-right"><?php echo (price_formatted(($this->general_settings->flat_ship_amount), $cart_total->currency). '/-'); ?></span>
+                    <?php else : ?>
+                        <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span>
+                    <?php endif; ?>
 
                     <!-- <span class="float-right"><?php echo price_formatted($cart_total->shipping_cost, $this->payment_settings->default_currency); ?>/-</span> -->
-                   
+
 
                 </p>
             <?php endif; ?>

@@ -746,10 +746,10 @@ class Auth_controller extends Home_Core_Controller
         //is email unique
         if (!$this->auth_model->is_unique_email_register($email)) {
             $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-            $this->session->set_flashdata('error', trans("msg_email_unique_error"));
+            // $this->session->set_flashdata('error', trans("msg_email_unique_error"));
             $data = array(
                 'result' => 0,
-                'error_message' => $this->load->view('partials/_messages', '', true)
+                'error_message' => "*You are already registered with us, please login to proceed.",
             );
             echo json_encode($data);
         } else  if (!$this->auth_model->is_unique_email_guest($email)) {

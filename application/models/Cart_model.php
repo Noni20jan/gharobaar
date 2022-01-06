@@ -714,6 +714,18 @@ class Cart_model extends CI_Model
                     $cod = (string)1;
                 }
             }
+
+
+            if ($this->general_settings->flat_ship_enable == 1) {
+                $cart_total->shipping_cost = $this->general_settings->flat_ship_amount;
+                $cart_total->total_tax_charges = 0;
+            }
+
+
+            if ($this->general_settings->flat_cod_enable == 1) {
+                $cart_total->total_cod_charges = 0;
+            }
+
             if ($cod) :
                 $cart_total->order_total = $cart_total->total + $cart_total->shipping_cost + $cart_total->total_cod_charges + $cart_total->total_tax_charges;
             else :

@@ -101,15 +101,17 @@
                                     </a>
                                 </li> -->
                                     <?php if ($this->is_sale_active) : ?>
-                                        <?php if (!is_user_vendor()) : ?>
-                                            <li>
-                                                <a href="<?php echo generate_url("orders_dashboard"); ?>">
+                                        <?php //if (!is_user_vendor()) : 
+                                        ?>
+                                        <li>
+                                            <a href="<?php echo generate_url("orders_dashboard"); ?>">
 
-                                                    <i class="icon-shopping-basket"></i>
-                                                    <?php echo trans("orders"); ?>
-                                                </a>
-                                            </li>
-                                        <?php endif; ?>
+                                                <i class="icon-shopping-basket"></i>
+                                                <?php echo trans("orders"); ?>
+                                            </a>
+                                        </li>
+                                        <?php //endif; 
+                                        ?>
 
 
                                     <?php endif; ?>

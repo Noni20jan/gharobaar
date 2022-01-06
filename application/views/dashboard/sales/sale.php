@@ -2,6 +2,7 @@
 
 <?php
 $seller_wise_data = get_shipping_cod_changes_seller_wise($this->auth_user->id, $order->id);
+// var_dump($seller_wise_data);
 if (!empty($seller_wise_data)) :
     $seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_data->total_cod_cost) / 100;
 endif;
@@ -820,7 +821,7 @@ endif;
                             <?php echo trans("subtotal"); ?>
                         </div>
                         <div class="col-sm-6 col-xs-6 col-right">
-                            <strong><?php echo price_formatted($sale_subtotal, $order->price_currency); ?></strong>
+                            <strong><?php echo price_formatted($sale_subtotal, $order->price_currency); ?>/-</strong>
                         </div>
                     </div>
 
@@ -828,8 +829,42 @@ endif;
                         <div class="col-sm-6 col-xs-6 col-left">
                             <?php echo trans("discount"); ?>
                         </div>
+
                         <div class="col-sm-6 col-xs-6 col-right">
-                            <strong><?php echo price_formatted($sale_discount * 100, $order->price_currency); ?></strong>
+                            <strong><?php echo price_formatted($sale_discount * 100, $order->price_currency); ?>/-</strong>
+                        </div>
+                    </div>
+
+                    <?php if ($order->payment_method == "Cash On Delivery") : ?>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-6 col-left">
+                                <strong><?php echo "COD Charges"; ?></strong>
+                            </div>
+                            <div class="col-sm-6 col-xs-6 col-right">
+                                <span class="float-right"><?php echo price_formatted_without_round($order->total_cod_charges, $this->payment_settings->default_currency); ?>/-</span></strong>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ($order->total_tax_charges > 0) : ?>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-6 col-left">
+                                <strong><?php echo "Taxes"; ?></strong>
+                            </div>
+                            <div class="col-sm-6 col-xs-6 col-right">
+                                <strong><span class="float-right"><?php echo price_formatted_without_round($order->total_tax_charges, $this->payment_settings->default_currency); ?>/-</span></strong>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-6 col-left">
+                            <strong><?php echo "Coupon Discount"; ?></strong>
+                        </div>
+
+                        <div class="col-sm-6 col-xs-6 col-right">
+                            <strong>-<?php echo price_formatted($order->coupon_discount, $order->price_currency); ?>/-</strong>
                         </div>
                     </div>
 
@@ -843,7 +878,7 @@ endif;
                             <?php echo trans("total"); ?>
                         </div>
                         <div class="col-sm-6 col-xs-6 col-right">
-                            <strong><?php echo price_formatted($sale_total, $order->price_currency); ?></strong>
+                            <strong><?php echo price_formatted($order->price_total, $order->price_currency); ?>/-</strong>
                         </div>
                     </div>
                 </div>
@@ -1443,7 +1478,7 @@ endforeach; ?>
                 "order_items": order_items,
 
                 "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-                "sub_total": <?php echo !empty($seller_wise_data) ? ($seller_wise_data->grand_total_amount) / 100 : $total_quantity_price ?>,
+                "sub_total": <?php echo !empty($seller_wise_data) ? ($order->price_total) / 100 : $total_quantity_price ?>,
                 "length": document.getElementById("total_length").value,
                 "breadth": document.getElementById("total_width").value,
                 "height": document.getElementById("total_height").value,
