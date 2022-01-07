@@ -493,23 +493,27 @@
                                                                     <a class="lone" data-toggle="modal" data-target="#Modal_info_<?php echo $cart_item->product_id; ?>">Add/Edit Customisation Detail</a>
 
                                                                     <?php if (empty($cart_item->variation_option)) : ?>
+                                                                        <?php if ($is_shop_open == 0) : ?>
+                                                                            <div class="lbl-enough-quantity"><?php echo trans("shop_is_closed"); ?>
+                                                                            </div>
+                                                                        <?php endif; ?>
                                                                         <?php if ($product->add_meet == "Made to stock") : ?>
-                                                                            <?php if (empty(check_product_stock($product)) || $is_shop_open == 0) : ?>
+                                                                            <?php if (empty(check_product_stock($product))) : ?>
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?>
                                                                                 </div>
                                                                             <?php endif; ?>
                                                                         <?php else : ?>
-                                                                            <?php if (empty(check_product_stock($product)) || $is_shop_open == 0) : ?>
+                                                                            <?php if (empty(check_product_stock($product))) : ?>
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?></div>
                                                                         <?php endif;
                                                                         endif; ?>
                                                                     <?php else : ?>
                                                                         <?php if ($product->add_meet == "Made to stock") : ?>
-                                                                            <?php if ($cart_item->variation_option->stock == 0 || $is_shop_open == 0) : ?>
+                                                                            <?php if ($cart_item->variation_option->stock == 0) : ?>
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?></div>
                                                                             <?php endif; ?>
                                                                         <?php else : ?>
-                                                                            <?php if ($cart_item->variation_option->stock == 0 || $is_shop_open == 0) : ?>
+                                                                            <?php if ($cart_item->variation_option->stock == 0) : ?>
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?></div>
                                                                         <?php endif;
                                                                         endif; ?>
@@ -773,39 +777,43 @@
                                         <?php if (empty($cart_total->is_all_product_available)) : ?>
                                             <a href="#" class="btn btn-block" data-toggle="modal" data-target="#product_not_available"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
                                         <?php else : ?>
-                                            <?php if (empty($cart_total->is_stock_available) || $is_shop_open == 0) : ?>
+                                            <?php if (empty($cart_total->is_stock_available)) : ?>
                                                 <strong class="btn btn-block " data-toggle="modal" data-target="#out_of_stock"><?php echo trans("continue_to_checkout"); ?> </strong>
                                             <?php else : ?>
-                                                <?php if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
-                                                    <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                <?php elseif (!empty($this->auth_check)) : ?>
-                                                    <?php if (($this->auth_user->phone_number) == '') : ?>
-                                                        <a href="#" class="btn btn-block" data-toggle="modal" data-target="#registerMobileModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                    <?php elseif ($open_rating_modal && $this->general_settings->rate_previous_order) : ?>
-                                                        <?php $this->load->view('partials/_modal_rate_last_order'); ?>
-                                                        <a href="#" data-backdrop="static" data-keyboard="false" class="btn btn-block" data-toggle="modal" data-target="#rateProductModalorder"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                        <?php else :
-                                                        $is_made_to_order = false;
-                                                        foreach ($cart_items as $cart_item) :
-                                                            $product = get_product($cart_item->product_id); ?>
+                                                <?php if ($is_shop_open == 0) : ?>
+                                                    <strong class="btn btn-block " data-toggle="modal" data-target="#shop_is_closed"><?php echo trans("continue_to_checkout"); ?> </strong>
+                                                <?php else : ?>
+                                                    <?php if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
+                                                        <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                    <?php elseif (!empty($this->auth_check)) : ?>
+                                                        <?php if (($this->auth_user->phone_number) == '') : ?>
+                                                            <a href="#" class="btn btn-block" data-toggle="modal" data-target="#registerMobileModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                        <?php elseif ($open_rating_modal && $this->general_settings->rate_previous_order) : ?>
+                                                            <?php $this->load->view('partials/_modal_rate_last_order'); ?>
+                                                            <a href="#" data-backdrop="static" data-keyboard="false" class="btn btn-block" data-toggle="modal" data-target="#rateProductModalorder"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                            <?php else :
+                                                            $is_made_to_order = false;
+                                                            foreach ($cart_items as $cart_item) :
+                                                                $product = get_product($cart_item->product_id); ?>
 
-                                                            <?php if ($product->add_meet == "Made to order") :
-                                                                $is_made_to_order = true;
-                                                            endif; ?>
-                                                        <?php endforeach; ?>
-                                                        <?php if ($is_made_to_order) : ?>
-                                                            <a href="#" class="btn btn-block" data-toggle="modal" data-target="#made_to_order_checkout"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                        <?php else : ?>
-                                                            <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
-                                                                <a href="<?php echo generate_url("cart", "shipping"); ?>" class="btn btn-block"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                                <?php if ($product->add_meet == "Made to order") :
+                                                                    $is_made_to_order = true;
+                                                                endif; ?>
+                                                            <?php endforeach; ?>
+                                                            <?php if ($is_made_to_order) : ?>
+                                                                <a href="#" class="btn btn-block" data-toggle="modal" data-target="#made_to_order_checkout"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
                                                             <?php else : ?>
-                                                                <a href="<?php echo generate_url("cart", "payment_method"); ?>" class="btn btn-block" onclick="checkreview()"> <strong><?php echo trans("continue_to_checkout"); ?> </strong>
-                                                                </a>
+                                                                <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
+                                                                    <a href="<?php echo generate_url("cart", "shipping"); ?>" class="btn btn-block"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                                <?php else : ?>
+                                                                    <a href="<?php echo generate_url("cart", "payment_method"); ?>" class="btn btn-block" onclick="checkreview()"> <strong><?php echo trans("continue_to_checkout"); ?> </strong>
+                                                                    </a>
+                                                                <?php endif; ?>
                                                             <?php endif; ?>
+
                                                         <?php endif; ?>
-                                                    <?php endif; ?>
-                                                <?php elseif ($this->general_settings->guest_checkout == 1) : ?>
-                                                    <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo "Login to Continue"; ?> </strong></a>
+                                                    <?php elseif ($this->general_settings->guest_checkout == 1) : ?>
+                                                        <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo "Login to Continue"; ?> </strong></a>
                                     <div class="text-center m-b-15"><strong>OR</strong></div>
 
                                     <a href="#" class="btn btn-block" data-toggle="modal" data-target="#guestLoginModal"> <strong><?php echo "Continue Checkout as Guest"; ?> </strong></a>
@@ -813,15 +821,16 @@
                                 <?php endif; ?>
                             <?php endif; ?>
                         <?php endif; ?>
-                        </p>
+                    <?php endif; ?>
+                    </p>
 
-                        <div class="payment-icons">
-                            <img src="<?php echo base_url(); ?>assets/img/payment/visa.svg" alt="visa">
-                            <img src="<?php echo base_url(); ?>assets/img/payment/mastercard.svg" alt="mastercard">
-                            <img src="<?php echo base_url(); ?>assets/img/payment/maestro.svg" alt="maestro">
-                            <img src="<?php echo base_url(); ?>assets/img/payment/amex.svg" alt="amex">
-                            <img src="<?php echo base_url(); ?>assets/img/payment/discover.svg" alt="discover">
-                        </div>
+                    <div class="payment-icons">
+                        <img src="<?php echo base_url(); ?>assets/img/payment/visa.svg" alt="visa">
+                        <img src="<?php echo base_url(); ?>assets/img/payment/mastercard.svg" alt="mastercard">
+                        <img src="<?php echo base_url(); ?>assets/img/payment/maestro.svg" alt="maestro">
+                        <img src="<?php echo base_url(); ?>assets/img/payment/amex.svg" alt="amex">
+                        <img src="<?php echo base_url(); ?>assets/img/payment/discover.svg" alt="discover">
+                    </div>
                                 </div>
                             </div>
                         </div>
@@ -964,6 +973,33 @@
                 <?php endif; ?>
 
 
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="shop_is_closed" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-custom">
+            <!-- form start -->
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true"><i class="icon-close"></i> </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row tracking-number-container">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <p class="details">Seller shop is closed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: green; color:white;"><?php echo trans("close"); ?></button>
             </div>
 
         </div>
