@@ -31,6 +31,12 @@
         margin-top: 5px;
     }
 
+    .span-message-count {
+        background-color: green;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
     #message p {
         /* padding: 3px 5; */
         font-size: 12px;
