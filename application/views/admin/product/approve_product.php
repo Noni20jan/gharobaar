@@ -31,7 +31,6 @@
                 <div class="form-group">
                     <label><?php echo trans("feature_type"); ?> (<?php echo $language->name; ?>)</label>
                     <select class="form-control" name="feature_type" id="feature_type" required>
-                        <option disabled selected>Select Feature Type</option>
                         <option value="GROUP_FEATURE"><?php echo 'Group Feature'; ?></option>
                     </select>
 
@@ -43,7 +42,7 @@
             <label class="control-label"><?php echo trans("feature_name"); ?>
             </label>
             <select class="form-control" name="feature_name" id="feature_name">
-                <option disabled selected>Select Feature name</option>
+                <option value="<?php echo 'BANNER_BY_PRODUCT'; ?>"><?php echo 'Banner For Products'; ?></option>
             </select>
         </div>
     </div>
@@ -230,7 +229,7 @@
         $('#feature_name').html('');
         if ($('#feature_type').val() == "GROUP_FEATURE") {
             $("#feature_name").prop("disabled", false);
-            $('#feature_name').append('<option disabled selected>Select Feature name</option>');
+            // $('#feature_name').append('<option disabled selected>Select Feature name</option>');
             $('#feature_name').append('<option value="<?php echo 'BANNER_BY_PRODUCT'; ?>"><?php echo 'Banner For Products'; ?></option>');
         } else if ($('#feature_type').val() == "INDIVIDUAL_FEATURE") {
             $("#feature_name").prop("disabled", true);
@@ -331,7 +330,7 @@
         $('#feature_value').html('');
         if ($('#feature_name').val() == "BANNER_BY_PRODUCT") {
             $("#feature_value").prop("disabled", false);
-            $('#feature_value').append('<option disabled selected>Select Feature Value</option>');
+            // $('#feature_value').append('<option disabled selected>Select Feature Value</option>');
             <?php foreach ($feature_group_names as $feature) : ?>
 
                 $('#feature_value').append('<option value="<?php echo $feature->id; ?>"><?php echo $feature->meaning; ?></option>');

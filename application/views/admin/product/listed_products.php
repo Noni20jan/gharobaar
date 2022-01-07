@@ -31,7 +31,7 @@
             <div class="form-group">
                 <label><?php echo trans("feature_type"); ?> (<?php echo $language->name; ?>)</label>
                 <select class="form-control" name="feature_type" id="feature_type" required>
-                    <option disabled selected>Select Feature Type</option>
+                    <!-- <option disabled selected>Select Feature Type</option> -->
 
                     <option value="GROUP_FEATURE">Group Feature</option>
                 </select>
@@ -44,7 +44,7 @@
         <label class="control-label"><?php echo trans("feature_name"); ?>
         </label>
         <select class="form-control" name="feature_name" id="feature_name">
-            <option disabled selected>Select Feature name</option>
+            <!-- <option disabled selected>Select Feature name</option> -->
             <option value="<?php echo 'BANNER_BY_PRODUCT'; ?>"><?php echo 'Banner For Products'; ?></option>
         </select>
     </div>
