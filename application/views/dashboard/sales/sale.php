@@ -341,7 +341,7 @@ endif;
                     <?php $shipp_date = new DateTime($shipped_date); ?>
                     <?php if ($item->order_status == 'processing') : ?>
 
-                        <?php if ($shipp_date >= $current_date) : ?>
+                        <?php if ($shipp_date > $current_date) : ?>
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
 
                         <?php else : ?>
@@ -1538,6 +1538,8 @@ endforeach; ?>
                         }
                     })
 
+
+
                 } else {
                     $('.ajax-loader').css("visibility", "hidden");
                     alert(response.payload.error_message)
@@ -1604,6 +1606,7 @@ endforeach; ?>
                 // }
             }
         });
+
         // $('#schedule_sipment').prop('disabled', true);
 
     }
