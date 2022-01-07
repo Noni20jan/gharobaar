@@ -220,7 +220,7 @@
                                                 <?php elseif ($active_page == "cancelled_by_user") : ?>
                                                     <label class="label label-rejected"><?= trans("cancelled_by_user"); ?></label>
                                                 <?php elseif ($active_page == "RTO") : ?>
-                                                    <label class="label label-success">RTO</label>
+                                                    <label class="label label-success"><?php echo $sale->order_status; ?></label>
                                                 <?php elseif ($active_page == "cancelled_by_seller") : ?>
                                                     <label class="label label-rejected"><?= trans("cancelled_by_seller"); ?></label>
                                                 <?php else : ?>

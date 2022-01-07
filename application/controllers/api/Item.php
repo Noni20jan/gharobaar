@@ -90,16 +90,34 @@ class Item extends REST_Controller
                     $data["order_status"] = "shipped";
                     break;
                 case "RTO INITIATED":
-                    $data["order_status"] = "RTO";
+                    $data["order_status"] = "RTO Initiated";
                     break;
-                case "RTO ACKNOWLEDGED":
-                    $data["order_status"] = "RTO";
+                case "RTO Acknowleged":
+                    $data["order_status"] = "RTO Acknowledged";
                     break;
-                case "RTO DELIVERED":
-                    $data["order_status"] = "RTO";
+                case "RTO Delivered":
+                    $data["order_status"] = "RTO Delivered";
                     break;
-                case "RTO IN TRANSIT":
-                    $data["order_status"] = "RTO";
+                case "RTO_IN_TRANSIT":
+                    $data["order_status"] = "RTO In Transit";
+                    break;
+                case "RETURN IN TRANSIT":
+                    $data["order_status"] = "Return In Transit";
+                    break;
+                case "RETURN INITIATED":
+                    $data["order_status"] = "Return Initiated";
+                    break;
+                case "RETURN ACKNOWLEDGED":
+                    $data["order_status"] = "Return Acknowledged";
+                    break;
+                case "RETURN PENDING":
+                    $data["order_status"] = "Return Pending";
+                    break;
+                case "RETURN PICKUP GENERATED":
+                    $data["order_status"] = "Return Pickup Generated";
+                    break;
+                case "RETURN PICKED UP":
+                    $data["order_status"] = "Return Picked Up";
                     break;
                     // default:
                     //     $data["order_status"] = $new_input['order_status'];

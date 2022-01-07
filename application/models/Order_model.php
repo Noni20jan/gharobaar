@@ -1835,7 +1835,16 @@ class Order_model extends CI_Model
         $this->db->select('orders.id');
         $this->db->group_by('orders.id');
         $this->db->where('order_products.seller_id', clean_number($user_id));
-        $this->db->where_in('order_products.order_status', $order_statuses);
+        $this->db->where('order_products.order_status', 'RTO');
+        $this->db->or_where('order_products.order_status', 'RTO Initiated');
+        $this->db->or_where('order_products.order_status', 'RTO In Transit');
+        $this->db->or_where('order_products.order_status', 'RTO Delivered');
+
+        $this->db->or_where('order_products.order_status', 'Return Initiated');
+        $this->db->or_where('order_products.order_status', 'Return Acknowledged');
+        $this->db->or_where('order_products.order_status', 'Return Pending');
+        $this->db->or_where('order_products.order_status', 'Return In Transit');
+
         $this->filter_sales();
         $query = $this->db->get('orders');
         return $query->num_rows();
@@ -1939,7 +1948,16 @@ class Order_model extends CI_Model
         $this->db->join('orders', 'order_products.order_id = orders.id');
         $this->db->select('order_products.order_id,order_products.product_id,order_products.product_title,order_products.product_currency,order_products.order_status,orders.created_at,orders.order_number');
         $this->db->where('order_products.seller_id', clean_number($user_id));
-        $this->db->where_in('order_products.order_status', $order_statuses);
+        $this->db->where('order_products.order_status', 'RTO');
+        $this->db->or_where('order_products.order_status', 'RTO Initiated');
+        $this->db->or_where('order_products.order_status', 'RTO In Transit');
+        $this->db->or_where('order_products.order_status', 'RTO Delivered');
+        $this->db->or_where('order_products.order_status', 'Return Initiated');
+        $this->db->or_where('order_products.order_status', 'Return Acknowledged');
+        $this->db->or_where('order_products.order_status', 'Return Pending');
+        $this->db->or_where('order_products.order_status', 'Return In Transit');
+
+
         $this->filter_sales();
         $this->db->order_by('orders.created_at', 'DESC');
         $this->db->limit($per_page, $offset);
