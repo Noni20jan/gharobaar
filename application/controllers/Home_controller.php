@@ -1244,8 +1244,8 @@ class Home_controller extends Home_Core_Controller
      */
     public function more_products($type_id)
     {
-
         get_method();
+        $page = $this->input->get('urlpage', true);
         $data['title'] = trans("products");
         $data['description'] = trans("products") . " - " . $this->app_name;
         $data['keywords'] = trans("products") . "," . $this->app_name;
@@ -1260,9 +1260,13 @@ class Home_controller extends Home_Core_Controller
         $data['product_count'] = $this->product_model->get_paginated_filtered_products_by_category($data["query_string_array"], null, $type_id);
         $data["categories"] = $this->parent_categories;
         // var_dump($type_id);die();
-        $this->load->view('partials/_header', $data);
-        $this->load->view('product/products', $data);
-        $this->load->view('partials/_footer');
+        if (empty($page)) {
+            $this->load->view('partials/_header', $data);
+            $this->load->view('product/products', $data);
+            $this->load->view('partials/_footer');
+        } else {
+            $this->load->view('product/infinte_scroll_products', $data);
+        }
     }
 
     /**
