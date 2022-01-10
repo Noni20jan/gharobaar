@@ -387,6 +387,10 @@
         }
     }
 
+    .shop-closed-cart {
+        text-align: justify;
+        margin-bottom: 0px;
+    }
 
     /* .cart-scroll-for-web {
         overflow-y: hidden;
@@ -1027,7 +1031,7 @@ if (!$this->auth_check) : ?>
                 <div class="row tracking-number-container">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <p class="details">Seller shop is closed</p>
+                            <p class="shop-closed-cart">Some products in your cart are not available currently since the seller is working at full capacity. Please try buying them at a later day</p>
                         </div>
                     </div>
                 </div>

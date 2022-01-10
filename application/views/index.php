@@ -985,7 +985,9 @@
             </div>
             <div class="column-collage">
                 <a href="<?php echo base_url() . "top-categories/gifts-festivities"; ?>"> <img src="<?php echo other_base_url() . "assets/img/landing-page-img/collage-3.png"; ?>" style="width:100%" alt="top-categories-gifts-festivities"></a>
-                <a href="<?php echo base_url() . "top-categories/home-cooks"; ?>"><img src="<?php echo other_base_url() . "assets/img/landing-page-img/collage-6.png"; ?>" style="width:100%" alt="top-categories-home-cooks"></a>
+                <!-- <a href="<?php echo base_url() . "top-categories/home-cooks"; ?>"><img src="<?php echo other_base_url() . "assets/img/landing-page-img/collage-6.png"; ?>" style="width:100%" alt="top-categories-home-cooks"></a> -->
+                <a href="#" data-toggle="modal" data-target="#hide_home_cook"><img src="<?php echo other_base_url() . "assets/img/landing-page-img/collage-6.png"; ?>" style="width:100%" alt="top-categories-home-cooks"></a>
+
             </div>
 
         </div>
@@ -1015,7 +1017,9 @@
 
         <div class="row-collage hidden-for-web justified-collage">
             <div class="column-mobile-collage">
-                <a href="<?php echo base_url() . "top-categories/home-cooks"; ?>"><img src="<?php echo other_base_url() . "assets/img/landing-page-img/collage-mobile-5.png"; ?>" style="width:100%" alt="top-categories-mobile-home-cooks"></a>
+                <a href="#" data-toggle="modal" data-target="#hide_home_cook"><img src="<?php echo other_base_url() . "assets/img/landing-page-img/collage-mobile-5.png"; ?>" style="width:100%" alt="top-categories-mobile-home-cooks"></a>
+
+                <!-- <a href="<?php echo base_url() . "top-categories/home-cooks"; ?>"><img src="<?php echo other_base_url() . "assets/img/landing-page-img/collage-mobile-5.png"; ?>" style="width:100%" alt="top-categories-mobile-home-cooks"></a> -->
                 <a href="<?php echo base_url() . "top-categories/personal-care-lifestyle"; ?>"> <img src="<?php echo other_base_url() . "assets/img/landing-page-img/collage-mobile-7.png"; ?>" style="width:100%" alt="top-categories-mobile-personal-care-lifestyle"></a>
             </div>
             <div class="column-mobile-collage">
@@ -1096,7 +1100,31 @@
         $this->load->view("partials/_main_slider_concern_new", ["second_slider_items" => $concern_slider_items]);
     endif; ?>
 </div>
+<div class="modal fade" id="hide_home_cook" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-custom">
+            <!-- form start -->
 
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true"><i class="icon-close"></i> </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row tracking-number-container">
+                    <div class="col-sm-12">
+                        <div class="form-group" style="margin-bottom:0px;">
+                            <p class="details">This category is under development, we'll soon be ready to take many home cooked delicacies ghar se ghar tak.'</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: green; color:white;"><?php echo trans("close"); ?></button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="index-wrapper" id="wrapper">
