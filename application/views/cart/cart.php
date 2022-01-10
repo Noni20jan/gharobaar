@@ -393,6 +393,40 @@
 
     } */
 </style>
+<style>
+    [title] {
+        border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+        border-radius: 2px;
+        position: relative;
+    }
+
+    body.touched [title]>* {
+        user-select: none;
+    }
+
+    body.touched [title]:hover>* {
+        user-select: auto
+    }
+
+    body.touched [title]:hover:after {
+        position: absolute;
+        top: 100%;
+        right: -10%;
+        content: attr(title);
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        background-color: white;
+        box-shadow: 1px 1px 3px;
+        padding: 0.3em;
+        z-index: 1;
+    }
+</style>
+<?php get_method();
+$login_check = $this->input->get('login', true);
+if (!$this->auth_check) : ?>
+    <input type="hidden" value="<?php echo $login_check; ?>" id="login_check">
+<?php else : ?>
+    <input type="hidden" value="" id="login_check">
+<?php endif; ?>
 <div id="wrapper" style="background:#fff;">
     <div class="container">
         <div class="fullwidth">
@@ -1345,31 +1379,3 @@
         document.body.classList.add('touched');
     });
 </script>
-
-<style>
-    [title] {
-        border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
-        border-radius: 2px;
-        position: relative;
-    }
-
-    body.touched [title]>* {
-        user-select: none;
-    }
-
-    body.touched [title]:hover>* {
-        user-select: auto
-    }
-
-    body.touched [title]:hover:after {
-        position: absolute;
-        top: 100%;
-        right: -10%;
-        content: attr(title);
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        background-color: white;
-        box-shadow: 1px 1px 3px;
-        padding: 0.3em;
-        z-index: 1;
-    }
-</style>

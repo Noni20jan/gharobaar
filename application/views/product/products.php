@@ -415,40 +415,12 @@ foreach ($sellers as $seller) {
         }
     }
 </style>
-<!-- <?php //if ($this->auth_check) {
-        // if ($this->auth_user->user_type == "guest") { 
-        ?>
-        <input type="hidden" id="role" value="<?php //echo $this->auth_user->user_type; 
-                                                ?>">
-        <input type="hidden" id="user_id" value="<?php //echo $this->auth_user->id; 
-                                                    ?>">
-<?php //}
-//} 
-?>
 
-<script>
-    $(document).ready(function() {
-        var user_type = document.getElementById("role").value;
-        var user_id = document.getElementById("user_id").value;
-
-        if (user_type == "guest") {
-            var id = user_id;
-            var data = {
-                "user_id": id,
-                "sys_lang_id": sys_lang_id
-            };
-            data[csfr_token_name] = $.cookie(csfr_cookie_name);
-            $.ajax({
-                type: "POST",
-                url: base_url + "cart_controller/remove_from_cart_guest",
-                data: data,
-                success: function(response) {
-                    window.location.href = base_url + "logout";
-                }
-            });
-        }
-    })
-</script> -->
+<?php if ($this->auth_check) {
+    if ($this->auth_user->user_type == "guest") {
+        redirect(base_url() . 'logout');
+    }
+} ?>
 <link rel="stylesheet" href="<?= base_url(); ?>assets/css/custom.css">
 <div id="wrapper">
     <div class="container">

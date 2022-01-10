@@ -7,7 +7,19 @@ class Order_controller extends Home_Core_Controller
     {
         parent::__construct();
         if (!$this->auth_check) {
-            redirect(lang_base_url());
+            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+                $link = "https";
+            else $link = "http";
+
+            // Here append the common URL characters.
+            $link .= "://";
+
+            // Append the host(domain name, ip) to the URL.
+            $link .= $_SERVER['HTTP_HOST'];
+
+            // Append the requested resource location to the URL
+            $link .= $_SERVER['REQUEST_URI'];
+            redirect(lang_base_url() . "?url=" . $link);
         }
         if (!$this->is_sale_active) {
             redirect(lang_base_url());

@@ -928,6 +928,10 @@
 </head>
 
 <body>
+    <?php get_method();
+    $path_url = $this->input->get('url', true);
+    ?>
+    <input type="hidden" id="redirect_url" value="<?php echo $path_url; ?>">
     <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
         <div id="announcement-bar">
             <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
@@ -1388,6 +1392,7 @@
                             <div id="result-login" class="font-size-13"></div>
                             <div class="form-group">
                                 <input type="text" name="email" class="form-control auth-form-input" id="guest_email_fill" placeholder="<?php echo trans("email_mobile"); ?>" required>
+                                <input type="hidden" name="redirect_path" id="redirect_path" value="<?php echo $path_url; ?>">
                             </div>
                             <div class="form-group">
                                 <input type="password" name="password" id="password_login" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" minlength="4" required>

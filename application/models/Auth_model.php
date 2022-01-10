@@ -869,7 +869,9 @@ class Auth_model extends CI_Model
     public function logout()
     {
         //clear cart
-        $this->cart_model->clear_cart();
+        if ($this->auth_user->user_type != "guest") {
+            $this->cart_model->clear_cart();
+        }
         //logout from db
         $this->delete_user_login_session_data();
         //unset user data

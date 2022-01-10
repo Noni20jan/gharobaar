@@ -161,9 +161,8 @@
         margin-bottom: -13px !important;
     } */
 </style>
-<?php //var_dump($product);
-// die();
-?>
+
+
 <?php if ($this->auth_check) {
     if ($this->auth_user->user_type == "guest") {
         redirect(base_url() . 'logout');
@@ -1099,3 +1098,32 @@ endif; ?>
         // alert("ok");
     })
 </script>
+
+
+<!-- abandant cart -->
+<!-- <script>
+    //Example if page has a single "Add to cart" button like "product description" page
+    window.addEventListener("load", () => {
+        // replace ".add-to-cart-btn" with the class name of your cart button element
+        const addToCartButton = document.querySelector(".btn-product-cart");
+        // replace ".product-title" with the class name of the element containing your product name
+        let productName = document.querySelector(".product-title").innerHTML;
+        console.log("productName: ", productName);
+        // replace ".product-img" with the class name of your product img element
+        // let productImageURL = document.querySelector(".img-product-slider").src;
+        // console.log("productImageURL: ", productImageURL);
+        addToCartButton.addEventListener("click", () => {
+            OneSignal.push(function() {
+                let timestamp = Math.floor(Date.now() / 1000);
+                OneSignal.sendTags({
+                    cart_update: timestamp,
+                    product_name: productName,
+                    // product_image: productImageURL,
+                }).then(function(tagsSent) {
+                    // Callback called when tags have finished sending
+                    console.log(tagsSent);
+                });
+            });
+        });
+    });
+</script> -->
