@@ -12,6 +12,7 @@
 <style>
     .dt-buttons {
         left: 20%;
+        content: "expport to excel";
     }
 
     @media only screen and (max-width: 768px) {
@@ -21,111 +22,94 @@
         }
     }
 
-    .row {
-
+    .index-table {
+        max-height: 1000px;
         overflow-x: auto;
     }
 </style>
-<div class="col-lg-12 col-md-12">
-    <div class="box">
-        <div class="box-header with-border">
-            <div class="pull-left">
-                <h3 class="box-title"><?php echo trans('sale-data'); ?></h3>
-            </div>
-        </div>
 
 
-    </div>
-    <div class="box-body">
-        <div class="row">
-            <div class="table-responsive">
-                <div class="col-sm-12">
+<div class="box-body index-table">
+    <div class="row">
+        <div class="table-responsive">
+            <div class="filter">
+                <form name="sale_data" id="sale_data" action="admin_controller/format_sale_data">
+                    <div class="item-table-filter">
+                        <label><?php echo trans("from_date"); ?></label>
+                        <input name="from_date" class="form-control" type="date" id="my_date_picker1" autocomplete="off">
+                    </div>
+                    <div class="item-table-filter">
+                        <label><?php echo trans("to_date"); ?></label>
+                        <input name="to_date" class="form-control" type="date" id="my_date_picker2" autocomplete="off">
+                    </div>
+                    <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
+                        <label style="display: block">&nbsp;</label>
+                        <button type="submit" class="btn bg-purple"><?php echo trans("submit"); ?></button>
+                    </div>
+                </form>
 
-                    <form name="sale_data" id="sale_data" action="admin_controller/format_sale_data">
-                        <div class="item-table-filter">
-                            <label><?php echo trans("from_date"); ?></label>
-                            <input name="from_date" class="form-control" type="date" id="my_date_picker1" autocomplete="off">
-                        </div>
-                        <div class="item-table-filter">
-                            <label><?php echo trans("to_date"); ?></label>
-                            <input name="to_date" class="form-control" type="date" id="my_date_picker2" autocomplete="off">
-                        </div>
-                        <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
-                            <label style="display: block">&nbsp;</label>
-                            <button type="submit" class="btn bg-purple"><?php echo trans("submit"); ?></button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-sm-12">
-                    <table class="table table-bordered table-striped button" id="extend_datatable" role="grid">
-                        <thead>
-                            <tr role="row">
-                                <th><?php echo ('order_no'); ?></th>
-                                <th><?php echo ('order_date'); ?></th>
-                                <th><?php echo ('seller_id'); ?></th>
-                                <th><?php echo ('seller_name'); ?></th>
-                                <th><?php echo ('seller_email'); ?></th>
-                                <th><?php echo ('seller_phone'); ?></th>
-                                <th><?php echo ('shop_name'); ?></th>
-                                <th><?php echo ('pan_no'); ?></th>
-                                <th><?php echo ('gst_no'); ?></th>
-                                <th><?php echo ('seller_address'); ?></th>
-                                <th><?php echo ('account_no'); ?></th>
-                                <th><?php echo ('acc_holder_name'); ?></th>
-                                <th><?php echo ('ifsc_code'); ?></th>
-                                <th><?php echo ('bank_branch'); ?></th>
-                                <th><?php echo ('product_title'); ?></th>
-                                <th><?php echo ('product_quantity'); ?></th>
-                                <th><?php echo ('order_status'); ?></th>
-                                <th><?php echo ('commission_rate'); ?></th>
-                                <th><?php echo ('commission_amount'); ?></th>
-                                <th><?php echo ('actual_product_gst_rate'); ?></th>
-                                <th><?php echo ('seller_gst_rate'); ?></th>
-                                <th><?php echo ('subtotal_excluding_gst'); ?></th>
-                                <th><?php echo ('seller_tprd_gst'); ?></th>
-                                <th><?php echo ('seller_tprd_cgst'); ?></th>
-                                <th><?php echo ('seller_tprd_sgst'); ?></th>
-                                <th><?php echo ('seller_tprd_igst'); ?></th>
-                                <th><?php echo ('seller_ship_cost'); ?></th>
-                                <th><?php echo ('seller_ship_gst'); ?></th>
-                                <th><?php echo ('seller_ship_cgst'); ?></th>
-                                <th><?php echo ('seller_ship_sgst'); ?></th>
-                                <th><?php echo ('seller_ship_igst'); ?></th>
-                                <th><?php echo ('seller_tship_cost'); ?></th>
-                                <th><?php echo ('seller_cod_cost'); ?></th>
-                                <th><?php echo ('seller_cod_gst'); ?></th>
-                                <th><?php echo ('seller_cod_cgst'); ?></th>
-                                <th><?php echo ('seller_cod_sgst'); ?></th>
-                                <th><?php echo ('seller_cod_igst'); ?></th>
-                                <th><?php echo ('seller_tcod'); ?></th>
-                                <th><?php echo ('grand_total_amount'); ?></th>
-                                <th><?php echo ('buyer'); ?></th>
-                                <th><?php echo ('buyer_email'); ?></th>
-                                <th><?php echo ('buyer_phone'); ?></th>
-                                <th><?php echo ('buyer_state'); ?></th>
-                                <th><?php echo ('payment_method'); ?></th>
-                                <th><?php echo ('payment_mode'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody id="sale_data_seller">
+                <table class="table table-bordered table-striped button" id="extend_datatable" role="grid">
+                    <thead>
+                        <tr role="row">
+                            <th><?php echo ('order_no'); ?></th>
+                            <th><?php echo ('order_date'); ?></th>
+                            <th><?php echo ('seller_id'); ?></th>
+                            <th><?php echo ('seller_name'); ?></th>
+                            <th><?php echo ('seller_email'); ?></th>
+                            <th><?php echo ('seller_phone'); ?></th>
+                            <th><?php echo ('shop_name'); ?></th>
+                            <th><?php echo ('pan_no'); ?></th>
+                            <th><?php echo ('gst_no'); ?></th>
+                            <th><?php echo ('seller_address'); ?></th>
+                            <th><?php echo ('account_no'); ?></th>
+                            <th><?php echo ('acc_holder_name'); ?></th>
+                            <th><?php echo ('ifsc_code'); ?></th>
+                            <th><?php echo ('bank_branch'); ?></th>
+                            <th><?php echo ('product_title'); ?></th>
+                            <th><?php echo ('product_quantity'); ?></th>
+                            <th><?php echo ('order_status'); ?></th>
+                            <th><?php echo ('commission_rate'); ?></th>
+                            <th><?php echo ('commission_amount'); ?></th>
+                            <th><?php echo ('actual_product_gst_rate'); ?></th>
+                            <th><?php echo ('seller_gst_rate'); ?></th>
+                            <th><?php echo ('subtotal_excluding_gst'); ?></th>
+                            <th><?php echo ('seller_tprd_gst'); ?></th>
+                            <th><?php echo ('seller_tprd_cgst'); ?></th>
+                            <th><?php echo ('seller_tprd_sgst'); ?></th>
+                            <th><?php echo ('seller_tprd_igst'); ?></th>
+                            <th><?php echo ('seller_ship_cost'); ?></th>
+                            <th><?php echo ('seller_ship_gst'); ?></th>
+                            <th><?php echo ('seller_ship_cgst'); ?></th>
+                            <th><?php echo ('seller_ship_sgst'); ?></th>
+                            <th><?php echo ('seller_ship_igst'); ?></th>
+                            <th><?php echo ('seller_tship_cost'); ?></th>
+                            <th><?php echo ('seller_cod_cost'); ?></th>
+                            <th><?php echo ('seller_cod_gst'); ?></th>
+                            <th><?php echo ('seller_cod_cgst'); ?></th>
+                            <th><?php echo ('seller_cod_sgst'); ?></th>
+                            <th><?php echo ('seller_cod_igst'); ?></th>
+                            <th><?php echo ('seller_tcod'); ?></th>
+                            <th><?php echo ('grand_total_amount'); ?></th>
+                            <th><?php echo ('buyer'); ?></th>
+                            <th><?php echo ('buyer_email'); ?></th>
+                            <th><?php echo ('buyer_phone'); ?></th>
+                            <th><?php echo ('buyer_state'); ?></th>
+                            <th><?php echo ('payment_method'); ?></th>
+                            <th><?php echo ('payment_mode'); ?></th>
+                        </tr>
+                    </thead>
+                    <tbody id="sale_data_seller">
 
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
+
+
             </div>
         </div>
     </div>
-</div>
+
 </div>
 <script>
-    $(document).ready(function() {
-        table = $('.button').DataTable({
-
-
-        });
-
-    });
-
     $("#sale_data").submit(function(e) {
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -213,9 +197,10 @@
                             });
                     },
                     dom: 'lBfrtip',
-                    buttons: [
-                        'excel',
-                    ],
+                    buttons: [{
+                        extend: 'excel',
+                        text: 'Export To Excel'
+                    }],
                     "aLengthMenu": [
                         [15, 30, 60, 100],
                         [15, 30, 60, 100, "All"]

@@ -20,66 +20,77 @@
             left: 5%;
         }
     }
+
+    .index-table {
+        max-height: 1000px;
+        overflow-x: auto;
+    }
+
+    .form-control {
+        border-radius: 20px;
+    }
 </style>
-<div class="box-header with-border">
-    <div class="pull-left">
-        <h3 class="box-title"><?php echo trans('sellers_ledgers'); ?></h3>
+<div class="index-table">
+    <div class="box-header with-border">
+        <div class="pull-left">
+            <h3 class="box-title"><?php echo trans('sellers_ledgers'); ?></h3>
+        </div>
     </div>
-</div>
-<div class="row table-filter-container">
-    <div class="col-sm-12">
+    <div class="row table-filter-container">
+        <div class="col-sm-12">
 
-        <form name="seller_ledgers_date" id="seller_ledgers_date" action="dashboard_controller/seller_ledgers_date">
-            <div class="item-table-filter">
-                <label><?php echo trans("from_date"); ?></label>
-                <input name="from_date" class="form-control" type="date" id="my_date_picker1" autocomplete="off" value="<?php echo html_escape($this->input->get('q', true)); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
-            </div>
-            <div class="item-table-filter">
-                <label><?php echo trans("to_date"); ?></label>
-                <input name="to_date" class="form-control" type="date" id="my_date_picker2" autocomplete="off" value="<?php echo html_escape($this->input->get('q', true)); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
-            </div>
-            <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
-                <label style="display: block">&nbsp;</label>
-                <button type="submit" class="btn bg-purple" id="sale_data_report"><?php echo trans("submit"); ?></button>
-            </div>
-        </form>
+            <form name="seller_ledgers_date" id="seller_ledgers_date" action="dashboard_controller/seller_ledgers_date">
+                <div class="item-table-filter">
+                    <label><?php echo trans("from_date"); ?></label>
+                    <input name="from_date" class="form-control" type="date" id="my_date_picker1">
+                </div>
+                <div class="item-table-filter">
+                    <label><?php echo trans("to_date"); ?></label>
+                    <input name="to_date" class="form-control" type="date" id="my_date_picker2">
+                </div>
+                <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
+                    <label style="display: block">&nbsp;</label>
+                    <button type="submit" class="btn bg-purple" id="sale_data_report"><?php echo trans("submit"); ?></button>
+                </div>
+            </form>
+
+        </div>
 
     </div>
 
-</div>
-<div class="col-lg-12 col-md-12">
     <div class="box">
         <!-- /.box-header -->
         <div class="box-body">
             <div class="row">
                 <div class="table-responsive">
-                    <div class="col-sm-12" style="overflow-x:scroll">
-                        <table class="table table-bordered table-striped dataTable" id="seller_ledgers_report" role="grid" aria-describedby="example1_info">
-                            <thead>
-                                <tr role="row">
-                                    <th><?php echo ('total_product_amt'); ?></th>
-                                    <th><?php echo ('commission_amt'); ?></th>
-                                    <th><?php echo ('shipping_amt'); ?></th>
-                                    <th><?php echo ('cod_amt'); ?></th>
-                                    <th><?php echo ('getway_amt'); ?></th>
-                                    <th><?php echo ('total_deduction'); ?></th>
-                                    <th><?php echo ('tcs_amt'); ?></th>
-                                    <th><?php echo ('tds_amt'); ?></th>
-                                    <th><?php echo ('penalty_amt'); ?></th>
-                                    <th><?php echo ('penalty_gst'); ?></th>
-                                    <th><?php echo ('penalty_total'); ?></th>
-                                    <th><?php echo ('net_balance'); ?></th>
-                                </tr>
-                            </thead>
-                            <tbody id="ledgers_data">
 
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="table table-bordered table-striped dataTable" id="seller_ledgers_report" role="grid" aria-describedby="example1_info">
+                        <thead>
+                            <tr role="row">
+                                <th><?php echo ('total_product_amt'); ?></th>
+                                <th><?php echo ('commission_amt'); ?></th>
+                                <th><?php echo ('shipping_amt'); ?></th>
+                                <th><?php echo ('cod_amt'); ?></th>
+                                <th><?php echo ('getway_amt'); ?></th>
+                                <th><?php echo ('total_deduction'); ?></th>
+                                <th><?php echo ('tcs_amt'); ?></th>
+                                <th><?php echo ('tds_amt'); ?></th>
+                                <th><?php echo ('penalty_amt'); ?></th>
+                                <th><?php echo ('penalty_gst'); ?></th>
+                                <th><?php echo ('penalty_total'); ?></th>
+                                <th><?php echo ('net_balance'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody id="ledgers_data">
+
+                        </tbody>
+                    </table>
+
                 </div>
             </div><!-- /.box-body -->
         </div>
     </div>
+
 </div>
 
 <script>
@@ -171,9 +182,10 @@
                             });
                     },
                     dom: 'lBfrtip',
-                    buttons: [
-                        'excel',
-                    ],
+                    buttons: [{
+                        extend: 'excel',
+                        text: 'Export To Excel'
+                    }],
                     "aLengthMenu": [
                         [15, 30, 60, 100],
                         [15, 30, 60, 100, "All"]

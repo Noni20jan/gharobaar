@@ -1946,6 +1946,14 @@ class Admin_controller extends Admin_Core_Controller
     }
 
 
+    public function seller_commission()
+    {
+        $data['title'] = trans("sale_data");
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/reports/seller_commision_data', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
 
     public function seller_profile_data()
     {
@@ -2021,5 +2029,29 @@ class Admin_controller extends Admin_Core_Controller
 
         $format_tds = $this->reports_model->tds_report($from_date, $to_date);
         echo json_encode($format_tds);
+    }
+    public function format_seller_commision()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $format_sller_commision = $this->reports_model->seller_commision_data($from_date, $to_date);
+        echo json_encode($format_sller_commision);
+    }
+    public function format_tcs_report()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $format_tcs = $this->reports_model->format_tcs_report($from_date, $to_date);
+        echo json_encode($format_tcs);
+    }
+    public function cash_free_charges()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $cash_free = $this->reports_model->cash_free_charges($from_date, $to_date);
+        echo json_encode($cash_free);
     }
 }

@@ -25,40 +25,50 @@
     .ui-datepicker {
         width: 16em;
     }
+
+    .index-table {
+        max-height: 1000px;
+        overflow-x: auto;
+    }
+
+    .form-control {
+        border-radius: 20px;
+    }
 </style>
-<div class="box-header with-border">
-    <div class="pull-left">
-        <h3 class="box-title"><?php echo trans ('sales_data'); ?></h3>
-    </div>
-</div>
-<div class="row table-filter-container">
-    <div class="col-sm-12">
+<div class="index-table">
+    <div class="box-header ">
 
-        <form name="sales_data_date" id="sales_data_date" action="dashboard_controller/sales_data_date">
-            <div class="item-table-filter">
-                <label><?php echo trans("from_date"); ?></label>
-                <input name="from_date" class="form-control" type="date" id="my_date_picker1" autocomplete="off" value="<?php echo html_escape($this->input->get('q', true)); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
-            </div>
-            <div class="item-table-filter">
-                <label><?php echo trans("to_date"); ?></label>
-                <input name="to_date" class="form-control" type="date" id="my_date_picker2" autocomplete="off" value="<?php echo html_escape($this->input->get('q', true)); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
-            </div>
-            <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
-                <label style="display: block">&nbsp;</label>
-                <button type="submit" class="btn bg-purple" id="sale_data_report"><?php echo trans("submit"); ?></button>
-            </div>
-        </form>
-
+        <h3 class="box-title"><?php echo trans('sales_data'); ?></h3>
     </div>
 
-</div>
-<div class="col-lg-12 col-md-12">
-    <div class="box">
-        <!-- /.box-header -->
-        <div class="box-body">
-            <div class="row">
-                <div class="table-responsive">
-                    <div class="col-sm-12" style="overflow-x:scroll">
+    <div class="row table-filter-container">
+        <div class="col-sm-12">
+
+            <form name="sales_data_date" id="sales_data_date" action="dashboard_controller/sales_data_date">
+                <div class="item-table-filter">
+                    <label><?php echo trans("from_date"); ?></label>
+                    <input name="from_date" class="form-control" type="date" id="my_date_picker1">
+                </div>
+                <div class="item-table-filter">
+                    <label><?php echo trans("to_date"); ?></label>
+                    <input name="to_date" class="form-control" type="date" id="my_date_picker2">
+                </div>
+                <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
+                    <label style="display: block">&nbsp;</label>
+                    <button type="submit" class="btn bg-purple" id="sale_data_report"><?php echo trans("submit"); ?></button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+    <div class="col-lg-12 col-md-12">
+        <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="table-responsive">
+
                         <table class="table table-bordered table-striped dataTable" id="sales_datatable" role="grid" aria-describedby="example1_info">
                             <thead>
                                 <tr role="row">
@@ -113,9 +123,10 @@
                             <tbody id="sales_data">
                             </tbody>
                         </table>
+
                     </div>
-                </div>
-            </div><!-- /.box-body -->
+                </div><!-- /.box-body -->
+            </div>
         </div>
     </div>
 </div>
@@ -229,9 +240,10 @@
                             });
                     },
                     dom: 'lBfrtip',
-                    buttons: [
-                        'excel',
-                    ],
+                    buttons: [{
+                        extend: 'excel',
+                        text: 'Export To Excel'
+                    }],
                     "aLengthMenu": [
                         [15, 30, 60, 100],
                         [15, 30, 60, 100, "All"]

@@ -21,59 +21,53 @@
         }
     }
 
-    .row {
 
+
+    .index-table {
+        max-height: 1000px;
         overflow-x: auto;
     }
 </style>
-<div class="col-lg-12 col-md-12">
-    <div class="box">
-        <div class="box-header with-border">
-            <div class="pull-left">
-            </div>
-        </div>
-        <div class="box-body">
-            <div class="row">
-                <div class="table-responsive">
-                    <div class="col-sm-12">
+<div class="box-body index-table">
+    <div class="row">
+        <div class="table-responsive">
 
-                        <form name="tds_report" id="tds_reports" action="admin_controller/format_tds">
-                            <div class="item-table-filter">
-                                <label><?php echo trans("from_date"); ?></label>
-                                <input name="from_date" class="form-control" type="date" id="my_date_picker1" autocomplete="off">
-                            </div>
-                            <div class="item-table-filter">
-                                <label><?php echo trans("to_date"); ?></label>
-                                <input name="to_date" class="form-control" type="date" id="my_date_picker2" autocomplete="off">
-                            </div>
-                            <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
-                                <label style="display: block">&nbsp;</label>
-                                <button type="submit" class="btn bg-purple"><?php echo trans("submit"); ?></button>
-                            </div>
-                        </form>
+            <div class="filter">
+                <form name="tds_report" id="tds_reports" action="admin_controller/format_tds">
+                    <div class="item-table-filter">
+                        <label><?php echo trans("from_date"); ?></label>
+                        <input name="from_date" class="form-control" type="date" id="my_date_picker1" autocomplete="off">
                     </div>
-                    <table class="table table-bordered table-striped " id="extend_datatable" role="grid">
-                        <thead>
-                            <tr role="row">
-                                <th>PAN</th>
-                                <th>Order ID</th>
-                                <th>Pay Out Date</th>
-                                <th>Date of Deduction</th>
-                                <th>Amount Paid</th>
-                                <th>TDS Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tds">
-
-
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="item-table-filter">
+                        <label><?php echo trans("to_date"); ?></label>
+                        <input name="to_date" class="form-control" type="date" id="my_date_picker2" autocomplete="off">
+                    </div>
+                    <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
+                        <label style="display: block">&nbsp;</label>
+                        <button type="submit" class="btn bg-purple"><?php echo trans("submit"); ?></button>
+                    </div>
             </div>
+            </form>
+            <table class="table table-bordered table-striped " id="extend_datatable" role="grid">
+                <thead>
+                    <tr role="row">
+                        <th>PAN</th>
+                        <th>Order ID</th>
+                        <th>Pay Out Date</th>
+                        <th>Date of Deduction</th>
+                        <th>Amount Paid</th>
+                        <th>TDS Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="tds">
+
+
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-</div>
+
 <script>
     $("#tds_reports").submit(function(e) {
 
@@ -162,9 +156,10 @@
                             });
                     },
                     dom: 'lBfrtip',
-                    buttons: [
-                        'excel',
-                    ],
+                    buttons: [{
+                        extend: 'excel',
+                        text: 'Export To Excel'
+                    }],
                     "aLengthMenu": [
                         [15, 30, 60, 100],
                         [15, 30, 60, 100, "All"]

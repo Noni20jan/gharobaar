@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+
 <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.css" rel="stylesheet" />
 <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -8,7 +9,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
     .dt-buttons {
         left: 20%;
@@ -21,62 +21,90 @@
         }
     }
 
+    .row {
+
+        overflow-x: auto;
+    }
+
+    div.container {
+        width: 80%;
+    }
 
     .index-table {
         max-height: 1000px;
         overflow-x: auto;
     }
 </style>
+
+
+
 <div class="box-body index-table">
     <div class="row">
-        <div class="table-responsive">
+
+        <form name="shipping_cod_charges" id="shipping_cod_charges" action="admin_controller/format_shipping_cod_charges">
+            <div class="item-table-filter">
+                <label><?php echo trans("from_date"); ?></label>
+                <input name="from_date" class="form-control" type="date" id="my_date_picker1" autocomplete="off">
+            </div>
+            <div class="item-table-filter">
+                <label><?php echo trans("to_date"); ?></label>
+                <input name="to_date" class="form-control" type="date" id="my_date_picker2" autocomplete="off">
+            </div>
+            <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
+                <label style="display: block">&nbsp;</label>
+                <button type="submit" class="btn bg-purple"><?php echo trans("submit"); ?></button>
+            </div>
+        </form>
+
+        <table class="table table-bordered table-striped dataTable" id="extend_datatable">
+            <thead>
+                <tr role="row">
+                    <th>Order Date</th>
+                    <th>GBT Order No.</th>
+                    <th>Schedule Shipment Date</th>
+                    <th>Schedule Shipment Time</th>
+                    <th>Pickup Schedule Date</th>
+                    <th>Shipment Status</th>
+                    <th>Buyer</th>
+                    <th>Buyer Mobile</th>
+                    <th>Buyer Email</th>
+                    <th>Buyer State</th>
+                    <th>Buyer's Address</th>
+                    <th>Seller Shop Name</th>
+                    <th>Seller Registered Email</th>
+                    <th>Seller State</th>
+                    <th>Product SKU</th>
+                    <th>Product Name</th>
+                    <th>Product Weight(Gms.)</th>
+                    <th>Sellers Packaging Dimenions(cm x cm x cm)</th>
+                    <th>Volumetric Weight- kg(s)</th>
+                    <th>Courier Service Provider</th>
+                    <th>Shipping amount</th>
+                    <th>COD charges</th>
+                    <th>Shipping amount</th>
+                    <th>COD charges</th>
+                    <th>Shiprocket's Order ID</th>
+                    <th>Shiprockets AWB Number</th>
+                    <th>Status of COD Remittance</th>
 
 
-            <form name="saller_profile_data" id="saller_profile_data" action="admin_controller/format_seller_profile_data">
-                <div class="item-table-filter">
-                    <label><?php echo trans("from_date"); ?></label>
-                    <input name="from_date" class="form-control" type="date" id="my_date_picker1" autocomplete="off">
-                </div>
-                <div class="item-table-filter">
-                    <label><?php echo trans("to_date"); ?></label>
-                    <input name="to_date" class="form-control" type="date" id="my_date_picker2" autocomplete="off">
-                </div>
-                <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
-                    <label style="display: block">&nbsp;</label>
-                    <button type="submit" class="btn bg-purple"><?php echo trans("submit"); ?></button>
-                </div>
-            </form>
-            <table class="table table-bordered table-striped " id="extend_datatable" role="grid">
-                <thead>
-                    <tr role="row">
-                        <th>Seller Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Shop</th>
-                        <th>Pan</th>
-                        <th>GST</th>
-                        <th>Address</th>
-                        <th>Account Number</th>
-                        <th>Account Holder</th>
-                        <th>IFSC Code</th>
-                        <th>Branch Name</th>
-                        <th>Pofile Status</th>
-                        <th>Profile Created At</th>
-                    </tr>
-                </thead>
-                <tbody id="seller_profile">
 
 
-                </tbody>
-            </table>
+                </tr>
+            </thead>
+            <tbody id="shipping_cod">
 
-        </div>
+            </tbody>
+        </table>
+
+
     </div>
 </div>
 </div>
-</div>
+
+
 <script>
-    $("#saller_profile_data").submit(function(e) {
+    $("#shipping_cod_charges").submit(function(e) {
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
 
@@ -101,6 +129,7 @@
             type: "POST",
             url: base_url + url,
             data: d, // serializes the form's elements.
+
             success: function(data) {
                 // console.log("test",data);
                 var Json_data = JSON.parse(data);
@@ -108,11 +137,12 @@
                 var len = Json_data.length;
                 if (len != 0) {
                     for (var i = 0; i < len; i++) {
-                        $('#seller_profile').append("<tr><td>" + Json_data[i].Seller + "</td><td>" + Json_data[i].Seller_Email + "</td><td>" + Json_data[i].Seller_Phone + "</td><td>" + Json_data[i].Shop_Name + "</td><td>" + Json_data[i].Pan + "</td><td>" + Json_data[i].GST + "</td><td>" + Json_data[i].Address + "</td><td>" + Json_data[i].Account_No + "</td><td>" + Json_data[i].Account_Holder + "</td><td>" + Json_data[i].IFSC_Code + "</td><td>" + Json_data[i].Bank_Branch + "</td><td>" + Json_data[i].Profile_Status + "</td><td>" + Json_data[i].Profile_Created_Date + "</td></tr>")
+                        $('#shipping_cod').append("<tr><td>" + Json_data[i].Order_Date + "</td><td>" + Json_data[i].GBT_Order_No + "</td><td>" + Json_data[i].Schedule_Shipment_Date + "</td><td>" + Json_data[i].Schedule_Shipment_Time + "</td><td>" + Json_data[i].Pickup_Schedule_Date + "</td><td>" + Json_data[i].Shipment_Status + "</td><td>" + Json_data[i].Buyer + "</td><td>" + Json_data[i].Buyer_Mobile + "</td><td>" + Json_data[i].Buyer_Email + "</td><td>" + Json_data[i].Buyer_State + "</td><td>" + Json_data[i].Buyer_Address + "</td><td>" + Json_data[i].Seller_Shop_Name + "</td><td>" + Json_data[i].Seller_Registered_Email + "</td><td>" + Json_data[i].Seller_State + "</td><td>" + Json_data[i].Product_SKU + "</td><td>" + Json_data[i].Product_Name + "</td><td>" + Json_data[i].Product_Weight + "</td><td>" + Json_data[i].Sellers_Packaging_Dimenions + "</td><td>" + Json_data[i].Volumetric_Weight + "</td><td>" + Json_data[i].Courier_Service_Provider + "</td><td>" + Json_data[i].Shipping_amount + "</td><td>" + Json_data[i].COD_charges + "</td><td>" + Json_data[i].Status_COD_Remittance + "</td><td>" + Json_data[i].COD_Balance_pending_with_Shiprocket + "</td><td>" + Json_data[i].Shiprockets_Order_ID + "</td><td>" + Json_data[i].Shiprockets_AWB_Number + "</td><td>" + Json_data[i].Cancellation_charges + "</td></tr>")
                     }
+
                 }
                 $('#extend_datatable').dataTable({
-
+                    autoWidth: false,
                     orderCellsTop: true,
                     fixedHeader: true,
                     initComplete: function() {
@@ -161,6 +191,7 @@
                                             .setSelectionRange(cursorPosition, cursorPosition);
                                     });
                             });
+
                     },
                     dom: 'lBfrtip',
                     buttons: [{
@@ -181,4 +212,5 @@
 
 
     });
+</script>
 </script>

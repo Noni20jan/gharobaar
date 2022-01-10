@@ -62,6 +62,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data['avg_seller_rating'] = $this->dashboard_model->get_seller_rating($this->auth_user->id);
         $data["top_sell"] = $this->dashboard_model->top_selling_products();
         $data["top_selling"] = $this->dashboard_model->products_top_selling($this->auth_user->id);
+        // $data['number_market_covered_till_now'] = $this->dashboard_model->number_market_covered_till_now($this->auth_user->id);
         $i = 0;
         $count = sizeof($data["customers_weekly"]);
         $data["z"] = array();
@@ -188,13 +189,13 @@ class Dashboard_controller extends Home_Core_Controller
             $data = array(
                 'email' =>  $email[$i],
                 'mobile' => $mobile[$i],
-                'referral_id' =>$referral,
-                'referral_user_id' =>$referrer_user_id
+                'referral_id' => $referral,
+                'referral_user_id' => $referrer_user_id
                 // 'status' => "A",
                 // 'created_by' => $this->auth_user->id,
             );
-            
-    
+
+
             $this->order_admin_model->create_referral_code($data);
         }
         redirect($this->agent->referrer());
@@ -1863,6 +1864,7 @@ class Dashboard_controller extends Home_Core_Controller
         $this->load->view('dashboard/includes/_footer');
     }
 
+
     /*
     *------------------------------------------------------------------------------------------
     * SALES
@@ -3103,7 +3105,7 @@ class Dashboard_controller extends Home_Core_Controller
     //seller reports
     public function sales_data_report()
     {
-       
+
         $data['title'] = trans("sales_data");
         $data['description'] = trans("sales_data") . " - " . $this->app_name;
         $data['keywords'] = trans("sales_data") . "," . $this->app_name;
@@ -3117,15 +3119,13 @@ class Dashboard_controller extends Home_Core_Controller
     {
         $from_date = $this->input->post('from_date', true);
         $to_date = $this->input->post('to_date', true);
-        $sales_data_date = $this->earnings_model->get_sales_data_reports($from_date, $to_date);
+        $sales_data_date = $this->reports_model->get_sales_data_reports($from_date, $to_date);
         echo json_encode($sales_data_date);
-
-
     }
 
     public function payment_report()
     {
-       
+
         $data['title'] = trans("payment_reports");
         $data['description'] = trans("payment_reports") . " - " . $this->app_name;
         $data['keywords'] = trans("payment_reports") . "," . $this->app_name;
@@ -3139,13 +3139,13 @@ class Dashboard_controller extends Home_Core_Controller
     {
         $from_date = $this->input->post('from_date', true);
         $to_date = $this->input->post('to_date', true);
-        $payment_report_date = $this->earnings_model->get_payment_report($from_date, $to_date);
+        $payment_report_date = $this->reports_model->get_payment_report($from_date, $to_date);
         echo json_encode($payment_report_date);
     }
 
     public function commission_bill_report()
     {
-       
+
         $data['title'] = trans("commission_bill");
         $data['description'] = trans("commission_bill") . " - " . $this->app_name;
         $data['keywords'] = trans("commission_bill") . "," . $this->app_name;
@@ -3159,29 +3159,24 @@ class Dashboard_controller extends Home_Core_Controller
     {
         $from_date = $this->input->post('from_date', true);
         $to_date = $this->input->post('to_date', true);
-        $commission_bill_date = $this->earnings_model->get_commission_bill_report($from_date, $to_date);
+        $commission_bill_date = $this->reports_model->get_commission_bill_report($from_date, $to_date);
         echo json_encode($commission_bill_date);
     }
 
     public function seller_ledgers_report()
     {
-       
+
         $data['title'] = trans("sellers_ledgers");
-        $data['description'] = trans("sellers_ledgers") . " - " . $this->app_name;
-        $data['keywords'] = trans("sellers_ledgers") . "," . $this->app_name;
-        // $data['seller_ledgers'] = $this->earnings_model->get_seller_ledgers_report();
-        // var_dump($data['seller_ledgers']);
+
         $this->load->view('dashboard/includes/_header', $data);
         $this->load->view('dashboard/reports/seller_ledgers', $data);
         $this->load->view('dashboard/includes/_footer');
-       
     }
     public function seller_ledgers_date()
     {
         $from_date = $this->input->post('from_date', true);
         $to_date = $this->input->post('to_date', true);
-        $seller_ledgers_date = $this->earnings_model->get_seller_ledgers_report($from_date, $to_date);
+        $seller_ledgers_date = $this->reports_model->get_seller_ledgers_report($from_date, $to_date);
         echo json_encode($seller_ledgers_date);
     }
 }
-
