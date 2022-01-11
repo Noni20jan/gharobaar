@@ -1378,6 +1378,7 @@ class Cart_controller extends Home_Core_Controller
                 $object_product->product_id = $cart_item->product_id;
                 $object_product->gst_rate = $product_details->gst_rate;
                 $object_product->product_total_price = $cart_item->total_price;
+                $object_product->tds_amount_product_huf_ind = 0;
 
 
 
