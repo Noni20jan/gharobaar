@@ -1114,7 +1114,7 @@
                 <div class="row tracking-number-container">
                     <div class="col-sm-12">
                         <div class="form-group" style="margin-bottom:0px;">
-                            <p class="details">This category is under development, we'll soon be ready to take many home cooked delicacies ghar se ghar tak.'</p>
+                            <p class="details">This category is under development, we'll soon be ready to take many home cooked delicacies ghar se ghar tak.</p>
                         </div>
                     </div>
                 </div>
