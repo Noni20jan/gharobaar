@@ -1671,7 +1671,9 @@ class Cart_controller extends Home_Core_Controller
             $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentOption=" . $data["paymentOption"] . "&paymentCode=" . $data["paymentCode"];
         } elseif (($this->input->post("payment_mode", true)) == "cc" || ($this->input->post("payment_mode", true)) == "dc" || ($this->input->post("payment_mode", true)) == "upi") {
             $data["paymentModes"] = $this->input->post("payment_mode", true);
-            $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentModes=" . $data["paymentModes"];
+            // $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentModes=" . $data["paymentModes"];
+            $data["returnUrl"] = "www.google.com";
+
         }
         $data["signature"] = $this->cashfree_gen_signature($data);
         if ($this->general_settings->enable_easysplit == 1) {
