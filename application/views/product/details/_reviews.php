@@ -85,9 +85,13 @@
                                             </div>
                                         </div>
                                         <div class="row-custom">
+
                                             <?php foreach ($review_images as $image) : ?>
-                                                <img id="review_image1" class="review_image small" src="<?php echo base_url() . $image->image_url; ?> " style="border-radius:10%;width:100px;height:100px" />
+                                                <?php if ($review->id == $image->id) : ?>
+                                                    <img id="review_image1" class="review_image small" src="<?php echo base_url() . $image->image_url; ?> " style="border-radius:10%;width:100px;height:100px" />
+                                                <?php endif ?>
                                             <?php endforeach; ?>
+
                                         </div>
                                         <div class="row-custom">
                                             <span class="date"><?php echo time_ago($review->created_at); ?></span>
