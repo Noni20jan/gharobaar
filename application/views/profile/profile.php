@@ -363,7 +363,11 @@
                 <?php $this->load->view("profile/_product_section", ["user_id" => $user->id]); ?>
             </div>
         </div>
-
+        <div class="col-12 text-center">
+            <div class="btn btn-md btn-view-more-new m-t-15 more" style="box-shadow: 2px 2px 5px #808080de !important;">
+                <a id="show_more_products" class="view-new-text" href="<?= generate_url("products") . '?search=' . $user->brand_name; ?>">View More Products</a><i class="fa fa-caret-down" style="color:black; margin-left:6px;"></i>
+            </div>
+        </div>
 
 
         <h3 style="text-align:center; padding-top:40px;">Seller Reviews</h3>
