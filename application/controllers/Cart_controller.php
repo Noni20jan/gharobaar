@@ -1268,7 +1268,8 @@ class Cart_controller extends Home_Core_Controller
             // $returnUrl = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"];
             $returnUrl= "www.google.com";
             else :
-            $returnUrl = base_url() . "cashfree-return?session_id=''";
+            // $returnUrl = base_url() . "cashfree-return?session_id=''";
+            $returnUrl= "www.google.com";
         endif;
 
 
