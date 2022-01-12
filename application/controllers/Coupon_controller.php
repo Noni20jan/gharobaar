@@ -487,6 +487,7 @@ class Coupon_controller extends Admin_Core_Controller
                                         $data["error"] = "This coupon is not valid for you.";
                                         $data["status"] = false;
                                         $data["msg"] = trans("coupon_not_valid");
+
                                     endif;
                                 else :
                                     $data["error"] = "This coupon is not valid for you.";
