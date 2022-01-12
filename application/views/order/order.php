@@ -161,6 +161,10 @@
     .table-orders tr td {
         padding: 0px 20px !important;
     }
+
+    .ratings {
+        cursor: pointer;
+    }
 </style>
 
 
@@ -659,8 +663,12 @@
                                             <?php endif; ?>
 
                                         </span>
-                                        <i class="fa fa-star" style="color:#e75480 ;"></i>
-                                        <a href="<?php echo generate_url("order_details") . "/" . (10000 + $item->order_id); ?>"><span style="color:#e75480 ;">Rate & Review the Product</span></a><br />
+                                        <div class="rate">
+                                            <i class="fa fa-star" style="color:#e75480 ;"></i>
+                                            <label class="label-star label-star-open-modal" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal" style="font-weight: 400;">
+                                                <span style="color:#e75480 ;" class="ratings">Rate & Review the Product</span><br />
+                                            </label></br>
+                                        </div>
                                         <i class="fa fa-star" style="color:#e75480 ;"></i>
                                         <a href="<?php echo lang_base_url() . 'contact'; ?>"> <span style="color:#e75480 ;">Need Help?</span></a>
                                     </td>
@@ -1224,6 +1232,12 @@
     $("#cancel_product_loader").click(function(e) {
         // $('#modalwindow').modal('hide');
         $('#cover-spin4').show();
+    });
+
+    $(document).on('click', '.rate .label-star-open-modal', function() {
+        var product_id = $(this).attr("data-product-id");
+        $("#rateProductModal #review_product_id").val(product_id);
+
     });
 </script>
 <script>
