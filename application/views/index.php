@@ -1182,8 +1182,22 @@
         <?php endif; ?>
     </div>
 </div>
-<!-- <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
+<div class="modal fade" id="freeshipModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered login-modal locate-modal" role="document">
+        <div class="modal-content">
+            <div class="auth-box">
+                <img src="assets/img/free_ship_banner.jpg" style="width:100%;">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(window).ready(function() {
+        $('#freeshipModal').modal('show');
+    });
+</script>
+<!-- <script src=" //code.jquery.com/jquery-1.11.0.min.js"></script>
+                <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
 <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
 
 <!-- slick Carousel CDN -->

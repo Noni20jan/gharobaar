@@ -3,7 +3,7 @@
 <style>
     .flexed-reviews {
         display: flex;
-        max-height: 150px;
+        max-height: 217px;
         overflow-y: auto;
     }
 
