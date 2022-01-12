@@ -486,7 +486,7 @@ class Coupon_controller extends Admin_Core_Controller
                                     else :
                                         $data["error"] = "This coupon is not valid for you.";
                                         $data["status"] = false;
-                                        $data["msg"] = trans("failure_coupon");
+                                        $data["msg"] = trans("coupon_not_valid");
                                     endif;
                                 else :
                                     $data["error"] = "This coupon is not valid for you.";
@@ -531,7 +531,7 @@ class Coupon_controller extends Admin_Core_Controller
                                 else :
                                     $data["error"] = "This coupon is not applicable on this cart.";
                                     $data["status"] = false;
-                                    $data["msg"] = trans("failure_coupon");
+                                    $data["msg"] = trans("coupon_not_valid");
                                 endif;
                                 break;
                             case "CATEGORY":
