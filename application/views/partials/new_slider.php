@@ -347,7 +347,7 @@
     <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;">
         <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="assets/gif/reload.gif" />
     </div>
-    <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1600px;height:560px;overflow:hidden;">
+    <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1600px;height:500px;overflow:hidden;">
         <?php if (!empty($second_slider_items)) :
             foreach ($second_slider_items as $item) : ?>
                 <div>

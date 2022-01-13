@@ -117,7 +117,8 @@ class Reports_model extends CI_Model
     public function format_sale_data($start_date, $end_date)
     {
         $end_date = $end_date . " 23:59:59";
-        $sql = "SELECT * FROM sale_data_report where order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s') AND order_date <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')";
+        $sql = "SELECT * FROM sale_data_report where order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s') AND order_date <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+        and order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing')";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -161,7 +162,8 @@ class Reports_model extends CI_Model
           users as u
           where sdr.seller_email = u.email
          and sdr.order_date >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s') 
-         and sdr.order_date <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s') 
+         and sdr.order_date <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
+         and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing') 
          group by sdr.seller ,
         sdr.seller_email ,
         sdr.seller_phone ,
@@ -184,7 +186,8 @@ class Reports_model extends CI_Model
     public function get_sales_data_reports($start_date, $end_date)
     {
         $end_date = $end_date . " 23:59:59";
-        $sql = "SELECT * FROM sale_data_report where order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s') AND order_date <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')";
+        $sql = "SELECT * FROM sale_data_report where order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s') AND order_date <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+         and order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing')";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -266,6 +269,7 @@ class Reports_model extends CI_Model
           where sdr.seller_email = u.email
          and sdr.order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
          and sdr.order_date <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+         and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing')
          group by sdr.seller ,
         sdr.seller_email ,
         sdr.seller_phone ,
