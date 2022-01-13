@@ -1231,20 +1231,7 @@
 </script>
 
 
-<!-- <?php if ($this->auth_check) : ?>
-    <?php if ((check_order_exists($this->auth_user->id)->count) == 0) : ?>
-        <div class="modal" id="first_order_offer" tabindex="-1" role="dialog" aria-hidden="true" >
-            <div class="modal-dialog new-width-bank" role="document" style="max-width:50%;top: 15%;">
-                <div class="modal-content">
-                   
-                    <div class="modal-body">
-                    <img src="<?php echo base_url(); ?>assets/img/offer.jpeg" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
-<?php endif; ?> -->
+
 
 
 
