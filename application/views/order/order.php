@@ -655,7 +655,6 @@
                                         <?php echo price_formatted($item->product_total_price, $item->product_currency); ?><span>/-</span>
                                     </td>
                                     <td>
-
                                         <span>
                                             <h6 style="padding-bottom:5%;"><?php echo $item->order_status; ?> on <?php echo date('d M Y', strtotime($item->updated_at)) ?></h6>
                                             <?php if ($item->order_status == "cancelled_by_user") : ?>
@@ -669,10 +668,13 @@
                                                 <span style="color:#e75480 ;" class="ratings">Rate & Review the Product</span><br />
                                             </label></br>
                                         </div>
-                                        <i class="fa fa-star" style="color:#e75480 ;"></i>
-                                        <a href="<?php echo lang_base_url() . 'contact'; ?>"> <span style="color:#e75480 ;">Need Help?</span></a>
+                                        <<<<<<< Updated upstream=======>>>>>>> Stashed changes
+                                            <i class="fa fa-star" style="color:#e75480 ;"></i>
+                                            <a href="<?php echo lang_base_url() . 'contact'; ?>"> <span style="color:#e75480 ;">Need Help?</span></a>
+
                                     </td>
                                 </tr>
+
                             <?php endforeach; ?>
                         </tbody>
                     </table>
@@ -706,38 +708,27 @@
                                         </div>
 
                                     </div>
-                                    <div class="row order-row-item">
+                                    <div class="row order-row-item ">
                                         <div class="col-3">
                                         </div>
-                                        <div class="col-9" style="margin-right:1%;">
+                                        <div class="col-9">
                                             <?php $shipping = get_order_shipping($order->id);
                                             if (!empty($shipping)) : ?>
-                                                <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?> &nbsp;
+                                                <!-- <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?> -->
                                         </div>
                                     </div>
                                     <div class="row order-row-item">
-                                        <div class="col-3">
-                                        </div>
                                         <div class="col-9" style="margin-right:1%;">
+                                            <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?>
+
                                             <div class="address-view"><?php echo $shipping->shipping_address_1 . ", " . $shipping->shipping_landmark . ", " . $shipping->shipping_area; ?></div>
                                             <div class="address-view"><?php echo $shipping->shipping_city . ", " . $shipping->shipping_state . ", " . $shipping->shipping_zip_code . ", " . $shipping->shipping_country; ?> </div>
-                                        </div>
-                                    </div>
-                                    <div class="row order-row-item">
-                                        <div class="col-3">
-                                        </div>
-                                        <div class="col-9" style="margin-right:1%;">
                                             <b> <?php echo $shipping->shipping_phone_number; ?></b>
-                                        </div>
-                                    </div>
-                                    <div class="row order-row-item">
-                                        <div class="col-3">
-                                        </div>
-                                        <div class="col-9" style="margin-right:1%;">
                                             <b> <?php echo $shipping->shipping_email; ?></b>
-                                        </div>
-                                    </div>
 
+                                        </div>
+
+                                    </div>
                                 <?php endif; ?>
                                 </div>
                                 <div class="invoice_margin">
@@ -849,7 +840,7 @@
                                 <?php $is_order_has_physical_product = false; ?>
                                 <div class="container">
                                     <div class="col-6 col-table-orders">
-                                        <h3 class="block-title"><?php echo trans("products"); ?></h3>
+                                        <h3 class="block-title" style="margin-left: 124px;"><?php echo trans("products"); ?></h3>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -976,7 +967,7 @@
                                                         <div class="row-custom">
                                                             <div class="rate-product">
                                                                 <p class="p-rate-product"><?php echo trans("rate_this_product"); ?></p>
-                                                                <div class="rating-stars">
+                                                                <div class="rating-stars" style="margin-left:129px;">
                                                                     <?php $review = get_review($item->product_id, $this->auth_user->id); ?>
                                                                     <label class="label-star label-star-open-modal" data-star="5" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 5) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
                                                                     <label class="label-star label-star-open-modal" data-star="4" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 4) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
@@ -1099,7 +1090,7 @@
                 <?php echo form_close(); ?>
             </div>
         </div>
-        <div id="cover-spin4"></div>
+        <div id="cover-spin-4"></div>
     </div>
     <div class="modal fade" id="rejection_reason_model_made_to_order" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -1231,7 +1222,7 @@
 <script>
     $("#cancel_product_loader").click(function(e) {
         // $('#modalwindow').modal('hide');
-        $('#cover-spin4').show();
+        $('#cover-spin-4').show();
     });
 
     $(document).on('click', '.rate .label-star-open-modal', function() {
@@ -1270,6 +1261,11 @@
 
             }
         }
+
+    });
+    $(document).on('click', '.rate .label-star-open-modal', function() {
+        var product_id = $(this).attr("data-product-id");
+        $("#rateProductModal #review_product_id").val(product_id);
 
     });
 </script>

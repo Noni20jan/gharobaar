@@ -394,12 +394,7 @@ $user = get_user($this->auth_user->id);
                     <?php endif; ?>
 
                     <li class="header_color header"><?php echo trans("payments"); ?></li>
-                    <li class="nav-earnings">
-                        <a href="<?= generate_dash_url("earnings"); ?>">
-                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/earnings.jpg" alt="" style="width: 20px; height: 20px;" />
-                            <span><?php echo trans("earnings"); ?></span>
-                        </a>
-                    </li>
+
 
                     <li class="nav-earnings">
                         <a href="<?= generate_dash_url("penalties"); ?>">
@@ -407,28 +402,35 @@ $user = get_user($this->auth_user->id);
                             <span><?php echo trans("penalties"); ?></span>
                         </a>
                     </li>
+                    <?php if ($this->general_settings->enable_earning_payout == 1) : ?>
+                        <li class="nav-earnings">
+                            <a href="<?= generate_dash_url("earnings"); ?>">
+                                <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/earnings.jpg" alt="" style="width: 20px; height: 20px;" />
+                                <span><?php echo trans("earnings"); ?></span>
+                            </a>
+                        </li>
 
+                        <li class="nav-earnings">
+                            <a href="<?= generate_dash_url("total_earning"); ?>">
+                                <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/earnings.jpg" alt="" style="width: 20px; height: 20px;" />
+                                <span><?php echo "Total Earnings"; ?></span>
+                            </a>
+                        </li>
 
-                    <li class="nav-earnings">
-                        <a href="<?= generate_dash_url("total_earning"); ?>">
-                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/earnings.jpg" alt="" style="width: 20px; height: 20px;" />
-                            <span><?php echo "Total Earnings"; ?></span>
-                        </a>
-                    </li>
-
-                    <li class="treeview<?php is_admin_nav_active(['withdraw-money', 'payouts', 'set-payout-account']); ?>">
-                        <a href="#">
-                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/payment-icon.png" alt="" style="width: 20px; height: 20px;" />
-                            <!-- <i class="fa fa-credit-card-alt" style="font-size: 14px;"></i> -->
-                            <span><?php echo trans("payouts"); ?></span>
-                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <!-- <li class="nav-withdraw-money"><a href="<?= generate_dash_url("withdraw_money"); ?>"><?= trans("withdraw_money"); ?></a></li> -->
-                            <li class="nav-payouts"><a href="<?= generate_dash_url("payouts"); ?>"><?= trans("payouts"); ?></a></li>
-                            <li class="nav-set-payout-account"><a href="<?= generate_dash_url("set_payout_account"); ?>"><?= trans("set_payout_account"); ?></a></li>
-                        </ul>
-                    </li>
+                        <li class="treeview<?php is_admin_nav_active(['withdraw-money', 'payouts', 'set-payout-account']); ?>">
+                            <a href="#">
+                                <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/payment-icon.png" alt="" style="width: 20px; height: 20px;" />
+                                <!-- <i class="fa fa-credit-card-alt" style="font-size: 14px;"></i> -->
+                                <span><?php echo trans("payouts"); ?></span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <!-- <li class="nav-withdraw-money"><a href="<?= generate_dash_url("withdraw_money"); ?>"><?= trans("withdraw_money"); ?></a></li> -->
+                                <li class="nav-payouts"><a href="<?= generate_dash_url("payouts"); ?>"><?= trans("payouts"); ?></a></li>
+                                <li class="nav-set-payout-account"><a href="<?= generate_dash_url("set_payout_account"); ?>"><?= trans("set_payout_account"); ?></a></li>
+                            </ul>
+                        </li>
+                    <?php endif ?>
                     <li class="treeview<?php is_admin_nav_active(['payment-history']); ?>">
                         <a href="#">
                             <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/payment-icon.png" alt="" style="width: 20px; height: 20px;" />
