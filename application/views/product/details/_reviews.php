@@ -3,8 +3,8 @@
 <style>
     .flexed-reviews {
         display: flex;
-        max-height: 217px;
-        overflow-y: auto;
+        /* max-height: 150px;
+        overflow-y: auto; */
     }
 
     @media screen and (max-width: 800px) {
@@ -44,9 +44,17 @@
 
     .readmore {
         margin: 0 5px;
+
         color: green;
         font-size: 13px;
         cursor: pointer;
+    }
+
+    .transition {
+        -webkit-transform: scale(2);
+        -moz-transform: scale(2);
+        -o-transform: scale(2);
+        transform: scale(2);
     }
 </style>
 <div class="container">
@@ -159,18 +167,11 @@
 </div>
 <script>
     $(document).ready(function() {
-        var small = {
-            width: "100px",
-            height: "100px"
-        };
-        var large = {
-            width: "200px",
-            height: "232px"
-        };
-        var count = 1;
-        $(".review_image").css(small).on('click', function() {
-            $(this).animate((count == 1) ? large : small);
-            count = 1 - count;
+        $('.review_image').hover(function() {
+            $(this).addClass('transition');
+            // other code     
+        }, function() {
+            $(this).removeClass('transition');
         });
     });
 </script>
@@ -196,6 +197,7 @@
         $(document).on('click', '.readmore', function() {
             // $(this).next('.readmore').fadeOut("400");
             $(this).next('.more-review').slideToggle(400);
+
         })
     })
 </script>
