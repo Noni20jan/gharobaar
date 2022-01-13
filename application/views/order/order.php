@@ -668,9 +668,9 @@
                                                 <span style="color:#e75480 ;" class="ratings">Rate & Review the Product</span><br />
                                             </label></br>
                                         </div>
-                                        <<<<<<< Updated upstream=======>>>>>>> Stashed changes
-                                            <i class="fa fa-star" style="color:#e75480 ;"></i>
-                                            <a href="<?php echo lang_base_url() . 'contact'; ?>"> <span style="color:#e75480 ;">Need Help?</span></a>
+
+                                        <i class="fa fa-star" style="color:#e75480 ;"></i>
+                                        <a href="<?php echo lang_base_url() . 'contact'; ?>"> <span style="color:#e75480 ;">Need Help?</span></a>
 
                                     </td>
                                 </tr>
@@ -1090,7 +1090,7 @@
                 <?php echo form_close(); ?>
             </div>
         </div>
-        <div id="cover-spin-4"></div>
+        <div id="cover-spin4"></div>
     </div>
     <div class="modal fade" id="rejection_reason_model_made_to_order" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -1222,7 +1222,7 @@
 <script>
     $("#cancel_product_loader").click(function(e) {
         // $('#modalwindow').modal('hide');
-        $('#cover-spin-4').show();
+        $('#cover-spin4').show();
     });
 
     $(document).on('click', '.rate .label-star-open-modal', function() {
