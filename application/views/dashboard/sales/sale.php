@@ -117,9 +117,9 @@ endif;
     }
 </style>
 
-<div class="ajax-loader">
+<!-- <div class="ajax-loader">
     <img src="<?php echo base_url(); ?>assets/gif/ajax-loader.gif" id="loader-img" />
-</div>
+</div> -->
 <div id="cover-spin"></div>
 <div class="box">
     <div class="box-header with-border">
@@ -1223,185 +1223,12 @@ endif;
 
 <?php
 endforeach; ?>
-<?php //var_dump($seller); 
+<?php
 ?>
-<script>
-    function wrapper(product_id, item_id) {
-
-        function uuidv4() {
-            return 'yxxyxxx'.replace(/[xy]/g, function(c) {
-                var r = Math.random() * 16 | 0,
-                    v = c == 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
-        }
-
-        var uniqid = uuidv4()
-        var result = "null";
-
-        var base_url = '<?php echo base_url() ?>';
-        var product_id = product_id;
-        var item_id = item_id;
-        var product_id_array = [];
-        product_id_array.push(product_id);
-
-        var data = {
-            product_id: product_id,
-            sys_lang_id: sys_lang_id
-
-        };
-        data[csfr_token_name] = $.cookie(csfr_cookie_name);
-
-        if (product_id) {
-
-            $.ajax({
-                url: base_url + "order_controller/get_wrapper",
-                method: "POST",
-                data: data,
-                success: function(data) {
-
-                    console.log(data);
-                    var product = JSON.parse(data);
-
-                    if (product.status == 1) {
-
-                        $.ajax({
-
-                            beforeSend: function() {
-                                $('.ajax-loader').css("visibility", "visible");
-                            },
-                            "url": "https://apiv2.shiprocket.in/v1/external/shipments/create/forward-shipment",
-                            "method": "POST",
-                            "timeout": 0,
-
-                            "headers": {
-                                "Content-Type": "application/json",
-                                "Authorization": "Bearer <?php echo $_SESSION['modesy_sess_user_shiprocket_token'] ?>"
-                            },
-                            "data": JSON.stringify({
-                                "order_id": "<?php echo $order->id ?>",
-                                "order_date": "<?php echo date('Y-m-d H:i', strtotime($order->created_at)) ?>",
-                                "billing_customer_name": "<?php echo $shipping->billing_first_name ?>",
-                                "billing_last_name": "<?php echo $shipping->billing_last_name ?>",
-                                "billing_address": "<?php echo ($shipping->billing_address_1) ?>",
-                                "billing_address_2": "<?php echo ($shipping->billing_address_2) ?>",
-                                "billing_city": "<?php echo ($shipping->billing_city) ?>",
-                                "billing_pincode": <?php echo ($shipping->billing_zip_code) ?>,
-                                "billing_state": "<?php echo ($shipping->billing_state) ?>",
-                                "billing_country": "<?php echo ($shipping->billing_country) ?>",
-                                "billing_email": "<?php echo ($shipping->billing_email) ?>",
-                                "billing_phone": <?php echo ($shipping->billing_phone_number) ?>,
-                                "shipping_is_billing": <?php echo ($shipping->use_same_address_for_billing == 1) ? "true" : "false"; ?>,
-                                "shipping_customer_name": "<?php echo $shipping->shipping_first_name ?>",
-                                "shipping_last_name": "<?php echo $shipping->shipping_last_name ?>",
-                                "shipping_address": "<?php echo ($shipping->shipping_address_1) ?>",
-                                "shipping_address_2": "<?php echo ($shipping->shipping_address_2) ?>",
-                                "shipping_city": "<?php echo ($shipping->shipping_city) ?>",
-                                "shipping_pincode": <?php echo ($shipping->shipping_zip_code) ?>,
-                                "shipping_country": "<?php echo ($shipping->shipping_country) ?>",
-                                "shipping_state": "<?php echo ($shipping->shipping_state) ?>",
-                                "shipping_email": "<?php echo ($shipping->shipping_email) ?>",
-                                "shipping_phone": <?php echo ($shipping->billing_phone_number) ?>,
-
-                                "order_items": [{
-
-                                    "name": product.product.slug,
-                                    "sku": product.product.sku,
-                                    "units": <?php echo $order_products[0]->product_quantity ?>,
-                                    "selling_price": product.product.price / 100
-                                }],
-
-                                "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-                                "sub_total": <?php echo !empty($seller_wise_data) ? ($seller_wise_data->grand_total_amount) / 100 : $total_quantity_price ?>,
-                                "length": parseInt(product.product.packed_product_length),
-                                "breadth": parseInt(product.product.packed_product_width),
-                                "height": parseInt(product.product.packed_product_height),
-                                "weight": parseInt(product.product.weight) / 1000,
-
-                                "pickup_location": uniqid,
-                                "vendor_details": {
-                                    "email": "<?php echo $this->auth_user->email ?>",
-                                    "phone": <?php echo $this->auth_user->phone_number ?>,
-                                    "name": "<?php echo $this->auth_user->shop_name ?>",
-                                    "address": "##00-".concat(product.product.product_address),
-                                    "address_2": product.product.landmark.concat(", ", product.product.product_area),
-                                    "city": product.product.product_city,
-                                    "state": product.product.product_state,
-                                    "country": "India",
-                                    "pin_code": parseInt(product.product.product_pincode),
-                                    "pickup_location": uniqid
-                                }
-                            }),
-                            success: function(response) {
-
-                                result = response;
-                                console.log(response);
-
-                                if (result.status == 1) {
-
-                                    var data = {
-                                        "shipment_order_id": result.payload.order_id,
-                                        "order_id": <?php echo $order->id ?>,
-                                        "product_id": product_id_array,
-                                        "order_product_id": order_item_id_array,
-                                        "shipment_id": result.payload.shipment_id,
-                                        "awb_code": result.payload.awb_code,
-                                        "pickup_scheduled_date": result.payload.pickup_scheduled_date,
-                                        "manifest_url": result.payload.manifest_url,
-                                        "label_url": result.payload.label_url,
-                                        "courier_company_name": result.payload.courier_name,
-                                        "courier_company_id": result.payload.courier_company_id,
-                                        "applied_weight": result.payload.applied_weight,
-                                        "pickup_token_number": result.payload.pickup_token_number,
-                                        "COD": result.payload.COD,
-
-                                    };
-                                    data[csfr_token_name] = $.cookie(csfr_cookie_name);
-                                    data["sys_lang_id"] = sys_lang_id;
-                                    $.ajax({
-                                        "url": base_url + "get-shipment",
-                                        "method": "POST",
-                                        "data": data,
-
-                                        success: function(data) {
-                                            window.location.reload()
-                                        },
-
-                                        complete: function() {
-                                            $('.ajax-loader').css("visibility", "hidden");
-                                        }
-                                    })
-
-                                } else {
-                                    $('.ajax-loader').css("visibility", "hidden");
-                                    alert(response.payload.error_message)
-
-                                }
-
-
-                            },
-                            error: function(response) {
-
-                                $('.ajax-loader').css("visibility", "hidden");
-                                alert(response.responseJSON.message)
-
-                            }
-
-                        })
-                    }
-
-                }
-            });
-        }
-    }
-</script>
 <script>
     function wrapper_multiple_product(products_array, order_items_array) {
         $("#schedule_multiple_products").modal('hide');
 
-        console.log(products_array);
-        console.log(order_items_array);
-
         function uuidv4() {
             return 'yxxyxxx'.replace(/[xy]/g, function(c) {
                 var r = Math.random() * 16 | 0,
@@ -1409,7 +1236,6 @@ endforeach; ?>
                 return v.toString(16);
             });
         }
-
         var uniqid = uuidv4()
         var result = "null";
         var total_quantity_price = 0;
@@ -1430,80 +1256,74 @@ endforeach; ?>
             product_id_array.push(products_array[i].id);
             order_item_id_array.push(order_items_array[i].id)
             quantity_price_array.push(order_items_array[i].product_quantity * order_items_array[i].price_after_discount / 100);
-
         }
         for (var j = 0; j < quantity_price_array.length; j++) {
             total_quantity_price += quantity_price_array[j];
         }
         var ref_order_id = Date.now().toString() + "-" + '<?php echo $order->id; ?>';
 
+        var required_data = {
+            "order_id": ref_order_id,
+            "order_date": "<?php echo date('Y-m-d H:i', strtotime($order->created_at)) ?>",
+            "billing_customer_name": "<?php echo $shipping->billing_first_name ?>",
+            "billing_last_name": "<?php echo $shipping->billing_last_name ?>",
+            "billing_address": "<?php echo ($shipping->billing_address_1 . ',' . $shipping->billing_area) ?>",
+            "billing_address_2": "<?php echo ($shipping->billing_landmark) ?>",
+            "billing_city": "<?php echo ($shipping->billing_city) ?>",
+            "billing_pincode": <?php echo ($shipping->billing_zip_code) ?>,
+            "billing_state": "<?php echo ($shipping->billing_state) ?>",
+            "billing_country": "<?php echo ($shipping->billing_country) ?>",
+            "billing_email": "<?php echo ($shipping->billing_email) ?>",
+            "billing_phone": <?php echo ($shipping->billing_phone_number) ?>,
+            "shipping_is_billing": <?php echo ($shipping->use_same_address_for_billing == 1) ? true : false; ?>,
+            "shipping_customer_name": "<?php echo $shipping->shipping_first_name ?>",
+            "shipping_last_name": "<?php echo $shipping->shipping_last_name ?>",
+            "shipping_address": "<?php echo ($shipping->shipping_address_1 . ',' . $shipping->shipping_area) ?>",
+            "shipping_address_2": "<?php echo ($shipping->shipping_landmark) ?>",
+            "shipping_city": "<?php echo ($shipping->shipping_city) ?>",
+            "shipping_pincode": <?php echo ($shipping->shipping_zip_code) ?>,
+            "shipping_country": "<?php echo ($shipping->shipping_country) ?>",
+            "shipping_state": "<?php echo ($shipping->shipping_state) ?>",
+            "shipping_email": "<?php echo ($shipping->shipping_email) ?>",
+            "shipping_phone": <?php echo ($shipping->billing_phone_number) ?>,
+            "order_items": order_items,
+            "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
+            "sub_total": <?php echo !empty($seller_wise_data) ? ($order->price_total) / 100 : $total_quantity_price ?>,
+            "length": document.getElementById("total_length").value,
+            "breadth": document.getElementById("total_width").value,
+            "height": document.getElementById("total_height").value,
+            "weight": document.getElementById("total_weight").value / 1000,
+            "pickup_location": uniqid,
+            "vendor_details": {
+                "email": "<?php echo $this->auth_user->email ?>",
+                "phone": <?php echo $this->auth_user->phone_number ?>,
+                "name": "<?php echo $this->auth_user->shop_name ?>",
+                "address": "##00-".concat(products_array[0].product_address),
+                "address_2": products_array[0].landmark.concat(", ", products_array[0].product_area),
+                "city": products_array[0].product_city,
+                "state": products_array[0].product_state,
+                "country": "India",
+                "pin_code": parseInt(products_array[0].product_pincode),
+                "pickup_location": uniqid
+            }
+        };
+        var data = {
+            "order": required_data,
+            sys_lang_id: sys_lang_id
+        };
+        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+
         $.ajax({
-
             beforeSend: function() {
-                $('.ajax-loader').css("visibility", "visible");
+                $('#cover-spin').show();
             },
-            "url": "https://apiv2.shiprocket.in/v1/external/shipments/create/forward-shipment",
-            "method": "POST",
-            "timeout": 0,
-
-            "headers": {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer <?php echo $_SESSION['modesy_sess_user_shiprocket_token'] ?>"
-            },
-            "data": JSON.stringify({
-                "order_id": ref_order_id,
-                "order_date": "<?php echo date('Y-m-d H:i', strtotime($order->created_at)) ?>",
-                "billing_customer_name": "<?php echo $shipping->billing_first_name ?>",
-                "billing_last_name": "<?php echo $shipping->billing_last_name ?>",
-                "billing_address": "<?php echo ($shipping->billing_address_1 . ',' . $shipping->billing_area) ?>",
-                "billing_address_2": "<?php echo ($shipping->billing_landmark) ?>",
-                "billing_city": "<?php echo ($shipping->billing_city) ?>",
-                "billing_pincode": <?php echo ($shipping->billing_zip_code) ?>,
-                "billing_state": "<?php echo ($shipping->billing_state) ?>",
-                "billing_country": "<?php echo ($shipping->billing_country) ?>",
-                "billing_email": "<?php echo ($shipping->billing_email) ?>",
-                "billing_phone": <?php echo ($shipping->billing_phone_number) ?>,
-                "shipping_is_billing": <?php echo ($shipping->use_same_address_for_billing == 1) ? "true" : "false"; ?>,
-                "shipping_customer_name": "<?php echo $shipping->shipping_first_name ?>",
-                "shipping_last_name": "<?php echo $shipping->shipping_last_name ?>",
-                "shipping_address": "<?php echo ($shipping->shipping_address_1 . ',' . $shipping->shipping_area) ?>",
-                "shipping_address_2": "<?php echo ($shipping->shipping_landmark) ?>",
-                "shipping_city": "<?php echo ($shipping->shipping_city) ?>",
-                "shipping_pincode": <?php echo ($shipping->shipping_zip_code) ?>,
-                "shipping_country": "<?php echo ($shipping->shipping_country) ?>",
-                "shipping_state": "<?php echo ($shipping->shipping_state) ?>",
-                "shipping_email": "<?php echo ($shipping->shipping_email) ?>",
-                "shipping_phone": <?php echo ($shipping->billing_phone_number) ?>,
-
-                "order_items": order_items,
-
-                "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-                "sub_total": <?php echo !empty($seller_wise_data) ? ($order->price_total) / 100 : $total_quantity_price ?>,
-                "length": document.getElementById("total_length").value,
-                "breadth": document.getElementById("total_width").value,
-                "height": document.getElementById("total_height").value,
-                "weight": document.getElementById("total_weight").value / 1000,
-
-                "pickup_location": uniqid,
-                "vendor_details": {
-                    "email": "<?php echo $this->auth_user->email ?>",
-                    "phone": <?php echo $this->auth_user->phone_number ?>,
-                    "name": "<?php echo $this->auth_user->shop_name ?>",
-                    "address": "##00-".concat(products_array[0].product_address),
-                    "address_2": products_array[0].landmark.concat(", ", products_array[0].product_area),
-                    "city": products_array[0].product_city,
-                    "state": products_array[0].product_state,
-                    "country": "India",
-                    "pin_code": parseInt(products_array[0].product_pincode),
-                    "pickup_location": uniqid
-                }
-            }),
+            type: "POST",
+            url: base_url + "order_controller/schedule_shiprocket_orders",
+            data: data,
             success: function(response) {
-
-                result = response;
-
+                var result = JSON.parse(response);
+                //result = response;
                 if (result.status == 1) {
-
                     var data = {
                         "shipment_order_id": result.payload.order_id,
                         "reference_order_id": ref_order_id,
@@ -1532,29 +1352,19 @@ endforeach; ?>
                         success: function(data) {
                             window.location.reload()
                         },
-
                         complete: function() {
-                            $('.ajax-loader').css("visibility", "hidden");
+                            $('#cover-spin').hide();
                         }
                     })
-
-
-
                 } else {
-                    $('.ajax-loader').css("visibility", "hidden");
+                    $('#cover-spin').hide();
                     alert(response.payload.error_message)
-
                 }
-
-
             },
             error: function(response) {
-
-                $('.ajax-loader').css("visibility", "hidden");
+                $('#cover-spin').hide();
                 alert(response.responseJSON.message)
-
             }
-
         });
     }
 </script>
@@ -1565,7 +1375,6 @@ endforeach; ?>
         $("input[name='checkbox-table']").each(function() {
             product_ids.push(this.value);
         });
-        console.log(product_ids);
         // $("#schedule_multiple_products").modal("show");
         // $('#items_array').val(product_ids);
         var data = {
@@ -1580,12 +1389,8 @@ endforeach; ?>
             data: data,
             success: function(response) {
                 $('#cover-spin').hide();
-                console.log(response);
                 var obj = JSON.parse(response);
-                console.log(obj);
-                console.log(obj.vars.order_items.length);
                 var a = "<?php echo sizeof($order_products); ?>"
-                console.log(a);
                 // if (a == 1) {
                 //     if (obj.result == 1) {
                 //         document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
@@ -1626,12 +1431,8 @@ endforeach; ?>
 </script>
 <script>
     function reason_specify(id) {
-
-
         var id_string = toString(id);
         var selectid = "reject_reason_select_" + id;
-
-
         // var option = $('option:selected', this).attr('mytag');
         var kb = $("selectid option:selected").attr("myTag");
         // alert(kb);
@@ -1666,7 +1467,6 @@ endforeach; ?>
                 success: function(response) {
                     $('#cover-spin').hide();
                     result2 = response;
-                    console.log(result2);
                 }
             })
         })
@@ -1749,13 +1549,9 @@ $this->session->unset_userdata('mds_send_email_data_seller'); ?>
 </script>
 <script>
     function nowBike_multiple_create_order(order_items_array, sale_total_price) {
-
         var order_item_id_array = [];
         for (var i = 0; i < order_items_array.length; i++) {
-
             order_item_id_array.push(order_items_array[i].id)
-
-
         }
         var shipping_address = JSON.parse('<?php echo $shipping_json; ?>');
         console.log(shipping_address);
@@ -1770,10 +1566,6 @@ $this->session->unset_userdata('mds_send_email_data_seller'); ?>
         var customer_number = shipping_address.shipping_phone_number;
         var order_id = '<?php echo $order->order_number; ?>';
         var total_amount = parseInt(sale_total_price);
-
-
-
-
         var required_data = {
             "vendor_name": '<?php echo $seller->first_name . " " . $seller->last_name; ?>',
             "vendor_contact_number": parseInt('<?php echo $seller->phone_number; ?>'),
@@ -1794,21 +1586,13 @@ $this->session->unset_userdata('mds_send_email_data_seller'); ?>
         };
 
         var session_token_nowbike = '<?php echo $this->general_settings->now_bike_session_token; ?>';
-
         var url = "http://delivery.now.bike/api/v1/orders?session_token=" + session_token_nowbike;
-
-
         var data = {
             "order": required_data,
             "url": url,
             sys_lang_id: sys_lang_id
-
         };
         data[csfr_token_name] = $.cookie(csfr_cookie_name);
-
-        // var data = {
-        //     "order": required_data
-        // }
 
         $('#cover-spin').show();
         $.ajax({
@@ -1819,7 +1603,6 @@ $this->session->unset_userdata('mds_send_email_data_seller'); ?>
             success: function(response) {
                 var response_json = JSON.parse(response);
                 var url = base_url + "order_controller/now_bike_order";
-
                 var data = {
                     sys_lang_id: sys_lang_id,
                     "now_bike_id": response_json.order.id,
@@ -1844,9 +1627,6 @@ $this->session->unset_userdata('mds_send_email_data_seller'); ?>
 </script>
 <script>
     function nowBike_create_order(order_id, order_product_id, sale_price) {
-
-
-
         var order_item_id_array = [];
         order_item_id_array.push(order_product_id);
         var shipping_address = JSON.parse('<?php echo $shipping_json; ?>');
@@ -1862,10 +1642,6 @@ $this->session->unset_userdata('mds_send_email_data_seller'); ?>
         var customer_number = shipping_address.shipping_phone_number;
         var order_id = '<?php echo $order->order_number; ?>';
         var total_amount = parseInt(sale_price) / 100;
-
-
-
-
         var required_data = {
             "vendor_name": '<?php echo $seller->first_name . " " . $seller->last_name; ?>',
             "vendor_contact_number": parseInt('<?php echo $seller->phone_number; ?>'),
@@ -1925,20 +1701,15 @@ $this->session->unset_userdata('mds_send_email_data_seller'); ?>
     }
 
     function nowBike_get_order_details(now_bike_id, element) {
-
         element.prop("disable", true);
         var session_token_nowbike = '<?php echo $this->general_settings->now_bike_session_token; ?>';
-
         var url = "http://delivery.now.bike/api/v1/orders/" + now_bike_id + "?session_token=" + session_token_nowbike;
-
         var data = {
             "url": url,
             sys_lang_id: sys_lang_id
 
         };
         data[csfr_token_name] = $.cookie(csfr_cookie_name);
-
-
         $('#cover-spin').show();
         $.ajax({
             type: "post",
@@ -1974,15 +1745,6 @@ $this->session->unset_userdata('mds_send_email_data_seller'); ?>
         var session_token_nowbike = '<?php echo $this->general_settings->now_bike_session_token; ?>';
 
         var url = "http://delivery.now.bike/api/v1/orders/" + now_bike_id + "/cancel?session_token=" + session_token_nowbike;
-
-        // var data = {
-        //     "order": {
-        //         "cancellation_reason": "Wrong Location Selected"
-        //     }
-        // };
-
-
-
         var data = {
             "order": {
                 "cancellation_reason": "Wrong Location Selected"

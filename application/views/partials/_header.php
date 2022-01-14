@@ -657,6 +657,17 @@
     <meta name="author" content="Codingest" />
     <link rel="shortcut icon" type="image/png" href="<?php echo get_favicon($this->general_settings); ?>" />
 
+    <!-- this scrip is provided by sakshi -->
+    <script>
+        (function(h, e, a, t, m, p) {
+            m = e.createElement(a);
+            m.async = !0;
+            m.src = t;
+            p = e.getElementsByTagName(a)[0];
+            p.parentNode.insertBefore(m, p);
+        })(window, document, 'script', 'https://u.heatmap.it/log.js');
+    </script>
+
 
     <meta property="og:locale" content="en-US" />
     <meta property="og:site_name" content="<?php echo xss_clean($this->general_settings->application_name); ?>" />

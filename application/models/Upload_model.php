@@ -465,6 +465,12 @@ class Upload_model extends CI_Model
             $img->fit(450, 460);
             $img->save(FCPATH . $new_path, $this->quality);
             return $new_path;
+        } elseif ($feature_name == "SHOP_BY_OCCASSION") {
+            $new_path = 'uploads/slider/slider_' . generate_unique_id() . '.png';
+            $img = Image::make($path)->orientate();
+            $img->fit(1600, 500);
+            $img->save(FCPATH . $new_path, $this->quality);
+            return $new_path;
         } else {
             $new_path = 'uploads/slider/slider_' . generate_unique_id() . '.png';
             $img = Image::make($path)->orientate();

@@ -747,11 +747,36 @@ class Order_controller extends Home_Core_Controller
         echo json_encode($result_data);
     }
 
+    // schedule shiprocket orders
+
+    public function schedule_shiprocket_orders()
+    {
+        $req_data = $this->input->post('order');
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://apiv2.shiprocket.in/v1/external/shipments/create/forward-shipment',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($req_data),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . $_SESSION['modesy_sess_user_shiprocket_token']
+            ),
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        echo $response;
+    }
+
 
 
     public function now_bike_generate_order_post()
     {
-
         $url = $this->input->post('url');
         $req_data = $this->input->post('order');
 

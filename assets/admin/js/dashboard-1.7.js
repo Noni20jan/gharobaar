@@ -187,7 +187,7 @@ function get_cities(val, map) {
 }
 //change by him
 function get_states_1(val, map) {
-    console.log('hello');
+    //console.log('hello');
     $('#select_states_1').children('option').remove();
     $('#select_cities_1').children('option').remove();
     $('#get_states_container_1').hide();
@@ -578,7 +578,7 @@ function generateUniqueProductVariationCode(button, product_id, sku) {
         data: data,
         success: function (res) {
             var obj = JSON.parse(res);
-            console.log(obj);
+            //console.log(obj);
             $("#input_sku_option").val(obj.sku_option);
             $("#form-variation-option-add-text").show();
             $(".spinner-variation-options").hide();
@@ -938,7 +938,7 @@ function check_for_email_register_js(email_address) {
         url: base_url + "check-register-email",
         data: data,
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             var i = JSON.parse(response);
 
             res = i.result;
@@ -959,7 +959,7 @@ function check_for_email_registered_user_js(email_address) {
         url: base_url + "check-register-user-email",
         data: data,
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             var i = JSON.parse(response);
 
             res = i.result;
@@ -1002,7 +1002,7 @@ function send_verification_otp(phn_num, label_content, email) {
 }
 
 function send_email_otp(email, label_content) {
-    console.log(email);
+    //(email);
     var data = {
         'sys_lang_id': sys_lang_id,
         'email': email,
@@ -1158,7 +1158,7 @@ function otp_verification_cart(input_otp, user_id, phn_num) {
         },
         success: function (response) {
             var i = JSON.parse(response);
-            console.log(i.result);
+            //console.log(i.result);
             if (i.result == true) {
                 update_mobile_num(phn_num, user_id);
                 document.getElementById("otp_field_cart").value = "";
