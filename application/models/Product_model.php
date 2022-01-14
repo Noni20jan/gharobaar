@@ -1120,6 +1120,7 @@ class Product_model extends Core_Model
         }
 
         //search words
+        //search words
         if (!empty($array_search_words)) {
             $this->db->join('product_details', 'product_details.product_id = products.id');
             $this->db->where('product_details.lang_id', clean_number($this->selected_lang->id));
@@ -1128,86 +1129,24 @@ class Product_model extends Core_Model
                 // $user_id=get_user_by_shop_name($word);
                 if (!empty($word)) {
                     // $this->db->or_like(array('product_details.title' => $word, 'product_details.description' => $word,'product_details.seo_keywords' => $word,'product_details.seo_title' => $word));
-                    $metaphone = metaphone($word);
-                    $soundex = soundex($word);
 
-                    // select all words from the dictionary matching the current word
-                    $sql = "SELECT * FROM word WHERE word ='$word'";
-                    $wordresult = $this->db->query($sql)->num_rows();
-                    // $wordnum = mysqli_num_rows($wordresult);
-                    if ($wordresult == 0) {
-                        $sql3 = "INSERT INTO word (word,metaphone,soundex) VALUES ('$word','$metaphone','$soundex')";
-                        $query = $this->db->query($sql3);
-                    }
-                    if ($this->general_settings->nlptype == 'metaphone') {
-                        // var_dump(strlen($metaphone));
-                        if (strlen($metaphone) > 4) {
-                            $sql2 = "SELECT * FROM word";
-                        } else {
-                            $sql2 = "SELECT * FROM word WHERE soundex ='$soundex'";
-                        }
-                    } elseif ($this->general_settings->nlptype == 'soundex') {
-                        $sql2 = "SELECT * FROM word WHERE soundex ='$soundex'";
-                    }
-                    $query1 = $this->db->query($sql2);
 
-                    // $count = $query1->num_rows();
-
-                    $result1 = $query1->result();
-                    $i = 1;
-                    $count = 0;
-                    $where = "";
-                    // while ($worddata = mysqli_fetch_array($wordresult, MYSQLI_ASSOC)) {
-                    $count1 = count($result1);
-                    // echo $count;
                     $this->db->group_start();
-                    $this->db->or_where('product_details.description', $word);
+                    $this->db->like('product_details.title', $word);
+                    // $this->db->or_like('product_details.description', $word);
                     $this->db->or_like('product_details.seo_title', $word);
                     $this->db->or_like('product_details.seo_keywords', $word);
-                    //$this->db->or_where('product_details.user_id', );
-                    $this->db->or_where('shop_name', $word);
-                    $this->db->or_where('brand_name', $word);
-                    foreach ($result1 as $results) {
-                        $soundword = $results->word;
-                        $test = metaphone($soundword);
-                        $test2 = levenshtein($metaphone, $test);
+                    //$this->db->or_like('product_details.user_id', );
+                    $this->db->or_like('shop_name', $word);
+                    $this->db->or_like('brand_name', $word);
 
-                        if ($test2 < 3) {
-                            $count = 1;
-                        } else {
-                            $count = 0;
-                        }
-                        if ($i <= $count1 && $count == 1) {
-                            // $soundword = $results->word;
-                            // echo $soundword;
-                            $this->db->or_like('product_details.title', $soundword);
-                            // $i++;
-                        }
-                        // } else if($i == $count1 && $count==1) {
-                        //     // $soundword = $results->word;
-                        //     // echo $soundword;
-                        //     $where .= "title Like '%$soundword%' ) ";
-                        //     // $i++;
-                        // }
-                        // }
-                        $i++;
-                    }
                     $this->db->group_end();
-                    // $this->db->group_start();
-                    // $this->db->like('product_details.title', $word);
-                    // $this->db->or_like('product_details.description', $word);
-                    // $this->db->or_like('product_details.seo_title', $word);
-                    // $this->db->or_like('product_details.seo_keywords', $word);
-                    // //$this->db->or_like('product_details.user_id', );
-                    // $this->db->or_like('shop_name', $word);
-                    // $this->db->or_like('brand_name', $word);
-
-                    // $this->db->group_end();
                 }
             }
             $this->db->group_end();
             // $this->db->order_by('products.is_promoted', 'DESC');
         }
+
 
         //food preference filter
         if (!empty($array_food_preference)) {
