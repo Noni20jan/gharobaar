@@ -695,9 +695,12 @@
                         <li class="nav-send-email-subscribers">
                             <a href="<?php echo admin_url(); ?>shipping-cod-charges"><?php echo trans("shipping_cod_charges"); ?></a>
                         </li>
-                        <!-- <li class="nav-send-email-subscribers">
+                        <li class="nav-send-email-subscribers">
+                            <a href="<?php echo admin_url(); ?>cash-free-charges-report"><?php echo trans("cash_free_charges_reports"); ?></a>
+                        </li>
+                        <li class="nav-send-email-subscribers">
                             <a href="<?php echo admin_url(); ?>tcs-report"><?php echo trans("tcs_report"); ?></a>
-                        </li> -->
+                        </li>
                         <li class="nav-send-email-subscribers">
                             <a href="<?php echo admin_url(); ?>tds-report"><?php echo trans("tds_report"); ?></a>
                         </li>

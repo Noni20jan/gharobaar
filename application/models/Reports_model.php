@@ -57,6 +57,8 @@ class Reports_model extends CI_Model
     AND op.order_id = os.order_id
     AND op.seller_id = os.seller_id
     AND op.order_id = oship.order_id
+    AND op.order_date>= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
+     AND op.order_date>= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
     order by op.order_id";
         $query = $this->db->query($sql);
         return $query->result();
@@ -177,7 +179,76 @@ class Reports_model extends CI_Model
     public function format_tcs_report($start_date, $end_date)
     {
         $end_date = $end_date . " 23:59:59";
-        $sql = "";
+        $sql = "SELECT distinct
+        concat(u.first_name,' ', u.last_name) as Seller,
+        u.email as 'Seller_Email',
+        u.phone_number as 'Selle_Phone',
+        op.order_id as 'Order_No',
+        u.shop_name as 'Shop_Name',
+        u.pan_number as 'Pan',
+        u.gst_number as 'GST',
+        concat(u.house_no,',',u.supplier_area,',', u.supplier_city,',', u.supplier_state,'-', u.pincode) as Address,
+        u.account_number as 'Account_No',
+        u.acc_holder_name as 'Account_Holder',
+        u.ifsc_code as 'IFSC_Code',
+        u.bank_branch as 'Bank_Branch',
+        op.order_status as 'Order_Status',
+        o.payment_method as 'Payment_Method',
+        op.commission_rate as 'Commision_Rate', 
+        op.product_title as 'Product_Title',
+        p.hsn_code as 'HSN_Code',
+        op.product_quantity as 'Product_Qty',
+        format(op.product_unit_price/100,2) as 'Product_Unit_Price',
+        format(op.price_after_discount/100,2) as 'Price_After_Discount',
+        format(op.price_excluded_gst/100,2) as 'Price_Excluded_GST',
+        format(p.commission_amount/100,2) as 'Commission_Amount',
+        p.gst_rate as 'Product_GST_Rate',
+        op.product_gst_rate as 'Ordered_Product_GST_Rate',
+        format(op.product_igst/100,2) as 'Product_IGST',
+        format(op.product_cgst/100,2) as 'Product_CGST',
+        format(op.product_sgst/100,2) as 'Product_SGST',
+        format((op.product_igst + op.product_cgst + op.product_sgst)/100,2) as 'Product_Total_GST',
+        format(op.product_total_price/100,2) as 'Product_Total_Price',
+        format(op.product_shipping_cost/100,2) as 'Product_Shipping_Cost',
+        format(op.shipping_igst/100,2) as 'Shipping_IGST', 
+        format(op.shipping_cgst/100,2) as 'Shipping_CGST',
+        format(op.shipping_sgst/100,2) as 'Shipping_SGST',
+        format(op.total_shipping_cost/100,2) as 'Total_Shipping_Cost',
+        format(op.product_cod_charges/100,2) as 'Product_COD_Charge',
+        format(op.cod_igst/100,2) as 'COD_IGST',
+        format(op.cod_cgst/100,2) as 'COD_CGST', 
+        format(op.cod_sgst/100,2) as 'COD_SGST',
+        format(op.total_cod_charges/100,2) as 'Total_COD_Charges',
+        format(o.price_total/100,2) as 'Total_Ordered_Value',
+        op.product_weight as 'Product_Weight',
+        op.product_delivery_partner as 'Product_Delivery_Partner',
+        o.total_tax_charges as 'Taxable_Value_Total',
+        format((op.product_igst + op.shipping_igst + op.cod_igst)/100,2) as 'IGST_Total',    
+        format((op.product_cgst + op.shipping_cgst + op.cod_cgst)/100,2) as 'CGST_Total',	
+        format((op.product_sgst + op.shipping_sgst + op.cod_sgst)/100,2) as 'SGST_Total',	
+        concat(buyer.first_name,' ', buyer.last_name) as 'Buyer_Name',
+        buyer.email as 'Buyer_Email',
+        buyer.phone_number as 'Buyer_Phone',
+        o.created_at as 'Order_date',
+        oship.shipping_state as 'Buyer_State'
+    FROM 
+        orders as o,
+        order_products AS op,
+        order_supplier as os,
+        order_shipping as oship,
+        products as p,
+        users as u,
+        users as buyer
+    WHERE 
+        o.id = op.order_id
+    and op.order_id = os.order_id
+    AND os.seller_id = op.seller_id
+    AND o.id = oship.order_id
+    AND op.product_id = p.id
+    AND op.seller_id = u.id
+    AND op.buyer_id = buyer.id
+    AND op.created_at >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
+     AND op.created_at <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -315,6 +386,75 @@ class Reports_model extends CI_Model
         and csp.is_active = 1
         and csp.is_completed = 1
         GROUP BY sdr.seller_id";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    public function cash_free_charges($start_date, $end_date)
+    {
+        $end_date = $end_date . " 23:59:59";
+        $sql = "SELECT DISTINCT
+        o.created_at AS 'Order_Date',
+        o.id AS 'Order_ID',
+        o.payment_method AS 'Payment_Mode',
+        csp.commission_rate AS 'Commission_Rate',
+        op.order_status AS 'Status',
+        op.buyer_id AS 'Buyer_ID',
+        ifNULL(CONCAT(buyer.first_name, ' ', buyer.last_name),buyer.first_name) AS 'Buyer_Name',
+        buyer.username AS 'Buyer_Username',
+        buyer.phone_number AS 'Buyer_Phone_Number',
+        buyer.email AS 'Buyer_Email',
+        seller.brand_name AS 'Brand_Name',
+        seller.pan_number AS 'Seller_PAN_Number',
+        seller.shop_name AS 'Seller_Shop_Name',
+        seller.email AS 'Seller_E_mail',
+        p.sku AS 'Product_SKU',
+        op.product_title AS 'Product_Title',
+        op.product_gst_rate AS 'Product_GST_Rate',
+        format(op.product_total_price/100,2) AS 'Product_Total_Price',
+        format(os.total_shipping_cost/100,2) AS 'Shipping_Cost',
+        format(o.price_total/100,2) AS 'Amount_Received ',
+        format(csp.net_seller_payable/100,2) AS 'Seller_Payable',
+        csp.payout_initiated AS 'Payout_Initiated',
+        format(csp.commission_amount/100,2) AS 'Commission_Amount',
+        format(csp.commission_amount_with_gst/100,2) AS 'Commission_Amount_With_GST',
+        format(csp.shipping_charge_to_gharobaar/100,2) AS 'Shipping_charges_to_gharobaar',
+        format(csp.tcs_amount/100,2) AS 'TCS_Amount',
+        format(csp.tds_amount/100,2) AS 'TDS_Amount',
+        format(csp.gateway_amount/100,2) AS 'Gateway_Amount',
+        format(csp.gateway_amount_with_gst/100,2) AS 'Gateway_Amount_With_GST',
+        trx.cashfree_order_id AS 'Cashfree_order_ID',
+        trx.payment_id AS 'Cashfree_Payment_ID',
+        format(ref.refund_amount,2) AS 'Refund_Amount'
+    FROM
+        orders AS o
+            JOIN
+        order_products AS op ON o.id = op.order_id,
+        orders AS o2
+            LEFT JOIN
+        refunds AS ref ON o2.id = ref.order_id,
+        users AS buyer,
+        users AS seller,
+        products AS p,
+        order_supplier AS os,
+        cashfree_seller_payout AS csp,
+        transactions AS trx
+    WHERE
+        op.seller_id = seller.id
+            AND op.buyer_id = buyer.id
+            AND o.buyer_id = op.buyer_id
+            AND op.product_id = p.id
+            AND o.id = os.order_id
+            AND op.seller_id = os.seller_id
+            AND seller.id = os.seller_id
+            AND o.id = csp.order_id
+            AND seller.id = csp.vendorId
+            AND o.id = trx.order_id
+            AND o.created_at >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
+            AND o.created_at < STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s') 
+            AND buyer.id != seller.id
+            AND csp.is_active = 1
+            AND csp.is_completed = 1
+            AND o.id = o2.id";
         $query = $this->db->query($sql);
         return $query->result();
     }

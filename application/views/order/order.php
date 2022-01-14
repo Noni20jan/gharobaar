@@ -930,10 +930,10 @@
                                                     <strong class="font-600"><?php echo time_ago($item->updated_at); ?></strong>
                                                 </div>
                                             </div>
-                                            <div class="row" style="text-align:center;">
+                                            <div class="row cancel" style="text-align:center;">
                                                 <?php if ($item->order_status == "payment_received" || $item->order_status == "awaiting_payment" || $item->order_status == "processing" || $item->order_status == "waiting") : ?>
                                                     <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
-                                                        <button class="btn btn-sm btn-custom" id="cancel" style="border-color:green;background-color:#fff;" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
+                                                        <button class="btn btn-sm btn-custom " id="cancel" style="width: 100px;" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
                                                     <?php elseif (get_product($item->product_id)->add_meet == "Made to order") : ?>
                                                         <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>" style="visibility:hidden;"><?php echo trans("cancel_item"); ?></button>
                                                     <?php else : ?>
@@ -967,7 +967,7 @@
                                                         <div class="row-custom">
                                                             <div class="rate-product">
                                                                 <p class="p-rate-product"><?php echo trans("rate_this_product"); ?></p>
-                                                                <div class="rating-stars">
+                                                                <div class="rating-stars" style="margin-left:129px;">
                                                                     <?php $review = get_review($item->product_id, $this->auth_user->id); ?>
                                                                     <label class="label-star label-star-open-modal" data-star="5" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 5) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
                                                                     <label class="label-star label-star-open-modal" data-star="4" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 4) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>

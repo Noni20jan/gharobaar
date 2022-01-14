@@ -1969,7 +1969,7 @@ class Admin_controller extends Admin_Core_Controller
     {
         $data['title'] = trans("shipping_cod_charges");
         $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/reports/shipping_cod_charges');
+        $this->load->view('admin/reports/shipping_cod_charges', $data);
         $this->load->view('admin/includes/_footer');
     }
     public function tcs_report()
@@ -1977,7 +1977,7 @@ class Admin_controller extends Admin_Core_Controller
         $data['title'] = trans("tcs_report");
 
         $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/reports/tcs_report');
+        $this->load->view('admin/reports/tcs_report', $data);
         $this->load->view('admin/includes/_footer');
     }
     public function tds_report()
@@ -1985,7 +1985,7 @@ class Admin_controller extends Admin_Core_Controller
         $data['title'] = trans("tds_report");
 
         $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/reports/tds_report');
+        $this->load->view('admin/reports/tds_report', $data);
         $this->load->view('admin/includes/_footer');
     }
     public function cash_free_charges_report()
@@ -1993,7 +1993,7 @@ class Admin_controller extends Admin_Core_Controller
         $data['title'] = trans("cash_free_charges_report");
 
         $this->load->view('admin/includes/_header', $data);
-        $this->load->view('admin/reports/cash_free_charges_report');
+        $this->load->view('admin/reports/cash_free_charges_report', $data);
         $this->load->view('admin/includes/_footer');
     }
 
