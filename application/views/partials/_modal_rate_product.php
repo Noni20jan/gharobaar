@@ -1,4 +1,35 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<style>
+    .product-imgs-modal {
+        height: 118px;
+    }
+
+    .form-textarea {
+        min-height: 60px;
+        border-radius: 15px;
+        padding: 10px 12px;
+        resize: vertical;
+    }
+
+    @media(max-width:768px) {
+        .product-imgs-modal {
+            height: 84px;
+        }
+
+        .scroll-for-mobile {
+            overflow-y: scroll !important;
+            height: 70vh;
+        }
+
+    }
+
+
+    .upload_image_span {
+        margin-left: 8px;
+        font-size: 10px;
+        color: grey;
+    }
+</style>
 <div class="modal fade" id="rateProductModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom">
@@ -31,9 +62,7 @@
                             <input type="hidden" name="product_id" id="review_product_id">
                         </div>
                         <div class="upload_image">
-
                             <input type="file" id="fileuploadbasic" name="file_[]" size="40" multiple="multiple" accept=".jpg, .jpeg,.png">
-
                         </div>
                         <span class="upload_image_span">*Maximun 4 images allowed</span>
                     </div>
@@ -48,3 +77,28 @@
         </div>
     </div>
 </div>
+<script>
+    $(function() {
+
+        var
+            max_file_number = 4,
+
+            $form = $('form'),
+
+            $file_upload = $('#fileuploadbasic', $form),
+
+            $button = $('.submit', $form);
+
+        // $button.prop('disabled', 'disabled');
+
+        $file_upload.on('change', function() {
+            var number_of_images = $(this)[0].files.length;
+            if (number_of_images > max_file_number) {
+                $(this).val('');
+                $button.prop('disabled', 'disabled');
+            } else {
+                $button.prop('disabled', false);
+            }
+        });
+    });
+</script>

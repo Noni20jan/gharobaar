@@ -3,8 +3,8 @@
 <style>
     .flexed-reviews {
         display: flex;
-        /* max-height: 150px;
-        overflow-y: auto; */
+        max-height: 200px;
+        overflow-y: auto;
     }
 
     @media screen and (max-width: 800px) {
@@ -51,10 +51,10 @@
     }
 
     .transition {
-        -webkit-transform: scale(2);
-        -moz-transform: scale(2);
-        -o-transform: scale(2);
-        transform: scale(2);
+        -webkit-transform: scale(1.5);
+        -moz-transform: scale(1.5);
+        -o-transform: scale(1.5);
+        transform: scale(1.5);
     }
 </style>
 <div class="container">
