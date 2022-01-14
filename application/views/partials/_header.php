@@ -830,7 +830,7 @@
             width: 100%;
             position: relative;
             display: block;
-            height: 58px;
+            height: 53px;
         }
 
         @media(max-width:768px) {
@@ -838,7 +838,7 @@
                 width: 100%;
                 position: relative;
                 display: none;
-                height: 58px;
+                height: 53px;
             }
         }
 
@@ -846,7 +846,7 @@
             width: 100%;
             position: relative;
             display: none;
-            height: 58px;
+            height: 53px;
         }
 
         @media(max-width:768px) {
@@ -854,7 +854,7 @@
                 width: 100%;
                 position: relative;
                 display: block;
-                height: 58px;
+                height: 53px;
             }
         }
 
@@ -883,10 +883,11 @@
         .sliding_content {
             display: flow-root;
             text-align: center;
-            background-color: #f3f999;
+            background-color: #007C05;
             font-weight: normal;
             font-style: normal;
             font-family: "Montserrat", Helvetica, sans-serif;
+            color: #fff;
             /* box-shadow: 0 0 1em 1px rgb(0 0 0 / 25%);
             color: #006; */
             /* margin: 0em;
@@ -1367,8 +1368,9 @@
                     <marquee behaviour="scroll" direction="right">
                         <p class="display-mobile"><strong><?php echo trans("free_ship_message"); ?> </strong></p>
                     </marquee>
-                </div>
             </article>
+        </div>
+
         </div>
     <?php endif; ?>
     <div id="overlay_bg" class="overlay-bg"></div>
