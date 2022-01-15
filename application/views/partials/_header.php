@@ -841,7 +841,7 @@
             width: 100%;
             position: relative;
             display: block;
-            height: 53px;
+            height: 50px;
         }
 
         @media(max-width:768px) {
@@ -885,7 +885,7 @@
             animation-name: example;
             animation-duration: 2s;
             animation-delay: 2s;
-            margin: 0px;
+            margin: -5px;
             animation-iteration-count: infinite;
         }
 
@@ -1370,20 +1370,21 @@
                 </div>
             </div>
         </div>
+        <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
+            <div id="announcement-mobile-bar">
+                <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
+
+                    <div class="animation-mobile-bar">
+                        <marquee behaviour="scroll" direction="right">
+                            <p class="display-mobile"><strong><?php echo trans("free_ship_message"); ?> </strong></p>
+                        </marquee>
+                </article>
+            </div>
+
+            </div>
+        <?php endif; ?>
     </header>
-    <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
-        <div id="announcement-mobile-bar">
-            <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
 
-                <div class="animation-mobile-bar">
-                    <marquee behaviour="scroll" direction="right">
-                        <p class="display-mobile"><strong><?php echo trans("free_ship_message"); ?> </strong></p>
-                    </marquee>
-            </article>
-        </div>
-
-        </div>
-    <?php endif; ?>
     <div id="overlay_bg" class="overlay-bg"></div>
     <!--include mobile menu-->
     <?php $this->load->view("partials/_nav_mobile"); ?>
