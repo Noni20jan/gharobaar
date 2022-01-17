@@ -841,7 +841,7 @@
             width: 100%;
             position: relative;
             display: block;
-            height: 50px;
+            height: 45px;
         }
 
         @media(max-width:768px) {
@@ -865,7 +865,7 @@
                 width: 100%;
                 position: relative;
                 display: block;
-                height: 53px;
+                height: 43px;
             }
         }
 
@@ -885,7 +885,7 @@
             animation-name: example;
             animation-duration: 2s;
             animation-delay: 2s;
-            margin: -5px;
+            margin: -10px;
             animation-iteration-count: infinite;
         }
 
@@ -899,30 +899,9 @@
             font-style: normal;
             font-family: "Montserrat", Helvetica, sans-serif;
             color: #fff;
-            /* box-shadow: 0 0 1em 1px rgb(0 0 0 / 25%);
-            color: #006; */
-            /* margin: 0em;
-            /* max-width: 100em; */
-            /* padding: 0em; */
         }
 
-        /* @keyframes example {
-            0% {
-                left: 0px;
-            }
 
-            50% {
-                left: 100%;
-            }
-
-            100% {
-                left: 0;
-            }
-
-        } */
-        .display {
-            /* text-align: center; */
-        }
 
         @media screen and (max-width:768px) {
             .sticky-header {
