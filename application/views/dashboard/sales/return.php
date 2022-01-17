@@ -166,7 +166,6 @@
                                     <th scope="col"><?php echo trans("total"); ?></th>
                                     <th scope="col"><?php echo trans("status"); ?></th>
                                     <th scope="col"><?php echo trans("date"); ?></th>
-                                    <th scope="col"><?php echo trans("options"); ?></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -228,12 +227,14 @@
                                                 <?php endif; ?>
                                             </td>
                                             <td><?php echo date("Y-m-d / h:i", strtotime($sale->created_at)); ?></td>
-                                            <td>
-                                                <a href="<?= generate_dash_url("sale"); ?>/<?php echo $sale->order_number; ?>" class="btn btn-sm btn-custom btn-details" id="details">
-                                                    <i class="fa fa-info-circle" aria-hidden="true"></i>Action</a>
-                                                <br>
+                                            <?php if ($this->general_settings->show_detail == 1) : ?>
+                                                <td>
+                                                    <a href="<?= generate_dash_url("sale"); ?>/<?php echo $sale->order_number; ?>" class="btn btn-sm btn-custom btn-details" id="details">
+                                                        <i class="fa fa-info-circle" aria-hidden="true"></i>Show Details</a>
+                                                    <br>
 
-                                            </td>
+                                                </td>
+                                            <?php endif; ?>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
