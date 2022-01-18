@@ -12,7 +12,6 @@ class Slider_model extends CI_Model
             'description' => $this->input->post('description', true),
             'link' => $this->input->post('link', true),
             'category_feature' => $this->input->post('feature_name', true),
-
             'item_order' => $this->input->post('item_order', true),
             'button_text' => $this->input->post('button_text', true),
             'text_color' => $this->input->post('text_color', true),
@@ -24,22 +23,25 @@ class Slider_model extends CI_Model
         );
 
         $this->load->model('upload_model');
-        $temp_path_slider = $this->upload_model->upload_temp_image('file_slider');
+        $temp_path_slider = $this->upload_model->slider_image_upload('file_slider');
         if (!empty($temp_path_slider)) {
-            $data["slider_image"] = $this->upload_model->slider_image_upload_slide($temp_path_slider);
-            $this->upload_model->delete_temp_image($temp_path_slider);
+            //$data["slider_image"] = $this->upload_model->slider_image_upload_slide($temp_path_slider);
+            $data["slider_image"] = $temp_path_slider;
+            //$this->upload_model->delete_temp_image($temp_path_slider);
         }
 
-        $temp_path = $this->upload_model->upload_temp_image('file');
+        $temp_path = $this->upload_model->slider_image_upload('file');
         if (!empty($temp_path)) {
-            $data["image"] = $this->upload_model->slider_image_upload($temp_path, $data['category_feature']);
-            $this->upload_model->delete_temp_image($temp_path);
+            //$data["image"] = $this->upload_model->slider_image_upload($temp_path, $data['category_feature']);
+            $data["image"] = $temp_path;
+            //$this->upload_model->delete_temp_image($temp_path);
         }
 
         $temp_path_mobile = $this->upload_model->upload_temp_image('file_mobile');
         if (!empty($temp_path_mobile)) {
-            $data["image_mobile"] = $this->upload_model->slider_image_mobile_upload($temp_path_mobile);
-            $this->upload_model->delete_temp_image($temp_path_mobile);
+            //$data["image_mobile"] = $this->upload_model->slider_image_mobile_upload($temp_path_mobile);
+            $data["image_mobile"] = $temp_path_mobile;
+            //$this->upload_model->delete_temp_image($temp_path_mobile);
         }
 
         return $this->db->insert('slider', $data);
@@ -67,22 +69,26 @@ class Slider_model extends CI_Model
         $item = $this->get_slider_item($id);
         if (!empty($item)) {
             $this->load->model('upload_model');
-            $temp_path_slider = $this->upload_model->upload_temp_image('file_slider');
+            $temp_path_slider = $this->upload_model->slider_image_upload('file_slider');
             if (!empty($temp_path_slider)) {
-                $data["slider_image"] = $this->upload_model->slider_image_upload_slide($temp_path_slider);
-                $this->upload_model->delete_temp_image($temp_path_slider);
+                delete_file_from_server($item->slider_image);
+                // $data["slider_image"] = $this->upload_model->slider_image_upload_slide($temp_path_slider);
+                $data["slider_image"] = $temp_path_slider;
+                //$this->upload_model->delete_temp_image($temp_path_slider);
             }
-            $temp_path = $this->upload_model->upload_temp_image('file');
+            $temp_path = $this->upload_model->slider_image_upload('file');
             if (!empty($temp_path)) {
                 delete_file_from_server($item->image);
-                $data["image"] = $this->upload_model->slider_image_upload($temp_path, $data['category_feature']);
-                $this->upload_model->delete_temp_image($temp_path);
+                //$data["image"] = $this->upload_model->slider_image_upload($temp_path, $data['category_feature']);
+                $data["image"] = $temp_path;
+                //$this->upload_model->delete_temp_image($temp_path);
             }
-            $temp_path_mobile = $this->upload_model->upload_temp_image('file_mobile');
+            $temp_path_mobile = $this->upload_model->slider_image_upload('file_mobile');
             if (!empty($temp_path_mobile)) {
                 delete_file_from_server($item->image_mobile);
-                $data["image_mobile"] = $this->upload_model->slider_image_mobile_upload($temp_path_mobile);
-                $this->upload_model->delete_temp_image($temp_path_mobile);
+                $data["image_mobile"] = $temp_path_mobile;
+                //$data["image_mobile"] = $this->upload_model->slider_image_mobile_upload($temp_path_mobile);
+                //$this->upload_model->delete_temp_image($temp_path_mobile);
             }
 
             $this->db->where('id', $id);

@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 // Require the Composer autoloader.
 require APPPATH . 'third_party/aws-sdk/vendor/autoload.php';
@@ -62,6 +62,13 @@ class Aws_model extends CI_Model
 	//put category object
 	public function put_category_object($key, $temp_path)
 	{
+		$this->put_object($key, $temp_path);
+	}
+
+	//put slider object
+	public function put_slider_object($file_name, $temp_path)
+	{
+		$key = "uploads/slider/" . $file_name;
 		$this->put_object($key, $temp_path);
 	}
 
@@ -139,5 +146,4 @@ class Aws_model extends CI_Model
 			}
 		}
 	}
-
 }

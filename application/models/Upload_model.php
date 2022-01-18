@@ -39,6 +39,7 @@ class Upload_model extends CI_Model
         }
     }
 
+
     public function upload_review_image($file_name, $last_id, $product_id1)
     {
         if (isset($_FILES[$file_name])) {
@@ -153,32 +154,6 @@ class Upload_model extends CI_Model
         $img->save(FCPATH . $new_path, $this->quality);
         return $new_path;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public function upload_pdf_file($file_name)
@@ -457,28 +432,54 @@ class Upload_model extends CI_Model
     }
 
     //slider image upload
-    public function slider_image_upload($path, $feature_name)
+    public function slider_image_upload($file_name)
     {
-        if ($feature_name == "SECOND_MAIN_BANNER" || $feature_name == "SHOP_BY_CONCERN") {
-            $new_path = 'uploads/slider/slider_' . generate_unique_id() . '.png';
-            $img = Image::make($path)->orientate();
-            $img->fit(450, 460);
-            $img->save(FCPATH . $new_path, $this->quality);
-            return $new_path;
-        } elseif ($feature_name == "SHOP_BY_OCCASSION") {
-            $new_path = 'uploads/slider/slider_' . generate_unique_id() . '.png';
-            $img = Image::make($path)->orientate();
-            $img->fit(1600, 500);
-            $img->save(FCPATH . $new_path, $this->quality);
-            return $new_path;
+        if (isset($_FILES[$file_name])) {
+            if (empty($_FILES[$file_name]['name'])) {
+                return null;
+            }
+        }
+        $config['upload_path'] = './uploads/slider/';
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $config['file_name'] = 'slider_' . generate_unique_id();
+        $this->load->library('upload', $config);
+        $this->load->model("aws_model");
+        if ($this->upload->do_upload($file_name)) {
+            $data = array('upload_data' => $this->upload->data());
+            if (isset($data['upload_data']['full_path'])) {
+                if (!empty($data['upload_data']['file_name'])) {
+                    $this->aws_model->put_slider_object($data['upload_data']['file_name'], "uploads/slider/" . $data['upload_data']['file_name']);
+                    delete_file_from_server("uploads/slider/" . $data["upload_data"]);
+                    return 'uploads/slider/' . $data['upload_data']['file_name'];
+                }
+            }
+            return null;
         } else {
-            $new_path = 'uploads/slider/slider_' . generate_unique_id() . '.png';
-            $img = Image::make($path)->orientate();
-            $img->fit(1920, 600);
-            $img->save(FCPATH . $new_path, $this->quality);
-            return $new_path;
+            return null;
         }
     }
+
+    // {
+    //     if ($feature_name == "SECOND_MAIN_BANNER" || $feature_name == "SHOP_BY_CONCERN") {
+    //         $new_path = 'uploads/slider/slider_' . generate_unique_id() . '.png';
+    //         $img = Image::make($path)->orientate();
+    //         $img->fit(450, 460);
+    //         $img->save(FCPATH . $new_path, $this->quality);
+    //         return $new_path;
+    //     } elseif ($feature_name == "SHOP_BY_OCCASSION") {
+    //         $new_path = 'uploads/slider/slider_' . generate_unique_id() . '.png';
+    //         $img = Image::make($path)->orientate();
+    //         $img->fit(1600, 500);
+    //         $img->save(FCPATH . $new_path, $this->quality);
+    //         return $new_path;
+    //     } else {
+    //         $new_path = 'uploads/slider/slider_' . generate_unique_id() . '.png';
+    //         $img = Image::make($path)->orientate();
+    //         $img->fit(1920, 600);
+    //         $img->save(FCPATH . $new_path, $this->quality);
+    //         return $new_path;
+    //     }
+    // }
 
     //slider image mobile upload
     public function slider_image_mobile_upload($path)

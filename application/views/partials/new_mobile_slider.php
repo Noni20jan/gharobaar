@@ -446,7 +446,11 @@
             foreach ($second_slider_items as $item) : ?>
                 <div>
                     <a href="<?php echo html_escape($item->link); ?>">
-                        <img data-u="image" style="opacity:0.8;" data-src="<?php echo base_url() . $item->slider_image; ?>" />
+                        <?php if ($this->general_settings->banner_storage == 'aws_s3') : ?>
+                            <img data-u="image" style="opacity:0.8;" data-src="<?php echo other_base_url() . $item->slider_image; ?>" />
+                        <?php else : ?>
+                            <img data-u="image" style="opacity:0.8;" data-src="<?php echo base_url() . $item->slider_image; ?>" />
+                        <?php endif; ?>
 
                     </a>
                 </div>
