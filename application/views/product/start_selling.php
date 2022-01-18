@@ -874,13 +874,15 @@ $pincode = get_pincode(281204);
 
                                                                             </div>
                                                                         </div>
+
                                                                         <div class="col-12 col-sm-4 col-custom-field mt-3">
                                                                             <div class="custom-control custom-radio">
                                                                                 <input type="radio" name="type_of_goods" value="gharobaar_with_gst" id="gharobaar_with_gst" class="custom-control-input">
-                                                                                <label for="gharobaar_with_gst" class="custom-control-label">Gharobaar With GST</label>
+                                                                                <label for="gharobaar_with_gst" class="custom-control-label">Gharobaar with GST</label>
 
                                                                             </div>
                                                                         </div>
+
                                                                         <div class="col-12 col-sm-4 col-custom-field mt-3">
                                                                             <div class="custom-control custom-radio">
                                                                                 <input type="radio" name="type_of_goods" id="none" value="none" class="custom-control-input">
@@ -900,17 +902,12 @@ $pincode = get_pincode(281204);
                                                                         <input type="text" id="gsthave1" name="gst_number" oninput="this.value = this.value.toUpperCase()" class="form-control auth-form-input ">
                                                                         <p class="Validation_error" id="gst_number_p"></p>
                                                                     </div>
+
                                                                     <div id="not_have_gst" style="display: none">
                                                                         <label class="control-label">Enter GST Application number<span class="Validation_error"> *</span></label>
                                                                         <input type="text" id="gstdonothave1" name="gst_application_number" oninput="this.value = this.value.toUpperCase()" class="form-control auth-form-input ">
                                                                         <p class="Validation_error" id="gst_application_p"></p>
                                                                     </div>
-                                                                    <div id="have_gst2" style="display: none">
-                                                                        <label class="control-label">Gharobaar GST Number<span class="Validation_error"> *</span></label>
-                                                                        <input type="text" id="gsthave1" name="gst_number" oninput="this.value = this.value.toUpperCase()" class="form-control auth-form-input">
-                                                                        <p class="Validation_error" id="gst_number_p"></p>
-                                                                    </div>
-
                                                                 </div>
 
 
@@ -1039,7 +1036,7 @@ $pincode = get_pincode(281204);
 
 
                                                                     <div class="form-group">
-                                                                        <label class="control-label">Shippment Type ?<span class="Validation_error"> *</span></label>
+                                                                        <label class="control-label">Shipment Type ?<span class="Validation_error"> *</span></label>
                                                                         <div class="row">
                                                                             <div class="col-12 col-sm-4 col-custom-field">
                                                                                 <div class="custom-control custom-radio">
@@ -1148,8 +1145,8 @@ $pincode = get_pincode(281204);
                                                                         <div class="col-12 col-sm-4 m-b-15">
                                                                             <label class="control-label">Pincode<span class="Validation_error"> *</span>
                                                                             </label>
-                                                                            <input type="number" name="pincode" id="pincode" class="form-control auth-form-input" placeholder="Pincode" required maxlength="6" minlength="6" required onchange="get_location($( '#pincode').val())">
-                                                                            <p class="Validation_error" id="pincode_p"></p>
+                                                                            <input type="number" name="pincode" id="pincode" class="form-control auth-form-input" placeholder="Pincode" required maxlength="6" minlength="6" required onkeyup="get_location($( '#pincode').val())">
+                                                                            <!-- <p class="Validation_error" id="pincode_p"></p> -->
                                                                             <span class="Validation_error" id="pincode_span"></span>
                                                                         </div>
                                                                         <div class="col-12 col-sm-4 m-b-15">
@@ -2960,9 +2957,11 @@ $pincode = get_pincode(281204);
                     if (html[0].PostOffice == null) {
                         $('#pincode_span')[0].innerHTML = "Please enter a valid pincode.";
                         $('#pincode_span1')[0].innerHTML = "Please enter a valid pincode.";
+
                     } else {
                         $('#pincode_span')[0].innerHTML = "";
                         $('#pincode_span1')[0].innerHTML = "";
+
                         $('input[name="supplier_state"]').val(html[0].PostOffice[0].State)
                         $('input[name="supplier_city"]').val(html[0].PostOffice[0].District)
                         $('input[name="area"]').val(html[0].PostOffice[0].Name)
@@ -3136,6 +3135,7 @@ $pincode = get_pincode(281204);
             $("input[name='gst']").click(function() {
                 if ($("#gst_have").is(":checked")) {
                     $("#have_gst").show();
+                    $("#have_gst3").show();
                     document.getElementById("gsthave1").required = true;
                     document.getElementById("gsthave1").pattern = '[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z,4]{1}[0-9A-Z]{1}';
                     document.getElementById("gsthave1").maxLength = 15;
@@ -3153,7 +3153,12 @@ $pincode = get_pincode(281204);
                         $(o).html("Above 20 lakh");
                         $("#turnover").append(o);
                     }
+
+
+
+
                     $("#not_have_gst").hide();
+
                 } else if ($("#gst_do_not_have").is(":checked")) {
                     $("#not_have_gst").show();
                     document.getElementById("gstdonothave1").required = true;
@@ -3271,7 +3276,6 @@ $pincode = get_pincode(281204);
                     $("#turnover").append(new Option("Above 20 lakh", "Above 20 lakh"));
                 }
             }
-
             if ($(this).is(':checked') && $(this).val() == 'none') {
                 document.getElementById("turnover").required = false;
                 $("#turnover-req")[0].innerHTML = "";
@@ -3390,10 +3394,12 @@ $pincode = get_pincode(281204);
                     $("#gst_do_not_have")[0].checked = true;
                 }
                 byPassGstSelection();
+
                 // $("#selected_yes").removeClass("hideMe");
                 $("#selected_no").addClass("hideMe");
                 $('input[name=type_of_goods]').each(function() {
                     $(this)[0].required = false;
+
                 });
                 $('input[name=gst]').each(function() {
                     $(this)[0].required = true;
@@ -3432,6 +3438,10 @@ $pincode = get_pincode(281204);
                     $(this)[0].required = true;
                     if ($(this).val() == "Food delivery services (Annual turnover less than 20 lakh)") {
                         $(this)[0].checked = true;
+                    }
+                    if ($(this).val() == "gharobaar_with_gst") {
+                        $(this)[0].checked = true;
+
                     }
                 });
                 $("#selected_no").removeClass("hideMe");

@@ -714,6 +714,7 @@ class Home_controller extends Home_Core_Controller
 
     public function infinite_scroll_products()
     {
+
         get_method();
         $data['title'] = trans("products");
         $data['description'] = trans("products") . " - " . $this->app_name;
@@ -1703,24 +1704,10 @@ class Home_controller extends Home_Core_Controller
 
         if ($data["have_gst"] == "N") {
             $data["type_of_goods"] = $this->input->post('type_of_goods', true);
-            if ($data["type_of_goods"] == "gharobaar_with_gst") {
-                if (($data["supplier_state"] == "Karnataka")) {
-                    $data['gst_number'] = '29AAECF4068L1Z6';
-                    $data["shop_name"] = "Friends With Dreams";
-                    $data["company_type"] = "Private Limited";
-                }
-                if ($data["supplier_state"] == "Delhi") {
-                    $data['gst_number'] = '07AAECF4068L1ZC';
-                    $data["shop_name"] = "Friends With Dreams";
-                    $data["company_type"] = "Private Limited";
-                }
-                if ($data["supplier_state"] == "Maharashtra") {
-                    $data['gst_number'] = '27AAECF4068L1ZA';
-                    $data["shop_name"] = "Friends With Dreams";
-                    $data["company_type"] = "Private Limited";
-                }
-            }
         }
+
+
+
         $data['image_pancard'] = "data:image/png;base64," . (trim($data['image_pancard'], "[removed]"));
 
         //unique seller id
@@ -2839,7 +2826,6 @@ class Home_controller extends Home_Core_Controller
         $response = curl_exec($curl);
 
         $status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
-
 
         curl_close($curl);
 
