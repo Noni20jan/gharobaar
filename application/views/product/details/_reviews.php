@@ -38,6 +38,29 @@
     }
 
     /* for see more on reviews */
+    .morecontent span {
+        display: none;
+
+    }
+
+    .morelink {
+        display: block;
+        color: green;
+        font-family: 'Montserrat';
+        text-decoration: underline;
+    }
+
+    .morelink:hover {
+        display: block;
+        /* color: green; */
+        font-family: 'Montserrat';
+        text-decoration: underline;
+    }
+
+    .see_more {
+        color: green !important;
+    }
+
     .more-review {
         display: none;
     }
@@ -175,12 +198,76 @@
         });
     });
 </script>
+
+<!-- <script>
+    var str = "your long string with many words.";
+    var wordCount = str.match(/(\w+)/g).length;
+    console.log(wordCount);
+</script>
+<script>
+    $(document).ready(function() {
+        // Configure/customize these variables.
+        var showChar = 100; // How many characters are shown by default
+        var ellipsestext = "";
+        var moretext = "See More";
+        var lesstext = "See Less";
+
+        $('.more').each(function() {
+            var content = $(this).html();
+
+            var content_length = content.split(' ').length;
+
+
+            const splitWords = (text, numWords) => {
+                const words = text.split(' ')
+                let part1 = '',
+                    part2 = ''
+                words.forEach((word, idx) => {
+                    if (idx < numWords) {
+                        part1 += ' ' + word
+                    } else {
+                        part2 += ' ' + word
+                    }
+                })
+                return [part1.trim(), part2.trim()]
+            }
+
+            const [part1, part2] = splitWords(content, showChar);
+
+
+            if (content_length > showChar) {
+
+                var c = part1;
+                var h = part2;
+
+                var html = c + '<span class="moreellipses">' + ellipsestext + '&nbsp;</span> <span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="see_more morelink" >' + moretext + '</a></span>';
+
+                $(this).html(html);
+            }
+
+        });
+        $(".morelink").click(function() {
+            if ($(this).hasClass("less")) {
+                $(this).removeClass("less");
+                $(this).html(moretext);
+            } else {
+                $(this).addClass("less");
+                $(this).html(lesstext);
+            }
+            $(this).parent().prev().toggle();
+            $(this).prev().toggle();
+            return false;
+        });
+    });
+</script> -->
+
+
 <!-- see more script -->
 <script>
     $(function() {
 
         var maxL = 40;
-
+        var i = 0;
         $('.content').each(function() {
 
             var text = $(this).text();
@@ -195,6 +282,14 @@
         });
 
         $(document).on('click', '.readmore', function() {
+            // i++;
+            $(this).html('');
+            // if (i % 2 != 0) {
+            //     $(this).html(' ...less');
+            // } else {
+            //     $(this).html(' ...more');
+            // }
+            // $(this).next('.readmore').html('');
             // $(this).next('.readmore').fadeOut("400");
             $(this).next('.more-review').slideToggle(400);
 

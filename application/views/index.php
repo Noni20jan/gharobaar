@@ -599,7 +599,7 @@
     }
 
     .testimonial-background {
-        background-image: url('assets/img/bg 1.png');
+        background-image: url('assets/img/who-are-we-bg.jpg');
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
@@ -1208,7 +1208,6 @@
 <!-- <script src=" //code.jquery.com/jquery-1.11.0.min.js"></script>
                 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
 <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
-
 <!-- slick Carousel CDN -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 
