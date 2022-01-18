@@ -2912,7 +2912,7 @@ order by id desc LIMIT 1";
     {
         // $user_id = $this->auth_user->id;
 
-        $sql = "SELECT search_text FROM search_keyword where user_id = $user_id order by created_at desc limit 10;";
+        $sql = "SELECT search_text FROM search_keyword where user_id = $user_id order by created_at desc;";
         $query = $this->db->query($sql);
         $data = $query->result();
         $this->build_query();
@@ -2920,6 +2920,7 @@ order by id desc LIMIT 1";
         $this->db->join('product_details', 'product_details.product_id = products.id');
         $this->db->where('product_details.lang_id', clean_number($this->selected_lang->id));
         $this->db->where('is_service', "0");
+        $this->db->where('is_shop_open', "1");
         $this->db->where('status', 1)->where('products.is_draft', 0)->where('products.is_deleted', 0);
 
         if (!empty($data)) :
@@ -2936,6 +2937,39 @@ order by id desc LIMIT 1";
         $this->db->order_by('products.created_at', 'DESC')->limit(clean_number($limit));
         return $this->db->get('products')->result();
     }
+
+
+
+
+    public function get_most_ordered_products($limit)
+    {
+        $sql = "SELECT * from products where id in(
+            SELECT op.product_id from order_products as op
+            GROUP BY op.product_id order by count(op.order_id) desc )limit 10";
+
+        $query = $this->db->query($sql);
+        $data = $query->result();
+
+
+        $this->build_query();
+
+        $this->db->join('product_details', 'product_details.product_id = products.id');
+        $this->db->where('product_details.lang_id', clean_number($this->selected_lang->id));
+        $this->db->where('is_service', "0");
+        $this->db->where('is_shop_open', "1");
+        $this->db->where('status', 1)->where('products.is_draft', 0)->where('products.is_deleted', 0);
+        $this->db->where('`products`.`id` IN (SELECT * FROM (SELECT op.product_id FROM order_products AS op
+        GROUP BY op.product_id
+        ORDER BY COUNT(op.order_id) DESC
+        LIMIT 30) AS t1)');
+        $this->db->order_by('rand()')->limit(clean_number($limit));
+        return $this->db->get('products')->result();
+    }
+
+
+
+
+
 
     //Check for exibition enabled
     public function check_exhibition_enabled($product_id)
