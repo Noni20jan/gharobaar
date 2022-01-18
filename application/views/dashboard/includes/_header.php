@@ -639,7 +639,7 @@ $user = get_user($this->auth_user->id);
                         </a>
                     </li>
                     <!-- Reports section started -->
-                    <?php if ($this->general_settings->seller_reports == 1) : ?>
+                    <?php if ($this->general_settings->seller_reports == 1 && $this->auth_user->id == 317) : ?>
                         <li class="header_color header"><?php echo trans("reports"); ?></li>
                         <li class="treeview">
                             <a href="#">
