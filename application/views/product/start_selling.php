@@ -876,6 +876,13 @@ $pincode = get_pincode(281204);
                                                                         </div>
                                                                         <div class="col-12 col-sm-4 col-custom-field mt-3">
                                                                             <div class="custom-control custom-radio">
+                                                                                <input type="radio" name="type_of_goods" value="gharobaar_with_gst" id="gharobaar_with_gst" class="custom-control-input">
+                                                                                <label for="gharobaar_with_gst" class="custom-control-label">Gharobaar With GST</label>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-sm-4 col-custom-field mt-3">
+                                                                            <div class="custom-control custom-radio">
                                                                                 <input type="radio" name="type_of_goods" id="none" value="none" class="custom-control-input">
                                                                                 <label for="none" class="custom-control-label">None</label>
 
@@ -898,6 +905,12 @@ $pincode = get_pincode(281204);
                                                                         <input type="text" id="gstdonothave1" name="gst_application_number" oninput="this.value = this.value.toUpperCase()" class="form-control auth-form-input ">
                                                                         <p class="Validation_error" id="gst_application_p"></p>
                                                                     </div>
+                                                                    <div id="have_gst2" style="display: none">
+                                                                        <label class="control-label">Gharobaar GST Number<span class="Validation_error"> *</span></label>
+                                                                        <input type="text" id="gsthave1" name="gst_number" oninput="this.value = this.value.toUpperCase()" class="form-control auth-form-input">
+                                                                        <p class="Validation_error" id="gst_number_p"></p>
+                                                                    </div>
+
                                                                 </div>
 
 
@@ -1025,68 +1038,68 @@ $pincode = get_pincode(281204);
 
 
 
-                                                                        <div class="form-group">
-                                                                            <label class="control-label">Shippment Type ?<span class="Validation_error"> *</span></label>
-                                                                            <div class="row">
-                                                                                <div class="col-12 col-sm-4 col-custom-field">
-                                                                                    <div class="custom-control custom-radio">
-                                                                                        <input type="radio" name="ship_yes_no" id="self_ship_yes" value="gharobaar" class="custom-control-input" checked required>
-                                                                                        <label for="self_ship_yes" class="custom-control-label">Gharobaar</label>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <div class="col-12 col-sm-4 col-custom-field">
-                                                                                    <div class="custom-control custom-radio">
-                                                                                        <input type="radio" name="ship_yes_no" id="self_ship_no" value="self_shipped" class="custom-control-input" required>
-                                                                                        <label for="self_ship_no" class="custom-control-label">Self Shipped</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group hideMe" id="selected_self">
-                                                                            <label class="control-label">Shipping Charges ?<span class="Validation_error"> *</span></label>
-                                                                            <div class="row ">
-
-                                                                                <div class="col-12 col-sm-4 col-custom-field">
-                                                                                    <div class="custom-control custom-radio">
-                                                                                        <input type="radio" name="ship_charge" id="ship_charge_yes" value="yes" class="custom-control-input">
-                                                                                        <label for="ship_charge_yes" class="custom-control-label">Yes</label>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <div class="col-12 col-sm-4 col-custom-field">
-                                                                                    <div class="custom-control custom-radio">
-                                                                                        <input type="radio" name="ship_charge" id="ship_charge_no" value="no" class="custom-control-input" checked>
-                                                                                        <label for="ship_charge_no" class="custom-control-label">No</label>
-
-                                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">Shippment Type ?<span class="Validation_error"> *</span></label>
+                                                                        <div class="row">
+                                                                            <div class="col-12 col-sm-4 col-custom-field">
+                                                                                <div class="custom-control custom-radio">
+                                                                                    <input type="radio" name="ship_yes_no" id="self_ship_yes" value="gharobaar" class="custom-control-input" checked required>
+                                                                                    <label for="self_ship_yes" class="custom-control-label">Gharobaar</label>
                                                                                 </div>
                                                                             </div>
 
-
-
-                                                                        </div>
-
-
-                                                                        <div class="form-group" id="ship_cod" style="display: none;">
-                                                                            <div class="row">
-                                                                                <div class="col-12 col-sm-4 m-b-15">
-                                                                                    <label class="control-label">Minimum Threshold<span class="Validation_error"> *</span></label>
-                                                                                    <input type="text" id="min_thresh" name="min_thresh" class="form-control auth-form-input" onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57'>
-                                                                                    <p class="Validation_error" id="min_thresh_v"></p>
-                                                                                </div>
-                                                                                <div class="col-12 col-sm-4 m-b-15">
-                                                                                    <label class="control-label">Shipping Amount<span class="Validation_error"> *</span></label>
-                                                                                    <input type="text" id="ship_amt" name="ship_amt" class="form-control auth-form-input" onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57'>
-                                                                                    <p class="Validation_error" id="ship_amt_v"></p>
-                                                                                </div>
-                                                                                <div class="col-12 col-sm-4 m-b-15">
-                                                                                    <label class="control-label">COD Charges<span class="Validation_error"> *</span></label>
-                                                                                    <input type="text" id="cod_chrg" name="cod_chrg" class="form-control auth-form-input" onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57'>
-                                                                                    <p class="Validation_error" id="cod_chrg_v"></p>
+                                                                            <div class="col-12 col-sm-4 col-custom-field">
+                                                                                <div class="custom-control custom-radio">
+                                                                                    <input type="radio" name="ship_yes_no" id="self_ship_no" value="self_shipped" class="custom-control-input" required>
+                                                                                    <label for="self_ship_no" class="custom-control-label">Self Shipped</label>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                    </div>
+                                                                    <div class="form-group hideMe" id="selected_self">
+                                                                        <label class="control-label">Shipping Charges ?<span class="Validation_error"> *</span></label>
+                                                                        <div class="row ">
+
+                                                                            <div class="col-12 col-sm-4 col-custom-field">
+                                                                                <div class="custom-control custom-radio">
+                                                                                    <input type="radio" name="ship_charge" id="ship_charge_yes" value="yes" class="custom-control-input">
+                                                                                    <label for="ship_charge_yes" class="custom-control-label">Yes</label>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-12 col-sm-4 col-custom-field">
+                                                                                <div class="custom-control custom-radio">
+                                                                                    <input type="radio" name="ship_charge" id="ship_charge_no" value="no" class="custom-control-input" checked>
+                                                                                    <label for="ship_charge_no" class="custom-control-label">No</label>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+
+                                                                    </div>
+
+
+                                                                    <div class="form-group" id="ship_cod" style="display: none;">
+                                                                        <div class="row">
+                                                                            <div class="col-12 col-sm-4 m-b-15">
+                                                                                <label class="control-label">Minimum Threshold<span class="Validation_error"> *</span></label>
+                                                                                <input type="text" id="min_thresh" name="min_thresh" class="form-control auth-form-input" onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57'>
+                                                                                <p class="Validation_error" id="min_thresh_v"></p>
+                                                                            </div>
+                                                                            <div class="col-12 col-sm-4 m-b-15">
+                                                                                <label class="control-label">Shipping Amount<span class="Validation_error"> *</span></label>
+                                                                                <input type="text" id="ship_amt" name="ship_amt" class="form-control auth-form-input" onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57'>
+                                                                                <p class="Validation_error" id="ship_amt_v"></p>
+                                                                            </div>
+                                                                            <div class="col-12 col-sm-4 m-b-15">
+                                                                                <label class="control-label">COD Charges<span class="Validation_error"> *</span></label>
+                                                                                <input type="text" id="cod_chrg" name="cod_chrg" class="form-control auth-form-input" onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57'>
+                                                                                <p class="Validation_error" id="cod_chrg_v"></p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
 
 
@@ -3258,6 +3271,7 @@ $pincode = get_pincode(281204);
                     $("#turnover").append(new Option("Above 20 lakh", "Above 20 lakh"));
                 }
             }
+
             if ($(this).is(':checked') && $(this).val() == 'none') {
                 document.getElementById("turnover").required = false;
                 $("#turnover-req")[0].innerHTML = "";
