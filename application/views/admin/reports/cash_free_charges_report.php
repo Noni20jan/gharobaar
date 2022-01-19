@@ -24,7 +24,7 @@
 
 
     .index-table {
-        max-height: 1000px;
+
         overflow-x: auto;
     }
 </style>
@@ -82,7 +82,7 @@
                             <th>Gateway Amount With_GST</th>
                             <th>Cashfree order ID</th>
                             <th>Cashfree Payment ID</th>
-                            <th>Refund Amount</th>
+
                         </tr>
                     </thead>
                     <tbody id="cash_free_data">
@@ -136,7 +136,7 @@
                 var len = Json_data.length;
                 if (len != 0) {
                     for (var i = 0; i < len; i++) {
-                        $('#cash_free_data').append("<tr><td>" + Json_data[i].Order_Date + "</td><td>" + Json_data[i].Order_ID + "</td><td>" + Json_data[i].Payment_Mode + "</td><td>" + Json_data[i].Commission_Rate + "</td><td>" + Json_data[i].Status + "</td><td>" + Json_data[i].Buyer_ID + "</td><td>" + Json_data[i].Buyer_Name + "</td><td>" + Json_data[i].Buyer_Username + "</td><td>" + Json_data[i].Buyer_Phone_Number + "</td><td>" + Json_data[i].Buyer_Email + "</td><td>" + Json_data[i].Brand_Name + "</td><td>" + Json_data[i].Seller_PAN_Number + "</td><td>" + Json_data[i].Seller_Shop_Name + "</td><td>" + Json_data[i].Seller_E_mail + "</td><td>" + Json_data[i].Product_SKU + "</td><td>" + Json_data[i].Product_Title + "</td><td>" + Json_data[i].Product_GST_Rate + "</td><td>" + Json_data[i].Product_Total_Price + "</td><td>" + Json_data[i].Shipping_Cost + "</td><td>" + Json_data[i].Amount_Received + "</td><td>" + Json_data[i].Seller_Payable + "</td><td>" + Json_data[i].Payout_Initiated + "</td><td>" + Json_data[i].Commission_Amount + "</td><td>" + Json_data[i].Commission_Amount_With_GST + "</td><td>" + Json_data[i].Shipping_charges_to_gharobaar + "</td><td>" + Json_data[i].TCS_Amount + "</td><td>" + Json_data[i].TDS_Amount + "</td><td>" + Json_data[i].Gateway_Amount + "</td><td>" + Json_data[i].Gateway_Amount_With_GST + "</td><td>" + Json_data[i].Cashfree_order_ID + "</td><td>" + Json_data[i].Cashfree_Payment_ID + "</td><td>" + Json_data[i].Refund_Amount + "<td></tr>")
+                        $('#cash_free_data').append("<tr><td>" + Json_data[i].Order_Date + "</td><td>" + Json_data[i].Order_ID + "</td><td>" + Json_data[i].Payment_Mode + "</td><td>" + Json_data[i].Commission_Rate + "</td><td>" + Json_data[i].Status + "</td><td>" + Json_data[i].Buyer_ID + "</td><td>" + Json_data[i].Buyer_Name + "</td><td>" + Json_data[i].Buyer_Username + "</td><td>" + Json_data[i].Buyer_Phone_Number + "</td><td>" + Json_data[i].Buyer_Email + "</td><td>" + Json_data[i].Brand_Name + "</td><td>" + Json_data[i].Seller_PAN_Number + "</td><td>" + Json_data[i].Seller_Shop_Name + "</td><td>" + Json_data[i].Seller_E_mail + "</td><td>" + Json_data[i].Product_SKU + "</td><td>" + Json_data[i].Product_Title + "</td><td>" + Json_data[i].Product_GST_Rate + "</td><td>" + Json_data[i].Product_Total_Price + "</td><td>" + Json_data[i].Shipping_Cost + "</td><td>" + Json_data[i].Amount_Received + "</td><td>" + Json_data[i].Seller_Payable + "</td><td>" + Json_data[i].Payout_Initiated + "</td><td>" + Json_data[i].Commission_Amount + "</td><td>" + Json_data[i].Commission_Amount_With_GST + "</td><td>" + Json_data[i].Shipping_charges_to_gharobaar + "</td><td>" + Json_data[i].TCS_Amount + "</td><td>" + Json_data[i].TDS_Amount + "</td><td>" + Json_data[i].Gateway_Amount + "</td><td>" + Json_data[i].Gateway_Amount_With_GST + "</td><td>" + Json_data[i].Cashfree_order_ID + "</td><td>" + Json_data[i].Cashfree_Payment_ID + "</td></tr>")
                     }
                 }
                 $('#extend_datatable').dataTable({
@@ -191,9 +191,10 @@
                             });
                     },
                     dom: 'lBfrtip',
-                    buttons: [
-                        'excel',
-                    ],
+                    buttons: [{
+                        extend: 'excel',
+                        text: 'Export To Excel'
+                    }],
                     "aLengthMenu": [
                         [15, 30, 60, 100],
                         [15, 30, 60, 100, "All"]
