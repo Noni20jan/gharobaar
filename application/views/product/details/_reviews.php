@@ -38,39 +38,25 @@
     }
 
     /* for see more on reviews */
-    .morecontent span {
-        display: none;
-
-    }
-
-    .morelink {
-        display: block;
-        color: green;
-        font-family: 'Montserrat';
-        text-decoration: underline;
-    }
-
-    .morelink:hover {
-        display: block;
-        /* color: green; */
-        font-family: 'Montserrat';
-        text-decoration: underline;
-    }
-
-    .see_more {
-        color: green !important;
-    }
-
-    .more-review {
+    .addReadMore.showlesscontent .SecSec,
+    .addReadMore.showlesscontent .readLess {
         display: none;
     }
 
-    .readmore {
-        margin: 0 5px;
+    .addReadMore.showmorecontent .readMore {
+        display: none;
+    }
 
-        color: green;
-        font-size: 13px;
+    .addReadMore .readMore,
+    .addReadMore .readLess {
+        margin-left: 2px;
         cursor: pointer;
+        color: green;
+    }
+
+    .addReadMoreWrapTxt.showmorecontent .SecSec,
+    .addReadMoreWrapTxt.showmorecontent .readLess {
+        display: block;
     }
 
     .transition {
@@ -112,7 +98,7 @@
                                         </div>
                                         <div class="row-custom">
                                             <div class="review">
-                                                <p class="content"><?php echo html_escape($review->review); ?></p>
+                                                <p class="addReadMore showlesscontent"><?php echo html_escape($review->review); ?></p>
                                             </div>
                                         </div>
                                         <div class="row-custom">
@@ -167,7 +153,7 @@
                                         </div>
                                         <div class="row-custom">
                                             <div class="review">
-                                                <?php echo html_escape($review->review); ?>
+                                                <p class="addReadMore showlesscontent"><?php echo html_escape($review->review); ?></p>
                                             </div>
                                         </div>
                                         <div class="row-custom">
@@ -264,37 +250,71 @@
 
 <!-- see more script -->
 <script>
-    $(function() {
+    function AddReadMore() {
+        //This limit you can set after how much characters you want to show Read More.
+        var carLmt = 30;
+        // Text to show when text is collapsed
+        var readMoreTxt = " ... Read More";
+        // Text to show when text is expanded
+        var readLessTxt = " Read Less";
 
-        var maxL = 40;
-        var i = 0;
-        $('.content').each(function() {
 
-            var text = $(this).text();
-            if (text.length > maxL) {
-                var begin = text.substr(0, maxL),
-                    end = text.substr(maxL);
+        //Traverse all selectors with this class and manupulate HTML part to show Read More
+        $(".addReadMore").each(function() {
+            if ($(this).find(".firstSec").length)
+                return;
 
-                $(this).html(begin)
-                    .append($('<a class="readmore"/>').html(' ...more'))
-                    .append($('<div class="more-review" />').html(end));
+            var allstr = $(this).text();
+            if (allstr.length > carLmt) {
+                var firstSet = allstr.substring(0, carLmt);
+                var secdHalf = allstr.substring(carLmt, allstr.length);
+                var strtoadd = firstSet + "<span class='SecSec'>" + secdHalf + "</span><span class='readMore'  title='Click to Show More'>" + readMoreTxt + "</span><span class='readLess' title='Click to Show Less'>" + readLessTxt + "</span>";
+                $(this).html(strtoadd);
             }
+
         });
+        //Read More and Read Less Click Event binding
+        $(document).on("click", ".readMore,.readLess", function() {
+            $(this).closest(".addReadMore").toggleClass("showlesscontent showmorecontent");
+        });
+    }
+    $(function() {
+        //Calling function after Page Load
+        AddReadMore();
+    });
 
-        $(document).on('click', '.readmore', function() {
-            // i++;
-            $(this).html('');
-            // if (i % 2 != 0) {
-            //     $(this).html(' ...less');
-            // } else {
-            //     $(this).html(' ...more');
-            // }
-            // $(this).next('.readmore').html('');
-            // $(this).next('.readmore').fadeOut("400");
-            $(this).next('.more-review').slideToggle(400);
 
-        })
-    })
+    // $(function() {
+
+    //     var maxL = 40;
+    //     var i = 0;
+    //     $('.content').each(function() {
+
+    //         var text = $(this).text();
+    //         if (text.length > maxL) {
+    //             var begin = text.substr(0, maxL),
+    //                 end = text.substr(maxL);
+
+    //             $(this).html(begin)
+    //                 .append($('<a class="readmore"/>').html(' ...more'))
+    //                 .append($('<div class="more-review" />').html(end));
+    //         }
+    //     });
+
+    //     $(document).on('click', '.readmore', function() {
+    //         // i++;
+    //         $(this).html('');
+    //         // if (i % 2 != 0) {
+    //         //     $(this).html(' ...less');
+    //         // } else {
+    //         //     $(this).html(' ...more');
+    //         // }
+    //         // $(this).next('.readmore').html('');
+    //         // $(this).next('.readmore').fadeOut("400");
+    //         $(this).next('.more-review').slideToggle(400);
+
+    //     })
+    // })
 </script>
 <!-- end for see more -->
 <?php $this->load->view('partials/_modal_rate_product'); ?>
