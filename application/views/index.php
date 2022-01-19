@@ -634,6 +634,12 @@
         font-family: 'poppins';
         font-size: 17px;
     }
+
+    .freeship-close {
+        position: absolute;
+        top: 9px !important;
+        right: 5px !important;
+    }
 </style>
 <!-- <style>
     .home-testimonial {
@@ -1041,7 +1047,7 @@
             <h3 class="find-your-seller" id="top_picks">Top Picks</h3>
             <div class="row row-product shop-by" id="top-picks-container-2">
                 <!--print products-->
-                <?php if (($this->auth_check) && (count($top_picks) >= 5)) : ?>                 
+                <?php if (($this->auth_check) && (count($top_picks) >= 5)) : ?>
                     <?php foreach ($top_picks as $product) : ?>
                         <?php if ($product->is_shop_open == "1") :
                         ?>
@@ -1058,7 +1064,7 @@
                             <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">
                                 <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
                             </div>
-                            <?php endif;
+                        <?php endif;
                         ?>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -1187,6 +1193,7 @@
         <div class="modal-dialog modal-dialog-centered login-modal locate-modal" role="document">
             <div class="modal-content">
                 <div class="auth-box">
+                    <button type="button" class="close freeship-close" data-dismiss="modal"><i class="icon-close"></i></button>
                     <img src="assets/img/free_ship_banner.jpg" style="width:100%;">
                 </div>
             </div>
@@ -1228,13 +1235,6 @@
         }
     });
 </script>
-
-
-
-
-
-
-
 
 
 <script>
