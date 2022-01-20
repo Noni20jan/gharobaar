@@ -6,75 +6,79 @@
             <div id="main-slider-concern" class="main-slider">
                 <?php if (!empty($second_slider_items)) :
                     foreach ($second_slider_items as $item) : ?>
-                        <div class="item lazyload" data-bg="<?php echo base_url() . $item->image; ?>" data-bg-mobile="<?php echo base_url() . $item->image_mobile; ?>">
-                            <a href="<?php echo html_escape($item->link); ?>">
-                                <div class="container">
-                                    <div class="row row-slider-caption align-items-center">
-                                        <div class="col-12">
-                                            <div class="caption">
-                                                <?php if (!empty($item->title)) : ?>
-                                                    <h2 class="title" data-animation="<?php echo $item->animation_title; ?>" data-delay="0.1s" style="color: <?php echo $item->text_color; ?>"><?php echo html_escape($item->title); ?></h2>
-                                                <?php endif;
-                                                if (!empty($item->description)) : ?>
-                                                    <p class="description" data-animation="<?php echo $item->animation_description; ?>" data-delay="0.5s" style="color: <?php echo $item->text_color; ?>"><?php echo html_escape($item->description); ?></p>
-                                                <?php endif;
-                                                if (!empty($item->button_text)) : ?>
-                                                    <button class="btn btn-slider" data-animation="<?php echo $item->animation_button; ?>" data-delay="0.9s" style="background-color: <?php echo $item->button_color; ?>;border-color: <?php echo $item->button_color; ?>;color: <?php echo $item->button_text_color; ?>"><?php echo html_escape($item->button_text); ?></button>
-                                                <?php endif; ?>
+                        <?php if ($this->general_settings->banner_storage == 'aws_s3') : ?>
+                            <div class="item lazyload" data-bg="<?php echo other_base_url() . $item->image; ?>" data-bg-mobile="<?php echo other_base_url() . $item->image_mobile; ?>">
+                            <?php else : ?>
+                                <div class="item lazyload" data-bg="<?php echo base_url() . $item->image; ?>" data-bg-mobile="<?php echo base_url() . $item->image_mobile; ?>">
+                                <?php endif; ?>
+                                <a href="<?php echo html_escape($item->link); ?>">
+                                    <div class="container">
+                                        <div class="row row-slider-caption align-items-center">
+                                            <div class="col-12">
+                                                <div class="caption">
+                                                    <?php if (!empty($item->title)) : ?>
+                                                        <h2 class="title" data-animation="<?php echo $item->animation_title; ?>" data-delay="0.1s" style="color: <?php echo $item->text_color; ?>"><?php echo html_escape($item->title); ?></h2>
+                                                    <?php endif;
+                                                    if (!empty($item->description)) : ?>
+                                                        <p class="description" data-animation="<?php echo $item->animation_description; ?>" data-delay="0.5s" style="color: <?php echo $item->text_color; ?>"><?php echo html_escape($item->description); ?></p>
+                                                    <?php endif;
+                                                    if (!empty($item->button_text)) : ?>
+                                                        <button class="btn btn-slider" data-animation="<?php echo $item->animation_button; ?>" data-delay="0.9s" style="background-color: <?php echo $item->button_color; ?>;border-color: <?php echo $item->button_color; ?>;color: <?php echo $item->button_text_color; ?>"><?php echo html_escape($item->button_text); ?></button>
+                                                    <?php endif; ?>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                </a>
                                 </div>
-                            </a>
-                        </div>
-                <?php endforeach;
+                        <?php endforeach;
                 endif; ?>
-            </div>
-            <div id="main-slider-nav-concern" class="main-slider-nav">
-                <button class="prev"><i class="icon-arrow-left"></i></button>
-                <button class="next"><i class="icon-arrow-right"></i></button>
+                            </div>
+                            <div id="main-slider-nav-concern" class="main-slider-nav">
+                                <button class="prev"><i class="icon-arrow-left"></i></button>
+                                <button class="next"><i class="icon-arrow-right"></i></button>
+                            </div>
             </div>
         </div>
     </div>
-</div>
-<div class="container-fluid index-mobile-slider">
-    <div class="row">
-        <div class="slider-container" <?= $this->rtl == true ? 'dir="rtl"' : ''; ?>>
-            <div id="main-mobile-slider-concern" class="main-slider">
-                <?php if (!empty($second_slider_items)) :
-                    foreach ($second_slider_items as $item) :
-                        $image = $item->image_mobile;
-                        if (empty($image)) {
-                            $image = $item->image;
-                        } ?>
-                        <div class="item lazyload" data-bg="<?php echo base_url() . $image; ?>">
-                            <a href="<?php echo html_escape($item->link); ?>">
-                                <div class="container">
-                                    <div class="row row-slider-caption align-items-center">
-                                        <div class="col-12">
-                                            <div class="caption">
-                                                <?php if (!empty($item->title)) : ?>
-                                                    <h2 class="title" data-animation="<?php echo $item->animation_title; ?>" data-delay="0.1s" style="color: <?php echo $item->text_color; ?>"><?php echo html_escape($item->title); ?></h2>
-                                                <?php endif;
-                                                if (!empty($item->description)) : ?>
-                                                    <p class="description" data-animation="<?php echo $item->animation_description; ?>" data-delay="0.5s" style="color: <?php echo $item->text_color; ?>"><?php echo html_escape($item->description); ?></p>
-                                                <?php endif;
-                                                if (!empty($item->button_text)) : ?>
-                                                    <button class="btn btn-slider" data-animation="<?php echo $item->animation_button; ?>" data-delay="0.9s" style="background-color: <?php echo $item->button_color; ?>;border-color: <?php echo $item->button_color; ?>;color: <?php echo $item->button_text_color; ?>"><?php echo html_escape($item->button_text); ?></button>
-                                                <?php endif; ?>
+    <div class="container-fluid index-mobile-slider">
+        <div class="row">
+            <div class="slider-container" <?= $this->rtl == true ? 'dir="rtl"' : ''; ?>>
+                <div id="main-mobile-slider-concern" class="main-slider">
+                    <?php if (!empty($second_slider_items)) :
+                        foreach ($second_slider_items as $item) :
+                            $image = $item->image_mobile;
+                            if (empty($image)) {
+                                $image = $item->image;
+                            } ?>
+                            <div class="item lazyload" data-bg="<?php echo base_url() . $image; ?>">
+                                <a href="<?php echo html_escape($item->link); ?>">
+                                    <div class="container">
+                                        <div class="row row-slider-caption align-items-center">
+                                            <div class="col-12">
+                                                <div class="caption">
+                                                    <?php if (!empty($item->title)) : ?>
+                                                        <h2 class="title" data-animation="<?php echo $item->animation_title; ?>" data-delay="0.1s" style="color: <?php echo $item->text_color; ?>"><?php echo html_escape($item->title); ?></h2>
+                                                    <?php endif;
+                                                    if (!empty($item->description)) : ?>
+                                                        <p class="description" data-animation="<?php echo $item->animation_description; ?>" data-delay="0.5s" style="color: <?php echo $item->text_color; ?>"><?php echo html_escape($item->description); ?></p>
+                                                    <?php endif;
+                                                    if (!empty($item->button_text)) : ?>
+                                                        <button class="btn btn-slider" data-animation="<?php echo $item->animation_button; ?>" data-delay="0.9s" style="background-color: <?php echo $item->button_color; ?>;border-color: <?php echo $item->button_color; ?>;color: <?php echo $item->button_text_color; ?>"><?php echo html_escape($item->button_text); ?></button>
+                                                    <?php endif; ?>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-                <?php endforeach;
-                endif; ?>
-            </div>
-            <div id="main-mobile-slider-nav-concern" class="main-slider-nav">
-                <button class="prev"><i class="icon-arrow-left"></i></button>
-                <button class="next"><i class="icon-arrow-right"></i></button>
+                                </a>
+                            </div>
+                    <?php endforeach;
+                    endif; ?>
+                </div>
+                <div id="main-mobile-slider-nav-concern" class="main-slider-nav">
+                    <button class="prev"><i class="icon-arrow-left"></i></button>
+                    <button class="next"><i class="icon-arrow-right"></i></button>
+                </div>
             </div>
         </div>
     </div>
-</div>
