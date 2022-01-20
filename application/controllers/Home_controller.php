@@ -275,7 +275,7 @@ class Home_controller extends Home_Core_Controller
         $data["user_data"] = $this->profile_model->get_vendor_data();
         $data["promoted_products"] = $this->product_model->get_promoted_products_banner();
         $data["latest_products"] = get_latest_products($this->general_settings->index_latest_products_count);
-        $data["most_ordered_products"]=$this->product_model->get_most_ordered_products($this->general_settings->index_latest_products_count);
+        $data["most_ordered_products"] = $this->product_model->get_most_ordered_products($this->general_settings->index_latest_products_count);
         if ($this->auth_check) {
             $data["top_picks"] = $this->product_model->get_top_picks_products($this->general_settings->index_latest_products_count, $this->auth_user->id);
         }
@@ -288,6 +288,7 @@ class Home_controller extends Home_Core_Controller
         } else {
             $data["top_picks_products"] = $this->product_model->get_products_by_pageview();
         }
+        // var_dump($data["category_products"]);
         $data["promoted_products"] = get_promoted_products($this->promoted_products_limit, 0);
         $data["promoted_products_count"] = get_promoted_products_count();
         $data["slider_items"] = $this->slider_model->get_slider_items();
@@ -686,6 +687,7 @@ class Home_controller extends Home_Core_Controller
      */
     public function products()
     {
+        // var_dump($pagination['per_page']);
         get_method();
         $page = $this->input->get('urlpage', true);
         $data['title'] = trans("products");
@@ -697,7 +699,9 @@ class Home_controller extends Home_Core_Controller
         $data["query_string_object_array"] = convert_query_string_to_object_array($data["query_string_array"]);
         //get paginated posts
         $pagination = $this->paginate(generate_url("products"), $this->product_model->get_paginated_filtered_products_count($data["query_string_array"], null), $this->product_per_page);
-
+        // var_dump($pagination);
+        // die();
+        // $data["inventory_type"] = $this->product_model->add_meet();
         $data['products'] = $this->product_model->get_paginated_filtered_products($data["query_string_array"], null, $pagination['per_page'], $pagination['offset']);
         $data['product_count'] = $this->product_model->get_paginated_filtered_products_count($data["query_string_array"]);
         $data["categories"] = $this->parent_categories;
@@ -715,7 +719,8 @@ class Home_controller extends Home_Core_Controller
 
     public function infinite_scroll_products()
     {
-
+        // var_dump("fhdfdg");
+        // die();
         get_method();
         $data['title'] = trans("products");
         $data['description'] = trans("products") . " - " . $this->app_name;
@@ -1096,6 +1101,7 @@ class Home_controller extends Home_Core_Controller
         } else {
             $data["top_picks_products"] = $this->product_model->get_products_by_pageview();
         }
+        // var_dump($data["category_products"]);
         $data["promoted_products"] = get_promoted_products($this->promoted_products_limit, 0);
         $data["promoted_products_count"] = get_promoted_products_count();
 
@@ -1196,6 +1202,7 @@ class Home_controller extends Home_Core_Controller
         $data["categories"] = $this->parent_categories;
 
         $data["all_category_selected"] = $this->product_model->get_category_selected_concerned_occasion($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id, true);
+        var_dump($data["all_category_selected"]);
 
         if (empty($page)) {
             $this->load->view('partials/_header', $data);
@@ -1255,6 +1262,7 @@ class Home_controller extends Home_Core_Controller
         $data['products'] = $this->product_model->get_products_by_category($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type);
         $data['product_count'] = $this->product_model->get_paginated_filtered_products_by_category($data["query_string_array"], null, $type_id);
         $data["categories"] = $this->parent_categories;
+        // var_dump($type_id);die();
         if (empty($page)) {
             $this->load->view('partials/_header', $data);
             $this->load->view('product/products', $data);
@@ -1276,6 +1284,7 @@ class Home_controller extends Home_Core_Controller
         }
         $page = $this->input->get('urlpage', true);
         $category_id = $this->input->get('category_id', true);
+        // var_dump($page);
         $data['title'] = !empty($category->title_meta_tag) ? $category->title_meta_tag : $category->name;
         $data['description'] = $category->description;
         $data['keywords'] = $category->keywords;
@@ -1337,7 +1346,9 @@ class Home_controller extends Home_Core_Controller
 
             $data["similar_products"] = $this->product_model->get_product_category($data["product"]->id);
             $data['diff_prod'] = $this->product_model->get_different_product($data["product"]->id);
+            // var_dump($data["product"]);
             $data["latest_products"] = get_latest_products($this->general_settings->index_latest_products_count);
+            //$data['diff_prod'] = $this->product_model->get_different_product($data["product"]->id);
 
             if ($data['product']->status == 0 || $data['product']->visibility == 0) {
                 if (!$this->auth_check) {
@@ -1700,6 +1711,8 @@ class Home_controller extends Home_Core_Controller
             // 'min_order_value'=>$this->input->post('min_order_value', true),
 
 
+
+
             // 'avg_revenue' => $this->input->post('avg_revenue', true),
             'is_active_shop_request' => 1
         );
@@ -1708,8 +1721,98 @@ class Home_controller extends Home_Core_Controller
             $data["type_of_goods"] = $this->input->post('type_of_goods', true);
         }
 
+        if ($data["type_of_goods"] == "gharobaar_with_gst"  && $data["supplier_state"] == "Delhi") {
+            $data["shop_name"] = "Friends with Dreams Pvt Ltd";
+            $data["company_type"] = "Private Limited";
+            $data["gst_number"] = "07AAECF4068L1ZC";
+            if ($this->membership_model->approve_shop_opening_request($this->auth_user->id)) {
+                $thresh = array(
+                    'acc_holder_name' => 'Gharobaar',
+                    'account_number' => '054805001076',
+                    'ifsc_code' => 'ICIC0000548',
+                    'bank_branch' => "ICICI Tower, NBCC place"
+                );
+                $this->membership_model->add_bank_details($thresh);
+            } else {
+                $data["is_active_shop_request"] = 1;
+            }
+            if ($data["type_of_goods"] == "gharobaar_with_gst"  && $data["supplier_state"] == "Karnataka") {
+                $data["shop_name"] = "Friends with Dreams Pvt Ltd";
+                $data["company_type"] = "Private Limited";
+                $data["gst_number"] = "29AAECF4068L1Z6";
+                if ($this->membership_model->approve_shop_opening_request($this->auth_user->id)) {
+                    $thresh = array(
+                        'acc_holder_name' => 'Gharobaar',
+                        'account_number' => '054805001076',
+                        'ifsc_code' => 'ICIC0000548',
+                        'bank_branch' => "ICICI Tower, NBCC place"
+                    );
+                    $this->membership_model->add_bank_details($thresh);
+                } else {
+                    $data["is_active_shop_request"] = 1;
+                }
+            }
+            if ($data["type_of_goods"] == "gharobaar_with_gst"  && $data["supplier_state"] == "Maharashtra") {
+                $data["shop_name"] = "Friends with Dreams Pvt Ltd";
+                $data["company_type"] = "Private Limited";
+                $data["gst_number"] = "27AAECF4068L1ZA";
+                if ($this->membership_model->approve_shop_opening_request($this->auth_user->id)) {
+                    $thresh = array(
+                        'acc_holder_name' => 'Gharobaar',
+                        'account_number' => '054805001076',
+                        'ifsc_code' => 'ICIC0000548',
+                        'bank_branch' => "ICICI Tower, NBCC place"
+                    );
+                    $this->membership_model->add_bank_details($thresh);
+                } else {
+                    $data["is_active_shop_request"] = 1;
+                }
+            }
+        }
 
 
+
+        if ($data["shop_name"] == "Friends with Dreams Pvt Ltd" && $data["gst_number"] == "07AAECF4068L1ZC" && $data["supplier_state"] == "Delhi") {
+            if ($this->membership_model->approve_shop_opening_request($this->auth_user->id)) {
+
+
+                $thresh = array(
+                    'acc_holder_name' => 'Gharobaar',
+                    'account_number' => '054805001076',
+                    'ifsc_code' => 'ICIC0000548',
+                    'bank_branch' => "ICICI Tower, NBCC place"
+                );
+                $this->membership_model->add_bank_details($thresh);
+            } else {
+                $this->membership_model->add_bank_details($data);
+            }
+        }
+        if ($data["shop_name"] == "Friends with Dreams Pvt Ltd" && $data["gst_number"] == "29AAECF4068L1Z6" && $data["supplier_state"] == "Karnataka") {
+            if ($this->membership_model->approve_shop_opening_request($this->auth_user->id)) {
+                $thresh = array(
+                    'acc_holder_name' => 'Gharobaar',
+                    'account_number' => '054805001076',
+                    'ifsc_code' => 'ICIC0000548',
+                    'bank_branch' => "ICICI Tower, NBCC place"
+                );
+                $this->membership_model->add_bank_details($thresh);
+            } else {
+                $this->membership_model->add_bank_details($data);
+            }
+        }
+        if ($data["shop_name"] == "Friends with Dreams Pvt Ltd" && $data["gst_number"] == "27AAECF4068L1ZA" && $data["supplier_state"] == "Maharashtra") {
+            if ($this->membership_model->approve_shop_opening_request($this->auth_user->id)) {
+                $thresh = array(
+                    'acc_holder_name' => 'Gharobaar',
+                    'account_number' => '054805001076',
+                    'ifsc_code' => 'ICIC0000548',
+                    'bank_branch' => "ICICI Tower, NBCC place"
+                );
+                $this->membership_model->add_bank_details($thresh);
+            } else {
+                $this->membership_model->add_bank_details($data);
+            }
+        }
         $data['image_pancard'] = "data:image/png;base64," . (trim($data['image_pancard'], "[removed]"));
 
         //unique seller id
@@ -2199,7 +2302,8 @@ class Home_controller extends Home_Core_Controller
         $data['post_user'] = $this->auth_model->get_user($data['post']->user_id);
         $data["category"] = $this->blog_category_model->get_category($data['post']->category_id);
         $data['latest_products'] = $this->product_admin_model->get_latest_products(5);
-
+        // var_dump($data['post']->category_id);
+        // die();
         $data['sub_category'] = $this->blog_model->get_sub_category_id($data['post']->category_id);
         $data['sub_category1'] = $this->blog_model->get_sub_category_id($data['sub_category'][0]->id);
         $data['latest_produts'] = $this->product_admin_model->get_product_id($data['sub_category1'][0]->id, 5);
@@ -2828,6 +2932,7 @@ class Home_controller extends Home_Core_Controller
         $response = curl_exec($curl);
 
         $status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+        // var_dump($status);
 
         curl_close($curl);
 
