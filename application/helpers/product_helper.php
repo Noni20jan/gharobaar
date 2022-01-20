@@ -850,6 +850,8 @@ if (!function_exists('get_query_string_array')) {
 
         array_push($array_filter_keys, "availability");
 
+        array_push($array_filter_keys, "category");
+
         $queries = array();
         $array_queries = array();
         $str = $_SERVER["QUERY_STRING"];

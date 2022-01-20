@@ -800,6 +800,20 @@ class Product_model extends Core_Model
         $seller_type = remove_special_characters($this->input->get("seller_type", true));
         $search = remove_special_characters(trim($this->input->get('search', true)));
 
+        //--------  category filter  --------
+        $filterCategory = input_get('category');
+        $filter_category_ids = array();
+        $filter_category_id_arr = explode(",", $filterCategory);
+        // return var_dump($filter_category_id_arr);
+        if (!empty($filter_category_id_arr)) {
+            foreach ($filter_category_id_arr as $cat) {
+                $filter_categories = $this->category_model->get_subcategories_tree($cat, false);
+                $filter_category_ids = array_merge(get_ids_from_array($filter_categories), $filter_category_ids);
+            }
+
+            // return var_dump($filter_category_ids);
+        }
+
 
 
         if (!empty($search)) {
@@ -836,7 +850,8 @@ class Product_model extends Core_Model
 
 
             foreach ($query_string_array as $key => $array_values) {
-                if ($key != "product_type" && $key != "meal_type" && $key != "cash_on_delivery" && $key != "blouse_details" && $key != "pet_age" && $key != "available"  && $key != "gender" && $key != "discount"  && $key != "food_type" && $key != "jewellery_type"  && $key != "rating"  && $key != "p_min" && $key != "p_max" && $key != "sort" && $key != "search" && $key != "seller_type" && $key != "origin_of_product" && $key != "food_preference" && $key != "available_for_return_or_exchange" && $key != "availability" && $key != "suitable_for" && $key != "is_personalised") {
+                $keyExistArr = array("product_type", "meal_type", "cash_on_delivery", "blouse_details", "pet_age", "available", "gender", "discount", "food_type", "jewellery_type", "rating", "p_min", "p_max", "sort", "search", "seller_type", "origin_of_product", "food_preference", "available_for_return_or_exchange", "availability", "suitable_for", "is_personalised", "category");
+                if (!in_array($key, $keyExistArr)) {
                     $item = new stdClass();
                     $item->key = $key;
                     $updated_array_values = array();
@@ -884,6 +899,12 @@ class Product_model extends Core_Model
             else :
                 $this->build_query("active", false, true);
             endif;
+        }
+
+
+        //filter for the category
+        if (!empty($filter_category_ids)) {
+            $this->db->where_in("products.category_id", $filter_category_ids, FALSE);
         }
 
 

@@ -828,24 +828,42 @@ foreach ($sellers as $seller) {
                                                 <?php endif; ?>
                                                 <?php foreach ($categories as $item) :
                                                     if ($item->actionable_status) :
-                                                        if (empty($all_category_selected)) :
+                                                        // if (empty($all_category_selected)) :
                                                 ?>
-                                                            <li<?= !empty($category->has_subcategory) ? ' class="li-sub"' : ''; ?>>
+                                                        <!-- <li<?= !empty($category->has_subcategory) ? ' class="li-sub"' : ''; ?>>
                                                                 <a href="<?= generate_category_url($item) . generate_filter_url($query_string_array, '', ''); ?>" <?= !empty($category) && $category->id == $item->id ? 'class="active"' : ''; ?>><?= category_name($item); ?></a>
-                                                                </li>
-                                                                <?php
-                                                            else :
-                                                                if (in_array($item->id, $all_category_selected)) :
-                                                                ?>
+                                                                </li> -->
 
-                                                                    <li<?= !empty($category->has_subcategory) ? ' class="li-sub"' : ''; ?>>
-                                                                        <a href="<?= generate_category_url($item) . generate_filter_url($query_string_array, '', ''); ?>" <?= !empty($category) && $category->id == $item->id ? 'class="active"' : ''; ?>><?= category_name($item); ?></a>
-                                                                        </li>
+                                                        <li>
+                                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'category', $item->id); ?>">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'category', $item->id) ? 'checked' : ''; ?>>
+                                                                    <label class="custom-control-label"><?= category_name($item); ?></label>
+                                                                </div>
+                                                            </a>
+                                                        </li>
                                                         <?php
-                                                                endif;
-                                                            endif;
-                                                        endif;
-                                                    endforeach; ?>
+                                                        // else :
+                                                        // if (in_array($item->id, $all_category_selected)) :
+                                                        ?>
+
+                                                        <!-- <li<?= !empty($category->has_subcategory) ? ' class="li-sub"' : ''; ?>>
+                                                                    <a href="<?= generate_category_url($item) . generate_filter_url($query_string_array, '', ''); ?>" <?= !empty($category) && $category->id == $item->id ? 'class="active"' : ''; ?>><?= category_name($item); ?></a>
+                                                                    </li> -->
+
+                                                        <!-- <li>
+                                                                    <a href="<?= current_url() . generate_filter_url($query_string_array, 'category', $item->id); ?>">
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'category', $item->id) ? 'checked' : ''; ?>>
+                                                                            <label class="custom-control-label"><?= category_name($item); ?></label>
+                                                                        </div>
+                                                                    </a>
+                                                                </li> -->
+                                                <?php
+                                                    // endif;
+                                                    // endif;
+                                                    endif;
+                                                endforeach; ?>
                                             </ul>
                                         </div>
                                     </div>
