@@ -528,8 +528,6 @@ class Email_model extends CI_Model
 
         try {
             $response = $sendgrid->send($email);
-            var_dump($response);
-            die();
             print $response->statusCode() . "\n";
             print_r($response->headers());
             print $response->body() . "\n";
@@ -573,8 +571,6 @@ class Email_model extends CI_Model
         }');
         $subject = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
         // var_dump($subject);
-        // die();
-        // $email->addbcc($bcc);
         $email->addContent("text/html", $subject);
 
         // $email->addContent("text/plain", "and easy to do anywhere, even with PHP");
