@@ -29,7 +29,11 @@
 
                                 <div class="col-sm-6 col-index-bn index_bn_<?= $index_banners_array[$banner_location][$i]->id; ?>">
                                     <a href="<?= $index_banners_array[$banner_location][$i]->banner_url; ?>">
-                                        <img src="<?= IMG_BASE64_1x1; ?>" data-src="<?= base_url() . $index_banners_array[$banner_location][$i]->banner_image_path; ?>" alt="banner" class="lazyload img-fluid" style="border-radius:20px;">
+                                        <?php if ($this->general_settings->banner_storage == 'aws_s3') : ?>
+                                            <img src="<?= IMG_BASE64_1x1; ?>" data-src="<?= other_base_url() . $index_banners_array[$banner_location][$i]->banner_image_path; ?>" alt="banner" class="lazyload img-fluid" style="border-radius:20px;">
+                                        <?php else : ?>
+                                            <img src="<?= IMG_BASE64_1x1; ?>" data-src="<?= base_url() . $index_banners_array[$banner_location][$i]->banner_image_path; ?>" alt="banner" class="lazyload img-fluid" style="border-radius:20px;">
+                                        <?php endif; ?>
                                     </a>
                                 </div>
                             <?php endif;
@@ -40,7 +44,11 @@
                                 <?php if ($index_banners_array[$banner_location][$i]->banner_location == $banner_location) : ?>
                                     <div class="col-sm-6 col-index-bn index_bn_<?= $index_banners_array[$banner_location][$i]->id; ?>">
                                         <a href="<?= $index_banners_array[$banner_location][$i]->banner_url; ?>">
-                                            <img src="<?= IMG_BASE64_1x1; ?>" data-src="<?= base_url() . $index_banners_array[$banner_location][$i]->banner_image_path; ?>" alt="banner" class="lazyload img-fluid" style="border-radius:20px;">
+                                            <?php if ($this->general_settings->banner_storage == 'aws_s3') : ?>
+                                                <img src="<?= IMG_BASE64_1x1; ?>" data-src="<?= other_base_url() . $index_banners_array[$banner_location][$i]->banner_image_path; ?>" alt="banner" class="lazyload img-fluid" style="border-radius:20px;">
+                                            <?php else : ?>
+                                                <img src="<?= IMG_BASE64_1x1; ?>" data-src="<?= base_url() . $index_banners_array[$banner_location][$i]->banner_image_path; ?>" alt="banner" class="lazyload img-fluid" style="border-radius:20px;">
+                                            <?php endif; ?>
                                         </a>
                                     </div>
                                 <?php endif; ?>
