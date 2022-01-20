@@ -1948,7 +1948,7 @@ class Admin_controller extends Admin_Core_Controller
 
     public function seller_commission()
     {
-        $data['title'] = trans("sale_data");
+        $data['title'] = trans("seller_commission");
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/reports/seller_commision_data', $data);
         $this->load->view('admin/includes/_footer');
@@ -1990,7 +1990,7 @@ class Admin_controller extends Admin_Core_Controller
     }
     public function cash_free_charges_report()
     {
-        $data['title'] = trans("cash_free_charges_report");
+        $data['title'] = trans("cash_free_charges_reports");
 
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/reports/cash_free_charges_report', $data);
@@ -2027,8 +2027,8 @@ class Admin_controller extends Admin_Core_Controller
         $from_date = $this->input->post('from_date', true);
         $to_date = $this->input->post('to_date', true);
 
-        $format_tds = $this->reports_model->tds_report($from_date, $to_date);
-        echo json_encode($format_tds);
+        $format_tds_report = $this->reports_model->tds_report($from_date, $to_date);
+        echo json_encode($format_tds_report);
     }
     public function format_seller_commision()
     {

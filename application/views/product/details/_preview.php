@@ -79,6 +79,10 @@ if (!empty($product_images)) {
     .product-slider-content {
         scrollbar-color: #fff0 #fff0;
     }
+
+    .plyr--video {
+        max-height: 355px;
+    }
 </style>
 <?php if ($image_count <= 1 && (!empty($video) || !empty($audio))) :
     if (!empty($video)) : ?>

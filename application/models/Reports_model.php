@@ -17,7 +17,7 @@ class Reports_model extends CI_Model
         $to_date = $to_date . " 23:59:59";
         $sql = "SELECT distinct
         op.created_at as 'Order_Date',
-        op.order_id as 'GBT_Order_No.',
+        op.order_id as 'GBT_Order_No',
         cast(sod.created_at AS date) as 'Schedule_Shipment_Date',
         cast(sod.created_at AS time) as 'Schedule_Shipment_Time',
         sod.pickup_scheduled_date as 'Pickup_Schedule_Date',
@@ -38,11 +38,11 @@ class Reports_model extends CI_Model
         sod.courier_company_name as 'Courier_Service_Provider',
         format(os.total_shipping_cost/100,2) as 'Shipping_amount' ,
         format(os.total_cod_cost/100,2) as 'COD_charges',
-        NULL as 'Status_COD_Remittance',
-        NULL as 'COD_pending_with_Shiprocket',
+        NULL as 'Status_of_COD_Remittance',
+	NULL as 'COD_pending_with_Shiprocket',
         sod.shipment_order_id as 'Shiprocket_Order_ID',
         sod.awb_code as 'Shiprockets_AWB_Number',
-        NULL as 'Cancellation_charges'
+        NULL as 'Cancellation_chrges'
     FROM order_products as op,
         products as p,
         order_supplier as os,
@@ -57,8 +57,8 @@ class Reports_model extends CI_Model
     AND op.order_id = os.order_id
     AND op.seller_id = os.seller_id
     AND op.order_id = oship.order_id
-    AND op.order_date>= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
-     AND op.order_date>= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
+    AND op.created_at >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
+      AND op.created_at <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
     order by op.order_id";
         $query = $this->db->query($sql);
         return $query->result();
