@@ -1996,6 +1996,14 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/reports/cash_free_charges_report', $data);
         $this->load->view('admin/includes/_footer');
     }
+    public function cod_charges_report()
+    {
+        $data['title'] = trans("cod_charges_report");
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/reports/cod_charges_report', $data);
+        $this->load->view('admin/includes/_footer');
+    }
 
 
     public function format_sale_data()
@@ -2052,6 +2060,14 @@ class Admin_controller extends Admin_Core_Controller
         $to_date = $this->input->post('to_date', true);
 
         $cash_free = $this->reports_model->cash_free_charges($from_date, $to_date);
+        echo json_encode($cash_free);
+    }
+    public function format_cod_charges_report()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $cash_free = $this->reports_model->format_cod_charges_report($from_date, $to_date);
         echo json_encode($cash_free);
     }
 }

@@ -256,9 +256,10 @@ class Reports_model extends CI_Model
 
     public function get_sales_data_reports($start_date, $end_date)
     {
+        $seller_id = $this->auth_user->id;
         $end_date = $end_date . " 23:59:59";
-        $sql = "SELECT * FROM sale_data_report where order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s') AND order_date <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
-         and order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing')";
+        $sql = "SELECT * FROM sale_data_report where order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s') AND order_date <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s') AND seller_id=$seller_id 
+         and order_status  NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing')";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -416,7 +417,7 @@ class Reports_model extends CI_Model
         format(csp.net_seller_payable/100,2) AS 'Seller_Payable',
         csp.payout_initiated AS 'Payout_Initiated',
         format(csp.commission_amount/100,2) AS 'Commission_Amount',
-        format(csp.commission_amount_with_gst/100,2) AS 'Commission_Amount_With_GST',
+        format(csp.commission_amount_with_gst/100,2) AS 'Commission_Amount_With GST',
         format(csp.shipping_charge_to_gharobaar/100,2) AS 'Shipping_charges_to_gharobaar',
         format(csp.tcs_amount/100,2) AS 'TCS_Amount',
         format(csp.tds_amount/100,2) AS 'TDS_Amount',
@@ -424,11 +425,18 @@ class Reports_model extends CI_Model
         format(csp.gateway_amount_with_gst/100,2) AS 'Gateway_Amount_With_GST',
         trx.cashfree_order_id AS 'Cashfree_order_ID',
         trx.payment_id AS 'Cashfree_Payment_ID',
-        format(ref.refund_amount,2) AS 'Refund_Amount'
+        format(ref.refund_amount,2) AS 'Refund_Amount',
+         o.offer_id,
+        FORMAT(o.coupon_discount / 100, 2) AS 'Coupon_Discount',
+        co.type AS 'Offer_Type',
+        co.offer_code AS 'Offer_Code',
+        co.name AS 'Offer_Name'
     FROM
         orders AS o
             JOIN
-        order_products AS op ON o.id = op.order_id,
+        order_products AS op ON o.id = op.order_id
+        LEFT JOIN
+        cms_offers AS co ON o.offer_id = co.id,
         orders AS o2
             LEFT JOIN
         refunds AS ref ON o2.id = ref.order_id,
@@ -450,11 +458,88 @@ class Reports_model extends CI_Model
             AND seller.id = csp.vendorId
             AND o.id = trx.order_id
             AND o.created_at >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
-            AND o.created_at < STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s') 
+            AND o.created_at < STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
             AND buyer.id != seller.id
             AND csp.is_active = 1
             AND csp.is_completed = 1
-            AND o.id = o2.id";
+            AND o.id = o2.id;";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    public function format_cod_charges_report($start_date, $end_date)
+    {
+        $end_date = $end_date . " 23:59:59";
+        $sql = "SELECT DISTINCT
+        o.created_at AS 'Order_Date',
+        o.id AS 'Order_ID',
+        o.payment_method AS 'Paymen_Mode',
+        csp.commission_rate AS 'Commission_Rate',
+        op.order_status AS 'Status',
+        op.buyer_id AS 'Buyer_ID',
+        IFNULL(CONCAT(buyer.first_name, ' ', buyer.last_name),
+                buyer.first_name) AS 'Buyer_Name',
+        buyer.username AS 'Buyer_Username',
+        buyer.phone_number AS 'Buyer_Phone_Number',
+        buyer.email AS 'Buyer_Email',
+        seller.brand_name AS 'Brand_Name',
+        seller.pan_number AS 'Seller_PAN_Number',
+        CASE
+            WHEN MID(seller.pan_number, 4, 1) = 'P' THEN 'Personal'
+            WHEN MID(seller.pan_number, 4, 1) = 'I' THEN 'Individual'
+            WHEN MID(seller.pan_number, 4, 1) = 'H' THEN 'HUF'
+            ELSE 'Others'
+        END AS 'PAN_Type',
+        seller.shop_name AS 'Seller_Shop_Name',
+        seller.email AS 'Seller_E_mail',
+        p.sku AS 'Product_SKU',
+        op.product_title AS 'Product_Title',
+        op.product_gst_rate AS 'Product_GST_Rate',
+        op.product_quantity AS 'Product_Quatity',
+        FORMAT(op.product_total_price / 100, 2) AS 'Product_Total_Price',
+        FORMAT(os.total_shipping_cost / 100, 2) AS 'Shipping_Cost',
+        FORMAT(o.price_total / 100, 2) AS 'Amount_Received ',
+        FORMAT(csp.net_seller_payable / 100, 2) AS 'Seller_Payable',
+        csp.payout_initiated AS 'Payout_Initiated',
+        FORMAT(csp.commission_amount / 100, 2) AS 'Commission_Amount',
+        FORMAT(csp.commission_amount_with_gst / 100,
+            2) AS 'Commission_Amount_With GST',
+        FORMAT(csp.shipping_charge_to_gharobaar / 100,
+            2) AS 'Shipping_charges_to_gharobaar',
+        FORMAT(csp.tcs_amount / 100, 2) AS 'TCS_Amount',
+        FORMAT(csp.tds_amount / 100, 2) AS 'TDS_Amount',
+        FORMAT(csp.cod_charge / 100, 2) AS 'COD_Amount',
+        FORMAT(csp.cod_charges_without_gst / 100,
+            2) AS 'COD_Amount_Without_GST',
+        o.offer_id,
+        FORMAT(o.coupon_discount / 100, 2) AS 'Coupon_Discount',
+        co.type AS 'Offer_Type',
+        co.offer_code AS 'Offer_Code',
+        co.name AS 'Offer_Name'
+    FROM
+        orders AS o
+            JOIN
+        order_products AS op ON o.id = op.order_id
+            LEFT JOIN
+        cms_offers AS co ON o.offer_id = co.id,
+        users AS buyer,
+        users AS seller,
+        products AS p,
+        order_supplier AS os,
+        cod_seller_payable AS csp
+    WHERE
+        op.seller_id = seller.id
+            AND op.buyer_id = buyer.id
+            AND o.buyer_id = op.buyer_id
+            AND op.product_id = p.id
+            AND o.id = os.order_id
+            AND op.seller_id = os.seller_id
+            AND seller.id = os.seller_id
+            AND o.id = csp.order_id
+            AND seller.id = csp.vendorId
+             AND o.created_at >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
+             AND o.created_at < STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+            AND buyer.id != seller.id
+            AND csp.is_active = 1";
         $query = $this->db->query($sql);
         return $query->result();
     }

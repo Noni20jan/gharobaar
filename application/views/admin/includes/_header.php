@@ -699,6 +699,9 @@
                             <a href="<?php echo admin_url(); ?>cash-free-charges-report"><?php echo trans("cash_free_charges_reports"); ?></a>
                         </li>
                         <li class="nav-send-email-subscribers">
+                            <a href="<?php echo admin_url(); ?>cod-charges-report"><?php echo trans("cod_charges_report"); ?></a>
+                        </li>
+                        <li class="nav-send-email-subscribers">
                             <a href="<?php echo admin_url(); ?>tcs-report"><?php echo trans("tcs_report"); ?></a>
                         </li>
                         <li class="nav-send-email-subscribers">
