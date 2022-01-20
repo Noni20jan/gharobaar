@@ -12,6 +12,7 @@
 <style>
     .dt-buttons {
         left: 20%;
+        content: "expport to excel";
     }
 
     @media only screen and (max-width: 768px) {
@@ -21,18 +22,18 @@
         }
     }
 
-
-
     .index-table {
-        max-height: 800px;
+        max-height: 1000px;
         overflow-x: auto;
     }
 </style>
+
+
 <div class="box-body index-table">
     <div class="row">
         <div class="table-responsive">
             <div class="filter">
-                <form name="cash_free" id="cash_free" action="admin_controller/cash_free_charges">
+                <form name="cod_charges" id="cod_charges" action="admin_controller/format_cod_charges_report">
                     <div class="item-table-filter">
                         <label><?php echo trans("from_date"); ?></label>
                         <input name="from_date" class="form-control" type="date" id="my_date_picker1" autocomplete="off">
@@ -47,7 +48,6 @@
                     </div>
                 </form>
 
-
                 <table class="table table-bordered table-striped button" id="extend_datatable" role="grid">
                     <thead>
                         <tr role="row">
@@ -59,52 +59,48 @@
                             <th>Buyer ID</th>
                             <th>Buyer Name</th>
                             <th>Buyer Username</th>
-                            <th>Buyer Phone_Number</th>
+                            <th>Buyer Phone Number</th>
                             <th>Buyer Email</th>
                             <th>Brand Name</th>
-                            <th>Seller PAN Number</th>
+                            <th>Seller PAN_Number</th>
+                            <th>PAN Type</th>
                             <th>Seller Shop Name</th>
-                            <th>Seller E-Mail</th>
+                            <th>Seller E mail</th>
                             <th>Product SKU</th>
                             <th>Product Title</th>
-                            <th>Product GST_Rate</th>
-                            <th>Product Total_Price</th>
+                            <th>Product GST Rate</th>
+                            <th>Product Quatity</th>
+                            <th>Product Total Price</th>
                             <th>Shipping Cost</th>
-                            <th>Amount Received</th>
+                            <th>Amount Received </th>
                             <th>Seller Payable</th>
                             <th>Payout Initiated</th>
                             <th>Commission Amount</th>
                             <th>Commission Amount With GST</th>
-                            <th>Shipping Charges To Gharobaar</th>
+                            <th>Shipping charges to gharobaar</th>
                             <th>TCS Amount</th>
                             <th>TDS Amount</th>
-                            <th>Gateway Amount</th>
-                            <th>Gateway Amount With_GST</th>
-                            <th>Cashfree order ID</th>
-                            <th>Cashfree Payment ID</th>
-
+                            <th>COD Amount</th>
+                            <th>COD Amount Without GST</th>
+                            <th>Coupon Discount</th>
+                            <th>Offer Type</th>
+                            <th>Offer Code</th>
+                            <th>Offer Name</th>
                         </tr>
                     </thead>
-                    <tbody id="cash_free_data">
+                    <tbody id="cod_charges_report">
 
                     </tbody>
                 </table>
 
+
             </div>
         </div>
     </div>
+
 </div>
-
 <script>
-    $(document).ready(function() {
-        table = $('.button').DataTable({
-
-
-        });
-
-    });
-
-    $("#cash_free").submit(function(e) {
+    $("#cod_charges").submit(function(e) {
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
 
@@ -136,7 +132,7 @@
                 var len = Json_data.length;
                 if (len != 0) {
                     for (var i = 0; i < len; i++) {
-                        $('#cash_free_data').append("<tr><td>" + Json_data[i].Order_Date + "</td><td>" + Json_data[i].Order_ID + "</td><td>" + Json_data[i].Payment_Mode + "</td><td>" + Json_data[i].Commission_Rate + "</td><td>" + Json_data[i].Status + "</td><td>" + Json_data[i].Buyer_ID + "</td><td>" + Json_data[i].Buyer_Name + "</td><td>" + Json_data[i].Buyer_Username + "</td><td>" + Json_data[i].Buyer_Phone_Number + "</td><td>" + Json_data[i].Buyer_Email + "</td><td>" + Json_data[i].Brand_Name + "</td><td>" + Json_data[i].Seller_PAN_Number + "</td><td>" + Json_data[i].Seller_Shop_Name + "</td><td>" + Json_data[i].Seller_E_mail + "</td><td>" + Json_data[i].Product_SKU + "</td><td>" + Json_data[i].Product_Title + "</td><td>" + Json_data[i].Product_GST_Rate + "</td><td>" + Json_data[i].Product_Total_Price + "</td><td>" + Json_data[i].Shipping_Cost + "</td><td>" + Json_data[i].Amount_Received + "</td><td>" + Json_data[i].Seller_Payable + "</td><td>" + Json_data[i].Payout_Initiated + "</td><td>" + Json_data[i].Commission_Amount + "</td><td>" + Json_data[i].Commission_Amount_With_GST + "</td><td>" + Json_data[i].Shipping_charges_to_gharobaar + "</td><td>" + Json_data[i].TCS_Amount + "</td><td>" + Json_data[i].TDS_Amount + "</td><td>" + Json_data[i].Gateway_Amount + "</td><td>" + Json_data[i].Gateway_Amount_With_GST + "</td><td>" + Json_data[i].Cashfree_order_ID + "</td><td>" + Json_data[i].Cashfree_Payment_ID + "</td></tr>")
+                        $('#cod_charges_report').append("<tr><td>" + Json_data[i].Order_Date + "</td><td>" + Json_data[i].Order_ID + "</td><td>" + Json_data[i].Payment_Mode + "</td><td>" + Json_data[i].Commission_Rate + "</td><td>" + Json_data[i].Status + "</td><td>" + Json_data[i].Buyer_ID + "</td><td>" + Json_data[i].Buyer_Name + "</td><td>" + Json_data[i].Buyer_Username + "</td><td>" + Json_data[i].Buyer_Phone_Number + "</td><td>" + Json_data[i].Buyer_Email + "</td><td>" + Json_data[i].Brand_Name + "</td><td>" + Json_data[i].Seller_PAN_Number + "</td><td>" + Json_data[i].PAN_Type + "</td><td>" + Json_data[i].Seller_Shop_Name + "</td><td>" + Json_data[i].Seller_E_mail + "</td><td>" + Json_data[i].Product_SKU + "</td><td>" + Json_data[i].Product_Title + "</td><td>" + Json_data[i].Product_GST_Rate + "</td><td>" + Json_data[i].Product_Quatity + "</td><td>" + Json_data[i].Product_Total_Price + "</td><td>" + Json_data[i].Shipping_Cost + "</td><td>" + Json_data[i].Amount_Received + "</td><td>" + Json_data[i].Seller_Payable + "</td><td>" + Json_data[i].Payout_Initiated + "</td><td>" + Json_data[i].Commission_Amount + "</td><td>" + Json_data[i].Commission_Amount_With_GST + "</td><td>" + Json_data[i].Shipping_charges_to_gharobaar + "</td><td>" + Json_data[i].TCS_Amount + "</td><td>" + Json_data[i].TDS_Amount + "</td><td>" + Json_data[i].COD_Amount + "</td><td>" + Json_data[i].COD_Amount_Without_GST + "</td><td>" + Json_data[i].Coupon_Discount + "</td><td>" + Json_data[i].Offer_Type + "</td><td>" + Json_data[i].Offer_Code + "</td><td>" + Json_data[i].Offer_Name + "</td></tr>")
                     }
                 }
                 $('#extend_datatable').dataTable({

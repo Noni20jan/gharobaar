@@ -529,6 +529,7 @@ $route[getr('admin', $rts) . '/shipping-cod-charges'] = 'admin_controller/shippi
 $route[getr('admin', $rts) . '/tcs-report'] = 'admin_controller/tcs_report';
 $route[getr('admin', $rts) . '/tds-report'] = 'admin_controller/tds_report';
 $route[getr('admin', $rts) . '/cash-free-charges-report'] = 'admin_controller/cash_free_charges_report';
+$route[getr('admin', $rts) . '/cod-charges-report'] = 'admin_controller/cod_charges_report';
 $route[getr('admin', $rts) . '/seller-commission-data'] = 'admin_controller/seller_commission';
 
 //seller pannel reports
