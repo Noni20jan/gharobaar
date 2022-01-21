@@ -541,6 +541,11 @@ class Membership_model extends CI_Model
         $this->db->where('id', $this->auth_user->id);
         return $this->db->update('users', $data);
     }
+    public function add_bank_details($data)
+    {
+        $this->db->update('users', $data);
+        $this->db->where('id', $this->auth_user->id);
+    }
 
     //approve shop opening request  but not vendor
     // public function approve_shop_opening_request_copy($user_id)
@@ -666,10 +671,12 @@ class Membership_model extends CI_Model
         return false;
     }
 
-    public function save_ship_type($data){
+    public function save_ship_type($data)
+    {
         $this->db->insert('seller_shipping_provider', $data);
     }
-    public function save_ship_charge_yes($data){
+    public function save_ship_charge_yes($data)
+    {
         $this->db->insert('seller_shipping_threshold', $data);
     }
 }

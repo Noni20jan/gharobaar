@@ -375,8 +375,7 @@
     <div class="row">
       <div class="col-sm-12 m-b-30 groove">
         <label id="label1">Your Bank Details</label>
-        <?php if (($this->auth_user->gst_number == '07AAECF4068L1ZC' || $this->auth_user->gst_number == '29AAECF4068L1Z6' || $this->auth_user->gst_number == '27AAECF4068L1ZA') && ($this->auth_user->supplier_state == "Karnataka" || $this->auth_user->supplier_state == "Delhi" || $this->auth_user->supplier_state == "Maharashtra") && $this->auth_user->shop_name == "Friends With Dreams" && $this->auth_user->company_type == "Private Limited") : ?>
-
+        <?php if (($this->auth_user->gst_number == '07AAECF4068L1ZC' || $this->auth_user->gst_number == '29AAECF4068L1Z6' || $this->auth_user->gst_number == '27AAECF4068L1ZA') && ($this->auth_user->supplier_state == "Karnataka" || $this->auth_user->supplier_state == "Delhi" || $this->auth_user->supplier_state == "Maharashtra") && $this->auth_user->shop_name == "Friends with Dreams Pvt Ltd" && $this->auth_user->company_type == "Private Limited") : ?>
           <div class="form-group">
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Account Holder Name<span class="Validation_error"> *</span></label></div>
@@ -396,7 +395,7 @@
             </div>
           </div>
         <?php endif; ?>
-        <?php if (($this->auth_user->gst_number == '07AAECF4068L1ZC' || $this->auth_user->gst_number == '29AAECF4068L1Z6' || $this->auth_user->gst_number == '27AAECF4068L1ZA') && ($this->auth_user->supplier_state == "Karnataka" || $this->auth_user->supplier_state == "Delhi" || $this->auth_user->supplier_state == "Maharashtra") && $this->auth_user->shop_name == "Friends With Dreams" && $this->auth_user->company_type == "Private Limited") : ?>
+        <?php if (($this->auth_user->gst_number == '07AAECF4068L1ZC' || $this->auth_user->gst_number == '29AAECF4068L1Z6' || $this->auth_user->gst_number == '27AAECF4068L1ZA') && ($this->auth_user->supplier_state == "Karnataka" || $this->auth_user->supplier_state == "Delhi" || $this->auth_user->supplier_state == "Maharashtra") && $this->auth_user->shop_name == "Friends with Dreams Pvt Ltd" && $this->auth_user->company_type == "Private Limited") : ?>
 
           <!-- <input type="text" name="holder_name" class="form-control form-input"  placeholder="Enter Account Holder Name"  required> -->
           <div class="form-group">
@@ -439,7 +438,7 @@
             </div>
           </div>
         <?php endif; ?>
-        <?php if (($this->auth_user->gst_number == '07AAECF4068L1ZC' || $this->auth_user->gst_number == '29AAECF4068L1Z6' || $this->auth_user->gst_number == '27AAECF4068L1ZA') && ($this->auth_user->supplier_state == "Karnataka" || $this->auth_user->supplier_state == "Delhi" || $this->auth_user->supplier_state == "Maharashtra") && $this->auth_user->shop_name == "Friends With Dreams" && $this->auth_user->company_type == "Private Limited") : ?>
+        <?php if (($this->auth_user->gst_number == '07AAECF4068L1ZC' || $this->auth_user->gst_number == '29AAECF4068L1Z6' || $this->auth_user->gst_number == '27AAECF4068L1ZA') && ($this->auth_user->supplier_state == "Karnataka" || $this->auth_user->supplier_state == "Delhi" || $this->auth_user->supplier_state == "Maharashtra") && $this->auth_user->shop_name == "Friends with Dreams Pvt Ltd" && $this->auth_user->company_type == "Private Limited") : ?>
 
           <div class="form-group">
             <div class="row Brand-1">
@@ -459,13 +458,13 @@
             </div>
           </div>
         <?php endif; ?>
-        <?php if (($this->auth_user->gst_number == '07AAECF4068L1ZC' || $this->auth_user->gst_number == '29AAECF4068L1Z6' || $this->auth_user->gst_number == '27AAECF4068L1ZA') && ($this->auth_user->supplier_state == "Karnataka" || $this->auth_user->supplier_state == "Delhi" || $this->auth_user->supplier_state == "Maharashtra") && $this->auth_user->shop_name == "Friends With Dreams" && $this->auth_user->company_type == "Private Limited") : ?>
+        <?php if (($this->auth_user->gst_number == '07AAECF4068L1ZC' || $this->auth_user->gst_number == '29AAECF4068L1Z6' || $this->auth_user->gst_number == '27AAECF4068L1ZA') && ($this->auth_user->supplier_state == "Karnataka" || $this->auth_user->supplier_state == "Delhi" || $this->auth_user->supplier_state == "Maharashtra") && $this->auth_user->shop_name == "Friends with Dreams Pvt Ltd" && $this->auth_user->company_type == "Private Limited") : ?>
 
           <div class="form-group">
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Bank Branch<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='text' name="bank_branch" id="bank_branch" class="form-control auth-form-input" value="ICICI Tower, NBCC" required readonly>
+                <input type='text' name="bank_branch" id="bank_branch" class="form-control auth-form-input" value="ICICI Tower, NBCC place" required readonly>
               </div>
             </div>
           </div>

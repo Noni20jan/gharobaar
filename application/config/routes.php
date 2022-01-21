@@ -88,8 +88,13 @@ foreach ($languages as $language) {
         //dashboard
         $route[$key . getr('dashboard', $rts)]['GET'] = 'dashboard_controller/index';
         $route[$key . getr('barterproduct', $rts) . '/(:any)']['GET'] = 'home_controller/any_barter/$1';
+        // $route[$key . getr('review_barter', $rts) . '/(:any)']['GET'] = 'home_controller/any_barter/$1';
+
 
         //profile
+        $route[$key . getr('seller_all_products', $rts)]['GET'] = 'home_controller/seller_all_products';
+
+        $route['seller_all_products']['POST'] = 'home_controller/seller_all_products';
         $route[$key . getr('barter_product', $rts) . '/(:any)']['GET'] = 'profile_controller/barter_product/$1';
         $route[$key . getr('profile', $rts) . '/(:any)']['GET'] = 'profile_controller/profile/$1';
         $route[$key . getr('profile-buyer', $rts) . '/(:any)']['GET'] = 'profile_controller/buyer_profile/$1';

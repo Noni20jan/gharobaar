@@ -1155,8 +1155,8 @@ class Product_model extends Core_Model
                     $this->db->group_start();
                     $this->db->like('product_details.title', $word);
                     // $this->db->or_like('product_details.description', $word);
-                    $this->db->or_like('product_details.seo_title', $word);
-                    $this->db->or_like('product_details.seo_keywords', $word);
+                    // $this->db->or_like('product_details.seo_title', $word);
+                    // $this->db->or_like('product_details.seo_keywords', $word);
                     //$this->db->or_like('product_details.user_id', );
                     $this->db->or_like('shop_name', $word);
                     $this->db->or_like('brand_name', $word);
@@ -1165,6 +1165,589 @@ class Product_model extends Core_Model
                 }
             }
             $this->db->group_end();
+            // $this->db->order_by('products.is_promoted', 'DESC');
+        }
+
+
+        //food preference filter
+        if (!empty($array_food_preference)) {
+            $this->db->group_start();
+            foreach ($array_food_preference as $food) {
+                if (!empty($food)) {
+                    if ($food == "Gluten_Free") {
+                        $this->db->where('products.is_gluten_free', 'Y');
+                    } else if ($food == "Organic") {
+                        $this->db->where('products.is_organic', 'Y');
+                    } else if ($food == "Vegan") {
+                        $this->db->where('products.is_vegan', 'Y');
+                    } else if ($food == "Sustainable") {
+                        $this->db->where('products.is_sustainable', 'Y');
+                    }
+                }
+            }
+            $this->db->group_end();
+        }
+
+
+        //Gender
+        $category_ids_1 = array();
+        $category_ids_2 = array();
+        $category_ids_3 = array();
+        $category_ids_4 = array();
+
+        if (!empty($gender)) {
+            $this->db->reset_query();
+            if ($gender == "Men") {
+                $categories_1 = $this->category_model->get_subcategories_tree(9, false);
+                $category_ids_1 = get_ids_from_array($categories_1);
+                $this->db->where_in("products.category_id", $category_ids_1);
+            } else if ($gender == "Women") {
+                $categories_2 = $this->category_model->get_subcategories_tree(10, false);
+                $category_ids_2 = get_ids_from_array($categories_2);
+                $this->db->where_in("products.category_id", $category_ids_2);
+            } else if ($gender == "Kids_Boys") {
+                $categories_3 = $this->category_model->get_subcategories_tree(381, false);
+                $category_ids_3 = get_ids_from_array($categories_3);
+                $this->db->where_in("products.category_id", $category_ids_3);
+            } else if ($gender == "Kids_Girls") {
+                $categories_4 = $this->category_model->get_subcategories_tree(382, false);
+
+                $category_ids_4 = get_ids_from_array($categories_4);
+                $this->db->where_in("products.category_id", $category_ids_4);
+            }
+            if (!$only_category) :
+                $this->build_query();
+            else :
+                $this->build_query("active", false, true);
+            endif;
+        }
+
+
+        //sort products
+        if (!empty($sort) && $sort == "lowest_price") {
+            $this->db->where('products.listing_price !=', 0);
+            $this->db->order_by('products.listing_price', 'ASC');
+        } elseif (!empty($sort) && $sort == "highest_price") {
+            $this->db->order_by('products.listing_price', 'DESC');
+        } elseif (!empty($sort) && $sort == "oldest_first") {
+            $this->db->order_by('products.created_at', 'ASC');
+        } elseif (!empty($sort) && $sort == "top_discount") {
+            $this->db->order_by('cast(products.discount_rate as decimal(16,2)) DESC');
+        } else {
+            // $this->db->order_by('rand()');
+            $this->db->order_by('rand_val');
+        }
+    }
+    public function filter_products_nlp($query_string_array = null, $category_id = null, $only_category = false)
+    {
+        $category_id = clean_number($category_id);
+        $p_min = clean_number($this->input->get("p_min", true));
+        $p_max = clean_number($this->input->get("p_max", true));
+        $sort = str_slug($this->input->get("sort", true));
+        $origin_of_product = $this->input->get("origin_of_product", true);
+        $jewellery_type = $this->input->get("jewellery_type", true);
+        $meal_type = $this->input->get("meal_type", true);
+        $food_type = $this->input->get("food_type", true);
+        $discount = $this->input->get("discount", true);
+        $gender = $this->input->get("gender", true);
+        $available = $this->input->get("available", true);
+        $pet_age = $this->input->get("pet_age", true);
+        $cash_on_delivery = $this->input->get("cash_on_delivery", true);
+        $food_preference = $this->input->get("food_preference", true);
+        $blouse_details =  str_replace('_', ' ', $this->input->get("blouse_details", true));
+        $available_for_return_or_exchange = $this->input->get("available_for_return_or_exchange", true);
+        $availability = $this->input->get("availability", true);
+        $personalised = $this->input->get("is_personalised", true);
+        $suitable_for = $this->input->get("suitable_for", true);
+        $add_meet = str_replace('_', ' ', $this->input->get("product_type", true));
+        $rating = remove_special_characters($this->input->get("rating", true));
+        $seller_type = remove_special_characters($this->input->get("seller_type", true));
+        $search = remove_special_characters(trim($this->input->get('search', true)));
+
+
+
+        if (!empty($search)) {
+            $array = explode(' ', $search);
+            $array_search_words = array();
+            foreach ($array as $item) {
+                if (strlen($item) > 1) {
+                    array_push($array_search_words, $item);
+                }
+            }
+        }
+        //food prefernce 
+        if (!empty($food_preference)) {
+            $array = explode(' ', $food_preference);
+            $array_food_preference = array();
+            foreach ($array as $item) {
+
+                array_push($array_food_preference, $item);
+            }
+        }
+
+
+        //category ids array
+        if (!empty($category_id)) {
+            $categories = $this->category_model->get_subcategories_tree($category_id, false);
+            $category_ids = get_ids_from_array($categories);
+            $this->db->reset_query();
+        }
+
+        //check if custom filters selected
+        $array_selected_filters = array();
+
+        if (!empty($query_string_array)) {
+
+
+            foreach ($query_string_array as $key => $array_values) {
+                if ($key != "product_type" && $key != "meal_type" && $key != "cash_on_delivery" && $key != "blouse_details" && $key != "pet_age" && $key != "available"  && $key != "gender" && $key != "discount"  && $key != "food_type" && $key != "jewellery_type"  && $key != "rating"  && $key != "p_min" && $key != "p_max" && $key != "sort" && $key != "search" && $key != "seller_type" && $key != "origin_of_product" && $key != "food_preference" && $key != "available_for_return_or_exchange" && $key != "availability" && $key != "suitable_for" && $key != "is_personalised") {
+                    $item = new stdClass();
+                    $item->key = $key;
+                    $updated_array_values = array();
+                    foreach ($array_values as $value) {
+                        array_push($updated_array_values, serialize(array(array("lang_id" => "1", "option_name" => $value))));
+                    }
+                    $item->array_values = $updated_array_values;
+                    array_push($array_selected_filters, $item);
+                }
+            }
+        }
+
+
+
+        if (!empty($array_selected_filters)) {
+            $array_queries = array();
+            foreach ($array_selected_filters as $filter) {
+                $this->db->join('variations', 'variations.id = variation_options.variation_id');
+                $this->db->select('product_id');
+                $this->db->where('variations.label_names', serialize(array(array("lang_id" => "1", "label" => str_replace('_', ' ', $filter->key)))));
+                $this->db->group_start();
+                $this->db->where_in('variation_options.option_names', $updated_array_values);
+                $this->db->group_end();
+                $this->db->from('variation_options');
+                $array_queries[] = $this->db->get_compiled_select();
+                $this->db->reset_query();
+            }
+            if (!empty($array_queries)) {
+                if (!$only_category) :
+                    $this->build_query();
+                else :
+                    $this->build_query("active", false, true);
+                endif;
+
+
+                foreach ($array_queries as $query) {
+
+
+                    $this->db->where_in('products.id', $query, FALSE);
+                }
+            }
+        } else {
+            if (!$only_category) :
+                $this->build_query();
+            else :
+                $this->build_query("active", false, true);
+            endif;
+        }
+
+
+        //add product filter options
+        if (!empty($category_ids)) {
+            $this->db->where_in("products.category_id", $category_ids, FALSE);
+            $this->db->order_by('products.is_promoted', 'DESC');
+        }
+        //product type array
+        $array_product_type = @explode(',', $add_meet);
+        if (!empty($array_product_type) && !empty($array_product_type[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.add_meet", $array_product_type);
+            $this->db->group_end();
+        }
+
+        //availability of products
+
+        if (!empty($available)) {
+            $this->db->group_start();
+            $this->db->where("products.stock>", 0);
+            $this->db->group_end();
+        }
+
+        if (!empty($cash_on_delivery)) {
+            $this->db->group_start();
+            $this->db->where("products.cod_accepted", $cash_on_delivery);
+            $this->db->where("products.add_meet", "Made to stock");
+
+            $this->db->group_end();
+        }
+
+        //blouse details
+        $array_blouse_details = @explode(',', $blouse_details);
+        if (!empty($array_blouse_details) && !empty($array_blouse_details[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.blouse_details", $array_blouse_details);
+            $this->db->group_end();
+        }
+        $array_available_for_return_or_exchange = @explode(',', $available_for_return_or_exchange);
+        if (!empty($array_available_for_return_or_exchange) && !empty($array_available_for_return_or_exchange[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.available_for_return_or_exchange", $array_available_for_return_or_exchange);
+            $this->db->group_end();
+        }
+        //Kids Corner
+        $array_kids_corner = @explode(',', $suitable_for);
+        if (!empty($array_kids_corner) && !empty($array_kids_corner[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.suitable_for", $array_kids_corner);
+            $this->db->group_end();
+        }
+        $array_is_personalised = @explode(',', $personalised);
+        if (!empty($array_is_personalised) && !empty($array_is_personalised[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.is_personalised", $array_is_personalised);
+            $this->db->group_end();
+        }
+
+        $array_days_available = @explode(',', $availability);
+        if (!empty($array_days_available) && !empty($array_days_available[0])) {
+
+            $this->db->group_start();
+            // $this->db->where_in("products.availability", $array_days_available);
+
+            $z = date('dS M Y');
+            $day = strtotime($z . "+1 Days");
+            $day_2 = strtotime($z . "+2 Days");
+            $way2 = date('l', $day_2);
+            $a = '%';
+            $way = date('l', $day);
+            if (in_array($way, $array_days_available) && in_array($way2, $array_days_available)) {
+                $a = '%';
+                $way2 = date('l', $day_2);
+                $way = date('l', $day);
+                $days = $a . $way . $a;
+                $day2 = $a . $way2 . $a;
+                $this->db->or_where('products.availability', 'All Days');
+                $this->db->where('lead_days', 1);
+                $this->db->or_where('products.availability', 'All Days');
+                $this->db->where('lead_days', 2);
+                $this->db->or_where("products.availability like", $days);
+                $this->db->where('lead_days', 1);
+
+                $this->db->or_where("products.availability like", $day2);
+                $this->db->where('lead_days', 2);
+
+                $this->db->group_end();
+            } else if (in_array($way, $array_days_available)) {
+                $way = date('l', $day);
+                $days = $a . $way . $a;
+                $this->db->or_where('products.availability', 'All Days');
+                // $this->db->or_where("products.availability like", $days);
+                $this->db->where('lead_days', 1);
+                $this->db->or_where("products.availability like", $days);
+                $this->db->where('lead_days', 1);
+
+
+
+                $this->db->group_end();
+            } else if (in_array($way2, $array_days_available)) {
+                $way2 = date('l', $day_2);
+                $day2 = $a . $way2 . $a;
+                $this->db->or_where('products.availability', 'All Days');
+                $this->db->where('lead_days', 2);
+                $this->db->or_where("products.availability like", $day2);
+                $this->db->where('lead_days', 2);
+
+                $this->db->group_end();
+            }
+        }
+
+        //pet age
+        $array_pet_age = @explode(',', $pet_age);
+        if (!empty($array_pet_age) && !empty($array_pet_age[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.pet_age", $array_pet_age);
+            $this->db->group_end();
+        }
+
+        //discount rate
+        if (!empty($discount)) :
+            $discount_array = explode(",", $discount);
+
+            if (count($discount_array) > 0) :
+                $this->db->group_start();
+                if (in_array("More_than_50", $discount_array)) {
+                    $this->db->or_where("cast(products.discount_rate as decimal(16,2)) BETWEEN 51 AND 100");
+                }
+                if (in_array("25-50", $discount_array)) {
+                    $this->db->or_where("cast(products.discount_rate as decimal(16,2)) BETWEEN 25 AND 50");
+                }
+                if (in_array("0-25", $discount_array)) {
+                    $this->db->or_where("cast(products.discount_rate as decimal(16,2)) BETWEEN 1 AND 25");
+                }
+                if (in_array("No Discount", $discount_array)) {
+                    $this->db->or_where("products.discount_rate = 0");
+                }
+                $this->db->group_end();
+            endif;
+        endif;
+        // if ($discount == "More_than_50" || $discount == "0-25" || $discount == "25-50" || $discount == "0") {
+        //     $this->db->group_start();
+        //     if ($discount == "More_than_50") {
+        //         $this->db->where("cast(products.discount_rate as decimal(16,2)) BETWEEN 51 AND 100");
+        //     } else if ($discount == "25-50") {
+        //         $this->db->where("cast(products.discount_rate as decimal(16,2)) BETWEEN 25 AND 50");
+        //     } else if ($discount == "0-25") {
+        //         $this->db->where("products.discount_rate<=", 25);
+        //         $this->db->where("products.discount_rate>=", 1);
+        //     } else if ($discount == "0") {
+        //         $this->db->where("products.discount_rate=0");
+        //     }
+        //     $this->db->group_end();
+        // }
+
+        //seller type
+        if (!empty($seller_type)) {
+            $user_supplier_speciality = get_supplier_by_supplier_speciality($seller_type);
+            $speciality_array = array();
+            foreach ($user_supplier_speciality as $speciality) {
+                array_push($speciality_array, $speciality->id);
+            }
+            if (count($speciality_array) > 0) {
+                $this->db->group_start();
+                $this->db->where_in("products.user_id", $speciality_array);
+                $this->db->group_end();
+            } else {
+                $this->db->where_in("products.user_id", 0);
+            }
+        }
+
+
+
+        //rating
+        $array_rating = @explode(',', $rating);
+        if (!empty($array_rating) && !empty($array_rating[0])) {
+            $this->db->group_start();
+            foreach ($array_rating as $ar) {
+                // $this->db->where("products.rating <", $ar + 1);
+                // $this->db->where("products.rating >=", $ar);
+                $this->db->or_group_start();
+                $this->db->where("products.rating <", $ar + 1);
+                $this->db->where("products.rating >=", $ar);
+                $this->db->group_end();
+            }
+            // $this->db->where_in("products.rating", $array_rating);
+            $this->db->group_end();
+        }
+
+        //meal type
+        $array_meal_type = @explode(',', $meal_type);
+
+        if (!empty($array_meal_type) && !empty($array_meal_type[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.is_appetisers_main_course_beverages_desserts", $array_meal_type);
+            $this->db->group_end();
+        }
+
+
+        //food type
+        $array_food_type = @explode(',', $food_type);
+
+        if (!empty($array_food_type) && !empty($array_food_type[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.is_veg_nonveg_jain", $array_food_type);
+            $this->db->group_end();
+        }
+
+        //jewellwry type
+        $array_jewellery_type = @explode(',', $jewellery_type);
+
+        if (!empty($array_jewellery_type) && !empty($array_jewellery_type[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.is_gold_silver_precious_stones_semi_precious_artificial", $array_jewellery_type);
+            $this->db->group_end();
+        }
+
+
+        //origin of product
+        $array_origin_of_product = @explode(',', $origin_of_product);
+
+        if (!empty($array_origin_of_product) && !empty($array_origin_of_product[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.product_state", $array_origin_of_product);
+            $this->db->group_end();
+        }
+
+        if ($p_min != "") {
+            $this->db->where('products.listing_price >=', intval($p_min * 100));
+        }
+        if ($p_max != "") {
+            $this->db->where('products.listing_price <=', intval($p_max * 100));
+        }
+
+        //search words
+        //search words
+        if (!empty($array_search_words)) {
+            $this->db->join('product_details', 'product_details.product_id = products.id');
+            $this->db->where('product_details.lang_id', clean_number($this->selected_lang->id));
+            // $this->db->group_start();
+            foreach ($array_search_words as $word) {
+                // $user_id=get_user_by_shop_name($word);
+                if (!empty($word)) {
+                    // $this->db->or_like(array('product_details.title' => $word, 'product_details.description' => $word,'product_details.seo_keywords' => $word,'product_details.seo_title' => $word));
+                    $metaphone = metaphone($word);
+                    $soundex = soundex($word);
+
+                    // select all words from the dictionary matching the current word
+                    $sql = "SELECT * FROM word WHERE word ='$word'";
+                    $wordresult = $this->db->query($sql)->num_rows();
+                    // $wordnum = mysqli_num_rows($wordresult);
+                    if ($wordresult == 0 && strlen($word) < 4) {
+                        $sql3 = "INSERT INTO word (word,metaphone,soundex) VALUES ('$word','$metaphone','$soundex')";
+                        $query = $this->db->query($sql3);
+                    }
+                    if ($this->general_settings->nlptype == 'metaphone') {
+                        // var_dump(strlen($metaphone));
+                        if (strlen($metaphone) > 4) {
+                            $sql2 = "SELECT * FROM word";
+                            $query1 = $this->db->query($sql2);
+
+                            // $count = $query1->num_rows();
+
+                            $result1 = $query1->result();
+                            $i = 1;
+                            $count = 0;
+                            $where = "";
+                            // while ($worddata = mysqli_fetch_array($wordresult, MYSQLI_ASSOC)) {
+                            $count1 = count($result1);
+                            // echo $count;
+                            $this->db->group_start();
+
+
+                            // $this->db->group_start();
+                            $this->db->like('product_details.title', $word);
+                            // $this->db->or_like('product_details.description', $word);
+                            // $this->db->or_like('product_details.seo_title', $word);
+                            // $this->db->or_like('product_details.seo_keywords', $word);
+                            //$this->db->or_like('product_details.user_id', );
+                            $this->db->or_like('shop_name', $word);
+                            $this->db->or_like('brand_name', $word);
+
+                            // $this->db->group_end();
+                            foreach ($result1 as $results) {
+                                $soundword = $results->word;
+                                $test = metaphone($soundword);
+                                $test2 = levenshtein($metaphone, $test);
+
+                                if ($test2 < 3) {
+                                    $count = 1;
+                                } else {
+                                    $count = 0;
+                                }
+                                if ($i <= $count1 && $count == 1) {
+                                    // $soundword = $results->word;
+                                    // echo $soundword;
+                                    $this->db->or_like('product_details.title', $soundword);
+                                    // $i++;
+                                }
+                                $i++;
+                            }
+                            $this->db->group_end();
+                        } else {
+                            // die();
+                            // $sql2 = "select * from word where soundex='$soundex'";
+                            $sql2 = "select temp.word,temp.display_order from(
+                                SELECT w1.word,1 as display_order FROM word as w1 WHERE soundex ='$soundex'                            and (length('ghee')=length(w1.word))
+                                UNION
+                                SELECT w2.word,2  as display_order FROM word as w2 WHERE soundex ='$soundex' 
+                                and (length('$word')+1=length(w2.word))
+                                UNION
+                                SELECT w3.word,3  as display_order FROM word as w3 WHERE soundex ='$soundex' 
+                                and (length('$word')=length(w3.word)+1)) as temp order by temp.display_order asc; ";
+                            $query1 = $this->db->query($sql2);
+
+                            // $count = $query1->num_rows();
+
+                            $result1 = $query1->result();
+                            // var_dump($result1);
+                            // die();
+                            $i = 1;
+                            $count = 0;
+                            $where = "";
+                            // while ($worddata = mysqli_fetch_array($wordresult, MYSQLI_ASSOC)) {
+                            $count1 = count($result1);
+                            // echo $count;
+                            $this->db->group_start();
+
+
+                            // $this->db->group_start();
+                            $this->db->like('product_details.title', $word);
+                            // $this->db->or_like('product_details.description', $word);
+                            // $this->db->or_like('product_details.seo_title', $word);
+                            // $this->db->or_like('product_details.seo_keywords', $word);
+                            //$this->db->or_like('product_details.user_id', );
+                            $this->db->or_like('shop_name', $word);
+                            $this->db->or_like('brand_name', $word);
+
+                            // $this->db->group_end();
+                            foreach ($result1 as $results) {
+                                $soundword = $results->word;
+                                $test = metaphone($soundword);
+                                $test2 = levenshtein($metaphone, $test);
+
+                                if ($i <= $count1) {
+                                    // $soundword = $results->word;
+                                    // echo $soundword;
+                                    $this->db->or_like('product_details.title', $soundword);
+                                    // $i++;
+                                }
+                                $i++;
+                            }
+                            $this->db->group_end();
+                        }
+                    } elseif ($this->general_settings->nlptype == 'soundex') {
+                        $sql2 = "SELECT * FROM word WHERE soundex ='$soundex'";
+                        $query1 = $this->db->query($sql2);
+
+                        // $count = $query1->num_rows();
+
+                        $result1 = $query1->result();
+                        $i = 1;
+                        $count = 0;
+                        $where = "";
+                        // while ($worddata = mysqli_fetch_array($wordresult, MYSQLI_ASSOC)) {
+                        $count1 = count($result1);
+                        // echo $count;
+                        $this->db->group_start();
+
+
+                        // $this->db->group_start();
+                        $this->db->like('product_details.title', $word);
+                        // $this->db->or_like('product_details.description', $word);
+                        // $this->db->or_like('product_details.seo_title', $word);
+                        // $this->db->or_like('product_details.seo_keywords', $word);
+                        //$this->db->or_like('product_details.user_id', );
+                        $this->db->or_like('shop_name', $word);
+                        $this->db->or_like('brand_name', $word);
+
+                        // $this->db->group_end();
+                        foreach ($result1 as $results) {
+                            $soundword = $results->word;
+                            $test = metaphone($soundword);
+                            $test2 = levenshtein($metaphone, $test);
+
+
+                            if ($i <= $count1) {
+                                // $soundword = $results->word;
+                                // echo $soundword;
+                                $this->db->or_like('product_details.title', $soundword);
+                                // $i++;
+                            }
+                            $i++;
+                        }
+                        $this->db->group_end();
+                    }
+                }
+            }
+            // $this->db->group_end();
             // $this->db->order_by('products.is_promoted', 'DESC');
         }
 
@@ -1548,10 +2131,60 @@ class Product_model extends Core_Model
         if (!$only_category) :
             $this->db->limit(clean_number($per_page), clean_number($offset));
 
-            return $this->db->get('products')->result();
+            $result = $this->db->get('products')->result_array();
+        // $subQuery1 = $this->db->_compile_select();
+
+        // $this->db->_reset_select();
         else :
-            return $this->db->get('products')->result_array();
+            $result = $this->db->get('products')->result_array();
+        // $subQuery1 = $this->db->_compile_select();
+
+        // $this->db->_reset_select();
         endif;
+        $this->filter_products_nlp($query_string_array, $category_id, $only_category);
+        if (!$only_category) :
+            $this->db->limit(clean_number($per_page), clean_number($offset));
+
+
+            $result1 = $this->db->get('products')->result_array();
+            // $obj_merged = (object) array_merge((array) $result, (array) $result1);
+            foreach ($result1 as $liste) {
+
+                // foreach ($result1 as $value) {
+                if (!in_array($liste, $result, true)) {
+                    array_push($result, $liste);
+                    // }
+                }
+            }
+            // $result3 = array();
+            // $result3 = array_unique($result1);
+            // $result2 = (object)$result1;
+            $result2 = json_decode(json_encode($result));
+            // var_dump($result2);
+            // die();
+            return $result2;
+        // $subQuery2 = $this->db->_compile_select();
+        // return $result1;
+        // $this->db->_reset_select();
+        else :
+            $result1 = $this->db->get('products')->result_array();
+            // $subQuery2 = $this->db->_compile_select();
+
+            // $this->db->_reset_select();
+            foreach ($result as $liste) {
+
+                foreach ($result1 as $value) {
+                    if (!in_array($value, $liste, true)) {
+                        array_push($liste, $value);
+                    }
+                }
+            }
+            return $result1;
+        endif;
+        // $this->db->from("($subQuery1 UNION $subQuery2)");
+        // return $this->db->get();
+
+        // return $result1->result();
     }
 
     //get paginated filtered products by seller
