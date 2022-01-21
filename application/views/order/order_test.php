@@ -58,8 +58,8 @@
     }
 
     .confirm-new-ui {
-        background-color: #007C05;
-        border-color: #007C05;
+        background-color: #FF3334;
+        border-color: #FF3334;
         width: 100%;
         font-weight: bolder;
         font-size: 18px;

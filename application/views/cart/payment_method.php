@@ -45,8 +45,8 @@
     }
 
     .btn-custom {
-        background-color: #007c05;
-        border-color: #007c05;
+        background-color: #FF3334;
+        border-color: #FF3334;
         font-weight: 600 !important;
     }
 </style>

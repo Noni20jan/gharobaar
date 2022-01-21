@@ -14,7 +14,7 @@
 
     .notify-me {
         /* margin-left: 12%; */
-        border: 3px solid #007C05;
+        border: 3px solid #FF3334;
         border-radius: 30px;
         width: 100%;
         padding: 3%;
@@ -35,7 +35,7 @@
     }
 
     .notify-button1 {
-        background-color: #007C05;
+        background-color: #FF3334;
         border-radius: 60px;
     }
 

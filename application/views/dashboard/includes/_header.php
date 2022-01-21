@@ -127,7 +127,7 @@ $user = get_user($this->auth_user->id);
         }
 
         .switch-field input:checked+label {
-            background-color: #007C05;
+            background-color: #FF3334;
             box-shadow: none;
             color: white;
         }

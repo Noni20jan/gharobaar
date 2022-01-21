@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php echo form_open('cart_controller/payment_cashfree',['id' => 'form_submit_disable']); ?>
+<?php echo form_open('cart_controller/payment_cashfree', ['id' => 'form_submit_disable']); ?>
 <style>
     .shipping_details {
         text-align: justify;
@@ -20,7 +20,7 @@
 
     @media (max-width: 700px) {
         .cash_free_btn {
-            background-color: #007c05 !important;
+            background-color: #FF3334 !important;
             cursor: pointer;
             color: #fff !important;
             font-weight: 600 !important;
@@ -80,7 +80,7 @@
     }
 
     .cash_free_btn {
-        background-color: #007c05 !important;
+        background-color: #FF3334 !important;
         cursor: pointer;
         color: #fff !important;
         font-weight: 600 !important;
@@ -281,9 +281,9 @@
     }
 </script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
-        $("#form_submit_disable").submit(function (e) {
+        $("#form_submit_disable").submit(function(e) {
 
             // e.preventDefault();
             $("#cashfreebtn").attr("disabled", true);

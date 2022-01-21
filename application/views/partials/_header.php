@@ -894,7 +894,7 @@
         .sliding_content {
             display: flow-root;
             text-align: center;
-            background-color: #007C05;
+            background-color: #FF3334;
             font-weight: normal;
             font-style: normal;
             font-family: "Montserrat", Helvetica, sans-serif;

@@ -94,13 +94,13 @@
                                                                             <?php if ($order->order_status == 'completed') : ?>
                                                                                 <p style="color: black;">&emsp;Your item is <strong class="font-600">Delivered</strong></p>
                                                                             <?php elseif ($items == "shipped" || $items == "out_for_delivery") : ?>
-                                                                                <p style="color: #007c05;">Your item is <strong class="font-600">on its way</strong></p>
+                                                                                <p style="color: #FF3334;">Your item is <strong class="font-600">on its way</strong></p>
                                                                             <?php elseif ($items == "cancelled_by_seller" || $items == "cancelled_by_user") : ?>
                                                                                 <p style="color: red;">Your item is <strong class="font-600">cancelled</strong></p>
                                                                             <?php elseif ($items == "rejected") : ?>
                                                                                 <p style="color: red;">Your item is <strong class="font-600">rejected</strong></p>
                                                                             <?php else : ?>
-                                                                                <p style="color: #007c05;">&emsp;Your item is <strong class="font-600">under process</strong></p>
+                                                                                <p style="color: #FF3334;">&emsp;Your item is <strong class="font-600">under process</strong></p>
                                                                             <?php endif; ?>
 
 

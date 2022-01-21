@@ -524,6 +524,7 @@ endif;
                                                 <script>
                                                     // Set the date we're counting down to
                                                     var countDownDate = new Date("<?= $date_str; ?>").getTime();
+                                                    console.log(countDownDate)
 
                                                     var x = setInterval(function() {
                                                         // Get today's date and time

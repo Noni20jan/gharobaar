@@ -98,7 +98,7 @@
     }
 
     .lone {
-        color: #007c05;
+        color: #FF3334;
         cursor: pointer;
         content: "\A";
         white-space: pre;
@@ -107,7 +107,7 @@
     @media (max-width: 700px) {
 
         .lone {
-            color: #007c05;
+            color: #FF3334;
             cursor: pointer;
             white-space: pre;
         }
@@ -291,8 +291,8 @@
         float: right;
         padding: 4px 16px;
         position: absolute;
-        color: #007C05;
-        border: 1px solid #007C05;
+        color: #FF3334;
+        border: 1px solid #FF3334;
         border-radius: 3px;
         text-transform: none;
         cursor: pointer;
@@ -349,7 +349,7 @@
 
     .coupon-div-applied-label {
         font-size: 12px;
-        color: #007C05;
+        color: #FF3334;
         padding: 2px 10px
     }
 
@@ -747,7 +747,7 @@ if (!$this->auth_check) : ?>
                                         <?php endif;
                                         endforeach; ?>
                                         <p>
-                                            <?php echo ("Discount"); ?><span class="float-right" id="discount_number" style="color: #007c05;">&#8377;<?php echo (round($discount, 2)) ?>/-</span>
+                                            <?php echo ("Discount"); ?><span class="float-right" id="discount_number" style="color: #FF3334;">&#8377;<?php echo (round($discount, 2)) ?>/-</span>
                                         </p>
                                     <?php endif; ?>
                                     <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
@@ -760,7 +760,7 @@ if (!$this->auth_check) : ?>
                                         </p>
 
                                     <?php endif; ?>
-                                    <p style="color:#007C05;" id="coupon-discount-tag" class="<?php echo ((!empty($this->session->userdata('mds_shopping_cart_coupon')))) ? '' : 'hide-coupon-discount' ?>">
+                                    <p style="color:#FF3334;" id="coupon-discount-tag" class="<?php echo ((!empty($this->session->userdata('mds_shopping_cart_coupon')))) ? '' : 'hide-coupon-discount' ?>">
                                         <strong>
                                             <?php echo "Coupon Discount"; ?>
                                             <span class="float-right" id="coupon-discount-text">
