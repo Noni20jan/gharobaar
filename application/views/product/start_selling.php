@@ -2954,14 +2954,13 @@ $pincode = get_pincode(281204);
                 cache: false,
                 success: function(html) {
 
+
                     if (html[0].PostOffice == null) {
                         $('#pincode_span')[0].innerHTML = "Please enter a valid pincode.";
                         $('#pincode_span1')[0].innerHTML = "Please enter a valid pincode.";
-
                     } else {
                         $('#pincode_span')[0].innerHTML = "";
                         $('#pincode_span1')[0].innerHTML = "";
-
                         $('input[name="supplier_state"]').val(html[0].PostOffice[0].State)
                         $('input[name="supplier_city"]').val(html[0].PostOffice[0].District)
                         $('input[name="area"]').val(html[0].PostOffice[0].Name)
@@ -3439,10 +3438,7 @@ $pincode = get_pincode(281204);
                     if ($(this).val() == "Food delivery services (Annual turnover less than 20 lakh)") {
                         $(this)[0].checked = true;
                     }
-                    if ($(this).val() == "gharobaar_with_gst") {
-                        $(this)[0].checked = true;
 
-                    }
                 });
                 $("#selected_no").removeClass("hideMe");
                 $("#selected_yes").addClass("hideMe");
