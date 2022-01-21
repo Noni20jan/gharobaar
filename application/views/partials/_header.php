@@ -5533,6 +5533,8 @@
                 document.getElementById("email_span_error").innerHTML = "";
                 document.getElementById("email_span_error").innerHTML = "Please enter email address";
             } else if (IsEmail(email_address) == false) {
+                document.getElementById("email_span_error").innerHTML = "";
+                document.getElementById("email_span_error").innerHTML = "Please enter a valid email address";
                 //invalid emailid
             } else if (phn_num != '' && phn_num.length == 10 && email_address != "") {
                 if (phn_num.length != 10) {
