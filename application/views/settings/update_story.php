@@ -376,7 +376,6 @@
       <div class="col-sm-12 m-b-30 groove">
         <label id="label1">Your Bank Details</label>
         <?php if (($this->auth_user->gst_number == '07AAECF4068L1ZC' || $this->auth_user->gst_number == '29AAECF4068L1Z6' || $this->auth_user->gst_number == '27AAECF4068L1ZA') && ($this->auth_user->supplier_state == "Karnataka" || $this->auth_user->supplier_state == "Delhi" || $this->auth_user->supplier_state == "Maharashtra") && $this->auth_user->shop_name == "Friends with Dreams Pvt Ltd" && $this->auth_user->company_type == "Private Limited") : ?>
-
           <div class="form-group">
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Account Holder Name<span class="Validation_error"> *</span></label></div>
