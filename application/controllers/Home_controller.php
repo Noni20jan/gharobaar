@@ -12,6 +12,25 @@ class Home_controller extends Home_Core_Controller
         // shipment api call for secret key
         $this->shiprocket();
     }
+
+    public function seller_all_products()
+    {
+        get_method();
+        $user_id = $this->input->get('b', true);
+
+        $data = array(
+            'html_content_products' => "",
+        );
+        // if (!empty($variation) && !empty($option)) {
+        $data['products'] = $this->product_model->get_product_by_seller($user_id);
+        // var_dump($user_id);
+        // die();
+        //slider content response
+
+        // $data["html_content_products"] = $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]);
+
+        $this->load->view('product/infinte_scroll_products1', $data);
+    }
     public function send_sms_members_post()
     {
 
@@ -423,6 +442,96 @@ class Home_controller extends Home_Core_Controller
         }
     }
     public function productbarter($slug)
+    {
+        get_method();
+        $slug = clean_slug($slug);
+        $this->comment_limit = 5;
+
+        $data["product"] = $this->product_model->get_product_by_slug($slug);
+        $data["barter_product"] = $this->product_model->get_product_by_slug($slug);
+        if (empty($data['product'])) {
+            $this->error_404();
+        } else {
+            if ($data['product']->status == 0 || $data['product']->visibility == 0) {
+                if (!$this->auth_check) {
+                    redirect(lang_base_url());
+                }
+                if ($data['product']->user_id != $this->auth_user->id && $this->auth_user->role != "admin") {
+                    redirect(lang_base_url());
+                }
+            }
+            $data['product_details'] = $this->product_model->get_product_details($data["product"]->id, $this->selected_lang->id, true);
+            $data["parent_categories_tree"] = $this->category_model->get_parent_categories_tree($data["product"]->category_id);
+            //images
+            $data["product_images"] = $this->file_model->get_product_images($data["product"]->id);
+            //related products
+            $key = "related_products_" . $data["product"]->id;
+            $data["related_products"] = get_cached_data($key);
+            if (empty($data["related_products"])) {
+                $data["related_products"] = $this->product_model->get_related_products($data["product"]->id, $data["product"]->category_id, $data["parent_categories_tree"]);
+                set_cache_data($key, $data["related_products"]);
+            }
+
+            $data["user"] = $this->auth_model->get_user($data["product"]->user_id);
+
+            //user products
+            $key = 'more_products_by_user_' . $data["user"]->id . 'cache';
+            $data['user_products'] = get_cached_data($key);
+            if (empty($data['user_products'])) {
+                $data["user_products"] = $this->product_model->get_user_products($data["user"]->id, $data["product"]->id);
+                set_cache_data($key, $data['user_products']);
+            }
+
+            $data['reviews'] = $this->review_model->get_reviews($data["product"]->id);
+            $data['review_count'] = item_count($data['reviews']);
+
+            $data['comment_count'] = $this->comment_model->get_product_comment_count($data["product"]->id);
+            $data['comments'] = $this->comment_model->get_comments($data["product"]->id, $this->comment_limit);
+            $data['comment_limit'] = $this->comment_limit;
+            $data["custom_fields"] = $this->field_model->get_custom_fields_by_category($data["product"]->category_id);
+            $data["half_width_product_variations"] = $this->variation_model->get_half_width_product_variations($data["product"]->id);
+            $data["full_width_product_variations"] = $this->variation_model->get_full_width_product_variations($data["product"]->id);
+            $data["index_settings"] = get_index_settings();
+
+            $data["video"] = $this->file_model->get_product_video($data["product"]->id);
+            $data["audio"] = $this->file_model->get_product_audio($data["product"]->id);
+
+            $data["digital_sale"] = null;
+            if ($data["product"]->product_type == 'digital' && $this->auth_check) {
+                $data["digital_sale"] = get_digital_sale_by_buyer_id($this->auth_user->id, $data["product"]->id);
+            }
+            //og tags
+            $data['show_og_tags'] = true;
+            $data['og_title'] = !empty($data['product_details']->seo_title) ? $data['product_details']->seo_title : $data['product_details']->title;
+            $data['og_description'] = $data['product_details']->seo_description;
+            $data['og_type'] = "article";
+            $data['og_url'] = generate_product_url($data['product']);
+            $data['og_image'] = get_product_image($data['product']->id, 'image_default');
+            $data['og_width'] = "750";
+            $data['og_height'] = "500";
+            if (!empty($data['user'])) {
+                $data['og_creator'] = $data['user']->username;
+                $data['og_author'] = $data['user']->username;
+            } else {
+                $data['og_creator'] = "";
+                $data['og_author'] = "";
+            }
+            $data['og_published_time'] = $data['product']->created_at;
+            $data['og_modified_time'] = $data['product']->created_at;
+
+            $data['title'] = $data['product_details']->title;
+            $data['description'] = $data['product_details']->seo_description;
+            $data['keywords'] = $data['product_details']->seo_keywords;
+
+            $this->load->view('partials/_header', $data);
+            $this->load->view('product/details/product_for_barter', $data);
+            $this->load->view('partials/_footer');
+            //increase pageviews
+            $this->product_model->increase_product_pageviews($data["product"]);
+        }
+    }
+
+    public function review_product($slug)
     {
         get_method();
         $slug = clean_slug($slug);

@@ -198,6 +198,16 @@
         width: 60%;
         border-radius: 50%;
     }
+
+    .ajax-load {
+        /* background: #e1e1e1; */
+        padding: 10px 0px;
+        width: 100%;
+    }
+
+    .more-products-loading {
+        width: 5%;
+    }
 </style>
 <!-- Wrapper -->
 <div id="wrapper">
@@ -359,16 +369,24 @@
             </div>
         <?php endif; ?>
         <div class="row">
+            <input type="hidden" id="user_id" value="<?php echo $user->id; ?>">
+
             <div class="col-12 groove">
                 <?php $this->load->view("profile/_product_section", ["user_id" => $user->id]); ?>
             </div>
         </div>
-        <div class="col-12 text-center">
+        <div class="ajax-load text-center" style="display:none">
+            <p><img class="more-products-loading" src="<?php echo base_url(); ?>assets/img/dark-loader.gif"></p>
+        </div>
+        <div class="ajax-load-2 text-center" style="display:none">
+        </div>
+        <!-- <div class="col-12 text-center">
             <div class="btn btn-md btn-view-more-new m-t-15 more" style="box-shadow: 2px 2px 5px #808080de !important;">
+                <input type="hidden" id="user_id" value="<?php echo $user->id; ?>">
+                <button id="view_more_products" onclick="view_more_products(<?php echo $user->id; ?>);"> View More Products</button>
                 <a id="show_more_products" class="view-new-text" href="<?= generate_url("products") . '?search=' . $user->brand_name; ?>">View More Products</a><i class="fa fa-caret-down" style="color:black; margin-left:6px;"></i>
             </div>
-        </div>
-
+        </div> -->
 
         <h3 style="text-align:center; padding-top:40px;">Seller Reviews</h3>
 
@@ -428,6 +446,109 @@
 <?php $this->load->view("partials/_modal_send_review", ["subject" => null]); ?>
 
 
+
+<script>
+    // var product_count = parseInt(document.getElementById('product_count').value);
+    // console.log(product_count);
+    // var total_pages = product_count / 32;
+    // var urlpage = 1;
+    // console.log(total_pages);
+    var page = 1;
+    // if (page == 1) {
+    $(window).scroll(function() {
+        // var end = document.getElementsByClassName('no-records-found');
+        // if (end.length > 0) {
+        // return false;
+        // } else {
+        // if (total_pages > -1) {          
+        if (page == 1) {
+
+            if ($(window).scrollTop() >= ($(document).height() - $(window).height()) * 0.7) {
+                // if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+                page++;
+                loadMoreData(page);
+                // console.log(total_pages);
+                // total_pages--;
+                // }
+            }
+        }
+        // }
+    });
+    // page++;
+    // }
+
+    function loadMoreData(page) {
+        var urlSearchParams = new URLSearchParams(window.location.search);
+        var params = Object.fromEntries(urlSearchParams.entries());
+        // params.page = page;
+        let url = document.URL;
+        params.b = $('#user_id').val();
+        page++;
+        // console.log(url);
+        // urlpage++;
+        // params.urlpage = urlpage;
+        params[csfr_token_name] = $.cookie(csfr_cookie_name);
+        // console.log(url + "?page=" + urlpage);
+        var test = $.ajax({
+                url: base_url + "seller_all_products",
+                method: "get",
+                data: params,
+
+                beforeSend: function() {
+                    // if (page == "2") {
+                    $('.ajax-load').show();
+                    // } else {
+                    // $('.ajax-load-1').show();
+                    // }
+                }
+            })
+            .done(function(data) {
+                console.log(data);
+                if (data == " ") {
+                    return;
+                } else {
+                    $('.ajax-load').hide();
+                    // $('.ajax-load-1').hide();
+                    $('#product_div_seller').empty();
+                    $('#no-more-products').html("That's all for now !");
+                    $("#product_div_seller").append(data);
+
+
+
+                }
+            })
+            .fail(function(jqXHR, ajaxOptions, thrownError) {
+                // alert('server not responding...');
+            });
+
+    }
+</script>
+<script>
+    function view_more_products(b) {
+        var a = {
+            id: b,
+            sys_lang_id: sys_lang_id,
+        };
+        a[csfr_token_name] = $.cookie(csfr_cookie_name);
+        // $("#submit_review").prop("disabled", true);
+        $.ajax({
+            type: "POST",
+            url: base_url + "seller_all_products",
+            data: a,
+            success: function(e) {
+                var d = JSON.parse(e);
+                // if (d.result == 1) {
+                // $(".spinner-activation-register").hide();
+                // document.getElementById("result-register").innerHTML =
+                // d.success_message;
+                // } else {
+                // location.reload();
+                // }
+                console(d);
+            },
+        });
+    }
+</script>
 
 <script>
     $(document).ready(function() {
