@@ -3451,6 +3451,7 @@ $pincode = get_pincode(281204);
                         $("#gst_have").rules("remove");
                     } else if ($(this)[0].id == "gst_do_not_have") {
                         $("#gst_do_not_have").rules("remove");
+
                     }
                 });
                 if ($('input[name="type_of_goods"]').is(':checked') && $('input[name="type_of_goods"]').val() == 'exempted_goods') {
