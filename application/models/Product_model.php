@@ -1653,13 +1653,14 @@ class Product_model extends Core_Model
                             $this->db->group_end();
                         } else {
                             // die();
+                            // $sql2 = "select * from word where soundex='$soundex'";
                             $sql2 = "select temp.word,temp.display_order from(
-                                SELECT w1.word,1 as display_order FROM gharobaar_qa.word as w1 WHERE soundex ='$soundex'                            and (length('ghee')=length(w1.word))
+                                SELECT w1.word,1 as display_order FROM word as w1 WHERE soundex ='$soundex'                            and (length('ghee')=length(w1.word))
                                 UNION
-                                SELECT w2.word,2  as display_order FROM gharobaar_qa.word as w2 WHERE soundex ='$soundex' 
+                                SELECT w2.word,2  as display_order FROM word as w2 WHERE soundex ='$soundex' 
                                 and (length('$word')+1=length(w2.word))
                                 UNION
-                                SELECT w3.word,3  as display_order FROM gharobaar_qa.word as w3 WHERE soundex ='$soundex' 
+                                SELECT w3.word,3  as display_order FROM word as w3 WHERE soundex ='$soundex' 
                                 and (length('$word')=length(w3.word)+1)) as temp order by temp.display_order asc; ";
                             $query1 = $this->db->query($sql2);
 
