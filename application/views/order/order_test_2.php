@@ -62,8 +62,8 @@
     }
 
     .confirm-new-ui {
-        background-color: #FF3334;
-        border-color: #FF3334;
+        background-color: #C00000;
+        border-color: #C00000;
         width: 100%;
         font-weight: bolder;
         font-size: 18px;
@@ -203,7 +203,7 @@
                     </div>
                     <?php if ($item->order_status == "payment_received" || $item->order_status == "awaiting_payment" || $item->order_status == "processing" || $item->order_status == "waiting") : ?>
                         <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
-                            <button type="submit" id="approve" class="btn btn-sm btn-custom" style="background-color:green;" onclick="approve_order_product('<?php echo $item->id; ?>','<?php echo trans("confirm_approve_order"); ?>');">Confirm Order</button>
+                            <button type="submit" id="approve" class="btn btn-sm btn-custom" style="background-color:#C00000;" onclick="approve_order_product('<?php echo $item->id; ?>','<?php echo trans("confirm_approve_order"); ?>');">Confirm Order</button>
 
                             <button class="btn btn-sm btn-custom view-order-details-button" id="cancel" style="" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
                         <?php elseif (get_product($item->product_id)->add_meet == "Made to order" && $item->order_status == "waiting") : ?>

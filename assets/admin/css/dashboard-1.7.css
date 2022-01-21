@@ -289,49 +289,49 @@ small {
 
 .btn-primary {
   color: #fff;
-  background-color: #FF3334;
-  border-color: #FF3334;
+  background-color: #C00000;
+  border-color: #C00000;
 }
 
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
   color: #fff;
-  background-color: #FF3334 !important;
-  border-color: #FF3334 !important;
+  background-color: #C00000 !important;
+  border-color: #C00000 !important;
 }
 
 .btn-success {
   color: #fff;
-  background-color: #FF3334;
-  border-color: #FF3334;
+  background-color: #C00000;
+  border-color: #C00000;
 }
 
 .btn-success:hover,
 .btn-success:focus,
 .btn-success:active {
   color: #fff;
-  background-color: #FF3334 !important;
-  border-color: #FF3334 !important;
+  background-color: #C00000 !important;
+  border-color: #C00000 !important;
 }
 
 .btn-info-new {
   color: #fff;
-  background-color: #FF3334;
-  border-color: #FF3334;
+  background-color: #C00000;
+  border-color: #C00000;
 }
 .btn-success-new {
   color: #fff;
-  background-color: #FF3334;
-  border-color: #FF3334;
+  background-color: #C00000;
+  border-color: #C00000;
 }
 
 .btn-success-new:hover,
 .btn-success-new:focus,
 .btn-success-new:active {
   color: #fff;
-  background-color: #FF3334 !important;
-  border-color: #FF3334 !important;
+  background-color: #C00000 !important;
+  border-color: #C00000 !important;
 }
 
 .btn-info {
@@ -538,7 +538,7 @@ small {
   margin: 0 auto;
   padding: 3px;
   border-radius: 100%;
-  /* background-color: #FF3334; */
+  /* background-color: #C00000; */
   background-image: url(assets/img/bronze-avatar.png);
 }
 

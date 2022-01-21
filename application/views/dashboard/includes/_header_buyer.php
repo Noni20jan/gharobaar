@@ -62,7 +62,7 @@
     }
 
     .mobile-map a {
-        color: green;
+        color: #C00000;
         font-size: 22px;
         position: relative;
         top: 8px;
@@ -153,7 +153,7 @@
     .check_pincode {
         position: relative;
         border-radius: 28px;
-        background-color: green;
+        background-color: #C00000;
         color: #fff;
         padding: 15px;
         border: none;
@@ -167,7 +167,7 @@
         .check_pincode {
             position: relative;
             border-radius: 28px;
-            background-color: green;
+            background-color: #C00000;
             color: #fff;
             padding: 15px;
             border: none;
@@ -186,7 +186,7 @@
     .OtpSendMsg {
         margin-bottom: 10px;
         text-align: center;
-        color: green;
+        color: #C00000;
     }
 
     .enter_p::placeholder {
@@ -237,7 +237,7 @@
     }
 
     #show_tim {
-        color: green;
+        color: #C00000;
         font-size: 22px;
         position: relative;
         top: 8px;
@@ -341,7 +341,7 @@
     }
 
     .map-icon {
-        color: green;
+        color: #C00000;
         font-size: 22px;
     }
 
@@ -459,7 +459,7 @@
 
     #check_pin {
         position: relative;
-        background-color: green;
+        background-color: #C00000;
         padding: 14px;
         color: #fff;
         border: none;
@@ -4027,7 +4027,7 @@
         }
 
         .icon-bg {
-            background-color: green;
+            background-color: #C00000;
             border-radius: 50%;
             color: white;
             font-size: 15px;
@@ -4688,7 +4688,7 @@
 
             /* Add a green text color and a checkmark when the requirements are right */
             .valid {
-                color: green;
+                color: #C00000;
             }
 
             .valid:before {

@@ -5,8 +5,8 @@ a:active {
 }
 
 .btn-custom {
-    background-color: #FF3334;
-    border-color: #FF3334;
+    background-color: #C00000;
+    border-color: #C00000;
     /* border-radius: 20px */
 }
 
@@ -14,7 +14,7 @@ a:active {
 .btn-custom:focus,
 .btn-custom:active {
     background-color: #EBEBEB !important;
-    border-color: #FF3334 !important;
+    border-color: #C00000 !important;
     font-weight: 500;
 }
 
@@ -25,7 +25,7 @@ a:active {
 }
 
 .btn-block {
-    background-color: #FF3334 !important;
+    background-color: #C00000 !important;
 }
 .btn-block-new{
     background-color: black;
@@ -35,8 +35,8 @@ a:active {
 
 
 .btn-block-new-ui {
-    background-color: #FF3334 !important;
-    border-color: #FF3334 !important;
+    background-color: #C00000 !important;
+    border-color: #C00000 !important;
     border-radius: .1875rem !important;
     width: 100%;
 }
@@ -82,8 +82,8 @@ a:active {
 }
 
 .nav-top .nav-top-right .nav li .btn-sell-now {
-    background-color: #FF3334 !important;
-    border-color: #FF3334 !important;
+    background-color: #C00000 !important;
+    border-color: #C00000 !important;
     font-weight: bold;
 }
 

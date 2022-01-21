@@ -72,7 +72,7 @@
                                                         </a>
                                                         <br>
 
-                                                        <a style="color: green; cursor:pointer;" data-toggle="modal" data-target="#Modal_info_<?php echo $cart_item->product_id; ?>">Add/Edit Customisation Detail</a>
+                                                        <a style="color: #C00000; cursor:pointer;" data-toggle="modal" data-target="#Modal_info_<?php echo $cart_item->product_id; ?>">Add/Edit Customisation Detail</a>
 
                                                         <?php if ($product->add_meet == "Made to stock") : ?>
                                                             <?php if (empty(check_product_stock($product))) : ?>

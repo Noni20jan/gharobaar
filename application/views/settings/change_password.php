@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- Wrapper -->
 
 
@@ -21,7 +21,7 @@
 
         /* Add a green text color and a checkmark when the requirements are right */
         .valid {
-            color: green;
+            color: #C00000;
         }
 
         .valid:before {
@@ -87,33 +87,33 @@
                         <?php $this->load->view('partials/_messages'); ?>
 
                         <?php echo form_open_multipart("change-password-post", ['id' => 'form_validate']); ?>
-                        <?php if (!empty($user->password)): ?>
+                        <?php if (!empty($user->password)) : ?>
                             <div class="form-group">
                                 <label class="control-label"><?php echo trans("old_password"); ?></label>
                                 <input type="password" name="old_password" class="form-control form-input" value="<?php echo old("old_password"); ?>" placeholder="<?php echo trans("old_password"); ?>" required>
                             </div>
                             <input type="hidden" name="old_password_exists" value="1">
-                        <?php else: ?>
+                        <?php else : ?>
                             <input type="hidden" name="old_password_exists" value="0">
                         <?php endif; ?>
                         <div class="form-group">
                             <label class="control-label"><?php echo trans("password"); ?></label>
                             <input type="password" name="password" id="password-field_change" class="form-control form-input" value="<?php echo old("password"); ?>" placeholder="<?php echo trans("password"); ?>" required>
                             <span toggle="#password-field_change" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                                <div id="message_change">
-                                    <p>Password must contain the following:
-                                    <p>
-                                    <p id="letter_change" class="invalid">A <b>lowercase</b> letter</p>
-                                    <p id="capital_change" class="invalid">A <b>capital (uppercase)</b> letter</p>
-                                    <p id="number_change" class="invalid">A <b>number</b></p>
-                                    <p id="length_change" class="invalid">Minimum <b>8 characters</b></p>
-                                </div>
+                            <div id="message_change">
+                                <p>Password must contain the following:
+                                <p>
+                                <p id="letter_change" class="invalid">A <b>lowercase</b> letter</p>
+                                <p id="capital_change" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                                <p id="number_change" class="invalid">A <b>number</b></p>
+                                <p id="length_change" class="invalid">Minimum <b>8 characters</b></p>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label"><?php echo trans("password_confirm"); ?></label>
                             <input type="password" id="password-field1" name="password_confirm" class="form-control form-input" value="<?php echo old("password_confirm"); ?>" placeholder="<?php echo trans("password_confirm"); ?>" required>
                             <span toggle="#password-field1" class="fa fa-fw fa-eye field-icon toggle-password1"></span>
-                                <label id="CheckPasswordMatch_change" style="color:red;"></label>
+                            <label id="CheckPasswordMatch_change" style="color:red;"></label>
 
                         </div>
 
@@ -213,15 +213,15 @@
     });
 </script>
 <script type="text/javascript">
-        function checkPasswordMatch1() {
-            var password = $("#password-field_change").val();
-            var confirmPassword = $("#password-field1").val();
-            if (password != confirmPassword)
-                $("#CheckPasswordMatch_change").html("Passwords do not match!");
-            else
-                $("#CheckPasswordMatch_change").html("");
-        }
-        $(document).ready(function() {
-            $("#password-field1").keyup(checkPasswordMatch1);
-        });
-    </script>
+    function checkPasswordMatch1() {
+        var password = $("#password-field_change").val();
+        var confirmPassword = $("#password-field1").val();
+        if (password != confirmPassword)
+            $("#CheckPasswordMatch_change").html("Passwords do not match!");
+        else
+            $("#CheckPasswordMatch_change").html("");
+    }
+    $(document).ready(function() {
+        $("#password-field1").keyup(checkPasswordMatch1);
+    });
+</script>

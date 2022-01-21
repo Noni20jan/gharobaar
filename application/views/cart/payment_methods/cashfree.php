@@ -20,7 +20,7 @@
 
     @media (max-width: 700px) {
         .cash_free_btn {
-            background-color: #FF3334 !important;
+            background-color: #C00000 !important;
             cursor: pointer;
             color: #fff !important;
             font-weight: 600 !important;
@@ -80,7 +80,7 @@
     }
 
     .cash_free_btn {
-        background-color: #FF3334 !important;
+        background-color: #C00000 !important;
         cursor: pointer;
         color: #fff !important;
         font-weight: 600 !important;

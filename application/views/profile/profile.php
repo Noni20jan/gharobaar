@@ -14,7 +14,7 @@
 
     .notify-me {
         /* margin-left: 12%; */
-        border: 3px solid #FF3334;
+        border: 3px solid #C00000;
         border-radius: 30px;
         width: 100%;
         padding: 3%;
@@ -35,7 +35,7 @@
     }
 
     .notify-button1 {
-        background-color: #FF3334;
+        background-color: #C00000;
         border-radius: 60px;
     }
 
@@ -154,14 +154,14 @@
 
     .morelink {
         display: block;
-        color: green;
+        color: #C00000;
         font-family: 'Montserrat';
         text-decoration: underline;
     }
 
     .morelink:hover {
         display: block;
-        /* color: green; */
+        /* color: #C00000; */
         font-family: 'Montserrat';
         text-decoration: underline;
     }

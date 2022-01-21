@@ -26,7 +26,7 @@ get_index_settings(); ?>
     @media only screen and (max-width: 1024px) {
         #check_pincode {
             position: relative;
-            background-color: green;
+            background-color: #C00000;
             color: #fff;
             border: none;
             bottom: 7px;
@@ -43,7 +43,7 @@ get_index_settings(); ?>
             <div class="col-8 col-left">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <div  id="check_availability">
+                        <div id="check_availability">
                             <?php echo trans("pincode_delivery_text"); ?>
                         </div>
                     </li>
@@ -52,7 +52,7 @@ get_index_settings(); ?>
 
                         <input type="text" name="search_pincode" class="clearable_search form-control" id="search_pincode" maxlength="6" minlength="6" pattern="[0-9]+" class="form-control input-search" value="<?php echo (!empty($_SESSION["modesy_sess_user_location"])) ? $_SESSION["modesy_sess_user_location"] : ''; ?>" placeholder="<?php echo trans("search_pincode"); ?>" autocomplete="off">
                         <input type="hidden" class="search_type_input_pincode" name="search_type_pincode" value="pincode">
-                        <button  id="check_pincode">Check !</button>
+                        <button id="check_pincode">Check !</button>
                         <div id="response_pincode_search_results" class="search-results-ajax"></div>
                         <?php echo form_close(); ?>
                     </li>

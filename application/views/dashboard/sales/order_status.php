@@ -7994,7 +7994,7 @@
     }
 
     .success {
-        color: green;
+        color: #C00000;
         display: block;
     }
 

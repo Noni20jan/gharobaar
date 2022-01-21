@@ -298,7 +298,7 @@ foreach ($sellers as $seller) {
         border-radius: 20px !important;
         line-height: 1.5 !important;
         color: #fff !important;
-        background-color: green;
+        background-color: #C00000;
     }
 
     .active_cod {
@@ -306,7 +306,7 @@ foreach ($sellers as $seller) {
         border-radius: 20px !important;
         line-height: 1.5 !important;
         color: #fff !important;
-        background-color: green;
+        background-color: #C00000;
     }
 
     @media only screen and (max-width: 900px) {
@@ -315,7 +315,7 @@ foreach ($sellers as $seller) {
             border-radius: 20px !important;
             line-height: 1.5 !important;
             color: #fff !important;
-            background-color: green;
+            background-color: #C00000;
         }
     }
 
@@ -346,7 +346,7 @@ foreach ($sellers as $seller) {
             border-radius: 20px !important;
             line-height: 1.5 !important;
             color: #fff !important;
-            background-color: green;
+            background-color: #C00000;
         }
     }
 
@@ -377,7 +377,7 @@ foreach ($sellers as $seller) {
         line-height: 1.5 !important;
         color: black !important;
         background-color: transparent;
-        border: 1px solid green;
+        border: 1px solid #C00000;
 
     }
 
@@ -388,7 +388,7 @@ foreach ($sellers as $seller) {
             line-height: 1.5 !important;
             color: black !important;
             background-color: transparent;
-            border: 1px solid green;
+            border: 1px solid #C00000;
         }
     }
 

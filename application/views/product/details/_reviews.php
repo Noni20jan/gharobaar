@@ -51,7 +51,7 @@
     .addReadMore .readLess {
         margin-left: 2px;
         cursor: pointer;
-        color: green;
+        color: #C00000;
     }
 
     .addReadMoreWrapTxt.showmorecontent .SecSec,
