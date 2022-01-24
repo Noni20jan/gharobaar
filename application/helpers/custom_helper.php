@@ -1279,6 +1279,20 @@ if (!function_exists('get_content_id')) {
         return $ci->page_model->get_content_id($label);
     }
 }
+
+
+
+if (!function_exists('check_order_exists')) {
+    function check_order_exists($user_id)
+    {
+        $ci = &get_instance();
+        return $ci->order_model->check_order_exists($user_id);
+    }
+}
+
+
+
+
 // get call model to get the sms event description
 //get call model to get the description
 if (!function_exists('get_sms_content')) {
@@ -3143,4 +3157,27 @@ if (!function_exists('breadcrumbs')) {
             return $rate_last_order;
         }
     }
+
+
+    if (!function_exists('get_cart_seller_total')) {
+        function get_cart_seller_total()
+        {
+            $ci = &get_instance();
+            $cart_seller_value = $ci->cart_model->calc_seller_cart_total();
+            return $cart_seller_value;
+        }
+    }
+    
+
+
+    if (!function_exists('get_seller_order_value')) {
+        function get_seller_order_value($seller_id)
+        {
+            $ci = &get_instance();
+            $seller_order_value = $ci->cart_model->get_seller_order_value($seller_id);
+            return $seller_order_value;
+        }
+    }
+
+
 }

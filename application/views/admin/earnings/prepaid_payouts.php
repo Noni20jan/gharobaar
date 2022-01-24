@@ -139,7 +139,9 @@
 
     function checkbox(ele, data) {
         var obj = {};
-        obj.order_id = data.order_id;
+        // obj.order_id = data.order_id;
+        obj.order_id = [];
+        obj.order_id.push(data.order_id);
         obj.seller_id = data.id;
         obj.phone = data.phone_number;
         obj.email = data.email;
@@ -157,6 +159,7 @@
                     var exist_obj = data_cal[i];
                     if (exist_obj.seller_id == obj.seller_id) {
                         exist_obj.seller_pay += parseInt(obj.seller_pay);
+                        exist_obj.order_id.push(obj.order_id[0]);
                         is_exists = 1;
                     } else {
                         is_exists = 0;
@@ -177,6 +180,12 @@
                     var exist_obj = data_cal[i];
                     if (exist_obj.seller_id == obj.seller_id) {
                         exist_obj.seller_pay -= parseInt(obj.seller_pay);
+                        let order_ids = exist_obj.order_id;
+                        i = order_ids.indexOf(obj.order_id[0]);
+                        if (i >= 0) {
+                            order_ids.splice(i, 1);
+                        }
+                        exist_obj.order_id = order_ids;
                         if (exist_obj.seller_pay == 0) {
                             index_obj = i;
                             data_cal.splice(index_obj, 1);

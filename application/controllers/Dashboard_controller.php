@@ -3179,4 +3179,16 @@ class Dashboard_controller extends Home_Core_Controller
         $seller_ledgers_date = $this->reports_model->get_seller_ledgers_report($from_date, $to_date);
         echo json_encode($seller_ledgers_date);
     }
+
+
+    public function sellerpayouts()
+    {
+        $seller_id = $this->auth_user->id;
+        $data['title'] = ("Initiated Payouts");
+        $data['seller_initiated_pay'] = $this->order_model->fetch_seller_payout_inititated($seller_id);
+        $this->load->view('dashboard/includes/_header', $data);
+        $this->load->view('dashboard/reports/cashfree_initiated_payouts', $data);
+        $this->load->view('dashboard/includes/_footer');
+    }
+ 
 }

@@ -13,7 +13,7 @@
     <div class="col-sm-12">
         <?php //echo form_open('order_controller/payout_initiate'); 
         ?>
-        <form name="payout_initiate" id="payout_initiate" action="order_controller/initiated_cod_payout">
+        <form name="payout_initiate" id="payout_initiate" action="dashboard_controller/initiated_seller_prepaid_payout">
             <div class="item-table-filter">
                 <label><?php echo trans("from_date"); ?></label>
                 <input name="from_date" class="form-control" type="text" id="my_date_picker1" autocomplete="off" value="<?php echo html_escape($this->input->get('q', true)); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
@@ -79,7 +79,7 @@
 
         var url = form.attr('action');
 
-        table = $('#cod_offer_dashboard').DataTable();
+        table = $('#seller_prepaid_dashboard').DataTable();
         table.clear().destroy();
 
         $.ajax({
@@ -93,7 +93,7 @@
                 var len = Json_data.length;
                 if (len != 0) {
                     for (var i = 0; i < len; i++) {
-                        $('#payouts_data').append("<tr><td>" + (j = i + 1) + "</td><td>" + Json_data[i].order_id + "</td><td>" + Json_data[i].shop_name + "</td><td>" + Json_data[i].created_at + "</td><td>" + Json_data[i].status + "</td><td>" + ((Json_data[i].grand_total_amount) / 100).toFixed(2) + "</td><td>" + ((Json_data[i].shipping_charge_to_gharobaar) / 100).toFixed(2) + "</td><td>" + ((Json_data[i].cod_charge) / 100).toFixed(2) + "</td><td>" + (((Json_data[i].Sup_Shipping_gst / 100) + (Json_data[i].Sup_cod_gst / 100) + (Json_data[i].Sup_subtotal_prd_gst / 100))).toFixed(2) + "</td><td>" + ((Json_data[i].net_seller_payable) / 100).toFixed(2) + "</td><td>" + (Json_data[i].referenceId) + "</td><td>" + (Json_data[i].message) + "</td><td>" + (Json_data[i].subCode) + "</td><td>" + (Json_data[i].batch_transfer_id) + "</td><td>" + (Json_data[i].transfer_id) + "</td></tr>")
+                        $('#payouts_data').append("<tr><td>" + (j = i + 1) + "</td><td>" + Json_data[i].order_id + "</td><td>" + Json_data[i].shop_name + "</td><td>" + Json_data[i].created_at + "</td><td>" + Json_data[i].status + "</td><td>" + ((Json_data[i].grand_total_amount) / 100).toFixed(2) + "</td><td>" + ((Json_data[i].shipping_charge_to_gharobaar) / 100).toFixed(2) + "</td><td>" + ((Json_data[i].cod_charge) / 100).toFixed(2) + "</td><td>" + (((Json_data[i].Sup_Shipping_gst / 100) + (Json_data[i].Sup_cod_gst / 100) + (Json_data[i].Sup_subtotal_prd_gst / 100))).toFixed(2) + "</td><td>" + ((Json_data[i].net_seller_payable) / 100).toFixed(2) + "</td><td>" + (Json_data[i].referenceId) + "</td><td>" + (Json_data[i].message) + "</td><td>" + (Json_data[i].subCode) + "</td><td>" + (Json_data[i].batch_transfer_id) + "</td></tr>")
                     }
                 }
                 
@@ -101,7 +101,7 @@
                 
                 
                                
-                $('#cod_offer_dashboard').dataTable({
+                $('#seller_prepaid_dashboard').dataTable({
                     orderCellsTop: true,
                     fixedHeader: true,
                     initComplete: function() {

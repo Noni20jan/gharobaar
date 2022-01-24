@@ -1237,14 +1237,32 @@
 </script>
 
 
+<?php if ($this->general_settings->first_order_popup == 1) : ?>
+    <?php if ($this->auth_check) : ?>
+        <?php if ((check_order_exists($this->auth_user->id)->count) == 0) : ?>
+            <div class="modal fade" id="first_order_offer" role="dialog">
+                <div class="modal-dialog modal-dialog-centered login-modal locate-modal" role="document">
+                    <div class="modal-content">
+                        <div class="auth-box">
+                            <button type="button" class="close freeship-close" data-dismiss="modal"><i class="icon-close"></i></button>
+                            <img src="<?php echo ($this->general_settings->first_order_popup_image)?>" style="width:100%;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(window).ready(function() {
+                    $('#first_order_offer').modal('show');
+                });
+            </script>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>
+
+
 <script>
     $(document).ready(function() {
 
-        // $("#first_order_offer").modal('show');
-        // $(".close").click(function() {
-        //     $("#first_order_offer").hide();
-
-        // });
 
         $(".slick-carousel-testimonial").slick({
             autoplay: false,

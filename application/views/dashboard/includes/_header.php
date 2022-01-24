@@ -424,11 +424,7 @@ $user = get_user($this->auth_user->id);
                                 <span><?php echo trans("payouts"); ?></span>
                                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
-                            <ul class="treeview-menu">
-                                <!-- <li class="nav-withdraw-money"><a href="<?= generate_dash_url("withdraw_money"); ?>"><?= trans("withdraw_money"); ?></a></li> -->
-                                <li class="nav-payouts"><a href="<?= generate_dash_url("payouts"); ?>"><?= trans("payouts"); ?></a></li>
-                                <li class="nav-set-payout-account"><a href="<?= generate_dash_url("set_payout_account"); ?>"><?= trans("set_payout_account"); ?></a></li>
-                            </ul>
+
                         </li>
                     <?php endif ?>
                     <li class="treeview<?php is_admin_nav_active(['payment-history']); ?>">
@@ -437,11 +433,18 @@ $user = get_user($this->auth_user->id);
                             <span><?php echo trans("payment_history"); ?></span>
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
-                        <ul class="treeview-menu">
-                            <?php if ($this->general_settings->membership_plans_system == 1) : ?>
+                        <!-- <ul class="treeview-menu">
+                            <? //php if ($this->general_settings->membership_plans_system == 1) : 
+                            ?>
                                 <li class="nav-payment-history"><a href="<?= generate_dash_url("payment_history"); ?>?payment=membership"><?= trans("membership_payments"); ?></a></li>
-                            <?php endif; ?>
+                            <? //php endif; 
+                            ?>
                             <li class="nav-payment-history"><a href="<?= generate_dash_url("payment_history"); ?>?payment=promotion"><?= trans("promotion_payments"); ?></a></li>
+                        </ul> -->
+                        <ul class="treeview-menu">
+                            
+                            <li class="nav-payouts"><a href="<?= generate_dash_url("initiatedallpayouts"); ?>"><?= ("Initiated Payouts"); ?></a></li>
+                            
                         </ul>
                     </li>
                     <?php $barter_view = $this->general_settings->barter_view; ?>

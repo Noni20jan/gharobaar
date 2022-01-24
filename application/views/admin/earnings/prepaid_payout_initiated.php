@@ -42,7 +42,8 @@
                                 <th><?php echo ('ReferenceId'); ?></th>
                                 <th><?php echo ('Message'); ?></th>
                                 <th><?php echo ('SubCode'); ?></th>
-                                <th><?php echo ('Batch_transfer_id'); ?></th>
+                                <th><?php echo ('Batch Transfer Id'); ?></th>
+                                <th><?php echo ('Transfer Id'); ?></th>
                             </tr>
                         </thead>
                         <tbody id="payouts_data">

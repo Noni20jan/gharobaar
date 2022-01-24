@@ -343,6 +343,7 @@ foreach ($languages as $language) {
         $route[$key . getr('dashboard', $rts) . '/' . getr('total_earning', $rts)]['GET'] = 'dashboard_controller/total_earning';
         $route[$key . getr('dashboard', $rts) . '/' . getr('withdraw_money', $rts)]['GET'] = 'dashboard_controller/withdraw_money';
         $route[$key . getr('dashboard', $rts) . '/' . getr('payouts', $rts)]['GET'] = 'dashboard_controller/payouts';
+        $route[$key . getr('dashboard', $rts) . '/' . getr('initiatedallpayouts', $rts)]['GET'] = 'dashboard_controller/sellerpayouts';
         $route[$key . getr('dashboard', $rts) . '/' . getr('set_payout_account', $rts)]['GET'] = 'dashboard_controller/set_payout_account';
         $route[$key . getr('dashboard', $rts) . '/' . getr('quote_requests', $rts)]['GET'] = 'dashboard_controller/quote_requests';
         $route[$key . getr('dashboard', $rts) . '/' . getr('barter_requests', $rts)]['GET'] = 'dashboard_controller/barter_requests';

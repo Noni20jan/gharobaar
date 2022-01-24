@@ -4075,6 +4075,7 @@ class Order_model extends CI_Model
         `e`.`Sup_subtotal_prd_gst`,
         `a`.`shipping_charge_to_gharobaar`,
         `a`.`cod_charge`,
+        `a`.`transfer_id`,
         `b`.`shop_name`,
         `b`.`id`,
 
@@ -4120,7 +4121,7 @@ class Order_model extends CI_Model
 
 
 
-    public function update_status_payouts($seller_id, $order_id, $status_code, $refrence_id, $message, $status, $batchid, $payout_charge, $mode)
+    public function update_status_payouts($seller_id, $order_id, $status_code, $refrence_id, $message, $status, $batchid, $payout_charge, $mode,$transfer_id)
     {
         $data = array(
             'payout_initiated' => 1,
@@ -4131,6 +4132,7 @@ class Order_model extends CI_Model
             'updated_at' => date('Y-m-d H:i:s'),
             'batch_transfer_id' => $batchid,
             'payout_charge' => $payout_charge,
+            'transfer_id'=>$transfer_id
         );
 
         $this->db->where('order_id', $order_id);
@@ -4220,6 +4222,7 @@ class Order_model extends CI_Model
         `a`.`status`,
         `a`.`subCode`,
         `a`.`batch_transfer_id`,
+        `a`.`transfer_id`,
         `a`.`gateway_amount_gst`,
         `a`.`gateway_amount`,
         `e`.`grand_total_amount`,
@@ -4936,4 +4939,18 @@ class Order_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->row();
     }
+
+
+
+    public function fetch_seller_payout_inititated($seller_id)
+    {
+        $seller_id = clean_number($seller_id);
+        $this->db->where('vendorId', $seller_id);
+        $query = $this->db->get('seller_payout_report');
+        return $query->result();
+    }
+
+
+
+
 }

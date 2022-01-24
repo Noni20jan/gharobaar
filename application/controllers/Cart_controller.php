@@ -1903,7 +1903,7 @@ class Cart_controller extends Home_Core_Controller
         $length = count($data_pay_array);
         for ($i = 0; $i < $length; $i++) {
             $obj = new stdClass();
-
+            $obj_trs = new stdClass();
             $transfer_id = random_int(10000, 99999);
             if ((($data_pay_array[$i]->seller_pay) / 100) < 1000) {
                 $payout_charge_with_gst = 2.50 + (0.18 * 2.50);
@@ -1928,6 +1928,7 @@ class Cart_controller extends Home_Core_Controller
             $obj->bankAccount = $data_pay_array[$i]->acc_no;
             $obj->ifsc = $data_pay_array[$i]->ifsc;
             array_push($sing_arr, $obj);
+            $data_pay_array[$i]->transfer_id=$obj->transferId;
         }
 
         $new_data = $sing_arr;
@@ -1990,7 +1991,9 @@ class Cart_controller extends Home_Core_Controller
 
                 $obj->seller_id = $data_pay_array[$i]->seller_id;
                 $obj->order_id = $data_pay_array[$i]->order_id;
-                $this->order_model->update_status_payouts($obj->seller_id, $obj->order_id, $status_code, $refrence_id, $message, $status, $batch_id, $obj->payout_charge, $mode);
+                foreach($obj->order_id as $order_id){
+                $this->order_model->update_status_payouts($obj->seller_id, $order_id, $status_code, $refrence_id, $message, $status, $batch_id, $obj->payout_charge, $mode, $data_pay_array[$i]->transfer_id);
+                }
             }
             echo $response;
         } else {
