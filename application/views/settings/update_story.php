@@ -464,7 +464,7 @@
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Bank Branch<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='text' name="bank_branch" id="bank_branch" class="form-control auth-form-input" value="ICICI Tower, NBCC place" required readonly>
+                <input type='text' name="bank_branch" id="bank_branch" class="form-control auth-form-input" value="ICICI Tower, NBCC place,Bisham Pitamah Marg, Pragati Vihar, New Delhi - 110003" required readonly>
               </div>
             </div>
           </div>
