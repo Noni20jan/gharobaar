@@ -4,6 +4,21 @@
         list-style-type: none;
     }
 
+    .red-link:hover {
+        color: red;
+    }
+
+    .red-link {
+        font-weight: 700;
+        padding: 12px 10px;
+        border: 1px solid #E55451;
+        margin-right: 8px;
+        font-size: 14px;
+        position: relative;
+        color: red;
+
+    }
+
     .collapsible-nav-bar-content {
         display: flex;
         margin-bottom: 0px;
@@ -134,11 +149,17 @@ if ($this->general_settings->selected_navigation == 1) : ?>
                                 endif; ?>
                             </div>
                         </li>
+
                 <?php endif;
                 endif; ?>
+                <?php $valentines = trans("festival_occasion"); ?>
+                <a class="red-link" href="<?php echo lang_base_url() . 'banner_by_product' . '/' . $valentines; ?>"><?php echo trans("valentines_day"); ?></a>
 
             </ul>
+
         </div>
+
+
         <div id="receita-div" style="display: none;border-top: 1px solid rgb(235, 235, 235);" class="receita-hidden">
             <ul class="collapsible-nav-bar-content">
                 <!-- <li class="nav-item"><a class="nav-link" href="<?php echo lang_base_url() . 'shipping_policy'; ?>">Shipping policy</a></li>
@@ -148,6 +169,7 @@ if ($this->general_settings->selected_navigation == 1) : ?>
                 <li class="nav-item"><a class="nav-link" href="<?php echo lang_base_url() . 'shop-by-seller'; ?>"><?php echo trans("shop_by_seller"); ?></a></li>
                 <li class="nav-item"><a class="nav-link" href="<?php echo lang_base_url() . 'aboutus'; ?>">About us</a></li>
                 <li class="nav-item"><a class="nav-link" href="<?php echo lang_base_url() . 'contact'; ?>">Contact us</a></li>
+
             </ul>
         </div>
     </div>

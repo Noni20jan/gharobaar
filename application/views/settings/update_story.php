@@ -488,7 +488,7 @@
                 <?php else : ?>
                   <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/cheque_image.jpeg'; ?>" style="border-radius:10%" />
                 <?php endif; ?>
-                <input type="file" name="cheque-image" id="cheque-logo" required="" style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>required" />
+                <input type="file" name="cheque-image" id="cheque-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>" />
 
                 <p id="file-upload-filename" style="margin-bottom:0;"></p>
                 <span style="color: red;" id="cheque_error"></span>
@@ -504,7 +504,7 @@
                 </script>
                 <script>
                   function cheque_image() {
-                    let cheque_image = $('#cheque-logo').val();
+                    let cheque_image = "<?php echo $this->auth_user->cheque_image_url; ?>";
                     if (cheque_image.length == 0) {
                       $('#cheque_error').html("Please enter cheque image.");
                     } else {
