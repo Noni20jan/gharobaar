@@ -153,8 +153,9 @@ if ($this->general_settings->selected_navigation == 1) : ?>
                 <?php endif;
                 endif; ?>
                 <?php $valentines = trans("festival_occasion"); ?>
-                <a class="red-link" href="<?php echo lang_base_url() . 'banner_by_product' . '/' . $valentines; ?>"><?php echo trans("valentines_day"); ?></a>
-
+                <?php if ($this->general_settings->valentine_visibility == 1) : ?>
+                    <a class="red-link" href="<?php echo lang_base_url() . 'banner_by_product' . '/' . $valentines; ?>"><?php echo trans("valentines_day"); ?></a>
+                <?php endif; ?>
             </ul>
 
         </div>
