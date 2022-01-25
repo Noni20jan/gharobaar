@@ -427,13 +427,16 @@ $user = get_user($this->auth_user->id);
 
                         </li>
                     <?php endif ?>
-                    <li class="treeview<?php is_admin_nav_active(['payment-history']); ?>">
-                        <a href="#">
-                            <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/payment-icon.png" alt="" style="width: 20px; height: 20px;" />
-                            <span><?php echo trans("payment_history"); ?></span>
-                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                        </a>
-                        <!-- <ul class="treeview-menu">
+
+                    <?php if ($this->general_settings->enable_seller_payout_report == 1) : ?>
+
+                        <li class="treeview<?php is_admin_nav_active(['payment-history']); ?>">
+                            <a href="#">
+                                <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/payment-icon.png" alt="" style="width: 20px; height: 20px;" />
+                                <span><?php echo trans("payment_history"); ?></span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            </a>
+                            <!-- <ul class="treeview-menu">
                             <? //php if ($this->general_settings->membership_plans_system == 1) : 
                             ?>
                                 <li class="nav-payment-history"><a href="<?= generate_dash_url("payment_history"); ?>?payment=membership"><?= trans("membership_payments"); ?></a></li>
@@ -441,12 +444,13 @@ $user = get_user($this->auth_user->id);
                             ?>
                             <li class="nav-payment-history"><a href="<?= generate_dash_url("payment_history"); ?>?payment=promotion"><?= trans("promotion_payments"); ?></a></li>
                         </ul> -->
-                        <ul class="treeview-menu">
-                            
-                            <li class="nav-payouts"><a href="<?= generate_dash_url("initiatedallpayouts"); ?>"><?= ("Initiated Payouts"); ?></a></li>
-                            
-                        </ul>
-                    </li>
+                            <ul class="treeview-menu">
+
+                                <li class="nav-payouts"><a href="<?= generate_dash_url("initiatedallpayouts"); ?>"><?= ("Initiated Payouts"); ?></a></li>
+
+                            </ul>
+                        </li>
+                    <?php endif ?>
                     <?php $barter_view = $this->general_settings->barter_view; ?>
                     <?php if ($barter_view == 1) { ?>
                         <li class="header_color header">Barter</li>
