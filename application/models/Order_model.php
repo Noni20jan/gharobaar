@@ -1432,6 +1432,7 @@ class Order_model extends CI_Model
         return $query->row();
     }
 
+
     //update order product status
     public function update_order_product_status($order_product_id, $reject_reason_comment)
     {
@@ -1829,21 +1830,31 @@ class Order_model extends CI_Model
     public function get_return_orders_count($user_id)
     {
         // json_decode(json_encode($this->lookup_model->get_lookup_order_return),true)
-        $order_statuses = json_decode(json_encode($this->lookup_model->get_lookup_order_return()), true);
-
         $this->db->join('order_products', 'order_products.order_id = orders.id');
         $this->db->select('orders.id');
         $this->db->group_by('orders.id');
-        $this->db->where('order_products.seller_id', clean_number($user_id));
         $this->db->where('order_products.order_status', 'RTO');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
         $this->db->or_where('order_products.order_status', 'RTO Initiated');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+
         $this->db->or_where('order_products.order_status', 'RTO In Transit');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+
         $this->db->or_where('order_products.order_status', 'RTO Delivered');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
 
         $this->db->or_where('order_products.order_status', 'Return Initiated');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+
         $this->db->or_where('order_products.order_status', 'Return Acknowledged');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+
         $this->db->or_where('order_products.order_status', 'Return Pending');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+
         $this->db->or_where('order_products.order_status', 'Return In Transit');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
 
         $this->filter_sales();
         $query = $this->db->get('orders');
@@ -1944,18 +1955,34 @@ class Order_model extends CI_Model
     }
     public function get_return_orders($user_id, $per_page, $offset)
     {
-        $order_statuses = json_decode(json_encode($this->lookup_model->get_lookup_order_return()), true);
         $this->db->join('orders', 'order_products.order_id = orders.id');
+        $this->db->join('users', 'order_products.seller_id = users.id');
+
         $this->db->select('order_products.order_id,order_products.product_id,order_products.product_title,order_products.product_currency,order_products.order_status,orders.created_at,orders.order_number');
-        $this->db->where('order_products.seller_id', clean_number($user_id));
+
         $this->db->where('order_products.order_status', 'RTO');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
         $this->db->or_where('order_products.order_status', 'RTO Initiated');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+
         $this->db->or_where('order_products.order_status', 'RTO In Transit');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+
         $this->db->or_where('order_products.order_status', 'RTO Delivered');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+
         $this->db->or_where('order_products.order_status', 'Return Initiated');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+
         $this->db->or_where('order_products.order_status', 'Return Acknowledged');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+
         $this->db->or_where('order_products.order_status', 'Return Pending');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+
         $this->db->or_where('order_products.order_status', 'Return In Transit');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+
 
 
         $this->filter_sales();
@@ -4121,7 +4148,7 @@ class Order_model extends CI_Model
 
 
 
-    public function update_status_payouts($seller_id, $order_id, $status_code, $refrence_id, $message, $status, $batchid, $payout_charge, $mode,$transfer_id)
+    public function update_status_payouts($seller_id, $order_id, $status_code, $refrence_id, $message, $status, $batchid, $payout_charge, $mode, $transfer_id)
     {
         $data = array(
             'payout_initiated' => 1,
@@ -4132,7 +4159,7 @@ class Order_model extends CI_Model
             'updated_at' => date('Y-m-d H:i:s'),
             'batch_transfer_id' => $batchid,
             'payout_charge' => $payout_charge,
-            'transfer_id'=>$transfer_id
+            'transfer_id' => $transfer_id
         );
 
         $this->db->where('order_id', $order_id);
@@ -4949,8 +4976,4 @@ class Order_model extends CI_Model
         $query = $this->db->get('seller_payout_report');
         return $query->result();
     }
-
-
-
-
 }
