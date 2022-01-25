@@ -303,10 +303,13 @@ class Reports_model extends CI_Model
     }
     public function get_commission_bill_report($start_date, $end_date)
     {
+        $seller_id = $this->auth_user->id;
+
         $end_date = $end_date . " 23:59:59";
         $sql = "SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order_Month',
         sdr.seller as Seller,
         sdr.seller_email as Email,
+        sdr.seller_id as 'Seller_Id',
         sdr.seller_phone as 'Phone',
         sdr.shop_name as Shop_name,
         sdr.pan_no as 'Pan',
@@ -339,6 +342,7 @@ class Reports_model extends CI_Model
           ON sdr.order_no = csp.order_id,
           users as u
           where sdr.seller_email = u.email
+          and sdr.seller_id=$seller_id
          and sdr.order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
          and sdr.order_date <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
          and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing')
@@ -417,7 +421,7 @@ class Reports_model extends CI_Model
         format(csp.net_seller_payable/100,2) AS 'Seller_Payable',
         csp.payout_initiated AS 'Payout_Initiated',
         format(csp.commission_amount/100,2) AS 'Commission_Amount',
-        format(csp.commission_amount_with_gst/100,2) AS 'Commission_Amount_With GST',
+        format(csp.commission_amount_with_gst/100,2) AS 'Commission_Amount_With_GST',
         format(csp.shipping_charge_to_gharobaar/100,2) AS 'Shipping_charges_to_gharobaar',
         format(csp.tcs_amount/100,2) AS 'TCS_Amount',
         format(csp.tds_amount/100,2) AS 'TDS_Amount',
@@ -540,6 +544,111 @@ class Reports_model extends CI_Model
              AND o.created_at < STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
             AND buyer.id != seller.id
             AND csp.is_active = 1";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    public function format_product_listing($start_date, $end_date)
+    {
+        $end_date = $end_date . " 23:59:59";
+        $sql = "SELECT 
+        sku,
+        category_id,
+        FORMAT(price / 100, 2) AS price,
+        FORMAT(listing_price / 100, 2) AS 'Listing_Price',
+        FORMAT(price_exclude_gst / 100, 2) AS 'Price_Ex_GST',
+        currency,
+        discount_rate,
+        gst_rate,
+        FORMAT(gst_amount / 100, 2) AS 'GST_Amount',
+        available_for_return_or_exchange,
+        available_for_barter,
+        status,
+        is_promoted,
+        promote_start_date,
+        promote_end_date,
+        promote_plan,
+        promote_day,
+        is_special_offer,
+        special_offer_date,
+        visibility,
+        rating,
+        pageviews,
+        demo_url,
+        stock,
+        cod_accepted,
+        shipping_time,
+        shipping_cost_type,
+        is_deleted,
+        is_draft,
+        add_meet,
+        contains_liquid contains_heat,
+        weight,
+        temperature,
+        allergance,
+        availability,
+        product_pincode,
+        product_weight,
+        product_state,
+        product_address,
+        product_city,
+        product_area,
+        landmark,
+        supplier_product_type,
+        is_expire,
+        expiry_date,
+        manufacturing_date,
+        lead_time,
+        is_organic,
+        is_sustainable,
+        is_handicraft,
+        is_gluten_Free,
+        is_vegan,
+        is_keto_friendly,
+        is_allergens,
+        is_personalised,
+        is_veg_nonveg_jain,
+        is_appetisers_main_course_beverages_desserts,
+        is_gold_silver_precious_stones_semi_precious_artificial,
+        special_delivery_requirement,
+        delivery_area,
+        product_wash_instruction,
+        blouse_details,
+        minimum_Prior_notice,
+        pet_age storage_instruction,
+        hsn_code,
+        packed_product_height,
+        packed_product_length,
+        packed_product_width,
+        other_product_wash_instruction,
+        other_blouse_details,
+        other_minimum_Prior_notice,
+        other_pet_age,
+        other_storage_instruction,
+        other_delivery_area,
+        shelf_life_from_date_of_manufacture,
+        discounted_price,
+        order_capacity,
+        lead_days,
+        weight_units,
+        shelf_units,
+        special_delivery_other,
+        product_pincode_1,
+        product_area_1,
+        product_address_1,
+        product_state_1,
+        product_city_1,
+        landmark_1,
+        created_at,
+        created_by,
+        last_updated_by,
+        last_updated_date,
+        last_updated_login,
+        rand_val,
+        suitable_for
+    FROM
+        products
+        where created_at >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s') 
+        AND created_at <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')";
         $query = $this->db->query($sql);
         return $query->result();
     }

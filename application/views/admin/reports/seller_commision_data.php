@@ -22,7 +22,7 @@
     }
 
     .index-table {
-        max-height: 1000px;
+        max-height: 600px;
         overflow-x: auto;
     }
 </style>

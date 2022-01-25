@@ -702,6 +702,9 @@
                             <a href="<?php echo admin_url(); ?>cod-charges-report"><?php echo trans("cod_charges_report"); ?></a>
                         </li>
                         <li class="nav-send-email-subscribers">
+                            <a href="<?php echo admin_url(); ?>product-listing"><?php echo trans("product_listing"); ?></a>
+                        </li>
+                        <li class="nav-send-email-subscribers">
                             <a href="<?php echo admin_url(); ?>tcs-report"><?php echo trans("tcs_report"); ?></a>
                         </li>
                         <li class="nav-send-email-subscribers">

@@ -2004,6 +2004,14 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/reports/cod_charges_report', $data);
         $this->load->view('admin/includes/_footer');
     }
+    public function product_listing()
+    {
+        $data['title'] = trans("product_listing");
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/reports/product_listing', $data);
+        $this->load->view('admin/includes/_footer');
+    }
 
 
     public function format_sale_data()
@@ -2069,5 +2077,13 @@ class Admin_controller extends Admin_Core_Controller
 
         $cash_free = $this->reports_model->format_cod_charges_report($from_date, $to_date);
         echo json_encode($cash_free);
+    }
+    public function format_product_listing()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $product_listing = $this->reports_model->format_product_listing($from_date, $to_date);
+        echo json_encode($product_listing);
     }
 }
