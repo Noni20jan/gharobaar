@@ -3,6 +3,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->selected_lang->short_form ?>">
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/jquery.dm-uploader.min.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/styles.css" />
@@ -655,7 +656,8 @@
     <meta name="description" content="<?php echo xss_clean($description); ?>" />
     <meta name="keywords" content="<?php echo xss_clean($keywords); ?>" />
     <meta name="author" content="Codingest" />
-    <link rel="shortcut icon" type="image/png" href="<?php echo get_favicon($this->general_settings); ?>" />
+
+    <link rel="shortcut icon" href="<?php echo get_favicon($this->general_settings); ?>" />
 
     <!-- this scrip is provided by sakshi -->
     <script>
@@ -5524,6 +5526,7 @@
         $("#verify_otp").click(function(e) {
             document.getElementById("verify_mobile_span").innerHTML = "";
             var phn_num = document.getElementById("phone_number").value;
+            console.log(phn_num);
             var email_address = document.getElementById("email_new").value;
             email_address = email_address.toLowerCase();
             console.log(email_address);
@@ -6018,4 +6021,64 @@
             });
             return res;
         }
+    </script>
+    <script>
+        window.onload = function() {
+
+            var pageTitle = document.title;
+            var attentionMessage = '<?php echo trans('miss_you'); ?>';
+            var blinkEvent = null;
+
+            document.addEventListener('visibilitychange', function(e) {
+                var isPageActive = !document.hidden;
+
+                if (!isPageActive) {
+                    blink();
+
+
+
+                } else {
+                    document.title = pageTitle;
+
+
+                    clearInterval(blinkEvent);
+                    var links = document.getElementsByTagName("link");
+
+                    filtered = [],
+                        i = links.length;
+                    while (i--) {
+                        links[i].rel === "shortcut icon" && filtered.push(links[i]);
+                    }
+                    filtered[0].href = "<?php echo get_favicon($this->general_settings); ?>";
+
+
+                }
+            });
+
+            function blink() {
+                blinkEvent = setInterval(function() {
+                    if (document.title === attentionMessage) {
+                        document.title = pageTitle;
+                        var links = document.getElementsByTagName("link");
+
+                        filtered = [],
+                            i = links.length;
+                        while (i--) {
+                            links[i].rel === "shortcut icon" && filtered.push(links[i]);
+                        }
+                        filtered[0].href = "<?php echo get_favicon($this->general_settings); ?>";
+                    } else {
+                        document.title = attentionMessage;
+                        var links = document.getElementsByTagName("link");
+
+                        filtered = [],
+                            i = links.length;
+                        while (i--) {
+                            links[i].rel === "shortcut icon" && filtered.push(links[i]);
+                        }
+                        filtered[0].href = "<?php echo base_url(); ?>assets/img/envelope.jpg";
+                    }
+                }, 100);
+            }
+        };
     </script>
