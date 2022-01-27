@@ -8,7 +8,7 @@
     <title><?php echo html_escape($title); ?> - <?php echo html_escape($this->general_settings->application_name); ?></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="shortcut icon" type="image/png" href="<?php echo get_favicon($this->general_settings); ?>" />
+    <link rel="shortcut icon" href="<?php echo get_favicon($this->general_settings); ?>" />
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <!-- Font Awesome -->
@@ -754,3 +754,63 @@
     <div class="content-wrapper">
         <!-- Main content -->
         <section class="content">
+            <script>
+                window.onload = function() {
+
+                    var pageTitle = document.title;
+                    var attentionMessage = '<?php echo trans('miss_you'); ?>';
+                    var blinkEvent = null;
+
+                    document.addEventListener('visibilitychange', function(e) {
+                        var isPageActive = !document.hidden;
+
+                        if (!isPageActive) {
+                            blink();
+
+
+
+                        } else {
+                            document.title = pageTitle;
+
+
+                            clearInterval(blinkEvent);
+                            var links = document.getElementsByTagName("link");
+
+                            filtered = [],
+                                i = links.length;
+                            while (i--) {
+                                links[i].rel === "shortcut icon" && filtered.push(links[i]);
+                            }
+                            filtered[0].href = "<?php echo get_favicon($this->general_settings); ?>";
+
+
+                        }
+                    });
+
+                    function blink() {
+                        blinkEvent = setInterval(function() {
+                            if (document.title === attentionMessage) {
+                                document.title = pageTitle;
+                                var links = document.getElementsByTagName("link");
+
+                                filtered = [],
+                                    i = links.length;
+                                while (i--) {
+                                    links[i].rel === "shortcut icon" && filtered.push(links[i]);
+                                }
+                                filtered[0].href = "<?php echo get_favicon($this->general_settings); ?>";
+                            } else {
+                                document.title = attentionMessage;
+                                var links = document.getElementsByTagName("link");
+
+                                filtered = [],
+                                    i = links.length;
+                                while (i--) {
+                                    links[i].rel === "shortcut icon" && filtered.push(links[i]);
+                                }
+                                filtered[0].href = "<?php echo base_url(); ?>assets/img/envelope.jpg";
+                            }
+                        }, 100);
+                    }
+                };
+            </script>

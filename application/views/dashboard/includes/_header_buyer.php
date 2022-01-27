@@ -12,6 +12,8 @@
     }
 
 
+
+
     .childtext {
         cursor: pointer;
     }
@@ -5648,6 +5650,66 @@
             });
 
         });
+    </script>
+    <script>
+        window.onload = function() {
+
+            var pageTitle = document.title;
+            var attentionMessage = '<?php echo trans('miss_you'); ?>';
+            var blinkEvent = null;
+
+            document.addEventListener('visibilitychange', function(e) {
+                var isPageActive = !document.hidden;
+
+                if (!isPageActive) {
+                    blink();
+
+
+
+                } else {
+                    document.title = pageTitle;
+
+
+                    clearInterval(blinkEvent);
+                    var links = document.getElementsByTagName("link");
+
+                    filtered = [],
+                        i = links.length;
+                    while (i--) {
+                        links[i].rel === "shortcut icon" && filtered.push(links[i]);
+                    }
+                    filtered[0].href = "<?php echo get_favicon($this->general_settings); ?>";
+
+
+                }
+            });
+
+            function blink() {
+                blinkEvent = setInterval(function() {
+                    if (document.title === attentionMessage) {
+                        document.title = pageTitle;
+                        var links = document.getElementsByTagName("link");
+
+                        filtered = [],
+                            i = links.length;
+                        while (i--) {
+                            links[i].rel === "shortcut icon" && filtered.push(links[i]);
+                        }
+                        filtered[0].href = "<?php echo get_favicon($this->general_settings); ?>";
+                    } else {
+                        document.title = attentionMessage;
+                        var links = document.getElementsByTagName("link");
+
+                        filtered = [],
+                            i = links.length;
+                        while (i--) {
+                            links[i].rel === "shortcut icon" && filtered.push(links[i]);
+                        }
+                        filtered[0].href = "<?php echo base_url(); ?>assets/img/envelope.jpg";
+                    }
+                }, 100);
+            }
+        };
     </script>
     <script>
         $('.dropdown-menu').on('click', function(e) {
