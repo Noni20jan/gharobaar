@@ -798,4 +798,49 @@ class Category_model extends CI_Model
         }
         return $categories;
     }
+
+    public function get_brandname()
+    {
+        $this->db->select('brand_name');
+        $this->db->where('brand_name!=', '');
+        $this->db->where('role', 'vendor');
+        $this->db->distinct();
+        $query = $this->db->get('users');
+        return $query->result();
+    }
+
+    public function get_shopname()
+    {
+        $this->db->select('shop_name');
+        $this->db->where('shop_name!=', '');
+        $this->db->where('role', 'vendor');
+        $this->db->distinct();
+        $query = $this->db->get('users');
+        return $query->result();
+    }
+
+    public function get_seller_email()
+    {
+        $this->db->select('email');
+        $this->db->where('email!=', '');
+        $this->db->where('role', 'vendor');
+        $this->db->distinct();
+        $query = $this->db->get('users');
+        return $query->result();
+    }
+
+    public function get_pending_product_title()
+    {
+        $this->db->select('product_details.title');
+        // $this->db->join('product_details', 'product_details.product_id = products.id');
+        $this->db->join('products', 'products.id = product_details.product_id');
+        $this->db->where('products.visibility', 1);
+        $this->db->where('products.is_draft', 0);
+        $this->db->where('products.is_deleted', 0);
+        $this->db->where('products.status !=', 1);
+        $this->db->where('products.is_service', 0);
+        $query = $this->db->get('product_details');
+        return $query->result();
+        
+    }
 }

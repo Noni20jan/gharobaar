@@ -285,6 +285,10 @@ class Product_admin_model extends CI_Model
         $product_type = input_get('product_type');
         $stock = input_get('stock');
         $q = input_get('q');
+        $brand_name = input_get('brand_name');
+        $shop_name = input_get('shop_name');
+        $seller_email= input_get('seller_email');
+        $product_title=input_get('product_title');
 
         if (!empty($category_ids)) {
             $this->db->where_in("products.category_id", $category_ids);
@@ -300,6 +304,23 @@ class Product_admin_model extends CI_Model
             $this->db->or_like('users.shop_name', $q);
             $this->db->group_end();
         }
+
+        if (!empty($brand_name)) {
+            $this->db->where('users.brand_name', $brand_name);
+        }
+
+        if (!empty($shop_name)) {
+            $this->db->where('users.shop_name', $shop_name);
+        }
+
+        if (!empty($seller_email)) {
+            $this->db->where('users.email', $seller_email);
+        }
+
+        if (!empty($product_title)) {
+            $this->db->where('product_details.title', $product_title);
+        }
+
         if ($product_type == "physical" || $product_type == "digital") {
             $this->db->where('products.product_type', $product_type);
         }
