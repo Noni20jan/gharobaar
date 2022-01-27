@@ -306,18 +306,26 @@ class Product_admin_model extends CI_Model
         }
 
         if (!empty($brand_name)) {
+            $this->db->join('product_details', 'product_details.product_id = products.id');
+            $this->db->join('users', 'products.user_id = users.id');
             $this->db->where('users.brand_name', $brand_name);
         }
 
         if (!empty($shop_name)) {
+            $this->db->join('product_details', 'product_details.product_id = products.id');
+            $this->db->join('users', 'products.user_id = users.id');
             $this->db->where('users.shop_name', $shop_name);
         }
 
         if (!empty($seller_email)) {
+            $this->db->join('product_details', 'product_details.product_id = products.id');
+            $this->db->join('users', 'products.user_id = users.id');
             $this->db->where('users.email', $seller_email);
         }
 
         if (!empty($product_title)) {
+            $this->db->join('product_details', 'product_details.product_id = products.id');
+            $this->db->join('users', 'products.user_id = users.id');
             $this->db->where('product_details.title', $product_title);
         }
 
