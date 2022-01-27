@@ -5705,7 +5705,7 @@
                         while (i--) {
                             links[i].rel === "shortcut icon" && filtered.push(links[i]);
                         }
-                        filtered[0].href = "<?php echo base_url(); ?>assets/img/envelope.jpg";
+                        filtered[0].href = "<?php echo base_url(); ?>assets/img/envelope_letter.jpg";
                     }
                 }, 100);
             }
