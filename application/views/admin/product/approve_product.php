@@ -348,50 +348,7 @@
         }
     });
 </script>
-</script>
-<script>
-    $('#submit_val_button').click(function() {
 
-        var arr = [];
-        $('input:checked[name=selected_id]').each(function() {
-            arr.push($(this).val());
-        });
-
-        $('#my_match').val(arr.join(':'));
-
-        var source_id = ($('#my_match').val());
-        var z = source_id.trim();
-        console.log(z);
-        var arr_source_id = (z.split(':'));
-        console.log(arr_source_id);
-        var split_arr = arr_source_id.map(s => s.trim())
-        var grp_feature_id = <?php echo $z; ?>;
-        var feature_id = parseInt($('#feature_value').val());
-
-        var data = {
-
-            'grp_feature_id': grp_feature_id,
-            'feature_id': feature_id,
-            'product_id': split_arr
-        }
-        data[csfr_token_name] = $.cookie(csfr_cookie_name);
-        $.ajax({
-
-            type: "POST",
-            url: base_url + "add-product-banner",
-
-            data: data,
-
-            success: function(data) {
-                location.reload();
-            },
-            error: function() {
-                alert("error"); //error occurs
-            }
-        });
-        return false;
-    });
-</script>
 <script>
     $(document).ready(function() {
         var table = $('#example').DataTable({
@@ -405,8 +362,11 @@
                 'className': 'dt-body-center',
 
             }],
+
+
             'order': [1, 'asc']
         });
+
 
 
 
@@ -450,6 +410,22 @@
 
 
                 }
+                var product_selected = []
+                $("input[name=selected_id]").each(function() {
+                    $(this).change(function() {
+                        if (this.checked) {
+                            product_selected.push($(this).val());
+
+
+                        } else {
+                            product_selected.splice($.inArray($(this).val(), tmp), 1);
+
+
+                        }
+                    });
+                });
+
+
                 var table = $('#example').DataTable({
 
                     'columnDefs': [{
@@ -461,7 +437,46 @@
                         'className': 'dt-body-center',
 
                     }],
+
                     'order': [1, 'asc']
+                });
+                $('#submit_val_button').click(function() {
+
+
+
+
+                    $('#my_match').val(product_selected.join(':'));
+
+                    var source_id = ($('#my_match').val());
+                    var z = source_id.trim();
+                    console.log(z);
+                    var arr_source_id = (z.split(':'));
+                    console.log(arr_source_id);
+                    var split_arr = arr_source_id.map(s => s.trim())
+                    var grp_feature_id = <?php echo $z; ?>;
+                    var feature_id = parseInt($('#feature_value').val());
+
+                    var data = {
+
+                        'grp_feature_id': grp_feature_id,
+                        'feature_id': feature_id,
+                        'product_id': split_arr
+                    }
+                    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+
+                        type: "POST",
+                        url: base_url + "add-product-banner",
+
+                        data: data,
+
+                        success: function(data) {
+                            location.reload();
+                        },
+                        error: function() {
+                            alert("error"); //error occurs
+                        }
+                    });
                 });
 
 

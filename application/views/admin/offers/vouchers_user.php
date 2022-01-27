@@ -143,45 +143,7 @@
 
         });
     </script>
-    <script>
-        $('#submit_val_button').click(function() {
-            var arr = [];
-            $('input:checked[name=selected_id]').each(function() {
-                arr.push($(this).val());
-            });
 
-            $('#my_match').val(arr.join(':'));
-
-            var source_id = ($('#my_match').val());
-            var z = source_id.trim();
-
-            var arr_source_id = (z.split(':'));
-            var split_arr = arr_source_id.map(s => s.trim())
-
-            var offer_id = ($('#offer_id').val());
-            var data = {
-                'source_type': 'Product',
-                'source_id': split_arr,
-                'offer_id': offer_id
-            }
-            data[csfr_token_name] = $.cookie(csfr_cookie_name);
-            $.ajax({
-
-                type: "POST",
-                url: base_url + "add-user-coupon",
-
-                data: data,
-
-                success: function(data) {
-                    location.reload();
-                },
-                error: function() {
-                    alert("error"); //error occurs
-                }
-            });
-            return false;
-        });
-    </script>
     <script>
         $('#offer_id').change(function() {
             table = $('#example').DataTable();
@@ -207,6 +169,53 @@
 
                         $('#insert_data').append("<tr><td>" + Json_data[i].id + "</td><td>" + '<a href="<?php echo base_url() . "profile"; ?>/' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].username + "</td><td>" + Json_data[i].email + "</td><td>" + '<label class="label label-success">' + '<?php echo trans("active"); ?>' + '</label>' + "</td><td>" + Json_data[i].last_seen + "</td><td>" + Json_data[i].created_at + "</td><td>" + '<input type="checkbox" name="selected_id" id="product_checkbox" value="' + Json_data[i].id + '">' + "</td></tr>")
                     }
+                    var user_selected = []
+                    $("input[name=selected_id]").each(function() {
+                        $(this).change(function() {
+                            if (this.checked) {
+                                user_selected.push($(this).val());
+
+
+                            } else {
+                                user_selected.splice($.inArray($(this).val(), tmp), 1);
+
+
+                            }
+                        });
+                    });
+                    $('#submit_val_button').click(function() {
+                        $('#my_match').val(user_selected.join(':'));
+
+                        var source_id = ($('#my_match').val());
+                        var z = source_id.trim();
+
+                        var arr_source_id = (z.split(':'));
+                        var split_arr = arr_source_id.map(s => s.trim())
+
+                        var offer_id = ($('#offer_id').val());
+                        var data = {
+                            'source_type': 'Product',
+                            'source_id': split_arr,
+                            'offer_id': offer_id
+                        }
+                        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                        $.ajax({
+
+                            type: "POST",
+                            url: base_url + "add-user-coupon",
+
+                            data: data,
+
+                            success: function(data) {
+                                location.reload();
+                            },
+                            error: function() {
+                                alert("error"); //error occurs
+                            }
+                        });
+                        return false;
+                    });
+
                     var table = $('#example').DataTable({
 
                         'columnDefs': [{
@@ -239,13 +248,3 @@
             });
         });
     </script>
-    <!-- <script>
-        $(document).ready(function() {
-            $('#example1').DataTable({
-                dom: 'lBfrtip',
-                buttons: [
-                    'excel'
-                ]
-            });
-        });
-    </script> -->
