@@ -213,11 +213,14 @@
                                 <th><?php echo trans('page_views'); ?></th>
                                 <th><?php echo trans('date'); ?></th>
                                 <th><?php echo trans('options'); ?></th>
+                                <th>Remarks</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if (!empty($products)) :
-                                foreach ($products as $item) : ?>
+                                foreach ($products as $item) :
+                                    $remarks = $this->product_admin_model->get_remarks($item->id);
+                            ?>
                                     <tr class="apporved-products-mobile-view">
                                         <td><?php echo html_escape($item->id); ?></td>
                                         <td class="td-product">
@@ -291,6 +294,9 @@
                                                 </ul>
                                             </div>
                                         </td>
+                                        <td><?php if ($remarks != "") {
+                                                echo html_escape($remarks->remark);
+                                            } ?></td>
                                     </tr>
                             <?php endforeach;
                             endif; ?>

@@ -49,11 +49,18 @@
                                 <!-- <th><?php echo trans('page_views'); ?></th> -->
                                 <th><?php echo trans('date'); ?></th>
                                 <th class="max-width-120"><?php echo trans('options'); ?></th>
+                                <th>Remarks</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            <?php foreach ($products as $item) : ?>
+                            <?php foreach ($products as $item) :
+                                // var_dump($item);
+                                // die(); 
+                                $remarks = $this->product_admin_model->get_remarks($item->id);
+
+                            ?>
+
                                 <tr>
                                     <td><input type="checkbox" name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>"></td>
                                     <td><?php echo html_escape($item->id); ?></td>
@@ -130,10 +137,14 @@
                                             </ul>
                                         </div>
                                     </td>
+
+                                    <td><?php if ($remarks != "") {
+                                            echo html_escape($remarks->remark);
+                                        } ?></td>
+
                                 </tr>
 
                             <?php endforeach; ?>
-
                         </tbody>
                     </table>
 

@@ -563,6 +563,11 @@ class Product_admin_model extends CI_Model
         $this->db->where('products.is_service', "0");
         return $this->db->count_all_results('products');
     }
+    public function get_reviews()
+    {
+        $this->db->select('remark');
+        return $this->db->get('notifications');
+    }
 
     //get paginated promoted products count
     public function get_paginated_promoted_services_count($list)
@@ -599,15 +604,24 @@ class Product_admin_model extends CI_Model
         $this->db->where('products.is_service', "1");
         return $this->db->count_all_results('products');
     }
-
+    public function get_remarks($product_id)
+    {
+        $this->db->where("source_id", $product_id);
+        $this->db->order_by('id', "DESC");
+        $this->db->limit('1');
+        return $this->db->get("notifications")->row();
+    }
     //get paginated pending products
     public function get_paginated_pending_products($per_page, $offset, $list)
     {
         $category_ids = $this->get_filter_category_ids();
         $this->build_query();
+        // $this->db->join('notifications', 'notifications.source_id=products.id', 'left');
+
         $this->filter_products($list, $category_ids);
         $this->db->where('products.status !=', 1);
         $this->db->where('products.is_service', "0");
+        // $this->db->select('*');
         $this->db->limit(clean_number($per_page), clean_number($offset));
         return $this->db->get('products')->result();
     }
