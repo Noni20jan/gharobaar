@@ -2101,6 +2101,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data['keywords'] = trans("sales") . "," . $this->app_name;
         $data["active_tab"] = "";
         $data["order"] = $this->order_model->get_order_by_order_number($order_number);
+
         // var_dump($data["order"]);
         // die();
         if (empty($data["order"])) {
@@ -2128,6 +2129,7 @@ class Dashboard_controller extends Home_Core_Controller
         $this->load->view('dashboard/sales/sale', $data);
         $this->load->view('dashboard/includes/_footer');
     }
+
     public function track_status($awb_number)
     {
         if (!$this->is_sale_active) {
@@ -2872,6 +2874,7 @@ class Dashboard_controller extends Home_Core_Controller
     {
         post_method();
         $this->order_model->shiprocket_response();
+        $this->order_model->schedule_penalty();
     }
 
 
@@ -3190,5 +3193,4 @@ class Dashboard_controller extends Home_Core_Controller
         $this->load->view('dashboard/reports/cashfree_initiated_payouts', $data);
         $this->load->view('dashboard/includes/_footer');
     }
- 
 }

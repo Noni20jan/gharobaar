@@ -1855,7 +1855,8 @@ class Order_model extends CI_Model
 
         $this->db->or_where('order_products.order_status', 'Return In Transit');
         $this->db->where('order_products.seller_id', clean_number($user_id));
-
+        $this->db->or_where('order_products.order_status', 'Return Delivered');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
         $this->filter_sales();
         $query = $this->db->get('orders');
         return $query->num_rows();
@@ -4975,5 +4976,55 @@ class Order_model extends CI_Model
         $this->db->where('vendorId', $seller_id);
         $query = $this->db->get('seller_payout_report');
         return $query->result();
+    }
+    public function schedule_penalty()
+    {
+
+        $order_id = trim($this->input->post('order_id', true));
+        $order_products = $this->order_model->get_order_products($order_id);
+
+
+        foreach ($order_products as $order_p) {
+            $product = $this->order_model->get_product_detail($order_p->product_id);
+            $lookup_table_data = $this->order_model->get_product_shipping_days_from_db($product[0]->shipping_time);
+            $estimated_days = $lookup_table_data->lookup_int_val;
+            $created_date = date('Y-m-d', strtotime($order_p->created_at));
+            $current_date = date('Y-m-d h:i:s');
+
+
+            foreach ($product as $p) {
+                if ($p->add_meet == 'Made to order') {
+                    $lead_time_in_sec = $order_p->lead_time;
+                    $order_accepted_at = $order_p->accepted_at;
+                    $accepted_at_in_sec = strtotime($order_accepted_at);
+
+                    $total_estimated_dispatch_in_sec = $accepted_at_in_sec + $lead_time_in_sec;
+                    $estimated_dispatch_date = date('Y-m-d H:i:s', $total_estimated_dispatch_in_sec);
+                } elseif ($p->add_meet == 'Made to stock') {
+                    $estimated_dispatch_date = date('Y-m-d H:i:s', strtotime($created_date . +$estimated_days . "days"));
+                }
+                if ($current_date > $estimated_dispatch_date) {
+                    $data = array(
+                        'order_number' => $order_p->order_id,
+                        'order_product_id' => $order_p->id,
+                        "quantity" => $order_p->product_quantity,
+                        "user_id" => $this->auth_user->id,
+                        "total_amount_paid_buyer" => $order_p->product_total_price,
+                        "commission_rate" => $order_p->commission_rate,
+                        "commission_amount" => $p->commission_amount,
+                        "shipping_cost" => $order_p->product_shipping_cost,
+                        "penalty_amount" => $this->general_settings->penalty_amount * 100,
+                        "currency" => 'INR',
+                        "order_date" =>  $order_p->created_at,
+                        "dispatch_date" => $estimated_dispatch_date,
+                        "created_at" => date('Y-m-d H:i:s'),
+                        "add_meet" =>  $p->add_meet
+
+
+                    );
+                    $this->db->insert('penalty', $data);
+                }
+            }
+        }
     }
 }

@@ -286,12 +286,15 @@ endif;
                 endif;
             endif;
         endforeach;
+
         ?>
+
         <div class="row">
             <div class="pull-right">
                 <?php if ($item->product_delivery_partner == "SHIPROCKET") : ?>
                     <?php if ($show && $item->order_status == "processing") : ?>
                         <button class="btn btn-md btn-block btn-info btn-table-delete" id="schedule_sipment" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
+
                     <?php endif; ?>
                 <?php elseif ($item->product_delivery_partner == "NOW-BIKES") : ?>
                     <?php if ($show) : ?>
@@ -324,8 +327,9 @@ endif;
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $ship_date; ?></b></p>
 
                         <?php else : ?>
+                            <?php $x = 10 * count($order_products); ?>
 
-                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs. 200 for this order shall be charged as per the terms of the agreement.
+                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo intval($x); ?> for this order shall be charged as per the terms of the agreement.
 
                                 **<br />
 
@@ -340,13 +344,13 @@ endif;
                     <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                     <?php $shipp_date = new DateTime($shipped_date); ?>
                     <?php if ($item->order_status == 'processing') : ?>
-
                         <?php if ($shipp_date > $current_date) : ?>
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
 
                         <?php else : ?>
+                            <?php $penalty = 10 * count($order_products); ?>
 
-                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs. 200 for this order shall be charged as per the terms of the agreement.
+                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo $penalty; ?> for this order shall be charged as per the terms of the agreement.
 
                                 **<br />
 
@@ -1226,9 +1230,12 @@ endif;
 endforeach; ?>
 <?php
 ?>
+
 <script>
     function wrapper_multiple_product(products_array, order_items_array) {
         $("#schedule_multiple_products").modal('hide');
+
+
 
         function uuidv4() {
             return 'yxxyxxx'.replace(/[xy]/g, function(c) {
@@ -1245,6 +1252,7 @@ endforeach; ?>
         var base_url = '<?php echo base_url() ?>';
         var order_items = [];
         var quantity_price_array = [];
+
         for (var i = 0; i < products_array.length; i++) {
             order_items.push({
 

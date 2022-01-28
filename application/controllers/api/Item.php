@@ -92,13 +92,13 @@ class Item extends REST_Controller
                 case "RTO INITIATED":
                     $data["order_status"] = "RTO Initiated";
                     break;
-                case "RTO Acknowleged":
+                case "RTO ACKNOWLEDGED":
                     $data["order_status"] = "RTO Acknowledged";
                     break;
-                case "RTO Delivered":
+                case "RTO DELIVERED":
                     $data["order_status"] = "RTO Delivered";
                     break;
-                case "RTO_IN_TRANSIT":
+                case "RTO IN TRANSIT":
                     $data["order_status"] = "RTO In Transit";
                     break;
                 case "RETURN IN TRANSIT":
@@ -118,6 +118,9 @@ class Item extends REST_Controller
                     break;
                 case "RETURN PICKED UP":
                     $data["order_status"] = "Return Picked Up";
+                    break;
+                case "RETURN DELIVERED":
+                    $data["order_status"] = "Return Delivered";
                     break;
                     // default:
                     //     $data["order_status"] = $new_input['order_status'];
