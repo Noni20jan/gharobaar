@@ -2586,18 +2586,19 @@ class Home_controller extends Home_Core_Controller
 
 
 
-    public function user_blog_3()
+    public function notification_details($id)
     {
-        get_method();
-        $page = $this->page_model->get_page_by_default_name('user_blog_3', $this->selected_lang->id);
-        //      
-        $data['title'] = $page->title;
-        $data['description'] = $page->description . " - " . $this->app_name;
-        $data['keywords'] = $page->keywords . " - " . $this->app_name;
-        $data['page'] = $page;
+        // get_method();
+        // $page = $this->page_model->get_page_by_default_name('user_blog_3', $this->selected_lang->id);
+        $this->order_model->update_notification_count($id);
+        // $data['title'] =  trans("notification_details");
+        // $data['description'] = $page->description . " - " . $this->app_name;
+        // $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        // $data['page'] = $page;
         $data["index_settings"] = get_index_settings();
+        $data['notifications'] = $this->order_model->get_notification_details($id);
         $this->load->view('partials/_header', $data);
-        $this->load->view('user_blog_3', $data);
+        $this->load->view('notification_details', $data);
         $this->load->view('partials/_footer');
     }
 
@@ -3148,10 +3149,7 @@ class Home_controller extends Home_Core_Controller
         $data['products'] = $this->product_model->get_products_shop_by_concern($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id);
         $data['product_count'] = $this->product_model->get_paginated_filtered_products_count_category_feature($data["query_string_array"], null, $type_id);
         $data["categories"] = $this->parent_categories;
-
         $data["all_category_selected"] = $this->product_model->get_category_selected_concerned_occasion($data["query_string_array"], null, $pagination['per_page'], $pagination['offset'], $type_id, true);
-
-
         $this->load->view('partials/_header', $data);
         $this->load->view('product/products', $data);
         $this->load->view('partials/_footer');
@@ -3159,24 +3157,14 @@ class Home_controller extends Home_Core_Controller
 
     public function thankyou()
     {
-
         $data['title'] = trans("thankyou-title");
         $data['description'] = trans("thankyou-title") . " - " . $this->app_name;
         $data['keywords'] = trans("thankyou-title") . "," . $this->app_name;
         $data["active_tab"] = "active_orders";
         $data['main_settings'] = get_main_settings();
-
-        // if (empty($this->session->userdata('thankyou_order_id'))) {          
-        //     $this->load->view('cart/thankyou');  
-        //     sleep(5);
-        //     redirect(lang_base_url());
-        // }
-        //redirect to home controller
         $data['order_number'] = $this->session->userdata('thankyou_order_id');
-
         $this->load->view('partials/_header', $data);
         $this->load->view('cart/thankyou', $data);
-        //unset the session for order
         $this->session->unset_userdata('thankyou_order_id');
         $this->load->view('partials/_footer');
     }
@@ -3193,6 +3181,23 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('categories');
         $this->load->view('partials/_footer');
     }
+
+    //notification details controller
+    // public function notification_details()
+    // {
+    //     $data['title'] = trans("notification-title");
+    //     // $data['description'] = trans("notification-title") . " - " . $this->app_name;
+    //     // $data['keywords'] = trans("notification-title") . "," . $this->app_name;
+    //     // $data["active_tab"] = "active_orders";
+    //     // $data['main_settings'] = get_main_settings();
+    //     // $data['order_number'] = $this->session->userdata('thankyou_order_id');
+    //     $this->load->view('partials/_header', $data);
+    //     // $this->load->view('cart/thankyou', $data);
+    //     // $this->session->unset_userdata('thankyou_order_id');
+    //     $this->load->view('partials/_footer');
+    // }
+
+
 
     //function to get the products tagged for a specific banner
 

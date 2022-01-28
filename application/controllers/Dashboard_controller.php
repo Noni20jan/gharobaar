@@ -2110,6 +2110,7 @@ class Dashboard_controller extends Home_Core_Controller
         if (!$this->order_model->check_order_seller($data["order"]->id)) {
             redirect(lang_base_url());
         }
+        $data['order_supplier'] = $this->order_model->get_charges_seller_wise1($data['order']->id);
         $data["order_products"] = $this->order_model->get_order_products($data["order"]->id);
 
         $data["reject_reason"] = $this->order_model->get_reject_reason();

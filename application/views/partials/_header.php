@@ -33,7 +33,7 @@
     }
 
     .span-message-count {
-        background-color: #C00000;
+        background-color: #d21f3c;
         font-size: 13px;
         font-weight: 600;
     }
@@ -46,7 +46,7 @@
 
     /* Add a green text color and a checkmark when the requirements are right */
     .valid {
-        color: #C00000;
+        color: #d21f3c;
     }
 
     .valid:before {
@@ -136,7 +136,7 @@
     }
 
     .mobile-map a {
-        color: #C00000;
+        color: #d21f3c;
         font-size: 22px;
         position: relative;
         top: 8px;
@@ -213,6 +213,7 @@
         padding-top: 4%;
     }
 
+
     @media(max-width:800px) {
         .locate-modal-description {
             margin-bottom: 17px;
@@ -232,7 +233,7 @@
     .check_pincode {
         position: relative;
         border-radius: 28px;
-        background-color: #C00000;
+        background-color: #d21f3c;
         color: #fff;
         padding: 15px;
         border: none;
@@ -246,7 +247,7 @@
         .check_pincode {
             position: relative;
             border-radius: 28px;
-            background-color: #C00000;
+            background-color: #d21f3c;
             color: #fff;
             padding: 15px;
             border: none;
@@ -265,7 +266,7 @@
     .OtpSendMsg {
         margin-bottom: 10px;
         text-align: center;
-        color: #C00000;
+        color: #d21f3c;
     }
 
     .enter_p::placeholder {
@@ -316,7 +317,7 @@
     }
 
     #show_tim {
-        color: #C00000;
+        color: #d21f3c;
         font-size: 22px;
         position: relative;
         top: 8px;
@@ -420,7 +421,7 @@
     }
 
     .map-icon {
-        color: #C00000;
+        color: #d21f3c;
         font-size: 22px;
     }
 
@@ -538,7 +539,7 @@
 
     #check_pin {
         position: relative;
-        background-color: #C00000;
+        background-color: #d21f3c;
         padding: 14px;
         color: #fff;
         border: none;
@@ -615,6 +616,21 @@
         bottom: 50px !important;
     }
 
+    .notification-count {
+        background: red !important;
+        position: absolute;
+        top: 0;
+        border-radius: 20px;
+    }
+
+    .notification-button {
+        background: green;
+        border-color: green;
+        padding: 6px;
+        border-radius: 20px;
+        color: white;
+    }
+
     /* .mustang img {
         width: 220px;
         height: auto;
@@ -648,6 +664,30 @@
 </style>
 
 <head>
+    <!-- onesignal  -->
+    <!-- <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+        window.OneSignal = window.OneSignal || [];
+        OneSignal.push(function() {
+            OneSignal.init({
+                appId: "0f961239-ad32-4be1-9911-4d8d500728c7",
+                safari_web_id: "web.onesignal.auto.5a2165c8-9d94-4308-bfd9-99a8484077b6",
+                notifyButton: {
+                    enable: true,
+                },
+                allowLocalhostAsSecureOrigin: true,
+            });
+        });
+    </script> -->
+
+    <!-- onesignal end -->
+
+
+
+
+
+
+
     <meta charset="utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -828,7 +868,7 @@
         }
 
         .icon-bg {
-            background-color: #C00000;
+            background-color: #d21f3c;
             border-radius: 50%;
             color: white;
             font-size: 15px;
@@ -896,7 +936,7 @@
         .sliding_content {
             display: flow-root;
             text-align: center;
-            background-color: #C00000;
+            background-color: #d21f3c;
             font-weight: normal;
             font-style: normal;
             font-family: "Montserrat", Helvetica, sans-serif;
@@ -919,6 +959,7 @@
     <script src="<?= base_url(); ?>assets/js/fselect.js"></script>
 
 </head>
+<div id="tittletoggle"></div>
 
 <body>
     <?php get_method();
@@ -1013,16 +1054,12 @@
                                         <?php if (!empty($_SESSION["modesy_sess_user_location"])) : ?>
                                             <li class="icon-bg" style="background-color:red;">
                                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
-
                                                     <i class="icon-map-marker"></i></a>
-
                                             </li>
                                         <?php else : ?>
                                             <li class="icon-bg">
                                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal" class="nav-link btn-modal-location">
-
                                                     <i class="icon-map-marker"></i></a>
-
                                             </li>
                                         <?php endif; ?>
                                         <?php if ($this->auth_check) : ?>
@@ -1074,7 +1111,6 @@
                                                 </li>
                                             <?php endif; ?>
                                         <?php else : ?>
-
                                             <li class="icon-bg">
                                                 <a id='wishlist'>
                                                     <i class="icon-heart-o"></i>
@@ -1082,8 +1118,29 @@
                                             </li>
                                         <?php endif; ?>
                                         <?php if ($this->auth_check) : ?>
-                                            <?php if ($this->auth_user->user_type != "guest") :
-                                            ?>
+                                            <li class="icon-bg">
+                                                <button class="dropbtn notification-button" onclick="myFunction()">
+                                                    <a id='wishlist'>
+                                                        <?php $count_array = $this->order_model->get_notification_count();
+                                                        $count = count($count_array); ?>
+                                                        <i class="far fa-bell"></i><span class="badge notification-count"><?php echo $count; ?></span>
+                                                    </a>
+                                                </button>
+                                                <div class="dropdown-content" id="myDropdown" style="border-radius: 0px;padding: 2px 2px; width: 100%; position: absolute; left: 0">
+                                                    <?php foreach ($count_array as $notification) : ?>
+                                                        <a href="<?php echo base_url('notification-details') . "/" . $notification->id ?>" style="padding: 15px 4px;border-radius: 0px;"><?php echo $notification->title; ?></a>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </li>
+                                        <?php else : ?>
+                                            <!-- <li class="icon-bg">
+                                                <a id='wishlist'>
+                                                    <i class="far fa-bell"></i>
+                                                </a>
+                                            </li> -->
+                                        <?php endif; ?>
+                                        <?php if ($this->auth_check) : ?>
+                                            <?php if ($this->auth_user->user_type != "guest") : ?>
                                                 <li class="nav-item dropdown profile-dropdown p-r-0">
                                                     <a class="nav-link dropdown-toggle a-profile" data-toggle="dropdown" href="javascript:void(0)" aria-expanded="false">
                                                         <img src="<?php echo get_user_avatar($this->auth_user); ?>" alt="<?php echo get_shop_name($this->auth_user); ?>"> <?php if ($unread_message_count > 0) : ?>
@@ -1415,6 +1472,46 @@
                 </div>
             </div>
         </div>
+
+        <!-- add to cart user emial_id contact modal -->
+
+        <div class="modal fade" id="add_to_cart_auth_check" role="dialog">
+            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
+                <div class="modal-content">
+                    <div class="auth-box">
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                        <h4 class="title"><?php echo trans("guest_login"); ?></h4>
+                        <!-- form start -->
+                        <form id="form_guest_login">
+                            <!-- include message block -->
+                            <div id="result-login" class="font-size-13"></div>
+                            <div class="form-group">
+                                <input type="text" name="cart_email" id="guest_email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
+                                <span id="email_span_error" style="color:red;"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="cart_phone_number" id="guest_phone_number" class="form-control auth-form-input" placeholder="Mobile Number" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
+                            </div>
+                            <div id="email_phn_exist_msg" style="color: red;">
+
+                            </div>
+                            <div class="form-group hide_after_response" id="continue_guest_hide" style="text-align:center;">
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("continue"); ?></button>
+                            </div>
+
+                        </form>
+                        <!-- form end -->
+                    </div>
+                </div>
+                r
+            </div>
+        </div>
+
+
+
+
+
 
 
         <!-- Guest Login Modal -->
@@ -1898,6 +1995,43 @@
     </div> -->
 
     <div id="menu-overlay"></div>
+    <!-- <script>
+        /**
+         * The following code will modify the title of the browser tab on the "blur" event
+         * and change it back to the original on the "focus" event.
+         */
+
+        // Store the original tab title
+        // Consider storing it in localStorage if you need it across the site
+        let origTitle = document.title;
+
+        // Change title when focusing on tab
+        function oldTitle() {
+            document.title = origTitle;
+        }
+
+        // Function to change title when un-focusing on tab
+        function newTitle() {
+            document.title = 'We miss you!';
+        }
+
+        // Bind functions to blur and focus events
+        window.onblur = newTitle; 
+        window.onfocus = oldTitle;
+
+
+        var cont = 0;
+        setInterval(function() {
+            if (cont % 2) {
+                var myText = oldTitle;
+            } else {
+                var myText = 'We miss you';
+            }
+            cont++;
+            $('#tittletoggle').html(myText);
+        }, 1000);
+    </script> -->
+
 
     <script>
         const toggleP = document.querySelector('#togglePassword_login');
@@ -5307,7 +5441,7 @@
     <?php endif; ?>
     <!-- whatsapp end -->
     <?php if ($this->general_settings->is_tawkto_enable == 1) : ?>
-        <script>
+        <!-- <script>
             var def_tawk_bottom = "20px"; /*This is their default style that I want to change*/
             var def_tawk_right = "16px"; /*This is their default style that I want to change*/
             var customize_tawk = ""; /*Interval object*/
@@ -5343,7 +5477,7 @@
                     var customize_tawk = setInterval(customize_tawk_widget, 100);
                 }
             };
-        </script>
+        </script> -->
     <?php endif; ?>
     <script>
         window.onscroll = function() {
@@ -6081,4 +6215,19 @@
                 }, 100);
             }
         };
+        /* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(e) {
+            if (!e.target.matches('.dropbtn')) {
+                var myDropdown = document.getElementById("myDropdown");
+                if (myDropdown.classList.contains('show')) {
+                    myDropdown.classList.remove('show');
+                }
+            }
+        }
     </script>

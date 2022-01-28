@@ -160,6 +160,8 @@ foreach ($languages as $language) {
         //$route[$key . getr('user_blog_2', $rts)]['GET'] = 'home_controller/user_blog_2';
         /*user_blog_3*/
         //$route[$key . getr('Artisanal-jewellery-amplifying-current-fashion-standards', $rts)]['GET'] = 'home_controller/user_blog_3';
+        /*notification_details*/
+        $route[$key . getr('notification-details/(:num)', $rts)]['GET'] = 'home_controller/notification_details/$1';
         /*user_blog_4*/
         //$route[$key . getr('Dress-well-first-interview', $rts)]['GET'] = 'home_controller/user_blog_4';
         /*user_blog_5*/
@@ -603,3 +605,6 @@ $route[$key . getr('order-window-update', $rts)]['GET'] = 'order_controller/orde
 $route['(:any)/(:any)']['GET'] = 'home_controller/subcategory/$1/$2';
 $route['(:any)']['GET'] = 'home_controller/any/$1';
 // $route['(:barter_any)']['GET'] = 'home_controller/barter_any/$1';
+
+//notification details page
+// $route[$key . getr('notification-details', $rts)]['GET'] = 'home_controller/notification_details';

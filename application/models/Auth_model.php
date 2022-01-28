@@ -976,11 +976,15 @@ class Auth_model extends CI_Model
         $query = $this->db->get('pincodes');
         return $query->result();
     }
-
+    public function get_coupon_code_by_id($id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->get('coupons');
+        return $query->row();
+    }
 
     public function get_coupon_codes()
     {
-
         $query = $this->db->get('coupons');
         return $query->result();
     }

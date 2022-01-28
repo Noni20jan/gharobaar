@@ -863,27 +863,35 @@ endif;
                         </div>
                     <?php endif; ?>
 
+
+
+
                     <div class="row">
                         <div class="col-sm-6 col-xs-6 col-left">
-                            <strong><?php echo "Coupon Discount"; ?></strong>
+                            <strong>Coupon Applied</strong>
                         </div>
 
                         <div class="col-sm-6 col-xs-6 col-right">
-                            <strong>-<?php echo price_formatted($order->coupon_discount, $order->price_currency); ?>/-</strong>
+                            <?php if (!empty($order->offer_id)) {
+                                $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);
+                                echo $coupon->coupon_code;
+                            } ?>
+                            <!-- <strong>-<?php echo price_formatted($order->coupon_discount, $order->price_currency); ?>/-</strong> -->
                         </div>
                     </div>
-
+                    <p style="font-size: 12px;">(The coupon is applied to the total amount of order)</p>
                     <div class="row">
                         <div class="col-12 m-b-15">
                             <div class="row-seperator"></div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-sm-6 col-xs-6 col-left">
                             <?php echo trans("total"); ?>
                         </div>
                         <div class="col-sm-6 col-xs-6 col-right">
-                            <strong><?php echo price_formatted($order->price_total, $order->price_currency); ?>/-</strong>
+                            <strong><?php echo price_formatted($order_supplier->Sup_total_prd, $order->price_currency); ?>/-</strong>
                         </div>
                     </div>
                 </div>
@@ -1228,8 +1236,6 @@ endif;
 
 <?php
 endforeach; ?>
-<?php
-?>
 
 <script>
     function wrapper_multiple_product(products_array, order_items_array) {
@@ -1297,7 +1303,7 @@ endforeach; ?>
             "shipping_phone": <?php echo ($shipping->billing_phone_number) ?>,
             "order_items": order_items,
             "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-            "sub_total": <?php echo !empty($seller_wise_data) ? ($order->price_total) / 100 : $total_quantity_price ?>,
+            "sub_total": <?php echo !empty($seller_wise_data) ? ($orders->price_total) / 100 : $total_quantity_price ?>,
             "length": document.getElementById("total_length").value,
             "breadth": document.getElementById("total_width").value,
             "height": document.getElementById("total_height").value,
