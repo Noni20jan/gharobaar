@@ -229,8 +229,8 @@
     }
 
     .confirm-new-ui {
-        background-color: #C00000;
-        border-color: #C00000;
+        background-color: #d21f3c;
+        border-color: #d21f3c;
         width: 100%;
         font-weight: bolder;
         font-size: 18px;
@@ -283,10 +283,10 @@
                                 endforeach;
                                 if ($order_status == 1) : ?>
 
-                                    <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#C00000;"><?php echo trans('view_invoice'); ?></a>
+                                    <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#d21f3c;"><?php echo trans('view_invoice'); ?></a>
                                 <?php else : ?>
 
-                                    <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#C00000;"><?php echo trans('porforma_invoice'); ?></a>
+                                    <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#d21f3c;"><?php echo trans('porforma_invoice'); ?></a>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -741,10 +741,10 @@
                                         endforeach;
                                         if ($order_status == 1) : ?>
 
-                                            <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn-view-invoice-mobile" style="background-color:#C00000;"><?php echo trans('view_invoice'); ?></a>
+                                            <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn-view-invoice-mobile" style="background-color:#d21f3c;"><?php echo trans('view_invoice'); ?></a>
                                         <?php else : ?>
 
-                                            <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn-view-invoice-mobile" style="background-color:#C00000;"><?php echo trans('porforma_invoice'); ?></a>
+                                            <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn-view-invoice-mobile" style="background-color:#d21f3c;"><?php echo trans('porforma_invoice'); ?></a>
                                         <?php endif; ?>
                                     </div>
                                 </div>

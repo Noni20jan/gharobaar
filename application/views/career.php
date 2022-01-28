@@ -91,7 +91,7 @@
             border-radius: 20px;
             min-height: 40px;
             min-width: 93px;
-            background-color: #C00000;
+            background-color: #d21f3c;
             /* background-color: #c582b5; */
             color: #fff;
             white-space: nowrap;

@@ -92,7 +92,7 @@
 
     #check-button {
         margin-left: 2%;
-        background-color: #C00000 !important;
+        background-color: #d21f3c !important;
         color: #fff;
         border-radius: 20px !important;
         font-size: 12px;

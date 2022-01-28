@@ -18,7 +18,7 @@
     }
 
     .color-check {
-        color: #C00000;
+        color: #d21f3c;
     }
 </style>
 

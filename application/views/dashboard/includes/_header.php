@@ -127,7 +127,7 @@ $user = get_user($this->auth_user->id);
         }
 
         .switch-field input:checked+label {
-            background-color: #C00000;
+            background-color: #d21f3c;
             box-shadow: none;
             color: white;
         }
@@ -222,7 +222,7 @@ $user = get_user($this->auth_user->id);
                         <ul class="nav navbar-nav">
                             <!-- <?php if ($this->auth_user->is_shop_open == "1") { ?>
                                 <li>
-                                    <span style="color:#C00000;"> Welcome To Gharobaar , You are ready to sell your Product or service.<span>
+                                    <span style="color:#d21f3c;"> Welcome To Gharobaar , You are ready to sell your Product or service.<span>
                                 </li>
                             <?php } else { ?>
                                 <li>

@@ -16,7 +16,7 @@
   }
 
   .btn:hover {
-    background-color: #C00000 !important;
+    background-color: #d21f3c !important;
 
   }
 
@@ -31,7 +31,7 @@
 <div class="container">
   <div class="wrapper">
     <div class="text-center">
-      <div><i style="color:#C00000;padding-top: 30px" class='fas fa-check-circle fa-7x'></i><br /></div>
+      <div><i style="color:#d21f3c;padding-top: 30px" class='fas fa-check-circle fa-7x'></i><br /></div>
       <h1 class="display-3"><?php echo trans("thankyou_messsage") ?></h1>
     </div>
     <?php if ($this->auth_user->user_type != "guest") : ?>

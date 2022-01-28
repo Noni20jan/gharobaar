@@ -26,7 +26,7 @@ get_index_settings(); ?>
     @media only screen and (max-width: 1024px) {
         #check_pincode {
             position: relative;
-            background-color: #C00000;
+            background-color: #d21f3c;
             color: #fff;
             border: none;
             bottom: 7px;

@@ -56,8 +56,8 @@
     }
 
     .btn-new-review {
-        background-color: #C00000;
-        border-color: #C00000;
+        background-color: #d21f3c;
+        border-color: #d21f3c;
         border-radius: 20px;
         color: white;
     }

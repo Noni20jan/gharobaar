@@ -1126,7 +1126,7 @@
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: center;">
-                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: #C00000; color:white;"><?php echo trans("close"); ?></button>
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: #d21f3c; color:white;"><?php echo trans("close"); ?></button>
             </div>
         </div>
     </div>
@@ -1245,7 +1245,7 @@
                     <div class="modal-content">
                         <div class="auth-box">
                             <button type="button" class="close freeship-close" data-dismiss="modal"><i class="icon-close"></i></button>
-                            <img src="<?php echo ($this->general_settings->first_order_popup_image)?>" style="width:100%;">
+                            <img src="<?php echo ($this->general_settings->first_order_popup_image) ?>" style="width:100%;">
                         </div>
                     </div>
                 </div>
