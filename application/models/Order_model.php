@@ -1983,6 +1983,8 @@ class Order_model extends CI_Model
 
         $this->db->or_where('order_products.order_status', 'Return In Transit');
         $this->db->where('order_products.seller_id', clean_number($user_id));
+        $this->db->or_where('order_products.order_status', 'Return Delivered');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
 
 
 
@@ -2132,6 +2134,7 @@ class Order_model extends CI_Model
 
     public function count_order_products($order_id, $seller_id)
     {
+
         $this->db->select('*');
         $this->db->where('order_id', $order_id);
         $this->db->where('seller_id', $seller_id);
