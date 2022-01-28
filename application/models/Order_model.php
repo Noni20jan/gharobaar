@@ -1857,6 +1857,17 @@ class Order_model extends CI_Model
         $this->db->where('order_products.seller_id', clean_number($user_id));
         $this->db->or_where('order_products.order_status', 'Return Delivered');
         $this->db->where('order_products.seller_id', clean_number($user_id));
+        $this->db->or_where('order_products.order_status', 'Return Picked Up');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+        $this->db->or_where('order_products.order_status', 'Return Pickup Generated');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+        $this->db->or_where('order_products.order_status', 'Return Pickup Queued');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+        $this->db->or_where('order_products.order_status', 'RTO NDR');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+        $this->db->or_where('order_products.order_status', 'RTO OFD');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+
         $this->filter_sales();
         $query = $this->db->get('orders');
         return $query->num_rows();
@@ -1985,7 +1996,16 @@ class Order_model extends CI_Model
         $this->db->where('order_products.seller_id', clean_number($user_id));
         $this->db->or_where('order_products.order_status', 'Return Delivered');
         $this->db->where('order_products.seller_id', clean_number($user_id));
-
+        $this->db->or_where('order_products.order_status', 'Return Picked Up');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+        $this->db->or_where('order_products.order_status', 'Return Pickup Generated');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+        $this->db->or_where('order_products.order_status', 'Return Pickup Queued');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+        $this->db->or_where('order_products.order_status', 'RTO NDR');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
+        $this->db->or_where('order_products.order_status', 'RTO OFD');
+        $this->db->where('order_products.seller_id', clean_number($user_id));
 
 
         $this->filter_sales();

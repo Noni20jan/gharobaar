@@ -116,8 +116,17 @@ class Item extends REST_Controller
                 case "RETURN PICKUP GENERATED":
                     $data["order_status"] = "Return Pickup Generated";
                     break;
-                case "RETURN PICKED UP":
+                case "RETURN PICKUP QUEUED":
+                    $data["order_status"] = "Return Pickup Queued";
+                    break;
+                case "RETURN PICKEDUP":
                     $data["order_status"] = "Return Picked Up";
+                    break;
+                case "RTO NDR":
+                    $data["order_status"] = "RTO NDR";
+                    break;
+                case "RTO OFD":
+                    $data["order_status"] = "RTO OFD";
                     break;
                 case "RETURN DELIVERED":
                     $data["order_status"] = "Return Delivered";
