@@ -640,6 +640,28 @@
         top: 9px !important;
         right: 5px !important;
     }
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+
+    .fa-heart {
+        color: #FF0000;
+        font-size: 25px;
+        position: absolute;
+        animation: heartMove linear 1;
+        top: -10vh;
+        z-index: 0;
+    }
+
+    @keyframes heartMove {
+        0% {
+            transform: translateY(-10vh);
+        }
+
+        100% {
+            transform: translateY(980vh);
+        }
+    }
 </style>
 <!-- <style>
     .home-testimonial {
@@ -747,6 +769,7 @@
         }
     })
 </script> -->
+
 <div class="section-slider web-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
         $this->load->view("partials/new_slider", ["second_slider_items" => $occassion_slider_items]);
@@ -1258,6 +1281,7 @@
         <?php endif; ?>
     <?php endif; ?>
 <?php endif; ?>
+<script src="https://kit.fontawesome.com/4f3ce16e3e.js" crossorigin="anonymous"></script>
 
 
 <script>
@@ -1302,6 +1326,23 @@
             ],
         });
     });
+    const body = document.querySelector("body");
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "fas fa-heart";
+        heart.style.left = (Math.random() * 100) + "vw";
+        heart.style.animationDuration = (Math.random() * 2) + 40 + "s"
+        body.appendChild(heart);
+    }
+    setInterval(createHeart, 50);
+    setInterval(function name(params) {
+        var heartArr = document.querySelectorAll(".fa-heart")
+        if (heartArr.length > 100) {
+            heartArr[0].remove()
+        }
+        //console.log(heartArr);
+    }, 100)
 </script>
 
 <!-- Wrapper End-->
