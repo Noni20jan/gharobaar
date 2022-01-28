@@ -305,6 +305,9 @@ endif;
         </div>
         <?php if (($item->product_delivery_partner) == "SHIPROCKET") : ?>
             <?php if (empty($shiprocket_order_details)) : ?>
+
+
+
                 <?php $product = get_product($item->product_id); ?>
                 <?php $current_date = new DateTime(); ?>
                 <?php $order_date = strtotime($order->created_at); ?>
@@ -327,9 +330,9 @@ endif;
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $ship_date; ?></b></p>
 
                         <?php else : ?>
-                            <?php $x = 10 * intval($order_count); ?>
 
-                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo $x; ?> for this order shall be charged as per the terms of the agreement.
+                            <?php $penalty_amt = 10 * intval($order_count); ?>
+                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo $penalty_amt; ?> for this order shall be charged as per the terms of the agreement.
 
                                 **<br />
 
@@ -348,9 +351,9 @@ endif;
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
 
                         <?php else : ?>
-                            <?php $penalty = 10 * intval($order_count); ?>
 
-                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo $penalty; ?> for this order shall be charged as per the terms of the agreement.
+                            <?php $penalty = 10 * intval($order_count); ?>
+                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo  $penalty; ?> for this order shall be charged as per the terms of the agreement.
 
                                 **<br />
 
@@ -358,12 +361,11 @@ endif;
                             </p>
                         <?php endif; ?>
                     <?php endif; ?>
-
-                <?php else : ?>
-                    <p></p>
                 <?php endif; ?>
-            <?php endif; ?>
 
+            <?php else : ?>
+                <p></p>
+            <?php endif; ?>
         <?php endif; ?>
 
         <div class="row">
@@ -402,8 +404,8 @@ endif;
                                     $product_details = get_product($item->product_id);
                                     // var_dump(json_encode($product_details));
                             ?>
-
                                     <tr>
+
                                         <td><input type="checkbox" <?php if ($item->order_status != "processing") {
                                                                         echo "disabled";
                                                                     } ?> name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>" checked style="display: none;"></td>
@@ -863,9 +865,6 @@ endif;
                         </div>
                     <?php endif; ?>
 
-
-
-
                     <div class="row">
                         <div class="col-sm-6 col-xs-6 col-left">
                             <strong>Coupon Applied</strong>
@@ -885,13 +884,13 @@ endif;
                             <div class="row-seperator"></div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-sm-6 col-xs-6 col-left">
                             <?php echo trans("total"); ?>
                         </div>
                         <div class="col-sm-6 col-xs-6 col-right">
                             <strong><?php echo price_formatted($order_supplier->Sup_total_prd, $order->price_currency); ?>/-</strong>
+
                         </div>
                     </div>
                 </div>
@@ -1236,6 +1235,8 @@ endif;
 
 <?php
 endforeach; ?>
+<?php
+?>
 
 <script>
     function wrapper_multiple_product(products_array, order_items_array) {
@@ -1303,7 +1304,7 @@ endforeach; ?>
             "shipping_phone": <?php echo ($shipping->billing_phone_number) ?>,
             "order_items": order_items,
             "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-            "sub_total": <?php echo !empty($seller_wise_data) ? ($orders->price_total) / 100 : $total_quantity_price ?>,
+            "sub_total": <?php echo !empty($seller_wise_data) ? ($order->price_total) / 100 : $total_quantity_price ?>,
             "length": document.getElementById("total_length").value,
             "breadth": document.getElementById("total_width").value,
             "height": document.getElementById("total_height").value,
