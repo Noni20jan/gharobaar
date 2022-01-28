@@ -2130,7 +2130,14 @@ class Order_model extends CI_Model
         return false;
     }
 
-
+    public function count_order_products($order_id, $seller_id)
+    {
+        $this->db->select('*');
+        $this->db->where('order_id', $order_id);
+        $this->db->where('seller_id', $seller_id);
+        $query = $this->db->get('order_products');
+        return $query->num_rows();
+    }
 
 
 
@@ -4966,6 +4973,43 @@ class Order_model extends CI_Model
         $sql = "SELECT count(id) as 'count' from orders where buyer_id=$user_id";
         $query = $this->db->query($sql);
         return $query->row();
+    }
+
+
+    public function get_notification_count()
+    {
+        $id = $this->auth_user->id;
+        $email = $this->auth_user->email;
+        $phone = $this->auth_user->phone_number;
+        $sql = "SELECT * from notify_user join notifications on notifications.id=notify_user.notification_id where `read`=0 and (for_user='$id' OR for_user='$email' OR for_user='$phone' ) ";
+        $count = $this->db->query($sql);
+        return $count->result();
+    }
+    public function get_notification_details($id)
+    {
+        // $id = $this->auth_user->id;
+        // $email = $this->auth_user->email;
+        // $phone = $this->auth_user->phone_number;
+        $sql = "SELECT * from notifications where notifications.id='$id' ";
+        $count = $this->db->query($sql);
+        // var_dump("9873658");
+        // die();
+        return $count->row();
+    }
+
+    public function update_notification_count($id)
+    {
+        $sql = "UPDATE notify_user SET `read`=1 where notification_id='$id' ";
+        return $this->db->query($sql);
+    }
+
+    public function get_charges_seller_wise1($order_id)
+    {
+        $this->db->where('order_id', $order_id);
+        $this->db->where('seller_id', $this->auth_user->id);
+        return $this->db->get('order_supplier')->row();
+        // var_dump($query->result());
+        // die();
     }
 
 

@@ -327,9 +327,9 @@ endif;
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $ship_date; ?></b></p>
 
                         <?php else : ?>
-                            <?php $x = 10 * count($order_products); ?>
+                            <?php $x = 10 * intval($order_count); ?>
 
-                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo intval($x); ?> for this order shall be charged as per the terms of the agreement.
+                            <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo $x; ?> for this order shall be charged as per the terms of the agreement.
 
                                 **<br />
 
@@ -348,7 +348,7 @@ endif;
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
 
                         <?php else : ?>
-                            <?php $penalty = 10 * count($order_products); ?>
+                            <?php $penalty = 10 * intval($order_count); ?>
 
                             <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo $penalty; ?> for this order shall be charged as per the terms of the agreement.
 

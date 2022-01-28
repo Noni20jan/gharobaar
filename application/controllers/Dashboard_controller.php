@@ -2123,8 +2123,8 @@ class Dashboard_controller extends Home_Core_Controller
         }
         $data["products"] = $product;
 
+        $data["order_count"] = $this->order_model->count_order_products($data["order"]->id, $this->auth_user->id);
         // $data['check'] = $this->order_model->get_stats($data["order"]->id, ($order_details->product_id));
-
 
         $this->load->view('dashboard/includes/_header', $data);
         $this->load->view('dashboard/sales/sale', $data);
