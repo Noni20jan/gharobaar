@@ -2165,7 +2165,7 @@ class Order_model extends CI_Model
         } elseif (substr_count($p->shipping_time, "_") > 2) {
             $shipping_time = intval($p->shipping_time);
         }
-        $sql = "SELECT Count(*) as count from order_products where order_id=$order_id and seller_id=$seller_id and DATE_ADD(created_at,INTERVAL + $shipping_time DAY)< DATE(NOW())";
+        $sql = "SELECT Count(*) as count from order_products where order_id=$order_id and seller_id=$seller_id";
         $query = $this->db->query($sql);
         return $query->result();
     }
