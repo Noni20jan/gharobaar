@@ -645,8 +645,8 @@
 
 
     .fa-heart {
-        color: #FF0000;
-        font-size: 25px;
+        color: #d21f3c;
+        font-size: 20px;
         position: absolute;
         animation: heartMove linear 1;
         top: -10vh;
@@ -1332,10 +1332,10 @@
         const heart = document.createElement("div");
         heart.className = "fas fa-heart";
         heart.style.left = (Math.random() * 100) + "vw";
-        heart.style.animationDuration = (Math.random() * 2) + 40 + "s"
+        heart.style.animationDuration = (Math.random() * 2) + 70 + "s"
         body.appendChild(heart);
     }
-    setInterval(createHeart, 50);
+    setInterval(createHeart, 150);
     setInterval(function name(params) {
         var heartArr = document.querySelectorAll(".fa-heart")
         if (heartArr.length > 100) {
