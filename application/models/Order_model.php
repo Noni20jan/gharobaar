@@ -2154,8 +2154,6 @@ class Order_model extends CI_Model
 
     public function count_order_products($order_id, $seller_id)
     {
-        $order_products = $this->order_model->get_order_products($order_id);
-
         $sql = "SELECT Count(*) as count from order_products where order_id=$order_id and seller_id=$seller_id";
         $query = $this->db->query($sql);
         return $query->result();

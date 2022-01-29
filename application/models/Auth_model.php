@@ -563,6 +563,7 @@ class Auth_model extends CI_Model
             return false;
         }
     }
+
     //guest login 
     //guest register
     public function guest_login($email)
@@ -979,7 +980,9 @@ class Auth_model extends CI_Model
     public function get_coupon_code_by_id($id)
     {
         $this->db->where('id', $id);
-        $query = $this->db->get('coupons');
+        $this->db->where('method', 'coupons');
+
+        $query = $this->db->get('cms_offers');
         return $query->row();
     }
 
