@@ -2154,12 +2154,20 @@ class Order_model extends CI_Model
 
     public function count_order_products($order_id, $seller_id)
     {
-
-        $this->db->select('*');
-        $this->db->where('order_id', $order_id);
-        $this->db->where('seller_id', $seller_id);
-        $query = $this->db->get('order_products');
-        return $query->num_rows();
+        $order_products = $this->order_model->get_order_products($order_id);
+        foreach ($order_products as $order_p) {
+            $product = $this->order_model->get_product_detail($order_p->product_id);
+            foreach ($product as $p) {
+            }
+        }
+        if (substr_count($p->shipping_time, "_") == 2) {
+            $shipping_time = intval($p->shipping_time);
+        } elseif (substr_count($p->shipping_time, "_") > 2) {
+            $shipping_time = intval($p->shipping_time);
+        }
+        $sql = "SELECT Count(*) as count from order_products where order_id=$order_id and seller_id=$seller_id and DATE_ADD(created_at,INTERVAL + $shipping_time DAY)< DATE(NOW())";
+        $query = $this->db->query($sql);
+        return $query->result();
     }
 
 
