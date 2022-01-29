@@ -1385,6 +1385,7 @@ endforeach; ?>
     }
 </script>
 
+
 <script>
     function Schedule_Multiple_shipment() {
         var product_ids = [];
