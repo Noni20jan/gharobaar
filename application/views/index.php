@@ -650,7 +650,7 @@
         position: absolute;
         animation: heartMove linear 1;
         top: -10vh;
-        z-index: 0;
+        z-index: 100;
     }
 
     @keyframes heartMove {
