@@ -1374,7 +1374,7 @@ endforeach; ?>
                     })
                 } else {
                     $('#cover-spin').hide();
-                    alert(response.payload.error_message)
+                    alert(JSON.parse(response).payload.error_message)
                 }
             },
             error: function(response) {
