@@ -876,7 +876,7 @@ endif;
                         <div class="col-sm-6 col-xs-6 col-right">
                             <?php if (!empty($order->offer_id)) {
                                 $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);
-                                echo $coupon->coupon_code;
+                                echo $coupon->offer_code;
                             } ?>
                             <!-- <strong>-<?php echo price_formatted($order->coupon_discount, $order->price_currency); ?>/-</strong> -->
                         </div>
