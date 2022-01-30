@@ -96,18 +96,10 @@ class Home_controller extends Home_Core_Controller
         $sender = "GHRBAR"; // This is who the message appears to be from.
         $numbers = "$phone"; // A single number or a comma-seperated list of numbers
         $msg_content = get_sms_content($label_content);
-
-        if ($label_content == "coupon_code") {
-            $token = array(
-                'code'  => $coupon_code,
-                'discount' => $discount
-            );
-        } else if ($label_content == "christmas_code") {
-            $token = array(
-                'code'  => $coupon_code,
-                'discount' => $discount
-            );
-        }
+        $token = array(
+            'code'  => $coupon_code,
+            'discount' => $discount
+        );
         $pattern = '[%s]';
         foreach ($token as $key => $val) {
             $varMap[sprintf($pattern, $key)] = $val;
@@ -139,6 +131,33 @@ class Home_controller extends Home_Core_Controller
         $data["html_content1"] = $this->load->view('partials/_messages', null, true);
         reset_flash_data();
         return true;
+    }
+
+    public function notification($message, $number)
+    {
+        if ($this->auth_check) {
+            $id = $this->auth_user->id;
+        } else {
+            $id = '0';
+        }
+        $notify = array(
+            'message' => $message,
+            // 'title' => $data['subject'],
+            'created_by' => $id,
+            'last_updated_by' => $id,
+        );
+        $this->db->insert("notifications", $notify);
+        $last_id = $this->db->insert_id();
+        $notification = array(
+            'for_user' => $number,
+            'notification_id' => $last_id,
+            'notification_type' => 'mobile',
+            'read' => '0',
+            'created_by' => $id,
+            'last_updated_by' => $id,
+            // 'event_id' => '420',
+        );
+        $this->db->insert("notify_user", $notification);
     }
     //send otp function
     public function send_otp_verification($phn_num)
@@ -185,6 +204,8 @@ class Home_controller extends Home_Core_Controller
         }
 
         $message = strtr($msg_content, $varMap);
+        $this->notification($message, $numbers);
+
         $data = "username=" . ($username) . "&hash=" . ($hash) . "&message=" . $message . "&sender=" . $sender . "&numbers=" . $numbers . "&test=" . $test;
         $ch = curl_init('http://api.textlocal.in/send/?');
         curl_setopt($ch, CURLOPT_POST, true);
