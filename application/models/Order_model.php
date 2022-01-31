@@ -2154,7 +2154,7 @@ class Order_model extends CI_Model
 
     public function count_order_products($order_id, $seller_id)
     {
-        $sql = "SELECT Count(*) as count from order_products where order_id=$order_id and seller_id=$seller_id";
+        $sql = "SELECT Count(*) as count from order_products where order_id=$order_id and seller_id=$seller_id and order_status='processing'";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -5077,7 +5077,7 @@ class Order_model extends CI_Model
                 } elseif ($p->add_meet == 'Made to stock') {
                     $estimated_dispatch_date = date('Y-m-d H:i:s', strtotime($created_date . +$estimated_days . "days"));
                 }
-                if ($current_date > $estimated_dispatch_date) {
+                if ($current_date > $estimated_dispatch_date && $order_p->order_status == 'processing') {
                     $data = array(
                         'order_number' => $order_p->order_id,
                         'order_product_id' => $order_p->id,
