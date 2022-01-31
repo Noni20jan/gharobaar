@@ -3975,7 +3975,17 @@ class Order_model extends CI_Model
             return $query->row()->order_id;
         }
     }
-
+    public function get_seller_id_by_awb($awb)
+    {
+        $this->db->where('awb_code', $awb);
+        $this->db->where('is_active', 1);
+        $query = $this->db->get('shiprocket_order_details');
+        if (empty($query->row())) {
+            return false;
+        } else {
+            return $query->row()->created_by;
+        }
+    }
     public function get_product_id_by_awb($awb)
     {
         $this->db->where('awb_code', $awb);

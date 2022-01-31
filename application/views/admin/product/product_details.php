@@ -480,7 +480,7 @@
                     </div>
                     <div class="col-md-9 col-sm-12 right">
                         <?php $this->load->view('admin/includes/_review_stars', ['review' => $product->rating]); ?>
-                        
+
                         <style>
                             .rating {
                                 float: left;
@@ -1200,18 +1200,36 @@
                             </div>
                             <form id="contactForm" name="contact" role="form">
                                 <div class="modal-body">
-
+                                    <input type="hidden" name="product_id" value="<?php echo $product->id; ?>">
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="email" name="email" value="<?php echo get_user($product->user_id)->email; ?>" class="form-control">
+                                        <input type="email" readonly name="email" value="<?php echo get_user($product->user_id)->email; ?>" class="form-control">
                                     </div>
 
 
-                                    </br>
+                                    </br>Dear seller,<br><br>
+
+                                    You are receiving this mail because Gharobaar team found an issue with your product listing.
+                                    <br>
+                                    Kindly review the comments and take appropriate actions and resubmit the listing.
+                                    <br>
+                                    The listed issue details are as follows -<br>
+                                    --------------------------------------------
+                                    <br>
+                                    <!-- 1. The listed issue comment 1.
+                                    2. The listed issue comment 2. -->
+
                                     <div class="form-group">
                                         <label for="message">Message</label>
                                         <textarea name="messagere" class="form-control form-textarea"></textarea>
                                     </div>
+                                    --------------------------------------------
+
+                                    <!-- <Product Detail> (As a url link and on click, it's should take the Supplier to product detail page) -->
+                                    <br>
+                                    Thanks & kind regards
+                                    <br>
+                                    Gharobaar Admin
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

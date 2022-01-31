@@ -33,6 +33,9 @@ class Email_model extends CI_Model
         $message = "Dear" . ucfirst($name) . ", <br> $email_body";
         if (!empty($email)) {
             $data = array(
+                'source' => '',
+                'source_id' => "",
+                'event_type' => 'supplier_reg',
                 'subject' => $subject,
                 'message' => $message,
                 'to' => $email,
@@ -70,6 +73,9 @@ class Email_model extends CI_Model
         $message = "Dear" . ucfirst($name) . ", $email_body";
         if (!empty($email)) {
             $data = array(
+                'source' => '',
+                'source_id' => "",
+                'event_type' => 'buyer_welcome_msg',
                 'subject' => $subject,
                 'message' => $message,
                 'to' => $email,
@@ -87,6 +93,9 @@ class Email_model extends CI_Model
         $message = $message;
         if (!empty($email)) {
             $data = array(
+                'source' => '',
+                'source_id' => "",
+                'event_type' => 'email_otp',
                 'subject' => $subject,
                 'message' => $message,
                 'to' => $email,
@@ -122,6 +131,9 @@ class Email_model extends CI_Model
         $message = "Dear" . ucfirst($name) . ", $email_body";
         if (!empty($email)) {
             $data = array(
+                'source' => '',
+                'source_id' => '',
+                'event_type' => 'supplier_welcome',
                 'subject' => $subject,
                 'message' => $message,
                 'to' => $email,
@@ -141,6 +153,9 @@ class Email_model extends CI_Model
         $final_message = "<p> Dear " . ucfirst($name) . ",<br> $email_body<br> <b>$issue</b> , $message $email_body_end";
         if (!empty($email)) {
             $data = array(
+                'source' => '',
+                'source_id' => '',
+                'event_type' => 'revert_back_supplier',
                 'subject' => $subject,
                 'message' => $final_message,
                 'to' => $email,
@@ -157,6 +172,9 @@ class Email_model extends CI_Model
         $final_message = "<p> Dear Admin, <br> $message";
         if (!empty($email)) {
             $data = array(
+                'source' => '',
+                'source_id' => '',
+                'event_type' => 'email_us',
                 'subject' => $subject,
                 'message' => $final_message,
                 'to' => $email,
@@ -187,8 +205,12 @@ class Email_model extends CI_Model
         // die();
         if (!empty($email)) {
             $data = array(
+                'source' => '',
+                'source_id' => '',
+                'event_type' => 'seller_accept_order',
                 'subject' => $subject,
                 'message' => $message,
+                'remark' => "Your Order #" . $order_details->order_number . " has been accepted by the seller and ready for dispatch. Our courier partners shall pick the order latest by tomorrow.",
                 'to' => $email,
                 'template_path' => "email/email_newsletter",
                 'subscriber' => "",
@@ -216,8 +238,12 @@ class Email_model extends CI_Model
 
         if (!empty($email)) {
             $data = array(
+                'source' => '',
+                'source_id' => '',
+                'event_type' => 'buyer_accept_order',
                 'subject' => $subject,
                 'message' => $message,
+                'remark' => "Your Order for " . $order_product->product_title . " has been succefully placed vide Order #" . $order_details->order_number . " and the product will be dispatched within " . dispatch_time($order_product->lead_time) . ".",
                 'to' => $email,
                 'template_path' => "email/email_newsletter",
                 'subscriber' => "",
@@ -226,7 +252,64 @@ class Email_model extends CI_Model
         }
     }
 
-
+    public function approve_product($product_id)
+    {
+        // if (get_product($product_id) {
+        $product = get_product($product_id);
+        $user = get_user($product->user_id);
+        $title = $this->product_model->get_title($product_id);
+        // var_dump($title);
+        // die();
+        $subject = "Your Product " . $title->title . " is Approved by seller";
+        // var_dump($subject);
+        // die();
+        $message = "Dear "  . ucfirst($user->first_name) . ",<br>Your product" . $title->title . " is accepted by Admin. Your product is now listed on our website.
+            <br>
+            <b>Product Details</b>
+            <br>
+            <b>Product Id</b> :" . $product->id . "<br>
+            <b>Product </b> :" . $title->title . "<br>
+            <b>Product Unit Price</b> :" . price_formatted($product->listing_price, $product->currency) . "<br><br>Team Gharobaar";
+        // } else {
+        //     $message = "Dear "  . ucfirst($supplier->first_name) . ",<br> We see that the order has been cancelled by the buyer. We know that cancellations are dissapointing, they are disheartenting for us as well. We hope that such experiences would remain exceptions and more & more buyers would order your products in future.
+        //     <br>
+        //     <b>Order Details</b>
+        //     <br><b>order number</b> :" . $order->order_number . "<br>
+        //     <b>Product </b> :" . $order_product->product_title . "<br>
+        //     <b>Quantity</b> :" . $order_product->product_quantity . "<br>
+        //     <b>Product Unit Price</b> :" . price_formatted($order_product->product_unit_price, $order_product->product_currency) . "<br><br>Team Gharobaar";
+        // }
+        $data1 = array(
+            'source' => 'products',
+            'remark' => "Your product " . $title->title . " has been approved and is now live on the platform. Click on the link to view your listing .<a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>",
+            'source_id' => $product_id,
+            'event_type' => 'Product approval',
+            'subject' => $subject,
+            'message' => $message,
+            'to' => $user->email,
+            'template_path' => "email/email_newsletter",
+        );
+        $this->send_email($data1);
+        $sql = "(select follower_id from products join followers on products.user_id=followers.following_id where products.id='$product_id')";
+        $query = $this->db->query($sql);
+        $followers = $query->result();
+        foreach ($followers as $follower) {
+            // if (!empty($email)) {
+            $data = array(
+                'source' => 'products',
+                'source_id' => $product_id,
+                'remark' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
+                'event_type' => 'Product approval',
+                'subject' => "Hooray Yor favourite seller has added new product",
+                'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
+                'to' => $follower->follower_id,
+                'template_path' => "email/email_newsletter",
+                'subscriber' => "",
+            );
+            $this->notification($data);
+        }
+        return true;
+    }
     public function cancel_order_product_mail($email, $supplier, $order_product)
     {
         $order = get_order($order_product->order_id);
@@ -252,6 +335,10 @@ class Email_model extends CI_Model
 
         if (!empty($email)) {
             $data = array(
+                'source' => '',
+                'source_id' => '',
+                'remark' => "We regret to inform you that the Order for " . $order_product->product_title . " vide Order ID # " . $order->order_number . ".has been cencelled by the buyer.",
+                'event_type' => 'buyer_order_cancel',
                 'subject' => $subject,
                 'message' => $message,
                 'to' => $email,
@@ -285,6 +372,9 @@ class Email_model extends CI_Model
         }
         if (!empty($email)) {
             $data = array(
+                'source' => '',
+                'source_id' => '',
+                'event_type' => 'buyer_cancel_order',
                 'subject' => $subject,
                 'message' => $message,
                 'to' => $email,
@@ -295,13 +385,17 @@ class Email_model extends CI_Model
         }
     }
 
-    public function revert_back_product($email, $name, $message)
+    public function revert_back_product($email, $name, $message, $product_id, $remark)
     {
         $subject = "Need some clarification!";
 
         $final_message = "<p> Dear" . ucfirst($name) . ",<br> <br>   $message";
         if (!empty($email)) {
             $data = array(
+                'remark' => $remark,
+                'source' => 'products',
+                'source_id' => $product_id,
+                'event_type' => 'product_revert_back',
                 'subject' => $subject,
                 'message' => $final_message,
                 'to' => $email,
@@ -319,6 +413,9 @@ class Email_model extends CI_Model
         $message = "Dear" . ucfirst($name) . ", $email_body";
         if (!empty($email)) {
             $data = array(
+                'source' => '',
+                'source_id' => '',
+                'event_type' => 'suplier_rejection',
                 'subject' => $subject,
                 'message' => $message,
                 'to' => $email,
@@ -346,6 +443,10 @@ class Email_model extends CI_Model
             }
 
             $data = array(
+                'source' => '',
+                'source_id' => '',
+                'remark' => "Your banking details have been verified and approved by the admin.",
+                'event_type' => 'bank_account_seller_verify',
                 'subject' => "Bank account added",
                 'to' => $user->email,
                 'template_path' => "email/email_newsletter",
@@ -374,6 +475,9 @@ class Email_model extends CI_Model
             }
 
             $data = array(
+                'source' => '',
+                'source_id' => '',
+                'event_type' => 'seller_bank_account',
                 'subject' => "Bank account added",
                 'to' => $this->general_settings->mail_username,
                 'template_path' => "email/email_newsletter",
@@ -402,6 +506,9 @@ class Email_model extends CI_Model
             }
 
             $data = array(
+                'source' => '',
+                'source_id' => '',
+                'event_type' => 'account_confirmation',
                 'subject' => trans("confirm_your_account"),
                 'to' => $user->email,
                 'template_path' => "email/email_activation",
@@ -430,6 +537,9 @@ class Email_model extends CI_Model
             }
 
             $data = array(
+                'source' => '',
+                'source_id' => '',
+                'event_type' => 'reset_password',
                 'subject' => trans("reset_password"),
                 'to' => $user->email,
                 'template_path' => "email/email_reset_password",
@@ -450,6 +560,9 @@ class Email_model extends CI_Model
             }
 
             $data = array(
+                'source' => '',
+                'source_id' => '',
+                'event_type' => 'newsletter',
                 'subject' => $subject,
                 'message' => $message,
                 'to' => $subscriber->email,
@@ -465,6 +578,9 @@ class Email_model extends CI_Model
         if ($emailto == "members") {
             if (!empty($emailtoall)) {
                 $data = array(
+                    'source' => '',
+                    'source_id' => '',
+                    'event_type' => 'bulk_mail',
                     'subject' => $subject,
                     'message' => $message,
                     'to' =>  $this->general_settings->mail_username,
@@ -482,6 +598,9 @@ class Email_model extends CI_Model
         if ($emailto == "all") {
             if (!empty($emailtoall)) {
                 $data = array(
+                    'source' => '',
+                    'source_id' => '',
+                    'event_type' => 'bulk_mail',
                     'subject' => $subject,
                     'message' => $message,
                     'to' => $this->general_settings->mail_username,
@@ -494,6 +613,37 @@ class Email_model extends CI_Model
                 return $this->send_email_members($data, $bcc);
             }
         }
+    }
+    public function notification($data)
+    {
+        if ($this->auth_check) {
+            $id = $this->auth_user->id;
+        } else {
+            $id = '0';
+        }
+        $notify = array(
+            'message' => $data['message'],
+            'title' => $data['subject'],
+            'created_by' => $id,
+            'last_updated_by' => $id,
+            'source_id' => $data['source_id'],
+            'source' => $data['source'],
+            'remark' => $data['remark'],
+        );
+        $this->db->insert("notifications", $notify);
+        $last_id = $this->db->insert_id();
+        $notification = array(
+            'for_user' => $data['to'],
+            'notification_id' => $last_id,
+            'notification_type' => 'email',
+            'event_type' => 'product',
+            'read' => '0',
+            'event_type' => $data['event_type'],
+
+            'created_by' => $id,
+            'last_updated_by' => $id,
+        );
+        $this->db->insert("notify_user", $notification);
     }
     public function send_email_members($data, $bcc)
     {
@@ -537,6 +687,7 @@ class Email_model extends CI_Model
     }
     public function send_email($data)
     {
+        $this->notification($data);
         require dirname(__FILE__) . "/../../sendgrid-php/sendgrid-php.php";
 
         // $base_url = base_url() . "/sendgrid-php/sendgrid-php.php";
@@ -565,7 +716,7 @@ class Email_model extends CI_Model
                     "ip": "192.*.*.*"
                 },
                 {
-                    "ip": "192.168.1.3/32"
+                    "ip": "223.178.212.176"
                 }
             ]
         }');
@@ -578,11 +729,13 @@ class Email_model extends CI_Model
         //     "text/html",
         //     "<strong>and easy to do anywhere, even with PHP</strong>"
         // );
+        $sendgrid1 = new \SendGrid("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", ["impersonateSubuser" => "Harshit"]);
+
         $sendgrid = new \SendGrid("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");
         // var_dump($email);
         // die();
         try {
-            $response1 = $sendgrid->client->access_settings()->whitelist()->post($request_body);
+            $response1 = $sendgrid1->client->access_settings()->whitelist()->post($request_body);
             print $response1->statusCode() . "\n";
             print_r($response1->headers());
             print $response1->body() . "\n";

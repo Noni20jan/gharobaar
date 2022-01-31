@@ -628,13 +628,25 @@ class Ajax_controller extends Home_Core_Controller
                         $buyer_name = $user->first_name;
                     }
                 }
+                $count = count($order_products);
+                $title = "";
+                $i = 1;
+                foreach ($order_products as $order_p2) {
+
+                    $title .= $order_p2->product_title;
+                    if ($i < $count) {
+                        $title .= ",";
+                    }
+                    $i++;
+                }
                 $data = array(
                     'subject' => trans("email_text_thank_for_order"),
                     'order' => $order,
                     'order_products' => $order_products,
                     'to' => $to,
                     'buyer_name' => $buyer_name,
-                    'template_path' => "email/email_new_order"
+                    'template_path' => "email/email_new_order",
+                    'remark' => "Your Order for " . $title . "  has been succefully placed vide Order #" . $order_id . " and the product will be dispatched soon     .",
                 );
                 $this->email_model->send_email($data);
 
@@ -652,6 +664,7 @@ class Ajax_controller extends Home_Core_Controller
                                     'subject' => trans("you_have_new_order"),
                                     'order' => $order,
                                     'order_products' => $seller_order_products,
+                                    'remark' => "You have rerceived an order for " . $order_product->product_title . "  vide Order #" . $order_id . " . You are expected to dispatch the order  within " . dispatch_time($order_product->lead_time) . ".",
                                     'to' => $seller->email,
                                     'seller_name' => $seller_name,
                                     'template_path' => "email/email_new_order_seller"

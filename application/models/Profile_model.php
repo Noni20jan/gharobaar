@@ -473,6 +473,20 @@ class Profile_model extends CI_Model
         if (empty($follow)) {
             //add follower
             $this->db->insert('followers', $data);
+            $data1 = array(
+                'to' => $this->input->post('following_id', true),
+                'source' => 'followers',
+                'source_id' => $this->input->post('following_id', true),
+                'event_type' => 'New Follower',
+                'remark' => "Congratulations! You have a new Follower! Click <a href='" . generate_url("followers") . "/" . $this->auth_user->slug . "'>here</a> to see Followers.",
+
+                'subject' => "Hooray You Got a new follower",
+                // 'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->title . "'>" .  $title->title . "</a>.",
+                'template_path' => "email/email_newsletter",
+                'subscriber' => "",
+            );
+            $this->load->model("email_model");
+            $this->email_model->notification($data1);
         } else {
             $this->db->where('id', $follow->id);
             $this->db->delete('followers');
@@ -741,11 +755,10 @@ class Profile_model extends CI_Model
 
 
 
-     //save seller sla agree
-     public function save_sla_agree($data,$user_id)
-     {
+    //save seller sla agree
+    public function save_sla_agree($data, $user_id)
+    {
         $this->db->where('id', $user_id);
         return $this->db->update('users', $data);
-     }
- 
+    }
 }

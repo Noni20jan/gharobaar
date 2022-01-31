@@ -7,9 +7,11 @@ class Order_controller extends Home_Core_Controller
     {
         parent::__construct();
         if (!$this->auth_check) {
-            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
                 $link = "https";
-            else $link = "http";
+            } else {
+                $link = "http";
+            }
 
             // Here append the common URL characters.
             $link .= "://";

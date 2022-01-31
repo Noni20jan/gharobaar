@@ -480,6 +480,8 @@ class Product_controller extends Admin_Core_Controller
     {
         $id = $this->input->post('id', true);
         if ($this->product_admin_model->approve_product($id)) {
+            $this->load->model('email_model');
+            $this->email_model->approve_product($id);
             $this->session->set_flashdata('success', trans("msg_product_approved"));
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
@@ -499,7 +501,29 @@ class Product_controller extends Admin_Core_Controller
 
         $id = $this->input->post('id1', true);
         $message = $this->input->post('messagere', true);
+        $product_id = $this->input->post('product_id', true);
+        $product = $this->product_model->get_productdetails_by_id($product_id);
+        // var_dump($product);
+        // die();
+        // $product_detail = $this->product_model->get_product_details_by_id($product->id);
+        $bind_message = "
 
+        You are receiving this mail because Gharobaar team  found an issue with your product listing.<br> 
+        
+        Kindly review the comments and take appropriate actions and resubmit the listing.<br>
+        
+        The listed issue details are as follows -<br>
+        --------------------------------------------<br>" . $message . "<br>
+        --------------------------------------------<br>
+        <b>Product Details</b><br>
+        <b>Product </b> :" . $product->title . "<br>
+        <p style='text-align: center;margin-top: 40px;'>
+    <a href='" . base_url() . "dashboard/edit-product/" . $product_id . "' style='font-size: 14px;text-decoration: none;padding: 14px 40px;background-color: #DF911E;color: #000000 !important; border-radius: 3px;'>
+       Edit Product
+    </a>
+</p>
+       <br> Thanks & kind regards<br>
+        Gharobaar Admin<br>";
         $email = $this->input->post('email', true);
         $user = get_user($id);
 
@@ -509,7 +533,13 @@ class Product_controller extends Admin_Core_Controller
         $this->session->set_flashdata('submit', "send_email");
 
         if (!empty($email)) {
-            if (!$this->email_model->revert_back_product($email, $user->first_name, $message)) {
+            if (!$this->email_model->revert_back_product(
+                $email,
+                $user->first_name,
+                $bind_message,
+                $product_id,
+                $message
+            )) {
                 redirect($this->agent->referrer());
                 // exit();
             }

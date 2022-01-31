@@ -87,7 +87,7 @@ class Message_controller extends Home_Core_Controller
     {
         $review_text = $this->input->post('review_text', true);
         $supplier_id = $this->input->post('supplier_id', true);
-        $res=$this->message_model->add_review($review_text, $supplier_id);
+        $res = $this->message_model->add_review($review_text, $supplier_id);
         var_dump($res);
         die();
         // var_dump($this->message_model->add_review($review_text, $supplier_id));
@@ -115,6 +115,7 @@ class Message_controller extends Home_Core_Controller
                 $receiver_id = $this->input->post('receiver_id', true);
                 $message = $this->input->post('message', true);
                 $user = get_user($receiver_id);
+                $title = $this->input->post('product_title', true);
 
                 if (!empty($user) && $user->send_email_new_message == 1 && !empty($message)) {
                     $email_data = array(
@@ -124,6 +125,21 @@ class Message_controller extends Home_Core_Controller
                         'message_subject' => $conversation->subject,
                         'message_text' => $message
                     );
+                    if (!empty($title)) {
+                        $data = array(
+                            'source' => 'coustomiation',
+                            // 'source_id' => $product_id,
+                            'remark' => "You have received a query for customization of your product " . $title,
+                            'event_type' => 'Customization Request',
+                            'subject' => "New customization query of your product",
+                            // 'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
+                            'to' => $receiver_id,
+                            'template_path' => "email/email_newsletter",
+                            'subscriber' => "",
+                        );
+                        $this->load->model("email_model");
+                        $this->email_model->notification($data);
+                    }
                     $this->session->set_userdata('mds_send_email_data', json_encode($email_data));
                 }
             }
@@ -215,5 +231,4 @@ class Message_controller extends Home_Core_Controller
         $conversation_id = $this->input->post('conversation_id', true);
         $this->message_model->delete_conversation($conversation_id);
     }
-
 }

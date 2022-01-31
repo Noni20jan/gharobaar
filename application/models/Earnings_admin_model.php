@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Earnings_admin_model extends CI_Model
 {
@@ -193,6 +193,21 @@ class Earnings_admin_model extends CI_Model
             'status' => $this->input->post('status', true),
             'created_at' => date('Y-m-d H:i:s')
         );
+        $data1 = array(
+            'to' => $user_id,
+            'remark' => "This is to inform you that payment of Rs" . $amount . " Has been initiated and should reflect in your account within the next couple of days.",
+            // 'for_user' =>,
+            'created_by' => '2',
+            'last_updated_by' => '2',
+            'source' => 'payouts',
+            // 'source_id' => $,
+            'event_type' => 'Payout Initiated',
+            'subject' => "Your Paymesnt is initiated",
+            // 'message' => $message,
+            // 'to' => $seller_id,
+        );
+        $this->load->model("email_model");
+        $this->email_model->notification($data1);
 
         if ($data['status'] == 1) {
             if ($this->db->insert('payouts', $data)) {
@@ -200,7 +215,6 @@ class Earnings_admin_model extends CI_Model
             }
         } else {
             return $this->db->insert('payouts', $data);
-
         }
         return false;
     }
