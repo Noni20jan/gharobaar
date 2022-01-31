@@ -101,6 +101,7 @@ class Email_model extends CI_Model
                 'to' => $email,
                 'template_path' => "email/email_newsletter",
                 'subscriber' => "",
+                'remark' => $message
             );
             return $this->send_email($data);
         }
