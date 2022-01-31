@@ -530,11 +530,13 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <?php if ($this->auth_check) : ?>
-                                                <?php if ($this->auth_user->id != $user->id) : ?>
-                                                    <p class="question">Have a question? <a href="javascript:void(0)" class="ask-seller" data-toggle="modal" data-target="#messageModal">For any customization queries, Contact Seller</a>
-                                                    <?php endif; ?>
-                                                <?php else : ?>
-                                                    <p class="question">Have a question? <a href="javascript:void(0)" class="ask-seller" data-toggle="modal" data-target="#loginModal">For any customization queries, Contact Seller</a>
+                                                <?php if ($product->is_personalised == 'Y') : ?>
+                                                    <?php if ($this->auth_user->id != $user->id) : ?>
+                                                        <p class="question">Have a question? <a href="javascript:void(0)" class="ask-seller" data-toggle="modal" data-target="#messageModal">For any customization queries, Contact Seller</a>
+                                                        <?php endif; ?>
+                                                    <?php else : ?>
+                                                        <p class="question">Have a question? <a href="javascript:void(0)" class="ask-seller" data-toggle="modal" data-target="#loginModal">For any customization queries, Contact Seller</a>
+                                                        <?php endif; ?>
                                                     <?php endif; ?>
                                         </div>
                                     </div>
