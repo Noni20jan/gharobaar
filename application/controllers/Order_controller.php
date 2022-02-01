@@ -387,7 +387,7 @@ class Order_controller extends Home_Core_Controller
                 if ($this->email_model->cancel_order_product_mail($supplier->email, $supplier, $order_product) && $this->email_model->cancel_order_product_mail_buyer($buyer->email, $buyer, $order_product)) {
                     redirect($this->agent->referrer());
                 }
-                $this->session->set_flashdata('success', trans("msg_email_sent"));
+                $this->session->set_flashdata('success', trans("msg_order_cancel"));
             } else {
                 $this->session->set_flashdata('error', trans("msg_error"));
             }
