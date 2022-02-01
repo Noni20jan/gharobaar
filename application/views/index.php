@@ -1332,7 +1332,7 @@
         const heart = document.createElement("div");
         heart.className = "fas fa-heart";
         heart.style.left = (Math.random() * 100) + "vw";
-        heart.style.animationDuration = (Math.random() * 2) + 70 + "s"
+        heart.style.animationDuration = (Math.random() * 2) + 80 + "s"
         body.appendChild(heart);
     }
     setInterval(createHeart, 150);
@@ -1342,7 +1342,7 @@
             heartArr[0].remove()
         }
         //console.log(heartArr);
-    }, 100)
+    }, 300)
 </script>
 
 <!-- Wrapper End-->
