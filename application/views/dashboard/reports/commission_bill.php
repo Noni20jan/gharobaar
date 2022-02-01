@@ -65,6 +65,7 @@
                                     <th><?php echo ('Order-Month'); ?></th>
                                     <th><?php echo ('Seller'); ?></th>
                                     <th><?php echo ('Email'); ?></th>
+                                    <th>Seller Id</th>
                                     <th><?php echo ('Phone'); ?></th>
                                     <th><?php echo ('Shop_name'); ?></th>
                                     <th><?php echo ('Pan'); ?></th>
@@ -126,7 +127,7 @@
                 var len = Json_data.length;
                 if (len != 0) {
                     for (var i = 0; i < len; i++) {
-                        $('#commission_bill').append("<tr><td>" + Json_data[i].Order_Month + "</td><td>" + Json_data[i].Seller + "</td><td>" + Json_data[i].Email + "</td><td>" + Json_data[i].Phone + "</td><td>" + Json_data[i].Shop_name + "</td><td>" + Json_data[i].Pan + "</td><td>" + Json_data[i].GST + "</td><td>" + Json_data[i].Address + "</td><td>" + Json_data[i].total_commission_amount + "</td><td>" + Json_data[i].Total_shipping_cost + "</td><td>" + Json_data[i].Total_Cod_cost + "</td><td>" + Json_data[i].getway_amt + "</td><td>" + Json_data[i].GST_Rate + "</td><td>" + Json_data[i].GST_Amount + "</td><td>" + Json_data[i].CGST + "</td><td>" + Json_data[i].SGST + "</td><td>" + Json_data[i].IGST + "</td><td>" + Json_data[i].TOTAL + "</td></tr>")
+                        $('#commission_bill').append("<tr><td>" + Json_data[i].Order_Month + "</td><td>" + Json_data[i].Seller + "</td><td>" + Json_data[i].Email + "</td><td>" + Json_data[i].Seller_Id + "</td><td>" + Json_data[i].Phone + "</td><td>" + Json_data[i].Shop_name + "</td><td>" + Json_data[i].Pan + "</td><td>" + Json_data[i].GST + "</td><td>" + Json_data[i].Address + "</td><td>" + Json_data[i].total_commission_amount + "</td><td>" + Json_data[i].Total_shipping_cost + "</td><td>" + Json_data[i].Total_Cod_cost + "</td><td>" + Json_data[i].getway_amt + "</td><td>" + Json_data[i].GST_Rate + "</td><td>" + Json_data[i].GST_Amount + "</td><td>" + Json_data[i].CGST + "</td><td>" + Json_data[i].SGST + "</td><td>" + Json_data[i].IGST + "</td><td>" + Json_data[i].TOTAL + "</td></tr>")
 
                     }
                 }

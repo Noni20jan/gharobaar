@@ -255,9 +255,17 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <div class="alert-message-lg">
-                    <!-- include message block -->
-                    <?php $this->load->view('dashboard/includes/_messages'); ?>
+                <div class="alert-message-lg feedback">
+                    <?php if ($this->session->flashdata('success')) : ?>
+                        <div class="m-b-15">
+                            <div class="alert alert-success alert-dismissable">
+                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                <h4 style="margin-left: 423px;">
+                                    <?php echo $this->session->flashdata('success'); ?>
+                                </h4>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -650,6 +658,20 @@
                                                 </p>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <?php if ($this->general_settings->reviews == 1 && $item->seller_id != $item->buyer_id) : ?>
+                                            <div class="rate-product">
+                                                <div class="rating" style="pointer-events: none;">
+                                                    <?php $review = get_review($item->product_id, $this->auth_user->id); ?>
+                                                    <label class="label-star" data-star="5" data-product-id="<?php echo $item->product_id; ?>"><i class="<?php echo (!empty($review) && $review->rating >= 5) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                    <label class="label-star" data-star="4" data-product-id="<?php echo $item->product_id; ?>"><i class="<?php echo (!empty($review) && $review->rating >= 4) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                    <label class="label-star" data-star="3" data-product-id="<?php echo $item->product_id; ?>"><i class="<?php echo (!empty($review) && $review->rating >= 3) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                    <label class="label-star" data-star="2" data-product-id="<?php echo $item->product_id; ?>"><i class="<?php echo (!empty($review) && $review->rating >= 2) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                    <label class="label-star" data-star="1" data-product-id="<?php echo $item->product_id; ?>"><i class="<?php echo (!empty($review) && $review->rating >= 1) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
                                     </td>
                                     <td style="padding-bottom: -1%;">
                                         <?php echo price_formatted($item->product_total_price, $item->product_currency); ?><span>/-</span>
@@ -1268,4 +1290,6 @@
         $("#rateProductModal #review_product_id").val(product_id);
 
     });
+    var timeout = 8000;
+    $('.feedback').delay(timeout).fadeOut(300);
 </script>

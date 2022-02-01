@@ -265,6 +265,8 @@ class Reports_model extends CI_Model
     }
     public function get_payment_report($start_date, $end_date)
     {
+        $seller_id = $this->auth_user->id;
+
         $end_date = $end_date . " 23:59:59";
         $sql = "SELECT sdr.seller_id, sdr.order_no,sdr.order_date,
         format(sum(sdr.grand_total_amount),2) as total_product_amt,
@@ -295,6 +297,7 @@ class Reports_model extends CI_Model
         and sdr.seller_id = csp.vendorId
         and sdr.order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
         and sdr.order_date <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+        AND  sdr.seller_id=$seller_id
         and csp.is_active = 1
         and csp.is_completed = 1
         GROUP BY sdr.seller_id, sdr.order_no,sdr.order_date";
@@ -644,11 +647,20 @@ class Reports_model extends CI_Model
         last_updated_date,
         last_updated_login,
         rand_val,
-        suitable_for
+        suitable_for,
+        sd.seller AS 'Seller_Name',
+        sd.shop_name AS 'Shop_Name',
+        sd.product_title AS 'Product'
     FROM
         products
-        where created_at >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s') 
-        AND created_at <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')";
+        join 
+        sale_data_report as sd
+    
+        where
+        products.id=sd.id
+        AND created_at >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s') 
+        AND created_at <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+        ORDER by created_at DESC";
         $query = $this->db->query($sql);
         return $query->result();
     }
