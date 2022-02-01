@@ -341,7 +341,31 @@ class Cart_controller extends Home_Core_Controller
                 );
             }
         }
+
+
+        $data['cart_items'] = $this->session_cart_items;
+        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+        $data["open_rating_modal"] = false;
+        if (!empty($this->auth_user)) :
+            $order_id['product_id'] =  $this->product_model->get_order_id($this->auth_user->id);
+            if (!empty($order_id['product_id'])) :
+                $order['order_id'] = $this->product_model->get_order_product_id($order_id['product_id']->order_id, $this->auth_user->id);
+                foreach ($order['order_id'] as $order1) :
+                    $not_rating['exist'] = $this->product_model->get_not_rating_product($order1->product_id, $this->auth_user->id);
+                    if (empty($not_rating['exist'])) :
+                        $data["open_rating_modal"] = true;
+                        break;
+                    endif;
+                endforeach;
+            endif;
+        endif;
+        $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
+
+
+
         $response = array(
+            "status" => true,
+            "button_html" => $this->load->view('cart/payment_button', $data, true),
             "product_details" => ($product_details["total_price_product"]) / 100,
             "total_mrp" => ($_SESSION["mds_shopping_cart_total"]->subtotal) / 100,
             "discount" => $_SESSION["mds_shopping_cart_total"]->discount,
@@ -1928,7 +1952,7 @@ class Cart_controller extends Home_Core_Controller
             $obj->bankAccount = $data_pay_array[$i]->acc_no;
             $obj->ifsc = $data_pay_array[$i]->ifsc;
             array_push($sing_arr, $obj);
-            $data_pay_array[$i]->transfer_id=$obj->transferId;
+            $data_pay_array[$i]->transfer_id = $obj->transferId;
         }
 
         $new_data = $sing_arr;
@@ -1991,8 +2015,8 @@ class Cart_controller extends Home_Core_Controller
 
                 $obj->seller_id = $data_pay_array[$i]->seller_id;
                 $obj->order_id = $data_pay_array[$i]->order_id;
-                foreach($obj->order_id as $order_id){
-                $this->order_model->update_status_payouts($obj->seller_id, $order_id, $status_code, $refrence_id, $message, $status, $batch_id, $obj->payout_charge, $mode, $data_pay_array[$i]->transfer_id);
+                foreach ($obj->order_id as $order_id) {
+                    $this->order_model->update_status_payouts($obj->seller_id, $order_id, $status_code, $refrence_id, $message, $status, $batch_id, $obj->payout_charge, $mode, $data_pay_array[$i]->transfer_id);
                 }
             }
             echo $response;

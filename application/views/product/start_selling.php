@@ -1031,6 +1031,17 @@ $pincode = get_pincode(281204);
                                                                     </div>
                                                                 </div>
 
+
+                                                                <div class="form-group">
+                                                                    <div class="row">
+                                                                        <div class="col-12 col-sm-6 m-b-15">
+                                                                            <label class="control-label">Minimum Order Value (if any)</label>
+                                                                            <input type="text" name="min_order_value" class="form-control auth-form-input" onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57'>
+                                                                            <!-- <p class="Validation_error" id="area_in_operation_p"></p> -->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
                                                                 <?php if ($this->general_settings->enable_ship_selection == 1) : ?>
 
 

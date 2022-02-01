@@ -795,80 +795,37 @@ if (!$this->auth_check) : ?>
                                             <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong>
                                         <?php endif; ?>
 
+                                        <?php $cart_seller_total = get_cart_seller_total();
+                                        $shop_name_seller = "";
+                                        foreach ($cart_seller_total as $cst) :
 
+                                            $check_min_order_value = get_seller_order_value($cst->seller_id);
+                                            // var_dump(round($cst->total_price/100,2));
+                                            if ($check_min_order_value == "" || $check_min_order_value == null || round($cst->total_price / 100, 2) >= $check_min_order_value) {
+                                                $matched_min_order_value = true;
+                                            } else {
+                                                $matched_min_order_value = false;
+                                                $shop_name_seller = get_shop_name_by_user_id($cst->seller_id);
+                                                break;
+                                            }
+
+                                        endforeach;
+                                        ?>
 
 
                                     </p>
-                                    <p class="line-seperator"></p>
-                                    <?php if (intval(secondsToTime($cart_total->min_dispatch_time)) > 1 || intval(secondsToTime($cart_total->max_dispatch_time)) > 1) :
-                                        $day = " days";
-                                    else :
-                                        $day = " day";
-                                    endif;
-                                    ?>
-                                    <?php if (secondsToTime($cart_total->min_dispatch_time) != secondsToTime($cart_total->max_dispatch_time)) : ?>
-                                        <p><?php echo trans("min_max_dispatch_days"); ?><?php echo (!empty(secondsToTime($cart_total->min_dispatch_time))) ? secondsToTime($cart_total->min_dispatch_time) . " - " : " "; ?><?php echo (!empty(secondsToTime($cart_total->max_dispatch_time))) ? secondsToTime($cart_total->max_dispatch_time) . $day : "" ?> </p>
-                                    <?php else : ?>
-                                        <p><?php echo trans("min_max_dispatch_days"); ?><?php echo (!empty(secondsToTime($cart_total->max_dispatch_time))) ? secondsToTime($cart_total->max_dispatch_time) . $day : "" ?> </p>
-                                    <?php endif; ?>
-                                    <p class="m-t-30">
-                                        <?php if (empty($cart_total->is_all_product_available)) : ?>
-                                            <a href="#" class="btn btn-block" data-toggle="modal" data-target="#product_not_available"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                        <?php else : ?>
-                                            <?php if (empty($cart_total->is_stock_available)) : ?>
-                                                <strong class="btn btn-block " data-toggle="modal" data-target="#out_of_stock"><?php echo trans("continue_to_checkout"); ?> </strong>
-                                            <?php else : ?>
-                                                <?php if ($is_shop_open == 0) : ?>
-                                                    <strong class="btn btn-block " data-toggle="modal" data-target="#shop_is_closed"><?php echo trans("continue_to_checkout"); ?> </strong>
-                                                <?php else : ?>
-                                                    <?php if (empty($this->auth_check) && $this->general_settings->guest_checkout != 1) : ?>
-                                                        <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                    <?php elseif (!empty($this->auth_check)) : ?>
-                                                        <?php if (($this->auth_user->phone_number) == '') : ?>
-                                                            <a href="#" class="btn btn-block" data-toggle="modal" data-target="#registerMobileModal"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                        <?php elseif ($open_rating_modal && $this->general_settings->rate_previous_order) : ?>
-                                                            <?php $this->load->view('partials/_modal_rate_last_order'); ?>
-                                                            <a href="#" data-backdrop="static" data-keyboard="false" class="btn btn-block" data-toggle="modal" data-target="#rateProductModalorder"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                            <?php else :
-                                                            $is_made_to_order = false;
-                                                            foreach ($cart_items as $cart_item) :
-                                                                $product = get_product($cart_item->product_id); ?>
+                                    <div id="pay_button">
+                                        <?php $this->load->view("cart/payment_button", ["cart_items" => $cart_items, "cart_total" => $cart_total]); ?>
+                                    </div>
 
-                                                                <?php if ($product->add_meet == "Made to order") :
-                                                                    $is_made_to_order = true;
-                                                                endif; ?>
-                                                            <?php endforeach; ?>
-                                                            <?php if ($is_made_to_order) : ?>
-                                                                <a href="#" class="btn btn-block" data-toggle="modal" data-target="#made_to_order_checkout"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                            <?php else : ?>
-                                                                <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
-                                                                    <a href="<?php echo generate_url("cart", "shipping"); ?>" class="btn btn-block"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
-                                                                <?php else : ?>
-                                                                    <a href="<?php echo generate_url("cart", "payment_method"); ?>" class="btn btn-block" onclick="checkreview()"> <strong><?php echo trans("continue_to_checkout"); ?> </strong>
-                                                                    </a>
-                                                                <?php endif; ?>
-                                                            <?php endif; ?>
 
-                                                        <?php endif; ?>
-                                                    <?php elseif ($this->general_settings->guest_checkout == 1) : ?>
-                                                        <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo "Login to Continue"; ?> </strong></a>
-                                    <div class="text-center m-b-15"><strong>OR</strong></div>
-
-                                    <a href="#" class="btn btn-block" data-toggle="modal" data-target="#guestLoginModal"> <strong><?php echo "Continue Checkout as Guest"; ?> </strong></a>
-
-                                <?php endif; ?>
-                            <?php endif; ?>
-                        <?php endif; ?>
-                    <?php endif; ?>
-                    </p>
-
-                    <div class="payment-icons">
-                        <img src="<?php echo base_url(); ?>assets/img/payment/visa.svg" alt="visa">
-                        <img src="<?php echo base_url(); ?>assets/img/payment/mastercard.svg" alt="mastercard">
-                        <img src="<?php echo base_url(); ?>assets/img/payment/maestro.svg" alt="maestro">
-                        <img src="<?php echo base_url(); ?>assets/img/payment/amex.svg" alt="amex">
-                        <img src="<?php echo base_url(); ?>assets/img/payment/discover.svg" alt="discover">
-                    </div>
+                                    <div class="payment-icons">
+                                        <img src="<?php echo base_url(); ?>assets/img/payment/visa.svg" alt="visa">
+                                        <img src="<?php echo base_url(); ?>assets/img/payment/mastercard.svg" alt="mastercard">
+                                        <img src="<?php echo base_url(); ?>assets/img/payment/maestro.svg" alt="maestro">
+                                        <img src="<?php echo base_url(); ?>assets/img/payment/amex.svg" alt="amex">
+                                        <img src="<?php echo base_url(); ?>assets/img/payment/discover.svg" alt="discover">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1043,6 +1000,39 @@ if (!$this->auth_check) : ?>
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade" id="min_order_val_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-custom">
+            <!-- form start -->
+
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true"><i class="icon-close"></i> </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row tracking-number-container">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <p class="details">The minimum order value for <strong><?php echo ($shop_name_seller) ?></strong> is <strong><?php echo "₹" . ($check_min_order_value) ?></strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: green; color:white;"><?php echo trans("close"); ?></button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
 <div class="modal fade" id="out_of_stock" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom">

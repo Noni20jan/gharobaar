@@ -1691,4 +1691,78 @@ class Cart_model extends CI_Model
         $query = $this->db->get('order_products');
         return $query->result();
     }
+
+    public function calc_seller_cart_total()
+    {
+        $cart_items = $this->cart_model->get_sess_cart_items();
+        if (empty($cart_items)) {
+            return false;
+        }
+        //creating product list seller wise
+
+        $product_seller_details = array();
+        foreach ($cart_items as $cart_item) {
+            $object = new stdClass();
+            $object->seller_id = get_active_product($cart_item->product_id)->user_id;
+            $new = true;
+            foreach ($product_seller_details as $psd) {
+                if ($psd->seller_id == $object->seller_id) {
+                    $object_product = new stdClass();
+                    $object_product->product_id = $cart_item->product_id;
+                    $object_product->parent_category_id = $cart_item->parent_category_id;
+                    $object_product->product_quantity = $cart_item->quantity;
+                    $object_product->product_unit_price = $cart_item->unit_price;
+                    $object_product->product_total_price = $cart_item->total_price;
+
+
+                    // if (count($psd->products) > 0) {
+                    //     foreach ($psd->products as $prod) {
+                    //         if (floatval($object_product->product_gst_rate) > floatval($prod->product_gst_rate)) {
+                    //             // $psd->seller_gst_rate = $object_product->product_gst_rate;
+                    //         }
+                    //     }
+                    // }
+                    array_push($psd->products, $object_product);
+
+                    $psd->total_price += $object_product->product_total_price;
+
+                    $new = false;
+                }
+            }
+            if ($new) :
+                $object->products = array();
+                $object_product = new stdClass();
+                $object_product->product_id = $cart_item->product_id;
+                $object_product->parent_category_id = $cart_item->parent_category_id;
+                $object_product->product_quantity = $cart_item->quantity;
+                $object_product->product_unit_price = $cart_item->unit_price;
+                $object_product->product_total_price = $cart_item->total_price;
+                // var_dump($cart_item->options_array);
+
+                array_push($object->products, $object_product);
+
+
+                // $object->seller_gst_rate = $object_product->product_gst_rate;
+
+                // if ($object_product->free_shipping)
+                //     $object->total_weight = $object_product->product_total_packaged_weight;
+                // else
+                //     $object->total_weight = $object_product->product_total_packaged_weight;
+                $object->total_price = $object_product->product_total_price;
+
+                array_push($product_seller_details, $object);
+            endif;
+            // var_dump($cart_item);
+        }
+        return $product_seller_details;
+    }
+
+
+    public function get_seller_order_value($seller_id)
+    {
+        $seller_id = clean_number($seller_id);
+        $this->db->where('id', $seller_id);
+        $query = $this->db->get('users');
+        return $query->row()->min_order_value;
+    }
 }

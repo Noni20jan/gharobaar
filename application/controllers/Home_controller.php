@@ -1838,7 +1838,7 @@ class Home_controller extends Home_Core_Controller
             'have_gst' => $this->input->post('gst_yes_no', true),
             'active_customer' => $this->input->post('active_customers', true),
             'selling_exempted_goods' => $this->input->post('selling_exempted_goods', true),
-            // 'min_order_value'=>$this->input->post('min_order_value', true),
+            'min_order_value'=>$this->input->post('min_order_value', true),
 
 
 
