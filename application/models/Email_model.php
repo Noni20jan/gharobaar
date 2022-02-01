@@ -679,9 +679,9 @@ class Email_model extends CI_Model
 
         try {
             $response = $sendgrid->send($email);
-            print $response->statusCode() . "\n";
-            print_r($response->headers());
-            print $response->body() . "\n";
+            $response->statusCode();
+            $response->headers();
+            $response->body();
         } catch (Exception $e) {
             echo 'Caught exception: ' . $e->getMessage() . "\n";
         }
@@ -737,15 +737,15 @@ class Email_model extends CI_Model
         // die();
         try {
             $response1 = $sendgrid1->client->access_settings()->whitelist()->post($request_body);
-            print $response1->statusCode() . "\n";
-            print_r($response1->headers());
-            print $response1->body() . "\n";
+            $response1->statusCode();
+            $response1->headers();
+            $response1->body();
             $response = $sendgrid->send($email);
             // var_dump($response);
             // die();
-            print $response->statusCode() . "\n";
-            print_r($response->headers());
-            print $response->body() . "\n";
+            $response->statusCode();
+            $response->headers();
+            $response->body();
         } catch (Exception $e) {
             echo 'Caught exception: ' . $e->getMessage() . "\n";
         }
