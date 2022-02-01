@@ -650,18 +650,6 @@ class Email_model extends CI_Model
     {
         require dirname(__FILE__) . "/../../sendgrid-php/sendgrid-php.php";
 
-        // $base_url = base_url() . "/sendgrid-php/sendgrid-php.php";
-        // // var_dump($base_url);
-        // // die();
-        // // require 'vendor/autoload.php'; // If you're using Composer (recommended)
-        // // Comment out the above line if not using Composer
-        // require($base_url);
-        // If not using Composer, uncomment the above line and
-        // download sendgrid-php.zip from the latest release here,
-        // replacing <PATH TO> with the path to the sendgrid-php.php file,
-        // which is included in the download:
-        // https://github.com/sendgrid/sendgrid-php/releases
-
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom($this->general_settings->mail_username, "Gharobaar");
         $email->setSubject($data['subject']);
@@ -670,9 +658,7 @@ class Email_model extends CI_Model
             $email->AddBCC($bcc);
         }
         $subject = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
-        // var_dump($subject);
-        // die();
-        // $email->addbcc($bcc);
+
         $email->addContent("text/html", $subject);
 
         $sendgrid = new \SendGrid("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");
@@ -688,21 +674,8 @@ class Email_model extends CI_Model
     }
     public function send_email($data)
     {
-        $this->notification($data);
+        //$this->notification($data);
         require dirname(__FILE__) . "/../../sendgrid-php/sendgrid-php.php";
-
-        // $base_url = base_url() . "/sendgrid-php/sendgrid-php.php";
-        // // var_dump($base_url);
-        // // die();
-        // // require 'vendor/autoload.php'; // If you're using Composer (recommended)
-        // // Comment out the above line if not using Composer
-        // require($base_url);
-        // If not using Composer, uncomment the above line and
-        // download sendgrid-php.zip from the latest release here,
-        // replacing <PATH TO> with the path to the sendgrid-php.php file,
-        // which is included in the download:
-        // https://github.com/sendgrid/sendgrid-php/releases
-
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom($this->general_settings->mail_username, "Gharobaar");
         $email->setSubject($data['subject']);
@@ -725,24 +698,16 @@ class Email_model extends CI_Model
         // var_dump($subject);
         $email->addContent("text/html", $subject);
 
-        // $email->addContent("text/plain", "and easy to do anywhere, even with PHP");
-        // $email->addContent(
-        //     "text/html",
-        //     "<strong>and easy to do anywhere, even with PHP</strong>"
-        // );
         $sendgrid1 = new \SendGrid("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", ["impersonateSubuser" => "Harshit"]);
 
         $sendgrid = new \SendGrid("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");
-        // var_dump($email);
-        // die();
+
         try {
             $response1 = $sendgrid1->client->access_settings()->whitelist()->post($request_body);
             $response1->statusCode();
             $response1->headers();
             $response1->body();
             $response = $sendgrid->send($email);
-            // var_dump($response);
-            // die();
             $response->statusCode();
             $response->headers();
             $response->body();

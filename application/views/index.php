@@ -1211,7 +1211,7 @@
         <?php endif; ?>
     </div>
 </div>
-<?php if ($this->general_settings->flat_ship_enable == 1) : ?>
+<?php if ($this->general_settings->free_ship_popup == 1) : ?>
     <div class="modal fade" id="freeshipModal" role="dialog">
         <div class="modal-dialog modal-dialog-centered login-modal locate-modal" role="document">
             <div class="modal-content">
@@ -1224,7 +1224,7 @@
     </div>
 <?php endif; ?>
 
-<?php if ($this->general_settings->flat_ship_enable == 1) : ?>
+<?php if ($this->general_settings->free_ship_popup == 1) : ?>
     <script>
         $(window).ready(function() {
             var shown = $.cookie('dialogShown');
