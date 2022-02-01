@@ -2159,8 +2159,68 @@ class Order_model extends CI_Model
         return $query->result();
     }
 
+    public function cancel_order_seller($order_id)
+    {
+        $order_product = $this->order_model->get_order_products($order_id);
+        $order_item_id = array();
+        foreach ($order_product as $order_p) {
+            $ordered_item_quantity = $order_p->product_quantity;
+            $order_item_product_id = $order_p->product_id;
+        }
+
+        $order_product_id = $this->input->post('order_product_id', true);
 
 
+
+        if (!empty($order_product)) {
+            if ($this->auth_user->id != $order_p->buyer_id) {
+                $data = array(
+                    // 'is_approved' => 1,
+                    'order_status' => "cancelled_by_seller",
+                    'updated_at' => date('Y-m-d H:i:s'),
+
+                );
+                $this->increase_product_stock_after_cancel($order_id, $order_item_product_id);
+                $this->db->where('order_id', $order_id);
+                $this->db->where_in('id', $order_item_id);
+
+                $this->db->update('order_products', $data);
+                return $this->db->last_query();
+            }
+            return false;
+        }
+    }
+    public function cancel_order_buyer($order_id)
+    {
+        $order_product = $this->order_model->get_order_products($order_id);
+        $order_item_id = array();
+        foreach ($order_product as $order_p) {
+            $ordered_item_quantity = $order_p->product_quantity;
+            $order_item_product_id = $order_p->product_id;
+            array_push($order_item_id, $order_p->id);
+        }
+
+
+
+
+        if (!empty($order_product)) {
+            if ($this->auth_user->id == $order_p->buyer_id) {
+                $data = array(
+                    // 'is_approved' => 1,
+                    'order_status' => "cancelled_by_user",
+                    'updated_at' => date('Y-m-d H:i:s'),
+
+                );
+                $this->increase_product_stock_after_cancel($order_id, $order_item_product_id);
+                $this->db->where('order_id', $order_id);
+                $this->db->where_in('id', $order_item_id);
+
+                $this->db->update('order_products', $data);
+                return $this->db->last_query();
+            }
+            return false;
+        }
+    }
     //decrease product stock after sale
     public function decrease_product_stock_after_sale($order_id)
     {
