@@ -1,5 +1,5 @@
 <div class="row table-filter-container">
-    <div class="col-sm-12">
+    <div class="col-sm-12" style="margin-left: 28px;">
         <?php echo form_open($form_action, ['method' => 'GET']); ?>
         <div class="row">
             <div class="item-table-filter" style="width: 80px; min-width: 80px;">
