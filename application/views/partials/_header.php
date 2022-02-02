@@ -18,9 +18,9 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main-1.7.min.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom.css" />
 <?php if (!empty($this->general_settings->site_color)) : ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/<?php echo $this->general_settings->site_color; ?>.min.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/<?php echo $this->general_settings->site_color; ?>.min.css?v=<?php echo $this->general_settings->random_key ?>" />
 <?php else : ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/default.min.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/default.min.css?v=<?php echo $this->general_settings->random_key ?>" />
 <?php endif; ?>
 <style>
     #message {
@@ -624,8 +624,8 @@
     }
 
     .notification-button {
-        background: green;
-        border-color: green;
+        background: #d21f3c;
+        border-color: #d21f3c;
         padding: 6px;
         border-radius: 20px;
         color: white;

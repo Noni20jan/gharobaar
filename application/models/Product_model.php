@@ -146,7 +146,7 @@ class Product_model extends Core_Model
                 $data = array(
                     'product_id' => $product_id,
                     'lang_id' => $language->id,
-                    'title' => !empty($title) ? $title : $main_title,
+                    'title' => !empty($title) ? str_replace('"', "'", $title) : $main_title,
                     'description' => $this->input->post('description_' . $language->id, false),
                     'seo_title' => $this->input->post('seo_title_' . $language->id, true),
                     'seo_description' => $this->input->post('seo_description_' . $language->id, true),
@@ -166,7 +166,7 @@ class Product_model extends Core_Model
             $data = array(
                 'product_id' => $product_id,
                 'lang_id' => $language->id,
-                'title' => !empty($title) ? $title : $main_title,
+                'title' => !empty($title) ? str_replace('"', "'", $title) : $main_title,
                 'description' => $this->input->post('description_' . $language->id, false),
                 'seo_title' => $this->input->post('seo_title_' . $language->id, true),
                 'seo_description' => $this->input->post('seo_description_' . $language->id, true),

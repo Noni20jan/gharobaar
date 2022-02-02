@@ -30,7 +30,7 @@
         width: 40px;
     }
 </style>
-<?php $menu_subcategory_display_limit = 5;
+<?php $menu_subcategory_display_limit = 8;
 if ($this->general_settings->selected_navigation == 1) : ?>
     <div class="container">
         <div class="navbar navbar-light navbar-expand">
