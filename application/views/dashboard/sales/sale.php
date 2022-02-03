@@ -322,7 +322,7 @@ endif;
                     <?php $ship_date = (date("dS M Y", $order_create)); ?>
                     <?php $shipping_date = new DateTime($ship_date); ?>
 
-                    <?php if ($item->order_status == 'processing') : ?>
+                    <?php if ($item_order->order_status == 'processing') : ?>
 
                         <?php if ($shipping_date > $current_date) : ?>
 
@@ -347,7 +347,7 @@ endif;
                     <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
                     <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                     <?php $shipp_date = new DateTime($shipped_date); ?>
-                    <?php if ($item->order_status == 'processing') : ?>
+                    <?php if ($item_order->order_status == 'processing') : ?>
                         <?php if ($shipp_date > $current_date) : ?>
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
 
