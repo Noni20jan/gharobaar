@@ -1182,7 +1182,7 @@
 
                     <textarea name="admin_review" rows="4" cols="50"></textarea>
                     <button class="btn btn-primary pull-right" type="submit">
-                        Your Review
+                        Add Review
                     </button>
                 </div>
                 <?php form_close(); ?>
