@@ -2128,7 +2128,6 @@ class Dashboard_controller extends Home_Core_Controller
         $data["order_products"] = $this->order_model->get_order_products($data["order"]->id);
 
         $data["reject_reason"] = $this->order_model->get_reject_reason();
-
         $data['main_settings'] = get_main_settings();
 
         $product = array();
@@ -2136,7 +2135,7 @@ class Dashboard_controller extends Home_Core_Controller
             array_push($product, $this->product_model->get_product_by_id($order_details->product_id));
         }
         $data["products"] = $product;
-
+        $data["products_order"] = $this->order_model->get_products_order($data["order"]->id, $this->auth_user->id);
         $data["order_count"] = $this->order_model->count_order_products($data["order"]->id, $this->auth_user->id);
         // $data['check'] = $this->order_model->get_stats($data["order"]->id, ($order_details->product_id));
 

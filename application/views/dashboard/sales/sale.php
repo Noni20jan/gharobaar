@@ -276,10 +276,10 @@ endif;
         <!-- check for schedule shipment buttom -->
         <?php
         $show = 0;
-        foreach ($order_products as $item) :
-            if ($item->seller_id == $this->auth_user->id) :
-                $shiprocket_order_details = get_shiprocket_order_details($order->id, $item->product_id);
-                $now_bike_data = get_nowBike_order_details($order->order_number, $item->id);
+        foreach ($products_order as $item_order) :
+            if ($item_order->seller_id == $this->auth_user->id) :
+                $shiprocket_order_details = get_shiprocket_order_details($order->id, $item_order->product_id);
+                $now_bike_data = get_nowBike_order_details($order->order_number, $item_order->id);
 
                 if (empty($shiprocket_order_details) && empty($now_bike_data)) :
                     $show = 1;
@@ -288,11 +288,10 @@ endif;
         endforeach;
 
         ?>
-
         <div class="row">
             <div class="pull-right">
-                <?php if ($item->product_delivery_partner == "SHIPROCKET") : ?>
-                    <?php if ($item->order_status == "processing") : ?>
+                <?php if ($item_order->product_delivery_partner == "SHIPROCKET") : ?>
+                    <?php if ($item_order->order_status == "processing" && $item_order->seller_id == $this->auth_user->id) : ?>
                         <button class="btn btn-md btn-block btn-info btn-table-delete" id="schedule_sipment" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
 
                     <?php endif; ?>

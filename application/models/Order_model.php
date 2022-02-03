@@ -2012,7 +2012,7 @@ class Order_model extends CI_Model
         $this->db->order_by('orders.created_at', 'DESC');
         $this->db->limit($per_page, $offset);
         $query = $this->db->get('order_products');
-        return var_dump($this->db->last_query());
+        return $query->result();
     }
 
     //get paginated cancelled_by_seller sales
@@ -4066,6 +4066,14 @@ class Order_model extends CI_Model
             }
             return $product;
         }
+    }
+    public function get_products_order($order_id, $seller_id)
+    {
+        $order_id = clean_number($order_id);
+        $this->db->where('order_id', $order_id);
+        $this->db->where('seller_id', $seller_id);
+        $query = $this->db->get('order_products');
+        return $query->result();
     }
 
     public function update_whole_order_status($order_id)
