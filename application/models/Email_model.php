@@ -660,6 +660,8 @@ class Email_model extends CI_Model
         $subject = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
 
         $email->addContent("text/html", $subject);
+        // var_dump($email);
+        // die();
 
         $sendgrid = new \SendGrid("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");
 
@@ -674,7 +676,7 @@ class Email_model extends CI_Model
     }
     public function send_email($data)
     {
-        //$this->notification($data);
+        $this->notification($data);
         require dirname(__FILE__) . "/../../sendgrid-php/sendgrid-php.php";
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom($this->general_settings->mail_username, "Gharobaar");
