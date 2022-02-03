@@ -29,15 +29,17 @@
                             </tr>
                         </thead>
                         <tbody id="payouts_data">
+                            <?php $i=1;?>
                             <?php foreach ($seller_initiated_pay as $sip) : ?>
                                 <tr>
-                                    <td><?php echo $sip->id; ?></td>
+                                    <td><?php echo $i; ?></td>
                                     <td><?php echo $sip->batch_transfer_id; ?></td>
                                     <td><?php echo $sip->order_list; ?></td>
                                     <td><?php echo $sip->payout_charge; ?></td>
                                     <td><?php echo $sip->tot_net_seller_payable; ?></td>
 
                                 </tr>
+                               <?php $i++;?>
                             <?php endforeach; ?>
                         </tbody>
                     </table>

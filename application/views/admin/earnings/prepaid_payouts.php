@@ -50,7 +50,7 @@
 
     </div><!-- /.box-body -->
     <div class="row">
-        <button type="submit" id="ini_pay_btn" class="btn bg-purple" style="float: right;" onclick="init_pay(data_cal,'prepaid');"><?php echo ("Initiate Payout"); ?></button>
+        <button type="submit" id="ini_pay_btn" class="btn bg-purple" style="float: right;" onclick="init_pay(data_cal,'prepaid');this.disabled=true;"><?php echo ("Initiate Payout"); ?></button>
     </div>
 </div>
 <!-- <script>
