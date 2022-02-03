@@ -554,6 +554,14 @@ class Product_controller extends Admin_Core_Controller
     /**
      * Approve Service
      */
+
+    public function admin_remark()
+    {
+        $id = $this->input->post('adminid');
+        $review = $this->input->post('admin_review');
+        $this->product_admin_model->get_admin_review($id, $review);
+        redirect(generate_url("admin/pending-products"));
+    }
     public function approve_service()
     {
         $id = $this->input->post('id', true);

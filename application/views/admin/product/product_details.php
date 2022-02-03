@@ -1170,9 +1170,27 @@
                 <?php endif; ?>
 
             </div>
+            <div class="admin">
+                <?php echo form_open('product_controller/admin_remark'); ?>
+                <input type="hidden" name="adminid" value="<?php echo $product->id; ?>">
+
+
+                <div class="col-md-3 col-sm-12">
+                    <label class="control-label"> Comments</label>
+                </div>
+                <div class="col-md-9 col-sm-12 right description">
+
+                    <textarea name="admin_review" rows="4" cols="50"></textarea>
+                    <button class="btn btn-primary pull-right" type="submit">
+                        Your Review
+                    </button>
+                </div>
+                <?php form_close(); ?>
+
+            </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <!-- form start -->
+
 
                 <?php echo form_open('product_controller/approve_product'); ?>
                 <input type="hidden" name="id" value="<?php echo $product->id; ?>">

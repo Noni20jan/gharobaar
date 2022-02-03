@@ -287,8 +287,8 @@ class Product_admin_model extends CI_Model
         $q = input_get('q');
         $brand_name = input_get('brand_name');
         $shop_name = input_get('shop_name');
-        $seller_email= input_get('seller_email');
-        $product_title=input_get('product_title');
+        $seller_email = input_get('seller_email');
+        $product_title = input_get('product_title');
 
         if (!empty($category_ids)) {
             $this->db->where_in("products.category_id", $category_ids);
@@ -802,6 +802,15 @@ class Product_admin_model extends CI_Model
             return $this->db->update('products', $data);
         }
         return false;
+    }
+    public function get_admin_review($id, $review)
+    {
+        $product = $this->get_product($id);
+        $data = array(
+            'admin_remark' => $review
+        );
+        $this->db->where('id', $product->id);
+        return $this->db->update('products', $data);
     }
 
 

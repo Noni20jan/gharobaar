@@ -50,6 +50,7 @@
                                 <th><?php echo trans('date'); ?></th>
                                 <th class="max-width-120"><?php echo trans('options'); ?></th>
                                 <th>Remarks</th>
+                                <th>Admin remarks</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -141,6 +142,8 @@
                                     <td><?php if ($remarks != "") {
                                             echo html_escape($remarks->remark);
                                         } ?></td>
+                                    <td><?php echo $item->admin_remark; ?></td>
+
 
                                 </tr>
 
