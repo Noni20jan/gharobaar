@@ -4152,7 +4152,7 @@ class Order_model extends CI_Model
         `b`.`ifsc_code`,
 
         `c`.`created_at`,
-        `c`.`created_at`,
+        `c`.`order_number`,
         (  
          CASE 
         WHEN `c`.`status` = 0  THEN 'Pending'
@@ -4215,7 +4215,7 @@ class Order_model extends CI_Model
         `b`.`ifsc_code`,
 
         `c`.`created_at`,
-        `c`.`created_at`,
+        `c`.`order_number`,
         (  
          CASE 
         WHEN `c`.`status` = 0  THEN 'Pending'
@@ -4314,6 +4314,7 @@ class Order_model extends CI_Model
         `b`.`ifsc_code`,
 
         `c`.`created_at`,
+        `c`.`order_number`,
         (CASE
         WHEN `c`.`status` = 0 THEN 'Pending'
         WHEN `c`.`status` = 1 THEN 'Completed'
@@ -4368,6 +4369,7 @@ class Order_model extends CI_Model
         `b`.`ifsc_code`,
 
         `c`.`created_at`,
+        `c`.`order_number`,
         (CASE
         WHEN `c`.`status` = 0 THEN 'Pending'
         WHEN `c`.`status` = 1 THEN 'Completed'
