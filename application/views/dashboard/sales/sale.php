@@ -292,7 +292,7 @@ endif;
         <div class="row">
             <div class="pull-right">
                 <?php if ($item->product_delivery_partner == "SHIPROCKET") : ?>
-                    <?php if ($show && $item->order_status == "processing") : ?>
+                    <?php if ($item->order_status == "processing") : ?>
                         <button class="btn btn-md btn-block btn-info btn-table-delete" id="schedule_sipment" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
 
                     <?php endif; ?>

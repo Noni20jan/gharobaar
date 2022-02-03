@@ -395,6 +395,91 @@ class Order_controller extends Home_Core_Controller
         }
     }
 
+    public function cancel_order_post()
+    {
+
+
+        $order_id = $this->input->post('order_id', true);
+        $order_product_id = $this->input->post('id', true);
+
+
+        $order_product = $this->order_model->get_order_products($order_id);
+
+        $order_detail = $this->order_model->get_order_detail_by_id($order_id);
+        $reject_reason = $this->input->post('reject_reason', true);
+        $reject_reason_comment1 = $this->input->post('reject_reason_comment1', true);
+        $order_product_id = $this->input->post('order_product_id', true);
+        $supplier = get_user($order_product->seller_id);
+        $buyer = get_user($order_product->buyer_id);
+
+        if ($this->order_model->cancel_order_seller($order_id, $order_product_id)) {
+            $payment_method = $order_detail[0]->payment_method;
+            if ($payment_method == 'Cashfree') {
+                //refund api call for cashfree
+                $this->refund_api_data($order_product_id);
+                if ($this->general_settings->enable_easysplit == 0) {
+                    $this->order_model->recal_prepaid_seller_payable($order_id);
+                }
+            } else {
+                $this->order_model->recal_cod_seller_payable($order_id);
+            }
+
+            $this->load->model("email_model");
+            $this->session->set_flashdata('submit', "send_email");
+
+            if (!empty($supplier->email) && !empty($buyer->email)) {
+                if ($this->email_model->cancel_order_product_mail($supplier->email, $supplier, $order_product) && $this->email_model->cancel_order_product_mail_buyer($buyer->email, $buyer, $order_product)) {
+                    redirect($this->agent->referrer());
+                }
+                $this->session->set_flashdata('success', trans("msg_email_sent"));
+            } else {
+                $this->session->set_flashdata('error', trans("msg_error"));
+            }
+            //refund initiation for cancel item (online payments)
+
+        } else {
+            redirect($this->agent->referrer());
+        }
+    }
+    public function cancel_order_buyer_post()
+    {
+
+        $order_product_id = $this->input->post('id', true);
+        $order_id = $this->input->post('order_id', true);
+
+
+        $order_products = $this->order_model->get_order_products($order_id);
+        foreach ($order_products as $order_p) {
+        }
+
+
+        $reject_reason = $this->input->post('reject_reason', true);
+
+        $reject_reason_comment1 = $this->input->post('reject_reason_comment1', true);
+        $order_product = $this->order_model->get_order_products($order_id);
+        $order_detail = $this->order_model->get_order_detail_by_id($order_id);
+
+        // $supplier = get_user($order_product->seller_id);
+        // $buyer = get_user($order_product->buyer_id);
+        if ($this->order_model->cancel_order_buyer($order_id, $order_product_id, $reject_reason, $reject_reason_comment1)) {
+            $payment_method = $order_detail[0]->payment_method;
+            if ($payment_method == 'Cashfree') {
+                //refund api call for cashfree
+                $this->refund_api_data($order_product_id);
+                if ($this->general_settings->enable_easysplit == 0) {
+                    $this->order_model->recal_prepaid_seller_payable($order_id);
+                }
+            } else {
+                $this->order_model->recal_cod_seller_payable($order_id);
+            }
+            $this->load->model("email_model");
+            $this->session->set_flashdata('submit', "send_email");
+        }
+        redirect($this->agent->referrer());
+    }
+
+    // refund initiation for cancel item (online payments)
+
 
 
     public function order_window_update()
@@ -403,7 +488,7 @@ class Order_controller extends Home_Core_Controller
         // die();
         //fetching all order products with waiting status
         $order_products = $this->order_model->order_window_update();
-        //bussines time start and end
+        //bussines time start and end\
         $start_time = strtotime($this->general_settings->bussiness_start_at);
         $end_time = strtotime($this->general_settings->bussiness_end_at);
         //time window in second
