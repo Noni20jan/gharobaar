@@ -135,8 +135,8 @@ class Item extends REST_Controller
                 case "RETURN DELIVERED":
                     $data["order_status"] = "Return Delivered";
                     break;
-                    // default:
-                    //     $data["order_status"] = $new_input['order_status'];
+                default:
+                    $data["order_status"] = $new_input['order_status'];
             }
             if ($data['order_status'] == 'completed') {
                 $title = $this->product_model->get_title($product_array);
@@ -173,7 +173,7 @@ class Item extends REST_Controller
                 $this->email_model->notification($data1);
                 $this->email_model->notification($data2);
             }
-            if ($data["order_status"] = "RTO Initiated") {
+            if ($data["order_status"] == "RTO Initiated") {
                 $seller_id = $this->order_model->get_seller_id_by_awb($new_input['awb_code']);
                 $title = $this->product_model->get_title($product_array);
                 $order_no = $this->order_model->get_order_detail_by_id($order_id);
@@ -250,4 +250,21 @@ class Item extends REST_Controller
 
         $this->response(['Item deleted successfully.'], REST_Controller::HTTP_OK);
     }
+
+
+    // API for cashfree update
+
+    // public function cashfree_api()
+    // {
+    //     $input = $this->input->post();
+
+    //     // $new_input = array();
+
+    //     $body_raw = file_get_contents('php://input');
+    //     $body_raw = json_decode($body_raw);
+
+    //     $this->db->where("id", $input['id']);
+    //     $this->db->update('users', $input['first_name']);
+    //     $this->response(['Item updated successfully.'], REST_Controller::HTTP_OK);
+    // }
 }
