@@ -385,6 +385,7 @@
                 </div>
             </div>
             <?php $is_order_has_physical_product = false; ?>
+
             <div class="order-head" style="margin-left:12px;">
                 <h3 class="block-title"><?php echo trans("products"); ?></h3>
             </div>
@@ -392,6 +393,9 @@
                 <div class="order-details-new-ui">
                     <div class="table-responsive">
                         <table class="table table-orders">
+                            <?php if (get_product($item->product_id)->add_meet == "Made to stock" && $item->order_status == "processing" || $item->order_status == "waiting") : ?>
+                                <button class="btn btn-md btn-block btn-info btn-table-delete" id="opened" style="float:right;display:none;" onclick="open_modal()">Cancel Order</button>
+                            <?php endif; ?>
                             <thead>
                                 <tr>
                                     <th scope="col"><?php echo trans("product"); ?></th>
@@ -406,6 +410,9 @@
                                         $is_order_has_physical_product = true;
                                     } ?>
                                     <tr>
+                                        <td><input type="checkbox" <?php if ($item->order_status != "processing") {
+                                                                        echo "disabled";
+                                                                    } ?> name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>"></td>
                                         <td style="width: 40%">
 
                                             <div class="table-item-product">
@@ -469,11 +476,11 @@
                                         <td style="width: 25%;">
                                             <?php if ($item->order_status == "payment_received" || $item->order_status == "awaiting_payment" || $item->order_status == "processing" || $item->order_status == "waiting") : ?>
                                                 <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
-                                                    <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
+                                                    <!-- <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button> -->
                                                 <?php elseif (get_product($item->product_id)->add_meet == "Made to order") : ?>
-                                                    <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>" style="visibility:hidden;"><?php echo trans("cancel_item"); ?></button>
+                                                    <!-- <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>" style="visibility:hidden;"><?php echo trans("cancel_item"); ?></button> -->
                                                 <?php else : ?>
-                                                    <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_made_to_order"><?php echo trans("cancel_item"); ?></button>
+                                                    <!-- <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_made_to_order"><?php echo trans("cancel_item"); ?></button> -->
                                                 <?php endif; ?>
 
                                                 <!-- <a data-toggle="modal" data-id="<?php echo $item->id; ?>" class="open-RejectReasonDialog btn btn-md btn-block btn-danger" data-target="#rejection_reason_model"><?php echo trans("cancel_item"); ?></a> -->
@@ -955,11 +962,11 @@
                                             <div class="row cancel" style="text-align:center;">
                                                 <?php if ($item->order_status == "payment_received" || $item->order_status == "awaiting_payment" || $item->order_status == "processing" || $item->order_status == "waiting") : ?>
                                                     <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
-                                                        <button class="btn btn-sm btn-custom " id="cancel" style="width: 100px;" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
+                                                        <!-- <button class="btn btn-sm btn-custom " id="cancel" style="width: 100px;" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button> -->
                                                     <?php elseif (get_product($item->product_id)->add_meet == "Made to order") : ?>
-                                                        <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>" style="visibility:hidden;"><?php echo trans("cancel_item"); ?></button>
+                                                        <!-- <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>" style="visibility:hidden;"><?php echo trans("cancel_item"); ?></button> -->
                                                     <?php else : ?>
-                                                        <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_made_to_order"><?php echo trans("cancel_item"); ?></button>
+                                                        <!-- <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_made_to_order"><?php echo trans("cancel_item"); ?></button> -->
                                                     <?php endif; ?>
 
                                                     <!-- <a data-toggle="modal" data-id="<?php echo $item->id; ?>" class="open-RejectReasonDialog btn btn-md btn-block btn-danger" data-target="#rejection_reason_model"><?php echo trans("cancel_item"); ?></a> -->
@@ -1067,8 +1074,54 @@
 </div>
 </div>
 <!-- Wrapper End-->
+<input type="hidden" name="order_id" value="<?php echo $order->id; ?>">
 
 <?php foreach ($order_products as $item) : ?>
+    <div class="modal fade" id="rejectModal<?php echo $order->id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-custom">
+                <!-- form start -->
+                <?php echo form_open('cancel-order-buyer'); ?>
+                <div class="modal-header">
+                    <h5 class="modal-title"><?php echo "Cancellation Reason"; ?></h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true"><i class="icon-close"></i> </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row tracking-number-container">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label"><?php echo "Choose Cancellation Reason"/*trans('choose_reject_reason')*/; ?></label>
+                                <select name="reject_reason" id="reject_reason_select_<?php echo $item->id; ?>" onchange='check_comments1(this.value);' class="form-control custom-select" data-order-product-id="<?php echo $item->id; ?>" required>
+                                    <option value="" disabled>Please select a Cancellation reason</option>
+                                    <?php if (!empty($reject_reason)) :
+                                        foreach ($reject_reason as $reason) : ?>
+                                            <option value="<?php echo html_escape($reason->id); ?>" myTag="<?php $reason->reason ?>"><?php echo $reason->reason ?></option>
+                                    <?php endforeach;
+                                    endif; ?>
+                                </select>
+                                <div id="other_comment1" style="display: none;">
+                                    <div id="reject_reason_specify_<?php echo $item->id; ?>">
+                                        <label class="control-label">Please Specify Reason</label>
+                                        <textarea class="form-control" id="other_comment1_text" name="reject_reason_comment1" row='3'></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- <p>Are you sure you want to cancel order?</p> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><?php echo trans("close"); ?></button>
+                    <button type="submit" value="update" id="cancel_product_loader" name="submit" class="btn btn-md btn-primary" onclick="cancel_order_buyer()"><?php echo trans("submit"); ?></button>
+                </div>
+                <?php echo form_close(); ?>
+            </div>
+        </div>
+        <div id="cover-spin4"></div>
+    </div>
 
     <div class="modal fade" id="rejection_reason_model_<?php echo $item->id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -1255,6 +1308,8 @@
 </script>
 <script>
     $(document).ready(function() {
+
+
         var item_status = <?php echo json_encode($order_products); ?>;
 
         for (i = 0; i < item_status.length; i++) {
@@ -1292,4 +1347,60 @@
     });
     var timeout = 8000;
     $('.feedback').delay(timeout).fadeOut(300);
+</script>
+<script>
+    $('input[name="checkbox-table"]').click(function() {
+        if ($("input[name='checkbox-table']:checked").length > 0) {
+            document.getElementById("opened").style.display = "inline-block";
+
+        } else {
+            document.getElementById("opened").style.display = "none";
+
+        }
+    });
+</script>
+
+
+<script>
+    function open_modal() {
+        setTimeout(
+            function() {
+                $("#rejectModal<?php echo $order->id; ?>").modal('show');
+            }, 200);
+    }
+</script>
+<script>
+    function cancel_order_buyer() {
+        var product_ids = [];
+        $("input[name='checkbox-table']:checked").each(function() {
+            product_ids.push(this.value);
+        });
+        console.log(product_ids);
+
+        // $("#schedule_multiple_products").modal("show");
+        // $('#items_array').val(product_ids);
+        var data = {
+            "id": product_ids,
+            "order_id": "<?php echo $order->id; ?>",
+            "reject_reason": "<?php echo $reason->id; ?>",
+            "reject_reason_comment": "<?php echo $item->reject_reason_comment; ?>",
+            "sys_lang_id": sys_lang_id
+        };
+        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+        // $('#cover-spin').show();
+        $.ajax({
+            url: base_url + "cancel-order-buyer",
+            type: "post",
+            data: data,
+            success: function(response) {
+                // $('#cover-spin').hide();
+                location.reload();
+                //alert(response);
+
+
+            }
+        });
+
+
+    }
 </script>
