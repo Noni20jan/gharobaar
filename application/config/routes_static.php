@@ -81,11 +81,13 @@ $route['download-free-digital-file-post']['POST'] = 'file_controller/download_fr
 $route['add-product-post']['POST'] = 'dashboard_controller/add_product_post';
 //offers
 $route['create-offers']['POST'] = 'admin_controller/create_offers';
-
+$route['penalty-post']['POST'] = 'dashboard_controller/penalty_post';
 
 $route['add-service-post']['POST'] = 'dashboard_controller/add_service_post';
 $route['edit-product-post']['POST'] = 'dashboard_controller/edit_product_post';
 $route['edit-product-details-post']['POST'] = 'dashboard_controller/edit_product_details_post';
+$route['cancel-order-post']['POST'] = 'order_controller/cancel_order_post';
+$route['cancel-order-buyer']['POST'] = 'order_controller/cancel_order_buyer_post';
 
 $route['edit-service-post']['POST'] = 'dashboard_controller/edit_service_post';
 $route['edit-service-details-post']['POST'] = 'dashboard_controller/edit_service_details_post';
