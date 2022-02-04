@@ -80,8 +80,12 @@ class Item extends REST_Controller
                 case "Pickup Exception":
                     $data["order_status"] = "shipped";
                     break;
+
                 case "ORDER SHIPPED":
                     $data["order_status"] = "shipped";
+                    break;
+                case "OUT FOR PICKUP":
+                    $data["order_status"] = "awaiting_pickup";
                     break;
                 case "PICKED UP":
                     $data["order_status"] = "shipped";
