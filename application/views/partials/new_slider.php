@@ -353,9 +353,9 @@
                 <div>
                     <a href="<?php echo html_escape($item->link); ?>">
                         <?php if ($this->general_settings->banner_storage == 'aws_s3') : ?>
-                            <img data-u="image" style="opacity:0.8;" data-src="<?php echo other_base_url() . $item->image; ?>" />
+                            <img data-u="image" data-src="<?php echo other_base_url() . $item->image; ?>" />
                         <?php else : ?>
-                            <img data-u="image" style="opacity:0.8;" data-src="<?php echo base_url() . $item->image; ?>" />
+                            <img data-u="image" data-src="<?php echo base_url() . $item->image; ?>" />
                         <?php endif; ?>
                     </a>
                 </div>
