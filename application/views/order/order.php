@@ -393,7 +393,7 @@
                 <div class="order-details-new-ui">
                     <div class="table-responsive">
                         <table class="table table-orders">
-                            <?php if (get_product($item->product_id)->add_meet == "Made to stock" && $item->order_status == "processing" || $item->order_status == "waiting") : ?>
+                            <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
                                 <button class="btn btn-md btn-block btn-info btn-table-delete" id="opened" style="float:right;display:none;" onclick="open_modal()">Cancel Order</button>
                             <?php endif; ?>
                             <thead>
