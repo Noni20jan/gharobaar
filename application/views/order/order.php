@@ -1140,7 +1140,7 @@
                             <input type="hidden" value='<?php echo $item->id; ?>' name="order_product_id" id="order_product_id">
                             <div class="form-group">
                                 <label class="control-label"><?php echo "Choose Cancellation Reason"/*trans('choose_reject_reason')*/; ?></label>
-                                <select name="reject_reason" id="reject_reason_select_<?php echo $item->id; ?>" onchange='check_comments1(this.value);' class="form-control custom-select" data-order-product-id="<?php echo $item->id; ?>" required>
+                                <select name="reject_reason" id="reject_reason_select" onchange='check_comments1(this.value);' class="form-control custom-select" data-order-product-id="<?php echo $item->id; ?>" required>
                                     <option value="" disabled>Please select a Cancellation reason</option>
                                     <?php if (!empty($reject_reason)) :
                                         foreach ($reject_reason as $reason) : ?>
@@ -1376,13 +1376,14 @@
             product_ids.push(this.value);
         });
         console.log(product_ids);
+        var values = $('#reject_reason_select :selected').val();
 
         // $("#schedule_multiple_products").modal("show");
         // $('#items_array').val(product_ids);
         var data = {
             "id": product_ids,
             "order_id": "<?php echo $order->id; ?>",
-            "reject_reason": "<?php echo $reason->id; ?>",
+            "reject_reason": values,
             "reject_reason_comment": "<?php echo $item->reject_reason_comment; ?>",
             "sys_lang_id": sys_lang_id
         };
