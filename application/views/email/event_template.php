@@ -286,7 +286,7 @@
         }
 
         @media all {
-            .social-content {
+            div.social-content {
                 text-align: center;
                 color: black;
                 display: flex;
@@ -333,30 +333,31 @@
             width: 80%;
         }
 
-        .social-icons {
+        div.social-icons {
             padding: 45px 0px 0px 21px;
         }
 
-        .visit-us-at {
+        div.visit-us-at {
             writing-mode: tb-rl;
         }
 
-        .social-link {
+        div .social-link {
             width: 32px;
         }
 
-        .social-content {
-            text-align: center;
+        div.social-content {
+            /* text-align: center;
             color: black;
             display: flex;
-            padding-left: 20%;
+            padding-left: 20%; */
+
         }
 
         .founders-note {
             width: 90%;
         }
 
-        @media(max-width:768px) {}
+        /* @media(max-width:768px) {} */
     </style>
 </head>
 
@@ -603,7 +604,7 @@
                                                     <a href="https://gharobaar.com/">
                                                         <img class="shop-now" src="https://gharobaar.com/assets/img/email_img/Shop%20Now%20(002).png"></a>
                                                 </div>
-                                                <div style="text-align: center;">
+                                                <!-- <div style="text-align: center;">
                                                     <div class="social-content">
                                                         <div>
                                                             <img src="https://gharobaar.com/assets/img/email_img/Asset%201%201.png">
@@ -625,7 +626,32 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
+                                                <!-- <div style="justify-content: center; align-items:center;"> -->
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style=" text-align: right;"><img src="https://gharobaar.com/assets/img/email_img/Asset%201%201.png">
+                                                                    </td>
+                                                                    <td class="visit-us-at" style="vertical-align: middle;"> <img src="https://gharobaar.com/assets/img/valentine_img/VISIT%20US%20AT.png">
+                                                                    </td>
+                                                                    <td style="vertical-align: middle !important; text-align:left;">
+                                                                        <a href="https://www.facebook.com/gharobaar.official" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener">
+                                                                            <img src="https://gharobaar.com/assets/img/social-icons/facebook.png" width="32" />
+                                                                        </a>
+                                                                        <a href="https://www.instagram.com/gharobaar_official/" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/instagram.png" width="32" />
+                                                                        </a> <a href="https://www.youtube.com/channel/UC2jOkQl0OR1cIJgo2WJZWqw" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/youtube.png" width="32" />
+                                                                        </a>
+                                                                        <a href="https://in.pinterest.com/gharobaar_official/_created/" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/pinterest.png" width="32" />
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
