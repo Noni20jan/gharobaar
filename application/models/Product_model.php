@@ -1153,7 +1153,7 @@ class Product_model extends Core_Model
 
 
                     $this->db->group_start();
-                    //  $this->db->like('product_details.title', $word);
+                    $this->db->like('product_details.title', $word);
                     // $this->db->or_like('product_details.description', $word);
                     // $this->db->or_like('product_details.seo_title', $word);
                     // $this->db->or_like('product_details.seo_keywords', $word);
