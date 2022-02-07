@@ -490,7 +490,7 @@
 
                                                         <?php endif; ?>
                                                     <?php endif; ?>
-                                                    <?php if (get_product($item->product_id)->add_meet == "Made to order" && $item->category_id != 2 || $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                    <?php if (get_product($item->product_id)->add_meet == "Made to order"  && get_product($item->product_id)->category_id != 2 || $item->order_status == "processing" || $item->order_status == "shipped") : ?>
                                                         <?php $lead_days = intval(get_product($item->product_id)->lead_days); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
                                                         <?php $delivery_days = $lead_days + 3; ?>
