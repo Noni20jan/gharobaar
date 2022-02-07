@@ -363,6 +363,26 @@ endif;
                             </p>
                         <?php endif; ?>
                     <?php endif; ?>
+                <?php elseif ((get_product($item_order->product_id)->add_meet) == "Made to order") : ?>
+                    <?php $shipped_time = (get_product($item_order->product_id)->lead_days); ?>
+                    <?php $created_at = strtotime($order->created_at); ?>
+
+                    <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
+                    <?php $shipped_date = (date("dS M Y", $order_create)); ?>
+                    <?php $shipp_date = new DateTime($shipped_date); ?>
+                    <?php if ($shipp_date > $current_date) : ?>
+                        <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
+                    <?php else : ?>
+                        <?php foreach ($order_count as $cnt) : ?>
+                        <?php endforeach; ?>
+                        <?php $penalty = 10 * intval($cnt->count); ?>
+                        <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo  $penalty; ?> for this order shall be charged as per the terms of the agreement.
+
+                            **<br />
+
+                            ** Kindly take note that the seller has to only schedule shipment on or before the due date. If the pickup was not done on time by the Shipping Partners, then no penalty will be levied on the seller.
+                        </p>
+                    <?php endif; ?>
                 <?php endif; ?>
 
             <?php else : ?>
