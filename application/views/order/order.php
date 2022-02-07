@@ -384,7 +384,6 @@
                     </div>
                 </div>
             </div>
-            <?php $is_order_has_physical_product = false; ?>
 
             <div class="order-head" style="margin-left:12px;">
                 <h3 class="block-title"><?php echo trans("products"); ?></h3>
@@ -444,6 +443,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="right">
+
                                                     <a href="<?php echo generate_product_url_by_slug($item->product_slug); ?>" target="_blank" class="table-product-title">
                                                         <?php echo html_escape($item->product_title); ?>
                                                     </a>
@@ -459,6 +459,46 @@
                                                     <!-- <p><span class="span-product-dtl-table"><?php echo trans("price"); ?>:</span><?php echo price_formatted($item->product_unit_price, $item->product_currency); ?></p> -->
                                                     <p><span class="span-product-dtl-table"><?php echo trans("quantity"); ?>:</span><?php echo $item->product_quantity; ?></p>
                                                     <p><span class="span-product-dtl-table"><?php echo trans("total"); ?>:</span><?php echo price_formatted($item->product_total_price, $item->product_currency); ?></p>
+                                                    <?php $is_order_has_physical_product = false; ?>
+                                                    <?php $product = get_product($item->product_id); ?>
+                                                    <?php $current_date = new DateTime(); ?>
+                                                    <?php $order_date = strtotime($order->created_at); ?>
+                                                    <?php $ordered_date = date("dS M Y", $order_date); ?>
+                                                    <?php $shipping_time = $product->shipping_time; ?>
+                                                    <?php if ($product->add_meet == "Made to stock") : ?>
+                                                        <?php if (substr_count($shipping_time, "_") > 2) : ?>
+                                                            <?php $ship_time = intval($product->shipping_time[2]); ?>
+                                                            <?php $created_at = strtotime($order->created_at); ?>
+                                                            <?php $x = $ship_time + 3; ?>
+
+                                                            <?php $order_create = strtotime("$x day", strtotime($order->created_at)); ?>
+
+                                                            <?php $ship_date = (date("dS M Y", $order_create)); ?>
+                                                            <?php $shipping_date = new DateTime($ship_date); ?>
+
+                                                            <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $ship_date; ?></p>
+                                                        <?php endif; ?>
+                                                        <?php if (substr_count($shipping_time, "_") == 2) : ?>
+                                                            <?php $shipped_time = intval($product->shipping_time); ?>
+                                                            <?php $created_at = strtotime($order->created_at); ?>
+                                                            <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
+                                                            <?php $shipped_date = (date("dS M Y", $order_create)); ?>
+                                                            <?php $shipp_date = new DateTime($shipped_date); ?>
+                                                            <?php if ($item->order_status == "processing"  || $item->order_status == "shipped") : ?>
+                                                                <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
+                                                            <?php endif; ?>
+
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                    <?php if (get_product($item->product_id)->add_meet == "Made to order" && $item->category_id != 2 || $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                        <?php $lead_days = intval(get_product($item->product_id)->lead_days); ?>
+                                                        <?php $created_at = strtotime($order->created_at); ?>
+                                                        <?php $delivery_days = $lead_days + 3; ?>
+                                                        <?php $order_create = strtotime("$delivery_days day", $created_at); ?>
+                                                        <?php $shipped_date = (date("dS M Y", $order_create)); ?>
+                                                        <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
+                                                    <?php endif; ?>
+
 
                                                     <!-- <?php if ($item->product_type == 'physical') : ?>
                                                                     <p><span class="span-product-dtl-table"><?php echo trans("shipping"); ?>:</span><?php echo price_formatted($item->product_shipping_cost, $item->product_currency); ?></p>
