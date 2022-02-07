@@ -57,7 +57,28 @@ class Cart_controller extends Home_Core_Controller
         $this->load->view('cart/cart', $data);
         $this->load->view('partials/_footer');
     }
-
+    /**
+     * Add to Cart barter
+     */
+    // public function add_barter_to_cart()
+    // {
+    //     $product_id = $this->input->post('barter_product_id', true);
+    //     $barter_request_id = $this->input->post('id', true);
+    //     $product = $this->product_model->get_active_product($product_id);
+    //     // if (!empty($this->cart_model->add_barter_to_cart($barter_request_id))) {
+    //     //     redirect(generate_url("cart"));
+    //     // }
+    //     // redirect($this->agent->referrer());
+    //     if (!empty($product)) {
+    //         if ($product->status != 1) {
+    //             $this->session->set_flashdata('product_details_error', trans("msg_error_cart_unapproved_products"));
+    //         } else {
+    //             $this->cart_model->add_barter_to_cart($product, $barter_request_id);
+    //             //redirect(generate_url("cart"));
+    //         }
+    //     }
+    //     redirect($this->agent->referrer());
+    // }
     /**
      * Add to Cart
      */
@@ -141,7 +162,7 @@ class Cart_controller extends Home_Core_Controller
             $data['price'] = $product->listing_price;
             $data['title'] = $product->slug;
             $data['seller_id'] = $product->user_id;
-            $data['created_by'] = $this->input->ip_address();;
+            $data['created_by'] = $this->input->ip_address();
             if (!empty($product)) {
                 if ($product->status != 1) {
                     $this->session->set_flashdata('product_details_error', trans("msg_error_cart_unapproved_products"));
@@ -2044,7 +2065,8 @@ class Cart_controller extends Home_Core_Controller
             }
             $i = 0;
             foreach ($product_id as $product_id1) {
-                $product = $this->product_model->get_product_by_id($product_id);
+                $product = $this->product_model->get_product_by_id($product_id1);
+                $title = $this->product_model->get_title($product_id1);
                 $review = $this->review_model->get_review($product_id1, $this->auth_user->id);
                 if (!empty($review)) {
                     $this->review_model->update_review1($review->id, $rating2[$i], $product_id1, $review_text2[$i]);
@@ -2056,6 +2078,20 @@ class Cart_controller extends Home_Core_Controller
                         $img_path = $this->upload_model->upload_review_image('file_' . $product_id1, $last_id, $product_id1);
                     }
                 }
+                $buyer_name = $this->auth_user->first_name;
+                $data = array(
+                    'source' => 'review',
+                    // 'source_id' => $product_id,
+                    'remark' => $buyer_name . " has rated your product " . $title->title . " .",
+                    'event_type' => 'New Review',
+                    'subject' => "New Review on you product",
+                    // 'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
+                    'to' => $product->user_id,
+                    'template_path' => "email/email_newsletter",
+                    'subscriber' => "",
+                );
+                $this->load->model("email_model");
+                $this->email_model->notification($data);
                 $i++;
             }
         }
