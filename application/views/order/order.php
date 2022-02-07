@@ -475,19 +475,18 @@
 
                                                             <?php $ship_date = (date("dS M Y", $order_create)); ?>
                                                             <?php $shipping_date = new DateTime($ship_date); ?>
-
-                                                            <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $ship_date; ?></p>
-                                                        <?php endif; ?>
-                                                        <?php if (substr_count($shipping_time, "_") == 2) : ?>
-                                                            <?php $shipped_time = intval($product->shipping_time); ?>
-                                                            <?php $created_at = strtotime($order->created_at); ?>
-                                                            <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
-                                                            <?php $shipped_date = (date("dS M Y", $order_create)); ?>
-                                                            <?php $shipp_date = new DateTime($shipped_date); ?>
-                                                            <?php if ($item->order_status == "processing"  || $item->order_status == "shipped") : ?>
-                                                                <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
+                                                            <?php if ($item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                                <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $ship_date; ?></p>
                                                             <?php endif; ?>
-
+                                                        <?php endif; ?>
+                                                    <?php elseif (substr_count($shipping_time, "_") == 2) : ?>
+                                                        <?php $shipped_time = intval($product->shipping_time); ?>
+                                                        <?php $created_at = strtotime($order->created_at); ?>
+                                                        <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
+                                                        <?php $shipped_date = (date("dS M Y", $order_create)); ?>
+                                                        <?php $shipp_date = new DateTime($shipped_date); ?>
+                                                        <?php if ($item->order_status == "processing"  || $item->order_status == "shipped") : ?>
+                                                            <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
                                                         <?php endif; ?>
                                                     <?php endif; ?>
                                                     <?php if (get_product($item->product_id)->add_meet == "Made to order"  && get_product($item->product_id)->category_id != 2 || $item->order_status == "processing" || $item->order_status == "shipped") : ?>
