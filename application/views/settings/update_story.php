@@ -550,6 +550,14 @@
             </div>
             <!-- <input type="text" name="brand_desc" class="form-control form-input"  placeholder="Describe your brand" onKeyPress="if(this.value.length==10) return false;" required> -->
           </div>
+          <div class="form-group">
+            <div class="row Brand-1">
+              <div class="col-md-3"><label id="formlabel2">Minimum Order Value(₹)</label></div>
+              <div class="col-md-9 Brand-name">
+                <input type='text' name="min_o_value" class="form-control auth-form-input" onkeypress='return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57' value="<?php echo html_escape($this->auth_user->min_order_value); ?>">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
