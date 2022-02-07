@@ -4163,11 +4163,10 @@ class Order_model extends CI_Model
         `c`.`order_number`,
         (  
          CASE 
-        WHEN `c`.`status` = 0  THEN 'Pending'
-        WHEN `c`.`status` = 1  THEN 'Completed'
-        WHEN `c`.`status` = 2  THEN 'Rejected'
-        
+        WHEN `e`.`status` IS NULL OR `e`.`status`  THEN 'NA'
+        WHEN `e`.`status` IS NOT NULL THEN `e`.`status`
         END)as 'order_status'
+        -- `e`.`status` as 'order_status'
      
     FROM
         `cod_seller_payable` `a`
@@ -4226,11 +4225,10 @@ class Order_model extends CI_Model
         `c`.`order_number`,
         (  
          CASE 
-        WHEN `c`.`status` = 0  THEN 'Pending'
-        WHEN `c`.`status` = 1  THEN 'Completed'
-        WHEN `c`.`status` = 2  THEN 'Rejected'
-        
+        WHEN `e`.`status` IS NULL OR `e`.`status`  THEN 'NA'
+        WHEN `e`.`status` IS NOT NULL THEN `e`.`status`
         END)as 'order_status'
+        -- `e`.`status` as 'order_status'
      
     FROM
         `cod_seller_payable` `a`
@@ -4323,11 +4321,12 @@ class Order_model extends CI_Model
 
         `c`.`created_at`,
         `c`.`order_number`,
-        (CASE
-        WHEN `c`.`status` = 0 THEN 'Pending'
-        WHEN `c`.`status` = 1 THEN 'Completed'
-        WHEN `c`.`status` = 2 THEN 'Rejected'
-    END) AS 'order_status'
+        (  
+         CASE 
+        WHEN `e`.`status` IS NULL OR `e`.`status`  THEN 'NA'
+        WHEN `e`.`status` IS NOT NULL THEN `e`.`status`
+        END)as 'order_status'
+        -- `e`.`status` as 'order_status'
     FROM
         `cashfree_seller_payout` `a`
             JOIN
@@ -4378,11 +4377,12 @@ class Order_model extends CI_Model
 
         `c`.`created_at`,
         `c`.`order_number`,
-        (CASE
-        WHEN `c`.`status` = 0 THEN 'Pending'
-        WHEN `c`.`status` = 1 THEN 'Completed'
-        WHEN `c`.`status` = 2 THEN 'Rejected'
-    END) AS 'order_status'
+        (  
+         CASE 
+        WHEN `e`.`status` IS NULL OR `e`.`status`  THEN 'NA'
+        WHEN `e`.`status` IS NOT NULL THEN `e`.`status`
+        END)as 'order_status'
+        -- `e`.`status` as 'order_status'
     FROM
         `cashfree_seller_payout` `a`
             JOIN
@@ -5175,4 +5175,87 @@ class Order_model extends CI_Model
             }
         }
     }
+
+
+
+//check order products status / update if all suborders completed in order supplier table
+public function update_order_status_if_completed_seller_wise($order_id,$seller_id)
+{
+    $order_id = clean_number($order_id);
+    $status="";
+    $order_products = $this->get_order_products_of_seller($order_id,$seller_id);
+$count_order_items= count($order_products);
+
+    if (!empty($order_products)) {
+        $completed=0;
+        $cancelled=0;
+        $shipped=0;
+        $processing=0;
+        $rejected=0;
+        foreach ($order_products as $order_product) {
+            if ($order_product->order_status == "completed") {
+                $completed++;
+            }
+            else if ($order_product->order_status == "shipped") {
+                $shipped++;
+            }
+            else if ($order_product->order_status == "processing") {
+                $processing++;
+            }
+            else if ($order_product->order_status == "cancelled"|| $order_product->order_status == "cancelled_by_user" || $order_product->order_status == "cancelled_by_seller") {
+                $cancelled++;
+            }
+            else if ($order_product->order_status == "rejected") {
+                $rejected++;
+            }
+        }
+
+if($count_order_items==$completed){
+    $data["status"]="completed";
+}
+else if($count_order_items== $cancelled){
+    $data["status"]="cancelled";
+}
+else if($count_order_items== $shipped){
+    $data["status"]="shipped";
+}
+else if($count_order_items== $processing){
+    $data["status"]="processing";
+}
+else if($count_order_items== $rejected){
+    $data["status"]="rejected";
+}
+else if($count_order_items== ($completed+$cancelled)){
+    $data["status"]="completed";
+}
+else if($count_order_items== ($completed+$rejected)){
+    $data["status"]="completed";
+}
+else if($count_order_items== ($completed+$rejected+$cancelled)){
+    $data["status"]="completed";
+}
+else if($count_order_items== ($completed+$rejected+$cancelled)){
+    $data["status"]="completed";
+}
+else{
+    $data["status"]="pending";
+}
+
+}
+
+$this->db->where('order_id', $order_id);
+$this->db->where('seller_id', $seller_id);
+$this->db->update('order_supplier', $data);
+}
+
+ //get order products
+ public function get_order_products_of_seller($order_id,$seller_id)
+ {
+     $order_id = clean_number($order_id);
+     $this->db->where('order_id', $order_id);
+     $this->db->where('seller_id', $seller_id);
+     $query = $this->db->get('order_products');
+     return $query->result();
+ }
+
 }
