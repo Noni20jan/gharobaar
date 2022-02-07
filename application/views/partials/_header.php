@@ -631,6 +631,15 @@
         color: white;
     }
 
+    /* width */
+    .dropdown-content::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .dropdown-content {
+        scrollbar-color: #fff0 #fff0;
+    }
+
     /* .mustang img {
         width: 220px;
         height: auto;
@@ -1117,7 +1126,7 @@
                                                     <i class="far fa-bell"></i><span class="badge notification-count"><?php echo $count; ?></span>
                                                     <!-- </div> -->
                                                 </button>
-                                                <div class="dropdown-content" id="myDropdown" style="border-radius: 0px;padding: 11px 5px; width: 100%; position: absolute; left: 0; overflow-y: auto;height: 79vh;">
+                                                <div class="dropdown-content" id="myDropdown" style="border-radius: 0px;padding: 11px 5px; width: 100%; position: absolute; left: 0; overflow-y: auto;max-height: 300px;">
                                                     <?php foreach ($count_array as $notification) : ?>
                                                         <a href="<?php echo base_url('notification-details') . "/" . $notification->id ?>" style="padding: 20px 4px;border-radius: 0px; border-bottom: 1px solid #8b8a8a40;"><?php echo $notification->title; ?></a>
                                                     <?php endforeach; ?>
@@ -1352,6 +1361,33 @@
                                     <?php endif; ?>
                                 </a>
                             </div>
+                            <?php if ($this->auth_check) : ?>
+                                <div class="mobile-bell-notification">
+                                    <li class="">
+                                    <li onclick="myFunction()" class="dropbtn">
+                                        <!-- <div id='wishlist'> -->
+                                        <?php $count_array = $this->order_model->get_notification_count();
+                                        $count = count($count_array); ?>
+                                        <i class="far fa-bell"></i><span class="badge notification-count"><?php echo $count; ?></span>
+                                        <!-- </div> -->
+                                    </li>
+                                    <div class="dropdown-content" id="myDropdown" style="border-radius: 0px;padding: 11px 5px; width: 100%; position: absolute; left: 0; overflow-y: auto;max-height: 300px;">
+                                        <?php foreach ($count_array as $notification) : ?>
+                                            <a href="<?php echo base_url('notification-details') . "/" . $notification->id ?>" style="padding: 20px 4px;border-radius: 0px; border-bottom: 1px solid #8b8a8a40;"><?php echo $notification->title; ?></a>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    </li>
+                                </div>
+                            <?php else : ?>
+                                <!-- <li class="icon-bg">
+                                                <a id='wishlist'>
+                                                    <i class="far fa-bell"></i>
+                                                </a>
+                                            </li> -->
+                            <?php endif; ?>
+
+
+
                             <div class="mobile-search">
                                 <a class="search-icon"><i class="icon-search"></i></a>
                             </div>
