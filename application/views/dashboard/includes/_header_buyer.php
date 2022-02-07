@@ -534,6 +534,7 @@
         }
     }
 
+
     /* .mustang img {
         width: 220px;
         height: auto;
@@ -4045,6 +4046,23 @@
             white-space: nowrap;
         }
 
+
+        .notification-count {
+            background: red !important;
+            position: absolute;
+            top: 0;
+            border-radius: 20px;
+        }
+
+        .notification-button {
+            background: #d21f3c;
+            border-color: #d21f3c;
+            padding: 6px;
+            border-radius: 20px;
+            color: white;
+        }
+
+
         /* .new-dropdown-scroll {
             height: 40vh;
             overflow-y: scroll;
@@ -4181,6 +4199,28 @@
                                                     <i class="icon-heart-o"></i>
                                                 </a>
                                             </li>
+                                        <?php endif; ?>
+                                        <?php if ($this->auth_check) : ?>
+                                            <li class="icon-bg">
+                                                <button onclick="myFunction()" class="dropbtn notification-button">
+                                                    <!-- <div id='wishlist'> -->
+                                                    <?php $count_array = $this->order_model->get_notification_count();
+                                                    $count = count($count_array); ?>
+                                                    <i class="far fa-bell"></i><span class="badge notification-count"><?php echo $count; ?></span>
+                                                    <!-- </div> -->
+                                                </button>
+                                                <div class="dropdown-content" id="myDropdown" style="border-radius: 0px;padding: 11px 5px; width: 100%; position: absolute; left: 0; overflow-y: auto;height: 79vh;">
+                                                    <?php foreach ($count_array as $notification) : ?>
+                                                        <a href="<?php echo base_url('notification-details') . "/" . $notification->id ?>" style="padding: 20px 4px;border-radius: 0px; border-bottom: 1px solid #8b8a8a40;"><?php echo $notification->title; ?></a>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </li>
+                                        <?php else : ?>
+                                            <!-- <li class="icon-bg">
+                                                <a id='wishlist'>
+                                                    <i class="far fa-bell"></i>
+                                                </a>
+                                            </li> -->
                                         <?php endif; ?>
                                         <?php if ($this->auth_check) : ?>
                                             <li class="nav-item dropdown profile-dropdown p-r-0">
@@ -4467,6 +4507,7 @@
                                     <?php endif; ?>
                                 </a>
                             </div>
+
                             <div class="mobile-search">
                                 <a class="search-icon"><i class="icon-search"></i></a>
                             </div>
@@ -5715,4 +5756,25 @@
         $('.dropdown-menu').on('click', function(e) {
             e.stopPropagation();
         })
+    </script>
+    <script>
+        /* When the user clicks on the button, 
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            // event.stopImmediatePropagation;
+            if (!event.target.matches('.dropbtn')) {
+                var myDropdown = document.getElementById("myDropdown");
+                var i;
+                for (i = 0; i < myDropdown.length; i++) {
+                    var openDropdown = myDropdown[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
     </script>

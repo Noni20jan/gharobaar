@@ -1110,16 +1110,16 @@
                                         <?php endif; ?>
                                         <?php if ($this->auth_check) : ?>
                                             <li class="icon-bg">
-                                                <button class="dropbtn notification-button" onclick="myFunction()">
-                                                    <a id='wishlist'>
-                                                        <?php $count_array = $this->order_model->get_notification_count();
-                                                        $count = count($count_array); ?>
-                                                        <i class="far fa-bell"></i><span class="badge notification-count"><?php echo $count; ?></span>
-                                                    </a>
+                                                <button onclick="myFunction()" class="dropbtn notification-button">
+                                                    <!-- <div id='wishlist'> -->
+                                                    <?php $count_array = $this->order_model->get_notification_count();
+                                                    $count = count($count_array); ?>
+                                                    <i class="far fa-bell"></i><span class="badge notification-count"><?php echo $count; ?></span>
+                                                    <!-- </div> -->
                                                 </button>
-                                                <div class="dropdown-content" id="myDropdown" style="border-radius: 0px;padding: 2px 2px; width: 100%; position: absolute; left: 0">
+                                                <div class="dropdown-content" id="myDropdown" style="border-radius: 0px;padding: 11px 5px; width: 100%; position: absolute; left: 0; overflow-y: auto;height: 79vh;">
                                                     <?php foreach ($count_array as $notification) : ?>
-                                                        <a href="<?php echo base_url('notification-details') . "/" . $notification->id ?>" style="padding: 15px 4px;border-radius: 0px;"><?php echo $notification->title; ?></a>
+                                                        <a href="<?php echo base_url('notification-details') . "/" . $notification->id ?>" style="padding: 20px 4px;border-radius: 0px; border-bottom: 1px solid #8b8a8a40;"><?php echo $notification->title; ?></a>
                                                     <?php endforeach; ?>
                                                 </div>
                                             </li>
@@ -2272,16 +2272,20 @@
     </script>
     <script>
         /* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
+        toggle between hiding and showing the dropdown content */
         function myFunction() {
             document.getElementById("myDropdown").classList.toggle("show");
         }
         // Close the dropdown if the user clicks outside of it
-        window.onclick = function(e) {
-            if (!e.target.matches('.dropbtn')) {
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
                 var myDropdown = document.getElementById("myDropdown");
-                if (myDropdown.classList.contains('show')) {
-                    myDropdown.classList.remove('show');
+                var i;
+                for (i = 0; i < myDropdown.length; i++) {
+                    var openDropdown = myDropdown[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
                 }
             }
         }

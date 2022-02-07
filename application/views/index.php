@@ -1344,7 +1344,7 @@
         //console.log(heartArr);
     }, 300)
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     function refreshPage() {
         var page_y = document.getElementsByTagName("body")[0].scrollTop;
         window.location.href = window.location.href.split('?')[0] + '?page_y=' + page_y;
@@ -1356,6 +1356,6 @@
             document.getElementsByTagName("body")[0].scrollTop = match[1];
         }
     }
-</script>
+</script> -->
 
 <!-- Wrapper End-->
