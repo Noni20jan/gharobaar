@@ -2291,7 +2291,7 @@ class Order_model extends CI_Model
     public function get_other_order_status($user_id, $per_page, $offset)
     {
         $this->db->join('orders', 'order_products.order_id=orders.id');
-        $data = ['processing', 'awaiting_pickup', 'RTO Initiated', 'RTO Acknowledged', 'RTO Delivered', 'RTO In Transit', 'Return In Transit', 'Return Delivered', 'Return Acknowledged', 'Return Pending', 'Return Pickup Generated', 'Return Pickup Queued', 'Return Picked Up', 'delivered', 'completed', 'shipped', 'cancelled_by_seller', 'cancelled_by_user', 'waiting', 'rejected', 'cancelled', 'RTO NDR', 'RTO OFD'];
+        $data = ['processing', 'awaiting_pickup', 'RTO Initiated', 'RTO Acknowledged', 'RTO Delivered', 'RTO In Transit', 'Return In Transit', 'Return Initiated', 'Return Delivered', 'Return Acknowledged', 'Return Pending', 'Return Pickup Generated', 'Return Pickup Queued', 'Return Picked Up', 'delivered', 'completed', 'shipped', 'cancelled_by_seller', 'cancelled_by_user', 'waiting', 'rejected', 'cancelled', 'RTO NDR', 'RTO OFD'];
         $this->db->select('*');
         $this->db->where_not_in('order_status', $data);
         $this->db->where('seller_id', $this->auth_user->id);
@@ -2305,7 +2305,7 @@ class Order_model extends CI_Model
     public function get_order_count($user_id)
     {
         $this->db->join('orders', 'order_products.order_id=orders.id');
-        $data = ['processing', 'awaiting_pickup', 'RTO Initiated', 'RTO Acknowledged', 'RTO Delivered', 'Return Delivered', 'Return Picked Up', 'RTO In Transit', 'Return In Transit', 'Return Acknowledged', 'Return Pending', 'Return Pickup Generated', 'Return Pickup Queued', 'delivered', 'completed', 'shipped', 'cancelled_by_seller', 'cancelled_by_user', 'waiting', 'rejected', 'cancelled', 'RTO NDR', 'RTO OFD'];
+        $data = ['processing', 'awaiting_pickup', 'RTO Initiated', 'RTO Acknowledged', 'Return Initiated', 'RTO Delivered', 'Return Delivered', 'Return Picked Up', 'RTO In Transit', 'Return In Transit', 'Return Acknowledged', 'Return Pending', 'Return Pickup Generated', 'Return Pickup Queued', 'delivered', 'completed', 'shipped', 'cancelled_by_seller', 'cancelled_by_user', 'waiting', 'rejected', 'cancelled', 'RTO NDR', 'RTO OFD'];
         $this->db->select('orders.id');
         $this->db->where_not_in('order_products.order_status', $data);
         $this->db->where('seller_id', $this->auth_user->id);
