@@ -2012,6 +2012,15 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/reports/product_listing', $data);
         $this->load->view('admin/includes/_footer');
     }
+    public function cart_data_report()
+    {
+        $data['title'] = trans("cart_data");
+
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/reports/cart_data', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
 
 
     public function format_sale_data()
@@ -2085,5 +2094,13 @@ class Admin_controller extends Admin_Core_Controller
 
         $product_listing = $this->reports_model->format_product_listing($from_date, $to_date);
         echo json_encode($product_listing);
+    }
+    public function cart_report()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $cart_report = $this->reports_model->format_cart_report($from_date, $to_date);
+        echo json_encode($cart_report);
     }
 }

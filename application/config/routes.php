@@ -542,6 +542,7 @@ $route[getr('admin', $rts) . '/tcs-report'] = 'admin_controller/tcs_report';
 $route[getr('admin', $rts) . '/product-listing'] = 'admin_controller/product_listing';
 
 $route[getr('admin', $rts) . '/tds-report'] = 'admin_controller/tds_report';
+$route[getr('admin', $rts) . '/cart-data'] = 'admin_controller/cart_data_report';
 $route[getr('admin', $rts) . '/cash-free-charges-report'] = 'admin_controller/cash_free_charges_report';
 $route[getr('admin', $rts) . '/cod-charges-report'] = 'admin_controller/cod_charges_report';
 $route[getr('admin', $rts) . '/seller-commission-data'] = 'admin_controller/seller_commission';

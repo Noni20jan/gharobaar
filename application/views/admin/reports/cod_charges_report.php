@@ -30,6 +30,11 @@
 
 
 <div class="box-body index-table">
+    <div class="box-header with-border">
+        <div class="pull-left">
+            <h3 class="box-title" style="font-weight: 600;font-size: 20px;margin-bottom: 20px;"><?php echo trans('cod_charges_report'); ?></h3>
+        </div>
+    </div>
     <div class="row">
         <div class="table-responsive">
             <div class="filter">

@@ -29,6 +29,11 @@
     }
 </style>
 <div class="box-body index-table">
+    <div class="box-header with-border">
+        <div class="pull-left">
+            <h3 class="box-title" style="font-weight: 600;font-size: 20px;margin-bottom: 20px;"><?php echo trans('cash_free_charges_reports'); ?></h3>
+        </div>
+    </div>
     <div class="row">
         <div class="table-responsive">
             <div class="filter">

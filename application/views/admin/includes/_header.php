@@ -710,6 +710,9 @@
                         <li class="nav-send-email-subscribers">
                             <a href="<?php echo admin_url(); ?>tds-report"><?php echo trans("tds_report"); ?></a>
                         </li>
+                        <li class="nav-send-email-subscribers">
+                            <a href="<?php echo admin_url(); ?>cart-data"><?php echo trans("cart_data"); ?></a>
+                        </li>
 
 
                     </ul>

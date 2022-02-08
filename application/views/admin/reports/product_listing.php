@@ -30,6 +30,10 @@
 
 
 <div class="box-body index-table">
+    <div class="box-header with-border">
+        <h2 class="box-title" style="font-weight: 600;font-size: 20px;margin-bottom: 20px;"><?php echo trans('product_listing'); ?></h2>
+
+    </div>
     <div class="row">
         <div class="table-responsive">
             <div class="filter">
@@ -51,6 +55,9 @@
                 <table class="table table-bordered table-striped button" id="extend_datatable" role="grid">
                     <thead>
                         <tr role="row">
+                            <th>Seller Name</th>
+                            <th>Shop Name</th>
+                            <th>Product Title</th>
                             <th>sku</th>
                             <th>category id</th>
                             <th>price</th>
@@ -63,11 +70,6 @@
                             <th>available for return or exchange</th>
                             <th>available for barter</th>
                             <th>status</th>
-                            <th>is promoted</th>
-                            <th>promote start date</th>
-                            <th>promote end date</th>
-                            <th>promote plan</th>
-                            <th>promote day</th>
                             <th>is special offer</th>
                             <th>special offer date</th>
                             <th>visibility</th>
@@ -136,16 +138,9 @@
                             <th>product state</th>
                             <th>product city</th>
                             <th>landmark </th>
-                            <th>created at</th>
-                            <th>created by</th>
-                            <th>last updated by</th>
-                            <th>last updated date</th>
-                            <th>last updated login</th>
-                            <th>val </th>
                             <th>suitable for</th>
-                            <th>Seller Name</th>
-                            <th>Shop Name</th>
-                            <th>Product Title</th>
+                            <th>created at</th>
+
                         </tr>
                     </thead>
                     <tbody id="product_data_list">
@@ -192,7 +187,7 @@
                 var len = Json_data.length;
                 if (len != 0) {
                     for (var i = 0; i < len; i++) {
-                        $('#product_data_list').append("<tr><td>" + Json_data[i].sku + "</td><td>" + Json_data[i].category_id + "</td><td>" + Json_data[i].price + "</td><td>" + Json_data[i].Listing_Price + "</td><td>" + Json_data[i].Price_Ex_GST + "</td><td>" + Json_data[i].currency + "</td><td>" + Json_data[i].discount_rate + "</td><td>" + Json_data[i].gst_rate + "</td><td>" + Json_data[i].GST_Amount + "</td><td>" + Json_data[i].available_for_return_or_exchange + "</td><td>" + Json_data[i].available_for_barter + "</td><td>" + Json_data[i].status + "</td><td>" + Json_data[i].is_promoted + "</td><td>" + Json_data[i].promote_start_date + "</td><td>" + Json_data[i].promote_end_date + "</td><td>" + Json_data[i].promote_plan + "</td><td>" + Json_data[i].promote_day + "</td><td>" + Json_data[i].is_special_offer + "</td><td>" + Json_data[i].special_offer_date + "</td><td>" + Json_data[i].visibility + "</td><td>" + Json_data[i].rating + "</td><td>" + Json_data[i].pageviews + "</td><td>" + Json_data[i].demo_url + "</td><td>" + Json_data[i].stock + "</td><td>" + Json_data[i].cod_accepted + "</td><td>" + Json_data[i].shipping_time + "</td><td>" + Json_data[i].shipping_cost_type + "</td><td>" + Json_data[i].is_deleted + "</td><td>" + Json_data[i].is_draft + "</td><td>" + Json_data[i].add_meet + "</td><td>" + Json_data[i].weight + "</td><td>" + Json_data[i].temperature + "</td><td>" + Json_data[i].allergance + "</td><td>" + Json_data[i].availability + "</td><td>" + Json_data[i].product_pincode + "</td><td>" + Json_data[i].product_weight + "</td><td>" + Json_data[i].product_state + "</td><td>" + Json_data[i].product_address + "</td><td>" + Json_data[i].product_city + "</td><td>" + Json_data[i].product_area + "</td><td>" + Json_data[i].landmark + "</td><td>" + Json_data[i].supplier_product_type + "</td><td>" + Json_data[i].is_expire + "</td><td>" + Json_data[i].expiry_date + "</td><td>" + Json_data[i].manufacturing_date + "</td><td>" + Json_data[i].lead_time + "</td><td>" + Json_data[i].is_organic + "</td><td>" + Json_data[i].is_sustainable + "</td><td>" + Json_data[i].is_handicraft + "</td><td>" + Json_data[i].is_gluten_Free + "</td><td>" + Json_data[i].is_vegan + "</td><td>" + Json_data[i].is_keto_friendly + "</td><td>" + Json_data[i].is_allergens + "</td><td>" + Json_data[i].is_personalised + "</td><td>" + Json_data[i].is_veg_nonveg_jain + "</td><td>" + Json_data[i].is_appetisers_main_course_beverages_desserts + "</td><td>" + Json_data[i].is_gold_silver_precious_stones_semi_precious_artificial + "</td><td>" + Json_data[i].special_delivery_requirement + "</td><td>" + Json_data[i].delivery_area + "</td><td>" + Json_data[i].product_wash_instruction + "</td><td>" + Json_data[i].blouse_details + "</td><td>" + Json_data[i].minimum_Prior_notice + "</td><td>" + Json_data[i].hsn_code + "</td><td>" + Json_data[i].packed_product_height + "</td><td>" + Json_data[i].packed_product_length + "</td><td>" + Json_data[i].packed_product_width + "</td><td>" + Json_data[i].other_product_wash_instruction + "</td><td>" + Json_data[i].other_blouse_details + "</td><td>" + Json_data[i].other_minimum_Prior_notice + "</td><td>" + Json_data[i].other_pet_age + "</td><td>" + Json_data[i].other_storage_instruction + "</td><td>" + Json_data[i].other_delivery_area + "</td><td>" + Json_data[i].shelf_life_from_date_of_manufacture + "</td><td>" + Json_data[i].discounted_price + "</td><td>" + Json_data[i].order_capacity + "</td><td>" + Json_data[i].lead_days + "</td><td>" + Json_data[i].weight_units + "</td><td>" + Json_data[i].shelf_units + "</td><td>" + Json_data[i].special_delivery_other + "</td><td>" + Json_data[i].product_pincode_1 + "</td><td>" + Json_data[i].product_area_1 + "</td><td>" + Json_data[i].product_address_1 + "</td><td>" + Json_data[i].product_state_1 + "</td><td>" + Json_data[i].product_city_1 + "</td><td>" + Json_data[i].landmark_1 + "</td><td>" + Json_data[i].created_at + "</td><td>" + Json_data[i].created_by + "</td><td>" + Json_data[i].last_updated_by + "</td><td>" + Json_data[i].last_updated_date + "</td><td>" + Json_data[i].last_updated_login + "</td><td>" + Json_data[i].rand_val + "</td><td>" + Json_data[i].suitable_for + "</td><td>" + Json_data[i].Seller_Name + "</td><td>" + Json_data[i].Shop_Name + "</td><td>" + Json_data[i].Product + "</td></tr>")
+                        $('#product_data_list').append("<tr><td>" + Json_data[i].Seller_Name + "</td><td>" + Json_data[i].Shop_Name + "</td><td>" + Json_data[i].Product_Title + "</td><td>" + Json_data[i].sku + "</td><td>" + Json_data[i].category_id + "</td><td>" + Json_data[i].price + "</td><td>" + Json_data[i].Listing_Price + "</td><td>" + Json_data[i].Price_Ex_GST + "</td><td>" + Json_data[i].currency + "</td><td>" + Json_data[i].discount_rate + "</td><td>" + Json_data[i].gst_rate + "</td><td>" + Json_data[i].GST_Amount + "</td><td>" + Json_data[i].available_for_return_or_exchange + "</td><td>" + Json_data[i].available_for_barter + "</td><td>" + Json_data[i].status + "</td><td>" + Json_data[i].is_special_offer + "</td><td>" + Json_data[i].special_offer_date + "</td><td>" + Json_data[i].visibility + "</td><td>" + Json_data[i].rating + "</td><td>" + Json_data[i].pageviews + "</td><td>" + Json_data[i].demo_url + "</td><td>" + Json_data[i].stock + "</td><td>" + Json_data[i].cod_accepted + "</td><td>" + Json_data[i].shipping_time + "</td><td>" + Json_data[i].shipping_cost_type + "</td><td>" + Json_data[i].is_deleted + "</td><td>" + Json_data[i].is_draft + "</td><td>" + Json_data[i].add_meet + "</td><td>" + Json_data[i].weight + "</td><td>" + Json_data[i].temperature + "</td><td>" + Json_data[i].allergance + "</td><td>" + Json_data[i].availability + "</td><td>" + Json_data[i].product_pincode + "</td><td>" + Json_data[i].product_weight + "</td><td>" + Json_data[i].product_state + "</td><td>" + Json_data[i].product_address + "</td><td>" + Json_data[i].product_city + "</td><td>" + Json_data[i].product_area + "</td><td>" + Json_data[i].landmark + "</td><td>" + Json_data[i].supplier_product_type + "</td><td>" + Json_data[i].is_expire + "</td><td>" + Json_data[i].expiry_date + "</td><td>" + Json_data[i].manufacturing_date + "</td><td>" + Json_data[i].lead_time + "</td><td>" + Json_data[i].is_organic + "</td><td>" + Json_data[i].is_sustainable + "</td><td>" + Json_data[i].is_handicraft + "</td><td>" + Json_data[i].is_gluten_Free + "</td><td>" + Json_data[i].is_vegan + "</td><td>" + Json_data[i].is_keto_friendly + "</td><td>" + Json_data[i].is_allergens + "</td><td>" + Json_data[i].is_personalised + "</td><td>" + Json_data[i].is_veg_nonveg_jain + "</td><td>" + Json_data[i].is_appetisers_main_course_beverages_desserts + "</td><td>" + Json_data[i].is_gold_silver_precious_stones_semi_precious_artificial + "</td><td>" + Json_data[i].special_delivery_requirement + "</td><td>" + Json_data[i].delivery_area + "</td><td>" + Json_data[i].product_wash_instruction + "</td><td>" + Json_data[i].blouse_details + "</td><td>" + Json_data[i].minimum_Prior_notice + "</td><td>" + Json_data[i].hsn_code + "</td><td>" + Json_data[i].packed_product_height + "</td><td>" + Json_data[i].packed_product_length + "</td><td>" + Json_data[i].packed_product_width + "</td><td>" + Json_data[i].other_product_wash_instruction + "</td><td>" + Json_data[i].other_blouse_details + "</td><td>" + Json_data[i].other_minimum_Prior_notice + "</td><td>" + Json_data[i].other_pet_age + "</td><td>" + Json_data[i].other_storage_instruction + "</td><td>" + Json_data[i].other_delivery_area + "</td><td>" + Json_data[i].shelf_life_from_date_of_manufacture + "</td><td>" + Json_data[i].discounted_price + "</td><td>" + Json_data[i].order_capacity + "</td><td>" + Json_data[i].lead_days + "</td><td>" + Json_data[i].weight_units + "</td><td>" + Json_data[i].shelf_units + "</td><td>" + Json_data[i].special_delivery_other + "</td><td>" + Json_data[i].product_pincode_1 + "</td><td>" + Json_data[i].product_area_1 + "</td><td>" + Json_data[i].product_address_1 + "</td><td>" + Json_data[i].product_state_1 + "</td><td>" + Json_data[i].product_city_1 + "</td><td>" + Json_data[i].landmark_1 + "</td><td>" + Json_data[i].suitable_for + "</td><td>" + Json_data[i].created_at + "</td></tr>")
                     }
                 }
                 $('#extend_datatable').dataTable({
