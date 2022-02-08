@@ -3653,26 +3653,13 @@ order by id desc LIMIT 1";
 
     public function get_most_ordered_products($limit)
     {
-        $sql = "SELECT * from products where id in(
-            SELECT op.product_id from order_products as op
-            GROUP BY op.product_id order by count(op.order_id) desc )limit 10";
-
-        $query = $this->db->query($sql);
-        $data = $query->result();
-
-
         $this->build_query();
-
-        $this->db->join('product_details', 'product_details.product_id = products.id');
-        $this->db->where('product_details.lang_id', clean_number($this->selected_lang->id));
+        $this->db->join('order_products', 'order_products.product_id = products.id');
         $this->db->where('is_service', "0");
         $this->db->where('is_shop_open', "1");
         $this->db->where('status', 1)->where('products.is_draft', 0)->where('products.is_deleted', 0);
-        $this->db->where('`products`.`id` IN (SELECT * FROM (SELECT op.product_id FROM order_products AS op
-        GROUP BY op.product_id
-        ORDER BY COUNT(op.order_id) DESC
-        LIMIT 30) AS t1)');
-        $this->db->order_by('rand()')->limit(clean_number($limit));
+        $this->db->group_by('order_products.seller_id'); 
+        $this->db->order_by("count(`products`.`id`)", 'desc');
         return $this->db->get('products')->result();
     }
 
