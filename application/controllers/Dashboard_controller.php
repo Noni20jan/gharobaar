@@ -2075,7 +2075,22 @@ class Dashboard_controller extends Home_Core_Controller
         $this->load->view('dashboard/sales/return', $data);
         $this->load->view('dashboard/includes/_footer');
     }
+    public function get_other_order_status()
+    {
+        $data['title'] = "Other Orders";
+        $data['description'] = trans("cancelled_by_user") . " - " . $this->app_name;
+        $data['keywords'] = trans("cancelled_by_user") . "," . $this->app_name;
+        $data['active_page'] = "Other Orders";
+        $data['page_url'] = generate_dash_url("other_orders");
+        $data["num_rows"] = $this->order_model->get_order_count($this->auth_user->id);
+        $pagination = $this->paginate($data['page_url'], $data['num_rows'], $this->per_page);
+        $data['sales'] = $this->order_model->get_other_order_status($this->auth_user->id, $pagination['per_page'], $pagination['offset']);
+        $data['main_settings'] = get_main_settings();
 
+        $this->load->view('dashboard/includes/_header', $data);
+        $this->load->view('dashboard/sales/other_orders', $data);
+        $this->load->view('dashboard/includes/_footer');
+    }
     /**
      * User Cancelled Sales
      */

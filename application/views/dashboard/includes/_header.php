@@ -388,6 +388,8 @@ $user = get_user($this->auth_user->id);
                                 <li class="nav-cancelled_by_user"><a href="<?= generate_dash_url("cancelled_by_user"); ?>"><?= trans("cancelled_by_user"); ?></a></li>
                                 <li class="nav-cancelled_by_seller"><a href="<?= generate_dash_url("cancelled_by_seller"); ?>"><?= trans("cancelled_by_seller"); ?></a></li>
                                 <li class="nav-cancelled_by_user"><a href="<?= generate_dash_url("return_orders"); ?>">Return Orders</a></li>
+                                <li class="nav-cancelled_by_user"><a href="<?= generate_dash_url("other_orders"); ?>">Other Orders</a></li>
+
 
                             </ul>
                         </li>

@@ -331,9 +331,13 @@ foreach ($languages as $language) {
         $route[$key . getr('dashboard', $rts) . '/' . getr('cancelled_by_user', $rts)]['GET'] = 'dashboard_controller/cancelled_by_user';
         $route[$key . getr('dashboard', $rts) . '/' . getr('cancelled_by_seller', $rts)]['GET'] = 'dashboard_controller/cancelled_by_seller';
         $route[$key . getr('dashboard', $rts) . '/' . getr('sale', $rts) . '/(:num)']['GET'] = 'dashboard_controller/sale/$1';
+        $route[$key . getr('dashboard', $rts) . '/' . getr('returns', $rts) . '/(:num)']['GET'] = 'dashboard_controller/return/$1';
+
         $route[$key . getr('dashboard', $rts) . '/' . getr('track_status', $rts) . '/(:num)']['GET'] = 'dashboard_controller/track_status/$1';
         // $route[$key . getr('dashboard', $rts) . '/' . getr('cancelorder', $rts) . '/(:num)']['GET'] = 'dashboard_controller/cancelorder/$1';
         $route[$key . getr('dashboard', $rts) . '/' . getr('return_orders', $rts)]['GET'] = 'dashboard_controller/return_orders';
+        $route[$key . getr('dashboard', $rts) . '/' . getr('other_orders', $rts)]['GET'] = 'dashboard_controller/get_other_order_status';
+
         $route[$key . getr('dashboard', $rts) . '/' . getr('hidden_products', $rts)]['GET'] = 'dashboard_controller/hidden_products';
         $route[$key . getr('dashboard', $rts) . '/' . getr('expired_products', $rts)]['GET'] = 'dashboard_controller/expired_products';
         $route[$key . getr('dashboard', $rts) . '/' . getr('hidden_services', $rts)]['GET'] = 'dashboard_controller/hidden_services';
