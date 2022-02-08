@@ -302,6 +302,8 @@ class Product_admin_model extends CI_Model
             $this->db->or_like('products.sku', $q);
             $this->db->or_like('products.promote_plan', $q);
             $this->db->or_like('users.shop_name', $q);
+            $this->db->or_like('users.brand_name', $q);
+            $this->db->or_like('users.email', $q);
             $this->db->group_end();
         }
 
