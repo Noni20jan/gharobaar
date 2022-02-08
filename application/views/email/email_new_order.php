@@ -50,6 +50,8 @@
                                 </p>
                             </div>
 
+
+
                             <?php $shipping = get_order_shipping($order->id);
                             if (!empty($shipping)) : ?>
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin-top: 30px;">
@@ -98,7 +100,40 @@
                                 </tr>
                                 <?php foreach ($order_products as $item) : ?>
                                     <tr>
-                                        <td style="width: 40%; padding: 15px 0; border-bottom: 1px solid #ddd;"><?php echo $item->product_title; ?></td>
+                                        <td style="width: 40%; padding: 15px 0; border-bottom: 1px solid #ddd;"><?php echo $item->product_title; ?>
+                                            <?php if ($product->add_meet == "Made to stock") : ?>
+                                                <?php if (substr_count($shipping_time, "_") > 2) : ?>
+                                                    <?php $ship_time = intval($product->shipping_time[2]); ?>
+                                                    <?php $created_at = strtotime($order->created_at); ?>
+                                                    <?php $x = $ship_time + 3; ?>
+
+                                                    <?php $order_create = strtotime("$x day", strtotime($order->created_at)); ?>
+
+                                                    <?php $ship_date = (date("dS M Y", $order_create)); ?>
+                                                    <?php $shipping_date = new DateTime($ship_date); ?>
+                                                    <?php if ($item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                        <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $ship_date; ?></p>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            <?php elseif (substr_count($shipping_time, "_") == 2) : ?>
+                                                <?php $shipped_time = intval($product->shipping_time); ?>
+                                                <?php $created_at = strtotime($order->created_at); ?>
+                                                <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
+                                                <?php $shipped_date = (date("dS M Y", $order_create)); ?>
+                                                <?php $shipp_date = new DateTime($shipped_date); ?>
+                                                <?php if ($item->order_status == "processing"  || $item->order_status == "shipped") : ?>
+                                                    <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                            <?php if (get_product($item->product_id)->add_meet == "Made to order"  && get_product($item->product_id)->category_id != 2 || $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                <?php $lead_days = intval(get_product($item->product_id)->lead_days); ?>
+                                                <?php $created_at = strtotime($order->created_at); ?>
+                                                <?php $delivery_days = $lead_days + 3; ?>
+                                                <?php $order_create = strtotime("$delivery_days day", $created_at); ?>
+                                                <?php $shipped_date = (date("dS M Y", $order_create)); ?>
+                                                <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
+                                            <?php endif; ?>
+                                        </td>
                                         <td style="padding: 10px 2px; border-bottom: 1px solid #ddd;"><?php echo price_formatted($item->product_unit_price, $item->product_currency); ?></td>
                                         <td style="padding: 10px 2px; border-bottom: 1px solid #ddd;"><?php echo price_formatted(($item->product_discount_amount * 100), $item->product_currency); ?></td>
                                         <td style="padding: 10px 2px; border-bottom: 1px solid #ddd;"><?php echo $item->product_quantity; ?></td>
