@@ -130,7 +130,7 @@ class Message_controller extends Home_Core_Controller
                             'source' => 'coustomiation',
                             // 'source_id' => $product_id,
                             'remark' => "You have received a query for customization of your product " . $title,
-                            'event_type' => 'Customization Request',
+                            'event_type' => 'Customization Notifications',
                             'subject' => "New customization query of your product",
                             // 'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
                             'to' => $receiver_id,

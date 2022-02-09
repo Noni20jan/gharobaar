@@ -2083,7 +2083,7 @@ class Cart_controller extends Home_Core_Controller
                     'source' => 'review',
                     // 'source_id' => $product_id,
                     'remark' => $buyer_name . " has rated your product " . $title->title . " .",
-                    'event_type' => 'New Review',
+                    'event_type' => 'Rating, Reviews & Followers',
                     'subject' => "New Review on you product",
                     // 'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
                     'to' => $product->user_id,

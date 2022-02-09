@@ -201,7 +201,7 @@ class Earnings_admin_model extends CI_Model
             'last_updated_by' => '2',
             'source' => 'payouts',
             // 'source_id' => $,
-            'event_type' => 'Payout Initiated',
+            'event_type' => 'Payouts',
             'subject' => "Your Paymesnt is initiated",
             // 'message' => $message,
             // 'to' => $seller_id,

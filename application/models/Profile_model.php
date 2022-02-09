@@ -477,7 +477,7 @@ class Profile_model extends CI_Model
                 'to' => $this->input->post('following_id', true),
                 'source' => 'followers',
                 'source_id' => $this->input->post('following_id', true),
-                'event_type' => 'New Follower',
+                'event_type' => 'Rating, Reviews & Followers',
                 'remark' => "Congratulations! You have a new Follower! Click <a href='" . generate_url("followers") . "/" . $this->auth_user->slug . "'>here</a> to see Followers.",
 
                 'subject' => "Hooray You Got a new follower",

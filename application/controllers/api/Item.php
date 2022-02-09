@@ -59,14 +59,14 @@ class Item extends REST_Controller
         $order_id = $this->order_model->get_order_id_by_awb($new_input['awb_code']);
         $product_array = $this->order_model->get_product_id_by_awb($new_input['awb_code']);
 
-$seller_id_array=array();
-foreach($product_array as $pa){
-   $sell_id= get_seller_id_by_product_id($pa);
+        $seller_id_array = array();
+        foreach ($product_array as $pa) {
+            $sell_id = get_seller_id_by_product_id($pa);
 
-   if(!in_array($sell_id, $seller_id_array, true)){
-    array_push($seller_id_array, $sell_id);
-}
-}
+            if (!in_array($sell_id, $seller_id_array, true)) {
+                array_push($seller_id_array, $sell_id);
+            }
+        }
 
         if ($order_id) {
             $data = array();
@@ -170,7 +170,7 @@ foreach($product_array as $pa){
                     'last_updated_by' => '2',
                     'source' => 'orders',
                     'source_id' => $order_id,
-                    'event_type' => 'Product delivered',
+                    'event_type' => 'Order Delivered',
                     'subject' => "Your Product is Successfully Delivered",
                     // 'message' => $message,
                     'to' => $order_no->buyer_id,
@@ -185,7 +185,7 @@ foreach($product_array as $pa){
                     'last_updated_by' => '2',
                     'source' => 'orders',
                     'source_id' => $order_id,
-                    'event_type' => 'Product delivered',
+                    'event_type' => 'Order Delivered',
                     'subject' => "Your Product is Successfully Delivered",
                     // 'message' => $message,
                     'to' => $seller_id,
@@ -206,7 +206,7 @@ foreach($product_array as $pa){
                     'last_updated_by' => '2',
                     'source' => 'orders',
                     'source_id' => $order_id,
-                    'event_type' => 'Product undelivered',
+                    'event_type' => 'Order Updates',
                     'subject' => "Your Product is  Undelivered",
                     // 'message' => $message,
                     'to' => $seller_id,
@@ -223,9 +223,9 @@ foreach($product_array as $pa){
             $this->order_model->update_whole_order_status($order_id);
             $this->order_model->get_order_item_count($order_id);
 
-foreach($seller_id_array as $sia){
-    $this->order_model->update_order_status_if_completed_seller_wise($order_id,$sia);
-}
+            foreach ($seller_id_array as $sia) {
+                $this->order_model->update_order_status_if_completed_seller_wise($order_id, $sia);
+            }
 
             $this->response(['Item updated successfully.'], REST_Controller::HTTP_OK);
         } else {
