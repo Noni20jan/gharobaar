@@ -117,7 +117,7 @@
                                                     <?php $ship_date = (date("dS M Y", $order_create)); ?>
                                                     <?php $shipping_date = new DateTime($ship_date); ?>
                                                     <?php if ($item->order_status == "processing" || $item->order_status == "shipped") : ?>
-                                                        <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $ship_date; ?></p>
+                                                        <!-- <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $ship_date; ?></p> -->
                                                     <?php endif; ?>
                                                 <?php endif; ?>
                                             <?php elseif (substr_count($shipping_time, "_") == 2) : ?>
