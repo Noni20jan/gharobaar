@@ -101,6 +101,11 @@
                                 <?php foreach ($order_products as $item) : ?>
                                     <tr>
                                         <td style="width: 40%; padding: 15px 0; border-bottom: 1px solid #ddd;"><?php echo $item->product_title; ?>
+                                            <?php $product = get_product($item->product_id); ?>
+                                            <?php $current_date = new DateTime(); ?>
+                                            <?php $order_date = strtotime($order->created_at); ?>
+                                            <?php $ordered_date = date("dS M Y", $order_date); ?>
+                                            <?php $shipping_time = $product->shipping_time; ?>
                                             <?php if ($product->add_meet == "Made to stock") : ?>
                                                 <?php if (substr_count($shipping_time, "_") > 2) : ?>
                                                     <?php $ship_time = intval($product->shipping_time[2]); ?>
