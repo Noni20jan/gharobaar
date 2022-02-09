@@ -104,7 +104,56 @@
                         </tr>
                     </thead>
                     <tbody id="sale_data_seller">
+                        <?php foreach ($sale as $item) : ?>
+                            <tr>
+                                <td><?php echo $item->order_no; ?></td>
+                                <td><?php echo $item->order_date; ?></td>
+                                <td><?php echo $item->seller_id; ?></td>
+                                <td><?php echo $item->seller; ?></td>
+                                <td><?php echo $item->seller_email; ?></td>
+                                <td><?php echo $item->seller_phone; ?></td>
+                                <td><?php echo $item->shop_name; ?></td>
+                                <td><?php echo $item->pan_no; ?></td>
+                                <td><?php echo $item->gst_no; ?></td>
+                                <td><?php echo $item->seller_address; ?></td>
+                                <td><?php echo $item->account_no; ?></td>
+                                <td><?php echo $item->acc_holder_name; ?></td>
+                                <td><?php echo $item->ifsc_code; ?></td>
+                                <td><?php echo $item->bank_branch; ?></td>
+                                <td><?php echo $item->product_title; ?></td>
+                                <td><?php echo $item->product_quantity; ?></td>
+                                <td><?php echo $item->order_status; ?></td>
+                                <td><?php echo $item->commission_rate; ?></td>
+                                <td><?php echo $item->commission_amount; ?></td>
+                                <td><?php echo $item->actual_product_gst_rate; ?></td>
+                                <td><?php echo $item->seller_gst_rate; ?></td>
+                                <td><?php echo $item->subtotal_excluding_gst; ?></td>
+                                <td><?php echo $item->seller_tprd_gst; ?></td>
+                                <td><?php echo $item->seller_tprd_cgst; ?></td>
+                                <td><?php echo $item->seller_tprd_sgst; ?></td>
+                                <td><?php echo $item->seller_tprd_igst; ?></td>
+                                <td><?php echo $item->seller_ship_cost; ?></td>
+                                <td><?php echo $item->seller_ship_gst; ?></td>
+                                <td><?php echo $item->seller_ship_cgst; ?></td>
+                                <td><?php echo $item->seller_ship_sgst; ?></td>
+                                <td><?php echo $item->seller_ship_igst; ?></td>
+                                <td><?php echo $item->seller_tship_cost; ?></td>
+                                <td><?php echo $item->seller_cod_cost; ?></td>
+                                <td><?php echo $item->seller_cod_gst; ?></td>
+                                <td><?php echo $item->seller_cod_cgst; ?></td>
+                                <td><?php echo $item->seller_cod_sgst; ?></td>
+                                <td><?php echo $item->seller_cod_igst; ?></td>
+                                <td><?php echo $item->seller_tcod; ?></td>
+                                <td><?php echo $item->grand_total_amount; ?></td>
+                                <td><?php echo $item->buyer; ?></td>
+                                <td><?php echo $item->buyer_email; ?></td>
+                                <td><?php echo $item->buyer_phone; ?></td>
+                                <td><?php echo $item->buyer_state; ?></td>
+                                <td><?php echo $item->payment_method; ?></td>
+                                <td><?php echo $item->payment_mode; ?></td>
+                            </tr>
 
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
 
@@ -219,5 +268,23 @@
         });
 
 
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#extend_datatable').DataTable({
+            dom: 'lBfrtip',
+            buttons: [{
+                extend: 'excel',
+                text: 'Export To Excel'
+            }],
+            "aLengthMenu": [
+                [15, 30, 60, 100],
+                [15, 30, 60, 100, "All"]
+            ],
+            "order": [
+                [0, "desc"]
+            ],
+        });
     });
 </script>

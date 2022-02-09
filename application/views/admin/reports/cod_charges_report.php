@@ -94,7 +94,45 @@
                         </tr>
                     </thead>
                     <tbody id="cod_charges_report">
-
+                        <?php foreach ($sale as $item) : ?>
+                            <tr>
+                                <td><?php echo $item->Order_Date; ?></td>
+                                <td><?php echo $item->Order_ID; ?></td>
+                                <td><?php echo $item->Payment_Mode; ?></td>
+                                <td><?php echo $item->Commission_Rate; ?></td>
+                                <td><?php echo $item->Status; ?></td>
+                                <td><?php echo $item->Buyer_ID; ?></td>
+                                <td><?php echo $item->Buyer_Name; ?></td>
+                                <td><?php echo $item->Buyer_Username; ?></td>
+                                <td><?php echo $item->Buyer_Phone_Number; ?></td>
+                                <td><?php echo $item->Buyer_Email; ?></td>
+                                <td><?php echo $item->Brand_Name; ?></td>
+                                <td><?php echo $item->Seller_PAN_Number; ?></td>
+                                <td><?php echo $item->PAN_Type; ?></td>
+                                <td><?php echo $item->Seller_Shop_Name; ?></td>
+                                <td><?php echo $item->Seller_E_mail; ?></td>
+                                <td><?php echo $item->Product_SKU; ?></td>
+                                <td><?php echo $item->Product_Title; ?></td>
+                                <td><?php echo $item->Product_GST_Rate; ?></td>
+                                <td><?php echo $item->Product_Quatity; ?></td>
+                                <td><?php echo $item->Product_Total_Price; ?></td>
+                                <td><?php echo $item->Shipping_Cost; ?></td>
+                                <td><?php echo $item->Amount_Received; ?></td>
+                                <td><?php echo $item->Seller_Payable; ?></td>
+                                <td><?php echo $item->Payout_Initiated; ?></td>
+                                <td><?php echo $item->Commission_Amount; ?></td>
+                                <td><?php echo $item->Commission_Amount_With_GST; ?></td>
+                                <td><?php echo $item->Shipping_charges_to_gharobaar; ?></td>
+                                <td><?php echo $item->TCS_Amount; ?></td>
+                                <td><?php echo $item->TDS_Amount; ?></td>
+                                <td><?php echo $item->COD_Amount; ?></td>
+                                <td><?php echo $item->COD_Amount_Without_GST; ?></td>
+                                <td><?php echo $item->Coupon_Discount; ?></td>
+                                <td><?php echo $item->Offer_Type; ?></td>
+                                <td><?php echo $item->Offer_Code; ?></td>
+                                <td><?php echo $item->Offer_Name; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
 
@@ -209,5 +247,23 @@
         });
 
 
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#extend_datatable').DataTable({
+            dom: 'lBfrtip',
+            buttons: [{
+                extend: 'excel',
+                text: 'Export To Excel'
+            }],
+            "aLengthMenu": [
+                [15, 30, 60, 100],
+                [15, 30, 60, 100, "All"]
+            ],
+            "order": [
+                [0, "desc"]
+            ],
+        });
     });
 </script>

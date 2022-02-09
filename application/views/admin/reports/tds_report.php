@@ -56,6 +56,7 @@
             <table class="table table-bordered table-striped " id="extend_datatable" role="grid">
                 <thead>
                     <tr role="row">
+                        <th>Seller</th>
                         <th>PAN</th>
                         <th>Order ID</th>
                         <th>Pay Out Date</th>
@@ -66,7 +67,18 @@
                 </thead>
                 <tbody id="tds">
 
+                    <?php foreach ($sale as $item) : ?>
+                        <tr>
+                            <td><?php echo $item->Seller; ?></td>
+                            <td><?php echo $item->Pan; ?></td>
+                            <td><?php echo $item->Order_ID; ?></td>
+                            <td><?php echo $item->Pay_Out_Date; ?></td>
+                            <td><?php echo $item->Date_of_Deduction; ?></td>
+                            <td><?php echo $item->Amount_Paid; ?></td>
+                            <td><?php echo $item->TDS_Amount; ?></td>
+                        </tr>
 
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -178,5 +190,23 @@
         });
 
 
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#extend_datatable').DataTable({
+            dom: 'lBfrtip',
+            buttons: [{
+                extend: 'excel',
+                text: 'Export To Excel'
+            }],
+            "aLengthMenu": [
+                [15, 30, 60, 100],
+                [15, 30, 60, 100, "All"]
+            ],
+            "order": [
+                [0, "desc"]
+            ],
+        });
     });
 </script>

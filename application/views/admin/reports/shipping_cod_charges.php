@@ -30,6 +30,11 @@
 
 
 <div class="box-body index-table">
+    <div class="box-header with-border">
+        <div class="pull-left">
+            <h3 class="box-title" style="font-weight: 600;font-size: 20px;margin-bottom: 20px;"><?php echo trans('shipping_cod_charges'); ?></h3>
+        </div>
+    </div>
     <div class="row">
         <div class="table-responsive">
             <div class="filter">
@@ -82,7 +87,37 @@
                         </tr>
                     </thead>
                     <tbody id="sale_data_seller">
-
+                        <?php foreach ($sale as $item) : ?>
+                            <tr>
+                                <td><?php echo $item->Order_Date; ?></td>
+                                <td><?php echo $item->GBT_Order_No; ?></td>
+                                <td><?php echo $item->Schedule_Shipment_Date; ?></td>
+                                <td><?php echo $item->Schedule_Shipment_Time; ?></td>
+                                <td><?php echo $item->Pickup_Schedule_Date; ?></td>
+                                <td><?php echo $item->Shipment_Status; ?></td>
+                                <td><?php echo $item->Buyer; ?></td>
+                                <td><?php echo $item->Buyer_Mobile; ?></td>
+                                <td><?php echo $item->Buyer_Email; ?></td>
+                                <td><?php echo $item->Buyer_State; ?></td>
+                                <td><?php echo $item->Buyer_Address; ?></td>
+                                <td><?php echo $item->Seller_Shop_Name; ?></td>
+                                <td><?php echo $item->Seller_Registered_Email; ?></td>
+                                <td><?php echo $item->Seller_State; ?></td>
+                                <td><?php echo $item->Product_SKU; ?></td>
+                                <td><?php echo $item->Product_Name; ?></td>
+                                <td><?php echo $item->Product_Weight; ?></td>
+                                <td><?php echo $item->Sellers_Packaging_Dimenions; ?></td>
+                                <td><?php echo $item->Volumetric_Weight; ?></td>
+                                <td><?php echo $item->Courier_Service_Provider; ?></td>
+                                <td><?php echo $item->Shipping_amount; ?></td>
+                                <td><?php echo $item->COD_charges; ?></td>
+                                <td><?php echo $item->Status_of_COD_Remittance; ?></td>
+                                <td><?php echo $item->COD_pending_with_Shiprocket; ?></td>
+                                <td><?php echo $item->Shiprocket_Order_ID; ?></td>
+                                <td><?php echo $item->Shiprockets_AWB_Number; ?></td>
+                                <td><?php echo $item->Cancellation_chrges; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
 
@@ -197,5 +232,23 @@
         });
 
 
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#extend_datatable').DataTable({
+            dom: 'lBfrtip',
+            buttons: [{
+                extend: 'excel',
+                text: 'Export To Excel'
+            }],
+            "aLengthMenu": [
+                [15, 30, 60, 100],
+                [15, 30, 60, 100, "All"]
+            ],
+            "order": [
+                [0, "desc"]
+            ],
+        });
     });
 </script>

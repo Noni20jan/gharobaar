@@ -70,7 +70,23 @@
                     </tr>
                 </thead>
                 <tbody id="seller_profile">
-
+                    <?php foreach ($sale as $item) : ?>
+                        <tr>
+                            <td><?php echo $item->Seller; ?></td>
+                            <td><?php echo $item->Seller_Email; ?></td>
+                            <td><?php echo $item->Seller_Phone; ?></td>
+                            <td><?php echo $item->Shop_Name; ?></td>
+                            <td><?php echo $item->Pan; ?></td>
+                            <td><?php echo $item->GST; ?></td>
+                            <td><?php echo $item->Address; ?></td>
+                            <td><?php echo $item->Account_No; ?></td>
+                            <td><?php echo $item->Account_Holder; ?></td>
+                            <td><?php echo $item->IFSC_Code; ?></td>
+                            <td><?php echo $item->Bank_Branch; ?></td>
+                            <td><?php echo $item->Profile_Status; ?></td>
+                            <td><?php echo $item->Profile_Created_Date; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
 
                 </tbody>
             </table>
@@ -185,5 +201,23 @@
         });
 
 
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#extend_datatable').DataTable({
+            dom: 'lBfrtip',
+            buttons: [{
+                extend: 'excel',
+                text: 'Export To Excel'
+            }],
+            "aLengthMenu": [
+                [15, 30, 60, 100],
+                [15, 30, 60, 100, "All"]
+            ],
+            "order": [
+                [0, "desc"]
+            ],
+        });
     });
 </script>

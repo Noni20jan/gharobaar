@@ -75,7 +75,26 @@
                         </tr>
                     </thead>
                     <tbody id="sale_data_seller">
-
+                        <?php foreach ($sale as $item) : ?>
+                            <tr>
+                                <td><?php echo $item->Seller; ?></td>
+                                <td><?php echo $item->Email; ?></td>
+                                <td><?php echo $item->Phone; ?></td>
+                                <td><?php echo $item->Shop_name; ?></td>
+                                <td><?php echo $item->Pan; ?></td>
+                                <td><?php echo $item->GST; ?></td>
+                                <td><?php echo $item->Address; ?></td>
+                                <td><?php echo $item->total_commission_amount; ?></td>
+                                <td><?php echo $item->Total_shipping_cost; ?></td>
+                                <td><?php echo $item->Total_Cod_cost; ?></td>
+                                <td><?php echo $item->getway_amt; ?></td>
+                                <td><?php echo $item->GST_Amount; ?></td>
+                                <td><?php echo $item->CGST; ?></td>
+                                <td><?php echo $item->SGST; ?></td>
+                                <td><?php echo $item->IGST; ?></td>
+                                <td><?php echo $item->TOTAL; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -85,14 +104,6 @@
 </div>
 </div>
 <script>
-    $(document).ready(function() {
-        table = $('.button').DataTable({
-
-
-        });
-
-    });
-
     $("#seller_commision").submit(function(e) {
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -197,5 +208,23 @@
         });
 
 
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#extend_datatable').DataTable({
+            dom: 'lBfrtip',
+            buttons: [{
+                extend: 'excel',
+                text: 'Export To Excel'
+            }],
+            "aLengthMenu": [
+                [15, 30, 60, 100],
+                [15, 30, 60, 100, "All"]
+            ],
+            "order": [
+                [0, "desc"]
+            ],
+        });
     });
 </script>

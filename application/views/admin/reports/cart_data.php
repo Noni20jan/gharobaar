@@ -21,8 +21,6 @@
         }
     }
 
-
-
     .index-table {
         max-height: 500px;
         overflow-x: auto;
@@ -51,6 +49,7 @@
                 <table class="table table-bordered table-striped button" id="extend_datatable" role="grid">
                     <thead>
                         <tr role="row">
+
                             <th> Buyer</th>
                             <th>email</th>
                             <th>Phone Number</th>
@@ -60,7 +59,17 @@
                         </tr>
                     </thead>
                     <tbody id="cart">
+                        <?php foreach ($sale as $item) : ?>
+                            <tr>
+                                <td><?php echo $item->Buyer; ?></td>
+                                <td><?php echo $item->Email; ?></td>
+                                <td><?php echo $item->Contact; ?></td>
+                                <td><?php echo $item->Product_Title; ?></td>
+                                <td><?php echo $item->Quantity; ?></td>
+                                <td><?php echo $item->Created_at; ?></td>
+                            </tr>
 
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
 
@@ -174,5 +183,23 @@
         });
 
 
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#extend_datatable').DataTable({
+            dom: 'lBfrtip',
+            buttons: [{
+                extend: 'excel',
+                text: 'Export To Excel'
+            }],
+            "aLengthMenu": [
+                [15, 30, 60, 100],
+                [15, 30, 60, 100, "All"]
+            ],
+            "order": [
+                [0, "desc"]
+            ],
+        });
     });
 </script>

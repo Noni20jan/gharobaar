@@ -106,7 +106,63 @@
                         </tr>
                     </thead>
                     <tbody id="tcs_data">
+                        <?php foreach ($sale as $item) : ?>
+                            <tr>
+                                <td><?php echo $item->Seller; ?></td>
+                                <td><?php echo $item->Seller_Email; ?></td>
+                                <td><?php echo $item->Selle_Phone; ?></td>
+                                <td><?php echo $item->Order_No; ?></td>
+                                <td><?php echo $item->Shop_Name; ?></td>
+                                <td><?php echo $item->Pan_no; ?></td>
+                                <td><?php echo $item->Gst_no; ?></td>
+                                <td><?php echo $item->Address; ?></td>
+                                <td><?php echo $item->Account_No; ?></td>
+                                <td><?php echo $item->Account_Holder; ?></td>
+                                <td><?php echo $item->IFSC_Code; ?></td>
+                                <td><?php echo $item->Bank_Branch; ?></td>
+                                <td><?php echo $item->Order_Status; ?></td>
+                                <td><?php echo $item->Payment_Method; ?></td>
+                                <td><?php echo $item->Commision_Rate; ?></td>
+                                <td><?php echo $item->Product_Title; ?></td>
+                                <td><?php echo $item->HSN_Code; ?></td>
+                                <td><?php echo $item->Product_Qty; ?></td>
+                                <td><?php echo $item->Product_Unit_Price; ?></td>
+                                <td><?php echo $item->Price_After_Discount; ?></td>
+                                <td><?php echo $item->Price_Excluded_GST; ?></td>
+                                <td><?php echo $item->Commission_Amount; ?></td>
+                                <td><?php echo $item->Product_GST_Rate; ?></td>
+                                <td><?php echo $item->Ordered_Product_GST_Rate; ?></td>
+                                <td><?php echo $item->Product_IGST; ?></td>
+                                <td><?php echo $item->Product_CGST; ?></td>
+                                <td><?php echo $item->Product_SGST; ?></td>
+                                <td><?php echo $item->Product_Total_GST; ?></td>
+                                <td><?php echo $item->Product_Total_Price; ?></td>
+                                <td><?php echo $item->Product_Shipping_Cost; ?></td>
+                                <td><?php echo $item->Shipping_IGST; ?></td>
+                                <td><?php echo $item->Shipping_CGST; ?></td>
+                                <td><?php echo $item->Shipping_SGST; ?></td>
+                                <td><?php echo $item->Total_Shipping_Cost; ?></td>
+                                <td><?php echo $item->Product_COD_Charge; ?></td>
+                                <td><?php echo $item->COD_IGST; ?></td>
+                                <td><?php echo $item->COD_CGST; ?></td>
+                                <td><?php echo $item->COD_SGST; ?></td>
+                                <td><?php echo $item->Total_COD_Charges; ?></td>
+                                <td><?php echo $item->Total_Ordered_Value; ?></td>
+                                <td><?php echo $item->Product_Weight; ?></td>
+                                <td><?php echo $item->Product_Delivery_Partner; ?></td>
+                                <td><?php echo $item->Taxable_Value_Total; ?></td>
+                                <td><?php echo $item->IGST_Total; ?></td>
+                                <td><?php echo $item->CGST_Total; ?></td>
+                                <td><?php echo $item->SGST_Total; ?></td>
+                                <td><?php echo $item->Buyer_Name; ?></td>
+                                <td><?php echo $item->Buyer_Email; ?></td>
+                                <td><?php echo $item->Buyer_Phone; ?></td>
+                                <td><?php echo $item->Order_date; ?></td>
+                                <td><?php echo $item->Buyer_State; ?></td>
 
+                            </tr>
+
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -219,5 +275,23 @@
         });
 
 
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#extend_datatable').DataTable({
+            dom: 'lBfrtip',
+            buttons: [{
+                extend: 'excel',
+                text: 'Export To Excel'
+            }],
+            "aLengthMenu": [
+                [15, 30, 60, 100],
+                [15, 30, 60, 100, "All"]
+            ],
+            "order": [
+                [0, "desc"]
+            ],
+        });
     });
 </script>
