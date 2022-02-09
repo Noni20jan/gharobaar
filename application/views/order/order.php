@@ -478,17 +478,10 @@
                                                             <?php if ($item->order_status == "processing" || $item->order_status == "shipped") : ?>
                                                                 <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $ship_date; ?></p>
                                                             <?php endif; ?>
-                                                        <?php endif; ?>
-                                                    <?php elseif (substr_count($shipping_time, "_") == 2) : ?>
-                                                        <?php $shipped_time = intval($product->shipping_time); ?>
-                                                        <?php $created_at = strtotime($order->created_at); ?>
-                                                        <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
-                                                        <?php $shipped_date = (date("dS M Y", $order_create)); ?>
-                                                        <?php $shipp_date = new DateTime($shipped_date); ?>
-                                                        <?php if ($item->order_status == "processing"  || $item->order_status == "shipped") : ?>
-                                                            <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
+
                                                         <?php endif; ?>
                                                     <?php endif; ?>
+
                                                     <?php if (get_product($item->product_id)->add_meet == "Made to order"  && get_product($item->product_id)->category_id != 2 || $item->order_status == "processing" || $item->order_status == "shipped") : ?>
                                                         <?php $lead_days = intval(get_product($item->product_id)->lead_days); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
@@ -497,7 +490,16 @@
                                                         <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                                                         <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
                                                     <?php endif; ?>
-
+                                                    <?php if ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") == 2) : ?>
+                                                        <?php $shipped_time = intval($product->shipping_time); ?>
+                                                        <?php $created_at = strtotime($order->created_at); ?>
+                                                        <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
+                                                        <?php $shipped_date = (date("dS M Y", $order_create)); ?>
+                                                        <?php $shipp_date = new DateTime($shipped_date); ?>
+                                                        <?php if ($item->order_status == "processing"  || $item->order_status == "shipped") : ?>
+                                                            <!-- <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p> -->
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
 
                                                     <!-- <?php if ($item->product_type == 'physical') : ?>
                                                                     <p><span class="span-product-dtl-table"><?php echo trans("shipping"); ?>:</span><?php echo price_formatted($item->product_shipping_cost, $item->product_currency); ?></p>
@@ -1113,7 +1115,6 @@
 </div>
 </div>
 <!-- Wrapper End-->
-<input type="hidden" name="order_id" value="<?php echo $order->id; ?>">
 
 <?php foreach ($order_products as $item) : ?>
     <div class="modal fade" id="rejectModal<?php echo $order->id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
@@ -1128,6 +1129,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" name="order_product_id" value="<?php echo $item->id; ?>">
+
+                    <input type="hidden" name="order_id" value="<?php echo $order->id; ?>">
+
                     <div class="row tracking-number-container">
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -1397,18 +1402,14 @@
 
         }
     });
-</script>
 
-
-<script>
     function open_modal() {
         setTimeout(
             function() {
                 $("#rejectModal<?php echo $order->id; ?>").modal('show');
             }, 200);
     }
-</script>
-<script>
+
     function cancel_order_buyer() {
         var product_ids = [];
         $("input[name='checkbox-table']:checked").each(function() {
