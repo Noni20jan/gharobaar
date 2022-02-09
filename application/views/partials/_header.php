@@ -629,6 +629,7 @@
         padding: 6px;
         border-radius: 20px;
         color: white;
+        font-size: 19px;
     }
 
     /* width */
@@ -957,7 +958,390 @@
         }
     </style>
     <!-- <script src="<?= base_url(); ?>assets/js/fselect.js"></script> -->
+    <style>
+        /* @import 'https://fonts.googleapis.com/css?family=Open+Sans'; */
 
+        /* body {
+            margin: 0;
+            padding: 0;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        .content {
+            padding: 15px;
+            margin-top: 60px;
+            color: #333;
+        } */
+
+        .navigation {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 60px;
+            background: #3f51b5;
+        }
+
+        .navigation .inner-navigation {
+            padding: 0;
+            margin: 0;
+        }
+
+        .navigation .inner-navigation li {
+            list-style-type: none;
+        }
+
+        .navigation .inner-navigation li .menu-link {
+            color: #ff5252;
+            line-height: 3.7em;
+            padding: 20px 18px;
+            text-decoration: none;
+            transition: background 0.5s, color 0.5s;
+        }
+
+        .navigation .inner-navigation li .menu-link.menu-anchor {
+            padding: 20px;
+            margin: 0;
+            background: #ff5252;
+            color: #FFF;
+        }
+
+        .navigation .inner-navigation li .menu-link.has-notifications {
+            background: #ff5252;
+            color: #FFF;
+        }
+
+        .navigation .inner-navigation li .menu-link.circle {
+            line-height: 3.8em;
+            padding: 14px 18px;
+            border-radius: 50%;
+        }
+
+        .navigation .inner-navigation li .menu-link.circle:hover {
+            background: #ff5252;
+            color: #FFF;
+        }
+
+        .navigation .inner-navigation li .menu-link.square:hover {
+            background: #ff5252;
+            color: #FFF;
+            transition: background 0.5s, color 0.5s;
+        }
+
+        .dropdown-container {
+            overflow-y: hidden;
+        }
+
+        .dropdown-container.expanded .dropdown {
+            -webkit-animation: fadein 0.5s;
+            -moz-animation: fadein 0.5s;
+            -ms-animation: fadein 0.5s;
+            -o-animation: fadein 0.5s;
+            animation: fadein 0.5s;
+            display: block;
+        }
+
+        .dropdown-container .dropdown {
+            -webkit-animation: fadeout 0.5s;
+            -moz-animation: fadeout 0.5s;
+            -ms-animation: fadeout 0.5s;
+            -o-animation: fadeout 0.5s;
+            animation: fadeout 0.5s;
+            display: none;
+            position: absolute;
+            width: 300px;
+            height: auto;
+            max-height: 600px;
+            overflow-y: hidden;
+            padding: 0;
+            margin: 0;
+            background: #fff;
+            margin-top: 3px;
+            /* margin-right: -15px; */
+            border-top: 4px solid #fff;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            -webkit-box-shadow: 2px 2px 15px -5px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 2px 2px 15px -5px rgba(0, 0, 0, 0.75);
+            box-shadow: 2px 2px 15px -5px rgba(0, 0, 0, 0.75);
+            /*
+            &:before{
+                position: absolute;
+                content: ' ';
+                width: 0; 
+                height: 0; 
+                top: -13px;
+                right: 7px;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-bottom: 10px solid $secondary-color; 
+            }
+            */
+        }
+
+        .dropdown-container .dropdown .notification-group {
+            border-bottom: 1px solid #e3e3e3;
+            overflow: hidden;
+            /* min-height: 65px; */
+        }
+
+        .dropdown-container .dropdown .notification-group:last-child {
+            border-bottom: 0;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        .dropdown-container .dropdown .notification-group .notification-tab {
+            padding: 14px 25px;
+            /* min-height: 65px; */
+        }
+
+        .dropdown-container .dropdown .notification-group .notification-tab:hover {
+            cursor: pointer;
+            background: #f1f1f1;
+        }
+
+        .dropdown-container .dropdown .notification-group .notification-tab:hover .fa,
+        .dropdown-container .dropdown .notification-group .notification-tab:hover p,
+        .dropdown-container .dropdown .notification-group .notification-tab:hover {
+            color: #606060 !important;
+            /* display: inline-block; */
+        }
+
+        .dropdown-container .dropdown .notification-group .notification-tab:hover {
+            background: #f1f1f1;
+            border-color: #f1f1f1;
+        }
+
+        .dropdown-container .dropdown .notification-group .notification-list {
+            padding: 0;
+            overflow-y: auto;
+            height: 0px;
+            max-height: 250px;
+            transition: height 0.5s;
+        }
+
+
+        .dropdown-container .dropdown .notification-group .notification-list .notification-list-item {
+            padding: 5px 25px;
+            border-bottom: 1px solid #e3e3e3;
+        }
+
+        .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .message {
+            margin: 5px 5px 10px;
+            color: gray;
+        }
+
+        .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .item-footer a {
+            color: #3f51b5;
+            text-decoration: none;
+        }
+
+        .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .item-footer .date {
+            float: right;
+        }
+
+        .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:nth-of-type(odd) {
+            background: #e3e3e3;
+        }
+
+        /* .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:hover {
+            cursor: pointer;
+        } */
+
+        .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:last-child {
+            border-bottom: 0;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            line-height: 30px;
+        }
+
+        .dropdown-container .dropdown .notification-group.expanded .notification-tab {
+            background: #e3e3e3;
+        }
+
+        .dropdown-container .dropdown .notification-group.expanded .notification-tab .fa,
+        .dropdown-container .dropdown .notification-group.expanded .notification-tab h4,
+        .dropdown-container .dropdown .notification-group.expanded .notification-tab {
+            color: #FFF;
+            /* display: inline-block; */
+        }
+
+        .dropdown-container .dropdown .notification-group.expanded .notification-tab {
+            background: #f1f1f1;
+            border-color: #f1f1f1;
+        }
+
+        .dropdown-container .dropdown .notification-group.expanded .notification-list {
+            height: 250px;
+            max-height: 100px;
+            transition: height 0.5s;
+        }
+
+        .dropdown-container .dropdown .notification-group .fa,
+        .dropdown-container .dropdown .notification-group h4,
+        .dropdown-container .dropdown .notification-group .label {
+            color: #333;
+            /* display: inline-block; */
+        }
+
+        .dropdown-container .dropdown .notification-group .fa {
+            margin-right: 5px;
+            margin-top: 25px;
+        }
+
+        .dropdown-container .dropdown .notification-group .label {
+            float: right;
+            margin-top: 20px;
+            color: #3f51b5;
+            border: 1px solid #3f51b5;
+            padding: 0px 7px;
+            border-radius: 15px;
+        }
+
+        .right {
+            float: right;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .notification-head {
+            color: #606060 !important;
+            margin: 0px 0px 0px;
+            padding: 7px 0px 10px 0px;
+        }
+
+        .head-notification-count {
+            color: gray;
+            position: absolute;
+            right: 12px;
+            /* top: 21px; */
+        }
+
+        /* @media only screen and (max-width: 321px) {
+                .dropdown-container .dropdown .notification-group .notification-tab h4 {
+                    display: none;
+                }
+
+                .dropdown-container .dropdown .notification-group .notification-tab:hover h4 {
+                    display: none;
+                }
+
+                .dropdown-container .dropdown .notification-group.expanded .notification-tab h4 {
+                    display: none;
+                }
+            }
+
+            @media only screen and (max-width: 514px) {
+                .dropdown-container .dropdown {
+                    width: 100%;
+                    margin: 0px;
+                    left: 0;
+                }
+            } */
+
+        /* 
+        @keyframes fadein {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-moz-keyframes fadein {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes fadein {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-ms-keyframes fadein {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-o-keyframes fadein {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeout {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        @-moz-keyframes fadeout {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        @-webkit-keyframes fadeout {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        @-ms-keyframes fadeout {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        @-o-keyframes fadeout {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        } */
+    </style>
 </head>
 <div id="tittletoggle"></div>
 
@@ -1119,17 +1503,120 @@
                                         <?php endif; ?>
                                         <?php if ($this->auth_check) : ?>
                                             <li class="icon-bg">
-                                                <button onclick="myFunction()" class="dropbtn notification-button">
-                                                    <!-- <div id='wishlist'> -->
-                                                    <?php $count_array = $this->order_model->get_notification_count();
-                                                    $count = count($count_array); ?>
-                                                    <i class="far fa-bell"></i><span class="badge notification-count"><?php echo $count; ?></span>
-                                                    <!-- </div> -->
-                                                </button>
-                                                <div class="dropdown-content" id="myDropdown" style="border-radius: 0px;padding: 11px 5px; width: 100%; position: absolute; left: 0; overflow-y: auto;max-height: 300px;">
-                                                    <?php foreach ($count_array as $notification) : ?>
-                                                        <a href="<?php echo base_url('notification-details') . "/" . $notification->id ?>" style="padding: 20px 4px;border-radius: 0px; border-bottom: 1px solid #8b8a8a40;"><?php echo $notification->title; ?></a>
-                                                    <?php endforeach; ?>
+                                                <!--span class="notification-label"></span-->
+                                                <div class="dropdown-container">
+                                                    <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
+                                                        <i class="far fa-bell notification-button"></i>
+                                                    </a>
+                                                    <ul class="dropdown" name="notificationMenu" style="z-index:100;">
+                                                        <li class="notification-group">
+                                                            <div class="notification-tab">
+                                                                <!-- <i class="fa fa-flag"></i> -->
+                                                                <p class="notification-head">Gharobaar Updates</p>
+                                                                <label class="head-notification-count">4</label>
+                                                            </div>
+                                                            <!-- tab -->
+                                                            <ul class="notification-list">
+                                                                <li class="notification-list-item" style="line-height:25px;">
+                                                                    <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+                                                                    <div class="item-footer" style="color:gray;">
+                                                                        <span class="from">project3</span>
+                                                                        <span class="date">2 minutes ago</span>
+                                                                    </div>
+                                                                </li>
+
+                                                                <li class="notification-list-item">
+                                                                    <!-- <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p> -->
+                                                                    <div class="item-footer">
+                                                                        <!-- <span class="from"><a href="#">project3</a></span>
+                                                                        <span class="date">2 minutes ago</span> -->
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="notification-group">
+                                                            <div class="notification-tab">
+                                                                <!-- <i class="fa fa-bug"></i> -->
+                                                                <p class="notification-head">Order Placement</p>
+                                                                <label class="head-notification-count">4</label>
+                                                            </div> <!-- tab -->
+                                                            <ul class="notification-list">
+                                                                <li class="notification-list-item">
+                                                                    <!-- <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p> -->
+                                                                    <div class="item-footer">
+                                                                        <!-- <span class="from"><a href="#">project1</a></span>
+                                                                        <span class="date">2 minutes ago</span> -->
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                            <!-- list -->
+                                                        </li>
+                                                        <li class="notification-group">
+                                                            <div class="notification-tab">
+                                                                <!-- <i class="fa fa-envelope"></i> -->
+                                                                <p class="notification-head">Order Update</p>
+                                                                <label class="head-notification-count">4</label>
+                                                            </div>
+                                                            <ul class="notification-list">
+                                                                <li class="notification-list-item">
+                                                                    <!-- <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p> -->
+                                                                    <div class="item-footer">
+                                                                        <!-- <span class="from"><a href="#">mstrlaw</a></span>
+                                                                        <span class="date">2 minutes ago</span> -->
+                                                                    </div>
+                                                                </li>
+
+                                                            </ul>
+                                                        </li>
+                                                        <li class="notification-group">
+                                                            <div class="notification-tab">
+                                                                <!-- <i class="fa fa-calendar"></i> -->
+                                                                <p class="notification-head">Order Cancellation by Seller</p>
+                                                                <label class="head-notification-count">4</label>
+                                                            </div>
+                                                            <ul class="notification-list">
+                                                                <li class="notification-list-item">
+                                                                    <!-- <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p> -->
+                                                                    <div class="item-footer">
+                                                                        <!-- <span class="from"><a href="#">mstrlaw</a></span>
+                                                                        <span class="date">in 2 days</span> -->
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="notification-group">
+                                                            <div class="notification-tab">
+                                                                <!-- <i class="fa fa-trophy"></i> -->
+                                                                <p class="notification-head">Order Delivered</p>
+                                                                <label class="head-notification-count">4</label>
+                                                            </div>
+                                                            <ul class="notification-list">
+                                                                <li class="notification-list-item">
+                                                                    <!-- <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p> -->
+                                                                    <div class="item-footer">
+                                                                        <!-- <span class="from"><a href="#">technical</a></span>
+                                                                        <span class="date">2 weeks ago</span> -->
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="notification-group">
+                                                            <div class="notification-tab">
+                                                                <!-- <i class="fa fa-trophy"></i> -->
+                                                                <p class="notification-head">Promotions</p>
+                                                                <label class="head-notification-count">4</label>
+                                                            </div>
+                                                            <ul class="notification-list">
+                                                                <li class="notification-list-item">
+                                                                    <!-- <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p> -->
+                                                                    <div class="item-footer">
+                                                                        <!-- <span class="from"><a href="#">technical</a></span>
+                                                                        <span class="date">2 weeks ago</span> -->
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </li>
                                         <?php else : ?>
@@ -1362,22 +1849,123 @@
                                 </a>
                             </div>
                             <?php if ($this->auth_check) : ?>
-                                <div class="mobile-bell-notification">
-                                    <li class="">
-                                    <li onclick="myFunction()" class="dropbtn">
-                                        <!-- <div id='wishlist'> -->
-                                        <?php $count_array = $this->order_model->get_notification_count();
-                                        $count = count($count_array); ?>
-                                        <i class="far fa-bell"></i><span class="badge notification-count"><?php echo $count; ?></span>
-                                        <!-- </div> -->
-                                    </li>
-                                    <div class="dropdown-content" id="myDropdown" style="border-radius: 0px;padding: 11px 5px; width: 100%; position: absolute; left: 0; overflow-y: auto;max-height: 300px;">
-                                        <?php foreach ($count_array as $notification) : ?>
-                                            <a href="<?php echo base_url('notification-details') . "/" . $notification->id ?>" style="padding: 20px 4px;border-radius: 0px; border-bottom: 1px solid #8b8a8a40;"><?php echo $notification->title; ?></a>
-                                        <?php endforeach; ?>
+                                <li class="icon-bg">
+                                    <!--span class="notification-label"></span-->
+                                    <div class="dropdown-container">
+                                        <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
+                                            <i class="far fa-bell notification-button"></i>
+                                        </a>
+                                        <ul class="dropdown" name="notificationMenu" style="z-index:100;">
+                                            <li class="notification-group">
+                                                <div class="notification-tab">
+                                                    <!-- <i class="fa fa-flag"></i> -->
+                                                    <p class="notification-head">Gharobaar Updates</p>
+                                                    <label class="head-notification-count">4</label>
+                                                </div>
+                                                <!-- tab -->
+                                                <ul class="notification-list">
+                                                    <li class="notification-list-item" style="line-height:25px;">
+                                                        <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+                                                        <div class="item-footer" style="color:gray;">
+                                                            <span class="from">project3</span>
+                                                            <span class="date">2 minutes ago</span>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="notification-list-item">
+                                                        <!-- <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p> -->
+                                                        <div class="item-footer">
+                                                            <!-- <span class="from"><a href="#">project3</a></span>
+                                                                        <span class="date">2 minutes ago</span> -->
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="notification-group">
+                                                <div class="notification-tab">
+                                                    <!-- <i class="fa fa-bug"></i> -->
+                                                    <p class="notification-head">Order Placement</p>
+                                                    <label class="head-notification-count">4</label>
+                                                </div> <!-- tab -->
+                                                <ul class="notification-list">
+                                                    <li class="notification-list-item">
+                                                        <!-- <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p> -->
+                                                        <div class="item-footer">
+                                                            <!-- <span class="from"><a href="#">project1</a></span>
+                                                                        <span class="date">2 minutes ago</span> -->
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <!-- list -->
+                                            </li>
+                                            <li class="notification-group">
+                                                <div class="notification-tab">
+                                                    <!-- <i class="fa fa-envelope"></i> -->
+                                                    <p class="notification-head">Order Update</p>
+                                                    <label class="head-notification-count">4</label>
+                                                </div>
+                                                <ul class="notification-list">
+                                                    <li class="notification-list-item">
+                                                        <!-- <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p> -->
+                                                        <div class="item-footer">
+                                                            <!-- <span class="from"><a href="#">mstrlaw</a></span>
+                                                                        <span class="date">2 minutes ago</span> -->
+                                                        </div>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+                                            <li class="notification-group">
+                                                <div class="notification-tab">
+                                                    <!-- <i class="fa fa-calendar"></i> -->
+                                                    <p class="notification-head">Order Cancellation by Seller</p>
+                                                    <label class="head-notification-count">4</label>
+                                                </div>
+                                                <ul class="notification-list">
+                                                    <li class="notification-list-item">
+                                                        <!-- <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p> -->
+                                                        <div class="item-footer">
+                                                            <!-- <span class="from"><a href="#">mstrlaw</a></span>
+                                                                        <span class="date">in 2 days</span> -->
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="notification-group">
+                                                <div class="notification-tab">
+                                                    <!-- <i class="fa fa-trophy"></i> -->
+                                                    <p class="notification-head">Order Delivered</p>
+                                                    <label class="head-notification-count">4</label>
+                                                </div>
+                                                <ul class="notification-list">
+                                                    <li class="notification-list-item">
+                                                        <!-- <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p> -->
+                                                        <div class="item-footer">
+                                                            <!-- <span class="from"><a href="#">technical</a></span>
+                                                                        <span class="date">2 weeks ago</span> -->
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="notification-group">
+                                                <div class="notification-tab">
+                                                    <!-- <i class="fa fa-trophy"></i> -->
+                                                    <p class="notification-head">Promotions</p>
+                                                    <label class="head-notification-count">4</label>
+                                                </div>
+                                                <ul class="notification-list">
+                                                    <li class="notification-list-item">
+                                                        <!-- <p class="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p> -->
+                                                        <div class="item-footer">
+                                                            <!-- <span class="from"><a href="#">technical</a></span>
+                                                                        <span class="date">2 weeks ago</span> -->
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    </li>
-                                </div>
+                                </li>
                             <?php else : ?>
                                 <!-- <li class="icon-bg">
                                                 <a id='wishlist'>
@@ -1385,7 +1973,6 @@
                                                 </a>
                                             </li> -->
                             <?php endif; ?>
-
 
 
                             <div class="mobile-search">
@@ -2307,6 +2894,54 @@
         })
     </script>
     <script>
+        //Open dropdown when clicking on element
+        $(document).on('click', "a[data-dropdown='notificationMenu']", function(e) {
+            e.preventDefault();
+
+            var el = $(e.currentTarget);
+
+            // $('body').prepend('<div id="dropdownOverlay" style="background: transparent; height:100%;width:100%;position:fixed;"></div>')
+
+            var container = $(e.currentTarget).parent();
+            var dropdown = container.find('.dropdown');
+            var containerWidth = container.width();
+            var containerHeight = container.height();
+
+            var anchorOffset = $(e.currentTarget).offset();
+
+            dropdown.css({
+                'right': containerWidth / 2 + 'px'
+            })
+
+            container.toggleClass('expanded')
+
+        });
+
+        //Close dropdowns on document click
+
+        // $(document).click(function() {
+        //     $(".dropdown").hide();
+        // });
+        // $(document).on('click', '#dropdownOverlay', function(e) {
+        //     var el = $(e.currentTarget)[0].activeElement;
+
+        //     if (typeof $(el).attr('data-dropdown') === 'undefined') {
+        //         $('#dropdownOverlay').remove();
+        //         $('.dropdown-container.expanded').removeClass('expanded');
+        //     }
+        // })
+
+        //Dropdown collapsile tabs
+        $('.notification-tab').click(function(e) {
+            if ($(e.currentTarget).parent().hasClass('expanded')) {
+                $('.notification-group').removeClass('expanded');
+            } else {
+                $('.notification-group').removeClass('expanded');
+                $(e.currentTarget).parent().toggleClass('expanded');
+            }
+        })
+    </script>
+    <!-- <script>
         /* When the user clicks on the button, 
         toggle between hiding and showing the dropdown content */
         function myFunction() {
@@ -2325,4 +2960,4 @@
                 }
             }
         }
-    </script>
+    </script> -->
