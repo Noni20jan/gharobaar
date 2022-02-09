@@ -1129,6 +1129,7 @@
         .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .message {
             margin: 5px 5px 10px;
             color: gray;
+            font-size: 13px;
         }
 
         .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .item-footer a {
@@ -1150,8 +1151,8 @@
 
         .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:last-child {
             border-bottom: 0;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
+            /* border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px; */
             line-height: 30px;
         }
 
@@ -1217,6 +1218,10 @@
             position: absolute;
             right: 12px;
             /* top: 21px; */
+        }
+
+        .from {
+            font-weight: 500;
         }
 
         /* @media only screen and (max-width: 321px) {
@@ -1508,7 +1513,7 @@
                                                     <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
                                                         <i class="far fa-bell notification-button"></i>
                                                     </a>
-                                                    <ul class="dropdown" name="notificationMenu" style="z-index:100;">
+                                                    <ul class="dropdown" name="notificationMenu" style="z-index:100; width:100%;">
                                                         <li class="notification-group">
                                                             <div class="notification-tab">
                                                                 <!-- <i class="fa fa-flag"></i> -->
@@ -1521,11 +1526,11 @@
                                                             <ul class="notification-list">
                                                                 <?php foreach ($gharobaar_updates as $gharobaar_update) : ?>
                                                                     <li class="notification-list-item" style="line-height:25px;">
-                                                                        <p class="message"><?php echo $gharobaar_update->remark; ?></p>
                                                                         <div class="item-footer" style="color:gray;">
                                                                             <span class="from"><?php echo $gharobaar_update->title; ?></span>
                                                                             <span class="date"><?php echo $gharobaar_update->created_at; ?></span>
                                                                         </div>
+                                                                        <p class="message"><?php echo $gharobaar_update->remark; ?></p>
                                                                     </li>
                                                                 <?php endforeach; ?>
 
@@ -1542,11 +1547,12 @@
                                                             <ul class="notification-list">
                                                                 <?php foreach ($order_placements as $order_placement) : ?>
                                                                     <li class="notification-list-item" style="line-height:25px;">
-                                                                        <p class="message"><?php echo $order_placement->remark; ?></p>
                                                                         <div class="item-footer" style="color:gray;">
                                                                             <span class="from"><?php echo $order_placement->title; ?></span>
                                                                             <span class="date"><?php echo $order_placement->created_at; ?></span>
                                                                         </div>
+                                                                        <p class="message"><?php echo $order_placement->remark; ?></p>
+
                                                                     </li>
                                                                 <?php endforeach; ?>
                                                             </ul>
@@ -1563,11 +1569,12 @@
                                                             <ul class="notification-list">
                                                                 <?php foreach ($order_updates as $order_update) : ?>
                                                                     <li class="notification-list-item" style="line-height:25px;">
-                                                                        <p class="message"><?php echo $order_update->remark; ?></p>
                                                                         <div class="item-footer" style="color:gray;">
                                                                             <span class="from"><?php echo $order_update->title; ?></span>
                                                                             <span class="date"><?php echo $order_update->created_at; ?></span>
                                                                         </div>
+                                                                        <p class="message"><?php echo $order_update->remark; ?></p>
+
                                                                     </li>
                                                                 <?php endforeach; ?>
                                                             </ul>
@@ -1583,11 +1590,12 @@
                                                             <ul class="notification-list">
                                                                 <?php foreach ($order_cancellation_seller_updates as $order_cancellation_seller_update) : ?>
                                                                     <li class="notification-list-item" style="line-height:25px;">
-                                                                        <p class="message"><?php echo $order_cancellation_seller_update->remark; ?></p>
                                                                         <div class="item-footer" style="color:gray;">
                                                                             <span class="from"><?php echo $order_cancellation_seller_update->title; ?></span>
                                                                             <span class="date"><?php echo $order_cancellation_seller_update->created_at; ?></span>
                                                                         </div>
+                                                                        <p class="message"><?php echo $order_cancellation_seller_update->remark; ?></p>
+
                                                                     </li>
                                                                 <?php endforeach; ?>
                                                             </ul>
@@ -1603,11 +1611,12 @@
                                                             <ul class="notification-list">
                                                                 <?php foreach ($order_delivered_updates as $order_delivered_update) : ?>
                                                                     <li class="notification-list-item" style="line-height:25px;">
-                                                                        <p class="message"><?php echo $order_delivered_update->remark; ?></p>
                                                                         <div class="item-footer" style="color:gray;">
                                                                             <span class="from"><?php echo $order_delivered_update->title; ?></span>
                                                                             <span class="date"><?php echo $order_delivered_update->created_at; ?></span>
                                                                         </div>
+                                                                        <p class="message"><?php echo $order_delivered_update->remark; ?></p>
+
                                                                     </li>
                                                                 <?php endforeach; ?>
                                                             </ul>
@@ -1623,11 +1632,12 @@
                                                             <ul class="notification-list">
                                                                 <?php foreach ($promotions_updates as $promotions_update) : ?>
                                                                     <li class="notification-list-item" style="line-height:25px;">
-                                                                        <p class="message"><?php echo $promotions_update->remark; ?></p>
                                                                         <div class="item-footer" style="color:gray;">
                                                                             <span class="from"><?php echo $promotions_update->title; ?></span>
                                                                             <span class="date"><?php echo $promotions_update->created_at; ?></span>
                                                                         </div>
+                                                                        <p class="message"><?php echo $promotions_update->remark; ?></p>
+
                                                                     </li>
                                                                 <?php endforeach; ?>
                                                             </ul>
@@ -1644,11 +1654,12 @@
                                                                 <ul class="notification-list">
                                                                     <?php foreach ($reviews_followers_updates as $reviews_followers_update) : ?>
                                                                         <li class="notification-list-item" style="line-height:25px;">
-                                                                            <p class="message"><?php echo $reviews_followers_update->remark; ?></p>
                                                                             <div class="item-footer" style="color:gray;">
                                                                                 <span class="from"><?php echo $reviews_followers_update->title; ?></span>
                                                                                 <span class="date"><?php echo $reviews_followers_update->created_at; ?></span>
                                                                             </div>
+                                                                            <p class="message"><?php echo $reviews_followers_update->remark; ?></p>
+
                                                                         </li>
                                                                     <?php endforeach; ?>
                                                                 </ul>
@@ -1664,11 +1675,12 @@
                                                                 <ul class="notification-list">
                                                                     <?php foreach ($listings_updates as $listings_update) : ?>
                                                                         <li class="notification-list-item" style="line-height:25px;">
-                                                                            <p class="message"><?php echo $listings_update->remark; ?></p>
                                                                             <div class="item-footer" style="color:gray;">
                                                                                 <span class="from"><?php echo $listings_update->title; ?></span>
                                                                                 <span class="date"><?php echo $listings_update->created_at; ?></span>
                                                                             </div>
+                                                                            <p class="message"><?php echo $listings_update->remark; ?></p>
+
                                                                         </li>
                                                                     <?php endforeach; ?>
                                                                 </ul>
@@ -1684,11 +1696,12 @@
                                                                 <ul class="notification-list">
                                                                     <?php foreach ($profile_updates as $profile_update) : ?>
                                                                         <li class="notification-list-item" style="line-height:25px;">
-                                                                            <p class="message"><?php echo $profile_update->remark; ?></p>
                                                                             <div class="item-footer" style="color:gray;">
                                                                                 <span class="from"><?php echo $profile_update->title; ?></span>
                                                                                 <span class="date"><?php echo $profile_update->created_at; ?></span>
                                                                             </div>
+                                                                            <p class="message"><?php echo $profile_update->remark; ?></p>
+
                                                                         </li>
                                                                     <?php endforeach; ?>
                                                                 </ul>
@@ -1704,11 +1717,12 @@
                                                                 <ul class="notification-list">
                                                                     <?php foreach ($payout_updates as $payout_update) : ?>
                                                                         <li class="notification-list-item" style="line-height:25px;">
-                                                                            <p class="message"><?php echo $payout_update->remark; ?></p>
                                                                             <div class="item-footer" style="color:gray;">
                                                                                 <span class="from"><?php echo $payout_update->title; ?></span>
                                                                                 <span class="date"><?php echo $payout_update->created_at; ?></span>
                                                                             </div>
+                                                                            <p class="message"><?php echo $payout_update->remark; ?></p>
+
                                                                         </li>
                                                                     <?php endforeach; ?>
                                                                 </ul>
@@ -1724,11 +1738,12 @@
                                                                 <ul class="notification-list">
                                                                     <?php foreach ($customization_updates as $customization_update) : ?>
                                                                         <li class="notification-list-item" style="line-height:25px;">
-                                                                            <p class="message"><?php echo $customization_update->remark; ?></p>
                                                                             <div class="item-footer" style="color:gray;">
                                                                                 <span class="from"><?php echo $customization_update->title; ?></span>
                                                                                 <span class="date"><?php echo $customization_update->created_at; ?></span>
                                                                             </div>
+                                                                            <p class="message"><?php echo $customization_update->remark; ?></p>
+
                                                                         </li>
                                                                     <?php endforeach; ?>
                                                                 </ul>
@@ -1973,7 +1988,7 @@
                                         <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
                                             <i class="far fa-bell notification-button"></i>
                                         </a>
-                                        <ul class="dropdown" name="notificationMenu" style="z-index:100;">
+                                        <ul class="dropdown" name="notificationMenu" style="z-index:100; width:100%;">
                                             <li class="notification-group">
                                                 <div class="notification-tab">
                                                     <!-- <i class="fa fa-flag"></i> -->
@@ -1986,14 +2001,13 @@
                                                 <ul class="notification-list">
                                                     <?php foreach ($gharobaar_updates as $gharobaar_update) : ?>
                                                         <li class="notification-list-item" style="line-height:25px;">
-                                                            <p class="message"><?php echo $gharobaar_update->remark; ?></p>
                                                             <div class="item-footer" style="color:gray;">
                                                                 <span class="from"><?php echo $gharobaar_update->title; ?></span>
                                                                 <span class="date"><?php echo $gharobaar_update->created_at; ?></span>
                                                             </div>
+                                                            <p class="message"><?php echo $gharobaar_update->remark; ?></p>
                                                         </li>
                                                     <?php endforeach; ?>
-
                                                 </ul>
                                             </li>
                                             <li class="notification-group">
