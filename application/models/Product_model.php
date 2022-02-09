@@ -1600,7 +1600,7 @@ class Product_model extends Core_Model
                     $sql = "SELECT * FROM word WHERE word ='$word'";
                     $wordresult = $this->db->query($sql)->num_rows();
                     // $wordnum = mysqli_num_rows($wordresult);
-                    if ($wordresult == 0 && strlen($word) < 4) {
+                    if ($wordresult == 0 && strlen($metaphone) > 4) {
                         $sql3 = "INSERT INTO word (word,metaphone,soundex) VALUES ('$word','$metaphone','$soundex')";
                         $query = $this->db->query($sql3);
                     }
@@ -3658,7 +3658,7 @@ order by id desc LIMIT 1";
         $this->db->where('is_service', "0");
         $this->db->where('is_shop_open', "1");
         $this->db->where('status', 1)->where('products.is_draft', 0)->where('products.is_deleted', 0);
-        $this->db->group_by('order_products.seller_id'); 
+        $this->db->group_by('order_products.seller_id');
         $this->db->order_by("count(`products`.`id`)", 'desc');
         return $this->db->get('products')->result();
     }
@@ -3733,7 +3733,7 @@ order by id desc LIMIT 1";
         $sql = "SELECT * FROM word WHERE word ='$word'";
         $wordresult = $this->db->query($sql)->num_rows();
         // $wordnum = mysqli_num_rows($wordresult);
-        if ($wordresult == 0 && strlen($word) < 4) {
+        if ($wordresult == 0 && strlen($metaphone) > 4) {
             $sql3 = "INSERT INTO word (word,metaphone,soundex) VALUES ('$word','$metaphone','$soundex')";
             $query = $this->db->query($sql3);
         }
