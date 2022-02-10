@@ -227,8 +227,7 @@ class Order_admin_model extends CI_Model
     public function get_order($id)
     {
         $id = clean_number($id);
-        $this->db->where('orders.id', $id);
-        $this->db->join('cms_offers', 'cms_offers.id=orders.offer_id');
+        $this->db->where('id', $id);
         $query = $this->db->get('orders');
         return $query->row();
     }
