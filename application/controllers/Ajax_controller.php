@@ -647,6 +647,7 @@ class Ajax_controller extends Home_Core_Controller
                     'buyer_name' => $buyer_name,
                     'template_path' => "email/email_new_order",
                     'remark' => "Your Order for " . $title . "  has been succefully placed vide Order #" . $order_id . " and the product will be dispatched soon     .",
+                    'event_type' => "Order Placement"
                 );
                 $this->email_model->send_email($data);
 
@@ -667,7 +668,8 @@ class Ajax_controller extends Home_Core_Controller
                                     'remark' => "You have rerceived an order for " . $order_product->product_title . "  vide Order #" . $order_id . " . You are expected to dispatch the order  within " . dispatch_time($order_product->lead_time) . ".",
                                     'to' => $seller->email,
                                     'seller_name' => $seller_name,
-                                    'template_path' => "email/email_new_order_seller"
+                                    'template_path' => "email/email_new_order_seller",
+                                    'event_type' => "Order Updates"
                                 );
                                 $this->email_model->send_email($data);
                             }

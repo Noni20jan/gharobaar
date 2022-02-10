@@ -2342,8 +2342,9 @@ foreach ($sellers as $seller) {
                 </div>
                 <div class="product-list-content">
                     <div class="row row-product">
-                        <?php $count = count($products); ?>
-                        <h6><b><?php echo $count; ?></b>&nbsp;products found
+                        <?php //$count = count($products); 
+                        ?>
+                        <h6><b><?php echo $product_count; ?></b>&nbsp;products found
                             <!-- <?php if (!empty($parent_categories)) :
                                         foreach ($parent_categories as $item) :
                                             if ($item->id == $category->id) : ?>
