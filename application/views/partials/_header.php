@@ -1282,7 +1282,7 @@
                                 <div class="top_logo_margin col-md-7 nav-top-left">
                                     <div class="row-align-items-center">
                                         <div class="top_logo_adjust logo">
-                                            <a href="<?php echo lang_base_url(); ?>"><img src="<?php echo get_logo($this->general_settings); ?>" alt="logo" class="logo_size"></a>
+                                            <a href="<?php echo lang_base_url(); ?>"><img src="<?php echo get_logo($this->general_settings); ?>?a=<?php echo $this->general_settings->random_key ?>" alt="logo" class="logo_size"></a>
                                         </div>
                                         <div class="top-search-bar<?= $this->general_settings->multi_vendor_system != 1 ? ' top-search-bar-single-vendor' : ''; ?>">
                                             <?php echo form_open(generate_url('search'), ['id' => 'form_validate_search', 'class' => 'form_search_main', 'method' => 'get']); ?>
