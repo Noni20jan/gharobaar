@@ -301,7 +301,7 @@ class Email_model extends CI_Model
                 'source_id' => $product_id,
                 'remark' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
                 'event_type' => 'Gharobaar Updates',
-                'subject' => "Hooray Yor favourite seller has added new product",
+                'subject' => "Hooray Your favourite seller has added new product",
                 'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
                 'to' => $follower->follower_id,
                 'template_path' => "email/email_newsletter",
