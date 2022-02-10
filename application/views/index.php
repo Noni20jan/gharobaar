@@ -735,16 +735,6 @@
         color: #6c83a2
     }
 </style> -->
-<!-- <?php //if ($this->auth_check) {
-        //if ($this->auth_user->user_type == "guest") { 
-        ?>
-        <input type="hidden" id="role" value="<?php //echo $this->auth_user->user_type; 
-                                                ?>">
-        <input type="hidden" id="user_id" value="<?php //echo $this->auth_user->id; 
-                                                    ?>">
-<?php //}
-//} 
-?>
 
 <script>
     $(document).ready(function() {
@@ -768,7 +758,12 @@
             });
         }
     })
-</script> -->
+</script>
+<?php if ($this->auth_check) {
+    if ($this->auth_user->user_type == "guest") {
+        redirect(base_url() . 'logout');
+    }
+} ?>
 
 <div class="section-slider web-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
