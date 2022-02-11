@@ -77,15 +77,15 @@ $db['default'] = array(
     'dsn'    => '',
 
 
-    // 'hostname' => 'qanew.cz5snxflsj5z.ap-south-1.rds.amazonaws.com',
-    // 'username' => 'educationdoctor',
-    // 'password' => 'PnHJM7VnasplnewqamCkAsr2v',
-    // 'database' => 'local_gharobaar',
-
     'hostname' => 'qanew.cz5snxflsj5z.ap-south-1.rds.amazonaws.com',
     'username' => 'educationdoctor',
     'password' => 'PnHJM7VnasplnewqamCkAsr2v',
-    'database' => 'test_gharobaar',
+    'database' => 'local_gharobaar',
+
+    // 'hostname' => 'qanew.cz5snxflsj5z.ap-south-1.rds.amazonaws.com',
+    // 'username' => 'educationdoctor',
+    // 'password' => 'PnHJM7VnasplnewqamCkAsr2v',
+    // 'database' => 'test_gharobaar',
 
     'dbdriver' => 'mysqli',
     'dbprefix' => '',

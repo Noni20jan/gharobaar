@@ -534,12 +534,279 @@
         }
     }
 
-    .dropdown-content::-webkit-scrollbar {
+    /* .dropdown-content::-webkit-scrollbar {
         width: 4px;
     }
 
     .dropdown-content {
         scrollbar-color: #fff0 #fff0;
+    } */
+
+    .navigation {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 60px;
+        background: #3f51b5;
+    }
+
+    .navigation .inner-navigation {
+        padding: 0;
+        margin: 0;
+    }
+
+    .navigation .inner-navigation li {
+        list-style-type: none;
+    }
+
+    .navigation .inner-navigation li .menu-link {
+        color: #ff5252;
+        line-height: 3.7em;
+        padding: 20px 18px;
+        text-decoration: none;
+        transition: background 0.5s, color 0.5s;
+    }
+
+    .navigation .inner-navigation li .menu-link.menu-anchor {
+        padding: 20px;
+        margin: 0;
+        background: #ff5252;
+        color: #FFF;
+    }
+
+    .navigation .inner-navigation li .menu-link.has-notifications {
+        background: #ff5252;
+        color: #FFF;
+    }
+
+    .navigation .inner-navigation li .menu-link.circle {
+        line-height: 3.8em;
+        padding: 14px 18px;
+        border-radius: 50%;
+    }
+
+    .navigation .inner-navigation li .menu-link.circle:hover {
+        background: #ff5252;
+        color: #FFF;
+    }
+
+    .navigation .inner-navigation li .menu-link.square:hover {
+        background: #ff5252;
+        color: #FFF;
+        transition: background 0.5s, color 0.5s;
+    }
+
+    .dropdown-container {
+        overflow-y: hidden;
+    }
+
+    .dropdown-container.expanded .dropdown {
+        -webkit-animation: fadein 0.5s;
+        -moz-animation: fadein 0.5s;
+        -ms-animation: fadein 0.5s;
+        -o-animation: fadein 0.5s;
+        animation: fadein 0.5s;
+        display: block;
+    }
+
+    .dropdown-container .dropdown {
+        -webkit-animation: fadeout 0.5s;
+        -moz-animation: fadeout 0.5s;
+        -ms-animation: fadeout 0.5s;
+        -o-animation: fadeout 0.5s;
+        animation: fadeout 0.5s;
+        display: none;
+        position: absolute;
+        width: 300px;
+        height: auto;
+        max-height: 600px;
+        overflow-y: hidden;
+        padding: 0;
+        margin: 0;
+        background: #fff;
+        margin-top: 3px;
+        /* margin-right: -15px; */
+        border-top: 4px solid #fff;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        -webkit-box-shadow: 2px 2px 15px -5px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 2px 2px 15px -5px rgba(0, 0, 0, 0.75);
+        box-shadow: 2px 2px 15px -5px rgba(0, 0, 0, 0.75);
+        /*
+            &:before{
+                position: absolute;
+                content: ' ';
+                width: 0; 
+                height: 0; 
+                top: -13px;
+                right: 7px;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-bottom: 10px solid $secondary-color; 
+            }
+            */
+    }
+
+    .dropdown-container .dropdown .notification-group {
+        border-bottom: 1px solid #e3e3e3;
+        overflow: hidden;
+        /* min-height: 65px; */
+    }
+
+    .dropdown-container .dropdown .notification-group:last-child {
+        border-bottom: 0;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-tab {
+        padding: 14px 25px;
+        text-align: left;
+        /* min-height: 65px; */
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-tab:hover {
+        cursor: pointer;
+        background: #f1f1f1;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-tab:hover .fa,
+    .dropdown-container .dropdown .notification-group .notification-tab:hover p,
+    .dropdown-container .dropdown .notification-group .notification-tab:hover {
+        color: #606060 !important;
+        /* display: inline-block; */
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-tab:hover {
+        background: #f1f1f1;
+        border-color: #f1f1f1;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-list {
+        padding: 0;
+        overflow-y: auto;
+        height: 0px;
+        max-height: 250px;
+        transition: height 0.5s;
+    }
+
+
+    .dropdown-container .dropdown .notification-group .notification-list .notification-list-item {
+        padding: 5px 25px;
+        border-bottom: 1px solid #e3e3e3;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .message {
+        margin: 5px 5px 10px;
+        color: gray;
+        font-size: 13px;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .item-footer a {
+        color: #3f51b5;
+        text-decoration: none;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-list .notification-list-item .item-footer .date {
+        float: right;
+    }
+
+    .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:nth-of-type(odd) {
+        background: #e3e3e3;
+    }
+
+    /* .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:hover {
+            cursor: pointer;
+        } */
+
+    .dropdown-container .dropdown .notification-group .notification-list .notification-list-item:last-child {
+        border-bottom: 0;
+        /* border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px; */
+        line-height: 30px;
+    }
+
+    .dropdown-container .dropdown .notification-group.expanded .notification-tab {
+        background: #e3e3e3;
+    }
+
+    .dropdown-container .dropdown .notification-group.expanded .notification-tab .fa,
+    .dropdown-container .dropdown .notification-group.expanded .notification-tab h4,
+    .dropdown-container .dropdown .notification-group.expanded .notification-tab {
+        color: #FFF;
+        /* display: inline-block; */
+    }
+
+    .dropdown-container .dropdown .notification-group.expanded .notification-tab {
+        background: #f1f1f1;
+        border-color: #f1f1f1;
+    }
+
+    .dropdown-container .dropdown .notification-group.expanded .notification-list {
+        height: 250px;
+        max-height: 100px;
+        text-align: left;
+        transition: height 0.5s;
+    }
+
+    .dropdown-container .dropdown .notification-group .fa,
+    .dropdown-container .dropdown .notification-group h4,
+    .dropdown-container .dropdown .notification-group .label {
+        color: #333;
+        /* display: inline-block; */
+    }
+
+    .dropdown-container .dropdown .notification-group .fa {
+        margin-right: 5px;
+        margin-top: 25px;
+    }
+
+    .dropdown-container .dropdown .notification-group .label {
+        float: right;
+        margin-top: 20px;
+        color: #3f51b5;
+        border: 1px solid #3f51b5;
+        padding: 0px 7px;
+        border-radius: 15px;
+    }
+
+
+
+    .notification-head {
+        color: #606060 !important;
+        margin: 0px 0px 0px;
+        padding: 7px 0px 10px 0px;
+    }
+
+    .head-notification-count {
+        color: gray;
+        position: absolute;
+        right: 12px;
+        /* top: 21px; */
+    }
+
+    .from {
+        font-weight: 500;
+    }
+
+
+    .mobile-notify-icon {
+        border-radius: 50%;
+        color: white;
+        font-size: 15px;
+        line-height: 0px;
+        list-style: none;
+    }
+
+    @media(max-width:768px) {
+        .notification-button {
+            background: #ffffff00 !important;
+            border-color: #ffffff00 !important;
+            padding: 6px;
+            border-radius: 20px;
+            color: black !important;
+            font-size: 19px;
+        }
     }
 
     /* .mustang img {
@@ -4209,17 +4476,247 @@
                                         <?php endif; ?>
                                         <?php if ($this->auth_check) : ?>
                                             <li class="icon-bg">
-                                                <button onclick="myFunction()" class="dropbtn notification-button">
-                                                    <!-- <div id='wishlist'> -->
-                                                    <?php $count_array = $this->order_model->get_notification_count();
-                                                    $count = count($count_array); ?>
-                                                    <i class="far fa-bell"></i><span class="badge notification-count"><?php echo $count; ?></span>
-                                                    <!-- </div> -->
-                                                </button>
-                                                <div class="dropdown-content" id="myDropdown" style="border-radius: 0px;padding: 11px 5px; width: 100%; position: absolute; left: 0; overflow-y: auto;max-height: 300px;">
-                                                    <?php foreach ($count_array as $notification) : ?>
-                                                        <a href="<?php echo base_url('notification-details') . "/" . $notification->id ?>" style="padding: 20px 4px;border-radius: 0px; border-bottom: 1px solid #8b8a8a40;"><?php echo $notification->title; ?></a>
-                                                    <?php endforeach; ?>
+                                                <!--span class="notification-label"></span-->
+                                                <div class="dropdown-container">
+                                                    <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
+                                                        <i class="far fa-bell notification-button"></i>
+                                                    </a>
+                                                    <ul class="dropdown" name="notificationMenu" style="z-index:100; width:100%; right: 20px;">
+                                                        <li class="notification-group">
+                                                            <div class="notification-tab">
+                                                                <!-- <i class="fa fa-flag"></i> -->
+                                                                <p class="notification-head">Gharobaar Updates</p>
+                                                                <?php $gharobaar_updates = $this->notification_model->get_gharobaar_updates($this->auth_user->email); ?>
+                                                                <label class="head-notification-count"><?php echo count($gharobaar_updates); ?></label>
+                                                            </div>
+                                                            <!-- tab -->
+
+                                                            <ul class="notification-list">
+                                                                <?php foreach ($gharobaar_updates as $gharobaar_update) : ?>
+                                                                    <li class="notification-list-item" style="line-height:25px;">
+                                                                        <div class="item-footer" style="color:gray;">
+                                                                            <span class="from"><?php echo $gharobaar_update->title; ?></span>
+                                                                            <span class="date"><?php echo $gharobaar_update->created_at; ?></span>
+                                                                        </div>
+                                                                        <p class="message"><?php echo $gharobaar_update->remark; ?></p>
+                                                                    </li>
+                                                                <?php endforeach; ?>
+
+                                                            </ul>
+                                                        </li>
+                                                        <li class="notification-group">
+                                                            <div class="notification-tab">
+                                                                <!-- <i class="fa fa-bug"></i> -->
+                                                                <p class="notification-head">Order Placement</p>
+                                                                <?php $order_placements = $this->notification_model->get_order_placement($this->auth_user->email); ?>
+                                                                <label class="head-notification-count"><?php echo count($order_placements); ?></label>
+                                                            </div> <!-- tab -->
+
+                                                            <ul class="notification-list">
+                                                                <?php foreach ($order_placements as $order_placement) : ?>
+                                                                    <li class="notification-list-item" style="line-height:25px;">
+                                                                        <div class="item-footer" style="color:gray;">
+                                                                            <span class="from"><?php echo $order_placement->title; ?></span>
+                                                                            <span class="date"><?php echo $order_placement->created_at; ?></span>
+                                                                        </div>
+                                                                        <p class="message"><?php echo $order_placement->remark; ?></p>
+
+                                                                    </li>
+                                                                <?php endforeach; ?>
+                                                            </ul>
+                                                            <!-- list -->
+                                                        </li>
+                                                        <li class="notification-group">
+                                                            <div class="notification-tab">
+                                                                <!-- <i class="fa fa-envelope"></i> -->
+                                                                <p class="notification-head">Order Update</p>
+                                                                <?php $order_updates = $this->notification_model->get_order_update($this->auth_user->email); ?>
+                                                                <label class="head-notification-count"><?php echo count($order_updates); ?></label>
+                                                            </div>
+
+                                                            <ul class="notification-list">
+                                                                <?php foreach ($order_updates as $order_update) : ?>
+                                                                    <li class="notification-list-item" style="line-height:25px;">
+                                                                        <div class="item-footer" style="color:gray;">
+                                                                            <span class="from"><?php echo $order_update->title; ?></span>
+                                                                            <span class="date"><?php echo $order_update->created_at; ?></span>
+                                                                        </div>
+                                                                        <p class="message"><?php echo $order_update->remark; ?></p>
+
+                                                                    </li>
+                                                                <?php endforeach; ?>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="notification-group">
+                                                            <div class="notification-tab">
+                                                                <!-- <i class="fa fa-calendar"></i> -->
+                                                                <p class="notification-head">Order Cancellation by Seller</p>
+                                                                <?php $order_cancellation_seller_updates = $this->notification_model->get_order_cancellation_by_seller($this->auth_user->email); ?>
+                                                                <label class="head-notification-count"><?php echo count($order_cancellation_seller_updates); ?></label>
+                                                            </div>
+
+                                                            <ul class="notification-list">
+                                                                <?php foreach ($order_cancellation_seller_updates as $order_cancellation_seller_update) : ?>
+                                                                    <li class="notification-list-item" style="line-height:25px;">
+                                                                        <div class="item-footer" style="color:gray;">
+                                                                            <span class="from"><?php echo $order_cancellation_seller_update->title; ?></span>
+                                                                            <span class="date"><?php echo $order_cancellation_seller_update->created_at; ?></span>
+                                                                        </div>
+                                                                        <p class="message"><?php echo $order_cancellation_seller_update->remark; ?></p>
+
+                                                                    </li>
+                                                                <?php endforeach; ?>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="notification-group">
+                                                            <div class="notification-tab">
+                                                                <!-- <i class="fa fa-trophy"></i> -->
+                                                                <p class="notification-head">Order Delivered</p>
+                                                                <?php $order_delivered_updates = $this->notification_model->get_order_delivered($this->auth_user->email); ?>
+                                                                <label class="head-notification-count"><?php echo count($order_delivered_updates); ?></label>
+                                                            </div>
+
+                                                            <ul class="notification-list">
+                                                                <?php foreach ($order_delivered_updates as $order_delivered_update) : ?>
+                                                                    <li class="notification-list-item" style="line-height:25px;">
+                                                                        <div class="item-footer" style="color:gray;">
+                                                                            <span class="from"><?php echo $order_delivered_update->title; ?></span>
+                                                                            <span class="date"><?php echo $order_delivered_update->created_at; ?></span>
+                                                                        </div>
+                                                                        <p class="message"><?php echo $order_delivered_update->remark; ?></p>
+
+                                                                    </li>
+                                                                <?php endforeach; ?>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="notification-group">
+                                                            <div class="notification-tab">
+                                                                <!-- <i class="fa fa-trophy"></i> -->
+                                                                <p class="notification-head">Promotions</p>
+                                                                <?php $promotions_updates = $this->notification_model->get_promotions($this->auth_user->email); ?>
+                                                                <label class="head-notification-count"><?php echo count($promotions_updates); ?></label>
+                                                            </div>
+
+                                                            <ul class="notification-list">
+                                                                <?php foreach ($promotions_updates as $promotions_update) : ?>
+                                                                    <li class="notification-list-item" style="line-height:25px;">
+                                                                        <div class="item-footer" style="color:gray;">
+                                                                            <span class="from"><?php echo $promotions_update->title; ?></span>
+                                                                            <span class="date"><?php echo $promotions_update->created_at; ?></span>
+                                                                        </div>
+                                                                        <p class="message"><?php echo $promotions_update->remark; ?></p>
+
+                                                                    </li>
+                                                                <?php endforeach; ?>
+                                                            </ul>
+                                                        </li>
+                                                        <?php if (is_user_vendor()) : ?>
+                                                            <li class="notification-group">
+                                                                <div class="notification-tab">
+                                                                    <!-- <i class="fa fa-trophy"></i> -->
+                                                                    <p class="notification-head">Rating, Reviews & Followers</p>
+                                                                    <?php $reviews_followers_updates = $this->notification_model->get_reviews_followers($this->auth_user->email); ?>
+                                                                    <label class="head-notification-count"><?php echo count($reviews_followers_updates); ?></label>
+                                                                </div>
+
+                                                                <ul class="notification-list">
+                                                                    <?php foreach ($reviews_followers_updates as $reviews_followers_update) : ?>
+                                                                        <li class="notification-list-item" style="line-height:25px;">
+                                                                            <div class="item-footer" style="color:gray;">
+                                                                                <span class="from"><?php echo $reviews_followers_update->title; ?></span>
+                                                                                <span class="date"><?php echo $reviews_followers_update->created_at; ?></span>
+                                                                            </div>
+                                                                            <p class="message"><?php echo $reviews_followers_update->remark; ?></p>
+
+                                                                        </li>
+                                                                    <?php endforeach; ?>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="notification-group">
+                                                                <div class="notification-tab">
+                                                                    <!-- <i class="fa fa-trophy"></i> -->
+                                                                    <p class="notification-head">Listings</p>
+                                                                    <?php $listings_updates = $this->notification_model->get_listings($this->auth_user->email); ?>
+                                                                    <label class="head-notification-count"><?php echo count($listings_updates); ?></label>
+                                                                </div>
+
+                                                                <ul class="notification-list">
+                                                                    <?php foreach ($listings_updates as $listings_update) : ?>
+                                                                        <li class="notification-list-item" style="line-height:25px;">
+                                                                            <div class="item-footer" style="color:gray;">
+                                                                                <span class="from"><?php echo $listings_update->title; ?></span>
+                                                                                <span class="date"><?php echo $listings_update->created_at; ?></span>
+                                                                            </div>
+                                                                            <p class="message"><?php echo $listings_update->remark; ?></p>
+                                                                        </li>
+                                                                    <?php endforeach; ?>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="notification-group">
+                                                                <div class="notification-tab">
+                                                                    <!-- <i class="fa fa-trophy"></i> -->
+                                                                    <p class="notification-head">Profile</p>
+                                                                    <?php $profile_updates = $this->notification_model->get_profile_notification($this->auth_user->email); ?>
+                                                                    <label class="head-notification-count"><?php echo count($profile_updates); ?></label>
+                                                                </div>
+
+                                                                <ul class="notification-list">
+                                                                    <?php foreach ($profile_updates as $profile_update) : ?>
+                                                                        <li class="notification-list-item" style="line-height:25px;">
+                                                                            <div class="item-footer" style="color:gray;">
+                                                                                <span class="from"><?php echo $profile_update->title; ?></span>
+                                                                                <span class="date"><?php echo $profile_update->created_at; ?></span>
+                                                                            </div>
+                                                                            <p class="message"><?php echo $profile_update->remark; ?></p>
+
+                                                                        </li>
+                                                                    <?php endforeach; ?>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="notification-group">
+                                                                <div class="notification-tab">
+                                                                    <!-- <i class="fa fa-trophy"></i> -->
+                                                                    <p class="notification-head">Payout</p>
+                                                                    <?php $payout_updates = $this->notification_model->get_payout_notification($this->auth_user->email); ?>
+                                                                    <label class="head-notification-count"><?php echo count($payout_updates); ?></label>
+                                                                </div>
+
+                                                                <ul class="notification-list">
+                                                                    <?php foreach ($payout_updates as $payout_update) : ?>
+                                                                        <li class="notification-list-item" style="line-height:25px;">
+                                                                            <div class="item-footer" style="color:gray;">
+                                                                                <span class="from"><?php echo $payout_update->title; ?></span>
+                                                                                <span class="date"><?php echo $payout_update->created_at; ?></span>
+                                                                            </div>
+                                                                            <p class="message"><?php echo $payout_update->remark; ?></p>
+
+                                                                        </li>
+                                                                    <?php endforeach; ?>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="notification-group">
+                                                                <div class="notification-tab">
+                                                                    <!-- <i class="fa fa-trophy"></i> -->
+                                                                    <p class="notification-head">Customization Notifications</p>
+                                                                    <?php $customization_updates = $this->notification_model->get_customization_notification($this->auth_user->email); ?>
+                                                                    <label class="head-notification-count"><?php echo count($customization_updates); ?></label>
+                                                                </div>
+
+                                                                <ul class="notification-list">
+                                                                    <?php foreach ($customization_updates as $customization_update) : ?>
+                                                                        <li class="notification-list-item" style="line-height:25px;">
+                                                                            <div class="item-footer" style="color:gray;">
+                                                                                <span class="from"><?php echo $customization_update->title; ?></span>
+                                                                                <span class="date"><?php echo $customization_update->created_at; ?></span>
+                                                                            </div>
+                                                                            <p class="message"><?php echo $customization_update->remark; ?></p>
+
+                                                                        </li>
+                                                                    <?php endforeach; ?>
+                                                                </ul>
+                                                            </li>
+                                                        <?php endif; ?>
+                                                    </ul>
                                                 </div>
                                             </li>
                                         <?php else : ?>
@@ -4514,7 +5011,255 @@
                                     <?php endif; ?>
                                 </a>
                             </div>
+                            <?php if ($this->auth_check) : ?>
+                                <div class="mobile-notification">
+                                    <li class="mobile-notify-icon">
+                                        <!--span class="notification-label"></span-->
+                                        <div class="dropdown-container">
+                                            <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
+                                                <i class="far fa-bell notification-button"></i>
+                                            </a>
+                                            <ul class="dropdown" name="notificationMenu" style="z-index:100; width:100%; right:0px!important;">
+                                                <li class="notification-group">
+                                                    <div class="notification-tab">
+                                                        <!-- <i class="fa fa-flag"></i> -->
+                                                        <p class="notification-head">Gharobaar Updates</p>
+                                                        <?php $gharobaar_updates = $this->notification_model->get_gharobaar_updates($this->auth_user->email); ?>
+                                                        <label class="head-notification-count"><?php echo count($gharobaar_updates); ?></label>
+                                                    </div>
+                                                    <!-- tab -->
 
+                                                    <ul class="notification-list">
+                                                        <?php foreach ($gharobaar_updates as $gharobaar_update) : ?>
+                                                            <li class="notification-list-item" style="line-height:25px;">
+                                                                <div class="item-footer" style="color:gray;">
+                                                                    <span class="from"><?php echo $gharobaar_update->title; ?></span>
+                                                                    <span class="date"><?php echo $gharobaar_update->created_at; ?></span>
+                                                                </div>
+                                                                <p class="message"><?php echo $gharobaar_update->remark; ?></p>
+                                                            </li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                </li>
+                                                <li class="notification-group">
+                                                    <div class="notification-tab">
+                                                        <!-- <i class="fa fa-bug"></i> -->
+                                                        <p class="notification-head">Order Placement</p>
+                                                        <?php $order_placements = $this->notification_model->get_order_placement($this->auth_user->email); ?>
+                                                        <label class="head-notification-count"><?php echo count($order_placements); ?></label>
+                                                    </div> <!-- tab -->
+
+                                                    <ul class="notification-list">
+                                                        <?php foreach ($order_placements as $order_placement) : ?>
+                                                            <li class="notification-list-item" style="line-height:25px;">
+                                                                <div class="item-footer" style="color:gray;">
+                                                                    <span class="from"><?php echo $order_placement->title; ?></span>
+                                                                    <span class="date"><?php echo $order_placement->created_at; ?></span>
+                                                                </div>
+                                                                <p class="message"><?php echo $order_placement->remark; ?></p>
+
+                                                            </li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                    <!-- list -->
+                                                </li>
+                                                <li class="notification-group">
+                                                    <div class="notification-tab">
+                                                        <!-- <i class="fa fa-envelope"></i> -->
+                                                        <p class="notification-head">Order Update</p>
+                                                        <?php $order_updates = $this->notification_model->get_order_update($this->auth_user->email); ?>
+                                                        <label class="head-notification-count"><?php echo count($order_updates); ?></label>
+                                                    </div>
+
+                                                    <ul class="notification-list">
+                                                        <?php foreach ($order_updates as $order_update) : ?>
+                                                            <li class="notification-list-item" style="line-height:25px;">
+                                                                <div class="item-footer" style="color:gray;">
+                                                                    <span class="from"><?php echo $order_update->title; ?></span>
+                                                                    <span class="date"><?php echo $order_update->created_at; ?></span>
+                                                                </div>
+                                                                <p class="message"><?php echo $order_update->remark; ?></p>
+                                                            </li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                </li>
+                                                <li class="notification-group">
+                                                    <div class="notification-tab">
+                                                        <!-- <i class="fa fa-calendar"></i> -->
+                                                        <p class="notification-head">Order Cancellation by Seller</p>
+                                                        <?php $order_cancellation_seller_updates = $this->notification_model->get_order_cancellation_by_seller($this->auth_user->email); ?>
+                                                        <label class="head-notification-count"><?php echo count($order_cancellation_seller_updates); ?></label>
+                                                    </div>
+
+                                                    <ul class="notification-list">
+                                                        <?php foreach ($order_cancellation_seller_updates as $order_cancellation_seller_update) : ?>
+                                                            <li class="notification-list-item" style="line-height:25px;">
+                                                                <div class="item-footer" style="color:gray;">
+                                                                    <span class="from"><?php echo $order_cancellation_seller_update->title; ?></span>
+                                                                    <span class="date"><?php echo $order_cancellation_seller_update->created_at; ?></span>
+                                                                </div>
+                                                                <p class="message"><?php echo $order_cancellation_seller_update->remark; ?></p>
+
+                                                            </li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                </li>
+                                                <li class="notification-group">
+                                                    <div class="notification-tab">
+                                                        <!-- <i class="fa fa-trophy"></i> -->
+                                                        <p class="notification-head">Order Delivered</p>
+                                                        <?php $order_delivered_updates = $this->notification_model->get_order_delivered($this->auth_user->email); ?>
+                                                        <label class="head-notification-count"><?php echo count($order_delivered_updates); ?></label>
+                                                    </div>
+
+                                                    <ul class="notification-list">
+                                                        <?php foreach ($order_delivered_updates as $order_delivered_update) : ?>
+                                                            <li class="notification-list-item" style="line-height:25px;">
+                                                                <div class="item-footer" style="color:gray;">
+                                                                    <span class="from"><?php echo $order_delivered_update->title; ?></span>
+                                                                    <span class="date"><?php echo $order_delivered_update->created_at; ?></span>
+                                                                </div>
+                                                                <p class="message"><?php echo $order_delivered_update->remark; ?></p>
+                                                            </li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                </li>
+                                                <li class="notification-group">
+                                                    <div class="notification-tab">
+                                                        <!-- <i class="fa fa-trophy"></i> -->
+                                                        <p class="notification-head">Promotions</p>
+                                                        <?php $promotions_updates = $this->notification_model->get_promotions($this->auth_user->email); ?>
+                                                        <label class="head-notification-count"><?php echo count($promotions_updates); ?></label>
+                                                    </div>
+
+                                                    <ul class="notification-list">
+                                                        <?php foreach ($promotions_updates as $promotions_update) : ?>
+                                                            <li class="notification-list-item" style="line-height:25px;">
+                                                                <div class="item-footer" style="color:gray;">
+                                                                    <span class="from"><?php echo $promotions_update->title; ?></span>
+                                                                    <span class="date"><?php echo $promotions_update->created_at; ?></span>
+                                                                </div>
+                                                                <p class="message"><?php echo $promotions_update->remark; ?></p>
+
+                                                            </li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                </li>
+                                                <?php if (is_user_vendor()) : ?>
+                                                    <li class="notification-group">
+                                                        <div class="notification-tab">
+                                                            <!-- <i class="fa fa-trophy"></i> -->
+                                                            <p class="notification-head">Rating, Reviews & Followers</p>
+                                                            <?php $reviews_followers_updates = $this->notification_model->get_reviews_followers($this->auth_user->email); ?>
+                                                            <label class="head-notification-count"><?php echo count($reviews_followers_updates); ?></label>
+                                                        </div>
+
+                                                        <ul class="notification-list">
+                                                            <?php foreach ($reviews_followers_updates as $reviews_followers_update) : ?>
+                                                                <li class="notification-list-item" style="line-height:25px;">
+                                                                    <div class="item-footer" style="color:gray;">
+                                                                        <span class="from"><?php echo $reviews_followers_update->title; ?></span>
+                                                                        <span class="date"><?php echo $reviews_followers_update->created_at; ?></span>
+                                                                    </div>
+                                                                    <p class="message"><?php echo $reviews_followers_update->remark; ?></p>
+
+                                                                </li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="notification-group">
+                                                        <div class="notification-tab">
+                                                            <!-- <i class="fa fa-trophy"></i> -->
+                                                            <p class="notification-head">Listings</p>
+                                                            <?php $listings_updates = $this->notification_model->get_listings($this->auth_user->email); ?>
+                                                            <label class="head-notification-count"><?php echo count($listings_updates); ?></label>
+                                                        </div>
+
+                                                        <ul class="notification-list">
+                                                            <?php foreach ($listings_updates as $listings_update) : ?>
+                                                                <li class="notification-list-item" style="line-height:25px;">
+                                                                    <div class="item-footer" style="color:gray;">
+                                                                        <span class="from"><?php echo $listings_update->title; ?></span>
+                                                                        <span class="date"><?php echo $listings_update->created_at; ?></span>
+                                                                    </div>
+                                                                    <p class="message"><?php echo $listings_update->remark; ?></p>
+                                                                </li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="notification-group">
+                                                        <div class="notification-tab">
+                                                            <!-- <i class="fa fa-trophy"></i> -->
+                                                            <p class="notification-head">Profile</p>
+                                                            <?php $profile_updates = $this->notification_model->get_profile_notification($this->auth_user->email); ?>
+                                                            <label class="head-notification-count"><?php echo count($profile_updates); ?></label>
+                                                        </div>
+
+                                                        <ul class="notification-list">
+                                                            <?php foreach ($profile_updates as $profile_update) : ?>
+                                                                <li class="notification-list-item" style="line-height:25px;">
+                                                                    <div class="item-footer" style="color:gray;">
+                                                                        <span class="from"><?php echo $profile_update->title; ?></span>
+                                                                        <span class="date"><?php echo $profile_update->created_at; ?></span>
+                                                                    </div>
+                                                                    <p class="message"><?php echo $profile_update->remark; ?></p>
+                                                                </li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="notification-group">
+                                                        <div class="notification-tab">
+                                                            <!-- <i class="fa fa-trophy"></i> -->
+                                                            <p class="notification-head">Payout</p>
+                                                            <?php $payout_updates = $this->notification_model->get_payout_notification($this->auth_user->email); ?>
+                                                            <label class="head-notification-count"><?php echo count($payout_updates); ?></label>
+                                                        </div>
+
+                                                        <ul class="notification-list">
+                                                            <?php foreach ($payout_updates as $payout_update) : ?>
+                                                                <li class="notification-list-item" style="line-height:25px;">
+                                                                    <div class="item-footer" style="color:gray;">
+                                                                        <span class="from"><?php echo $payout_update->title; ?></span>
+                                                                        <span class="date"><?php echo $payout_update->created_at; ?></span>
+                                                                    </div>
+                                                                    <p class="message"><?php echo $payout_update->remark; ?></p>
+
+                                                                </li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="notification-group">
+                                                        <div class="notification-tab">
+                                                            <!-- <i class="fa fa-trophy"></i> -->
+                                                            <p class="notification-head">Customization Notifications</p>
+                                                            <?php $customization_updates = $this->notification_model->get_customization_notification($this->auth_user->email); ?>
+                                                            <label class="head-notification-count"><?php echo count($customization_updates); ?></label>
+                                                        </div>
+
+                                                        <ul class="notification-list">
+                                                            <?php foreach ($customization_updates as $customization_update) : ?>
+                                                                <li class="notification-list-item" style="line-height:25px;">
+                                                                    <div class="item-footer" style="color:gray;">
+                                                                        <span class="from"><?php echo $customization_update->title; ?></span>
+                                                                        <span class="date"><?php echo $customization_update->created_at; ?></span>
+                                                                    </div>
+                                                                    <p class="message"><?php echo $customization_update->remark; ?></p>
+                                                                </li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                    </li>
+                                                <?php endif; ?>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </div>
+                            <?php else : ?>
+                                <!-- <li class="icon-bg">
+                                                <a id='wishlist'>
+                                                    <i class="far fa-bell"></i>
+                                                </a>
+                                            </li> -->
+                            <?php endif; ?>
                             <div class="mobile-search">
                                 <a class="search-icon"><i class="icon-search"></i></a>
                             </div>
@@ -5784,4 +6529,52 @@
                 }
             }
         }
+    </script>
+    <script>
+        //Open dropdown when clicking on element
+        $(document).on('click', "a[data-dropdown='notificationMenu']", function(e) {
+            e.preventDefault();
+
+            var el = $(e.currentTarget);
+
+            // $('body').prepend('<div id="dropdownOverlay" style="background: transparent; height:100%;width:100%;position:fixed;"></div>')
+
+            var container = $(e.currentTarget).parent();
+            var dropdown = container.find('.dropdown');
+            var containerWidth = container.width();
+            var containerHeight = container.height();
+
+            var anchorOffset = $(e.currentTarget).offset();
+
+            dropdown.css({
+                'right': containerWidth / +'px'
+            })
+
+            container.toggleClass('expanded')
+
+        });
+
+        //Close dropdowns on document click
+
+        // $(document).click(function() {
+        //     $(".dropdown").hide();
+        // });
+        // $(document).on('click', '#dropdownOverlay', function(e) {
+        //     var el = $(e.currentTarget)[0].activeElement;
+
+        //     if (typeof $(el).attr('data-dropdown') === 'undefined') {
+        //         $('#dropdownOverlay').remove();
+        //         $('.dropdown-container.expanded').removeClass('expanded');
+        //     }
+        // })
+
+        //Dropdown collapsile tabs
+        $('.notification-tab').click(function(e) {
+            if ($(e.currentTarget).parent().hasClass('expanded')) {
+                $('.notification-group').removeClass('expanded');
+            } else {
+                $('.notification-group').removeClass('expanded');
+                $(e.currentTarget).parent().toggleClass('expanded');
+            }
+        })
     </script>
