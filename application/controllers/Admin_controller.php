@@ -1943,6 +1943,15 @@ class Admin_controller extends Admin_Core_Controller
         $this->load->view('admin/reports/sale_data', $data);
         $this->load->view('admin/includes/_footer');
     }
+    public function sale_data_cancellation()
+    {
+        $data['title'] = trans("sale_data_cancellation");
+        $data['sale'] = $this->reports_model->fetch_sale_data_cancellation();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/reports/sale_data_cancellation', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
 
 
     public function seller_commission()
@@ -2034,6 +2043,10 @@ class Admin_controller extends Admin_Core_Controller
         $format_sale_data = $this->reports_model->format_sale_data($from_date, $to_date);
         echo json_encode($format_sale_data);
     }
+
+
+
+
     public function format_seller_profile_data()
     {
         $from_date = $this->input->post('from_date', true);
@@ -2105,5 +2118,13 @@ class Admin_controller extends Admin_Core_Controller
 
         $cart_report = $this->reports_model->format_cart_report($from_date, $to_date);
         echo json_encode($cart_report);
+    }
+    public function format_sale_data_cancellation()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $format_sale_data = $this->reports_model->format_sale_data_cancellation($from_date, $to_date);
+        echo json_encode($format_sale_data);
     }
 }

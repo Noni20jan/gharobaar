@@ -685,7 +685,9 @@
                         <li class="nav-send-email-subscribers">
                             <a href="<?php echo admin_url(); ?>sale-data"><?php echo trans("sale_data"); ?></a>
                         </li>
-
+                        <li class="nav-send-email-subscribers">
+                            <a href="<?php echo admin_url(); ?>sale_data_cancellation"><?php echo trans("sale_data_cancellation"); ?></a>
+                        </li>
                         <li class="nav-system-settings">
                             <a href="<?php echo admin_url(); ?>seller-commission-data"><?php echo trans("seller_commission_data"); ?></a>
                         </li>
