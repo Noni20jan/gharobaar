@@ -485,7 +485,8 @@
                                                     <?php elseif ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") == 2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
                                                         <?php $shipped_time = intval($product->shipping_time); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
-                                                        <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
+                                                        <?php $delivery_time=$shipped_time+3;?>
+                                                        <?php $order_create = strtotime("$delivery_time day", $created_at); ?>
                                                         <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                                                         <?php $shipp_date = new DateTime($shipped_date); ?>
                                                             <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
@@ -1112,6 +1113,8 @@
             <div class="modal-content modal-custom">
                 <!-- form start -->
                 <?php echo form_open('cancel-order-buyer'); ?>
+                <input type="hidden" name="order_id" value="<?php echo $order->id;?>">
+
                 <div class="modal-header">
                     <h5 class="modal-title"><?php echo "Cancellation Reason"; ?></h5>
                     <button type="button" class="close" data-dismiss="modal">
@@ -1119,9 +1122,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" name="order_product_id" value="<?php echo $item->id; ?>">
 
-                    <input type="hidden" name="order_id" value="<?php echo $order->id; ?>">
 
                     <div class="row tracking-number-container">
                         <div class="col-sm-12">
