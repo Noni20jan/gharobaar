@@ -691,7 +691,7 @@
             <?php endif; ?>
             <div class="row">
                 <div class="col-sm-6 col-xs-6 col-left">
-                    <?php if (!empty($order->offer_id)) { ?>
+                    <?php if (!empty($order->offer_id) && $order->offer_id != 0) { ?>
                         <strong>Coupon Applied</strong>
                 </div>
 
