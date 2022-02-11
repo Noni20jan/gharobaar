@@ -1113,6 +1113,8 @@
             <div class="modal-content modal-custom">
                 <!-- form start -->
                 <?php echo form_open('cancel-order-buyer'); ?>
+                <input type="hidden" name="order_id" value="<?php echo $order->id;?>">
+
                 <div class="modal-header">
                     <h5 class="modal-title"><?php echo "Cancellation Reason"; ?></h5>
                     <button type="button" class="close" data-dismiss="modal">
