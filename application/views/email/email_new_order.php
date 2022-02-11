@@ -101,12 +101,12 @@
                                 <?php foreach ($order_products as $item) : ?>
                                     <tr>
                                         <td style="width: 40%; padding: 15px 0; border-bottom: 1px solid #ddd;"><?php echo $item->product_title; ?>
-                                            <?php $product = get_product($item->product_id); ?>
-                                            <?php $current_date = new DateTime(); ?>
-                                            <?php $order_date = strtotime($order->created_at); ?>
-                                            <?php $ordered_date = date("dS M Y", $order_date); ?>
-                                            <?php $shipping_time = $product->shipping_time; ?>
-                                            <?php if ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") >2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                        <?php $product = get_product($item->product_id); ?>
+                                                    <?php $current_date = new DateTime(); ?>
+                                                    <?php $order_date = strtotime($order->created_at); ?>
+                                                    <?php $ordered_date = date("dS M Y", $order_date); ?>
+                                                    <?php $shipping_time = $product->shipping_time; ?>
+                                                    <?php if ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") >2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
                                                         <?php $ship_time = intval($product->shipping_time[2]); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
                                                         <?php $x = $ship_time + 3; ?>
@@ -126,12 +126,15 @@
                                                     <?php elseif ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") == 2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
                                                         <?php $shipped_time = intval($product->shipping_time); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
-                                                        <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
+                                                        <?php $delivery_time=$shipped_time+3;?>
+                                                        <?php $order_create = strtotime("$delivery_time day", $created_at); ?>
                                                         <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                                                         <?php $shipp_date = new DateTime($shipped_date); ?>
                                                             <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
 
                                                     <?php endif; ?>
+
+
                                      </td>
                                         <td style="padding: 10px 2px; border-bottom: 1px solid #ddd;"><?php echo price_formatted($item->product_unit_price, $item->product_currency); ?></td>
                                         <td style="padding: 10px 2px; border-bottom: 1px solid #ddd;"><?php echo price_formatted(($item->product_discount_amount * 100), $item->product_currency); ?></td>
