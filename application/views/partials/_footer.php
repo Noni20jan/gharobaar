@@ -643,12 +643,12 @@ $this->session->unset_userdata('mds_send_email_data'); ?>
         });
     </script>
 <?php endif; ?>
-<script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/popper.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/plugins-1.7.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/speech-input.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/script-1.7.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/admin/js/dashboard-1.7.js"></script>
+<script async src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/popper.min.js"></script>
+<script async src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script async src="<?php echo base_url(); ?>assets/js/plugins-1.7.js"></script>
+<script async src="<?php echo base_url(); ?>assets/js/speech-input.js"></script>
+<script async src="<?php echo base_url(); ?>assets/js/script-1.7.min.js"></script>
+<script async src="<?php echo base_url(); ?>assets/admin/js/dashboard-1.7.js"></script>
 <script>
     $('<input>').attr({
         type: 'hidden',

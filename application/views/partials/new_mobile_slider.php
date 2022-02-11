@@ -3,7 +3,7 @@
 <!-- #region Jssor Slider Begin -->
 <!-- Generator: Jssor Slider Composer -->
 <!-- Source: https://www.jssor.com/demos/village-tour/village-tour.slider/=edit -->
-<script src="assets/js/jssor.slider-28.1.0.min.js" type="text/javascript"></script>
+<script async src="assets/js/jssor.slider-28.1.0.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     window.jssor_1_slider_init = function() {
 

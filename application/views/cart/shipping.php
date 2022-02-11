@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<script src="<?= base_url(); ?>assets/js/main-1.7.js"></script>
+<script async src="<?= base_url(); ?>assets/js/main-1.7.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/progress-tracker.css">
 <style>
     .checkout-steps .divider {

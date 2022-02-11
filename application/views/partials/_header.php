@@ -712,7 +712,7 @@
 
 
     <meta charset="utf-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script async src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?php echo xss_clean($title); ?> - <?php echo xss_clean($this->settings->site_title); ?></title>
     <meta name="google-site-verification" content="ylZCFiu4192QkhZzF1w0qhJz5laFNzKWncrEenc6YA8" />
@@ -722,7 +722,7 @@
 
     <link rel="shortcut icon" href="<?php echo get_favicon($this->general_settings); ?>" />
 
-    <script src="<?php base_url(); ?>assets/js/header.min.js"></script>
+    <script async src="<?php base_url(); ?>assets/js/header.min.js"></script>
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=202708615038039&ev=PageView&noscript=1" /></noscript>
 
     <meta property="og:locale" content="en-US" />

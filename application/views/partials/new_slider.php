@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-<script src="assets\js\jssor.slider-28.1.0.min.js" type="text/javascript"></script>
+<script async src="assets\js\jssor.slider-28.1.0.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     window.jssor_1_slider_init1 = function() {
 
