@@ -131,7 +131,8 @@
                                                         <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                                                         <?php $shipp_date = new DateTime($shipped_date); ?>
                                                             <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
-
+                                                            <?php else:?>
+                                                                <p></p>
                                                     <?php endif; ?>
 
 
