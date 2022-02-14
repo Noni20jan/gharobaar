@@ -4187,7 +4187,7 @@ class Order_model extends CI_Model
         `c`.`order_number`,
         (  
          CASE 
-        WHEN `e`.`status` IS NULL OR `e`.`status`  THEN 'NA'
+        WHEN `e`.`status` IS NULL OR `e`.`status`  THEN 'pending'
         WHEN `e`.`status` IS NOT NULL THEN `e`.`status`
         END)as 'order_status'
         -- `e`.`status` as 'order_status'
@@ -4249,7 +4249,7 @@ class Order_model extends CI_Model
         `c`.`order_number`,
         (  
          CASE 
-        WHEN `e`.`status` IS NULL OR `e`.`status`  THEN 'NA'
+        WHEN `e`.`status` IS NULL OR `e`.`status`  THEN 'pending'
         WHEN `e`.`status` IS NOT NULL THEN `e`.`status`
         END)as 'order_status'
         -- `e`.`status` as 'order_status'
@@ -4347,7 +4347,7 @@ class Order_model extends CI_Model
         `c`.`order_number`,
         (  
          CASE 
-        WHEN `e`.`status` IS NULL OR `e`.`status`  THEN 'NA'
+        WHEN `e`.`status` IS NULL OR `e`.`status`  THEN 'pending'
         WHEN `e`.`status` IS NOT NULL THEN `e`.`status`
         END)as 'order_status'
         -- `e`.`status` as 'order_status'
@@ -4403,7 +4403,7 @@ class Order_model extends CI_Model
         `c`.`order_number`,
         (  
          CASE 
-        WHEN `e`.`status` IS NULL OR `e`.`status`  THEN 'NA'
+        WHEN `e`.`status` IS NULL OR `e`.`status`  THEN 'pending'
         WHEN `e`.`status` IS NOT NULL THEN `e`.`status`
         END)as 'order_status'
         -- `e`.`status` as 'order_status'
