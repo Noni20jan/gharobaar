@@ -1,4 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
+
 <style>
     .zoom {
         transition: transform .2s;
