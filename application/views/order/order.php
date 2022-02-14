@@ -491,6 +491,8 @@
                                                         <?php $shipp_date = new DateTime($shipped_date); ?>
                                                             <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
 
+
+                                                            
                                                     <?php endif; ?>
                                                     <!-- <?php if ($item->product_type == 'physical') : ?>
                                                                     <p><span class="span-product-dtl-table"><?php echo trans("shipping"); ?>:</span><?php echo price_formatted($item->product_shipping_cost, $item->product_currency); ?></p>
