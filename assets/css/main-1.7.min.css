@@ -15596,7 +15596,7 @@ img {
 }
 #payment-button-container {
   text-align: center;
-  visibility: hidden;
+  visibility: show;
 }
 .bank-account-container {
   text-align: left;
