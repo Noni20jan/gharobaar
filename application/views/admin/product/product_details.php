@@ -1180,9 +1180,9 @@
                 </div>
                 <div class="col-md-9 col-sm-12 right description">
 
-                    <textarea name="admin_review" rows="4" cols="50"></textarea>
+                    <textarea name="admin_review" rows="4" cols="50">Write Your Remark Here.......</textarea>
                     <button class="btn btn-primary pull-right" type="submit">
-                        Add Review
+                        Add Remark
                     </button>
                 </div>
                 <?php form_close(); ?>
