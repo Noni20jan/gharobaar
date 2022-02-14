@@ -686,6 +686,27 @@ class Reports_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
+    public function fetch_sale_data_cancellation()
+    {
+        $sql = "SELECT distinct sdr.*,sod.awb_code as Awb_Code
+        FROM sale_data_report as sdr,
+        order_products as op,
+          shiprocket_order_details as sod
+        where
+         sdr.order_no = op.order_id
+         and sdr.seller_id = op.seller_id
+         and sdr.product_id = op.product_id
+         and sdr.order_no = sod.order_id
+         and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user', 'rejected','processing')
+         and YEAR(sdr.order_date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+         AND MONTH(sdr.order_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) 
+         and YEAR(op.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+         AND MONTH(op.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+         and sod.awb_code is not null
+         order by sdr.order_no";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     public function fetch_seller_commission()
     {
 
@@ -1093,6 +1114,29 @@ class Reports_model extends CI_Model
     AND op.buyer_id = buyer.id
      AND YEAR(op.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
      AND MONTH(op.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    public function format_sale_data_cancellation($start_date, $end_date)
+    {
+        $end_date = $end_date . " 23:59:59";
+        $sql = "SELECT distinct sdr.*,sod.awb_code as Awb_Code
+        FROM sale_data_report as sdr,
+        order_products as op,
+          shiprocket_order_details as sod
+        where
+         sdr.order_no = op.order_id
+         and sdr.seller_id = op.seller_id
+         and sdr.product_id = op.product_id 
+         and sdr.order_no = sod.order_id
+         and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user', 'rejected','processing')
+         and sdr.order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
+         and sdr.order_date < STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+         and op.created_at >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
+         and op.created_at < STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+         and sod.awb_code is not null
+         order by sdr.order_no";
         $query = $this->db->query($sql);
         return $query->result();
     }

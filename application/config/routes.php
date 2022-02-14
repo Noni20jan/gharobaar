@@ -536,6 +536,8 @@ $route[getr('admin', $rts) . '/storage'] = 'admin_controller/storage';
 
 // reports
 $route[getr('admin', $rts) . '/sale-data'] = 'admin_controller/sales';
+$route[getr('admin', $rts) . '/sale_data_cancellation'] = 'admin_controller/sale_data_cancellation';
+
 $route[getr('admin', $rts) . '/seller-profile-data'] = 'admin_controller/seller_profile_data';
 $route[getr('admin', $rts) . '/shipping-cod-charges'] = 'admin_controller/shipping_cod_charges';
 $route[getr('admin', $rts) . '/tcs-report'] = 'admin_controller/tcs_report';
