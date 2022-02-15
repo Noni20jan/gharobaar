@@ -513,7 +513,27 @@ class Cart_controller extends Home_Core_Controller
         //check for exhibition enabled products
         $data['check_exhibition'] = $this->order_model->check_exhibition_enabled($data['c_items']);
 
-        $payment_type = input_get('payment_type');
+       
+        $data['mds_payment_type'] = "sale";
+
+
+        //check is set cart payment method
+        $data['cart_payment_method'] = $this->cart_model->get_sess_cart_payment_method();
+        
+            $this->cart_model->validate_cart();
+            //sale payment
+            $data['cart_items'] = $this->cart_model->get_sess_cart_items();
+            if ($data['cart_items'] == null) {
+                redirect(generate_url("cart"));
+            }
+            $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+            $data["shipping_address"] = $this->cart_model->get_sess_cart_shipping_address();
+            $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
+            //total amount
+            $data['total_amount'] = $data['cart_total']->total_price;
+            $data['currency'] = $this->payment_settings->default_currency;
+        
+            $payment_type = input_get('payment_type');
         if ($payment_type != "membership" && $payment_type != "promote") {
             $payment_type = "sale";
         }
@@ -1093,6 +1113,7 @@ class Cart_controller extends Home_Core_Controller
      */
     public function cash_on_delivery_payment_post()
     {
+        $this->cart_model->set_sess_cart_payment_method();
         //add order
         $order_id = $this->order_model->add_order_offline_payment("Cash On Delivery");
         $order = $this->order_model->get_order($order_id);
@@ -1308,6 +1329,7 @@ class Cart_controller extends Home_Core_Controller
 
     public function payment_cashfree()
     {
+        $this->cart_model->set_sess_cart_payment_method();
 
         if (!empty($_SESSION["modesy_sess_unique_id"])) :
             $returnUrl = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"];
@@ -2099,4 +2121,42 @@ class Cart_controller extends Home_Core_Controller
 
         redirect($this->agent->referrer());
     }
+
+public function load_pay_view(){
+
+ $pay_method = $this->input->post('pay_method', true);
+ $std = new stdClass();
+ $std->payment_option = $pay_method;
+ $this->session->set_userdata('mds_cart_payment_method', $std);
+ $data['mds_payment_type'] = "sale";
+ //check is set cart payment method
+ $data['cart_payment_method'] = $this->cart_model->get_sess_cart_payment_method();
+ 
+     $this->cart_model->validate_cart();
+     $data['cart_items'] = $this->cart_model->get_sess_cart_items();
+     if ($data['cart_items'] == null) {
+         redirect(generate_url("cart"));
+     }
+     $data['cart_payment_method'] = $this->cart_model->get_sess_cart_payment_method();
+     
+     $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+     $data["shipping_address"] = $this->cart_model->get_sess_cart_shipping_address();
+     $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
+     //total amount
+     $data['total_amount'] = $data['cart_total']->total_price;
+     $data['currency'] = $this->payment_settings->default_currency;
+
+     if($pay_method=='cashfree'){
+        $pay_view= $this->load->view("cart/payment_methods/cashfree", $data, true);
+        }
+        else{
+            $pay_view= $this->load->view("cart/payment_methods/_cash_on_delivery", $data, true);
+        }
+    $response = array(
+        "status" => true,
+        "pay_view"=>$pay_view,
+        
+    );
+    echo json_encode($response);
+}
 }

@@ -241,7 +241,8 @@
     </div>
     <div class="row" style="margin-top: 3%;" id="paynow-for-web">
         <div class="col-sm-6">
-            <a class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>'><?php echo trans("change_pay_method") ?></a>
+            <!-- <a class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;" href='<//?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>'></?php echo trans("change_pay_method") ?></a> -->
+            <a href="<?php echo generate_url("cart", "shipping"); ?>" class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 10px !important;"> <?php echo trans("change_address"); ?></a>
         </div>
         <div class="col-sm-6">
             <button type="submit" id="cashfreebtn" class="cash_free_btn btn btn-lg float-right" style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
@@ -252,7 +253,8 @@
             <button type="submit" id="cashfreebtn" class="cash_free_btn btn btn-lg float-right" style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
         </div>
         <div class="col-sm-6">
-            <a class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>'><?php echo trans("change_pay_method") ?></a>
+            <!-- <a class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>'><?php echo trans("change_pay_method") ?></a> -->
+            <a href="<?php echo generate_url("cart", "shipping"); ?>"class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;"> <?php echo trans("change_address"); ?></a>
         </div>
     </div>
 </div>
