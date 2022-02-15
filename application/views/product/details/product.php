@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 
 <style>
     .star-rating {
@@ -510,9 +510,18 @@
                                 <h3 class="product_description">Description</h3>
                                 <pre style="margin-top: 3px; white-space:pre-line; font-weight:500; text-align:justify; font-size: 100%; font-family:'Montserrat';" class="more"><?php echo $product_details->description; ?></pre>
                                 <?php if ($product->add_meet == "Made to order") : ?>
-                                    <div class="summary-section-disclaimer" style="max-width:100%;">
+                                    <?php if($this->general_settings->made_to_order_check==0):?>
+
+                                    <div class="summary-section-disclaimer" style="max-width:100%; display:none;">
                                         <h5 style="padding:2%; font-size: 15px;"><?php echo get_content("made_to_order"); ?></h5>
-                                    </div>
+                                        </div>
+                                        <?php else:?>
+                                            <div class="summary-section-disclaimer" style="max-width:100%;">
+                                        <h5 style="padding:2%; font-size: 15px;display:none;"><?php echo get_content("made_to_order"); ?></h5>
+                                        </div>       
+                                        <?php endif;?>                                
+                                   
+
                                 <?php endif; ?>
                             </div>
                         </div>

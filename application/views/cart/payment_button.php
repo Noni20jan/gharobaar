@@ -75,7 +75,11 @@ endif;
                                 endif; ?>
                             <?php endforeach; ?>
                             <?php if ($is_made_to_order) : ?>
-                                <a href="#" class="btn btn-block" data-toggle="modal" data-target="#made_to_order_checkout"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                <?php if($this->general_settings->made_to_order_check==0):?>
+                                                    <a href="<?php echo generate_url("cart", "shipping"); ?>" class="btn btn-block"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                            <?php else : ?>
+                                                <a href="#" class="btn btn-block" data-toggle="modal" data-target="#made_to_order_checkout"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
+                                                <?php endif;?>
                             <?php else : ?>
                                 <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
                                     <a href="<?php echo generate_url("cart", "shipping"); ?>" class="btn btn-block"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a>
