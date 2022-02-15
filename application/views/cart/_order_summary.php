@@ -100,7 +100,7 @@
                                 <?php if (!empty($cart_item->discount_rate)) : ?>
                                     <div class="list-item">
                                         <label><?php echo trans("discount"); ?>:</label>
-                                        <strong style="color: #d21f3c;"><?php echo price_formatted($cart_item->discount_amount * 100, $cart_item->currency); ?></strong>
+                                        <strong style="color: #007C05;"><?php echo price_formatted($cart_item->discount_amount * 100, $cart_item->currency); ?></strong>
                                     </div>
                                 <?php endif; ?>
                                 <?php if ($product->product_type != 'digital' && $this->form_settings->shipping == 1) : ?>
@@ -144,12 +144,12 @@
             <?php endif;
             endforeach; ?>
             <!-- <p>
-                <?php echo trans("total_discount"); ?><span class="float-right" style="color: #d21f3c;"><?php echo price_formatted($total_discount * 100, $cart_total->currency); ?>/-</span>
+                <?php echo trans("total_discount"); ?><span class="float-right" style="color: #007C05;"><?php echo price_formatted($total_discount * 100, $cart_total->currency); ?>/-</span>
             </p> -->
         <?php endif; ?>
         <!-- <?php if (!empty($cart_total->gst)) : ?>
             <p>
-                <?php echo trans("total_discount"); ?><span class="float-right" style="color: #d21f3c;"><?php echo price_formatted($total_discount * 100, $cart_total->currency); ?></span>
+                <?php echo trans("total_discount"); ?><span class="float-right" style="color: #007C05;"><?php echo price_formatted($total_discount * 100, $cart_total->currency); ?></span>
             </p>
         <?php endif; ?> -->
 
@@ -199,11 +199,11 @@
         <?php endif; ?>
 
         <?php if ($cart_total->applied_coupon_discount > 0) : ?>
-            <p style="color:#d21f3c;">
+            <p style="color:#007C05;">
                 <strong><?php echo "Coupon Discount"; ?><span class="float-right"><?php echo "- " . price_formatted_without_round($cart_total->applied_coupon_discount, $this->payment_settings->default_currency); ?>/-</span></strong>
             </p>
         <?php elseif (!empty($cart_total->applied_coupon_source_type)) : ?>
-            <p style="color:#d21f3c;">
+            <p style="color:#007C05;">
                 <strong><?php echo "Coupon Discount"; ?>
                     <span class="float-right">
                         <?php switch ($cart_total->applied_coupon_source_type):

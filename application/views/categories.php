@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: center;">
-                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: #d21f3c; color:white;"><?php echo trans("close"); ?></button>
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: #007C05; color:white;"><?php echo trans("close"); ?></button>
             </div>
         </div>
     </div>

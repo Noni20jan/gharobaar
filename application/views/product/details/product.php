@@ -57,7 +57,7 @@
 
     #check_pincode {
         position: absolute;
-        background-color: #d21f3c;
+        background-color: #007C05;
         color: #fff;
         border: none;
         top: 12px;
@@ -304,14 +304,14 @@
 
     .morelink {
         display: block;
-        color: #d21f3c;
+        color: #007C05;
         font-family: 'Montserrat';
         text-decoration: underline;
     }
 
     .morelink:hover {
         display: block;
-        /* color: #d21f3c; */
+        /* color: #007C05; */
         font-family: 'Montserrat';
         text-decoration: underline;
     }

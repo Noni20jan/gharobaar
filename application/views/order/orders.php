@@ -100,7 +100,7 @@
 														</td>
 
 														<td>
-															<a href="<?php echo generate_url("order_details") . "/" . get_order($order->order_id)->order_number; ?>" style="color:white; background-color:#d21f3c;" class="btn btn-sm btn-table-info"><?php echo trans("details"); ?></a><br />
+															<a href="<?php echo generate_url("order_details") . "/" . get_order($order->order_id)->order_number; ?>" style="color:white; background-color:#007C05;" class="btn btn-sm btn-table-info"><?php echo trans("details"); ?></a><br />
 															<span>
 																<?php $datetime = new DateTime($order->created_at);
 																			$formatted_date_month = $datetime->format('M');
@@ -230,13 +230,13 @@
 																	<?php if ($order->order_status == 'completed') : ?>
 																		<p style="color: black;">&emsp;Your item is <strong class="font-600">Delivered</strong></p>
 																	<?php elseif ($items == "shipped" || $items == "out_for_delivery") : ?>
-																		<p style="color: #d21f3c;">Your item is <strong class="font-600">on its way</strong></p>
+																		<p style="color: #007C05;">Your item is <strong class="font-600">on its way</strong></p>
 																	<?php elseif ($items == "cancelled_by_seller" || $items == "cancelled_by_user") : ?>
 																		<p style="color: red;">Your item is <strong class="font-600">cancelled</strong></p>
 																	<?php elseif ($items == "rejected") : ?>
 																		<p style="color: red;">Your item is <strong class="font-600">rejected</strong></p>
 																	<?php else : ?>
-																		<p style="color: #d21f3c;">&emsp;Your item is <strong class="font-600">under process</strong></p>
+																		<p style="color: #007C05;">&emsp;Your item is <strong class="font-600">under process</strong></p>
 																	<?php endif; ?>
 
 

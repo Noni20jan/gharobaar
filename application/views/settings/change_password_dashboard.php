@@ -21,7 +21,7 @@
 
         /* Add a green text color and a checkmark when the requirements are right */
         .valid {
-            color: #d21f3c;
+            color: #007C05;
         }
 
         .valid:before {

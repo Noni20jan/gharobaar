@@ -689,31 +689,32 @@
                     </div>
                 </div> -->
             <?php endif; ?>
-            <div class="row">
-                <div class="col-sm-6 col-xs-6 col-left">
-                    <?php if (!empty($order->offer_id) && $order->offer_id != 0) { ?>
+            <?php if (!empty($order->offer_id) && $order->offer_id != 0) { ?>
+                <div class="row">
+                    <div class="col-sm-6 col-xs-6 col-left">
+
                         <strong>Coupon Applied</strong>
-                </div>
+                    </div>
 
-                <div class="col-sm-6 col-xs-6 col-right">
+                    <div class="col-sm-6 col-xs-6 col-right">
 
-                    <?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);
+                        <?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);
                         echo $coupon->offer_code; ?>
 
-                    <!-- <strong>-<?php echo price_formatted($order->coupon_discount, $order->price_currency); ?>/-</strong> -->
+                        <!-- <strong>-<?php echo price_formatted($order->coupon_discount, $order->price_currency); ?>/-</strong> -->
+                    </div>
+                </div>
+                <p style="font-size: 12px;">(The coupon is applied to the total amount of order)</p>
+            <?php    } ?>
+            <hr>
+            <div class="row row-details">
+                <div class="col-xs-12 col-sm-6 col-right">
+                    <strong> <?php echo trans("total"); ?></strong>
+                </div>
+                <div class="col-sm-6">
+                    <strong class="font-right"><?php echo price_formatted($order->price_total, $order->price_currency); ?></strong>
                 </div>
             </div>
-            <p style="font-size: 12px;">(The coupon is applied to the total amount of order)</p>
-        <?php    } ?>
-        <hr>
-        <div class="row row-details">
-            <div class="col-xs-12 col-sm-6 col-right">
-                <strong> <?php echo trans("total"); ?></strong>
-            </div>
-            <div class="col-sm-6">
-                <strong class="font-right"><?php echo price_formatted($order->price_total, $order->price_currency); ?></strong>
-            </div>
-        </div>
         </div>
     </div>
 </div>

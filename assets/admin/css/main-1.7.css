@@ -216,8 +216,8 @@ textarea {
 }
 
 .custom-control-input:checked~.custom-control-label::before {
-    border-color: #d21f3c;
-    background-color: #d21f3c;
+    border-color: #007C05;
+    background-color: #007C05;
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
@@ -900,8 +900,8 @@ table.dataTable {
 }
 
 .btn-custom {
-    background-color: #d21f3c;
-    border-color: #d21f3c;
+    background-color: #007C05;
+    border-color: #007C05;
     color: white;
 }
 

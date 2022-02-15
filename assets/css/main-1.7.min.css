@@ -2530,8 +2530,8 @@ fieldset:disabled a.btn {
 }
 .btn-info {
   color: #fff;
-  background-color: #d21f3c;
-  border-color: #d21f3c;
+  background-color: #007C05;
+  border-color: #007C05;
 }
 .btn-info:hover {
   color: #fff;
@@ -10126,7 +10126,7 @@ img {
 }
 #check_pincode {
   position: absolute;
-  background-color: #d21f3c;
+  background-color: #007C05;
   color: #fff;
   border: none;
   top: 12px;
@@ -10697,7 +10697,7 @@ img {
 .li-main-nav-right a i {
   float: left;
   padding: 7px 13px;
-  background-color: #d21f3c;
+  background-color: #007C05;
   border-radius: 20px;
   font-size: 1.1rem;
   position: relative;
@@ -11073,7 +11073,7 @@ img {
   position: absolute !important;
   display: inline-block;
   font-size: 12px;
-  background-color: #d21f3c;
+  background-color: #007C05;
   border-radius: 50%;
   bottom: 18px;
   left: 15px;
@@ -14976,7 +14976,7 @@ img {
   float: left;
   margin-right: 10px;
   margin-bottom: 10px;
-  background-color: #d21f3c;
+  background-color: #007C05;
   margin-top: 13px;
 }
 .filter-reset-tag .right {
@@ -16408,7 +16408,7 @@ img {
   font-size: 14px !important;
 }
 .swal-button--danger {
-  background-color: #d21f3c !important;
+  background-color: #007C05 !important;
 }
 .btn-file-upload {
   position: relative;
@@ -16447,7 +16447,7 @@ img {
   line-height: 40px;
   display: block;
   text-align: center;
-  background-color: #d21f3c;
+  background-color: #007C05;
   border-radius: 50%;
   z-index: 999999;
 }

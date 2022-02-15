@@ -33,7 +33,7 @@
     }
 
     .span-message-count {
-        background-color: #d21f3c;
+        background-color: #007C05;
         font-size: 13px;
         font-weight: 600;
     }
@@ -46,7 +46,7 @@
 
     /* Add a green text color and a checkmark when the requirements are right */
     .valid {
-        color: #d21f3c;
+        color: #007C05;
     }
 
     .valid:before {
@@ -136,7 +136,7 @@
     }
 
     .mobile-map a {
-        color: #d21f3c;
+        color: #007C05;
         font-size: 22px;
         position: relative;
         top: 8px;
@@ -233,7 +233,7 @@
     .check_pincode {
         position: relative;
         border-radius: 28px;
-        background-color: #d21f3c;
+        background-color: #007C05;
         color: #fff;
         padding: 15px;
         border: none;
@@ -247,7 +247,7 @@
         .check_pincode {
             position: relative;
             border-radius: 28px;
-            background-color: #d21f3c;
+            background-color: #007C05;
             color: #fff;
             padding: 15px;
             border: none;
@@ -266,7 +266,7 @@
     .OtpSendMsg {
         margin-bottom: 10px;
         text-align: center;
-        color: #d21f3c;
+        color: #007C05;
     }
 
     .enter_p::placeholder {
@@ -317,7 +317,7 @@
     }
 
     #show_tim {
-        color: #d21f3c;
+        color: #007C05;
         font-size: 22px;
         position: relative;
         top: 8px;
@@ -421,7 +421,7 @@
     }
 
     .map-icon {
-        color: #d21f3c;
+        color: #007C05;
         font-size: 22px;
     }
 
@@ -539,7 +539,7 @@
 
     #check_pin {
         position: relative;
-        background-color: #d21f3c;
+        background-color: #007C05;
         padding: 14px;
         color: #fff;
         border: none;
@@ -624,8 +624,8 @@
     }
 
     .notification-button {
-        background: #d21f3c;
-        border-color: #d21f3c;
+        background: #007C05;
+        border-color: #007C05;
         padding: 6px;
         border-radius: 20px;
         color: white;
@@ -882,7 +882,7 @@
         }
 
         .icon-bg {
-            background-color: #d21f3c;
+            background-color: #007C05;
             border-radius: 50%;
             color: white;
             font-size: 15px;
@@ -950,7 +950,7 @@
         .sliding_content {
             display: flow-root;
             text-align: center;
-            background-color: #d21f3c;
+            background-color: #007C05;
             font-weight: normal;
             font-style: normal;
             font-family: "Montserrat", Helvetica, sans-serif;

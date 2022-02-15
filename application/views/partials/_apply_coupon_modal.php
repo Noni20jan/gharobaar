@@ -22,7 +22,7 @@
     }
 
     .couponsForm-textInputContainer .couponsForm-base-textInput {
-        caret-color: #d21f3c;
+        caret-color: #007C05;
         padding: 0;
         border: none;
         width: 70%;
@@ -34,14 +34,14 @@
         top: 11px;
         right: 16px;
         font-size: 14px;
-        color: #d21f3c;
+        color: #007C05;
         font-weight: 600;
         letter-spacing: 1px;
         cursor: not-allowed;
     }
 
     .couponsForm-textInputContainer .couponsForm-enabled {
-        color: #d21f3c;
+        color: #007C05;
         cursor: pointer;
     }
 
@@ -60,8 +60,8 @@
     }
 
     .coupon_code_apply {
-        color: #d21f3c;
-        border: 1px dashed #d21f3c;
+        color: #007C05;
+        border: 1px dashed #007C05;
         border-radius: 3px;
         padding: 8px 12px;
         padding-right: 15px;

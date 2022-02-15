@@ -1,7 +1,7 @@
 <style>
     .btn-new-review {
-        background-color: #d21f3c;
-        border-color: #d21f3c;
+        background-color: #007C05;
+        border-color: #007C05;
         border-radius: 20px;
         color: white;
     }

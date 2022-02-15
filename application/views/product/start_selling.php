@@ -89,13 +89,13 @@ $pincode = get_pincode(281204);
         }
 
         .btn-primary1 {
-            background-color: #d21f3c;
+            background-color: #007C05;
             border-radius: 20px;
             color: white;
         }
 
         .btn-default {
-            background-color: #d21f3c;
+            background-color: #007C05;
             border-radius: 20px;
 
         }
@@ -256,7 +256,7 @@ $pincode = get_pincode(281204);
         }
 
         .button {
-            background-color: #d21f3c;
+            background-color: #007C05;
             /* Green */
             border: none;
             color: white;
@@ -273,13 +273,13 @@ $pincode = get_pincode(281204);
         }
 
         .button1 {
-            background-color: #d21f3c;
+            background-color: #007C05;
             color: white;
             border: 2px solid #4CAF50;
         }
 
         .button1:hover {
-            background-color: #d21f3c;
+            background-color: #007C05;
             color: white;
         }
 

@@ -98,7 +98,7 @@
     }
 
     .lone {
-        color: #d21f3c;
+        color: #007C05;
         cursor: pointer;
         content: "\A";
         white-space: pre;
@@ -107,7 +107,7 @@
     @media (max-width: 700px) {
 
         .lone {
-            color: #d21f3c;
+            color: #007C05;
             cursor: pointer;
             white-space: pre;
         }
@@ -291,8 +291,8 @@
         float: right;
         padding: 4px 16px;
         position: absolute;
-        color: #d21f3c;
-        border: 1px solid #d21f3c;
+        color: #007C05;
+        border: 1px solid #007C05;
         border-radius: 3px;
         text-transform: none;
         cursor: pointer;
@@ -349,7 +349,7 @@
 
     .coupon-div-applied-label {
         font-size: 12px;
-        color: #d21f3c;
+        color: #007C05;
         padding: 2px 10px
     }
 
@@ -747,7 +747,7 @@ if (!$this->auth_check) : ?>
                                         <?php endif;
                                         endforeach; ?>
                                         <p>
-                                            <?php echo ("Discount"); ?><span class="float-right" id="discount_number" style="color: #d21f3c;">&#8377;<?php echo (round($discount, 2)) ?>/-</span>
+                                            <?php echo ("Discount"); ?><span class="float-right" id="discount_number" style="color: #007C05;">&#8377;<?php echo (round($discount, 2)) ?>/-</span>
                                         </p>
                                     <?php endif; ?>
                                     <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
@@ -760,7 +760,7 @@ if (!$this->auth_check) : ?>
                                         </p>
 
                                     <?php endif; ?>
-                                    <p style="color:#d21f3c;" id="coupon-discount-tag" class="<?php echo ((!empty($this->session->userdata('mds_shopping_cart_coupon')))) ? '' : 'hide-coupon-discount' ?>">
+                                    <p style="color:#007C05;" id="coupon-discount-tag" class="<?php echo ((!empty($this->session->userdata('mds_shopping_cart_coupon')))) ? '' : 'hide-coupon-discount' ?>">
                                         <strong>
                                             <?php echo "Coupon Discount"; ?>
                                             <span class="float-right" id="coupon-discount-text">
@@ -994,7 +994,7 @@ if (!$this->auth_check) : ?>
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: center;">
-                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: #d21f3c; color:white;"><?php echo trans("close"); ?></button>
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: #007C05; color:white;"><?php echo trans("close"); ?></button>
             </div>
 
         </div>
@@ -1053,7 +1053,7 @@ if (!$this->auth_check) : ?>
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: center;">
-                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: #d21f3c; color:white;"><?php echo trans("close"); ?></button>
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: #007C05; color:white;"><?php echo trans("close"); ?></button>
             </div>
 
         </div>
@@ -1074,8 +1074,8 @@ if (!$this->auth_check) : ?>
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: center;">
-                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" id="confirm_remove_no" style="background-color: #d21f3c; color:white;">No</button>
-                <button type="button" class="btn btn-md btn-default" id="confirm_remove_yes" data-dismiss="modal" style="background-color: #d21f3c; color:white;">Yes</button>
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" id="confirm_remove_no" style="background-color: #007C05; color:white;">No</button>
+                <button type="button" class="btn btn-md btn-default" id="confirm_remove_yes" data-dismiss="modal" style="background-color: #007C05; color:white;">Yes</button>
             </div>
 
         </div>

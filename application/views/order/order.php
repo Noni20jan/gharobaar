@@ -229,8 +229,8 @@
     }
 
     .confirm-new-ui {
-        background-color: #d21f3c;
-        border-color: #d21f3c;
+        background-color: #007C05;
+        border-color: #007C05;
         width: 100%;
         font-weight: bolder;
         font-size: 18px;
@@ -291,10 +291,10 @@
                                 endforeach;
                                 if ($order_status == 1) : ?>
 
-                                    <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#d21f3c;"><?php echo trans('view_invoice'); ?></a>
+                                    <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#007C05;"><?php echo trans('view_invoice'); ?></a>
                                 <?php else : ?>
 
-                                    <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#d21f3c;"><?php echo trans('porforma_invoice'); ?></a>
+                                    <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#007C05;"><?php echo trans('porforma_invoice'); ?></a>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -465,7 +465,7 @@
                                                     <?php $order_date = strtotime($order->created_at); ?>
                                                     <?php $ordered_date = date("dS M Y", $order_date); ?>
                                                     <?php $shipping_time = $product->shipping_time; ?>
-                                                    <?php if ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") >2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                    <?php if ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") > 2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
                                                         <?php $ship_time = intval($product->shipping_time[2]); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
                                                         <?php $x = $ship_time + 3; ?>
@@ -474,8 +474,8 @@
 
                                                         <?php $ship_date = (date("dS M Y", $order_create)); ?>
                                                         <?php $shipping_date = new DateTime($ship_date); ?>
-                                                            <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $ship_date; ?></p>
-                                                        <?php elseif (get_product($item->product_id)->add_meet == "Made to order"  && get_product($item->product_id)->category_id != 2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                        <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $ship_date; ?></p>
+                                                    <?php elseif (get_product($item->product_id)->add_meet == "Made to order"  && get_product($item->product_id)->category_id != 2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
                                                         <?php $lead_days = intval(get_product($item->product_id)->lead_days); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
                                                         <?php $delivery_days = $lead_days + 3; ?>
@@ -485,14 +485,14 @@
                                                     <?php elseif ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") == 2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
                                                         <?php $shipped_time = intval($product->shipping_time); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
-                                                        <?php $delivery_time=$shipped_time+3;?>
+                                                        <?php $delivery_time = $shipped_time + 3; ?>
                                                         <?php $order_create = strtotime("$delivery_time day", $created_at); ?>
                                                         <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                                                         <?php $shipp_date = new DateTime($shipped_date); ?>
-                                                            <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
+                                                        <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
 
 
-                                                            
+
                                                     <?php endif; ?>
                                                     <!-- <?php if ($item->product_type == 'physical') : ?>
                                                                     <p><span class="span-product-dtl-table"><?php echo trans("shipping"); ?>:</span><?php echo price_formatted($item->product_shipping_cost, $item->product_currency); ?></p>
@@ -804,10 +804,10 @@
                                         endforeach;
                                         if ($order_status == 1) : ?>
 
-                                            <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn-view-invoice-mobile" style="background-color:#d21f3c;"><?php echo trans('view_invoice'); ?></a>
+                                            <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn-view-invoice-mobile" style="background-color:#007C05;"><?php echo trans('view_invoice'); ?></a>
                                         <?php else : ?>
 
-                                            <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn-view-invoice-mobile" style="background-color:#d21f3c;"><?php echo trans('porforma_invoice'); ?></a>
+                                            <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn-view-invoice-mobile" style="background-color:#007C05;"><?php echo trans('porforma_invoice'); ?></a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -1115,7 +1115,7 @@
             <div class="modal-content modal-custom">
                 <!-- form start -->
                 <?php echo form_open('cancel-order-buyer'); ?>
-                <input type="hidden" name="order_id" value="<?php echo $order->id;?>">
+                <input type="hidden" name="order_id" value="<?php echo $order->id; ?>">
 
                 <div class="modal-header">
                     <h5 class="modal-title"><?php echo "Cancellation Reason"; ?></h5>

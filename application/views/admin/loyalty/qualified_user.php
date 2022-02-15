@@ -18,7 +18,7 @@
     }
 
     .color-check {
-        color: #d21f3c;
+        color: #007C05;
     }
 </style>
 
