@@ -1115,8 +1115,6 @@
             <div class="modal-content modal-custom">
                 <!-- form start -->
                 <?php echo form_open('cancel-order-buyer'); ?>
-                <input type="hidden" name="order_id" value="<?php echo $order->id;?>">
-
                 <div class="modal-header">
                     <h5 class="modal-title"><?php echo "Cancellation Reason"; ?></h5>
                     <button type="button" class="close" data-dismiss="modal">
@@ -1128,6 +1126,7 @@
 
                     <div class="row tracking-number-container">
                         <div class="col-sm-12">
+
                             <div class="form-group">
                                 <label class="control-label"><?php echo "Choose Cancellation Reason"/*trans('choose_reject_reason')*/; ?></label>
                                 <select name="reject_reason" id="reject_reason_select_<?php echo $item->id; ?>" onchange='check_comments1(this.value);' class="form-control custom-select" data-order-product-id="<?php echo $item->id; ?>" required>
@@ -1236,6 +1235,7 @@
     <?php endforeach; ?>
 
 <?php endforeach; ?>
+
 <!-- Modal -->
 <div class="modal fade" id="reportPaymentModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
