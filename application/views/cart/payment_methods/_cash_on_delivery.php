@@ -138,7 +138,8 @@
 			<!-- <p class="m-b-30">
 				<?php echo trans("cash_on_delivery_warning"); ?>
 			</p> -->
-			<a class="btn btn-lg btn-custom btn-place-order float-left m-t-30" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>' ><?php echo trans("change_pay_method") ?></a>
+			<!-- <a class="btn btn-lg btn-custom btn-place-order float-left m-t-30" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>' ><?php echo trans("change_pay_method") ?></a> -->
+			<a href="<?php echo generate_url("cart", "shipping"); ?>"class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;"> <?php echo trans("change_address"); ?></a>
 			<button type="submit" name="submit" value="update" class="btn btn-lg btn-custom btn-place-order float-right m-t-30" id="place_order"><?php echo trans("place_order") ?></button>
 		</div>
 		<?php echo form_close(); ?>
