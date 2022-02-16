@@ -710,9 +710,9 @@ class Email_model extends CI_Model
             $response1->headers();
             $response1->body();
             $response = $sendgrid->send($email);
-            print 'Status Code: ' . $response->statusCode() . "\n";
+            $response->statusCode();
             $response->headers();
-            print   $response->body() . "\n";
+            $response->body();
         } catch (Exception $e) {
             echo 'Caught exception: ' . $e->getMessage() . "\n";
         }
