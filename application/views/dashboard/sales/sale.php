@@ -288,10 +288,11 @@ endif;
         endforeach;
 
         ?>
+        
         <div class="row">
             <div class="pull-right">
                 <?php if ($item_order->product_delivery_partner == "SHIPROCKET") : ?>
-                    <?php if ($item_order->order_status == "processing" && $item_order->seller_id == $this->auth_user->id) : ?>
+                    <?php if ($orders_count >= 1) : ?>
                         <button class="btn btn-md btn-block btn-info btn-table-delete" id="schedule_sipment" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
 
                     <?php endif; ?>
@@ -304,7 +305,6 @@ endif;
         </div>
         <?php if (($item->product_delivery_partner) == "SHIPROCKET") : ?>
             <?php if (empty($shiprocket_order_details)) : ?>
-
 
 
                 <?php $product = get_product($item->product_id); ?>
@@ -322,15 +322,16 @@ endif;
                     <?php $ship_date = (date("dS M Y", $order_create)); ?>
                     <?php $shipping_date = new DateTime($ship_date); ?>
 
-                    <?php if ($item_order->order_status == 'processing') : ?>
+                    <?php if ($orders_count>=1) : ?>
 
-                        <?php if ($shipping_date > $current_date) : ?>
+                        <?php if ($shipping_date >= $current_date) : ?>
 
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $ship_date; ?></b></p>
 
                         <?php else : ?>
                             <?php foreach ($order_count as $cnt) : ?>
                             <?php endforeach; ?>
+
                             <?php $penalty_amt = 10 * intval($cnt->count); ?>
 
                             <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo $penalty_amt; ?> for this order shall be charged as per the terms of the agreement.
@@ -347,8 +348,8 @@ endif;
                     <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
                     <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                     <?php $shipp_date = new DateTime($shipped_date); ?>
-                    <?php if ($item_order->order_status == 'processing') : ?>
-                        <?php if ($shipp_date > $current_date) : ?>
+                    <?php if ($orders_count>=1) : ?>
+                        <?php if ($shipp_date >= $current_date) : ?>
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
 
                         <?php else : ?>
@@ -370,7 +371,7 @@ endif;
                     <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
                     <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                     <?php $shipp_date = new DateTime($shipped_date); ?>
-                    <?php if ($shipp_date > $current_date) : ?>
+                    <?php if ($shipp_date >= $current_date) : ?>
                         <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
                     <?php else : ?>
                         <?php foreach ($order_count as $cnt) : ?>
@@ -1281,8 +1282,8 @@ endforeach; ?>
         var base_url = '<?php echo base_url() ?>';
         var order_items = [];
         var quantity_price_array = [];
-
         for (var i = 0; i < products_array.length; i++) {
+
             order_items.push({
 
                 name: order_items_array[i].product_title,
@@ -1396,15 +1397,17 @@ endforeach; ?>
                     })
                 } else {
                     $('#cover-spin').hide();
-                    alert(JSON.parse(response).payload.error_message)
+                    alert(JSON.parse(response).payload.error_message);
                 }
             },
             error: function(response) {
                 $('#cover-spin').hide();
                 alert(response.responseJSON.message)
             }
+        
         });
     }
+    
 </script>
 
 

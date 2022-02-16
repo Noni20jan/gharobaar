@@ -601,7 +601,9 @@ class Dashboard_controller extends Home_Core_Controller
         $product_delivery_partner = get_order_product($product_ids[0])->product_delivery_partner;
 
         if (!empty($product_ids)) {
+            
             foreach ($product_ids as $id) {
+                if(get_order_product($id)->order_status=="processing"){
                 array_push($items_ids, $id);
                 $product = get_product(get_order_product($id)->product_id);
                 if (strcasecmp($product_address, $product->product_address) == 0 && strcasecmp($product_landmark, $product->landmark) == 0 && strcasecmp($product_area, $product->product_area) == 0 && strcasecmp($product_city, $product->product_city) == 0 && strcasecmp($product_pincode, $product->product_pincode) == 0) {
@@ -609,6 +611,7 @@ class Dashboard_controller extends Home_Core_Controller
                 } else {
                     $pickup_location_matched++;
                 }
+            }
             }
         }
 
@@ -637,6 +640,7 @@ class Dashboard_controller extends Home_Core_Controller
 
         if (!empty($product_ids)) {
             foreach ($product_ids as $id) {
+                if(get_order_product($id)->order_status=="processing"){
 
                 $product = get_product(get_order_product($id)->product_id);
                 $order_product = get_order_product($id);
@@ -647,6 +651,7 @@ class Dashboard_controller extends Home_Core_Controller
                 array_push($products_array, $product);
                 array_push($order_items, $order_product);
             }
+        }
         }
 
 
@@ -2153,7 +2158,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data["products_order"] = $this->order_model->get_products_order($data["order"]->id, $this->auth_user->id);
         $data["order_count"] = $this->order_model->count_order_products($data["order"]->id, $this->auth_user->id);
         // $data['check'] = $this->order_model->get_stats($data["order"]->id, ($order_details->product_id));
-
+        $data["orders_count"]=$this->order_model->get_seller_count_order_products($data["order"]->id,$this->auth_user->id);
         $this->load->view('dashboard/includes/_header', $data);
         $this->load->view('dashboard/sales/sale', $data);
         $this->load->view('dashboard/includes/_footer');
