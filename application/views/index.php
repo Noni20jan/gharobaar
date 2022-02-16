@@ -759,7 +759,7 @@
         <div class="row cards-space">
             <div class="col-sm-2">
                 <a href="<?php echo lang_base_url() . 'shop-by-concern'; ?>">
-                    <img class="top-picks-new-ui" src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/assets/img/landing-page-img/new-ui-img-1.png" alt="shop-by-concern">
+                    <img class="top-picks-new-ui" src="<?php echo base_url(); ?>assets/img/landing-page-img/new-ui-img-1.png" alt="shop-by-concern">
                     <p>
                         <strong class="top-centered">Shop By Concern</strong>
                     </p>
@@ -767,7 +767,7 @@
             </div>
             <div class="col-sm-2">
                 <a href="<?php echo lang_base_url() . 'shop-by-seller'; ?>">
-                    <img class="top-picks-new-ui" src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/assets/img/landing-page-img/new-ui-img-2.png" alt="shop-by-seller">
+                    <img class="top-picks-new-ui" src="<?php echo base_url(); ?>assets/img/landing-page-img/new-ui-img-2.png" alt="shop-by-seller">
                     <p>
                         <strong class="bottom-centered">Shop By Seller</strong>
                     </p>
@@ -775,7 +775,7 @@
             </div>
             <div class="col-sm-2">
                 <a href="<?php echo lang_base_url() . 'shop-by-occasion'; ?>">
-                    <img class="top-picks-new-ui" src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/assets/img/landing-page-img/new-ui-img-3.png" alt="shop-by-occasion">
+                    <img class="top-picks-new-ui" src="assets/img/landing-page-img/new-ui-img-3.png" alt="shop-by-occasion">
                     <p>
                         <strong class="top-centered-2">Shop By Occasion</strong>
                     </p>
@@ -783,7 +783,7 @@
             </div>
             <div class="col-sm-2 scroller">
                 <a href="#top_picks">
-                    <img class="top-picks-new-ui" src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/assets/img/landing-page-img/new-ui-img-4.png" alt="top-picks">
+                    <img class="top-picks-new-ui" src="<?php echo base_url(); ?>assets/img/landing-page-img/new-ui-img-4.png" alt="top-picks">
                     <p>
                         <strong class="bottom-centered-2">Top Picks</strong>
                     </p>
@@ -791,7 +791,7 @@
             </div>
             <div class="col-sm-2 scroller">
                 <a href="#top_discounts">
-                    <img class="top-picks-new-ui" src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/assets/img/landing-page-img/new-ui-img-5.png" alt="top-discounts">
+                    <img class="top-picks-new-ui" src="<?php echo base_url(); ?>assets/img/landing-page-img/new-ui-img-5.png" alt="top-discounts">
                     <p>
                         <strong class="top-centered-3">Top Discounts</strong>
                     </p>
