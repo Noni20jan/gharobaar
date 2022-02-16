@@ -2387,15 +2387,13 @@ foreach ($sellers as $seller) {
     </div>
 </div>
 <!-- Wrapper End-->
+<script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 <script type="text/javascript"></script>
-<script>
-
-
-</script>
 <script>
     var urlpage = 1;
     var page = 1;
@@ -2757,13 +2755,7 @@ foreach ($sellers as $seller) {
         if ($(this).is(':checked')) {
             $(this).attr('value', 'true');
             console.log($(this).val());
-
             window.location.href = z;
-
-
-
-
-
 
         } else {
             $(this).attr('value', 'false');
