@@ -35,21 +35,23 @@
 <?php //var_dump($product);
 //die();
 ?>
-<?php if ($product->add_meet == "Made to stock") : ?>
-    <?php $variation = $this->variation_model->get_product_variations($product->id);
+<?php //if ($product->add_meet == "Made to stock") : 
+?>
+<?php $variation = $this->variation_model->get_product_variations($product->id);
 
-    if (!empty($variation)) { ?>
+if (!empty($variation)) { ?>
 
-        <?php $variations_stock = 0; //var_dump($variation);
-        foreach ($variation as $variations) :
-            $variation_option = $this->variation_model->get_variation_options($variations->id);
+    <?php $variations_stock = 0; //var_dump($variation);
+    foreach ($variation as $variations) :
+        $variation_option = $this->variation_model->get_variation_options($variations->id);
 
-            foreach ($variation_option as $variation_stock) :
-                $variations_stock = $variations_stock + $variation_stock->stock;
-            endforeach;
-        endforeach; ?>
-    <?php } ?>
-<?php endif; ?>
+        foreach ($variation_option as $variation_stock) :
+            $variations_stock = $variations_stock + $variation_stock->stock;
+        endforeach;
+    endforeach; ?>
+<?php } ?>
+<?php //endif; 
+?>
 <div class="product-item">
     <div class="row-custom<?php echo (!empty($product->image_second)) ? ' product-multiple-image' : ''; ?>">
         <a class="item-wishlist-button item-wishlist-enable <?php echo (is_product_in_wishlist($product) == 1) ? 'item-wishlist' : ''; ?>" data-product-id="<?php echo $product->id; ?>"></a>
