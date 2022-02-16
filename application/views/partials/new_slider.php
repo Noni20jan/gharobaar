@@ -252,6 +252,10 @@
         animation-timing-function: linear;
     }
 
+    img {
+        aspect-ratio: attr(width) / attr(height);
+    }
+
     @keyframes jssorl-009-spin {
         from {
             transform: rotate(0deg);
