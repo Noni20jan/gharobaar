@@ -1839,7 +1839,7 @@ class Home_controller extends Home_Core_Controller
             'have_gst' => $this->input->post('gst_yes_no', true),
             'active_customer' => $this->input->post('active_customers', true),
             'selling_exempted_goods' => $this->input->post('selling_exempted_goods', true),
-            'min_order_value'=>$this->input->post('min_order_value', true),
+            'min_order_value' => $this->input->post('min_order_value', true),
 
 
 
@@ -3250,5 +3250,88 @@ class Home_controller extends Home_Core_Controller
         } else {
             $this->load->view('product/infinte_scroll_products', $data);
         }
+    }
+    public function notification_count()
+    {
+        $data['notification_count'] = $this->notification_model->get_notification_count();
+        echo json_encode($data);
+    }
+    public function gharobaar_updates_read()
+    {
+
+        $data['update'] = $this->notification_model->gharobaar_updates_read($this->auth_user->email);
+        $data['success'] = "success";
+        echo json_encode($data);
+    }
+    public function order_update_read()
+    {
+
+        $data['update'] = $this->notification_model->order_update_read($this->auth_user->email);
+        $data['success'] = "success";
+        echo json_encode($data);
+    }
+    public function order_placement_read()
+    {
+
+        $data['update'] = $this->notification_model->order_placement_read($this->auth_user->email);
+        $data['success'] = "success";
+        echo json_encode($data);
+    }
+    public function order_cancel_seller_read()
+    {
+
+        $data['update'] = $this->notification_model->order_cancel_seller_read($this->auth_user->email);
+        $data['success'] = "success";
+        echo json_encode($data);
+    }
+    public function order_delivered_read()
+    {
+
+        $data['update'] = $this->notification_model->order_delivered_read($this->auth_user->email);
+        $data['success'] = "success";
+        echo json_encode($data);
+    }
+    public function update_promotion_read()
+    {
+
+        $data['update'] = $this->notification_model->update_promotion_read($this->auth_user->email);
+        $data['success'] = "success";
+        echo json_encode($data);
+    }
+    public function update_review_follower_read()
+    {
+
+        $data['update'] = $this->notification_model->update_review_follower_read($this->auth_user->email);
+        $data['success'] = "success";
+        echo json_encode($data);
+    }
+    public function update_listing_read()
+    {
+
+        $data['update'] = $this->notification_model->update_listing_read($this->auth_user->email);
+        $data['success'] = "success";
+        echo json_encode($data);
+    }
+    public function update_profile_read()
+    {
+
+        $data['update'] = $this->notification_model->update_profile_read($this->auth_user->email);
+        $data['success'] = "success";
+        echo json_encode($data);
+    }
+    public function update_payout_read()
+    {
+
+        $data['update'] = $this->notification_model->update_payout_read($this->auth_user->email);
+        $data['success'] = "success";
+        echo json_encode($data);
+    }
+
+    public function update_customization_read()
+    {
+
+        $data['update'] = $this->notification_model->update_customization_read($this->auth_user->email);
+        $data['success'] = "success";
+        echo json_encode($data);
     }
 }
