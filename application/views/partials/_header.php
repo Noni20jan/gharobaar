@@ -15,7 +15,7 @@
 <link rel="preload" href="<?php echo base_url(); ?>assets/css/fselect.css" as="style">
 <link rel="preload" href="<?php echo base_url(); ?>assets/vendor/font-icons/css/mds-icons.min.css" as="style">
 
-<link rel="preload" href="<?php echo base_url(); ?>assets/fonts/slick.woff" as="font" type="font/format" crossorigin>
+<!-- <link rel="preload" href="<?php echo base_url(); ?>assets/fonts/slick.woff" as="font" type="font/format" crossorigin> -->
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
