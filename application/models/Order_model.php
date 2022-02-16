@@ -5216,6 +5216,7 @@ class Order_model extends CI_Model
             $shipped = 0;
             $processing = 0;
             $rejected = 0;
+            $awating_pickup=0;
             foreach ($order_products as $order_product) {
                 if ($order_product->order_status == "completed") {
                     $completed++;
@@ -5228,6 +5229,9 @@ class Order_model extends CI_Model
                 } else if ($order_product->order_status == "rejected") {
                     $rejected++;
                 }
+                else if ($order_product->order_status == "awating_pickup") {
+                    $awating_pickup++;
+                }
             }
 
             if ($count_order_items == $completed) {
@@ -5236,7 +5240,11 @@ class Order_model extends CI_Model
                 $data["status"] = "cancelled";
             } else if ($count_order_items == $shipped) {
                 $data["status"] = "shipped";
-            } else if ($count_order_items == $processing) {
+            }
+            else if ($count_order_items == ($shipped+$cancelled+$rejected)) {
+                $data["status"] = "shipped";
+            }
+            else if ($count_order_items == $processing) {
                 $data["status"] = "processing";
             } else if ($count_order_items == $rejected) {
                 $data["status"] = "rejected";
@@ -5248,7 +5256,12 @@ class Order_model extends CI_Model
                 $data["status"] = "completed";
             } else if ($count_order_items == ($completed + $rejected + $cancelled)) {
                 $data["status"] = "completed";
-            } else {
+            } else if ($count_order_items == $awating_pickup) {
+                $data["status"] = "awating_pickup";
+            } else if ($count_order_items == ($awating_pickup+$cancelled+$rejected)) {
+                $data["status"] = "awating_pickup";
+            }
+            else {
                 $data["status"] = "pending";
             }
         }
