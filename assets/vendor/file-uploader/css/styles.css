@@ -1,3 +1,12 @@
+font {
+ font-display: auto;
+ font-display: block;
+ font-display: swap;
+ font-display: fallback;
+ font-display: optional;
+}
+
+
 .dm-uploader-container {
     position: relative;
     float: left;

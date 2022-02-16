@@ -3,6 +3,21 @@
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->selected_lang->short_form ?>">
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" as="style">
+<link rel="preload" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/jquery.dm-uploader.min.css" as="style">
+<link rel="preload" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/styles.css" as="style">
+<link rel="preload" href="<?php echo base_url(); ?>assets/vendor/file-manager/file-manager.css" as="style">
+<link rel="preload" href="<?php echo base_url(); ?>assets/css/slick-theme.css" as="style">
+<link rel="preload" href="<?php echo base_url(); ?>assets/css/slick.css" as="style">
+<link rel="preload" href="<?php echo base_url(); ?>assets/css/main-1.7.min.css" as="style">
+<link rel="preload" href="<?php echo base_url(); ?>assets/css/custom.css" as="style">
+<link rel="preload" href="<?php echo base_url(); ?>assets/css/colors/default.min.css" as="style">
+<link rel="preload" href="<?php echo base_url(); ?>assets/css/fselect.css" as="style">
+<link rel="preload" href="<?php echo base_url(); ?>assets/vendor/font-icons/css/mds-icons.min.css" as="style">
+
+<link rel="preload" href="<?php echo base_url(); ?>assets/fonts/slick.woff" as="font" type="font/format" crossorigin>
+
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/jquery.dm-uploader.min.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/styles.css" />
@@ -13,7 +28,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/slick.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/font-icons/css/mds-icons.min.css" />
 <?php echo !empty($this->fonts->font_url) ? $this->fonts->font_url : ''; ?>
-<link rel="stylesheet" href="<?= base_url(); ?>assets/css/fselect.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fselect.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main-1.7.min.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom.css" />
 <?php if (!empty($this->general_settings->site_color)) : ?>
