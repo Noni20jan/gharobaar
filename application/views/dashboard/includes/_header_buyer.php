@@ -4189,7 +4189,7 @@
         });
     </script>
     <!-- <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script> -->
-    <script src="<?php echo base_url(); ?>assets/js/script-1.7.min.js"></script>
+    <!-- <script src="<?php echo base_url(); ?>assets/js/script-1.7.min.js"></script> -->
     <!-- chat systems  -->
 
     <!-- <script type="text/javascript">
