@@ -1393,6 +1393,14 @@ class Order_model extends CI_Model
         $query = $this->db->get('order_products');
         return $query->result();
     }
+    public function get_seller_count_order_products($order_id, $seller_id)
+    {
+        $this->db->where('order_id', clean_number($order_id));
+        $this->db->where('seller_id', clean_number($seller_id));
+        $this->db->where('order_status','processing');
+        $query = $this->db->get('order_products');
+        return $query->num_rows();
+    }
 
     //get order product
     public function get_order_product($order_product_id)
@@ -2853,6 +2861,7 @@ class Order_model extends CI_Model
     public function get_actual_shipping_charges($pickuppostcode, $deliverypostcode, $cashond, $weightobject)
     {
 
+        if($this->general_settings->shiprocket_check == 1){
 
         $curl = curl_init();
 
@@ -2891,7 +2900,6 @@ class Order_model extends CI_Model
         //     'freight_charges' => json_decode($response)->data->available_courier_companies[0]->freight_charge * 100,
         // );
         // var_dump(json_decode($response)->data);
-
         $shipping_data = array(
             'actual_shipping_charges_with_gst' => intval((json_decode($response)->data->available_courier_companies[0]->rate) * 100),
             'actual_shipping_charges' => intval((json_decode($response)->data->available_courier_companies[0]->rate / (1 + (18 / 100))) * 100),
@@ -2903,6 +2911,7 @@ class Order_model extends CI_Model
         // $shipping_cost = $shipping_data['actual_shipping_charges'] * 100;
 
         return $shipping_data;
+    }
     }
 
     public function get_supplier()
@@ -3105,6 +3114,7 @@ class Order_model extends CI_Model
                         array_push($supp_data_array_copy, $suppqq);
                     }
                 } else if ($prod_details->delivery_partner == "SHIPROCKET") {
+                    if($this->general_settings->shiprocket_check == 1){
 
                     $shiprocket_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
                     $Supplier_Shipping_cost_with_gst = intval($shiprocket_charges["freight_charges"] + ($shiprocket_charges["freight_charges"] * 18 / 100));
@@ -3244,6 +3254,7 @@ class Order_model extends CI_Model
                     }
                 }
             }
+        }
         }
 
         $ship_data_copy = json_encode($supp_data_array_copy);
@@ -5153,7 +5164,7 @@ class Order_model extends CI_Model
     {
 
         $order_id = trim($this->input->post('order_id', true));
-        $order_products = $this->order_model->get_order_products($order_id);
+        $order_products = $this->order_model->get_order_products_of_seller($order_id,$this->auth_user->id);
 
 
         foreach ($order_products as $order_p) {
