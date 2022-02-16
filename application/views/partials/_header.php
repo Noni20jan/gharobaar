@@ -1369,15 +1369,16 @@
                                         <?php if ($this->auth_check) : ?>
                                             <li class="icon-bg">
                                                 <!--span class="notification-label"></span-->
-
-                                                <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
-                                                    <?php $count_array = $this->notification_model->get_notification_count();
-                                                    $count = count($count_array); ?>
-                                                    <i class="far fa-bell"></i><span class="badge notification-count"><?php echo $count; ?></span>
-                                                </a>
-
                                                 <!-- <div id='wishlist'> -->
                                                 <div class="dropdown-container">
+                                                    <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
+                                                        <?php $count_array = $this->notification_model->get_notification_count();
+                                                        $count = count($count_array); ?>
+                                                        <i class="far fa-bell"></i><span class="badge notification-count"><?php echo $count; ?></span>
+                                                    </a>
+
+                                                    <!-- <div id='wishlist'> -->
+
                                                     <!-- </div> -->
 
                                                     <ul class="dropdown" name="notificationMenu" style="z-index:100; width:100%; right: 20px;">
@@ -6685,6 +6686,8 @@
                                 } else {
                                     document.getElementById("email_phn_exist_msg").innerHTML =
                                         e.error_message;
+                                    $('#email_phn_exist_msg_login').show();
+                                    $('#continue_guest_hide').hide();
                                 }
                             },
                         });
@@ -6725,6 +6728,8 @@
                             } else {
                                 document.getElementById("email_phn_exist_msg").innerHTML =
                                     e.error_message;
+                                $('#email_phn_exist_msg_login').show();
+                                $('#continue_guest_hide').hide();
                             }
                         },
                     });
