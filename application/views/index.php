@@ -978,17 +978,17 @@
         </div>
         <div class="row-collage hidden-for-mobile" style="justify-content:center;">
             <div class="column-collage">
-                <a href="<?php echo base_url() . "top-categories/fashion"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-1.jpg"; ?>" style="width:100%" alt="top-categories-fashion"></a>
-                <a href="<?php echo base_url() . "top-categories/grocery"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-4.jpg"; ?>" style="width:100%" alt="top-categories-grocery"></a>
+                <a href="<?php echo base_url() . "top-categories/fashion"; ?>"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-1.jpg"; ?>" style="width:100%" alt="top-categories-fashion"></a>
+                <a href="<?php echo base_url() . "top-categories/grocery"; ?>"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-4.jpg"; ?>" style="width:100%" alt="top-categories-grocery"></a>
             </div>
             <div class="column-collage">
-                <a href="<?php echo base_url() . "top-categories/kids-corner"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-2.jpg"; ?>" style="width:100%" alt="top-categories-kids-corner"></a>
-                <a href="<?php echo base_url() . "top-categories/home"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-5.jpg"; ?>" style="width:100%" alt="top-categories-home"></a>
+                <a href="<?php echo base_url() . "top-categories/kids-corner"; ?>"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-2.jpg"; ?>" style="width:100%" alt="top-categories-kids-corner"></a>
+                <a href="<?php echo base_url() . "top-categories/home"; ?>"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-5.jpg"; ?>" style="width:100%" alt="top-categories-home"></a>
             </div>
             <div class="column-collage">
-                <a href="<?php echo base_url() . "top-categories/gifts-festivities"; ?>"> <img src="<?php echo base_url() . "assets/img/landing-page-img/collage-3.jpg"; ?>" style="width:100%" alt="top-categories-gifts-festivities"></a>
+                <a href="<?php echo base_url() . "top-categories/gifts-festivities"; ?>"> <img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-3.jpg"; ?>" style="width:100%" alt="top-categories-gifts-festivities"></a>
                 <!-- <a href="<?php echo base_url() . "top-categories/home-cooks"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-6.jpg"; ?>" style="width:100%" alt="top-categories-home-cooks"></a> -->
-                <a href="#" data-toggle="modal" data-target="#hide_home_cook"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-6.jpg"; ?>" style="width:100%" alt="top-categories-home-cooks"></a>
+                <a href="#" data-toggle="modal" data-target="#hide_home_cook"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-6.jpg"; ?>" style="width:100%" alt="top-categories-home-cooks"></a>
 
             </div>
 
@@ -996,10 +996,10 @@
 
         <div class="row-collage-2 hidden-for-mobile" style="justify-content:center;">
             <div class="column-collage-2">
-                <a href="<?php echo base_url() . "top-categories/personal-care-lifestyle"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-7.jpg"; ?>" style="width:100%" alt="top-categories-personal-care-lifestyle"></a>
+                <a href="<?php echo base_url() . "top-categories/personal-care-lifestyle"; ?>"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-7.jpg"; ?>" style="width:100%" alt="top-categories-personal-care-lifestyle"></a>
             </div>
             <div class="column-collage-2">
-                <a href="<?php echo base_url() . "top-categories/art-stationery"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-8.jpg"; ?>" style="width:100%" alt="top-categories-art-stationery"></a>
+                <a href="<?php echo base_url() . "top-categories/art-stationery"; ?>"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-8.jpg"; ?>" style="width:100%" alt="top-categories-art-stationery"></a>
             </div>
         </div>
 
@@ -1008,25 +1008,25 @@
         <!-- collage-for-mobile -->
         <div class="row-collage hidden-for-web justified-collage" id="category-app-bar">
             <div class="column-mobile-collage">
-                <a href="<?php echo base_url() . "top-categories/fashion"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-1.jpg"; ?>" style="width:100%" alt="top-categories-mobile-fashion"></a>
-                <a href="<?php echo base_url() . "top-categories/grocery"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-3.jpg"; ?>" style="width:100%" alt="top-categories-mobile-grocery"></a>
+                <a href="<?php echo base_url() . "top-categories/fashion"; ?>"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-1.jpg"; ?>" style="width:100%" alt="top-categories-mobile-fashion"></a>
+                <a href="<?php echo base_url() . "top-categories/grocery"; ?>"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-3.jpg"; ?>" style="width:100%" alt="top-categories-mobile-grocery"></a>
             </div>
             <div class="column-mobile-collage">
-                <a href="<?php echo base_url() . "top-categories/kids-corner"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-2.jpg"; ?>" style="width:100%" alt="top-categories-mobile-kids-corner"></a>
-                <a href="<?php echo base_url() . "top-categories/home"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-4.jpg"; ?>" style="width:100%" alt="top-categories-mobile-home"></a>
+                <a href="<?php echo base_url() . "top-categories/kids-corner"; ?>"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-2.jpg"; ?>" style="width:100%" alt="top-categories-mobile-kids-corner"></a>
+                <a href="<?php echo base_url() . "top-categories/home"; ?>"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-4.jpg"; ?>" style="width:100%" alt="top-categories-mobile-home"></a>
             </div>
         </div>
 
         <div class="row-collage hidden-for-web justified-collage">
             <div class="column-mobile-collage">
-                <a href="#" data-toggle="modal" data-target="#hide_home_cook"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-5.jpg"; ?>" style="width:100%" alt="top-categories-mobile-home-cooks"></a>
+                <a href="#" data-toggle="modal" data-target="#hide_home_cook"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-5.jpg"; ?>" style="width:100%" alt="top-categories-mobile-home-cooks"></a>
 
                 <!-- <a href="<?php echo base_url() . "top-categories/home-cooks"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-5.jpg"; ?>" style="width:100%" alt="top-categories-mobile-home-cooks"></a> -->
-                <a href="<?php echo base_url() . "top-categories/personal-care-lifestyle"; ?>"> <img src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-7.jpg"; ?>" style="width:100%" alt="top-categories-mobile-personal-care-lifestyle"></a>
+                <a href="<?php echo base_url() . "top-categories/personal-care-lifestyle"; ?>"> <img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-7.jpg"; ?>" style="width:100%" alt="top-categories-mobile-personal-care-lifestyle"></a>
             </div>
             <div class="column-mobile-collage">
-                <a href="<?php echo base_url() . "top-categories/art-stationery"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-6.jpg"; ?>" style="width:100%" alt="top-categories-mobile-art-stationery"></a>
-                <a href="<?php echo base_url() . "top-categories/gifts-festivities"; ?>"><img src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-8.jpg"; ?>" style="width:100%" alt="top-categories-mobile-gifts-festivities"></a>
+                <a href="<?php echo base_url() . "top-categories/art-stationery"; ?>"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-6.jpg"; ?>" style="width:100%" alt="top-categories-mobile-art-stationery"></a>
+                <a href="<?php echo base_url() . "top-categories/gifts-festivities"; ?>"><img loading="lazy" src="<?php echo base_url() . "assets/img/landing-page-img/collage-mobile-8.jpg"; ?>" style="width:100%" alt="top-categories-mobile-gifts-festivities"></a>
             </div>
         </div>
         <!-- end of mobile-collage -->
@@ -1210,7 +1210,7 @@
 <?php endif; ?>
 <!-- <script src=" //code.jquery.com/jquery-1.11.0.min.js"></script>
                 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
-<script async src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
 <!-- slick Carousel CDN -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 
