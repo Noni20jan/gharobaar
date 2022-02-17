@@ -1484,6 +1484,10 @@ class Order_model extends CI_Model
                             $this->db->where('id', $sub_category_id->parent_id);
                             $categoty_id = $this->db->get('categories')->row();
                             $email_data = array(
+                                'source' => '',
+                                'source_id' => '',
+                                'remark' => "We regret to inform you that the Order for " . $order_product->product_title . " placed vide Order #" . get_order($order_product->order_id)->order_number . " has been cancelled by the seller because the seller did not update the available stock details on the platform.",
+                                'event_type' => 'Order Cancellation by Seller',
                                 'email_type' => 'email_general',
                                 'to' => get_user($order_product->buyer_id)->email,
                                 'subject' => "Your order has been cancelled by Supplier",
@@ -1525,6 +1529,10 @@ class Order_model extends CI_Model
                     } else if (get_product($order_product->product_id)->add_meet == "Made to order") {
                         if ($this->general_settings->send_email_order_shipped == 1) {
                             $email_data = array(
+                                'source' => '',
+                                'source_id' => '',
+                                'remark' => "We regret to inform you that the Order for " . $order_product->product_title . " placed vide Order #" . get_order($order_product->order_id)->order_number . " has been cancelled by the seller because the suppliers are small scale homeprenuers who are making these products at home with limited means, hence we give them an option to accept/ reject the order, after ascertaining their ability to service it.",
+                                'event_type' => 'Order Cancellation by Seller',
                                 'email_type' => 'email_general',
                                 'to' => get_user($order_product->buyer_id)->email,
                                 'subject' => "Your order has been cancelled by Supplier",
@@ -5115,15 +5123,7 @@ class Order_model extends CI_Model
     }
 
 
-    public function get_notification_count()
-    {
-        $id = $this->auth_user->id;
-        $email = $this->auth_user->email;
-        $phone = $this->auth_user->phone_number;
-        $sql = "SELECT * from notify_user join notifications on notifications.id=notify_user.notification_id where `read`=0 and (for_user='$id' OR for_user='$email' OR for_user='$phone' ) ";
-        $count = $this->db->query($sql);
-        return $count->result();
-    }
+
     public function get_notification_details($id)
     {
         // $id = $this->auth_user->id;

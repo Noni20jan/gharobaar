@@ -250,29 +250,7 @@ class Notification_model extends CI_Model
         $this->db->where('for_user', $email);
         $this->db->where('read', 0);
         $this->db->join('notifications', "notifications.id=notify_user.notification_id");
-        $query1 = $this->db->get('notify_user')->result();
-        $date = date("Y-m-d H:i:s", strtotime("-1 week"));
-        $this->db->where('read_date >=', $date);
-        $this->db->group_start();
-        $this->db->where('event_type', 'Gharobaar Updates');
-        $this->db->or_where('event_type', 'Customization Notifications');
-        $this->db->or_where('event_type', 'Listings');
-        $this->db->or_where('event_type', 'Rating, Reviews & Followers');
-        $this->db->or_where('event_type', 'Order Update');
-        $this->db->or_where('event_type', 'Order Updates');
-        $this->db->or_where('event_type', 'Order Placement');
-        $this->db->or_where('event_type', 'Payout');
-        $this->db->or_where('event_type', 'Profile');
-        $this->db->or_where('event_type', 'Promotions');
-        $this->db->or_where('event_type', 'Order Delivered');
-        $this->db->or_where('event_type', 'Order Cancellation by Seller');
-        $this->db->group_end();
-        $this->db->where('for_user', $email);
-        $this->db->where('read', 1);
-        $this->db->join('notifications', "notifications.id=notify_user.notification_id");
-        $query2 = $this->db->get('notify_user')->result();
-        $query = array_merge($query1, $query2);
-        return $query;
+        return  $query1 = $this->db->get('notify_user')->result();
     }
     public function gharobaar_updates_read($email)
     {
