@@ -667,7 +667,7 @@
     </script>
 
     <!-- Facebook Pixel Code -->
-    <script>
+    <!-- <script>
         ! function(f, b, e, v, n, t, s) {
             if (f.fbq) return;
             n = f.fbq = function() {
@@ -688,11 +688,11 @@
             'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '238067258511763');
         fbq('track', 'PageView');
-    </script>
-    <noscript>
+    </script> -->
+    <!-- <noscript>
         <img height="1" width="1" src="https://www.facebook.com/tr?id=238067258511763&ev=PageView
 &noscript=1" />
-    </noscript>
+    </noscript> -->
     <!-- End Facebook Pixel Code -->
 
     <meta property="og:locale" content="en-US" />
