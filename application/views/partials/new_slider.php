@@ -1,5 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
+<link rel="preload" href="<?php echo base_url(); ?>assets/js/jssor.slider-28.1.0.min.js" as="script">
+
 <script src="assets\js\jssor.slider-28.1.0.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     window.jssor_1_slider_init1 = function() {
@@ -331,43 +333,6 @@
         opacity: .3;
         pointer-events: none;
     }
-
-    .slider_div {
-        position: relative;
-        margin: 0 auto;
-        top: 0px;
-        left: 0px;
-        overflow: hidden;
-        visibility: hidden;
-    }
-
-    .slider_loader {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 100%;
-        text-align: center;
-    }
-
-    .loader_img {
-        margin-top: -19px;
-        position: relative;
-        top: 50%;
-        width: 38px;
-        height: 38px;
-    }
-
-    .slider_image {
-        cursor: default;
-        position: relative;
-        top: 0px;
-        left: 0px;
-        width: 1600px;
-        height: 500px;
-        overflow: hidden;
-
-    }
 </style>
 <!-- <svg viewbox="0 0 0 0" width="0" height="0" style="display:block;position:relative;left:0px;top:0px;">
     <defs>
@@ -383,20 +348,20 @@
         </mask>
     </defs>
 </svg> -->
-<div id="jssor_1">
+<div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:1600px;height:500px;overflow:hidden;visibility:hidden;">
     <!-- Loading Screen -->
-    <div data-u="loading" class="jssorl-009-spin slider_loader">
-        <img class="loader_img" src="assets/gif/reload.gif" />
+    <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;">
+        <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="assets/gif/reload.gif" />
     </div>
-    <div class="slider_image" data-u="slides">
+    <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1600px;height:500px;overflow:hidden;">
         <?php if (!empty($second_slider_items)) :
             foreach ($second_slider_items as $item) : ?>
                 <div>
                     <a href="<?php echo html_escape($item->link); ?>">
                         <?php if ($this->general_settings->banner_storage == 'aws_s3') : ?>
-                            <img data-u="image" data-src="<?php echo other_base_url() . $item->image; ?>" />
+                            <img loading="lazy" data-u="image" data-src="<?php echo other_base_url() . $item->image; ?>" />
                         <?php else : ?>
-                            <img data-u="image" data-src="<?php echo base_url() . $item->image; ?>" />
+                            <img loading="lazy" data-u="image" data-src="<?php echo base_url() . $item->image; ?>" />
                         <?php endif; ?>
                     </a>
                 </div>

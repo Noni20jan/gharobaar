@@ -32,9 +32,9 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main-1.7.min.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom.css" />
 <?php if (!empty($this->general_settings->site_color)) : ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/<?php echo $this->general_settings->site_color; ?>.min.css?v=<?php echo $this->general_settings->random_key ?>" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/<?php echo $this->general_settings->site_color; ?>.min.css?v=1234qwer" />
 <?php else : ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/default.min.css?v=<?php echo $this->general_settings->random_key ?>" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/default.min.css?v=1234qwer" />
 <?php endif; ?>
 <style>
     #message {
@@ -646,7 +646,9 @@
 
 <head>
     <meta charset="utf-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="preload" href="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" as="script">
+
+    <script async src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?php echo xss_clean($title); ?> - <?php echo xss_clean($this->settings->site_title); ?></title>
     <meta name="google-site-verification" content="ylZCFiu4192QkhZzF1w0qhJz5laFNzKWncrEenc6YA8" />
