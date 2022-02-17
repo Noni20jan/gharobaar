@@ -339,7 +339,7 @@ class Email_model extends CI_Model
                 'source' => '',
                 'source_id' => '',
                 'remark' => "We regret to inform you that the Order for " . $order_product->product_title . " vide Order ID # " . $order->order_number . ".has been cencelled by the buyer.",
-                'event_type' => 'Order Cancellation by Seller',
+                'event_type' => 'Order Updates',
                 'subject' => $subject,
                 'message' => $message,
                 'to' => $email,
