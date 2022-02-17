@@ -479,6 +479,8 @@ foreach ($sellers as $seller) {
                     <?php $filter_sort = str_slug($this->input->get('sort', true)); ?>
                     <div class="sort-select">
                         <select class="custom-select" onchange="window.location.replace(this.value);" style="border-radius: 20px;">
+                        <option value="">Select an option</option>
+
                             <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'most_recent'); ?>" <?= $filter_sort == 'most_recent' ? ' selected' : ''; ?>><?= trans("latest_first"); ?></option>
                             <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'oldest_first'); ?>" <?= $filter_sort == 'oldest_first' ? ' selected' : ''; ?>><?= trans("oldest_first"); ?></option>
                             <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'lowest_price'); ?>" <?= $filter_sort == 'lowest_price' ? ' selected' : ''; ?>><?= trans("lowest_price"); ?></option>
