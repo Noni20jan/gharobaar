@@ -809,6 +809,15 @@
         }
     }
 
+    .mobile-notification {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: right;
+        width: 39px;
+        height: 52px;
+    }
+
+
     /* .mustang img {
         width: 220px;
         height: auto;
