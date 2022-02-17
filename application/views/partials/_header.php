@@ -613,6 +613,14 @@
             -webkit-transform: translateZ(0);
             /* overflow: hidden; */
         }
+
+        /* .notification-button {
+            background: #fff !important;
+            border-color: #fff !important;
+            padding: 6px;
+            border-radius: 20px;
+            color: black;
+        } */
     }
 
     .caFLbO {
@@ -623,7 +631,9 @@
         background: red !important;
         position: absolute;
         top: 0;
+        color: white;
         border-radius: 20px;
+        font-size: 11px !important;
     }
 
     .notification-button {
@@ -892,6 +902,10 @@
                 position: relative;
                 display: block;
                 height: 43px;
+            }
+
+            .dropdown-container {
+                font-size: 18px;
             }
         }
 
@@ -1217,6 +1231,29 @@
             line-height: 0px;
             list-style: none;
         }
+
+        .morecontent span {
+            display: none;
+
+        }
+
+        .morelink {
+            display: block;
+            color: #d21f3c;
+            font-family: 'Montserrat';
+            text-decoration: underline;
+        }
+
+        .morelink:hover {
+            display: block;
+            /* color: #d21f3c; */
+            font-family: 'Montserrat';
+            text-decoration: underline;
+        }
+
+        .notify-styles {
+            padding: 8px;
+        }
     </style>
 </head>
 
@@ -1382,14 +1419,14 @@
                                             </li>
                                         <?php endif; ?>
                                         <?php if ($this->auth_check) : ?>
-                                            <li class="icon-bg">
+                                            <li class="icon-bg notify-styles">
                                                 <!--span class="notification-label"></span-->
                                                 <!-- <div id='wishlist'> -->
                                                 <div class="dropdown-container">
                                                     <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
                                                         <?php $count_array = $this->notification_model->get_notification_count();
                                                         $count = count($count_array); ?>
-                                                        <i class="far fa-bell"></i><span class="badge notification-count"><?php echo $count; ?></span>
+                                                        <i class="far fa-bell" style="color:white;"></i><span class="badge notification-count"><?php echo $count; ?></span>
                                                     </a>
 
                                                     <!-- <div id='wishlist'> -->
@@ -1413,10 +1450,9 @@
                                                                             <span class="from"><?php echo $gharobaar_update->title; ?></span>
                                                                             <span class="date"><?php echo $gharobaar_update->created_at; ?></span>
                                                                         </div>
-                                                                        <p class="message"><?php echo $gharobaar_update->remark; ?></p>
+                                                                        <p class="message more"><?php echo $gharobaar_update->remark; ?></p>
                                                                     </li>
                                                                 <?php endforeach; ?>
-
                                                             </ul>
                                                         </li>
                                                         <li class="notification-group">
@@ -1434,7 +1470,7 @@
                                                                             <span class="from"><?php echo $order_placement->title; ?></span>
                                                                             <span class="date"><?php echo $order_placement->created_at; ?></span>
                                                                         </div>
-                                                                        <p class="message"><?php echo $order_placement->remark; ?></p>
+                                                                        <p class="message more"><?php echo $order_placement->remark; ?></p>
 
                                                                     </li>
                                                                 <?php endforeach; ?>
@@ -1456,7 +1492,7 @@
                                                                             <span class="from"><?php echo $order_update->title; ?></span>
                                                                             <span class="date"><?php echo $order_update->created_at; ?></span>
                                                                         </div>
-                                                                        <p class="message"><?php echo $order_update->remark; ?></p>
+                                                                        <p class="message more"><?php echo $order_update->remark; ?></p>
 
                                                                     </li>
                                                                 <?php endforeach; ?>
@@ -1477,7 +1513,7 @@
                                                                             <span class="from"><?php echo $order_cancellation_seller_update->title; ?></span>
                                                                             <span class="date"><?php echo $order_cancellation_seller_update->created_at; ?></span>
                                                                         </div>
-                                                                        <p class="message"><?php echo $order_cancellation_seller_update->remark; ?></p>
+                                                                        <p class="message more"><?php echo $order_cancellation_seller_update->remark; ?></p>
 
                                                                     </li>
                                                                 <?php endforeach; ?>
@@ -1498,7 +1534,7 @@
                                                                             <span class="from"><?php echo $order_delivered_update->title; ?></span>
                                                                             <span class="date"><?php echo $order_delivered_update->created_at; ?></span>
                                                                         </div>
-                                                                        <p class="message"><?php echo $order_delivered_update->remark; ?></p>
+                                                                        <p class="message more"><?php echo $order_delivered_update->remark; ?></p>
 
                                                                     </li>
                                                                 <?php endforeach; ?>
@@ -1519,7 +1555,7 @@
                                                                             <span class="from"><?php echo $promotions_update->title; ?></span>
                                                                             <span class="date"><?php echo $promotions_update->created_at; ?></span>
                                                                         </div>
-                                                                        <p class="message"><?php echo $promotions_update->remark; ?></p>
+                                                                        <p class="message more"><?php echo $promotions_update->remark; ?></p>
 
                                                                     </li>
                                                                 <?php endforeach; ?>
@@ -1541,7 +1577,7 @@
                                                                                 <span class="from"><?php echo $reviews_followers_update->title; ?></span>
                                                                                 <span class="date"><?php echo $reviews_followers_update->created_at; ?></span>
                                                                             </div>
-                                                                            <p class="message"><?php echo $reviews_followers_update->remark; ?></p>
+                                                                            <p class="message more"><?php echo $reviews_followers_update->remark; ?></p>
 
                                                                         </li>
                                                                     <?php endforeach; ?>
@@ -1562,7 +1598,7 @@
                                                                                 <span class="from"><?php echo $listings_update->title; ?></span>
                                                                                 <span class="date"><?php echo $listings_update->created_at; ?></span>
                                                                             </div>
-                                                                            <p class="message"><?php echo $listings_update->remark; ?></p>
+                                                                            <p class="message more"><?php echo $listings_update->remark; ?></p>
 
                                                                         </li>
                                                                     <?php endforeach; ?>
@@ -1583,7 +1619,7 @@
                                                                                 <span class="from"><?php echo $profile_update->title; ?></span>
                                                                                 <span class="date"><?php echo $profile_update->created_at; ?></span>
                                                                             </div>
-                                                                            <p class="message"><?php echo $profile_update->remark; ?></p>
+                                                                            <p class="message more"><?php echo $profile_update->remark; ?></p>
 
                                                                         </li>
                                                                     <?php endforeach; ?>
@@ -1604,7 +1640,7 @@
                                                                                 <span class="from"><?php echo $payout_update->title; ?></span>
                                                                                 <span class="date"><?php echo $payout_update->created_at; ?></span>
                                                                             </div>
-                                                                            <p class="message"><?php echo $payout_update->remark; ?></p>
+                                                                            <p class="message more"><?php echo $payout_update->remark; ?></p>
 
                                                                         </li>
                                                                     <?php endforeach; ?>
@@ -1625,7 +1661,7 @@
                                                                                 <span class="from"><?php echo $customization_update->title; ?></span>
                                                                                 <span class="date"><?php echo $customization_update->created_at; ?></span>
                                                                             </div>
-                                                                            <p class="message"><?php echo $customization_update->remark; ?></p>
+                                                                            <p class="message more"><?php echo $customization_update->remark; ?></p>
 
                                                                         </li>
                                                                     <?php endforeach; ?>
@@ -1870,7 +1906,7 @@
                                         <!--span class="notification-label"></span-->
                                         <div class="dropdown-container">
                                             <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
-                                                <i class="far fa-bell notification-button"></i>
+                                                <i class="far fa-bell" style="font-size:21px;"></i>
                                             </a>
                                             <ul class="dropdown" name="notificationMenu" style="z-index:100; width:100%; right:0px!important;">
                                                 <li class="notification-group">
