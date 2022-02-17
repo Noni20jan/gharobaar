@@ -1256,6 +1256,14 @@
         .notify-styles {
             padding: 8px;
         }
+
+        .mobile-notification {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: right;
+            width: 39px;
+            height: 52px;
+        }
     </style>
 </head>
 
