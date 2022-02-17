@@ -36,6 +36,14 @@
 ::before {
   box-sizing: border-box;
 }
+font {
+  font-display: auto;
+  font-display: block;
+  font-display: swap;
+  font-display: fallback;
+  font-display: optional;
+ }
+ 
 html {
   font-family: sans-serif;
   line-height: 1.15;

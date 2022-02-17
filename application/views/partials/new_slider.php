@@ -331,6 +331,43 @@
         opacity: .3;
         pointer-events: none;
     }
+
+    .slider_div {
+        position: relative;
+        margin: 0 auto;
+        top: 0px;
+        left: 0px;
+        overflow: hidden;
+        visibility: hidden;
+    }
+
+    .slider_loader {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+
+    .loader_img {
+        margin-top: -19px;
+        position: relative;
+        top: 50%;
+        width: 38px;
+        height: 38px;
+    }
+
+    .slider_image {
+        cursor: default;
+        position: relative;
+        top: 0px;
+        left: 0px;
+        width: 1600px;
+        height: 500px;
+        overflow: hidden;
+
+    }
 </style>
 <!-- <svg viewbox="0 0 0 0" width="0" height="0" style="display:block;position:relative;left:0px;top:0px;">
     <defs>
@@ -346,12 +383,12 @@
         </mask>
     </defs>
 </svg> -->
-<div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:1600px;height:500px;overflow:hidden;visibility:hidden;">
+<div id="jssor_1">
     <!-- Loading Screen -->
-    <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;">
-        <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="assets/gif/reload.gif" />
+    <div data-u="loading" class="jssorl-009-spin slider_loader">
+        <img class="loader_img" src="assets/gif/reload.gif" />
     </div>
-    <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1600px;height:500px;overflow:hidden;">
+    <div class="slider_image" data-u="slides">
         <?php if (!empty($second_slider_items)) :
             foreach ($second_slider_items as $item) : ?>
                 <div>
