@@ -4199,7 +4199,7 @@
     </script>
     <!-- <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script> -->
     <link rel="preload" href="<?php echo base_url(); ?>assets/js/script-1.7.min.js" as="script">
-    <script async src="<?php echo base_url(); ?>assets/js/script-1.7.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/script-1.7.min.js"></script>
     <!-- chat systems  -->
 
     <!-- <script type="text/javascript">
@@ -6344,7 +6344,7 @@
     <!-- End Google Tag Manager -->
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-199516838-1"></script>
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-199516838-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 

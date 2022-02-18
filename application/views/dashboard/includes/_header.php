@@ -75,11 +75,11 @@ $user = get_user($this->auth_user->id);
         </script>
     <?php endif; ?>
     <!-- jQuery 3 -->
-    <script async src="<?= base_url(); ?>assets/admin/js/jquery.min.js"></script>
-    <script async src="<?= base_url(); ?>assets/js/fselect.js"></script>
-    <script async src="<?php echo base_url(); ?>assets/vendor/file-uploader/js/jquery.dm-uploader.min.js"></script>
-    <script async src="<?php echo base_url(); ?>assets/vendor/file-uploader/js/ui.js"></script>
-    <script async src="<?= base_url(); ?>assets/js/plugins-1.7.js"></script>
+    <script src="<?= base_url(); ?>assets/admin/js/jquery.min.js"></script>
+    <script src="<?= base_url(); ?>assets/js/fselect.js"></script>
+    <script src="<?php echo base_url(); ?>assets/vendor/file-uploader/js/jquery.dm-uploader.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/vendor/file-uploader/js/ui.js"></script>
+    <script src="<?= base_url(); ?>assets/js/plugins-1.7.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

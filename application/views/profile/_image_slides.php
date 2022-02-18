@@ -195,7 +195,7 @@ if (!empty($product_images)) {
 
 
 
-<script async type="text/javascript" src="<?php echo base_url(); ?>assets/js/slick.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/slick.min.js"></script>
 
 <div class="image-heading row">Seller's Gallery</div>
 <?php if (count($product_images) > 0) : ?>
@@ -273,7 +273,7 @@ if (!empty($product_images)) {
 
             </div>
 
-            <script async src="<?php echo base_url(); ?>assets/js/initcarousel.js"></script>
+            <script src="<?php echo base_url(); ?>assets/js/initcarousel.js"></script>
 
 
 
