@@ -870,6 +870,10 @@ class Ajax_controller extends Home_Core_Controller
     public function send_email_general()
     {
         $data = array(
+            'source' => '',
+            'source_id' => '',
+            'remark' => $this->input->post('remark', true),
+            'event_type' => $this->input->post('event_type', true),
             'template_path' => "email/email_general",
             'to' => $this->input->post('to', true),
             'subject' => $this->input->post('subject', true),

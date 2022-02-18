@@ -296,6 +296,7 @@ class Email_model extends CI_Model
         $followers = $query->result();
         foreach ($followers as $follower) {
             // if (!empty($email)) {
+            $user = get_user($follower->follower_id);
             $data = array(
                 'source' => 'products',
                 'source_id' => $product_id,
@@ -303,7 +304,7 @@ class Email_model extends CI_Model
                 'event_type' => 'Gharobaar Updates',
                 'subject' => "Hooray Your favourite seller has added new product",
                 'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
-                'to' => $follower->follower_id,
+                'to' => $user->email,
                 'template_path' => "email/email_newsletter",
                 'subscriber' => "",
             );
@@ -339,7 +340,7 @@ class Email_model extends CI_Model
                 'source' => '',
                 'source_id' => '',
                 'remark' => "We regret to inform you that the Order for " . $order_product->product_title . " vide Order ID # " . $order->order_number . ".has been cencelled by the buyer.",
-                'event_type' => 'Order Cancellation by Seller',
+                'event_type' => 'Order Updates',
                 'subject' => $subject,
                 'message' => $message,
                 'to' => $email,
@@ -678,7 +679,11 @@ class Email_model extends CI_Model
     }
     public function send_email($data)
     {
+
+
         $this->notification($data);
+
+
         require dirname(__FILE__) . "/../../sendgrid-php/sendgrid-php.php";
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom($this->general_settings->mail_username, "Gharobaar");
@@ -694,15 +699,16 @@ class Email_model extends CI_Model
                     "ip": "192.*.*.*"
                 },
                 {
-                    "ip": "223.178.212.176"
+                    "ip": "223.190.85.71"
                 }
             ]
         }');
+
         $subject = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
         // var_dump($subject);
         $email->addContent("text/html", $subject);
 
-        $sendgrid1 = new \SendGrid("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", ["impersonateSubuser" => "Harshit"]);
+        $sendgrid1 = new \SendGrid("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", ["impersonateSubuser" => "rahul.teni"]);
 
         $sendgrid = new \SendGrid("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");
 

@@ -473,8 +473,9 @@ class Profile_model extends CI_Model
         if (empty($follow)) {
             //add follower
             $this->db->insert('followers', $data);
+            $user = get_user($this->input->post('following_id', true));
             $data1 = array(
-                'to' => $this->input->post('following_id', true),
+                'to' => $user->email,
                 'source' => 'followers',
                 'source_id' => $this->input->post('following_id', true),
                 'event_type' => 'Rating, Reviews & Followers',
