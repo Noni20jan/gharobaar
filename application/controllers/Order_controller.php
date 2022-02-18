@@ -459,7 +459,7 @@ class Order_controller extends Home_Core_Controller
         }
         //  $order_product = get_order_product($order_product_id);
 
-        if ($this->order_model->cancel_order_buyer($order_id, $order_product_id, $reject_reason, $reject_reason_comment1)) {
+        if ($this->order_model->cancel_order_buyer($order_id, $order_product_ids, $reject_reason, $reject_reason_comment1)) {
 
             // refund initiation for cancel item (online payments)
             $payment_method = $order_detail[0]->payment_method;
@@ -488,12 +488,6 @@ class Order_controller extends Home_Core_Controller
             // redirect($this->agent->referrer());
         }
     }
-
-
-
-
-
-
 
     // refund initiation for cancel item (online payments)
 
