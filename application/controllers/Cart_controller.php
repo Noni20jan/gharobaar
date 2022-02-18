@@ -589,10 +589,14 @@ class Cart_controller extends Home_Core_Controller
                 redirect(lang_base_url());
             }
         }
+        if ($data['cart_total']->total_price != 0) {
 
-        $this->load->view('partials/_header', $data);
-        $this->load->view('cart/payment_method', $data);
-        $this->load->view('partials/_footer');
+            $this->load->view('partials/_header', $data);
+            $this->load->view('cart/payment_method', $data);
+            $this->load->view('partials/_footer');
+        } else {
+            $this->cash_on_delivery_payment_post();
+        }
     }
 
     /**
@@ -2106,6 +2110,7 @@ class Cart_controller extends Home_Core_Controller
                     }
                 }
                 $buyer_name = $this->auth_user->first_name;
+                $user = get_user($product->user_id);
                 $data = array(
                     'source' => 'review',
                     // 'source_id' => $product_id,
@@ -2113,7 +2118,7 @@ class Cart_controller extends Home_Core_Controller
                     'event_type' => 'Rating, Reviews & Followers',
                     'subject' => "New Review on you product",
                     // 'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
-                    'to' => $product->user_id,
+                    'to' => $user->email,
                     'template_path' => "email/email_newsletter",
                     'subscriber' => "",
                 );

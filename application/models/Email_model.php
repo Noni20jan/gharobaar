@@ -620,11 +620,7 @@ class Email_model extends CI_Model
     }
     public function notification($data)
     {
-        if ($this->auth_check) {
-            $id = $this->auth_user->id;
-        } else {
-            $id = '0';
-        }
+        $id = '0';
         $notify = array(
             'message' => $data['message'],
             'title' => $data['subject'],
@@ -679,11 +675,7 @@ class Email_model extends CI_Model
     }
     public function send_email($data)
     {
-
-
         $this->notification($data);
-
-
         require dirname(__FILE__) . "/../../sendgrid-php/sendgrid-php.php";
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom($this->general_settings->mail_username, "Gharobaar");
@@ -703,7 +695,6 @@ class Email_model extends CI_Model
                 }
             ]
         }');
-
         $subject = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
         // var_dump($subject);
         $email->addContent("text/html", $subject);
