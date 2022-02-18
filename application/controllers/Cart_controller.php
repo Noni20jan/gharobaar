@@ -1595,7 +1595,7 @@ class Cart_controller extends Home_Core_Controller
             // }
             // condition end
 
-
+            $object->shipping=0;
             if (!empty($pan_number)) {
                 if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                     // $object->tds_amount = 0;
