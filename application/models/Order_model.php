@@ -5164,7 +5164,7 @@ class Order_model extends CI_Model
     {
 
         $order_id = trim($this->input->post('order_id', true));
-        $order_products = $this->order_model->get_order_products_of_seller($order_id,$this->auth_user->id);
+        $order_products = $this->order_model->get_order_products($order_id);
 
 
         foreach ($order_products as $order_p) {
