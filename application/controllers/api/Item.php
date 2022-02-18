@@ -160,25 +160,35 @@ class Item extends REST_Controller
                     $data["order_status"] = $new_input['order_status'];
             }
             if ($data['order_status'] == 'completed') {
-                $title = $this->product_model->get_title($product_array);
-                $order_no = $this->order_model->get_order_detail_by_id($order_id);
-                $data1 = array(
-                    // 'title' => "Your Product is Successfully Delivered",
-                    'remark' => "Your order for " . $title->title . " vide Order #" . $order_id . " has been succefully delivered as per our shipping partner.In order to raise any concerns or issue with the products received kindly click on the link <a href='" . base_url() . "order-details/" . $order_no->order_number . "'>Order Details</a>",
-                    // 'for_user' =>,
-                    'created_by' => '2',
-                    'last_updated_by' => '2',
-                    'source' => 'orders',
-                    'source_id' => $order_id,
-                    'event_type' => 'Order Delivered',
-                    'subject' => "Your Product is Successfully Delivered",
-                    // 'message' => $message,
-                    'to' => $order_no->buyer_id,
-                );
-                $seller_id = $this->order_model->get_seller_id_by_awb($new_input['awb_code']);
+                foreach ($product_array as $paid) {
+                    $title = $this->product_model->get_title($paid);
+                    $order_no = $this->order_model->get_order_details_by_id($order_id);
+                    // var_dump($order_no->order_number);
+                    // die();
+                    $user1 = get_user($order_no->buyer_id);
 
+                    $data1 = array(
+                        'message' => "",
+                        // 'title' => "Your Product is Successfully Delivered",
+                        'remark' => "Your order for " . $title->title . " vide Order #" . $order_id . " has been succefully delivered as per our shipping partner.In order to raise any concerns or issue with the products received kindly click on the link <a href='" . base_url() . "order-details/" . $order_no->order_number . "'>Order Details</a>",
+                        // 'for_user' =>,
+                        'created_by' => '2',
+                        'last_updated_by' => '2',
+                        'source' => 'orders',
+                        'source_id' => $order_id,
+                        'event_type' => 'Order Delivered',
+                        'subject' => "Your Product is Successfully Delivered",
+                        // 'message' => $message,
+                        'to' => $user1->email,
+                    );
+                    $this->load->model("email_model");
+                    $this->email_model->notification($data1);
+                }
+                $seller_id = $this->order_model->get_seller_id_by_awb($new_input['awb_code']);
+                $user = get_user($seller_id);
                 $data2 = array(
                     // 'title' => "Your Product is Successfully Delivered",
+                    'message' => "",
                     'remark' => "Your Order No #" .  $order_no->order_number . " Has been succefully deliverd to the buyer.",
                     // 'for_user' =>,
                     'created_by' => '2',
@@ -188,31 +198,34 @@ class Item extends REST_Controller
                     'event_type' => 'Order Delivered',
                     'subject' => "Your Product is Successfully Delivered",
                     // 'message' => $message,
-                    'to' => $seller_id,
+                    'to' => $user->email,
                 );
                 $this->load->model("email_model");
-                $this->email_model->notification($data1);
                 $this->email_model->notification($data2);
             }
             if ($data["order_status"] == "RTO Initiated") {
                 $seller_id = $this->order_model->get_seller_id_by_awb($new_input['awb_code']);
-                $title = $this->product_model->get_title($product_array);
-                $order_no = $this->order_model->get_order_detail_by_id($order_id);
-                $data3 = array(
-                    // 'title' => "Your Product is Successfully Delivered",
-                    'remark' => "Please take note that Order No #" . $order_no->order_number . " containing $title->title shipped vide Tracking No. " . $new_input['awb_code'] . " is undeliverrable and shall be returned back to you. To check and track the status of return, kindly click on the link <a href='" . base_url() . "dashboard/sale/" . $order_no->order_number . "'>Link</a>",
-                    // 'for_user' =>,
-                    'created_by' => '2',
-                    'last_updated_by' => '2',
-                    'source' => 'orders',
-                    'source_id' => $order_id,
-                    'event_type' => 'Order Updates',
-                    'subject' => "Your Product is  Undelivered",
-                    // 'message' => $message,
-                    'to' => $seller_id,
-                );
-                $this->load->model("email_model");
-                $this->email_model->notification($data3);
+                foreach ($product_array as $paid) {
+                    $title = $this->product_model->get_title($paid);
+                    $order_no = $this->order_model->get_order_details_by_id($order_id);
+                    $user = get_user($seller_id);
+                    $data3 = array(
+                        'message' => "",
+                        // 'title' => "Your Product is Successfully Delivered",
+                        'remark' => "Please take note that Order No #" . $order_no->order_number . " containing $title->title shipped vide Tracking No. " . $new_input['awb_code'] . " is undeliverrable and shall be returned back to you. To check and track the status of return, kindly click on the link <a href='" . base_url() . "dashboard/sale/" . $order_no->order_number . "'>Link</a>",
+                        // 'for_user' =>,
+                        'created_by' => '2',
+                        'last_updated_by' => '2',
+                        'source' => 'orders',
+                        'source_id' => $order_id,
+                        'event_type' => 'Order Updates',
+                        'subject' => "Your Product is  Undelivered",
+                        // 'message' => $message,
+                        'to' => $user->email,
+                    );
+                    $this->load->model("email_model");
+                    $this->email_model->notification($data3);
+                }
             }
 
             // $data["order_status"] = $new_input['order_status'];

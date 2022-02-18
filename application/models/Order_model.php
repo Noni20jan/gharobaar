@@ -3689,6 +3689,13 @@ class Order_model extends CI_Model
         $query = $this->db->get('orders');
         return $query->result();
     }
+    public function get_order_details_by_id($order_id)
+    {
+        $order_id = clean_number($order_id);
+        $this->db->where('id', $order_id);
+        $query = $this->db->get('orders');
+        return $query->row();
+    }
     public function save_refund_detail($refund_data)
     {
         $this->db->insert('refunds', $refund_data);

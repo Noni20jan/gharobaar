@@ -2083,7 +2083,7 @@ class Cart_controller extends Home_Core_Controller
                     }
                 }
                 $buyer_name = $this->auth_user->first_name;
-                $user = $product->user_id;
+                $user = get_user($product->user_id);
                 $data = array(
                     'source' => 'review',
                     // 'source_id' => $product_id,
