@@ -361,7 +361,6 @@ class Order_controller extends Home_Core_Controller
         $order_detail = $this->order_model->get_order_detail_by_id($order_id);
 
 
-        $order_product_id = $this->input->post('order_product_id', true);
         $order_product = get_order_product($order_product_id);
         $supplier = get_user($order_product->seller_id);
         $buyer = get_user($order_product->buyer_id);
@@ -445,27 +444,28 @@ class Order_controller extends Home_Core_Controller
     {
         $reject_reason = $this->input->post('reject_reason', true);
         $reject_reason_comment1 = $this->input->post('reject_reason_comment1', true);
-        $order_product_id = $this->input->post('id', true);
-
+        $order_product_ids = $this->input->post('id', true);
+        $order_id = $this->input->post('order_id');
+        // $product_id=$this->input->post('order_product_id', true);
         // $order_product = $this->order_model->get_order_product($order_product_id);
-        $order_id = $this->input->post('order_id',true);
-        $order_detail = $this->order_model->get_order_detail_by_id($order_id);
-        $order_products=$this->order_model->get_order_products($order_id);
-        foreach($order_products as $order_p){
+        foreach ($order_product_ids as $order_product_id) {
 
+            $order_products = $this->order_model->get_order_product($order_product_id);
+            $order_detail = $this->order_model->get_order_detail_by_id($order_products->order_id);
+
+            $supplier = get_user($order_products->seller_id);
+            $buyer = get_user($order_products->buyer_id);
+            $email = get_user($order_products->seller_id)->email;
         }
-        // $order_product = get_order_product($order_product_id);
-        $supplier = get_user($order_p->seller_id);
-        $buyer = get_user($order_p->buyer_id);
-        $email = get_user($order_p->seller_id)->email;
-        
+        //  $order_product = get_order_product($order_product_id);
+
         if ($this->order_model->cancel_order_buyer($order_id, $order_product_id, $reject_reason, $reject_reason_comment1)) {
 
-            //refund initiation for cancel item (online payments)
+            // refund initiation for cancel item (online payments)
             $payment_method = $order_detail[0]->payment_method;
             if ($payment_method == 'Cashfree') {
                 //refund api call for cashfree
-                $this->refund_api_data($order_p->id);
+                $this->refund_api_data($order_product_id);
                 if ($this->general_settings->enable_easysplit == 0) {
                     $this->order_model->recal_prepaid_seller_payable($order_id);
                 }
@@ -474,20 +474,26 @@ class Order_controller extends Home_Core_Controller
             }
 
             $this->load->model("email_model");
-            $this->session->set_flashdata('submit', "send_email");
+            $this->session->set_flashdata("submit", "send_email");
 
             if (!empty($supplier->email) && !empty($buyer->email)) {
-                if ($this->email_model->cancel_order_mail($supplier->email, $supplier) && $this->email_model->cancel_order_mail_buyer($buyer->email, $buyer)) {
-                    redirect($this->agent->referrer());
-                }
+                $this->email_model->cancel_order_product_mail($supplier->email, $supplier, $order_products);
+
+                $this->email_model->cancel_order_product_mail_buyer($buyer->email, $buyer, $order_products);
+
                 $this->session->set_flashdata('success', trans("msg_order_cancel"));
             } else {
                 $this->session->set_flashdata('error', trans("msg_error"));
             }
-            redirect($this->agent->referrer());
-
+            // redirect($this->agent->referrer());
         }
     }
+
+
+
+
+
+
 
     // refund initiation for cancel item (online payments)
 

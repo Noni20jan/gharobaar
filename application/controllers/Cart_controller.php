@@ -1554,7 +1554,7 @@ class Cart_controller extends Home_Core_Controller
                 }
             }
 
-
+            $object->shipping=0;
             // condition for shipping slabs
             $slab = true;
             if ($slab == true) {
@@ -1572,7 +1572,7 @@ class Cart_controller extends Home_Core_Controller
             //     }
             // }
             // condition end
-
+            $object->shipping_charge_to_gharobaar=0;
             $object->shipping=0;
             if (!empty($pan_number)) {
                 if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
@@ -1605,6 +1605,7 @@ class Cart_controller extends Home_Core_Controller
             // } else {
             //     $object->tcs_amount = 0;
             // }
+            $object->shipping_charge_with_gst=0;
             $object->gateway_amount = round(($object->shipping_charge_with_gst + $object->total_amount_with_gst) * ($object->gateway_charge / 100));
             $object->gateway_amount_gst = round($object->gateway_amount * 0.18);
             $object->gateway_amount_with_gst = round($object->gateway_amount + $object->gateway_amount_gst);

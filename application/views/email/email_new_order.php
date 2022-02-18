@@ -107,7 +107,7 @@
                                                     <?php $ordered_date = date("dS M Y", $order_date); ?>
                                                     <?php $shipping_time = $product->shipping_time; ?>
 
-                                                    <?php if ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") >2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                    <?php if ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") >2) : ?>
                                                         <?php $ship_time = intval($product->shipping_time[2]); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
                                                         <?php $x = $ship_time + 3; ?>
@@ -117,14 +117,14 @@
                                                         <?php $ship_date = (date("dS M Y", $order_create)); ?>
                                                         <?php $shipping_date = new DateTime($ship_date); ?>
                                                             <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $ship_date; ?></p>
-                                                        <?php elseif ($product->add_meet == "Made to order" && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                        <?php elseif ($product->add_meet == "Made to order" ) : ?>
                                                         <?php $lead_days = intval(get_product($item->product_id)->lead_days); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
                                                         <?php $delivery_days = $lead_days + 3; ?>
                                                         <?php $order_create = strtotime("$delivery_days day", $created_at); ?>
                                                         <?php $shipping_date = (date("dS M Y", $order_create)); ?>
-                                                        <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $$shipping_date; ?></p>
-                                                    <?php elseif ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") == 2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                        <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipping_date; ?></p>
+                                                    <?php elseif ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") == 2) : ?>
                                                         <?php $shipped_time = intval($product->shipping_time); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
                                                         <?php $delivery_time=$shipped_time+3;?>
