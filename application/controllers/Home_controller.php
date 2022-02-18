@@ -10,7 +10,9 @@ class Home_controller extends Home_Core_Controller
         $this->blog_paginate_per_page = 12;
         $this->promoted_products_limit = $this->general_settings->index_promoted_products_count;
         // shipment api call for secret key
+        if($this->general_settings->shiprocket_check==1){
         $this->shiprocket();
+        }
     }
 
     public function seller_all_products()
