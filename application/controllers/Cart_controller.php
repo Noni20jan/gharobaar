@@ -1577,9 +1577,13 @@ class Cart_controller extends Home_Core_Controller
             if (!empty($pan_number)) {
                 if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                     // $object->tds_amount = 0;
+                    $object->shipping=0;
+
                     $object->tds_amount_shipping = 0;
                     $object->tds_amount_shipping_huf_ind = 0.01 * ($object->shipping);
                 } else {
+                    $object->shipping=0;
+
                     // $object->tds_amount = 0.01 * ($psd->total_price_without_gst);
                     $object->tds_amount_shipping = 0.01 * ($object->shipping);
                 }
