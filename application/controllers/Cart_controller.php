@@ -569,10 +569,14 @@ class Cart_controller extends Home_Core_Controller
                 redirect(lang_base_url());
             }
         }
+        if ($data['cart_total']->total_price != 0) {
 
-        $this->load->view('partials/_header', $data);
-        $this->load->view('cart/payment_method', $data);
-        $this->load->view('partials/_footer');
+            $this->load->view('partials/_header', $data);
+            $this->load->view('cart/payment_method', $data);
+            $this->load->view('partials/_footer');
+        } else {
+            $this->cash_on_delivery_payment_post();
+        }
     }
 
     /**

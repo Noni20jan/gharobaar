@@ -137,13 +137,19 @@ class Order_model extends CI_Model
         if ($payment_method == 'Cash On Delivery') {
             $order_status = "order_processing";
         }
+        // if ($payment_method != 'Cash On Delivery') {
+        //     $payment_status = "payment_received";
+        // }
         // if($this->cart_model->check_cart_has_made_to_order_product() ==true)
         // {
         //     $data["order_status"] = "waiting";
         // }
 
         $cart_total = $this->cart_model->get_sess_cart_total();
-
+        if ($cart_total->total_price == 0) {
+            $payment_method = "cashfree";
+            $payment_status = "payment_received";
+        }
         // $Supp_ship_data = json_decode($this->get_shipping_cost($cart_total));
         // var_dump($Supp_ship_data);
 

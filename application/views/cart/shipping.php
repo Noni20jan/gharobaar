@@ -871,7 +871,11 @@
                         <a href="<?php echo generate_url("cart"); ?>" class="btn btn-lg btn-custom" style="  text-decoration: underline;
 ">
                             <&nbsp;<?php echo trans("return_to_cart"); ?> </a>
-                                <button type="submit" id="payment_button" name="submit" value="update" class="btn btn-lg btn-custom" id="payment" <?php echo (empty($get_address)) ? "disabled" : "" ?>><?php echo trans("continue_to_payment_method") ?></button>
+                                <?php if ($cart_total->total_price != 0) : ?>
+                                    <button type="submit" id="payment_button" name="submit" value="update" class="btn btn-lg btn-custom" id="payment" <?php echo (empty($get_address)) ? "disabled" : "" ?>><?php echo trans("continue_to_payment_method") ?></button>
+                                <?php else : ?>
+                                    <button type="submit" id="payment_button" name="submit" value="update" class="btn btn-lg btn-custom" id="payment" <?php echo (empty($get_address)) ? "disabled" : "" ?>><?php echo trans("place_order") ?></button>
+                                <?php endif; ?>
                     </div>
                 </div>
             </div>
