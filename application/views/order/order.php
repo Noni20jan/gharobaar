@@ -475,7 +475,7 @@
                                                         <?php $ship_date = (date("dS M Y", $order_create)); ?>
                                                         <?php $shipping_date = new DateTime($ship_date); ?>
                                                         <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $ship_date; ?></p>
-                                                    <?php elseif (get_product($item->product_id)->add_meet == "Made to order"  && get_product($item->product_id)->category_id != 2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                    <?php elseif (get_product($item->product_id)->add_meet == "Made to order" && $item->order_status == "processing" || $item->order_status == "shipped" || $item->order_status == "waiting") : ?>
                                                         <?php $lead_days = intval(get_product($item->product_id)->lead_days); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
                                                         <?php $delivery_days = $lead_days + 3; ?>
@@ -490,7 +490,8 @@
                                                         <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                                                         <?php $shipp_date = new DateTime($shipped_date); ?>
                                                         <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
-
+                                                    <?php elseif (get_product($item->product_id)->add_meet == "Made to order"  && get_product($item->product_id)->category_id == 2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                        <p><span class="span-product-dtl-table">Expected Delivery Date:</span><?php echo $item->expected_delivery_date; ?></p>
 
 
                                                     <?php endif; ?>
@@ -1114,7 +1115,6 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content modal-custom">
                 <!-- form start -->
-                <?php echo form_open('cancel-order-buyer'); ?>
                 <div class="modal-header">
                     <h5 class="modal-title"><?php echo "Cancellation Reason"; ?></h5>
                     <button type="button" class="close" data-dismiss="modal">
@@ -1122,11 +1122,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
-
                     <div class="row tracking-number-container">
                         <div class="col-sm-12">
-
                             <div class="form-group">
                                 <label class="control-label"><?php echo "Choose Cancellation Reason"/*trans('choose_reject_reason')*/; ?></label>
                                 <select name="reject_reason" id="reject_reason_select_<?php echo $item->id; ?>" onchange='check_comments1(this.value);' class="form-control custom-select" data-order-product-id="<?php echo $item->id; ?>" required>
@@ -1153,7 +1150,6 @@
                     <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><?php echo trans("close"); ?></button>
                     <button type="submit" value="update" id="cancel_product_loader" name="submit" class="btn btn-md btn-primary" onclick="cancel_order_buyer()"><?php echo trans("submit"); ?></button>
                 </div>
-                <?php echo form_close(); ?>
             </div>
         </div>
         <div id="cover-spin4"></div>
@@ -1428,12 +1424,19 @@
             data: data,
             success: function(response) {
                 // $('#cover-spin').hide();
-                location.reload();
+                setTimeout(myURL, 10000);
+
+                function myURL() {
+                    location.reload();
+                }
+                // location.reload();
                 //alert(response);
 
 
             }
+
         });
+
 
 
     }
