@@ -392,11 +392,10 @@
                 <div class="order-details-new-ui">
                     <div class="table-responsive">
                         <table class="table table-orders">
-                            <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
                                 <button class="btn btn-md btn-block btn-info btn-table-delete" id="opened" style="float:right;display:none;" onclick="open_modal()">Cancel Order</button>
-                            <?php endif; ?>
                             <thead>
                                 <tr>
+                                    <!-- <th><input type="checkbox" id="selectall"></th> -->
                                     <th scope="col"><?php echo trans("product"); ?></th>
                                     <th scope="col"><?php echo trans("options"); ?></th>
                                     <th scope="col" style="text-align: center;"><?php echo trans("tracking_status"); ?></th>
@@ -409,7 +408,7 @@
                                         $is_order_has_physical_product = true;
                                     } ?>
                                     <tr>
-                                        <td><input type="checkbox" <?php if ($item->order_status != "processing") {
+                                        <td><input type="checkbox" <?php if ($item->order_status != "processing" || get_product($item->product_id)->add_meet=="Made to order") {
                                                                         echo "disabled";
                                                                     } ?> name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>"></td>
                                         <td style="width: 40%">
@@ -465,7 +464,7 @@
                                                     <?php $order_date = strtotime($order->created_at); ?>
                                                     <?php $ordered_date = date("dS M Y", $order_date); ?>
                                                     <?php $shipping_time = $product->shipping_time; ?>
-                                                    <?php if ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") >2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                    <?php if ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") >2 && $item->order_status == "processing" || $item->order_status == "shipped" || $item->order_status == "waiting") : ?>
                                                         <?php $ship_time = intval($product->shipping_time[2]); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
                                                         <?php $x = $ship_time + 3; ?>
@@ -475,14 +474,14 @@
                                                         <?php $ship_date = (date("dS M Y", $order_create)); ?>
                                                         <?php $shipping_date = new DateTime($ship_date); ?>
                                                             <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $ship_date; ?></p>
-                                                        <?php elseif (get_product($item->product_id)->add_meet == "Made to order" && $item->order_status == "processing" || $item->order_status == "shipped" || $item->order_status=="waiting") : ?>
+                                                        <?php elseif (get_product($item->product_id)->add_meet == "Made to order" && $item->order_status == "processing" || $item->order_status == "shipped" || $item->order_status == "waiting") : ?>
                                                         <?php $lead_days = intval(get_product($item->product_id)->lead_days); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
                                                         <?php $delivery_days = $lead_days + 3; ?>
                                                         <?php $order_create = strtotime("$delivery_days day", $created_at); ?>
                                                         <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                                                         <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
-                                                    <?php elseif ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") == 2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                    <?php elseif ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") == 2 && $item->order_status == "processing" || $item->order_status == "shipped" || $item->order_status == "waiting") : ?>
                                                         <?php $shipped_time = intval($product->shipping_time); ?>
                                                         <?php $created_at = strtotime($order->created_at); ?>
                                                         <?php $delivery_time=$shipped_time+3;?>
@@ -490,7 +489,7 @@
                                                         <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                                                         <?php $shipp_date = new DateTime($shipped_date); ?>
                                                             <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
-                                                     <?php elseif (get_product($item->product_id)->add_meet == "Made to order"  && get_product($item->product_id)->category_id == 2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+                                                     <?php elseif (get_product($item->product_id)->add_meet == "Made to order"  && get_product($item->product_id)->category_id == 2 && $item->order_status == "processing" || $item->order_status == "shipped" ||$item->order_status == "waiting") : ?>
                                                         <p><span class="span-product-dtl-table">Expected Delivery Date:</span><?php echo $item->expected_delivery_date; ?></p>
 
 
@@ -1399,6 +1398,23 @@
                 $("#rejectModal<?php echo $order->id; ?>").modal('show');
             }, 200);
     }
+//     $("#selectall").click(function() {
+        
+//     if($(this).is(":checked")) {
+        
+//         $("input[name='checkbox-table']").prop("checked",this.checked);
+//         document.getElementById("opened").style.display = "inline-block";
+
+//         }
+//         if(!$(this).is(":checked")){
+//             document.getElementById("opened").style.display = "none";
+//             $("input[name='checkbox-table']").prop("checked",this.checked);
+// alert("not checked");
+        
+
+//         }
+//     });
+    
 
     function cancel_order_buyer() {
         var product_ids = [];
@@ -1430,13 +1446,14 @@
 function myURL() {
     location.reload();
 }
-                // location.reload();
-                //alert(response);
+
+
 
 
             }
             
         });
+      
         
 
 

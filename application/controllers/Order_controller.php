@@ -465,7 +465,7 @@ class Order_controller extends Home_Core_Controller
             $payment_method = $order_detail[0]->payment_method;
             if ($payment_method == 'Cashfree') {
                 //refund api call for cashfree
-                $this->refund_api_data($order_product_id);
+                $this->refund_api_data($order_product_ids);
                 if ($this->general_settings->enable_easysplit == 0) {
                     $this->order_model->recal_prepaid_seller_payable($order_id);
                 }
@@ -488,6 +488,15 @@ class Order_controller extends Home_Core_Controller
             // redirect($this->agent->referrer());
         }
     }
+
+
+
+
+
+
+
+
+
 
     // refund initiation for cancel item (online payments)
 
