@@ -668,7 +668,7 @@
     <link rel="shortcut icon" type="image/png" href="<?php echo get_favicon($this->general_settings); ?>" />
 
     <!-- this scrip is provided by sakshi -->
-    <script>
+    <!-- <script>
         (function(h, e, a, t, m, p) {
             m = e.createElement(a);
             m.async = !0;
@@ -676,7 +676,7 @@
             p = e.getElementsByTagName(a)[0];
             p.parentNode.insertBefore(m, p);
         })(window, document, 'script', 'https://u.heatmap.it/log.js');
-    </script>
+    </script> -->
 
     <!-- Facebook Pixel Code -->
     <!-- <script>
@@ -6487,7 +6487,7 @@
         }
     </script>
     <!-- Facebook Pixel Code -->
-    <script>
+    <!-- <script>
         ! function(f, b, e, v, n, t, s) {
             if (f.fbq) return;
             n = f.fbq = function() {
@@ -6509,11 +6509,11 @@
         fbq('init', '202708615038039');
         fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=202708615038039&ev=PageView&noscript=1" /></noscript>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=202708615038039&ev=PageView&noscript=1" /></noscript> -->
     <!-- End Facebook Pixel Code -->
 
     <!-- Google Tag Manager -->
-    <script>
+    <!-- <script>
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
@@ -6528,11 +6528,11 @@
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-KGZRFDN');
-    </script>
+    </script> -->
     <!-- End Google Tag Manager -->
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script src="https://www.googletagmanager.com/gtag/js?id=UA-199516838-1"></script>
+    <!-- <script src="https://www.googletagmanager.com/gtag/js?id=UA-199516838-1"></script> -->
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -6545,7 +6545,7 @@
     </script>
 
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGZRFDN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGZRFDN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> -->
     <!-- End Google Tag Manager (noscript) -->
 
     <script>
