@@ -310,6 +310,7 @@ class Home_controller extends Home_Core_Controller
         $data['title'] = $this->settings->homepage_title;
         $data['description'] = $this->settings->site_description;
         $data['keywords'] = $this->settings->keywords;
+        // $data['cart_items'] = $this->cart_model->get_sess_cart_items();
 
         //products
         $data["user_data"] = $this->profile_model->get_vendor_data();
@@ -1839,7 +1840,7 @@ class Home_controller extends Home_Core_Controller
             'have_gst' => $this->input->post('gst_yes_no', true),
             'active_customer' => $this->input->post('active_customers', true),
             'selling_exempted_goods' => $this->input->post('selling_exempted_goods', true),
-            'min_order_value'=>$this->input->post('min_order_value', true),
+            'min_order_value' => $this->input->post('min_order_value', true),
 
 
 
@@ -2891,7 +2892,6 @@ class Home_controller extends Home_Core_Controller
                 } else {
                     $last_id = $this->review_model->add_review($rating, $product_id, $review_text);
                     if (!empty($last_id)) {
-
                         $this->load->model('upload_model');
                         $img_path = $this->upload_model->upload_buyer_image('file_[]', $last_id, $product_id);
                     }
@@ -3250,5 +3250,19 @@ class Home_controller extends Home_Core_Controller
         } else {
             $this->load->view('product/infinte_scroll_products', $data);
         }
+    }
+    public function cart_data()
+    {
+        $cart_items = $this->cart_model->get_sess_cart_items();
+        if (!empty($cart_items)) {
+            $data = array(
+                "empty" => "false",
+            );
+        } else {
+            $data = array(
+                "empty" => "true",
+            );
+        }
+        echo json_encode($data);
     }
 }
