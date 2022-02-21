@@ -4185,7 +4185,7 @@
                                         <?php endif; ?>
                                         <?php if ($this->is_sale_active) : ?>
                                             <li class="icon-bg cart-icon-number">
-                                                <a class="cart_a" href="<?php echo generate_url("cart"); ?>">
+                                                <a class="cart_a" href="#" onclick="cart_empty()">
                                                     <i class="icon-cart"></i>
                                                     <?php $cart_product_count = get_cart_product_count();
                                                     if ($cart_product_count > 0) : ?>
@@ -4507,7 +4507,7 @@
                                 <?php endif; ?>
                             </div>
                             <div class="mobile-cart">
-                                <a class="cart_a" href="<?php echo generate_url("cart"); ?>"><i class="icon-cart"></i>
+                                <a class="cart_a" href="#" onclick="cart_empty()"><i class="icon-cart"></i>
                                     <?php $cart_product_count = get_cart_product_count();
                                     if ($cart_product_count > 0) : ?>
                                         <span class="notification"><?php echo $cart_product_count; ?></span>
@@ -5783,5 +5783,32 @@
                     }
                 }
             }
+        }
+    </script>
+    <script>
+        function cart_empty() {
+            var a = {
+
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+
+            // data[csfr_token_name] = $.cookie(csfr_cookie_name);
+            $.ajax({
+                type: "POST",
+                url: base_url + "home_controller/cart_data",
+                data: a,
+                success: function(response) {
+                    var i = JSON.parse(response);
+
+                    console.log(i.empty);
+                    if (i.empty == "false") {
+                        window.location.href =
+                            base_url + "cart"
+                    } else {
+                        $('#cart_modal').modal('show');
+                    }
+
+                }
+            });
         }
     </script>
