@@ -4489,7 +4489,7 @@
                                                 <!--span class="notification-label"></span-->
                                                 <div class="dropdown-container">
                                                     <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
-                                                    <?php $count_array = $this->notification_model->get_notification_count();
+                                                        <?php $count_array = $this->notification_model->get_notification_count();
                                                         $count = count($count_array); ?>
                                                         <i class="far fa-bell notification-button"></i><span class="badge notification-count" style="right: 27%;"><?php echo $count; ?></span>
                                                     </a>
@@ -5029,8 +5029,8 @@
                                         <!--span class="notification-label"></span-->
                                         <div class="dropdown-container">
                                             <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
-                                            <?php $count_array = $this->notification_model->get_notification_count();
-                                                        $count = count($count_array); ?>
+                                                <?php $count_array = $this->notification_model->get_notification_count();
+                                                $count = count($count_array); ?>
                                                 <i class="far fa-bell notification-button"></i></i><span class="badge notification-count" style="right: 9%;top: 12%;"><?php echo $count; ?></span>
                                             </a>
                                             <ul class="dropdown" name="notificationMenu" style="z-index:100; width:100%; right:0px!important;">
@@ -6590,5 +6590,217 @@
                 $('.notification-group').removeClass('expanded');
                 $(e.currentTarget).parent().toggleClass('expanded');
             }
+        })
+    </script>
+
+    <script>
+        $('.gharobar_updates').click(function(e) {
+            var a = {
+                sys_lang_id: sys_lang_id
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+            $.ajax({
+
+                url: base_url + "home_controller/gharobaar_updates_read",
+                method: "POST",
+                data: a,
+                success: function(data) {
+
+                    // $('#comment_form')[0].reset();
+                    // load_unseen_notification();
+
+                }
+
+            });
+        })
+        $('.order_update').click(function(e) {
+            var a = {
+                sys_lang_id: sys_lang_id
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+            $.ajax({
+
+                url: base_url + "home_controller/order_update_read",
+                method: "POST",
+                data: a,
+                success: function(data) {
+
+                    // $('#comment_form')[0].reset();
+                    // load_unseen_notification();
+
+                }
+
+            });
+        })
+        $('.order_placement').click(function(e) {
+            var a = {
+                sys_lang_id: sys_lang_id
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+            $.ajax({
+
+                url: base_url + "home_controller/order_placement_read",
+                method: "POST",
+                data: a,
+                success: function(data) {
+
+                    // $('#comment_form')[0].reset();
+                    // load_unseen_notification();
+
+                }
+
+            });
+        })
+        $('.order_cancel_seller').click(function(e) {
+            var a = {
+                sys_lang_id: sys_lang_id
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+            $.ajax({
+
+                url: base_url + "home_controller/order_cancel_seller_read",
+                method: "POST",
+                data: a,
+                success: function(data) {
+
+                    // $('#comment_form')[0].reset();
+                    // load_unseen_notification();
+
+                }
+
+            });
+        })
+        $('.order_delivered').click(function(e) {
+            var a = {
+                sys_lang_id: sys_lang_id
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+            $.ajax({
+
+                url: base_url + "home_controller/order_delivered_read",
+                method: "POST",
+                data: a,
+                success: function(data) {
+
+                    // $('#comment_form')[0].reset();
+                    // load_unseen_notification();
+
+                }
+
+            });
+        })
+        $('.get_promotions_read').click(function(e) {
+            var a = {
+                sys_lang_id: sys_lang_id
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+            $.ajax({
+
+                url: base_url + "home_controller/update_promotion_read",
+                method: "POST",
+                data: a,
+                success: function(data) {
+
+                    // $('#comment_form')[0].reset();
+                    // load_unseen_notification();
+
+                }
+
+            });
+        })
+        $('.review_follower_read').click(function(e) {
+            var a = {
+                sys_lang_id: sys_lang_id
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+            $.ajax({
+
+                url: base_url + "home_controller/update_review_follower_read",
+                method: "POST",
+                data: a,
+                success: function(data) {
+
+                    // $('#comment_form')[0].reset();
+                    // load_unseen_notification();
+
+                }
+
+            });
+        })
+        $('.listing_read').click(function(e) {
+            var a = {
+                sys_lang_id: sys_lang_id
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+            $.ajax({
+
+                url: base_url + "home_controller/update_listing_read",
+                method: "POST",
+                data: a,
+                success: function(data) {
+
+                    // $('#comment_form')[0].reset();
+                    // load_unseen_notification();
+
+                }
+
+            });
+        })
+        $('.profile_read').click(function(e) {
+            var a = {
+                sys_lang_id: sys_lang_id
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+            $.ajax({
+
+                url: base_url + "home_controller/update_profile_read",
+                method: "POST",
+                data: a,
+                success: function(data) {
+
+                    // $('#comment_form')[0].reset();
+                    // load_unseen_notification();
+
+                }
+
+            });
+        })
+        $('.payout_read').click(function(e) {
+            var a = {
+                sys_lang_id: sys_lang_id
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+            $.ajax({
+
+                url: base_url + "home_controller/update_payout_read",
+                method: "POST",
+                data: a,
+                success: function(data) {
+
+                    // $('#comment_form')[0].reset();
+                    // load_unseen_notification();
+
+                }
+
+            });
+        })
+        $('.customization_read').click(function(e) {
+            var a = {
+                sys_lang_id: sys_lang_id
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+            $.ajax({
+
+                url: base_url + "home_controller/update_customization_read",
+                method: "POST",
+                data: a,
+                success: function(data) {
+
+                    // $('#comment_form')[0].reset();
+                    // load_unseen_notification();
+
+                }
+
+            });
         })
     </script>

@@ -1395,13 +1395,14 @@
                                         <?php endif; ?>
                                         <?php if ($this->is_sale_active) : ?>
                                             <li class="icon-bg cart-icon-number">
-                                                <a class="cart_a" href="<?php echo generate_url("cart"); ?>">
+                                                <a class="cart_a" href="#" onclick="cart_empty()">
                                                     <i class="icon-cart"></i>
                                                     <?php $cart_product_count = get_cart_product_count();
                                                     if ($cart_product_count > 0) : ?>
                                                         <span class="notification"><?php echo $cart_product_count; ?></span>
                                                     <?php endif; ?>
                                                 </a>
+
                                             </li>
                                         <?php endif; ?>
                                         <?php if ($this->auth_check) : ?>
@@ -2702,6 +2703,8 @@
 
                 </div>
             </div>
+
+            </div>
             <script>
                 $(function() {
                     $('#fssai_undertakingModal').modal('show');
@@ -2748,6 +2751,21 @@
     <!-- <div id="pageloader">
         <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif" alt="processing..." />
     </div> -->
+    <div class="modal" tabindex="-1" role="dialog" id=cart_modal class="cart_modal" data-toggle="cart_modal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-custom">
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" id="close-pin">X</button>
+                </div>
+                <div class="modal-body">
+                    <p><? echo trans("your_cart_is_empty"); ?></p>
+                    <p id="ideal_cart" style="margin-left: 70px;"><strong class="font-900"><?php echo trans("ideal_cart"); ?></strong></p>
+                    <img src="<?php echo base_url(); ?>assets/img/empty-cart.png" id="empty_cart" style="max-width: 504px;margin-left: -50px;">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="menu-overlay"></div>
 
@@ -7185,4 +7203,32 @@
 
             });
         })
+    </script>
+
+    <script>
+        function cart_empty() {
+            var a = {
+
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+
+            // data[csfr_token_name] = $.cookie(csfr_cookie_name);
+            $.ajax({
+                type: "POST",
+                url: base_url + "home_controller/cart_data",
+                data: a,
+                success: function(response) {
+                    var i = JSON.parse(response);
+
+                    console.log(i.empty);
+                    if (i.empty == "false") {
+                        window.location.href =
+                            base_url + "cart"
+                    } else {
+                        $('#cart_modal').modal('show');
+                    }
+
+                }
+            });
+        }
     </script>

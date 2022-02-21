@@ -10,8 +10,8 @@ class Home_controller extends Home_Core_Controller
         $this->blog_paginate_per_page = 12;
         $this->promoted_products_limit = $this->general_settings->index_promoted_products_count;
         // shipment api call for secret key
-        if($this->general_settings->shiprocket_check==1){
-        $this->shiprocket();
+        if ($this->general_settings->shiprocket_check == 1) {
+            $this->shiprocket();
         }
     }
 
@@ -312,6 +312,7 @@ class Home_controller extends Home_Core_Controller
         $data['title'] = $this->settings->homepage_title;
         $data['description'] = $this->settings->site_description;
         $data['keywords'] = $this->settings->keywords;
+        // $data['cart_items'] = $this->cart_model->get_sess_cart_items();
 
         //products
         $data["user_data"] = $this->profile_model->get_vendor_data();
@@ -2893,7 +2894,6 @@ class Home_controller extends Home_Core_Controller
                 } else {
                     $last_id = $this->review_model->add_review($rating, $product_id, $review_text);
                     if (!empty($last_id)) {
-
                         $this->load->model('upload_model');
                         $img_path = $this->upload_model->upload_buyer_image('file_[]', $last_id, $product_id);
                     }
@@ -3334,6 +3334,22 @@ class Home_controller extends Home_Core_Controller
 
         $data['update'] = $this->notification_model->update_customization_read($this->auth_user->email);
         $data['success'] = "success";
+        echo json_encode($data);
+    }
+
+
+    public function cart_data()
+    {
+        $cart_items = $this->cart_model->get_sess_cart_items();
+        if (!empty($cart_items)) {
+            $data = array(
+                "empty" => "false",
+            );
+        } else {
+            $data = array(
+                "empty" => "true",
+            );
+        }
         echo json_encode($data);
     }
 }

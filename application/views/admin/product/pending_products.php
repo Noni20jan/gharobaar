@@ -17,8 +17,29 @@
         background-color: #f5f2f200;
 
     }
+
+    .feedback {
+        background-color: #b1dfbb
+    }
+
+    .button {
+        margin-left: 1107px;
+        margin-bottom: 7px;
+    }
+
+    .submit {
+        max-height: 23px;
+        padding: 2px;
+    }
 </style>
+<div class="feedback" style="display: none;width: 162px;margin-left: 517px;">
+    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+
+    <i class="fa fa-check option-icon"></i>
+    Remark Updated
+</div>
 <div class="box">
+
     <div class="box-header with-border">
         <h3 class="box-title"><?php echo $title; ?></h3>
     </div><!-- /.box-header -->
@@ -35,6 +56,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped" role="grid">
                         <?php $this->load->view('admin/product/_filter_products'); ?>
+
                         <thead>
                             <tr role="row">
                                 <th width="20"><input type="checkbox" class="checkbox-table" id="checkAll"></th>
@@ -142,15 +164,27 @@
                                     <td><?php if ($remarks != "") {
                                             echo html_escape($remarks->remark);
                                         } ?></td>
-                                    <td><?php echo $item->admin_remark; ?></td>
+                                    <td>
 
+                                        <input type="hidden" name="adminid" id="adminid.<?php echo html_escape($item->id); ?>" value="<?php echo $item->id; ?>">
+
+
+                                        <textarea name="admin_review" id="admin_review_<?php echo html_escape($item->id); ?>" class="admin_review" rows="2" cols="15" value="<?php echo $item->admin_remark; ?>"><?php echo $item->admin_remark; ?></textarea>
+                                        <button class="btn btn-primary submit" type="submit" id="submit" class="submit" onclick="data('product_controller/admin_remark','<?php echo $item->id; ?>' )">
+                                            submit
+                                        </button>
+
+                                    </td>
 
                                 </tr>
 
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <div class="message" id="message" display="none">
+                        <?php echo $this->session->flashdata('success'); ?>
 
+                    </div>
                     <?php if (empty($products)) : ?>
                         <p class="text-center">
                             <?php echo trans("no_records_found"); ?>
@@ -175,3 +209,51 @@
         </div>
     </div><!-- /.box-body -->
 </div>
+<script>
+    $(document).ready(function() {
+        // function data() {
+        //     event.preventDefault();
+        //     var id = $('#adminid').val();
+        //     alert(id);
+        //     reviewid = 'admin_review.' + id
+        //     alert(reviewid)
+        //     var review = $(reviewid).val();
+        //     formDATA = {
+        //         id: id,
+        //         admin_reviews: review,
+        //         sys_lang_id: sys_lang_id
+        //     };
+        //     (formDATA[csfr_token_name] = $.cookie(csfr_cookie_name));
+        //     $.ajax({
+        //         type: "POST",
+        //         url: base_url + "product_controller/admin_remark",
+        //         data: formDATA,
+        //         dataType: 'json',
+        //         contentType: false,
+        //         processData: false,
+        //         success: function(response) {}
+        //     })
+        // };
+    });
+
+    function data(e, t) {
+        console.log($('#admin_review_' + t))
+        var a = $('#admin_review_' + t).val();
+        var n = {
+            adminid: t,
+            admin_review: a,
+        };
+        (n[csfr_token_name] = $.cookie(csfr_cookie_name)),
+        console.log(n);
+        console.log("BASE URL", base_url + e)
+        $.ajax({
+            type: "POST",
+            url: base_url + e,
+            data: n,
+            success: function(e) {
+                location.reload();
+            },
+        });
+
+    }
+</script>

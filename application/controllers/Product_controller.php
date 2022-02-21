@@ -557,8 +557,9 @@ class Product_controller extends Admin_Core_Controller
 
     public function admin_remark()
     {
-        $id = $this->input->post('adminid');
-        $review = $this->input->post('admin_review');
+
+        $id = $this->input->post('adminid', true);
+        $review = $this->input->post('admin_review', true);
         $this->product_admin_model->get_admin_review($id, $review);
         redirect(generate_url("admin/pending-products"));
     }
@@ -855,5 +856,11 @@ class Product_controller extends Admin_Core_Controller
     {
         $review_ids = $this->input->post('review_ids', true);
         $this->review_model->delete_multi_reviews($review_ids);
+    }
+    public function admin_updated_remark()
+    {
+        $id = $this->input->post('adminid');
+        $review = $this->input->post('admin_review');
+        $this->product_admin_model->get_admin_review($id, $review);
     }
 }
