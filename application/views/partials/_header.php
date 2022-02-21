@@ -1904,7 +1904,7 @@
                                 <?php endif; ?>
                             </div>
                             <div class="mobile-cart">
-                                <a class="cart_a" href="<?php echo generate_url("cart"); ?>"><i class="icon-cart"></i>
+                                <a class="cart_a" href="#" onclick="cart_empty()"><i class="icon-cart"></i>
                                     <?php $cart_product_count = get_cart_product_count();
                                     if ($cart_product_count > 0) : ?>
                                         <span class="notification"><?php echo $cart_product_count; ?></span>
