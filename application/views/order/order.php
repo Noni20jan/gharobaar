@@ -395,7 +395,7 @@
                                 <button class="btn btn-md btn-block btn-info btn-table-delete" id="opened" style="float:right;display:none;" onclick="open_modal()">Cancel Order</button>
                             <thead>
                                 <tr>
-                                    <!-- <th><input type="checkbox" id="selectall"></th> -->
+                                    <th><input type="checkbox" id="selectall"></th>
                                     <th scope="col"><?php echo trans("product"); ?></th>
                                     <th scope="col"><?php echo trans("options"); ?></th>
                                     <th scope="col" style="text-align: center;"><?php echo trans("tracking_status"); ?></th>
@@ -408,9 +408,13 @@
                                         $is_order_has_physical_product = true;
                                     } ?>
                                     <tr>
-                                        <td><input type="checkbox" <?php if ($item->order_status != "processing" || get_product($item->product_id)->add_meet=="Made to order") {
-                                                                        echo "disabled";
-                                                                    } ?> name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>"></td>
+                                        <td><?php if(get_product($item->product_id)->add_meet=="Made to order" && $item->order_status=="processing"):?>
+                                                                        <input type="checkbox" name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>"  value="false" style="display:none;">
+                                                                        <?php elseif(get_product($item->product_id)->add_meet=="Made to stock" && $item->order_status=="processing"):?>
+                                                                          <input type="checkbox" name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>">
+
+                                                                    <?php endif;?>
+                                                                </td>
                                         <td style="width: 40%">
 
                                             <div class="table-item-product">
@@ -1398,22 +1402,21 @@
                 $("#rejectModal<?php echo $order->id; ?>").modal('show');
             }, 200);
     }
-//     $("#selectall").click(function() {
+    $("#selectall").click(function() {
         
-//     if($(this).is(":checked")) {
+    if($(this).is(":checked")) {
         
-//         $("input[name='checkbox-table']").prop("checked",this.checked);
-//         document.getElementById("opened").style.display = "inline-block";
+        $("input[name='checkbox-table']").prop("checked",this.checked);
+        document.getElementById("opened").style.display = "inline-block";
 
-//         }
-//         if(!$(this).is(":checked")){
-//             document.getElementById("opened").style.display = "none";
-//             $("input[name='checkbox-table']").prop("checked",this.checked);
-// alert("not checked");
+        }
+        if(!$(this).is(":checked")){
+            document.getElementById("opened").style.display = "none";
+            $("input[name='checkbox-table']").prop("checked",this.checked);
         
 
-//         }
-//     });
+        }
+    });
     
 
     function cancel_order_buyer() {

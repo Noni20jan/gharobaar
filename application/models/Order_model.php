@@ -5164,14 +5164,17 @@ class Order_model extends CI_Model
     {
 
         $order_id = trim($this->input->post('order_id', true));
+    
         $order_products = $this->order_model->get_order_products($order_id);
 
-
+  
         foreach ($order_products as $order_p) {
             $product = $this->order_model->get_product_detail($order_p->product_id);
+         
             $lookup_table_data = $this->order_model->get_product_shipping_days_from_db($product[0]->shipping_time);
             $estimated_days = $lookup_table_data->lookup_int_val;
-            $created_date = date('Y-m-d', strtotime($order_p->created_at));
+       
+            $created_date = date('Y-m-d h:i:s', strtotime($order_p->created_at));
             $current_date = date('Y-m-d h:i:s');
 
 
@@ -5180,13 +5183,18 @@ class Order_model extends CI_Model
                     $lead_time_in_sec = $order_p->lead_time;
                     $order_accepted_at = $order_p->accepted_at;
                     $accepted_at_in_sec = strtotime($order_accepted_at);
-
+                  
                     $total_estimated_dispatch_in_sec = $accepted_at_in_sec + $lead_time_in_sec;
                     $estimated_dispatch_date = date('Y-m-d H:i:s', $total_estimated_dispatch_in_sec);
                 } elseif ($p->add_meet == 'Made to stock') {
-                    $estimated_dispatch_date = date('Y-m-d H:i:s', strtotime($created_date . +$estimated_days . "days"));
+                    $date=strtotime($created_date);
+                    $estimated_dispatch_date =strtotime("$estimated_days day", $date);
+                    $dispatch_date= date('Y-m-d h:i:s',$estimated_dispatch_date);
+              
                 }
-                if ($current_date > $estimated_dispatch_date && $order_p->order_status == 'processing') {
+           
+  
+                if ($dispatch_date < $current_date && $order_p->order_status=="processing") {
                     $data = array(
                         'order_number' => $order_p->order_id,
                         'order_product_id' => $order_p->id,
@@ -5199,12 +5207,13 @@ class Order_model extends CI_Model
                         "penalty_amount" => $this->general_settings->penalty_amount * 100,
                         "currency" => 'INR',
                         "order_date" =>  $order_p->created_at,
-                        "dispatch_date" => $estimated_dispatch_date,
+                         "dispatch_date" => $dispatch_date,
                         "created_at" => date('Y-m-d H:i:s'),
                         "add_meet" =>  $p->add_meet
 
 
                     );
+                  
                     $this->db->insert('penalty', $data);
                 }
             }
