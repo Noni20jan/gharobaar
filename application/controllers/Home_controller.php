@@ -1853,7 +1853,7 @@ class Home_controller extends Home_Core_Controller
         if ($data["have_gst"] == "N") {
             $data["type_of_goods"] = $this->input->post('type_of_goods', true);
         }
-
+if($this->general_settings->update_bank == 1){
         if ($data["type_of_goods"] == "gharobaar_with_gst"  && $data["supplier_state"] == "Delhi") {
             $data["shop_name"] = "Friends with Dreams Pvt Ltd";
             $data["company_type"] = "Private Limited";
@@ -1948,6 +1948,7 @@ class Home_controller extends Home_Core_Controller
                 $data["is_active_shop_request"] = 1;
             }
         }
+    }
         $data['image_pancard'] = "data:image/png;base64," . (trim($data['image_pancard'], "[removed]"));
 
         //unique seller id
