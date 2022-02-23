@@ -2211,8 +2211,6 @@ class Order_model extends CI_Model
         }
 
 
-
-
         if (!empty($order_product)) {
             if ($this->auth_user->id == $order_p->buyer_id) {
                 $data = array(
@@ -2226,12 +2224,13 @@ class Order_model extends CI_Model
                 $this->increase_product_stock_after_cancel($order_id, $order_item_product_id);
                 $this->db->where('order_id', $order_id);
                 $this->db->where_in('id', $data1);
-
                 $this->db->update('order_products', $data);
+                
                 return true;
             }
             return false;
         }
+    
     }
     //decrease product stock after sale
     public function decrease_product_stock_after_sale($order_id)
