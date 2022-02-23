@@ -104,7 +104,7 @@
             <h3><u>Shipment Delays</u></h3>
 
             <p>
-                In case your shipment is delayed, please send us an email on <a class="for-contact" href="mailto: contact@gharobaar.com">contact@gharobaar.com</a> with your order number.
+                In case your shipment is delayed, please send us an email on <a class="for-contact" href="mailto:<?php echo trans('contact_gharobaar');?>"><?php echo trans('contact_gharobaar');?></a> with your order number.
             </p>
             <p>
                 In the unfortunate scenario that your shipment has been misplaced or lost enroute, we can either resend the order to you (if the same products are still in stock), or issue a credit note to you, or reimburse the amount completely to you.

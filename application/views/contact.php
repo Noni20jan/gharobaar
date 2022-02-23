@@ -83,7 +83,7 @@
                                 <?php if ($this->settings->contact_email) : ?>
                                     <div class="col-12 contact-item">
                                         <i class="icon-envelope" aria-hidden="true"></i>
-                                        <a href="mailto:contact@gharobaar.com"> <?php echo html_escape($this->settings->contact_email); ?>
+                                        <a href="mailto:<?php echo trans('contact_gharobaar');?>"> <?php echo html_escape($this->settings->contact_email); ?>
                                 </a>
                                     </div>
                                 <?php endif; ?>

@@ -56,7 +56,7 @@
                 are small scale homepreneurs, making them at home with limited means. Thus, we do not
                 offer a no question-based Return or exchange on any product (unless the same is provided
                 by the seller in his/her individual capacity).</p>
-            <p>In order to place a return/exchange request, please write to us at <a class="for-contact" href="mailto: contact@gharobaar.com">contact@gharobaar.com</a> within 48 hours of receiving the product. You email must contain your order number, detailed description of the nature of concern, and relevant pictures (in case the product is damaged or different from what was ordered).</p>
+            <p>In order to place a return/exchange request, please write to us at <a class="for-contact" href="mailto: <?php echo trans("contact_gharobaar");?>"><?php echo trans("contact_gharobaar");?></a> within 48 hours of receiving the product. You email must contain your order number, detailed description of the nature of concern, and relevant pictures (in case the product is damaged or different from what was ordered).</p>
             <p>Once your return request is received and reviewed, we will contact you for the next steps.</p>
             <h5>Please Note:</h5>
             <ul class="please-note">
