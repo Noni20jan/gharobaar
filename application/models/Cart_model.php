@@ -1612,7 +1612,7 @@ class Cart_model extends CI_Model
     public function add_delivery_distance()
     {
         $shipping_address = $this->session->userdata('mds_cart_shipping_address');
-
+// var_dump($shipping_address);die();
         $cart = array();
         $new_cart = array();
         $this->cart_product_ids = array();
@@ -1625,9 +1625,10 @@ class Cart_model extends CI_Model
 
             $cart_item->delivery_address = $shipping_address->shipping_zip_code;
             $cart_item->delivery_city = $shipping_address->shipping_city;
-
+// var_dump($product_pickup_address);
+// var_dump($cart_item->delivery_address);
             $distance_matrix = $this->profile_model->product_deliverale_or_not($product_pickup_address, $cart_item->delivery_address);
-            // var_dump($distance_matrix->rows[0]->elements[0]->distance);
+            // var_dump($distance_matrix->rows[0]->elements[0]->distance);die();
             $cart_item->delivery_distance = $distance_matrix->rows[0]->elements[0]->distance;
 
             $dist_value = $cart_item->delivery_distance->value;

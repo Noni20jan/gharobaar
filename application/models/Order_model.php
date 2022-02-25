@@ -5304,4 +5304,19 @@ class Order_model extends CI_Model
         $query = $this->db->get('order_products');
         return $query->result();
     }
+
+    public function if_preapid_transfer_id($refrence_id)
+    {
+        $sql = "SELECT count(referenceId) AS 'count' FROM cashfree_seller_payout where referenceId= $refrence_id";
+        $query = $this->db->query($sql);
+        return $query->row()->count;
+    }
+
+    public function if_cod_transfer_id($refrence_id)
+    {
+        $sql = "SELECT count(referenceId) AS 'count' FROM cod_seller_payable where referenceId= $refrence_id";
+        $query = $this->db->query($sql);
+        return $query->row()->count;
+    }
+
 }

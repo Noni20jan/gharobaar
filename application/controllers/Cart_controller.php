@@ -534,6 +534,7 @@ class Cart_controller extends Home_Core_Controller
             $data['currency'] = $this->payment_settings->default_currency;
         
             $payment_type = input_get('payment_type');
+            $payment_type= "sale";
         if ($payment_type != "membership" && $payment_type != "promote") {
             $payment_type = "sale";
         }
@@ -1382,6 +1383,8 @@ class Cart_controller extends Home_Core_Controller
                     $object_product->gst_rate = $product_details->gst_rate;
                     $object_product->product_total_price = $cart_item->total_price;
 
+                    $object_product->shipping_cost_type=$product_details->shipping_cost_type;
+
                     // $commission_rate = $this->general_settings->commission_rate;
 
 
@@ -1452,7 +1455,14 @@ class Cart_controller extends Home_Core_Controller
                 $object_product->product_total_price = $cart_item->total_price;
                 $object_product->tds_amount_product_huf_ind = 0;
 
+                $object_product->shipping_cost_type=$product_details->shipping_cost_type;
 
+                if($object_product->shipping_cost_type=='shipping_buyer_pays'){
+
+                }
+                elseif($object_product->shipping_cost_type=='free_shipping'){
+                    
+                }
 
                 $gst_cal = 1 + ($object_product->gst_rate / 100);
                 $product_price_excluding_gst = round($object_product->product_total_price / $gst_cal, 0);
@@ -2169,4 +2179,193 @@ public function load_pay_view(){
     );
     echo json_encode($response);
 }
+
+
+
+
+public function shipping_post_test()
+    {
+        $this->cart_model->set_sess_cart_shipping_address();
+        // redirect(generate_url("cart", "payment_method") . "?payment_type=sale");
+        $data['keywords'] = trans("shopping_cart") . "," . $this->app_name;
+        $data['offer'] = $this->cart_model->available_offers();
+        $data['c_items'] = $this->cart_model->get_sess_cart_items();
+        $data['c_count'] = get_cart_product_count();
+        $data['check_cashond'] = $this->order_model->check_cod($data['c_items'], $data['c_count']);
+        $data['check_made_to_order'] = $this->order_model->check_mto($data['c_items']);
+        //check for exhibition enabled products
+        $data['check_exhibition'] = $this->order_model->check_exhibition_enabled($data['c_items']);
+
+       
+        $data['mds_payment_type'] = "sale";
+
+
+        //check is set cart payment method
+        $data['cart_payment_method'] = $this->cart_model->get_sess_cart_payment_method();
+        
+            $this->cart_model->validate_cart();
+            //sale payment
+            $data['cart_items'] = $this->cart_model->get_sess_cart_items();
+            if ($data['cart_items'] == null) {
+                redirect(generate_url("cart"));
+            }
+            $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+            $data["shipping_address"] = $this->cart_model->get_sess_cart_shipping_address();
+            $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
+            //total amount
+            $data['total_amount'] = $data['cart_total']->total_price;
+            $data['currency'] = $this->payment_settings->default_currency;
+        
+            $payment_type = input_get('payment_type');
+            $payment_type= "sale";
+        if ($payment_type != "membership" && $payment_type != "promote") {
+            $payment_type = "sale";
+        }
+
+        if ($payment_type == "sale") {
+            $this->cart_model->validate_cart();
+            //sale payment
+            $data['cart_items'] = $this->cart_model->get_sess_cart_items();
+            $data['mds_payment_type'] = "sale";
+            if ($data['cart_items'] == null) {
+                redirect(generate_url("cart"));
+            }
+            //check auth for digital products
+            if (!$this->auth_check && $this->cart_model->check_cart_has_digital_product() == true) {
+                $this->session->set_flashdata('error', trans("msg_digital_product_register_error"));
+                redirect(generate_url("register"));
+                exit();
+            }
+            $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+            $user_id = null;
+            if ($this->auth_check) {
+                $user_id = $this->auth_user->id;
+            }
+
+            $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
+            $data['cart_has_digital_product'] = $this->cart_model->check_cart_has_digital_product();
+            $this->cart_model->unset_sess_cart_payment_method();
+        } 
+
+        if ($data['cart_total']->total_price != 0) {
+            $pay_view = $this->load->view('cart/payment_method_ajax', $data, true);
+            $response = array(
+                "status" => true,
+                "pay_view_page"=>$pay_view,
+                
+            );
+            echo json_encode($response);
+            
+        } else {
+            $this->cash_on_delivery_payment_post();
+        }
+    }
+
+
+
+
+
+
+
+public function payment_method_selection()
+    {
+        // $data['title'] = trans("shopping_cart");
+        // $data['description'] = trans("shopping_cart") . " - " . $this->app_name;
+        // $data['keywords'] = trans("shopping_cart") . "," . $this->app_name;
+        $data['offer'] = $this->cart_model->available_offers();
+        $data['c_items'] = $this->cart_model->get_sess_cart_items();
+        $data['c_count'] = get_cart_product_count();
+        $data['check_cashond'] = $this->order_model->check_cod($data['c_items'], $data['c_count']);
+        $data['check_made_to_order'] = $this->order_model->check_mto($data['c_items']);
+        //check for exhibition enabled products
+        $data['check_exhibition'] = $this->order_model->check_exhibition_enabled($data['c_items']);
+
+       
+        $data['mds_payment_type'] = "sale";
+
+
+        //check is set cart payment method
+        $data['cart_payment_method'] = $this->cart_model->get_sess_cart_payment_method();
+        
+            $this->cart_model->validate_cart();
+            //sale payment
+            $data['cart_items'] = $this->cart_model->get_sess_cart_items();
+            if ($data['cart_items'] == null) {
+                redirect(generate_url("cart"));
+            }
+            $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+            $data["shipping_address"] = $this->cart_model->get_sess_cart_shipping_address();
+            $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
+            //total amount
+            $data['total_amount'] = $data['cart_total']->total_price;
+            $data['currency'] = $this->payment_settings->default_currency;
+        
+            $payment_type = input_get('payment_type');
+            $payment_type = "sale";
+        if ($payment_type != "membership" && $payment_type != "promote") {
+            $payment_type = "sale";
+        }
+
+        if ($payment_type == "sale") {
+            $this->cart_model->validate_cart();
+            //sale payment
+            $data['cart_items'] = $this->cart_model->get_sess_cart_items();
+            $data['mds_payment_type'] = "sale";
+            if ($data['cart_items'] == null) {
+                redirect(generate_url("cart"));
+            }
+            //check auth for digital products
+            if (!$this->auth_check && $this->cart_model->check_cart_has_digital_product() == true) {
+                $this->session->set_flashdata('error', trans("msg_digital_product_register_error"));
+                redirect(generate_url("register"));
+                exit();
+            }
+            $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+            $user_id = null;
+            if ($this->auth_check) {
+                $user_id = $this->auth_user->id;
+            }
+
+            $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
+            $data['cart_has_digital_product'] = $this->cart_model->check_cart_has_digital_product();
+            $this->cart_model->unset_sess_cart_payment_method();
+        } elseif ($payment_type == 'membership') {
+            //membership payment
+            if ($this->general_settings->membership_plans_system != 1) {
+                redirect(lang_base_url());
+                exit();
+            }
+            $data['mds_payment_type'] = 'membership';
+            $plan_id = $this->session->userdata('modesy_selected_membership_plan_id');
+            if (empty($plan_id)) {
+                redirect(lang_base_url());
+                exit();
+            }
+            $data['plan'] = $this->membership_model->get_plan($plan_id);
+            if (empty($data['plan'])) {
+                redirect(lang_base_url());
+                exit();
+            }
+        } elseif ($payment_type == 'promote') {
+            //promote payment
+            if ($this->general_settings->promoted_products != 1) {
+                redirect(lang_base_url());
+            }
+            $data['mds_payment_type'] = 'promote';
+            $data['promoted_plan'] = $this->session->userdata('modesy_selected_promoted_plan');
+            if (empty($data['promoted_plan'])) {
+                redirect(lang_base_url());
+            }
+        }
+        if ($data['cart_total']->total_price != 0) {
+
+            $this->load->view('partials/_header', $data);
+            $this->load->view('cart/payment_method', $data);
+            $this->load->view('partials/_footer');
+        } else {
+            $this->cash_on_delivery_payment_post();
+        }
+    }
+
+
 }

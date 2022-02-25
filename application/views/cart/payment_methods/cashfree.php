@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php echo form_open('cart_controller/payment_cashfree', ['id' => 'form_submit_disable']); ?>
+<?php echo form_open('', ['id' => 'form_submit_disable','onsubmit'=> 'Payment()']); ?>
 <style>
     .shipping_details {
         text-align: justify;
