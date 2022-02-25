@@ -48,6 +48,7 @@ if (!empty($variation)) { ?>
 
         foreach ($variation_option as $variation_stock) :
             $variations_stock = $variations_stock + $variation_stock->stock;
+
         endforeach;
     endforeach; ?>
 <?php } ?>
@@ -100,13 +101,23 @@ if (!empty($variation)) { ?>
                 </div>
             <?php endif; ?>
             <?php if (empty($variation)) { ?>
-                <?php if (!check_product_stock($product)) { ?>
-                    <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
-                <?php } ?>
+                <?php if (!check_product_stock($product)) {
+                    if ($product->add_meet == "Made to stock") :
+                ?>
+                        <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
+                    <?php else : ?>
+                        <span class="badge badge-dark badge-promoted" id="cvl">Not Available</span>
+                <?php endif;
+                } ?>
             <?php } else { ?>
-                <?php if ($variations_stock == 0) { ?>
-                    <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
-                <?php } ?>
+                <?php if ($variations_stock == 0) {
+                    if ($product->add_meet == "Made to stock") :
+                ?>
+                        <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
+                    <?php else : ?>
+                        <span class="badge badge-dark badge-promoted" id="cvl">Not Available</span>
+                <?php endif;
+                } ?>
             <?php } ?>
             <?php if (get_vendor_shop_status($product->user_id) == 0) : ?>
 
