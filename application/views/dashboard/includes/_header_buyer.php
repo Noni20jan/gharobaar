@@ -4492,7 +4492,7 @@
                                                         $count = count($count_array); ?>
                                                         <i class="far fa-bell notification-button"></i><span class="badge notification-count" style="right: 27%;"><?php echo $count; ?></span>
                                                     </a>
-                                                    <ul class="dropdown" name="notificationMenu" style="z-index:100; width:100%; right: 20px;">
+                                                    <ul class="dropdown close-notify" id="notify_dropdown" name="notificationMenu" style="z-index:100; width:100%; right: 20px;">
                                                         <li class="notification-group">
                                                             <div class="notification-tab">
                                                                 <!-- <i class="fa fa-flag"></i> -->
@@ -5032,7 +5032,7 @@
                                                         $count = count($count_array); ?>
                                                 <i class="far fa-bell notification-button"></i></i><span class="badge notification-count" style="right: 9%;top: 12%;"><?php echo $count; ?></span>
                                             </a>
-                                            <ul class="dropdown" name="notificationMenu" style="z-index:100; width:100%; right:0px!important;">
+                                            <ul class="dropdown close-notify" name="notificationMenu" style="z-index:100; width:100%; right:0px!important;">
                                                 <li class="notification-group">
                                                     <div class="notification-tab">
                                                         <!-- <i class="fa fa-flag"></i> -->
@@ -6544,42 +6544,29 @@
         }
     </script>
     <script>
-        //Open dropdown when clicking on element
-        $(document).on('click', "a[data-dropdown='notificationMenu']", function(e) {
+         //Open dropdown when clicking on element
+         $(document).on('click', "a[data-dropdown='notificationMenu']",  function(e){
+                if($(".close-notify").hide()){
+                   
             e.preventDefault();
-
+            e.stopPropagation();
             var el = $(e.currentTarget);
-
-            // $('body').prepend('<div id="dropdownOverlay" style="background: transparent; height:100%;width:100%;position:fixed;"></div>')
-
+                        
             var container = $(e.currentTarget).parent();
             var dropdown = container.find('.dropdown');
             var containerWidth = container.width();
             var containerHeight = container.height();
-
+            
             var anchorOffset = $(e.currentTarget).offset();
 
             dropdown.css({
-                'right': containerWidth / +'px'
+                'right': containerWidth / + 'px'
             })
-
-            container.toggleClass('expanded')
-
-        });
-
-        //Close dropdowns on document click
-
-        // $(document).click(function() {
-        //     $(".dropdown").hide();
-        // });
-        // $(document).on('click', '#dropdownOverlay', function(e) {
-        //     var el = $(e.currentTarget)[0].activeElement;
-
-        //     if (typeof $(el).attr('data-dropdown') === 'undefined') {
-        //         $('#dropdownOverlay').remove();
-        //         $('.dropdown-container.expanded').removeClass('expanded');
-        //     }
-        // })
+            
+            container.toggleClass('expanded');
+            $(".close-notify").show();
+                }
+            });
 
         //Dropdown collapsile tabs
         $('.notification-tab').click(function(e) {
@@ -6590,4 +6577,18 @@
                 $(e.currentTarget).parent().toggleClass('expanded');
             }
         })
+    </script>
+
+<script>
+        $(document).click(function(){
+        if ($(".close-notify").show()){
+            $(".close-notify").hide();
+        }
+        });
+
+        /* Clicks within the dropdown won't make
+        it past the dropdown itself */
+        $(".close-notify").click(function(e){
+        e.stopPropagation();
+        });
     </script>

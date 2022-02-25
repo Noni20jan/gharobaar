@@ -1197,14 +1197,14 @@
             padding: 0px 7px;
             border-radius: 15px;
         }
-
-        .right {
+      
+        /* .right-notify {
             float: right;
         }
 
-        .left {
+        .left-notify {
             float: left;
-        }
+        } */
 
         .notification-head {
             color: #606060 !important;
@@ -1441,7 +1441,7 @@
 
                                                     <!-- </div> -->
 
-                                                    <ul class="dropdown" name="notificationMenu" style="z-index:100; width:100%; right: 20px;">
+                                                    <ul class="dropdown close-notify" id="notify_dropdown" name="notificationMenu" style="z-index:100; width:100%; right: 20px;">
                                                         <li class="notification-group">
                                                             <div class="notification-tab gharobar_updates">
                                                                 <!-- <i class="fa fa-flag"></i> -->
@@ -1916,7 +1916,7 @@
                                             <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
                                                 <i class="far fa-bell" style="font-size:21px;"></i>
                                             </a>
-                                            <ul class="dropdown" name="notificationMenu" style="z-index:100; width:100%; right:0px!important;">
+                                            <ul class="dropdown close-notify" name="notificationMenu" style="z-index:100; width:100%; right:0px!important;">
                                                 <li class="notification-group">
                                                     <div class="notification-tab gharobar_updates">
                                                         <!-- <i class="fa fa-flag"></i> -->
@@ -6940,26 +6940,29 @@
     <!-- code start for notification functionality -->
     <script>
         //Open dropdown when clicking on element
-        $(document).on('click', "a[data-dropdown='notificationMenu']", function(e) {
+            $(document).on('click', "a[data-dropdown='notificationMenu']",  function(e){
+                if($(".close-notify").hide()){
+                   
             e.preventDefault();
-
+            e.stopPropagation();
             var el = $(e.currentTarget);
+                        
             var container = $(e.currentTarget).parent();
             var dropdown = container.find('.dropdown');
             var containerWidth = container.width();
             var containerHeight = container.height();
-
+            
             var anchorOffset = $(e.currentTarget).offset();
 
             dropdown.css({
-                'right': containerWidth / +'px'
+                'right': containerWidth / + 'px'
             })
-
-            // container.scrollTop = 0;
-            container.toggleClass('expanded')
-            $('.notification-list').scrollTop = 0;
-        });
-
+            
+            container.toggleClass('expanded');
+            $(".close-notify").show();
+                }
+            });
+          
         //Dropdown collapsile tabs
         $('.notification-tab').click(function(e) {
             if ($(e.currentTarget).parent().hasClass('expanded')) {
@@ -7183,4 +7186,18 @@
 
             });
         })
+    </script>
+
+    <script>
+        $(document).click(function(){
+        if ($(".close-notify").show()){
+            $(".close-notify").hide();
+        }
+        });
+
+        /* Clicks within the dropdown won't make
+        it past the dropdown itself */
+        $(".close-notify").click(function(e){
+        e.stopPropagation();
+        });
     </script>
