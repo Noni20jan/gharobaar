@@ -1200,13 +1200,13 @@
             border-radius: 15px;
         }
 
-        .right {
+        /* .right-notify {
             float: right;
         }
 
-        .left {
+        .left-notify {
             float: left;
-        }
+        } */
 
         .notification-head {
             color: #606060 !important;
@@ -1444,7 +1444,7 @@
 
                                                     <!-- </div> -->
 
-                                                    <ul class="dropdown" name="notificationMenu" style="z-index:100; width:100%; right: 20px;">
+                                                    <ul class="dropdown close-notify" id="notify_dropdown" name="notificationMenu" style="z-index:100; width:100%; right: 20px;">
                                                         <li class="notification-group">
                                                             <div class="notification-tab gharobar_updates">
                                                                 <!-- <i class="fa fa-flag"></i> -->
@@ -1919,7 +1919,7 @@
                                             <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
                                                 <i class="far fa-bell" style="font-size:21px;"></i>
                                             </a>
-                                            <ul class="dropdown" name="notificationMenu" style="z-index:100; width:100%; right:0px!important;">
+                                            <ul class="dropdown close-notify" name="notificationMenu" style="z-index:100; width:100%; right:0px!important;">
                                                 <li class="notification-group">
                                                     <div class="notification-tab gharobar_updates">
                                                         <!-- <i class="fa fa-flag"></i> -->
@@ -6961,23 +6961,26 @@
     <script>
         //Open dropdown when clicking on element
         $(document).on('click', "a[data-dropdown='notificationMenu']", function(e) {
-            e.preventDefault();
+            if ($(".close-notify").hide()) {
 
-            var el = $(e.currentTarget);
-            var container = $(e.currentTarget).parent();
-            var dropdown = container.find('.dropdown');
-            var containerWidth = container.width();
-            var containerHeight = container.height();
+                e.preventDefault();
+                e.stopPropagation();
+                var el = $(e.currentTarget);
 
-            var anchorOffset = $(e.currentTarget).offset();
+                var container = $(e.currentTarget).parent();
+                var dropdown = container.find('.dropdown');
+                var containerWidth = container.width();
+                var containerHeight = container.height();
 
-            dropdown.css({
-                'right': containerWidth / +'px'
-            })
+                var anchorOffset = $(e.currentTarget).offset();
 
-            // container.scrollTop = 0;
-            container.toggleClass('expanded')
-            $('.notification-list').scrollTop = 0;
+                dropdown.css({
+                    'right': containerWidth / +'px'
+                })
+
+                container.toggleClass('expanded');
+                $(".close-notify").show();
+            }
         });
 
         //Dropdown collapsile tabs
@@ -7206,29 +7209,15 @@
     </script>
 
     <script>
-        function cart_empty() {
-            var a = {
+        $(document).click(function() {
+            if ($(".close-notify").show()) {
+                $(".close-notify").hide();
+            }
+        });
 
-            };
-            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
-
-            // data[csfr_token_name] = $.cookie(csfr_cookie_name);
-            $.ajax({
-                type: "POST",
-                url: base_url + "home_controller/cart_data",
-                data: a,
-                success: function(response) {
-                    var i = JSON.parse(response);
-
-                    console.log(i.empty);
-                    if (i.empty == "false") {
-                        window.location.href =
-                            base_url + "cart"
-                    } else {
-                        $('#cart_modal').modal('show');
-                    }
-
-                }
-            });
-        }
+        /* Clicks within the dropdown won't make
+        it past the dropdown itself */
+        $(".close-notify").click(function(e) {
+            e.stopPropagation();
+        });
     </script>

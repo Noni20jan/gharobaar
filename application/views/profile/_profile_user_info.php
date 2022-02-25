@@ -100,7 +100,7 @@
             </div>
             <?php if ($user->role == 'admin' || $user->role == 'vendor') : ?>
                 <div class="row-custom">
-                    <p class="description">
+                    <p class="description more">
                         <?php echo html_escape(ucfirst($user->brand_desc)); ?>
                     </p>
                 </div>
