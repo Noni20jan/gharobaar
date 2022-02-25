@@ -2896,6 +2896,7 @@ class Home_controller extends Home_Core_Controller
                     if (!empty($last_id)) {
                         $this->load->model('upload_model');
                         $img_path = $this->upload_model->upload_buyer_image('file_[]', $last_id, $product_id);
+                        $this->session->set_flashdata('success', trans("thanks_feeedback"));
                     }
                 }
             }
