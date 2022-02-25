@@ -1232,14 +1232,11 @@ class Product_model extends Core_Model
             $this->db->order_by('products.created_at', 'ASC');
         } elseif (!empty($sort) && $sort == "top_discount") {
             $this->db->order_by('cast(products.discount_rate as decimal(16,2)) DESC');
-
-        } 
-        elseif (!empty($sort) && $sort == "most_recent") {
-            $date=date('Y-m-d h-i-s',strtotime('-30 days'));
+        } elseif (!empty($sort) && $sort == "most_recent") {
+            $date = date('Y-m-d h-i-s', strtotime('-30 days'));
             $this->db->where('products.created_at>', $date);
             $this->db->order_by('products.created_at', 'DESC');
-        }
-        else {
+        } else {
             // $this->db->order_by('rand()');
             $this->db->order_by('rand_val');
         }
@@ -1851,13 +1848,11 @@ class Product_model extends Core_Model
             $this->db->order_by('products.created_at', 'ASC');
         } elseif (!empty($sort) && $sort == "top_discount") {
             $this->db->order_by('cast(products.discount_rate as decimal(16,2)) DESC');
-        } 
-        elseif (!empty($sort) && $sort == "most_recent") {
-            $date=date('Y-m-d h-i-s',strtotime('-30 days'));
+        } elseif (!empty($sort) && $sort == "most_recent") {
+            $date = date('Y-m-d h-i-s', strtotime('-30 days'));
             $this->db->where('products.created_at>', $date);
             $this->db->order_by('products.created_at', 'DESC');
-        }
-        else {
+        } else {
             // $this->db->order_by('rand()');
             $this->db->order_by('rand_val');
         }
@@ -4022,5 +4017,11 @@ order by id desc LIMIT 1";
             }
         }
         return $parent_cat_array;
+    }
+    public function get_product_by_seller($user_id)
+    {
+        $this->build_query();
+        $this->db->where('users.id', $user_id);
+        return $this->db->get('products')->result();
     }
 }
