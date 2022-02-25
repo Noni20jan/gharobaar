@@ -802,7 +802,13 @@ class Cart_model extends CI_Model
                         endif;
                         break;
                 endswitch;
+                if ($cart_total->total_price < $cart_total->applied_coupon_discount) {
+                    $cart_total->applied_coupon_discount = $cart_total->total_price;
+                }
                 $cart_total->total_price = $cart_total->total_price - $cart_total->applied_coupon_discount;
+                if ($cart_total->total_price < 0) {
+                    $cart_total->total_price = 0;
+                }
             }
             $this->session->set_userdata('mds_shopping_cart_total', $cart_total);
             if ($this->auth_check) {

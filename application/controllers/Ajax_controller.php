@@ -646,7 +646,7 @@ class Ajax_controller extends Home_Core_Controller
                     'to' => $to,
                     'buyer_name' => $buyer_name,
                     'template_path' => "email/email_new_order",
-                    'remark' => "Your Order for " . $title . "  has been succefully placed vide Order #" . $order_id . " and the product will be dispatched soon     .",
+                    'remark' => "Your Order has been succefully placed vide Order #" . $order_id . " and the product will be dispatched soon     .",
                     'event_type' => "Order Placement"
                 );
                 $this->email_model->send_email($data);
@@ -657,6 +657,7 @@ class Ajax_controller extends Home_Core_Controller
                     foreach ($order_products as $order_product) {
                         $seller = get_user($order_product->seller_id);
                         $seller_name = $seller->first_name;
+                        $product = get_product($order_product->product_id);
                         if (!empty($seller)) {
                             if ($seller->send_email_when_item_sold == 1 && !in_array($seller->id, $seller_ids)) {
                                 array_push($seller_ids, $seller->id);
@@ -665,7 +666,7 @@ class Ajax_controller extends Home_Core_Controller
                                     'subject' => trans("you_have_new_order"),
                                     'order' => $order,
                                     'order_products' => $seller_order_products,
-                                    'remark' => "You have rerceived an order for " . $order_product->product_title . "  vide Order #" . $order_id . " . You are expected to dispatch the order  within " . dispatch_time($order_product->lead_time) . ".",
+                                    'remark' => "You have rerceived an order for " . $order_product->product_title . "  vide Order #" . $order_id . " . You are expected to dispatch the order  within " . $product->lead_days . "days.",
                                     'to' => $seller->email,
                                     'seller_name' => $seller_name,
                                     'template_path' => "email/email_new_order_seller",

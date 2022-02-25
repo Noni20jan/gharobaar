@@ -224,7 +224,7 @@ class Email_model extends CI_Model
 
         $seller = get_user($order_product->seller_id);
         $order_details = get_order($order_product->order_id);
-
+        $product = get_product($order_product->product_id);
 
         $subject = "Order number  " . $order_details->order_number . " is Accepted";
 
@@ -244,7 +244,7 @@ class Email_model extends CI_Model
                 'event_type' => 'Order Placement',
                 'subject' => $subject,
                 'message' => $message,
-                'remark' => "Your Order for " . $order_product->product_title . " has been succefully placed vide Order #" . $order_details->order_number . " and the product will be dispatched within " . dispatch_time($order_product->lead_time) . ".",
+                'remark' => "Your Order for " . $order_product->product_title . " has been succefully placed vide Order #" . $order_details->order_number . " and the product will be dispatched within " . $product->lead_days . "days.",
                 'to' => $email,
                 'template_path' => "email/email_newsletter",
                 'subscriber' => "",
