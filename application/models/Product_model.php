@@ -2185,10 +2185,19 @@ class Product_model extends Core_Model
                     // }
                 }
             }
+            $search = remove_special_characters(trim($this->input->get('search', true)));
+
             // $result3 = array();
             // $result3 = array_unique($result1);
             // $result2 = (object)$result1;
             $result2 = json_decode(json_encode($result));
+            foreach ($result2 as $result55) {
+                $sim = similar_text($result55->title, $search, $perc);
+                $result55->perc = $perc;
+            }
+            $price = array_column($result2, 'perc');
+
+            array_multisort($price, SORT_DESC, $result2);
             // var_dump($result2);
             // die();
             return $result2;
