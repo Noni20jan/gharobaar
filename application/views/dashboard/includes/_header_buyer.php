@@ -2,6 +2,7 @@
 <?php //var_dump($_SESSION['session_otp']);
 ?>
 <!DOCTYPE html>
+<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 <html lang="<?php echo $this->selected_lang->short_form ?>">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -4185,7 +4186,7 @@
                                         <?php endif; ?>
                                         <?php if ($this->is_sale_active) : ?>
                                             <li class="icon-bg cart-icon-number">
-                                                <a class="cart_a" href="#" onclick="cart_empty()">
+                                                <a class="cart_a" href="javascript:void(0)" onclick="cart_empty()">
                                                     <i class="icon-cart"></i>
                                                     <?php $cart_product_count = get_cart_product_count();
                                                     if ($cart_product_count > 0) : ?>
@@ -4507,7 +4508,7 @@
                                 <?php endif; ?>
                             </div>
                             <div class="mobile-cart">
-                                <a class="cart_a" href="#" onclick="cart_empty()"><i class="icon-cart"></i>
+                                <a class="cart_a" href="javascript:void(0)" onclick="cart_empty()"><i class="icon-cart"></i>
                                     <?php $cart_product_count = get_cart_product_count();
                                     if ($cart_product_count > 0) : ?>
                                         <span class="notification"><?php echo $cart_product_count; ?></span>
@@ -5805,7 +5806,13 @@
                         window.location.href =
                             base_url + "cart"
                     } else {
-                        $('#cart_modal').modal('show');
+                        ($(".cart_a").append(),
+                            $.notify({
+                                title: "<strong></strong> ",
+                                message: "Your Cart Is Empty!",
+                            }))
+
+
                     }
 
                 }

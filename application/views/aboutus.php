@@ -78,7 +78,7 @@
     .founders {
         font-weight: 500;
         /* line-height: 1.2; */
-        font-family: "Montserrat", sans-serif;
+        font-family: 'poppins', sans-serif;
         margin-bottom: 50px;
 
     }

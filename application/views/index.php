@@ -306,6 +306,7 @@
     .find-your-seller {
         font-size: 28px;
         font-weight: bolder;
+        font-family: 'poppins', sans-serif;
         color: #454545;
     }
 
@@ -615,7 +616,7 @@
 
     .sub-heading-text {
         font-weight: 700;
-        font-family: 'chloe';
+        font-family: 'poppins', sans-serif;
         margin-bottom: 25px;
     }
 
@@ -625,13 +626,13 @@
     }
 
     .who-are-we-style {
-        font-family: 'chloe';
+        font-family: 'poppins', sans-serif;
         font-weight: 800;
     }
 
     .testimonial-content {
         font-weight: 500;
-        font-family: 'poppins';
+        font-family: 'poppins', sans-serif;
         font-size: 17px;
     }
 
@@ -724,7 +725,6 @@
     }
 
     .link-name {
-        font-family: "Montserrat", Sans-serif;
         font-size: 14px;
         color: #6c83a2
     }
@@ -1328,34 +1328,22 @@
     });
     const body = document.querySelector("body");
 
-    function createHeart() {
-        const heart = document.createElement("div");
-        heart.className = "fas fa-heart";
-        heart.style.left = (Math.random() * 100) + "vw";
-        heart.style.animationDuration = (Math.random() * 2) + 80 + "s"
-        body.appendChild(heart);
-    }
-    setInterval(createHeart, 150);
-    setInterval(function name(params) {
-        var heartArr = document.querySelectorAll(".fa-heart")
-        if (heartArr.length > 100) {
-            heartArr[0].remove()
-        }
-        //console.log(heartArr);
-    }, 300)
+    // function createHeart() {
+    //     const heart = document.createElement("div");
+    //     heart.className = "fas fa-heart";
+    //     heart.style.left = (Math.random() * 100) + "vw";
+    //     heart.style.animationDuration = (Math.random() * 2) + 80 + "s"
+    //     body.appendChild(heart);
+    // }
+    // setInterval(createHeart, 150);
+    // setInterval(function name(params) {
+    //     var heartArr = document.querySelectorAll(".fa-heart")
+    //     if (heartArr.length > 100) {
+    //         heartArr[0].remove()
+    //     }
+    //     //console.log(heartArr);
+    // }, 300)
 </script>
-<!-- <script type="text/javascript">
-    function refreshPage() {
-        var page_y = document.getElementsByTagName("body")[0].scrollTop;
-        window.location.href = window.location.href.split('?')[0] + '?page_y=' + page_y;
-    }
-    window.onload = function() {
-        setTimeout(refreshPage, 35000);
-        if (window.location.href.indexOf('page_y') != -1) {
-            var match = window.location.href.split('?')[1].split("&")[0].split("=");
-            document.getElementsByTagName("body")[0].scrollTop = match[1];
-        }
-    }
-</script> -->
+
 
 <!-- Wrapper End-->

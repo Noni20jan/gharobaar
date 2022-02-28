@@ -4,6 +4,7 @@
         font-size: 28px;
         color: #454545;
         font-weight: bolder;
+        font-family: "poppins", sans-serif;
     }
 
     @media(max-width:768px) {
