@@ -82,7 +82,7 @@ class Reports_model extends CI_Model
       AND csp.is_active = 1
       AND csp.payout_initiated = 1
        AND csp.created_at >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
-      AND csp.created_at <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s') 
+       AND csp.created_at <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')  
     GROUP BY 	concat(u.first_name,' ', u.last_name),
         u.pan_number ,
         csp.order_id , 
@@ -116,10 +116,12 @@ class Reports_model extends CI_Model
 
 
 
-    public function format_sale_data($start_date, $end_date)
+    public function format_sale_data($start_date)
     {
-        $end_date = $end_date . " 23:59:59";
-        $sql = "SELECT * FROM sale_data_report where order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s') AND order_date <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+        $query_date = $start_date;
+        $start = date('Y-m-01 00:00:00', strtotime($query_date));
+        $end = date('Y-m-t 23:59:59', strtotime($query_date));
+        $sql = "SELECT * FROM sale_data_report where order_date >= STR_TO_DATE('$start', '%Y-%m-%d %k:%i:%s') AND order_date <= STR_TO_DATE('$end', '%Y-%m-%d %k:%i:%s')
         and order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing')";
         $query = $this->db->query($sql);
         return $query->result();

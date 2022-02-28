@@ -18,6 +18,7 @@
 <!-- <link rel="preload" href="<?php echo base_url(); ?>assets/fonts/slick.woff" as="font" type="font/format" crossorigin> -->
 
 
+<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/jquery.dm-uploader.min.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/styles.css" />
@@ -1395,7 +1396,7 @@
                                         <?php endif; ?>
                                         <?php if ($this->is_sale_active) : ?>
                                             <li class="icon-bg cart-icon-number">
-                                                <a class="cart_a" href="#" onclick="cart_empty()">
+                                                <a class="cart_a" href="javascript:void(0)" onclick="cart_empty()" id="cart_empty">
                                                     <i class="icon-cart"></i>
                                                     <?php $cart_product_count = get_cart_product_count();
                                                     if ($cart_product_count > 0) : ?>
@@ -1843,6 +1844,7 @@
 
                                         <?php endif; ?>
                                     </ul>
+                                    <div class="akshat" id="akshat" style="display:none;color:red;margin-left: 145px;font-family: sans-serif;font-weight: 400;" data-tooltip="Your Cart Is Empty!"></div>
                                 </div>
                             </div>
                         </div>
@@ -1904,7 +1906,7 @@
                                 <?php endif; ?>
                             </div>
                             <div class="mobile-cart">
-                                <a class="cart_a" href="#" onclick="cart_empty()"><i class="icon-cart"></i>
+                                <a class="cart_a" href="javascript:void(0)" onclick="cart_empty()"><i class="icon-cart"></i>
                                     <?php $cart_product_count = get_cart_product_count();
                                     if ($cart_product_count > 0) : ?>
                                         <span class="notification"><?php echo $cart_product_count; ?></span>
@@ -2761,6 +2763,7 @@
                 <div class="modal-body">
                     <p><? echo trans("your_cart_is_empty"); ?></p>
                     <p id="ideal_cart" style="margin-left: 70px;"><strong class="font-900"><?php echo trans("ideal_cart"); ?></strong></p>
+
                     <img src="<?php echo base_url(); ?>assets/img/empty-cart.png" id="empty_cart" style="max-width: 504px;margin-left: -50px;">
                 </div>
             </div>
@@ -7199,8 +7202,19 @@
                 data: a,
                 success: function(data) {
 
-                    // $('#comment_form')[0].reset();
-                    // load_unseen_notification();
+                    console.log(i.empty);
+                    if (i.empty == "false") {
+                        window.location.href =
+                            base_url + "cart"
+                    } else {
+                        ($(".cart_a").append(),
+                            $.notify({
+                                title: "<strong></strong> ",
+                                message: "Your Cart Is Empty!",
+                            }))
+
+
+                    }
 
                 }
 
