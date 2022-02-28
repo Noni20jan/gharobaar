@@ -1855,7 +1855,6 @@ class Home_controller extends Home_Core_Controller
                 
 if($this->general_settings->update_bank == 1){
         if ($data["type_of_goods"] == "gharobaar_with_gst" && $data["have_gst"]== "N" && $data["company_type"]=="Private Limited" && $data["supplier_state"]== "Delhi") {
-            if ($this->membership_model->approve_shop_opening_request($this->auth_user->id)) {
 
             $data["shop_name"]="Friends with Dreams Pvt Ltd";
             $data["gst_number"]="07AAECF4068L1ZC";   
@@ -1867,7 +1866,7 @@ if($this->general_settings->update_bank == 1){
 
                 );
                 $this->membership_model->add_bank_details($thresh,$this->auth_user->id);
-            } 
+            
         }
             else {
                 $data["is_active_shop_request"] = 1;
@@ -1919,9 +1918,6 @@ if($this->general_settings->update_bank == 1){
 
 
         if ($data["shop_name"] == "Friends with Dreams Pvt Ltd" && $data["have_gst"] =='Y' && $data["gst_number"] == "07AAECF4068L1ZC" && $data["supplier_state"] == "Delhi" && $data["company_type"] == "Private Limited") {
-            if ($this->membership_model->approve_shop_opening_request($this->auth_user->id)) {
-
-
 
                 $thresh = array(
                     'acc_holder_name' => 'Gharobaar',
@@ -1930,12 +1926,12 @@ if($this->general_settings->update_bank == 1){
                     'bank_branch' => "ICICI Tower, NBCC place"
                 );
                 $this->membership_model->add_bank_details($thresh,$this->auth_user->id);
-            } else {
-                $data["is_active_shop_request"] = 1;
-            }
+            
+        }
+        else {
+            $data["is_active_shop_request"] = 1;
         }
         if ($data["shop_name"] == "Friends with Dreams Pvt Ltd" && $data["have_gst"] =='Y' && $data["gst_number"] == "29AAECF4068L1Z6" && $data["supplier_state"] == "Karnataka" && $data["company_type"] == "Private Limited") {
-            if ($this->membership_model->approve_shop_opening_request($this->auth_user->id)) {
                 $thresh = array(
                     'acc_holder_name' => 'Gharobaar',
                     'account_number' => '054805001076',
@@ -1944,7 +1940,7 @@ if($this->general_settings->update_bank == 1){
                 );
                 $this->membership_model->add_bank_details($thresh,$this->auth_user->id);
 
-            } 
+            
         }
         else{
             $thresh = array(
@@ -1957,7 +1953,6 @@ if($this->general_settings->update_bank == 1){
 
         }
         if ($data["shop_name"] == "Friends with Dreams Pvt Ltd" && $data["have_gst"] =='Y' && $data["gst_number"] == "27AAECF4068L1ZA" && $data["supplier_state"] == "Maharashtra" && $data["company_type"] == "Private Limited") {
-            if ($this->membership_model->approve_shop_opening_request($this->auth_user->id)) {
                 $thresh = array(
                     'acc_holder_name' => 'Gharobaar',
                     'account_number' => '054805001076',
@@ -1977,7 +1972,7 @@ if($this->general_settings->update_bank == 1){
                 $this->membership_model->add_bank_details($thresh,$this->auth_user->id);
 
             }
-        }
+        
     
         $data['image_pancard'] = "data:image/png;base64," . (trim($data['image_pancard'], "[removed]"));
 
