@@ -14,6 +14,11 @@ $pincode = get_pincode(281204);
 
 <head>
     <style>
+        .tooltip-styling{
+            background: #ccd6bf !important;
+  color: black !important;
+        }
+   
         .tooltip .tooltip-inner {
             background-color: black !important;
             color: white;
@@ -43,7 +48,6 @@ $pincode = get_pincode(281204);
             max-width: 1000px;
             margin: 1.75rem auto;
         }
-
 
         .modal-content {
             border: 0px;
@@ -877,8 +881,11 @@ $pincode = get_pincode(281204);
 
                                                                         <div class="col-12 col-sm-4 col-custom-field mt-3">
                                                                             <div class="custom-control custom-radio">
+                                                                            <label for="gharobaar_with_gst" id="gharobaar_gst" title="Even if you do not have a GST Number, you can still sell on the platform by partnering with Gharobaar - You simply have to register using our GST number.  Please write to sellerhelp@gharobaar.com in case you need more information about this" class="custom-control-label">Use Gharobaar GST
+                                                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+
                                                                                 <input type="radio" name="type_of_goods" value="gharobaar_with_gst" id="gharobaar_with_gst" class="custom-control-input">
-                                                                                <label for="gharobaar_with_gst" class="custom-control-label">Gharobaar with GST</label>
+                                                                                </label>
 
                                                                             </div>
                                                                         </div>
@@ -3692,9 +3699,12 @@ $pincode = get_pincode(281204);
             }
         });
     </script>
-
-
-
+    <script>
+    $('#gharobaar_gst').tooltip({
+        tooltipClass: "tooltip-styling",
+        placement : 'bottom'
+    });
+    </script>
 </body>
 
 </html>

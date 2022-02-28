@@ -1439,7 +1439,7 @@ class Cart_controller extends Home_Core_Controller
 
                     $psd->total_tcs_amount_product += $object_product->tcs_amount_product;
                     $psd->total_tds_amount_product += $object_product->tds_amount_product;
-                    $psd->total_tds_amount_product_huf_ind += $object_product->tds_amount_product_huf_ind;
+                    $psd->total_tds_amount_product_huf_ind += 0;
                     array_push($psd->products, $object_product);
                     $new = false;
                 }
