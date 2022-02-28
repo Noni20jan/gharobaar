@@ -20,6 +20,7 @@ class Order_admin_controller extends Admin_Core_Controller
 		$data['title'] = trans("orders");
 		$data['form_action'] = admin_url() . "orders";
 
+		// $data['order_products'] = $this->order_admin_model->get_order_products($id);
 		$pagination = $this->paginate(admin_url() . 'orders', $this->order_admin_model->get_orders_count());
 		$data['orders'] = $this->order_admin_model->get_paginated_orders($pagination['per_page'], $pagination['offset']);
 		$data["session"] = get_user_session();
@@ -46,7 +47,29 @@ class Order_admin_controller extends Admin_Core_Controller
 		// $this->load->view('partials/_footer', $data);
 		$this->load->view('admin/includes/_footer');
 	}
+	/**
+	 * Expendible Order Details
+	 */
+	public function order_details1()
+	{
+		$id=$this->input->post('order_id',true);
+		$data['title'] = trans("order");
 
+		// $data['order'] = $this->order_admin_model->get_order($id);
+		// if (empty($data['order'])) {
+		// 	redirect(admin_url() . "orders");
+		// }
+		$order_products = $this->order_admin_model->get_order_products($id);
+		// $data["session"] = get_user_session();
+		echo json_encode($order_products);
+		// $this->load->view('admin/includes/_header', $data);
+		// $this->load->view('admin/order/order_details', $data);
+		// // $this->load->view('partials/_footer', $data);
+		// $this->load->view('admin/includes/_footer');
+	}
+
+
+	
 	public function order_product_details($id)
 	{
 		$data['title'] = trans("order");
