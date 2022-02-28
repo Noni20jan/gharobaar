@@ -18,6 +18,7 @@ class Admin_controller extends Admin_Core_Controller
     public function index()
     {
         $data['title'] = trans("admin_panel");
+        // $data['cart_items'] = $this->session_cart_items;
 
         $data['order_count'] = $this->order_admin_model->get_all_orders_count();
         $data['product_count'] = $this->product_admin_model->get_products_count();
@@ -2038,9 +2039,8 @@ class Admin_controller extends Admin_Core_Controller
     public function format_sale_data()
     {
         $from_date = $this->input->post('from_date', true);
-        $to_date = $this->input->post('to_date', true);
 
-        $format_sale_data = $this->reports_model->format_sale_data($from_date, $to_date);
+        $format_sale_data = $this->reports_model->format_sale_data($from_date);
         echo json_encode($format_sale_data);
     }
 
@@ -2123,7 +2123,6 @@ class Admin_controller extends Admin_Core_Controller
     {
         $from_date = $this->input->post('from_date', true);
         $to_date = $this->input->post('to_date', true);
-
         $format_sale_data = $this->reports_model->format_sale_data_cancellation($from_date, $to_date);
         echo json_encode($format_sale_data);
     }

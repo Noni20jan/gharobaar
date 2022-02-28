@@ -41,12 +41,9 @@
                 <form name="sale_data" id="sale_data" action="admin_controller/format_sale_data">
                     <div class="item-table-filter">
                         <label><?php echo trans("from_date"); ?></label>
-                        <input name="from_date" class="form-control" type="date" id="my_date_picker1" autocomplete="off">
+                        <input name="from_date" class="form-control" type="month" id="my_date_picker1" autocomplete="off">
                     </div>
-                    <div class="item-table-filter">
-                        <label><?php echo trans("to_date"); ?></label>
-                        <input name="to_date" class="form-control" type="date" id="my_date_picker2" autocomplete="off">
-                    </div>
+
                     <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
                         <label style="display: block">&nbsp;</label>
                         <button type="submit" class="btn bg-purple"><?php echo trans("submit"); ?></button>
@@ -190,7 +187,7 @@
             url: base_url + url,
             data: d, // serializes the form's elements.
             success: function(data) {
-                // console.log("test",data);
+                console.log(data);
                 var Json_data = JSON.parse(data);
                 console.log(Json_data.length);
                 var len = Json_data.length;
