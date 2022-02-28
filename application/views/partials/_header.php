@@ -6962,8 +6962,10 @@
 
     <!-- code start for notification functionality -->
     <script>
+        var onicon = 0
         //Open dropdown when clicking on element
         $(document).on('click', "a[data-dropdown='notificationMenu']", function(e) {
+            onicon++;
             if ($(".close-notify").hide()) {
 
                 e.preventDefault();
@@ -6982,7 +6984,11 @@
                 })
 
                 container.toggleClass('expanded');
-                $(".close-notify").show();
+                if (onicon % 2 == 1) {
+                    $(".close-notify").show();
+                } else {
+                    $(".close-notify").hide();
+                }
             }
         });
 
@@ -6999,6 +7005,20 @@
                 $('.notification-list').scrollTop(height);
             }
         })
+
+
+        $(document).click(function() {
+            if ($(".close-notify").show()) {
+                $(".close-notify").hide();
+            }
+        });
+
+        /* Clicks within the dropdown won't make
+        it past the dropdown itself */
+        $(".close-notify").click(function(e) {
+            e.stopPropagation();
+        });
+
 
         $('.gharobar_updates').click(function(e) {
             var a = {
@@ -7243,18 +7263,4 @@
                 }
             });
         }
-    </script>
-
-    <script>
-        $(document).click(function() {
-            if ($(".close-notify").show()) {
-                $(".close-notify").hide();
-            }
-        });
-
-        /* Clicks within the dropdown won't make
-        it past the dropdown itself */
-        $(".close-notify").click(function(e) {
-            e.stopPropagation();
-        });
     </script>

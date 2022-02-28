@@ -31,14 +31,17 @@
 						</tr>
 						</thead>
 						<tbody>
-
 						<?php foreach ($orders as $item): ?>
 							<tr>
 								<td class="order-number-table">
+									<button type="button" class="btn btn-success exploder" id="onPlus_order_details_view" onclick="order_summary_on_orders(<?php echo $item->id; ?>);">
+									<i class="fa fa-plus" aria-hidden="true"></i>
+									</button>
 									<a href="<?php echo admin_url(); ?>order-details/<?php echo html_escape($item->id); ?>" class="table-link">
 										#<?php echo html_escape($item->order_number); ?>
 									</a>
 								</td>
+										
 								<td>
 									<?php if ($item->buyer_id == 0): ?>
 										<div class="table-orders-user">
@@ -102,7 +105,28 @@
 									<?php echo form_close(); ?><!-- form end -->
 								</td>
 							</tr>
-
+							<tr class="explode hide">
+							<td colspan="12" style="display: none;">
+								<table class="table table-condensed">
+								<thead>
+                                    <tr role="row">
+                                        <th><?php echo trans('product_id'); ?></th>
+                                        <th><?php echo trans('product'); ?></th>
+                                        <th><?php echo trans('unit_price'); ?></th>
+                                        <th><?php echo trans('quantity'); ?></th>
+                                        <th><?php echo trans('vat'); ?></th>
+                                        <th><?php echo trans('shipping_cost'); ?></th>
+                                        <th><?php echo trans('total'); ?></th>
+                                        <th><?php echo trans('status'); ?></th>
+                                        <th><?php echo trans('updated'); ?></th>
+                                        <!-- <th class="max-width-120"><?php echo trans('options'); ?></th> -->
+                                    </tr>
+                                </thead>
+								<tbody id="table_<?php echo $item->id;?>">                                     
+                                </tbody>
+							</table>
+							</td>
+						</tr>
 						<?php endforeach; ?>
 
 						</tbody>
@@ -124,5 +148,59 @@
 				</div>
 			</div>
 		</div>
-	</div><!-- /.box-body -->
+	</div>
 </div>
+<!-- script for collapsible order details -->
+<script>
+		$(".exploder").click(function(){
+		
+		$(this).toggleClass("btn-success btn-danger");
+		
+		$("i", this).toggleClass("fa fa-plus fa fa-times");
+		
+		$(this).closest("tr").next("tr").toggleClass("hide");
+		
+		if($(this).closest("tr").next("tr").hasClass("hide")){
+			$(this).closest("tr").next("tr").children("td").slideUp();
+		}
+		else{
+			$(this).closest("tr").next("tr").children("td").slideDown(350);
+		}
+		});
+</script>
+<script>
+    // $(document).ready(function() {
+        var dataa=1;
+    // });
+
+        function order_summary_on_orders(order_number) {
+            if(document.getElementById('table_'+order_number).rows.length==0){
+
+            
+        //   if(dataa==1){
+                    var a = {
+                        
+                    order_id:order_number,
+                    };
+                    (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+
+                    $.ajax({
+                        type: "POST",
+                        url: base_url + "order_admin_controller/order_details1",
+                        data: a,
+                        success: function(response) {
+                            dataa=0;
+                            var Json_data = JSON.parse(response);
+                            var len = Json_data.length;
+                if (len != 0) {
+                    for (var i = 0; i < len; i++) {
+                        $('#table_'+order_number).append("<tr><td>" + Json_data[i].product_id + "</td><td>" + Json_data[i].product_title + "</td><td>" + Json_data[i].product_unit_price/100+'INR' + "</td><td>" + Json_data[i].product_quantity + "</td><td>" + Json_data[i].product_gst/100+'INR' + "</td><td>" + Json_data[i].product_shipping_cost/100+'INR' + "</td><td>" + Json_data[i].product_total_price + "</td><td>" + Json_data[i].order_status + "</td><td>"+ Json_data[i].updated_at + "</td><td>")
+                    }
+                }
+                        }
+                    }
+                    
+                    );
+                }
+            }
+</script>
