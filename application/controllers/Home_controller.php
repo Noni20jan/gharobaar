@@ -1872,7 +1872,6 @@ if($this->general_settings->update_bank == 1){
                 $data["is_active_shop_request"] = 1;
             }
             if ($data["type_of_goods"] == "gharobaar_with_gst" && $data["have_gst"] == "N" && $data["company_type"]=="Private Limited" && $data["supplier_state"] == "Karnataka") {
-                if ($this->membership_model->approve_shop_opening_request($this->auth_user->id)) {
                     $data["shop_name"]="Friends with Dreams Pvt Ltd";
                     $data["gst_number"]="29AAECF4068L1Z6";
                     
@@ -1883,13 +1882,12 @@ if($this->general_settings->update_bank == 1){
                         'bank_branch' => "ICICI Tower, NBCC place"
                     );
                     $this->membership_model->add_bank_details($thresh,$this->auth_user->id);
-                } else {
+                }else {
                     $data["is_active_shop_request"] = 1;
                 }
-            }
+            
             if ($data["type_of_goods"] == "gharobaar_with_gst" && $data["have_gst"] == "N"  && $data["company_type"]=="Private Limited" && $data["supplier_state"] == "Maharashtra") {
           
-                if ($this->membership_model->approve_shop_opening_request($this->auth_user->id)) {
                     $data["shop_name"]="Friends with Dreams Pvt Ltd";
                     $data["gst_number"]="27AAECF4068L1ZA";
                    
@@ -1900,19 +1898,12 @@ if($this->general_settings->update_bank == 1){
                         'bank_branch' => "ICICI Tower, NBCC place"
                     );
                     $this->membership_model->add_bank_details($thresh);
-                } else {
+                 
+                   }   else {
                     $data["is_active_shop_request"] = 1;
                 }
-            }
-            else{
-                $thresh = array(
-                    'acc_holder_name' => '',
-                    'account_number' => '',
-                    'ifsc_code' => '',
-                    'bank_branch' => ""
-                );
-                $this->membership_model->add_bank_details($thresh,$this->auth_user->id);
-            }
+            
+          
         }
 
 
