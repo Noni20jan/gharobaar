@@ -7202,6 +7202,30 @@
                 data: a,
                 success: function(data) {
 
+                    // $('#comment_form')[0].reset();
+                    // load_unseen_notification();
+
+                }
+
+            });
+        })
+    </script>
+
+    <script>
+        function cart_empty() {
+            var a = {
+
+            };
+            (a[csfr_token_name] = $.cookie(csfr_cookie_name)),
+
+            // data[csfr_token_name] = $.cookie(csfr_cookie_name);
+            $.ajax({
+                type: "POST",
+                url: base_url + "home_controller/cart_data",
+                data: a,
+                success: function(response) {
+                    var i = JSON.parse(response);
+
                     console.log(i.empty);
                     if (i.empty == "false") {
                         window.location.href =
@@ -7217,9 +7241,8 @@
                     }
 
                 }
-
             });
-        })
+        }
     </script>
 
     <script>
