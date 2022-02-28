@@ -2225,9 +2225,9 @@ class Dashboard_controller extends Home_Core_Controller
     //     $this->load->view('dashboard/includes/_footer');
     // }
 
-
     /**
      * Update Order Product Status Post
+     * 
      */
     public function update_order_product_status_post()
     {
@@ -2907,8 +2907,9 @@ class Dashboard_controller extends Home_Core_Controller
     public function get_shipment()
     {
         post_method();
-        $this->order_model->shiprocket_response();
         $this->order_model->schedule_penalty();
+        $this->order_model->shiprocket_response();
+
     }
 
 
@@ -3008,6 +3009,7 @@ class Dashboard_controller extends Home_Core_Controller
 
         $this->refund_api($refund_amount, $payment_refrence_id, $product_name, $data);
     }
+
 
     public function refund_api($refund_amount, $payment_refrence_id, $product_name, $data)
     {
