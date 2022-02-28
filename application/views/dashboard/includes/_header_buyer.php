@@ -6545,7 +6545,9 @@
     </script>
     <script>
          //Open dropdown when clicking on element
+         var onicon = 0
          $(document).on('click', "a[data-dropdown='notificationMenu']",  function(e){
+             onicon++;
                 if($(".close-notify").hide()){
                    
             e.preventDefault();
@@ -6564,8 +6566,12 @@
             })
             
             container.toggleClass('expanded');
+            if(onicon%2==1){
             $(".close-notify").show();
                 }
+            else{
+                $(".close-notify").hide();
+            }}
             });
 
         //Dropdown collapsile tabs
