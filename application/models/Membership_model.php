@@ -91,6 +91,12 @@ class Membership_model extends CI_Model
         $this->db->where('id', clean_number($id));
         return $this->db->get('membership_transactions')->row();
     }
+    public function add_bank_details($data,$user_id)
+    {
+        $this->db->where('id',$user_id);
+        $this->db->update('users', $data);
+    }
+
 
     //get membership plan title
     public function get_membership_plan_title($plan)
@@ -540,11 +546,6 @@ class Membership_model extends CI_Model
         }
         $this->db->where('id', $this->auth_user->id);
         return $this->db->update('users', $data);
-    }
-    public function add_bank_details($data)
-    {
-        $this->db->update('users', $data);
-        $this->db->where('id', $this->auth_user->id);
     }
 
     //approve shop opening request  but not vendor
