@@ -2555,6 +2555,19 @@
             </div>
         </div>
 
+        <script>
+            const toggleP = document.querySelector('#togglePassword_login');
+            const passw = document.querySelector('#password_login');
+            toggleP.addEventListener('click', function(e) {
+                // toggle the type attribute
+                console.log("click");
+                const type = passw.getAttribute('type') === 'password' ? 'text' : 'password';
+                passw.setAttribute('type', type);
+                // toggle the eye slash icon
+                this.classList.toggle('fa-eye-slash');
+            });
+        </script>
+
     <?php endif; ?>
 
     <div class="modal fade" id="verifyMobileModal" role="dialog" data-backdrop="static">
@@ -2762,18 +2775,7 @@
 
     <div id="menu-overlay"></div>
 
-    <script>
-        const toggleP = document.querySelector('#togglePassword_login');
-        const passw = document.querySelector('#password_login');
-        toggleP.addEventListener('click', function(e) {
-            // toggle the type attribute
-            console.log("click");
-            const type = passw.getAttribute('type') === 'password' ? 'text' : 'password';
-            passw.setAttribute('type', type);
-            // toggle the eye slash icon
-            this.classList.toggle('fa-eye-slash');
-        });
-    </script>
+
     <script>
         var myInput = document.getElementById("password");
         var letter = document.getElementById("letter");
