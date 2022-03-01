@@ -1270,6 +1270,13 @@
 
 <body>
     <?php get_method();
+    $login_check = $this->input->get('login', true);
+    if (!$this->auth_check) : ?>
+        <input type="hidden" value="<?php echo $login_check; ?>" id="login_check">
+    <?php else : ?>
+        <input type="hidden" value="" id="login_check">
+    <?php endif; ?>
+    <?php get_method();
     $path_url = $this->input->get('url', true);
     ?>
     <input type="hidden" id="redirect_url" value="<?php echo $path_url; ?>">
@@ -1844,7 +1851,6 @@
 
                                         <?php endif; ?>
                                     </ul>
-                                    <div class="akshat" id="akshat" style="display:none;color:red;margin-left: 145px;font-family: sans-serif;font-weight: 400;" data-tooltip="Your Cart Is Empty!"></div>
                                 </div>
                             </div>
                         </div>
@@ -2753,22 +2759,6 @@
     <!-- <div id="pageloader">
         <img src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif" alt="processing..." />
     </div> -->
-    <div class="modal" tabindex="-1" role="dialog" id=cart_modal class="cart_modal" data-toggle="cart_modal">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-custom">
-                <div class="modal-header">
-
-                    <button type="button" class="close" data-dismiss="modal" id="close-pin">X</button>
-                </div>
-                <div class="modal-body">
-                    <p><? echo trans("your_cart_is_empty"); ?></p>
-                    <p id="ideal_cart" style="margin-left: 70px;"><strong class="font-900"><?php echo trans("ideal_cart"); ?></strong></p>
-
-                    <img src="<?php echo base_url(); ?>assets/img/empty-cart.png" id="empty_cart" style="max-width: 504px;margin-left: -50px;">
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div id="menu-overlay"></div>
 

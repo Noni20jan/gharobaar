@@ -424,13 +424,7 @@
         z-index: 1;
     }
 </style>
-<?php get_method();
-$login_check = $this->input->get('login', true);
-if (!$this->auth_check) : ?>
-    <input type="hidden" value="<?php echo $login_check; ?>" id="login_check">
-<?php else : ?>
-    <input type="hidden" value="" id="login_check">
-<?php endif; ?>
+
 <div id="wrapper" style="background:#fff;">
     <div class="container">
         <div class="fullwidth">

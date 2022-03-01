@@ -120,6 +120,7 @@ class Review_model extends CI_Model
         $product_id = clean_number($product_id);
         $this->db->join('users', 'users.id = reviews.user_id');
         $this->db->where('reviews.product_id', $product_id);
+        $this->db->where('reviews.is_approved', '1');
         $query = $this->db->get('reviews');
         return $query->num_rows();
     }
