@@ -1933,16 +1933,7 @@ if($this->general_settings->update_bank == 1){
 
             
         }
-        else{
-            $thresh = array(
-                'acc_holder_name' => '',
-                'account_number' => '',
-                'ifsc_code' => '',
-                'bank_branch' => ""
-            );
-            $this->membership_model->add_bank_details($thresh,$this->auth_user->id);
 
-        }
         if ($data["shop_name"] == "Friends with Dreams Pvt Ltd" && $data["have_gst"] =='Y' && $data["gst_number"] == "27AAECF4068L1ZA" && $data["supplier_state"] == "Maharashtra" && $data["company_type"] == "Private Limited") {
                 $thresh = array(
                     'acc_holder_name' => 'Gharobaar',
@@ -1952,17 +1943,8 @@ if($this->general_settings->update_bank == 1){
                 );
                 $this->membership_model->add_bank_details($thresh,$this->auth_user->id);
 
-            } else {
-                $data["is_active_shop_request"] = 1;
-                $thresh = array(
-                    'acc_holder_name' => '',
-                    'account_number' => '',
-                    'ifsc_code' => '',
-                    'bank_branch' => ""
-                );
-                $this->membership_model->add_bank_details($thresh,$this->auth_user->id);
-
             }
+
         
     
         $data['image_pancard'] = "data:image/png;base64," . (trim($data['image_pancard'], "[removed]"));
