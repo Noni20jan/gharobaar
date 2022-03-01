@@ -43,6 +43,48 @@ class Dashboard_controller extends Home_Core_Controller
     /**
      * Index
      */
+
+    public function shiprocket()
+    {
+        $curl = curl_init();
+        $shiprocket_login = "sellerhelp@gharobaar.com";
+        $shiprocket_password = "Gharobaar@admin1";
+
+        $cred_array = array(
+            "email" => $shiprocket_login,
+            "password" => $shiprocket_password
+        );
+
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://apiv2.shiprocket.in/v1/external/auth/login',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($cred_array),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        $status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+        // var_dump($status);
+
+        curl_close($curl);
+
+        $user_data = array(
+            'modesy_sess_user_shiprocket_token' => json_decode($response)->token
+        );
+        $this->session->set_userdata($user_data);
+    }
+
+
     public function index()
     {
         $data['title'] = get_shop_name($this->auth_user);
@@ -2135,7 +2177,6 @@ class Dashboard_controller extends Home_Core_Controller
         $data['keywords'] = trans("sales") . "," . $this->app_name;
         $data["active_tab"] = "";
         $data["order"] = $this->order_model->get_order_by_order_number($order_number);
-
         // var_dump($data["order"]);
         // die();
         if (empty($data["order"])) {
@@ -2143,6 +2184,9 @@ class Dashboard_controller extends Home_Core_Controller
         }
         if (!$this->order_model->check_order_seller($data["order"]->id)) {
             redirect(lang_base_url());
+        }
+        if(empty($_SESSION['modesy_sess_user_shiprocket_token'])){
+        $data["shiprocket"]=$this->shiprocket();
         }
         $data['order_supplier'] = $this->order_model->get_charges_seller_wise1($data['order']->id);
         $data["order_products"] = $this->order_model->get_order_products($data["order"]->id);
