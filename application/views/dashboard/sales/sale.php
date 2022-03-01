@@ -912,8 +912,12 @@ endif;
                             <?php echo trans("total"); ?>
                         </div>
                         <div class="col-sm-6 col-xs-6 col-right">
+                            <?php if(!is_null($seller_wise_data)):?>
                             <strong><?php echo price_formatted($order_supplier->Sup_total_prd, $order->price_currency); ?>/-</strong>
+                            <?php else:?>
+                                <strong><?php echo price_formatted($sale_subtotal, $order->price_currency); ?>/-</strong>
 
+                            <?php endif;?>
                         </div>
                     </div>
                 </div>
@@ -1488,32 +1492,7 @@ endforeach; ?>
         //     document.getElementById(cancel_reason).style.display = "none";
     }
 </script>
-<script>
-    var result = null;
 
-    function cancel_shipment() {
-        $('#cover-spin').show();
-        $.ajax({
-            "url": "https://apiv2.shiprocket.in/v1/external/orders/cancel",
-            "method": "POST",
-            "timeout": 0,
-
-            "headers": {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer <?php echo $_SESSION['modesy_sess_user_shiprocket_token'] ?>"
-            },
-            "data": JSON.stringify({
-                "ids": [result['order_id']
-
-                ],
-                success: function(response) {
-                    $('#cover-spin').hide();
-                    result2 = response;
-                }
-            })
-        })
-    }
-</script>
 <?php if (!empty($this->session->userdata('mds_send_email_data'))) : ?>
     <script>
         $(document).ready(function() {
