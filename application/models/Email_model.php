@@ -261,7 +261,7 @@ class Email_model extends CI_Model
         $title = $this->product_model->get_title($product_id);
         // var_dump($title);
         // die();
-        $subject = "Your Product " . $title->title . " is Approved by seller";
+        $subject = "Your Product " . $title->title . " is Approved by admin";
         // var_dump($subject);
         // die();
         $message = "Dear "  . ucfirst($user->first_name) . ",<br>Your product" . $title->title . " is accepted by Admin. Your product is now listed on our website.
