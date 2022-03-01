@@ -18,26 +18,11 @@
 
     }
 
-    .feedback {
-        background-color: #b1dfbb
-    }
-
-    .button {
-        margin-left: 1107px;
-        margin-bottom: 7px;
-    }
-
     .submit {
         max-height: 23px;
         padding: 2px;
     }
 </style>
-<div class="feedback" style="display: none;width: 162px;margin-left: 517px;">
-    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-
-    <i class="fa fa-check option-icon"></i>
-    Remark Updated
-</div>
 <div class="box">
 
     <div class="box-header with-border">
@@ -210,32 +195,6 @@
     </div><!-- /.box-body -->
 </div>
 <script>
-    $(document).ready(function() {
-        // function data() {
-        //     event.preventDefault();
-        //     var id = $('#adminid').val();
-        //     alert(id);
-        //     reviewid = 'admin_review.' + id
-        //     alert(reviewid)
-        //     var review = $(reviewid).val();
-        //     formDATA = {
-        //         id: id,
-        //         admin_reviews: review,
-        //         sys_lang_id: sys_lang_id
-        //     };
-        //     (formDATA[csfr_token_name] = $.cookie(csfr_cookie_name));
-        //     $.ajax({
-        //         type: "POST",
-        //         url: base_url + "product_controller/admin_remark",
-        //         data: formDATA,
-        //         dataType: 'json',
-        //         contentType: false,
-        //         processData: false,
-        //         success: function(response) {}
-        //     })
-        // };
-    });
-
     function data(e, t) {
         console.log($('#admin_review_' + t))
         var a = $('#admin_review_' + t).val();
@@ -252,6 +211,7 @@
             data: n,
             success: function(e) {
                 location.reload();
+
             },
         });
 
