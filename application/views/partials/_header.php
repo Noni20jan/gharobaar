@@ -11,7 +11,7 @@
 <link rel="preload" href="<?php echo base_url(); ?>assets/css/slick.css" as="style">
 <link rel="preload" href="<?php echo base_url(); ?>assets/css/main-1.7.min.css" as="style">
 <link rel="preload" href="<?php echo base_url(); ?>assets/css/custom.css" as="style">
-<link rel="preload" href="<?php echo base_url(); ?>assets/css/colors/default.min.css" as="style">
+<!-- <link rel="preload" href="<?php echo base_url(); ?>assets/css/colors/default.min.css" as="style"> -->
 <link rel="preload" href="<?php echo base_url(); ?>assets/css/fselect.css" as="style">
 <link rel="preload" href="<?php echo base_url(); ?>assets/vendor/font-icons/css/mds-icons.min.css" as="style">
 
