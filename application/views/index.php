@@ -793,11 +793,6 @@
 </div>
 
 
-<div class="section-slider">
-    <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
-        $this->load->view("partials/_main_slider_2", ["second_slider_items" => $second_slider_items]);
-    endif; ?>
-</div>
 
 <div class="index-wrapper" id="wrapper">
     <div class="container">
@@ -918,11 +913,6 @@
     </div>
 </div>
 
-<!-- <div class="section-slider">
-    <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
-        $this->load->view("partials/_main_slider_occasion_new", ["second_slider_items" => $occassion_slider_items]);
-    endif; ?>
-</div> -->
 
 
 <div class="col-12 sides-gap-equal">
