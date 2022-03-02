@@ -165,8 +165,9 @@ class Reports_model extends CI_Model
           ON sdr.order_no = csp.order_id,
           users as u
           where sdr.seller_email = u.email
-         and sdr.order_date >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s') 
-         and sdr.order_date <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
+          and sdr.order_date >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s') 
+          and sdr.order_date <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
+
          and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing') 
          group by sdr.seller ,
         sdr.seller_email ,
