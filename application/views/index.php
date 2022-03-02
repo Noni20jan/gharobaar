@@ -758,7 +758,8 @@
             </div>
         </section>
         <?php if ($this->general_settings->slider_status == 1) : ?>
-            <?php $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); ?>
+            <?php // $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); 
+            ?>
         <?php endif; ?>
 
         <div class="row">

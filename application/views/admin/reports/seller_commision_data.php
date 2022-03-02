@@ -77,6 +77,7 @@
                     <tbody id="sale_data_seller">
                         <?php foreach ($sale as $item) : ?>
                             <tr>
+                                <td><?php echo $item->Seller; ?></td>
                                 <td><?php echo $item->Email; ?></td>
                                 <td><?php echo $item->Phone; ?></td>
                                 <td><?php echo $item->Shop_name; ?></td>
