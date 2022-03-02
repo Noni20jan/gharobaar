@@ -718,52 +718,7 @@
                 </a>
             </div>
         </div>
-        <!-- <section class="home-testimonial">
-            <div class="container-fluid">
-                <div class="row d-flex justify-content-center testimonial-pos">
-                    <div class="col-md-12 pt-4 d-flex justify-content-center">
-                        <h3>Testimonials</h3>
-                    </div>
-                    <div class="col-md-12 d-flex justify-content-center">
-                        <h2>Explore the students experience</h2>
-                    </div>
-                </div>
-                <section class="home-testimonial-bottom">
-                    <div class="container testimonial-inner">
-                        <div class="row d-flex justify-content-center">
-                            <div class="col-md-4 style-3">
-                                <div class="tour-item ">
-                                    <div class="tour-desc bg-white">
-                                        <div class="tour-text color-grey-3 text-center">“At this School, our mission is to balance a rigorous comprehensive college preparatory curriculum with healthy social and emotional development.”</div>
-                                        <div class="d-flex justify-content-center pt-2 pb-2"><img class="tm-people" src="https://images.pexels.com/photos/6625914/pexels-photo-6625914.jpeg" alt=""></div>
-                                        <div class="link-name d-flex justify-content-center">Balbir Kaur</div>
-                                        <div class="link-position d-flex justify-content-center">Student</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 style-3">
-                                <div class="tour-item ">
-                                    <div class="tour-desc bg-white">
-                                        <div class="tour-text color-grey-3 text-center">“At this School, our mission is to balance a rigorous comprehensive college preparatory curriculum with healthy social and emotional development.”</div>
-                                        <div class="d-flex justify-content-center pt-2 pb-2"><img class="tm-people" src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></div>
-                                        <div class="link-name d-flex justify-content-center">Balbir Kaur</div>
-                                        <div class="link-position d-flex justify-content-center">Student</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 style-3">
-                                <div class="tour-item ">
-                                    <div class="tour-desc bg-white">
-                                        <div class="tour-text color-grey-3 text-center">“At this School, our mission is to balance a rigorous comprehensive college preparatory curriculum with healthy social and emotional development.”</div>
-                                        <div class="d-flex justify-content-center pt-2 pb-2"><img class="tm-people" src="https://images.pexels.com/photos/4946604/pexels-photo-4946604.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></div>
-                                        <div class="link-name d-flex justify-content-center">Balbir Kaur</div>
-                                        <div class="link-position d-flex justify-content-center">Student</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </section>
-        </section> -->
+
         <?php if (!empty($promoted_products)) : ?>
             <?php if ($this->general_settings->index_promoted_products == 1 && $this->general_settings->promoted_products == 1 && !empty($promoted_products)) : ?>
                 <div class="col-12 sides-gap-equal section section-promoted">
@@ -802,8 +757,9 @@
                 </div>
             </div>
         </section>
-        <?php $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); ?>
-
+        <?php if ($this->general_settings->slider_status == 1) : ?>
+            <?php $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); ?>
+        <?php endif; ?>
 
         <div class="row">
             <h3 style=" padding-left: 16px;" class="find-your-seller">Find Your Seller</h3>
@@ -830,56 +786,10 @@
                     </p>
                 </div>
             <?php endforeach; ?>
-            <!-- <div class="col-sm-2 for-space-between-imgs">
-                <img class="top-sellers-new-ui" src="assets/img/landing-page-img/your-seller-1.png">
-                <p>
-                    <strong class="bottom-centered-seller">Phoenix Seller</strong>
-                </p>
-            </div> -->
-            <!-- <div class="col-sm-2 for-space-between-imgs">
-                <img class="top-sellers-new-ui" src="assets/img/landing-page-img/your-seller-2.png">
-                <p>
-                    <strong class="bottom-centered-seller-2 ">Gritty Over 60</strong>
-                </p>
-            </div>
-            <div class="col-sm-2 for-space-between-imgs">
-                <img class="top-sellers-new-ui" src="assets/img/landing-page-img/your-seller-3.png">
-                <p>
-                    <strong class="bottom-centered-seller-jobs">Out Of Regular Job</strong>
-                </p>
-            </div>
-            <div class="col-sm-2 for-space-between-imgs">
-                <img class="top-sellers-new-ui" src="assets/img/landing-page-img/your-seller-4.png">
-                <p>
-                    <strong class="bottom-centered-seller-3">First Venture</strong>
-                </p>
-            </div>
-            <div class="col-sm-2 for-space-between-imgs">
-                <img class="top-sellers-new-ui" src="assets/img/landing-page-img/your-seller-5.png">
-                <p>
-                    <strong class="bottom-centered-seller-1">Cooperative Group</strong>
-                </p>
-            </div>
-            <div class="col-sm-2 for-space-between-imgs">
-                <img class="top-sellers-new-ui" src="assets/img/landing-page-img/your-seller-6.png">
-                <p>
-                    <strong class="bottom-centered-seller-1">Pursuing Passion</strong>
-                </p>
-            </div> -->
         </div>
 
     </div>
 </div>
-
-
-
-<!-- <div class="row" id="second-slider" style="margin-bottom:5%;">
-            <div class="section-slider">
-                <img style="width:100%;" src="assets/img/landing-page-img/banner-2-img.png">
-            </div>
-        </div>
-    </div>
-</div> -->
 
 
 <div class="section-slider">
