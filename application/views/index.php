@@ -672,7 +672,16 @@
 <?php   }
 } ?>
 
-
+<div class="section-slider web-slider">
+    <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
+        $this->load->view("partials/new_slider", ["second_slider_items" => $occassion_slider_items]);
+    endif; ?>
+</div>
+<div class="section-slider mobile-slider">
+    <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
+        $this->load->view("partials/new_mobile_slider", ["second_slider_items" => $occassion_slider_items]);
+    endif; ?>
+</div>
 <!-- Wrapper -->
 <div class="index-wrapper" id="wrapper">
     <div class="container">
@@ -757,9 +766,7 @@
                 </div>
             </div>
         </section>
-
-        <?php //$this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); 
-        ?>
+        <?php $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); ?>
 
 
         <div class="row">
@@ -793,6 +800,21 @@
 </div>
 
 
+
+<!-- <div class="row" id="second-slider" style="margin-bottom:5%;">
+            <div class="section-slider">
+                <img style="width:100%;" src="assets/img/landing-page-img/banner-2-img.png">
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<div class="section-slider">
+    <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
+        $this->load->view("partials/_main_slider_2", ["second_slider_items" => $second_slider_items]);
+    endif; ?>
+</div>
 
 <div class="index-wrapper" id="wrapper">
     <div class="container">
@@ -857,13 +879,6 @@
         </div>
         <!-- end of mobile-collage -->
 
-
-        <div class="col-12 sides-gap-equal">
-            <div class="row-custom row-bn">
-                <!--Include banner-->
-                <?php $this->load->view("partials/_ad_spaces", ["ad_space" => "index_1", "class" => ""]); ?>
-            </div>
-        </div>
 
         <div class="col-12 sides-gap-equal section section-latest-products">
             <h3 class="find-your-seller" id="top_picks">Top Picks</h3>
