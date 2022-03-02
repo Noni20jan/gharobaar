@@ -221,6 +221,7 @@
                         <span><b> (<?php echo $count_star; ?>)</b> </span>
                     <?php  } ?>
                 </div>
+                <span><i class="icon-eye"></i><?php echo html_escape($product->pageviews); ?></span>
             </div>
         </div>
         <div class="row-custom price">
