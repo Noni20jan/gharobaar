@@ -204,6 +204,33 @@
                         else if(Json_data[i].order_status=="processing"){
                             new_order_status="Processing";
                         }
+                        else if(Json_data[i].order_status=="cancelled_by_seller"){
+                            new_order_status="Cancelled By Seller";
+                        }
+                        else if(Json_data[i].order_status=="rejected"){
+                            new_order_status="Rejected";
+                        }
+                        else if(Json_data[i].order_status=="cancelled"){
+                            new_order_status="Cancelled";
+                        }
+                        else if(Json_data[i].order_status=="awaiting_pickup"){
+                            new_order_status="Awaiting Pickup";
+                        }
+                        else if(Json_data[i].order_status=="shipped"){
+                            new_order_status="Shipped";
+                        }
+                        else if(Json_data[i].order_status=="waiting"){
+                            new_order_status="Waiting";
+                        }
+                        else if(Json_data[i].order_status=="Return Delivered"){
+                            new_order_status="Return Delivered";
+                        }
+                        else if(Json_data[i].order_status=="RTO Delivered"){
+                            new_order_status="RTO Delivered";
+                        }
+                        else if(Json_data[i].order_status=="RTO Initiated"){
+                            new_order_status="RTO Initiated";
+                        }
                         var time_format =Json_data[i].updated_at;
                         time_ago_format= time_ago(time_format);
                         $('#table_'+order_number).append("<tr><td>" + Json_data[i].product_id + "</td><td>" + Json_data[i].product_title + "</td><td>" +"₹"+ Json_data[i].product_unit_price/100 + "</td><td>" + Json_data[i].product_quantity + "</td><td>" +"₹"+ Json_data[i].product_gst/100 + "</td><td>" +"₹"+ Json_data[i].product_shipping_cost/100 + "</td><td>" +"₹"+ Json_data[i].product_total_price/100 + "</td><td>" + new_order_status + "</td><td>"+ time_ago_format + "</td><td>")
