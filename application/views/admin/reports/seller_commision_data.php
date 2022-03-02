@@ -77,7 +77,6 @@
                     <tbody id="sale_data_seller">
                         <?php foreach ($sale as $item) : ?>
                             <tr>
-                                <td><?php echo $item->Seller; ?></td>
                                 <td><?php echo $item->Email; ?></td>
                                 <td><?php echo $item->Phone; ?></td>
                                 <td><?php echo $item->Shop_name; ?></td>
@@ -88,6 +87,7 @@
                                 <td><?php echo $item->Total_shipping_cost; ?></td>
                                 <td><?php echo $item->Total_Cod_cost; ?></td>
                                 <td><?php echo $item->getway_amt; ?></td>
+                                <td><?php echo $item->GST_Rate; ?></td>
                                 <td><?php echo $item->GST_Amount; ?></td>
                                 <td><?php echo $item->CGST; ?></td>
                                 <td><?php echo $item->SGST; ?></td>
