@@ -643,35 +643,34 @@
     }
 </style>
 
-<script>
-    $(document).ready(function() {
-        var user_type = document.getElementById("role").value;
-        var user_id = document.getElementById("user_id").value;
 
-        if (user_type == "guest") {
-            var id = user_id;
-            var data = {
-                "user_id": id,
-                "sys_lang_id": sys_lang_id
-            };
-            data[csfr_token_name] = $.cookie(csfr_cookie_name);
-            $.ajax({
-                type: "POST",
-                url: base_url + "cart_controller/remove_from_cart_guest",
-                data: data,
-                success: function(response) {
-                    window.location.href = base_url + "logout";
-                }
-            });
-        }
-    })
-</script>
 <?php if ($this->auth_check) {
-    if ($this->auth_user->user_type == "guest") {
-        redirect(base_url() . 'logout');
-    }
+    if ($this->auth_user->user_type == "guest") { ?>
+        <input type="hidden" id="user_id" value=<?php echo $this->auth_user->id; ?>>
+        <script>
+            // var user_type = document.getElementById("role").value;
+            var user_id = document.getElementById("user_id").value;
+            var base_url = '<?php echo base_url(); ?>';
+            var user_type = "guest";
+            if (user_type == "guest") {
+                var id = user_id;
+                var data = {
+                    "user_id": id,
+                    // "sys_lang_id": sys_lang_id
+                };
+                // data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    type: "POST",
+                    url: base_url + "cart_controller/remove_from_cart_guest",
+                    data: data,
+                    success: function(response) {
+                        window.location.href = base_url + "logout";
+                    }
+                });
+            }
+        </script>
+<?php   }
 } ?>
-
 
 
 <!-- Wrapper -->
