@@ -757,10 +757,10 @@
                 </div>
             </div>
         </section>
-        <?php if ($this->general_settings->slider_status == 1) : ?>
-            <?php // $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); 
-            ?>
-        <?php endif; ?>
+
+        <?php //$this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); 
+        ?>
+
 
         <div class="row">
             <h3 style=" padding-left: 16px;" class="find-your-seller">Find Your Seller</h3>
