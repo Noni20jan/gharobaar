@@ -693,7 +693,9 @@ endif;
                                                     <?php echo form_close(); ?>
                                                 <?php else : ?>
                                                     <p class="m-b-5">
+                                                        <?php if($item->product_delivery_partner=="SELF"):?>
                                                         <button type="button" class="btn btn-md btn-block btn-success" data-toggle="modal" data-target="#updateStatusModal_<?php echo $item->id; ?>"><?php echo trans('update_order_status'); ?></button>
+                                                        <?php endif;?>
                                                     </p>
 
                                                     <div id='loader' style='display: none;'>
