@@ -2,7 +2,6 @@
 
 <?php
 $seller_wise_data = get_shipping_cod_changes_seller_wise($this->auth_user->id, $order->id);
-// var_dump($seller_wise_data);
 if (!empty($seller_wise_data)) :
     $seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_data->total_cod_cost) / 100;
 endif;
@@ -693,7 +692,9 @@ endif;
                                                     <?php echo form_close(); ?>
                                                 <?php else : ?>
                                                     <p class="m-b-5">
+                                                        <?php if($item->product_delivery_partner=="SELF"):?>
                                                         <button type="button" class="btn btn-md btn-block btn-success" data-toggle="modal" data-target="#updateStatusModal_<?php echo $item->id; ?>"><?php echo trans('update_order_status'); ?></button>
+                                                        <?php endif;?>
                                                     </p>
 
                                                     <div id='loader' style='display: none;'>
@@ -888,21 +889,7 @@ endif;
                         </div>
                     <?php endif; ?>
 
-                    <div class="row">
-                        <div class="col-sm-6 col-xs-6 col-left">
-                            <strong>Coupon Applied</strong>
-                        </div>
-
-                        <div class="col-sm-6 col-xs-6 col-right">
-                            <?php if (!empty($order->offer_id)) {
-                                $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);
-                                echo $coupon->offer_code;
-                            } ?>
-                            <!-- <strong>-<?php echo price_formatted($order->coupon_discount, $order->price_currency); ?>/-</strong> -->
-                        </div>
-                    </div>
-                    <p style="font-size: 12px;">(The coupon is applied to the total amount of order)</p>
-                    <div class="row">
+                        <div class="row">
                         <div class="col-12 m-b-15">
                             <div class="row-seperator"></div>
                         </div>
@@ -1331,7 +1318,7 @@ endforeach; ?>
             "shipping_phone": <?php echo ($shipping->billing_phone_number) ?>,
             "order_items": order_items,
             "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-            "sub_total": <?php echo !empty($seller_wise_data) ? ($order->price_total) / 100 : $total_quantity_price ?>,
+            "sub_total": <?php echo !empty($seller_wise_data) ? ($seller_wise_data->grand_total_amount) / 100 : $total_quantity_price ?>,
             "length": document.getElementById("total_length").value,
             "breadth": document.getElementById("total_width").value,
             "height": document.getElementById("total_height").value,
