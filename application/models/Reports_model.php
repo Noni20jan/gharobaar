@@ -186,7 +186,7 @@ class Reports_model extends CI_Model
     public function format_seller_commision_data_cod($from_date, $to_date)
     {
         $to_date = $to_date . " 23:59:59";
-        $sql = "SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order-Month',
+        $sql = "SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order_Month',
         sdr.seller as Seller,
         sdr.seller_email as Email,
         sdr.seller_phone as 'Phone',
@@ -828,7 +828,7 @@ class Reports_model extends CI_Model
     public function fetch_seller_commission_cod()
     {
 
-        $sql = "SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order-Month',
+        $sql = "SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order_Month',
     sdr.seller as Seller,
     sdr.seller_email as Email,
     sdr.seller_phone as 'Phone',
