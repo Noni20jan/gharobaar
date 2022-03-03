@@ -244,7 +244,7 @@ class Email_model extends CI_Model
                 'event_type' => 'Order Placement',
                 'subject' => $subject,
                 'message' => $message,
-                'remark' => "Your Order for " . $order_product->product_title . " has been succefully placed vide Order #" . $order_details->order_number . " and the product will be dispatched within " . $product->lead_days . "days.",
+                'remark' => "Your Order for " . $order_product->product_title . " has been succefully placed vide Order #" . $order_details->order_number . " and the product will be dispatched soon",
                 'to' => $email,
                 'template_path' => "email/email_newsletter",
                 'subscriber' => "",
@@ -261,7 +261,7 @@ class Email_model extends CI_Model
         $title = $this->product_model->get_title($product_id);
         // var_dump($title);
         // die();
-        $subject = "Your Product " . $title->title . " is Approved by seller";
+        $subject = "Your Product " . $title->title . " is Approved by admin";
         // var_dump($subject);
         // die();
         $message = "Dear "  . ucfirst($user->first_name) . ",<br>Your product" . $title->title . " is accepted by Admin. Your product is now listed on our website.
