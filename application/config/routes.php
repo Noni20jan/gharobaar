@@ -548,6 +548,8 @@ $route[getr('admin', $rts) . '/cart-data'] = 'admin_controller/cart_data_report'
 $route[getr('admin', $rts) . '/cash-free-charges-report'] = 'admin_controller/cash_free_charges_report';
 $route[getr('admin', $rts) . '/cod-charges-report'] = 'admin_controller/cod_charges_report';
 $route[getr('admin', $rts) . '/seller-commission-data'] = 'admin_controller/seller_commission';
+$route[getr('admin', $rts) . '/seller-commission-data-cod'] = 'admin_controller/seller_commission_cod';
+
 
 //seller pannel reports
 $route[getr('dashboard', $rts) . '/sales_data'] = 'dashboard_controller/sales_data_report';

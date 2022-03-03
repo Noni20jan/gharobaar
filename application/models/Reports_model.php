@@ -182,6 +182,62 @@ class Reports_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
+
+    public function format_seller_commision_data_cod($from_date, $to_date)
+    {
+        $to_date = $to_date . " 23:59:59";
+        $sql = "SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order-Month',
+        sdr.seller as Seller,
+        sdr.seller_email as Email,
+        sdr.seller_phone as 'Phone',
+        sdr.shop_name as Shop_name,
+        sdr.pan_no as 'Pan',
+        sdr.gst_no 'GST',
+        sdr.seller_address as Address,
+        format(sum(sdr.commission_amount),2) as total_commission_amount,
+        format(sum(sdr.seller_ship_cost),2) as Total_shipping_cost,
+        format(sum(sdr.seller_cod_cost),2) as Total_Cod_cost,
+        -- ifnull(format(sum(csp.gateway_amount/100),2) , 0) as getway_amt,
+        0 as getway_amt,
+        '18%' as 'GST_Rate', 
+        FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + 0 ) * 18) / 100, 2) AS GST_Amount,
+            IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+                FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + 0) * 18) / 100)/2,2), 0 ) as CGST,
+                IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+                FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + 0) * 18) / 100)/2, 2), 0 ) as SGST,
+                    IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
+                FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + 0 ) * 18) / 100, 2)) as IGST,
+                Format ((sum(sdr.commission_amount) + sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) + 0 +  
+                (((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + 0 ) * 18) / 100) ),2) as TOTAL
+        
+         FROM sale_data_report as sdr,
+          cod_seller_payable as cosp,
+          Gharobar.users as u
+          where sdr.seller_email = u.email
+          and sdr.seller_id = u.id
+          and sdr.seller_id = cosp.vendorId
+          and sdr.order_no = cosp.order_id 
+          and sdr.order_date >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
+          and sdr.order_date < STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
+           and cosp.created_at >=STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
+           and cosp.created_at < STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
+           and cosp.is_active = 1
+          and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected', 'processing')
+         group by sdr.seller ,
+        sdr.seller_email ,
+        sdr.seller_phone ,
+        sdr.shop_name,
+        sdr.pan_no,
+        sdr.gst_no,
+        sdr.seller_address;";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
     public function format_tcs_report($start_date, $end_date)
     {
         $end_date = $end_date . " 23:59:59";
@@ -768,6 +824,62 @@ class Reports_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
+
+    public function fetch_seller_commission_cod()
+    {
+
+        $sql = "SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order-Month',
+    sdr.seller as Seller,
+    sdr.seller_email as Email,
+    sdr.seller_phone as 'Phone',
+    sdr.shop_name as Shop_name,
+    sdr.pan_no as 'Pan',
+    sdr.gst_no 'GST',
+    sdr.seller_address as Address,
+    format(sum(sdr.commission_amount),2) as total_commission_amount,
+    format(sum(sdr.seller_ship_cost),2) as Total_shipping_cost,
+    format(sum(sdr.seller_cod_cost),2) as Total_Cod_cost,
+    0 as getway_amt,
+    '18%' as 'GST_Rate', 
+    FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                 + sum(sdr.commission_amount) + 0 ) * 18) / 100, 2) AS GST_Amount,
+        IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+            FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                 + sum(sdr.commission_amount) + 0) * 18) / 100)/2,2), 0 ) as CGST,
+            IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+            FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                 + sum(sdr.commission_amount) + 0) * 18) / 100)/2, 2), 0 ) as SGST,
+                IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
+            FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                 + sum(sdr.commission_amount) + 0 ) * 18) / 100, 2)) as IGST,
+            Format ((sum(sdr.commission_amount) + sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) + 0 +  
+            (((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                 + sum(sdr.commission_amount) + 0 ) * 18) / 100) ),2) as TOTAL
+    
+     FROM sale_data_report as sdr,
+      cod_seller_payable as cosp,
+      Gharobar.users as u
+      where sdr.seller_email = u.email
+      and sdr.seller_id = u.id
+      and sdr.seller_id = cosp.vendorId
+      and sdr.order_no = cosp.order_id 
+      AND YEAR( sdr.order_date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+           AND MONTH( sdr.order_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+           AND YEAR( cosp.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+           AND MONTH( cosp.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+       and cosp.is_active = 1
+      and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected', 'processing')
+     group by sdr.seller ,
+    sdr.seller_email ,
+    sdr.seller_phone ,
+    sdr.shop_name,
+    sdr.pan_no,
+    sdr.gst_no,
+    sdr.seller_address";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
     public function fetch_profile_data()
     {
         $sql = "SELECT concat(u.first_name,' ', u.last_name) as Seller, u.email as 'Seller_Email',u.phone_number as 'Seller_Phone',u.shop_name as 'Shop_Name',u.pan_number as 'Pan',u.gst_number as 'GST',concat(u.house_no,',',u.supplier_area,',', u.supplier_city,',', u.supplier_state,'-', u.pincode) as Address,  u.account_number as 'Account_No',u.acc_holder_name as 'Account_Holder',u.ifsc_code as 'IFSC_Code',u.bank_branch as 'Bank_Branch',IF(is_profile_approved = 1, 'APPROVED', 'PENDING') as 'Profile_Status',created_at as 'Profile_Created_Date'
