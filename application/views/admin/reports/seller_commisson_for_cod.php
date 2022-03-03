@@ -29,7 +29,7 @@
 <div class="box-body index-table">
     <div class="box-header with-border">
         <div class="pull-left">
-            <h3 class="box-title" style="font-weight: 600;font-size: 20px;margin-bottom: 20px;"><?php echo trans('seller_commission_cod'); ?></h3>
+            <h3 class="box-title" style="font-weight: 600;font-size: 20px;margin-bottom: 20px;"><?php echo trans('seller_commission_data_cod'); ?></h3>
         </div>
     </div>
     <div class="row">

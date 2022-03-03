@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- custom style style -->
+<!-- <script src="/scripts/js/jquery.min.js"></script> -->
 <?php $sellers = get_products();
 $unique_state_array = array();
 foreach ($sellers as $seller) {
@@ -2387,15 +2388,13 @@ foreach ($sellers as $seller) {
     </div>
 </div>
 <!-- Wrapper End-->
-
-
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 <script type="text/javascript"></script>
-<script>
-
 
 </script>
+<script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
 <script>
     var urlpage = 1;
     var page = 1;
@@ -2406,9 +2405,9 @@ foreach ($sellers as $seller) {
         } else {
             if ($(window).scrollTop() >= ($(document).height() - $(window).height()) * 0.7) {
                 // if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+
                 page++;
                 loadMoreData(page);
-
             }
         }
     });
