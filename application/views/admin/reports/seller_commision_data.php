@@ -55,6 +55,7 @@
                 <table class="table table-bordered table-striped button" id="extend_datatable" role="grid">
                     <thead>
                         <tr role="row">
+                            <th>Order Month</th>
                             <th>Seller</th>
                             <th>Email</th>
                             <th>Phone</th>
@@ -77,6 +78,7 @@
                     <tbody id="sale_data_seller">
                         <?php foreach ($sale as $item) : ?>
                             <tr>
+                                <td><?php echo $item->Order_Month; ?></td>
                                 <td><?php echo $item->Seller; ?></td>
                                 <td><?php echo $item->Email; ?></td>
                                 <td><?php echo $item->Phone; ?></td>
@@ -137,7 +139,7 @@
                 var len = Json_data.length;
                 if (len != 0) {
                     for (var i = 0; i < len; i++) {
-                        $('#sale_data_seller').append("<tr><td>" + Json_data[i].Seller + "</td><td>" + Json_data[i].Email + "</td><td>" + Json_data[i].Phone + "</td><td>" + Json_data[i].Shop_name + "</td><td>" + Json_data[i].Pan + "</td><td>" + Json_data[i].GST + "</td><td>" + Json_data[i].Address + "</td><td>" + Json_data[i].total_commission_amount + "</td><td>" + Json_data[i].Total_shipping_cost + "</td><td>" + Json_data[i].Total_Cod_cost + "</td><td>" + Json_data[i].getway_amt + "</td><td>" + Json_data[i].GST_Rate + "</td><td>" + Json_data[i].GST_Amount + "</td><td>" + Json_data[i].CGST + "</td><td>" + Json_data[i].SGST + "</td><td>" + Json_data[i].IGST + "</td><td>" + Json_data[i].TOTAL + "</td></tr>")
+                        $('#sale_data_seller').append("<tr><td>" + Json_data[i].Order_Month + "</td><td>" + Json_data[i].Seller + "</td><td>" + Json_data[i].Email + "</td><td>" + Json_data[i].Phone + "</td><td>" + Json_data[i].Shop_name + "</td><td>" + Json_data[i].Pan + "</td><td>" + Json_data[i].GST + "</td><td>" + Json_data[i].Address + "</td><td>" + Json_data[i].total_commission_amount + "</td><td>" + Json_data[i].Total_shipping_cost + "</td><td>" + Json_data[i].Total_Cod_cost + "</td><td>" + Json_data[i].getway_amt + "</td><td>" + Json_data[i].GST_Rate + "</td><td>" + Json_data[i].GST_Amount + "</td><td>" + Json_data[i].CGST + "</td><td>" + Json_data[i].SGST + "</td><td>" + Json_data[i].IGST + "</td><td>" + Json_data[i].TOTAL + "</td></tr>")
                     }
                 }
                 $('#extend_datatable').dataTable({

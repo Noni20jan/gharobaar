@@ -130,11 +130,11 @@ class Reports_model extends CI_Model
     public function seller_commision_data($from_date, $to_date)
     {
         $to_date = $to_date . " 23:59:59";
-        $sql = "SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order-Month',
+        $sql = "SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order_Month',
         sdr.seller as Seller,
         sdr.seller_email as Email,
         sdr.seller_phone as 'Phone',
-        sdr.shop_name as 'Shop_name',
+        sdr.shop_name as Shop_name,
         sdr.pan_no as 'Pan',
         sdr.gst_no 'GST',
         sdr.seller_address as Address,
@@ -142,7 +142,6 @@ class Reports_model extends CI_Model
         format(sum(sdr.seller_ship_cost),2) as Total_shipping_cost,
         format(sum(sdr.seller_cod_cost),2) as Total_Cod_cost,
         ifnull(format(sum(csp.gateway_amount/100),2) , 0) as getway_amt,
-        -- format(sum(csp.gateway_amount/100),2) as getway_amt,
         '18%' as 'GST_Rate', 
         FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
                      + sum(sdr.commission_amount) + ifnull(format(sum(csp.gateway_amount/100),2) , 0) ) * 18) / 100, 2) AS GST_Amount,
@@ -159,16 +158,20 @@ class Reports_model extends CI_Model
                 (((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
                      + sum(sdr.commission_amount) + ifnull(sum(csp.gateway_amount/100), 0) ) * 18) / 100) ),2) as TOTAL
         
-         -- FORMAT(sum(csp.gateway_amount)/100,2) as Gateway_charges
-         FROM sale_data_report as sdr
-         LEFT JOIN cashfree_seller_payout as csp 
-          ON sdr.order_no = csp.order_id,
-          users as u
+         FROM sale_data_report as sdr,
+          cashfree_seller_payout as csp,
+          Gharobar.users as u
           where sdr.seller_email = u.email
-          and sdr.order_date >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s') 
-          and sdr.order_date <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
-
-         and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing') 
+          and sdr.seller_id = u.id
+          and sdr.seller_id = csp.vendorId
+          and sdr.order_no = csp.order_id 
+          and sdr.order_date >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
+          and sdr.order_date < STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
+           and csp.created_at >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
+           and csp.created_at < STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
+           and csp.is_completed = 1
+           and csp.is_active = 1
+          and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected', 'processing')
          group by sdr.seller ,
         sdr.seller_email ,
         sdr.seller_phone ,
@@ -713,11 +716,11 @@ class Reports_model extends CI_Model
     public function fetch_seller_commission()
     {
 
-        $sql = "SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order-Month',
+        $sql = "SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order_Month',
         sdr.seller as Seller,
         sdr.seller_email as Email,
         sdr.seller_phone as 'Phone',
-        sdr.shop_name as 'Shop_name',
+        sdr.shop_name as Shop_name,
         sdr.pan_no as 'Pan',
         sdr.gst_no 'GST',
         sdr.seller_address as Address,
@@ -725,7 +728,6 @@ class Reports_model extends CI_Model
         format(sum(sdr.seller_ship_cost),2) as Total_shipping_cost,
         format(sum(sdr.seller_cod_cost),2) as Total_Cod_cost,
         ifnull(format(sum(csp.gateway_amount/100),2) , 0) as getway_amt,
-        -- format(sum(csp.gateway_amount/100),2) as getway_amt,
         '18%' as 'GST_Rate', 
         FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
                      + sum(sdr.commission_amount) + ifnull(format(sum(csp.gateway_amount/100),2) , 0) ) * 18) / 100, 2) AS GST_Amount,
@@ -742,16 +744,20 @@ class Reports_model extends CI_Model
                 (((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
                      + sum(sdr.commission_amount) + ifnull(sum(csp.gateway_amount/100), 0) ) * 18) / 100) ),2) as TOTAL
         
-         -- FORMAT(sum(csp.gateway_amount)/100,2) as Gateway_charges
-         FROM sale_data_report as sdr
-         LEFT JOIN cashfree_seller_payout as csp 
-          ON sdr.order_no = csp.order_id,
-          users as u
+         FROM sale_data_report as sdr,
+          cashfree_seller_payout as csp,
+          Gharobar.users as u
           where sdr.seller_email = u.email
-        AND YEAR( sdr.order_date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
-        AND MONTH( sdr.order_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
-
-         and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing') 
+          and sdr.seller_id = u.id
+          and sdr.seller_id = csp.vendorId
+          and sdr.order_no = csp.order_id 
+           AND YEAR( sdr.order_date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+           AND MONTH( sdr.order_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+           AND YEAR( csp.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+           AND MONTH( csp.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+           and csp.is_completed = 1
+           and csp.is_active = 1
+          and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected', 'processing')
          group by sdr.seller ,
         sdr.seller_email ,
         sdr.seller_phone ,
