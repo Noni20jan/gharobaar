@@ -672,16 +672,12 @@
 <?php   }
 } ?>
 
-<div class="section-slider web-slider">
+<div class="section-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
-        $this->load->view("partials/new_slider", ["second_slider_items" => $occassion_slider_items]);
+        $this->load->view("partials/_main_slider");
     endif; ?>
 </div>
-<div class="section-slider mobile-slider">
-    <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
-        $this->load->view("partials/new_mobile_slider", ["second_slider_items" => $occassion_slider_items]);
-    endif; ?>
-</div>
+
 <!-- Wrapper -->
 <div class="index-wrapper" id="wrapper">
     <div class="container">
