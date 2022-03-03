@@ -287,7 +287,7 @@ endif;
         endforeach;
 
         ?>
-        
+
         <div class="row">
             <div class="pull-right">
                 <?php if ($item_order->product_delivery_partner == "SHIPROCKET") : ?>
@@ -321,7 +321,7 @@ endif;
                     <?php $ship_date = (date("dS M Y", $order_create)); ?>
                     <?php $shipping_date = new DateTime($ship_date); ?>
 
-                    <?php if ($orders_count>=1) : ?>
+                    <?php if ($orders_count >= 1) : ?>
 
                         <?php if ($shipping_date >= $current_date) : ?>
 
@@ -347,7 +347,7 @@ endif;
                     <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
                     <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                     <?php $shipp_date = new DateTime($shipped_date); ?>
-                    <?php if ($orders_count>=1) : ?>
+                    <?php if ($orders_count >= 1) : ?>
                         <?php if ($shipp_date >= $current_date) : ?>
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
 
@@ -692,9 +692,9 @@ endif;
                                                     <?php echo form_close(); ?>
                                                 <?php else : ?>
                                                     <p class="m-b-5">
-                                                        <?php if($item->product_delivery_partner=="SELF"):?>
-                                                        <button type="button" class="btn btn-md btn-block btn-success" data-toggle="modal" data-target="#updateStatusModal_<?php echo $item->id; ?>"><?php echo trans('update_order_status'); ?></button>
-                                                        <?php endif;?>
+                                                        <?php if ($item->product_delivery_partner == "SELF") : ?>
+                                                            <button type="button" class="btn btn-md btn-block btn-success" data-toggle="modal" data-target="#updateStatusModal_<?php echo $item->id; ?>"><?php echo trans('update_order_status'); ?></button>
+                                                        <?php endif; ?>
                                                     </p>
 
                                                     <div id='loader' style='display: none;'>
@@ -889,7 +889,7 @@ endif;
                         </div>
                     <?php endif; ?>
 
-                        <div class="row">
+                    <div class="row">
                         <div class="col-12 m-b-15">
                             <div class="row-seperator"></div>
                         </div>
@@ -899,12 +899,12 @@ endif;
                             <?php echo trans("total"); ?>
                         </div>
                         <div class="col-sm-6 col-xs-6 col-right">
-                            <?php if(!is_null($seller_wise_data)):?>
-                            <strong><?php echo price_formatted($order_supplier->Sup_total_prd, $order->price_currency); ?>/-</strong>
-                            <?php else:?>
+                            <?php if (!is_null($seller_wise_data)) : ?>
+                                <strong><?php echo price_formatted($order_supplier->Sup_total_prd, $order->price_currency); ?>/-</strong>
+                            <?php else : ?>
                                 <strong><?php echo price_formatted($sale_subtotal, $order->price_currency); ?>/-</strong>
 
-                            <?php endif;?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -1388,17 +1388,16 @@ endforeach; ?>
                     })
                 } else {
                     $('#cover-spin').hide();
-                    alert(JSON.parse(response).payload.error_message);
+                    alert(response);
                 }
             },
             error: function(response) {
                 $('#cover-spin').hide();
                 alert(response.responseJSON.message)
             }
-        
+
         });
     }
-    
 </script>
 
 
