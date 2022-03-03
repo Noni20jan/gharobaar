@@ -1146,22 +1146,32 @@ class Product_model extends Core_Model
             $this->db->join('product_details', 'product_details.product_id = products.id');
             $this->db->where('product_details.lang_id', clean_number($this->selected_lang->id));
             $this->db->group_start();
+            // $this->db->group_start();
+            // $search_word = str_replace("'", "\'", $search);
+            // var_dump($search);
+            // var_dump($search_word);
+            $this->db->like('product_details.title', $search);
             foreach ($array_search_words as $word) {
+
                 // $user_id=get_user_by_shop_name($word);
                 if (!empty($word)) {
+                    $search_word = $word;
+                    // var_dump($word);
+                    // var_dump($search_word);
+                    // die();
                     // $this->db->or_like(array('product_details.title' => $word, 'product_details.description' => $word,'product_details.seo_keywords' => $word,'product_details.seo_title' => $word));
+                    // $this->db->like('product_details.title', $word);
 
-
-                    $this->db->group_start();
-                    $this->db->like('product_details.title', $word);
+                    // $this->db->group_start();
+                    $this->db->or_like('product_details.title',  $search_word);
                     // $this->db->or_like('product_details.description', $word);
                     // $this->db->or_like('product_details.seo_title', $word);
                     // $this->db->or_like('product_details.seo_keywords', $word);
                     //$this->db->or_like('product_details.user_id', );
-                    $this->db->or_like('shop_name', $word);
-                    $this->db->or_like('brand_name', $word);
+                    $this->db->or_like('shop_name', $search_word);
+                    $this->db->or_like('brand_name',  $search_word);
 
-                    $this->db->group_end();
+                    // $this->db->group_end();
                 }
             }
             $this->db->group_end();
@@ -1888,9 +1898,9 @@ class Product_model extends Core_Model
             $array = explode(' ', $search);
             $user_id = $this->auth_user->id;
             if (!empty($user_id)) {
-
+                $word = str_replace("'", "\'", $search);
                 // $sql = "SELECT count(search_text) FROM search_keyword where search_text like   '$search%'   and user_id=$user_id;";
-                $sql = "SELECT COUNT(*) as count FROM search_keyword where search_text='$search' AND user_id='$user_id';";
+                $sql = "SELECT COUNT(*) as count FROM search_keyword where search_text='$word' AND user_id='$user_id';";
                 $query = $this->db->query($sql);
                 $count = $query->row();
                 // var_dump($count->count);die();
