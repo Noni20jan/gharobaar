@@ -1001,8 +1001,10 @@
                                                 </div>
                                             </div>
                                             <div class="row">
+                                              <?php if($item->order_status=="processing" || $item->order_status=="shipped" || $item->order_status=="waiting"):?>  
                                             <div class="col-6 col-left">
                                         Estimated Delivery Date
+                                        <?php endif;?>
                                     </div>
                                     <div class="col-6 col-right">
                                     <?php if ($product->add_meet == "Made to stock" && substr_count($shipping_time,'_')>2 && $item->order_status=="processing" || $item->order_status=="shipped") : ?>
