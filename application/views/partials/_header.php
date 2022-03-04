@@ -1169,13 +1169,6 @@
             border-radius: 15px;
         }
 
-        .right {
-            float: right;
-        }
-
-        .left {
-            float: left;
-        }
 
         .notification-head {
             color: #606060 !important;
@@ -1386,7 +1379,14 @@
                                                                 <!-- <i class="fa fa-flag"></i> -->
                                                                 <p class="notification-head">Gharobaar Updates</p>
                                                                 <?php $gharobaar_updates = $this->notification_model->get_gharobaar_updates($this->auth_user->email); ?>
-                                                                <label class="head-notification-count"><?php echo count($gharobaar_updates); ?></label>
+                                                                <?php $gharobaar_updates_count = 0; ?>
+                                                                <?php foreach ($gharobaar_updates as $gharobaar_update) : ?>
+                                                                    <?php if ($gharobaar_update->read != 1) { ?>
+                                                                        <?php $gharobaar_updates_count = $gharobaar_updates_count + 1; ?>
+                                                                <?php }
+                                                                endforeach; ?>
+
+                                                                <label class="head-notification-count"><?php echo $gharobaar_updates_count; ?></label>
                                                             </div>
                                                             <!-- tab -->
 
@@ -1408,7 +1408,13 @@
                                                                 <!-- <i class="fa fa-bug"></i> -->
                                                                 <p class="notification-head">Order Placement</p>
                                                                 <?php $order_placements = $this->notification_model->get_order_placement($this->auth_user->email); ?>
-                                                                <label class="head-notification-count"><?php echo count($order_placements); ?></label>
+                                                                <?php $order_placement_count = 0; ?>
+                                                                <?php foreach ($order_placements as $order_placement) : ?>
+                                                                    <?php if ($order_placement->read != 1) { ?>
+                                                                        <?php $order_placement_count = $order_placement_count + 1; ?>
+                                                                <?php }
+                                                                endforeach; ?>
+                                                                <label class="head-notification-count"><?php echo $order_placement_count; ?></label>
                                                             </div> <!-- tab -->
 
                                                             <ul class="notification-list">
@@ -1430,7 +1436,13 @@
                                                                 <!-- <i class="fa fa-envelope"></i> -->
                                                                 <p class="notification-head">Order Update</p>
                                                                 <?php $order_updates = $this->notification_model->get_order_update($this->auth_user->email); ?>
-                                                                <label class="head-notification-count"><?php echo count($order_updates); ?></label>
+                                                                <?php $order_updates_count = 0; ?>
+                                                                <?php foreach ($order_updates as $order_update) : ?>
+                                                                    <?php if ($order_update->read != 1) { ?>
+                                                                        <?php $order_updates_count = $order_updates_count + 1; ?>
+                                                                <?php }
+                                                                endforeach; ?>
+                                                                <label class="head-notification-count"><?php echo $order_updates_count; ?></label>
                                                             </div>
 
                                                             <ul class="notification-list">
@@ -1451,7 +1463,13 @@
                                                                 <!-- <i class="fa fa-calendar"></i> -->
                                                                 <p class="notification-head">Order Cancellation by Seller</p>
                                                                 <?php $order_cancellation_seller_updates = $this->notification_model->get_order_cancellation_by_seller($this->auth_user->email); ?>
-                                                                <label class="head-notification-count"><?php echo count($order_cancellation_seller_updates); ?></label>
+                                                                <?php $order_cancellation_seller_updates_count = 0; ?>
+                                                                <?php foreach ($order_cancellation_seller_updates as $order_cancellation_seller_update) : ?>
+                                                                    <?php if ($order_cancellation_seller_update->read != 0) { ?>
+                                                                        <?php $order_cancellation_seller_updates_count = $order_cancellation_seller_updates_count + 1; ?>
+                                                                <?php }
+                                                                endforeach; ?>
+                                                                <label class="head-notification-count"><?php echo $order_cancellation_seller_updates_count; ?></label>
                                                             </div>
 
                                                             <ul class="notification-list">
@@ -1472,7 +1490,13 @@
                                                                 <!-- <i class="fa fa-trophy"></i> -->
                                                                 <p class="notification-head">Order Delivered</p>
                                                                 <?php $order_delivered_updates = $this->notification_model->get_order_delivered($this->auth_user->email); ?>
-                                                                <label class="head-notification-count"><?php echo count($order_delivered_updates); ?></label>
+                                                                <?php $order_delivered_updates_count = 0; ?>
+                                                                <?php foreach ($order_delivered_updates as $order_delivered_update) : ?>
+                                                                    <?php if ($order_delivered_update->read != 1) { ?>
+                                                                        <?php $order_delivered_updates_count = $order_delivered_updates_count + 1; ?>
+                                                                <?php }
+                                                                endforeach; ?>
+                                                                <label class="head-notification-count"><?php echo $order_delivered_updates_count; ?></label>
                                                             </div>
 
                                                             <ul class="notification-list">
@@ -1493,7 +1517,13 @@
                                                                 <!-- <i class="fa fa-trophy"></i> -->
                                                                 <p class="notification-head">Promotions</p>
                                                                 <?php $promotions_updates = $this->notification_model->get_promotions($this->auth_user->email); ?>
-                                                                <label class="head-notification-count"><?php echo count($promotions_updates); ?></label>
+                                                                <?php $promotions_updates_count = 0; ?>
+                                                                <?php foreach ($promotions_updates as $promotions_update) : ?>
+                                                                    <?php if ($promotions_update->read != 1) { ?>
+                                                                        <?php $promotions_updates_count = $promotions_updates_count + 1; ?>
+                                                                <?php }
+                                                                endforeach; ?>
+                                                                <label class="head-notification-count"><?php echo $promotions_updates_count; ?></label>
                                                             </div>
 
                                                             <ul class="notification-list">
@@ -1515,7 +1545,13 @@
                                                                     <!-- <i class="fa fa-trophy"></i> -->
                                                                     <p class="notification-head">Rating, Reviews & Followers</p>
                                                                     <?php $reviews_followers_updates = $this->notification_model->get_reviews_followers($this->auth_user->email); ?>
-                                                                    <label class="head-notification-count"><?php echo count($reviews_followers_updates); ?></label>
+                                                                    <?php $reviews_followers_updates_count = 0; ?>
+                                                                    <?php foreach ($reviews_followers_updates as $reviews_followers_update) : ?>
+                                                                        <?php if ($reviews_followers_update->read != 1) { ?>
+                                                                            <?php $reviews_followers_updates_count = $reviews_followers_updates_count + 1; ?>
+                                                                    <?php }
+                                                                    endforeach; ?>
+                                                                    <label class="head-notification-count"><?php echo $reviews_followers_updates_count; ?></label>
                                                                 </div>
 
                                                                 <ul class="notification-list">
@@ -1536,7 +1572,13 @@
                                                                     <!-- <i class="fa fa-trophy"></i> -->
                                                                     <p class="notification-head">Listings</p>
                                                                     <?php $listings_updates = $this->notification_model->get_listings($this->auth_user->email); ?>
-                                                                    <label class="head-notification-count"><?php echo count($listings_updates); ?></label>
+                                                                    <?php $listings_updates_count = 0; ?>
+                                                                    <?php foreach ($listings_updates as $listings_update) : ?>
+                                                                        <?php if ($listings_update->read != 1) { ?>
+                                                                            <?php $listings_updates_count = $listings_updates_count + 1; ?>
+                                                                    <?php }
+                                                                    endforeach; ?>
+                                                                    <label class="head-notification-count"><?php echo $listings_updates_count; ?></label>
                                                                 </div>
 
                                                                 <ul class="notification-list">
@@ -1557,7 +1599,13 @@
                                                                     <!-- <i class="fa fa-trophy"></i> -->
                                                                     <p class="notification-head">Profile</p>
                                                                     <?php $profile_updates = $this->notification_model->get_profile_notification($this->auth_user->email); ?>
-                                                                    <label class="head-notification-count"><?php echo count($profile_updates); ?></label>
+                                                                    <?php $profile_updates_count = 0; ?>
+                                                                    <?php foreach ($profile_updates as $profile_update) : ?>
+                                                                        <?php if ($profile_update->read != 1) { ?>
+                                                                            <?php $profile_updates_count = $profile_updates_count + 1; ?>
+                                                                    <?php }
+                                                                    endforeach; ?>
+                                                                    <label class="head-notification-count"><?php echo $profile_updates_count; ?></label>
                                                                 </div>
 
                                                                 <ul class="notification-list">
@@ -1578,7 +1626,13 @@
                                                                     <!-- <i class="fa fa-trophy"></i> -->
                                                                     <p class="notification-head">Payout</p>
                                                                     <?php $payout_updates = $this->notification_model->get_payout_notification($this->auth_user->email); ?>
-                                                                    <label class="head-notification-count"><?php echo count($payout_updates); ?></label>
+                                                                    <?php $payout_updates_count = 0; ?>
+                                                                    <?php foreach ($payout_updates as $payout_update) : ?>
+                                                                        <?php if ($payout_update->read != 1) { ?>
+                                                                            <?php $payout_updates_count = $payout_updates_count + 1; ?>
+                                                                    <?php }
+                                                                    endforeach; ?>
+                                                                    <label class="head-notification-count"><?php echo $payout_updates_count; ?></label>
                                                                 </div>
 
                                                                 <ul class="notification-list">
@@ -1599,7 +1653,13 @@
                                                                     <!-- <i class="fa fa-trophy"></i> -->
                                                                     <p class="notification-head">Customization Notifications</p>
                                                                     <?php $customization_updates = $this->notification_model->get_customization_notification($this->auth_user->email); ?>
-                                                                    <label class="head-notification-count"><?php echo count($customization_updates); ?></label>
+                                                                    <?php $customization_updates_count = 0; ?>
+                                                                    <?php foreach ($customization_updates as $customization_update) : ?>
+                                                                        <?php if ($customization_update->read != 1) { ?>
+                                                                            <?php $customization_updates_count = $customization_updates_count + 1; ?>
+                                                                    <?php }
+                                                                    endforeach; ?>
+                                                                    <label class="head-notification-count"><?php echo $customization_updates_count; ?></label>
                                                                 </div>
 
                                                                 <ul class="notification-list">
@@ -1862,7 +1922,14 @@
                                                         <!-- <i class="fa fa-flag"></i> -->
                                                         <p class="notification-head">Gharobaar Updates</p>
                                                         <?php $gharobaar_updates = $this->notification_model->get_gharobaar_updates($this->auth_user->email); ?>
-                                                        <label class="head-notification-count"><?php echo count($gharobaar_updates); ?></label>
+                                                        <?php $gharobaar_updates_count = 0; ?>
+                                                        <?php foreach ($gharobaar_updates as $gharobaar_update) : ?>
+                                                            <?php if ($gharobaar_update->read != 1) { ?>
+                                                                <?php $gharobaar_updates_count = $gharobaar_updates_count + 1; ?>
+                                                        <?php }
+                                                        endforeach; ?>
+
+                                                        <label class="head-notification-count"><?php echo $gharobaar_updates_count; ?></label>
                                                     </div>
                                                     <!-- tab -->
 
@@ -1883,7 +1950,13 @@
                                                         <!-- <i class="fa fa-bug"></i> -->
                                                         <p class="notification-head">Order Placement</p>
                                                         <?php $order_placements = $this->notification_model->get_order_placement($this->auth_user->email); ?>
-                                                        <label class="head-notification-count"><?php echo count($order_placements); ?></label>
+                                                        <?php $order_placement_count = 0; ?>
+                                                        <?php foreach ($order_placements as $order_placement) : ?>
+                                                            <?php if ($order_placement->read != 1) { ?>
+                                                                <?php $order_placement_count = $order_placement_count + 1; ?>
+                                                        <?php }
+                                                        endforeach; ?>
+                                                        <label class="head-notification-count"><?php echo $order_placement_count; ?></label>
                                                     </div> <!-- tab -->
 
                                                     <ul class="notification-list">
@@ -1904,7 +1977,13 @@
                                                         <!-- <i class="fa fa-envelope"></i> -->
                                                         <p class="notification-head">Order Update</p>
                                                         <?php $order_updates = $this->notification_model->get_order_update($this->auth_user->email); ?>
-                                                        <label class="head-notification-count"><?php echo count($order_updates); ?></label>
+                                                        <?php $order_updates_count = 0; ?>
+                                                        <?php foreach ($order_updates as $order_update) : ?>
+                                                            <?php if ($order_update->read != 1) { ?>
+                                                                <?php $order_updates_count = $order_updates_count + 1; ?>
+                                                        <?php }
+                                                        endforeach; ?>
+                                                        <label class="head-notification-count"><?php echo $order_updates_count; ?></label>
                                                     </div>
 
                                                     <ul class="notification-list">
@@ -1924,7 +2003,13 @@
                                                         <!-- <i class="fa fa-calendar"></i> -->
                                                         <p class="notification-head">Order Cancellation by Seller</p>
                                                         <?php $order_cancellation_seller_updates = $this->notification_model->get_order_cancellation_by_seller($this->auth_user->email); ?>
-                                                        <label class="head-notification-count"><?php echo count($order_cancellation_seller_updates); ?></label>
+                                                        <?php $order_cancellation_seller_updates_count = 0; ?>
+                                                        <?php foreach ($order_cancellation_seller_updates as $order_cancellation_seller_update) : ?>
+                                                            <?php if ($order_cancellation_seller_update->read != 0) { ?>
+                                                                <?php $order_cancellation_seller_updates_count = $order_cancellation_seller_updates_count + 1; ?>
+                                                        <?php }
+                                                        endforeach; ?>
+                                                        <label class="head-notification-count"><?php echo $order_cancellation_seller_updates_count; ?></label>
                                                     </div>
 
                                                     <ul class="notification-list">
@@ -1944,7 +2029,13 @@
                                                         <!-- <i class="fa fa-trophy"></i> -->
                                                         <p class="notification-head">Order Delivered</p>
                                                         <?php $order_delivered_updates = $this->notification_model->get_order_delivered($this->auth_user->email); ?>
-                                                        <label class="head-notification-count"><?php echo count($order_delivered_updates); ?></label>
+                                                        <?php $order_delivered_updates_count = 0; ?>
+                                                        <?php foreach ($order_delivered_updates as $order_delivered_update) : ?>
+                                                            <?php if ($order_delivered_update->read != 1) { ?>
+                                                                <?php $order_delivered_updates_count = $order_delivered_updates_count + 1; ?>
+                                                        <?php }
+                                                        endforeach; ?>
+                                                        <label class="head-notification-count"><?php echo $order_delivered_updates_count; ?></label>
                                                     </div>
 
                                                     <ul class="notification-list">
@@ -1964,7 +2055,13 @@
                                                         <!-- <i class="fa fa-trophy"></i> -->
                                                         <p class="notification-head">Promotions</p>
                                                         <?php $promotions_updates = $this->notification_model->get_promotions($this->auth_user->email); ?>
-                                                        <label class="head-notification-count"><?php echo count($promotions_updates); ?></label>
+                                                        <?php $promotions_updates_count = 0; ?>
+                                                        <?php foreach ($promotions_updates as $promotions_update) : ?>
+                                                            <?php if ($promotions_update->read != 1) { ?>
+                                                                <?php $promotions_updates_count = $promotions_updates_count + 1; ?>
+                                                        <?php }
+                                                        endforeach; ?>
+                                                        <label class="head-notification-count"><?php echo $promotions_updates_count; ?></label>
                                                     </div>
 
                                                     <ul class="notification-list">
@@ -1985,7 +2082,13 @@
                                                             <!-- <i class="fa fa-trophy"></i> -->
                                                             <p class="notification-head">Rating, Reviews & Followers</p>
                                                             <?php $reviews_followers_updates = $this->notification_model->get_reviews_followers($this->auth_user->email); ?>
-                                                            <label class="head-notification-count"><?php echo count($reviews_followers_updates); ?></label>
+                                                            <?php $reviews_followers_updates_count = 0; ?>
+                                                            <?php foreach ($reviews_followers_updates as $reviews_followers_update) : ?>
+                                                                <?php if ($reviews_followers_update->read != 1) { ?>
+                                                                    <?php $reviews_followers_updates_count = $reviews_followers_updates_count + 1; ?>
+                                                            <?php }
+                                                            endforeach; ?>
+                                                            <label class="head-notification-count"><?php echo $reviews_followers_updates_count; ?></label>
                                                         </div>
 
                                                         <ul class="notification-list">
@@ -2005,7 +2108,13 @@
                                                             <!-- <i class="fa fa-trophy"></i> -->
                                                             <p class="notification-head">Listings</p>
                                                             <?php $listings_updates = $this->notification_model->get_listings($this->auth_user->email); ?>
-                                                            <label class="head-notification-count"><?php echo count($listings_updates); ?></label>
+                                                            <?php $listings_updates_count = 0; ?>
+                                                            <?php foreach ($listings_updates as $listings_update) : ?>
+                                                                <?php if ($listings_update->read != 1) { ?>
+                                                                    <?php $listings_updates_count = $listings_updates_count + 1; ?>
+                                                            <?php }
+                                                            endforeach; ?>
+                                                            <label class="head-notification-count"><?php echo $listings_updates_count; ?></label>
                                                         </div>
 
                                                         <ul class="notification-list">
@@ -2025,7 +2134,13 @@
                                                             <!-- <i class="fa fa-trophy"></i> -->
                                                             <p class="notification-head">Profile</p>
                                                             <?php $profile_updates = $this->notification_model->get_profile_notification($this->auth_user->email); ?>
-                                                            <label class="head-notification-count"><?php echo count($profile_updates); ?></label>
+                                                            <?php $profile_updates_count = 0; ?>
+                                                            <?php foreach ($profile_updates as $profile_update) : ?>
+                                                                <?php if ($profile_update->read != 1) { ?>
+                                                                    <?php $profile_updates_count = $profile_updates_count + 1; ?>
+                                                            <?php }
+                                                            endforeach; ?>
+                                                            <label class="head-notification-count"><?php echo $profile_updates_count; ?></label>
                                                         </div>
 
                                                         <ul class="notification-list">
@@ -2045,7 +2160,13 @@
                                                             <!-- <i class="fa fa-trophy"></i> -->
                                                             <p class="notification-head">Payout</p>
                                                             <?php $payout_updates = $this->notification_model->get_payout_notification($this->auth_user->email); ?>
-                                                            <label class="head-notification-count"><?php echo count($payout_updates); ?></label>
+                                                            <?php $payout_updates_count = 0; ?>
+                                                            <?php foreach ($payout_updates as $payout_update) : ?>
+                                                                <?php if ($payout_update->read != 1) { ?>
+                                                                    <?php $payout_updates_count = $payout_updates_count + 1; ?>
+                                                            <?php }
+                                                            endforeach; ?>
+                                                            <label class="head-notification-count"><?php echo $payout_updates_count; ?></label>
                                                         </div>
 
                                                         <ul class="notification-list">
@@ -2056,6 +2177,8 @@
                                                                         <span class="from"><?php echo $payout_update->title; ?></span>
                                                                         <span class="date"><?php echo $payout_update->created_at; ?></span>
                                                                     </div>
+                                                                    <p class="message"><?php echo $payout_update->remark; ?></p>
+
                                                                 </li>
                                                             <?php endforeach; ?>
                                                         </ul>
@@ -2065,7 +2188,13 @@
                                                             <!-- <i class="fa fa-trophy"></i> -->
                                                             <p class="notification-head">Customization Notifications</p>
                                                             <?php $customization_updates = $this->notification_model->get_customization_notification($this->auth_user->email); ?>
-                                                            <label class="head-notification-count"><?php echo count($customization_updates); ?></label>
+                                                            <?php $customization_updates_count = 0; ?>
+                                                            <?php foreach ($customization_updates as $customization_update) : ?>
+                                                                <?php if ($customization_update->read != 1) { ?>
+                                                                    <?php $customization_updates_count = $customization_updates_count + 1; ?>
+                                                            <?php }
+                                                            endforeach; ?>
+                                                            <label class="head-notification-count"><?php echo $customization_updates_count; ?></label>
                                                         </div>
 
                                                         <ul class="notification-list">
