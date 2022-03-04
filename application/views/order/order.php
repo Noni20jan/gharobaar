@@ -978,6 +978,7 @@
                                                     <strong class="font-600"><?php echo price_formatted($order->price_subtotal + $order->price_shipping, $order->price_currency); ?></strong>
                                                 </div>
                                             </div>
+
                                             <?php if ($is_order_has_physical_product) : ?>
                                                 <div class="row">
                                                     <div class="col-6 col-left">
@@ -999,6 +1000,43 @@
                                                     <strong class="font-600"><?php echo time_ago($item->updated_at); ?></strong>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                            <div class="col-6 col-left">
+                                        Estimated Delivery Date
+                                    </div>
+                                    <div class="col-6 col-right">
+                                    <?php if ($product->add_meet == "Made to stock" && substr_count($shipping_time,'_')>2 && $item->order_status=="processing" || $item->order_status=="shipped") : ?>
+
+<?php $ship_time = intval($product->shipping_time[2]); ?>
+<?php $created_at = strtotime($order->created_at); ?>
+<?php $x = $ship_time + 3; ?>
+
+<?php $order_create = strtotime("$x day", strtotime($order->created_at)); ?>
+
+<?php $ship_date = (date("dS M Y", $order_create)); ?>
+<?php $shipping_date = new DateTime($ship_date); ?>
+<strong class="font-600"><?php echo $ship_date; ?></strong>
+<?php elseif ($product->add_meet == "Made to order" && $item->order_status=="processing" || $item->order_status=="shipped" || $item->order_status=="waiting") : ?>
+<?php $lead_days = intval(get_product($item->product_id)->lead_days); ?>
+<?php $created_at = strtotime($order->created_at); ?>
+<?php $delivery_days = $lead_days + 3; ?>
+<?php $order_create = strtotime("$delivery_days day", $created_at); ?>
+<?php $shipping_date = (date("dS M Y", $order_create)); ?>
+<strong class="font-600"><?php echo $shipping_date; ?></strong>
+<?php elseif ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") == 2 && $item->order_status=="processing" || $item->order_status=="shipped" || $item->order_status=="waiting") : ?>
+<?php $shipped_time = intval($product->shipping_time); ?>
+<?php $created_at = strtotime($order->created_at); ?>
+<?php $delivery_time=$shipped_time+3;?>
+<?php $order_create = strtotime("$delivery_time day", $created_at); ?>
+<?php $shipped_date = (date("dS M Y", $order_create)); ?>
+<?php $shipp_date = new DateTime($shipped_date); ?>
+<strong class="font-600"><?php echo $shipped_date; ?></p>
+
+
+    
+<?php endif; ?>
+</div>
+</div>
                                             <div class="row cancel" style="text-align:center;">
                                                 <?php if ($item->order_status == "payment_received" || $item->order_status == "awaiting_payment" || $item->order_status == "processing" || $item->order_status == "waiting") : ?>
                                                     <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
@@ -1448,7 +1486,7 @@
                 setTimeout(myURL, 10000);
 
 function myURL() {
-    location.reload();
+    // location.reload();
 }
 
 
