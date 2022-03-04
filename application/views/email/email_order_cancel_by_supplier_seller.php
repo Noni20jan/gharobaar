@@ -117,8 +117,11 @@
                                     </a>
                                 </p>
                             <?php else : ?>
-                                <p style='text-align: center;margin-top: 40px;'> In order to track your order, please register on the website or write to contact@gharobaar.com</p>
-                            <?php endif; ?>
+                                <p style='text-align: center;margin-top: 40px;'>
+                                    <a href="<?php echo generate_url("guest_order") . '/' . $order->order_number .'?user_id='.$order->buyer_id; ?>" style='font-size: 14px;text-decoration: none;padding: 14px 40px;background-color: #DF911E;color: #000000 !important; border-radius: 3px;'>
+                                        <?php echo trans("see_order_details"); ?>
+                                    </a>
+                                </p>                            <?php endif; ?>
                             In case of MTO - We'd like to share again with you that your order contains product(s) from suppliers who are small scale homeprenuers making these products at home with limited means, hence we give them an option to accept/ reject the order within 2 hours of receiving it. Please note that this product cannot be returned or exchanged, however you may get an exchange or return based on the supplier's discretion. / or In case of MTS - Please note that this product can be returned or exchanged within CCC days or before the dispatch date or only if the dispatch is after the committed date of delivery
                             <br>Your order shall also bring rewards to you, please visit the Gharobaar website to learn more about the loyalty program. We would love to get your feedback about the product, service and the seller, your appreciation would encourage us & our partners to continue serving you to the best of our ability, and your criticism would make us learn and improve.
                             We look forward to serving you again and continue to get your patronage.
