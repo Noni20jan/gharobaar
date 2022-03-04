@@ -733,11 +733,6 @@
             <?php endif; ?>
         <?php else : ?>
             <?php if ($this->general_settings->index_promoted_products == 1 && $this->general_settings->promoted_products == 1 && !empty($promoted_products)) : ?>
-                <!-- <div class="col-12 sides-gap-equal section section-promoted"> -->
-                <!-- promoted products -->
-                <? //php $this->load->view("product/_featured_products"); 
-                ?>
-                <!-- </div> -->
             <?php endif; ?>
         <?php endif; ?>
         <section class="testimonial-background">
@@ -762,10 +757,10 @@
                 </div>
             </div>
         </section>
-
+        <!-- code start for seller specific banners -->
         <?php // $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); 
         ?>
-
+        <!-- code end for seller specific banners -->
 
         <div class="row">
             <h3 style=" padding-left: 16px;" class="find-your-seller">Find Your Seller</h3>
@@ -796,16 +791,6 @@
 
     </div>
 </div>
-
-
-
-<!-- <div class="row" id="second-slider" style="margin-bottom:5%;">
-            <div class="section-slider">
-                <img style="width:100%;" src="assets/img/landing-page-img/banner-2-img.png">
-            </div>
-        </div>
-    </div>
-</div> -->
 
 
 <div class="section-slider">

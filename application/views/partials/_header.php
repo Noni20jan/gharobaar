@@ -18,7 +18,7 @@
 <!-- <link rel="preload" href="<?php echo base_url(); ?>assets/fonts/slick.woff" as="font" type="font/format" crossorigin> -->
 
 
-<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+<link async href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/jquery.dm-uploader.min.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/styles.css" />

@@ -2,7 +2,7 @@
 <?php //var_dump($_SESSION['session_otp']);
 ?>
 <!DOCTYPE html>
-<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+<link async href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 <html lang="<?php echo $this->selected_lang->short_form ?>">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 

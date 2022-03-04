@@ -52,10 +52,6 @@ class Lookup_model extends CI_Model
 
     public function get_lookup_image_url($lookup_code)
     {
-        //     $this->db->where('lookup_type', $lookup_type);
-        //     $query = $this->db->get('lookup_values');
-        //     $id = $query->row()->lookup_type;
-
         $this->db->where('lookup_value_code', $lookup_code);
         $query = $this->db->get("images_function");
         return $query->row();

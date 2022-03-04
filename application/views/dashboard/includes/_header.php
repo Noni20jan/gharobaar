@@ -14,7 +14,7 @@ $user = get_user($this->auth_user->id);
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="shortcut icon" type="image/png" href="<?php echo get_favicon($this->general_settings); ?>" />
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link async href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?= base_url(); ?>assets/admin/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/font-icons/css/mds-icons.min.css" />
