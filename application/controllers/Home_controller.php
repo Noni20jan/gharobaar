@@ -314,7 +314,7 @@ class Home_controller extends Home_Core_Controller
         $data['keywords'] = $this->settings->keywords;
         //products
         $data["user_data"] = $this->profile_model->get_vendor_data();
-        $data["promoted_products"] = $this->product_model->get_promoted_products_banner();
+        //$data["promoted_products"] = $this->product_model->get_promoted_products_banner();
         $data["latest_products"] = get_latest_products($this->general_settings->index_latest_products_count);
         $data["most_ordered_products"] = $this->product_model->get_most_ordered_products($this->general_settings->index_latest_products_count);
         if ($this->auth_check) {
@@ -331,7 +331,8 @@ class Home_controller extends Home_Core_Controller
             $data["top_picks_products"] = $this->product_model->get_products_by_pageview();
         }
         // var_dump($data["category_products"]);
-        $data["promoted_products"] = get_promoted_products($this->promoted_products_limit, 0);
+        //$data["promoted_products"] = $this->product_model->get_promoted_products($this->promoted_products_limit, 0);
+        $data["promoted_products"] = $this->product_model->get_promoted_products_limited($this->promoted_products_limit, 0);
         $data["promoted_products_count"] = get_promoted_products_count();
         $data["slider_items"] = $this->slider_model->get_slider_items();
         $data["slider_items"] = $this->slider_model->get_slider_item_by_type("MAIN_BANNER");
