@@ -1375,6 +1375,52 @@ class Home_controller extends Home_Core_Controller
     }
 
 
+    public function guest_order($order_number)
+    {
+        get_method();
+        $user_id = $this->input->get("user_id", true);
+
+        $data['title'] = trans("orders");
+        $data['description'] = trans("orders") . " - " . $this->app_name;
+        $data['keywords'] = trans("orders") . "," . $this->app_name;
+        $data["active_tab"] = "";
+        $data["cart_items"] = $this->cart_model->get_sess_cart_items();
+        $data["cart_total"] = $this->cart_model->get_sess_cart_total();
+        $data["order"] = $this->order_model->get_order_by_order_number($order_number);
+        $data["order_products"] = $this->order_model->get_order_products($data["order"]->id);
+        $product = array();
+        foreach ($data["order_products"] as $order_details) {
+            array_push($product, $this->product_model->get_product_by_id($order_details->product_id));
+        }
+        $data["products"] = $product;
+        $data['check'] = $this->order_model->get_stats($data["order"]->id, ($order_details->product_id));
+
+
+
+        if (empty($data["order"])) {
+            redirect(lang_base_url());
+        }
+        if ($data["order"]->buyer_id != $user_id) {
+            redirect(lang_base_url());
+        }
+
+        $data['main_settings'] = get_main_settings();
+        $data["reject_reason"] = $this->order_model->get_reject_reason_buyer();
+        $data["order_products"] = $this->order_model->get_order_products($data["order"]->id);
+        $data["order_products_history"] = $this->order_model->get_user_order_history($user_id);
+        $data["last_bank_transfer"] = $this->order_admin_model->get_bank_transfer_by_order_number($data["order"]->order_number);
+
+        $this->load->view('dashboard/includes/_header_buyer', $data);
+        $this->load->view('order/guest_order_details', $data);
+        $this->load->view('partials/_footer', $data);
+        // $this->load->view('dashboard/includes/_footer');
+    }
+
+
+
+    // http://localhost/gharobaar/guest_order/11419?user_id=181
+
+
     /**
      * View More Products by category
      */

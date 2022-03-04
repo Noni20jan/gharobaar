@@ -183,9 +183,11 @@
                                     </a>
                                 </p>
                             <?php else : ?>
-                                <p style='text-align: center;margin-top: 40px;'> In order to track your order, please register on the website or write to contact@gharobaar.com</p>
-                            <?php endif; ?>
-
+                                <p style='text-align: center;margin-top: 40px;'>
+                                    <a href="<?php echo generate_url("guest_order") . '/' . $order->order_number .'?user_id='.$order->buyer_id; ?>" style='font-size: 14px;text-decoration: none;padding: 14px 40px;background-color: #DF911E;color: #000000 !important; border-radius: 3px;'>
+                                        <?php echo trans("see_order_details"); ?>
+                                    </a>
+                                </p>                             <?php endif; ?>
                             <br>
                             <br>
 
