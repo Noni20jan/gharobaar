@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- custom style style -->
+<!-- <script src="/scripts/js/jquery.min.js"></script> -->
 <?php $sellers = get_products();
 $unique_state_array = array();
 foreach ($sellers as $seller) {
@@ -479,7 +480,7 @@ foreach ($sellers as $seller) {
                     <?php $filter_sort = str_slug($this->input->get('sort', true)); ?>
                     <div class="sort-select">
                         <select class="custom-select" onchange="window.location.replace(this.value);" style="border-radius: 20px;">
-                        <option value="">Select an option</option>
+                            <option value="">Select an option</option>
 
                             <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'most_recent'); ?>" <?= $filter_sort == 'most_recent' ? ' selected' : ''; ?>><?= trans("latest_first"); ?></option>
                             <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'oldest_first'); ?>" <?= $filter_sort == 'oldest_first' ? ' selected' : ''; ?>><?= trans("oldest_first"); ?></option>
@@ -2391,9 +2392,6 @@ foreach ($sellers as $seller) {
 <!-- Wrapper End-->
 <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-
-
-
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 <script type="text/javascript"></script>
 <script>
@@ -2406,9 +2404,9 @@ foreach ($sellers as $seller) {
         } else {
             if ($(window).scrollTop() >= ($(document).height() - $(window).height()) * 0.7) {
                 // if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+
                 page++;
                 loadMoreData(page);
-
             }
         }
     });

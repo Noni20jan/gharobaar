@@ -32,6 +32,10 @@
         /* Safari 3-8 */
         transform: scale(1.25);
     }
+
+    .icon-check {
+        color: #90EE90;
+    }
 </style>
 <?php //var_dump($product);
 //die();
@@ -87,13 +91,13 @@ if (!empty($variation)) { ?>
                             $disabled = " disabled"; ?>
 
                             <a href="javascript:void(0)" class="item-options btn-add-to-cart zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
-                                <i class="icon-cart cart-size "></i>
+                                <i class="icon-cart cart-size"></i>
                             </a>
                         <?php } ?>
                     <?php } else { ?>
                         <?php if ($variations_stock != 0) { ?>
                             <a href="javascript:void(0)" class="item-options btn-add-to-cart zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
-                                <i class="icon-cart cart-size "></i>
+                                <i class="icon-cart cart-size"></i>
                             </a>
                         <?php } ?>
                     <?php } ?>
