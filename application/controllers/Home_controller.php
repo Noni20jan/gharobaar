@@ -319,7 +319,8 @@ class Home_controller extends Home_Core_Controller
         $data["most_ordered_products"] = $this->product_model->get_most_ordered_products($this->general_settings->index_latest_products_count);
         if ($this->auth_check) {
             // $data["top_picks"] = $this->product_model->get_top_picks_products($this->general_settings->index_latest_products_count, $this->auth_user->id);
-            $data["top_picks"] = $this->product_model->get_most_ordered_products($this->general_settings->index_latest_products_count);
+            // $data["top_picks"] = $this->product_model->get_most_ordered_products($this->general_settings->index_latest_products_count);
+            $data["top_picks"] = $data["most_ordered_products"];
         }
         if (!empty($this->auth_user->id)) {
             if ($this->auth_user->gender == 'Male') {
@@ -332,8 +333,9 @@ class Home_controller extends Home_Core_Controller
         }
         // var_dump($data["category_products"]);
         //$data["promoted_products"] = $this->product_model->get_promoted_products($this->promoted_products_limit, 0);
-        $data["promoted_products"] = $this->product_model->get_promoted_products_limited($this->promoted_products_limit, 0);
-        $data["promoted_products_count"] = get_promoted_products_count();
+        //$data["promoted_products"] = $this->product_model->get_promoted_products_limited($this->promoted_products_limit, 0);
+        $data["promoted_products"] = $this->product_model->get_promoted_products_from_mv();
+        $data["promoted_products_count"] = 10;
         $data["slider_items"] = $this->slider_model->get_slider_items();
         $data["slider_items"] = $this->slider_model->get_slider_item_by_type("MAIN_BANNER");
         $data["second_slider_items"] = $this->slider_model->get_slider_item_by_type("SECOND_MAIN_BANNER");

@@ -2116,6 +2116,14 @@ class Product_model extends Core_Model
         $this->build_query('promoted');
         $this->db->order_by('products.promote_start_date', 'DESC')->limit(clean_number($per_page), clean_number($offset));
         $query = $this->db->get('products');
+        var_dump($this->db->last_query());
+        die();
+        return $query->result();
+    }
+    //get promoted products
+    public function get_promoted_products_from_mv()
+    {
+        $query = $this->db->get('mv_featured_products');
         return $query->result();
     }
 
