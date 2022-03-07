@@ -76,6 +76,8 @@ class Order_model extends CI_Model
             if ($this->auth_check) {
                 $data["buyer_type"] = "registered";
                 $data["buyer_id"] = $this->auth_user->id;
+                $user = get_user($this->auth_user->id);
+                $data["buyer_type"] = $user->user_type;
             }
             if ($this->db->insert('orders', $data)) {
                 $order_id = $this->db->insert_id();
