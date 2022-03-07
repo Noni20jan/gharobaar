@@ -1,10 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 
 <head>
+    <title>abundant cart</title>
+
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet"> -->
+
     <style>
+        /* @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap'); */
+
+
+
+        .footer-image {
+            background-image: url('https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/images/footer_image.png');
+            width: 100%;
+            height: 100%;
+        }
+
         img {
             border: none;
             -ms-interpolation-mode: bicubic;
@@ -12,7 +27,7 @@
         }
 
         body {
-            background-color: #f6f6f6;
+            background-color: #F9F9F9;
             font-family: sans-serif;
             -webkit-font-smoothing: antialiased;
             font-size: 14px;
@@ -37,12 +52,12 @@
         }
 
         .body {
-            background-color: #cccccc;
+            background-color: #ffffff;
             width: 100%;
         }
 
         .body1 {
-            /* background-color: #FFB300; */
+            background-color: #ffffff;
             width: 100%;
         }
 
@@ -82,7 +97,7 @@
             clear: both;
             Margin-top: 10px;
             text-align: center;
-            width: 100%;
+            width: 90%;
         }
 
         .footer td,
@@ -229,10 +244,27 @@
             text-decoration: none;
         }
 
+        .dynamic-text {
+            padding: 3% 10%;
+            font-family: 'lato', sans-serif;
+        }
+
+        .dynamic-footer {
+            padding: 3% 10%;
+            font-family: 'lato', sans-serif;
+            font-size: 80%;
+        }
+
         hr {
             border: 0;
             border-bottom: 1px solid #f6f6f6;
             margin: 20px 0;
+        }
+
+
+        .web-product {
+            height: 15%;
+            width: 15%;
         }
 
         @media only screen and (max-width: 620px) {
@@ -241,13 +273,18 @@
                 margin-bottom: 10px !important;
             }
 
+            table[class=body4] td {
+                padding: 0% 30%;
+
+            }
+
             table[class=body] p,
             table[class=body] ul,
             table[class=body] ol,
             table[class=body] td,
             table[class=body] span,
             table[class=body] a {
-                font-size: 16px !important;
+                font-size: 10px !important;
             }
 
             table[class=body] .wrapper,
@@ -283,19 +320,19 @@
                 max-width: 100% !important;
                 width: auto !important;
             }
+
+            table[class=body3] .mobile-product {
+                height: 10% !important;
+                width: 10% !important;
+            }
         }
 
         @media all {
-            div.social-content {
-                text-align: center;
-                color: black;
-                display: flex;
-                padding-left: 0;
-            }
-
             .ExternalClass {
                 width: 100%;
             }
+
+
 
             .ExternalClass,
             .ExternalClass p,
@@ -323,41 +360,12 @@
                 background-color: #34495e !important;
                 border-color: #34495e !important;
             }
+
+            .mobile-product {
+                height: 20% !important;
+                width: 20% !important;
+            }
         }
-
-        .shop-now {
-            width: 30%;
-        }
-
-        .coupon-code {
-            width: 80%;
-        }
-
-        div.social-icons {
-            padding: 45px 0px 0px 21px;
-        }
-
-        div.visit-us-at {
-            writing-mode: tb-rl;
-        }
-
-        div .social-link {
-            width: 32px;
-        }
-
-        div.social-content {
-            /* text-align: center;
-            color: black;
-            display: flex;
-            padding-left: 20%; */
-
-        }
-
-        .founders-note {
-            width: 90%;
-        }
-
-        /* @media(max-width:768px) {} */
     </style>
 </head>
 
@@ -365,297 +373,66 @@
 
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
         <tr>
-            <td>
-                <div>
+            <td class="container">
+                <div class="content">
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
                         <tr>
                             <td style="text-align: center;">
-
-                                <head>
-
-
-
-                                    <!-- <style>
-                                        td {
-                                            font-size: x-large;
-                                        }
-
-                                        .container {
-                                            padding: 0 20%;
-                                        }
-
-                                        @media only screen and (max-width: 600px) {
-                                            .container {
-                                                width: 100%;
-                                                padding: 0 0%;
-                                            }
-
-                                            .products {
-                                                padding-right: 0% 4%;
-                                            }
-
-                                        }
-                                    </style> -->
-                                </head>
-
-                                <body>
-                                    <div class="container">
-                                        <div style="width: 100%; background-size: cover; background-image:
-                                            url('https://gharobaar.com/assets/img/email_img/Untitled-1%203.png');">
-                                            <div>
-                                                <br>
-                                                <div class="row" style="margin:2% 0;">
-                                                    <img class="founders-note" src="https://gharobaar.com/assets/img/valentine_img/FOUNDER%20note.png">
-                                                </div>
-
-                                                <div>
-                                                    <img src="https://gharobaar.com/assets/img/valentine_img/Group%2023.png" style="height: 129%; width:92%">
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-8">
-                                                        <div class="row" style="text-align:left; margin-left:2%;">
-                                                            <img src="https://gharobaar.com/assets/img/valentine_img/Valentine%20Day%20Gifting%20Guide.png">
-                                                        </div>
-                                                    </div>
-                                                    <!-- <div class="col-4">
-                                                    <div style="text-align:right; margin-right:8%;"><img
-                                                            src="https://gharobaar.com/assets/img/email_img/Asset%202%201.png"></div>
-                                                </div> -->
-                                                </div>
-                                            </div>
-                                            <!-- <img src="https://gharobaar.com/assets/img/email_img/Capture3.PNG" style="width: 100%; height: 12%;"> -->
-                                            <div class="row" style="align-self: center;"><img src="https://gharobaar.com/assets/img/valentine_img/Group%2022%20(1).png" style="width: 100%;">
-                                            </div>
+                                <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic11.png">
+                                <div style="padding: 3%;">
+                                    <a href="https://www.gharobaar.com/profile/nupurghundiyalgmailcom"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic2.png"></a>
+                                    <a href="https://www.gharobaar.com/profile/namratha1011gmailcom"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic3.png"></a>
+                                    <a href="https://www.gharobaar.com/profile/infotheiascapegmailcom"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic4.png"></a>
+                                    <a href="https://www.gharobaar.com/profile/happinesswhitelightelementsin"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic5.png"></a>
+                                    <a href="https://www.gharobaar.com/profile/salesshuddhpureshop"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic6.png"></a>
 
 
+                                    <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic7.png">
+                                </div>
+
+                                <a href="https://www.gharobaar.com/shop-by-seller"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic10.png"></a>
 
 
-                                            <div style="padding: 0% 10%;" class="products">
-                                                <div class="row" style="display:flex;">
-                                                    <div class="col-md-6">
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Group%2025.png" style="">
-                                                    </div>
-                                                    <div class="col-md-6" style="text-align:center; padding-top:13%;">
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/ROSE%20MINI%20DRESS.png"><br>
-                                                        <br>
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Rose%20mini.png">
-                                                        <br>
-                                                        <br>
-                                                        <a href="https://www.gharobaar.com/rose-midi-dress-4647">
-                                                            <img src="https://gharobaar.com/assets/img/email_img/Group%201.png"></a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <div class="footer-image">
+                                    <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic12.png" width="30%">
 
 
-
-                                            <div style="padding: 0% 10%;">
-                                                <div class="row" style="display:flex;">
-                                                    <div class="col-md-6" style=" text-align:center; padding-right: 10%;">
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Stained%20glass%20heart%20hanging.png"><br>
-                                                        <br>
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/art%20gilheri.png">
-                                                        <br>
-                                                        <br>
-                                                        <a href="https://www.gharobaar.com/rose-midi-dress-4647">
-                                                            <img src="https://gharobaar.com/assets/img/email_img/Group%201.png"></a>
-                                                    </div>
-                                                    <div class="col-md-6" style="height: 90%;">
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Group%2025%20(1).png" style="">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div style="padding: 0% 10%;">
-                                                <div class="row" style="display:flex;">
-                                                    <div class="col-md-6">
-                                                        <!-- <img src="https://gharobaar.com/assets/img/email_img/Ellipse%203.png"
-                                                        style="height: 100%; " -->
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Group%2029.png" style="height: 90%;">
-                                                    </div>
-                                                    <div class="col-md-6" style="text-align:center; padding-top:13%;">
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/niyor%20perfumes.png"><br>
-                                                        <br>
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Niyor%20perfume.png">
-                                                        <br>
-                                                        <br>
-                                                        <a href="https://www.gharobaar.com/niyor-personalized-perfume-for-gift-customised-label-of-your-choice-perfect-valentines-birthday-gift-7250">
-                                                            <img src="https://gharobaar.com/assets/img/email_img/Group%201.png"></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div style="padding: 0% 10%;">
-                                                <div class="row" style="display:flex;">
-                                                    <div class="col-md-6" style=" text-align:center; padding-right: 10%;">
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Alcohol%20Free%20Aftershave.png"><br>
-                                                        <br>
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Geelee%20Mitti.png"><br>
-                                                        <br>
-                                                        <a href="https://www.gharobaar.com/alcohol-free-aftershave-100-natural-soothing-moisturizing-with-aloe-vera-rose-water-no-irritation-side-effects-100ml-7149">
-                                                            <img src="https://gharobaar.com/assets/img/email_img/Group%201.png"></a>
-
-                                                    </div>
-                                                    <div class="col-md-6" style="height: 90%;">
-                                                        <!-- <img src="https://gharobaar.com/assets/img/email_img/Ellipse%203.png"
-                                                        style="height: 230px; "x;"> -->
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Group%2027.png">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div style="padding: 0% 10%;">
-                                                <div class="row" style="display:flex;">
-                                                    <div class="col-md-6">
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Group%2026.png" style="height: 90%;">
-                                                        <!-- <img src="https://gharobaar.com/assets/img/email_img/Ellipse%203.png"
-                                                        style="height: 263px; "> -->
-                                                    </div>
-                                                    <div class="col-md-6" style="text-align:center; padding-top:7%;">
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Explosion%20box.png"><br>
-                                                        <br>
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Handy%20Mandy.png"><br>
-                                                        <br>
-                                                        <a href="https://www.gharobaar.com/heart-shape-explosion-box-7201">
-                                                            <img src="https://gharobaar.com/assets/img/email_img/Group%201.png"></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-
-                                            <div style="padding: 0% 10%;">
-                                                <div class="row" style="display:flex;">
-                                                    <div class="col-md-6" style=" text-align:center; padding-right: 10%;">
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Rainbow%20Teddy%20Shirt.png"><br>
-                                                        <br>
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Pawgy%20Pet.png"><br>
-                                                        <br>
-                                                        <a href="https://www.gharobaar.com/rainbow-teddy-shirt-2514">
-                                                            <img src="https://gharobaar.com/assets/img/email_img/Group%201.png"></a>
-
-
-                                                    </div>
-                                                    <div class="col-md-6" style="height: 90%;">
-                                                        <!-- <img src="https://gharobaar.com/assets/img/email_img/Ellipse%203.png"
-                                                        style="height: 209px; "x;"> -->
-                                                        <br><img src="https://gharobaar.com/assets/img/valentine_img/Group%2028.png" style="">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div style="padding: 0% 10%;">
-                                                <div class="row" style="display:flex;">
-                                                    <div class="col-md-6">
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Mask%20Group.png" style="height: 90%;">
-                                                    </div>
-                                                    <div class="col-md-6" style="text-align:center; padding-top:7%;">
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Lavender%20candle.png"><br>
-                                                        <br>
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Moum%20candles..png"><br>
-                                                        <br>
-                                                        <a href="https://www.gharobaar.com/lavender-double-wick-candles-7266">
-                                                            <img src="https://gharobaar.com/assets/img/email_img/Group%201.png"></a>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-
-
-                                            <div style="padding: 0% 10%;">
-                                                <div class="row" style="display:flex;">
-                                                    <div class="col-md-6" style=" text-align:center; padding-right: 10%;">
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Gluten-free%20chocolate.png" style=""><br>
-                                                        <br>
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Piperleaf.png"><br>
-                                                        <br>
-                                                        <a href="https://www.gharobaar.com/5599">
-                                                            <img src="https://gharobaar.com/assets/img/email_img/Group%201.png" style=""></a>
-
-                                                    </div>
-                                                    <div class="col-md-6" style="">
-                                                        <img src="https://gharobaar.com/assets/img/valentine_img/Mask%20Group%20(1).png" style="height: 90%;">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div style="text-align: center;">
-                                                <img src="https://gharobaar.com/assets/img/valentine_img/Group%2019.png" style="height: 45%; width: 80%;">
-                                            </div>
-                                            <div style="background-color: lightpink">
-                                                <br>
-                                                <br>
-                                                <div style="text-align: center;">
-                                                    <img src="https://gharobaar.com/assets/img/valentine_img/Group%207.png">
-                                                </div>
-
-                                                <div style="text-align: center;">
-                                                    <img class="coupon-code" src="https://gharobaar.com/assets/img/valentine_img/coupon%20code.png">
-                                                </div>
-                                                <div style="text-align: center;">
-
-                                                    <a href="https://gharobaar.com/">
-                                                        <img class="shop-now" src="https://gharobaar.com/assets/img/email_img/Shop%20Now%20(002).png"></a>
-                                                </div>
-                                                <!-- <div style="text-align: center;">
-                                                    <div class="social-content">
-                                                        <div>
-                                                            <img src="https://gharobaar.com/assets/img/email_img/Asset%201%201.png">
-                                                        </div>
-                                                        <div class="visit-us-at">
-                                                            <img src="https://gharobaar.com/assets/img/valentine_img/VISIT%20US%20AT.png">
-                                                        </div>
-                                                        <div class="social-icons">
-                                                            <a href="https://www.facebook.com/gharobaar.official" target="_blank" rel="noopener" style="text-decoration: none;">
-                                                                <img class="social-link" src="https://gharobaar.com/assets/img/social-icons/facebook.png" />
-                                                            </a>
-                                                            <a href="https://www.instagram.com/gharobaar_official/" target="_blank" rel="noopener" style="text-decoration: none;">
-                                                                <img class="social-link" src="https://gharobaar.com/assets/img/social-icons/instagram.png" />
-                                                            </a> <a href="https://www.youtube.com/channel/UC2jOkQl0OR1cIJgo2WJZWqw" target="_blank" rel="noopener" style="text-decoration: none;">
-                                                                <img class="social-link" src="https://gharobaar.com/assets/img/social-icons/youtube.png" />
-                                                            </a>
-                                                            <a href="https://in.pinterest.com/gharobaar_official/_created/" target="_blank" rel="noopener" style="text-decoration: none;">
-                                                                <img class="social-link" src="https://gharobaar.com/assets/img/social-icons/pinterest.png" />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
-                                                <!-- <div style="justify-content: center; align-items:center;"> -->
-                                                <table>
+                                    <table border="0" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td>
+                                                <table border="0" cellpadding="0" cellspacing="0" class="body4">
                                                     <tr>
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-                                                                    <td style=" text-align: right;"><img src="https://gharobaar.com/assets/img/email_img/Asset%201%201.png">
-                                                                    </td>
-                                                                    <td class="visit-us-at" style="vertical-align: middle;"> <img src="https://gharobaar.com/assets/img/valentine_img/VISIT%20US%20AT.png">
-                                                                    </td>
-                                                                    <td style="vertical-align: middle !important; text-align:left;">
-                                                                        <a href="https://www.facebook.com/gharobaar.official" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener">
-                                                                            <img src="https://gharobaar.com/assets/img/social-icons/facebook.png" width="32" />
-                                                                        </a>
-                                                                        <a href="https://www.instagram.com/gharobaar_official/" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/instagram.png" width="32" />
-                                                                        </a> <a href="https://www.youtube.com/channel/UC2jOkQl0OR1cIJgo2WJZWqw" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/youtube.png" width="32" />
-                                                                        </a>
-                                                                        <a href="https://in.pinterest.com/gharobaar_official/_created/" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/pinterest.png" width="32" />
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
+
+                                                        <td class="visit-us-at" style="vertical-align: middle;text-align: right;">
+                                                            <img src="https://gharobaar.com/assets/img/valentine_img/VISIT%20US%20AT.png">
+                                                        </td>
+                                                        <td style="text-align: left;width: 56%;">
+
+                                                            <a href="https://www.facebook.com/gharobaar.official" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener">
+                                                                <img src="https://gharobaar.com/assets/img/social-icons/facebook.png" width="32" />
+                                                            </a>
+                                                            <a href="https://www.instagram.com/gharobaar_official/" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/instagram.png" width="32" />
+                                                            </a> <a href="https://www.youtube.com/channel/UC2jOkQl0OR1cIJgo2WJZWqw" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/youtube.png" width="32" />
+                                                            </a>
+                                                            <a href="https://www.linkedin.com/company/gharobaar" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/linkedin.png" width="32" />
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </body>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    <br>
+                                </div>
+                                <!-- <img src="pic9.png"> -->
+
                             </td>
                         </tr>
                     </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</html>

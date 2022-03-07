@@ -1145,10 +1145,7 @@ class Product_model extends Core_Model
             $this->db->join('product_details', 'product_details.product_id = products.id');
             $this->db->where('product_details.lang_id', clean_number($this->selected_lang->id));
             $this->db->group_start();
-            // $this->db->group_start();
-            // $search_word = str_replace("'", "\'", $search);
-            // var_dump($search);
-            // var_dump($search_word);
+
             $this->db->like('product_details.title', $search);
             foreach ($array_search_words as $word) {
 
@@ -2218,6 +2215,20 @@ class Product_model extends Core_Model
             $result2 = json_decode(json_encode($result));
             foreach ($result2 as $result55) {
                 $sim = similar_text($result55->title, $search, $perc);
+                $result55->perc = $perc;
+            }
+            $price = array_column($result2, 'perc');
+
+            array_multisort($price, SORT_DESC, $result2);
+            foreach ($result2 as $result55) {
+                $sim = similar_text($result55->brand_name, $search, $perc);
+                $result55->perc = $perc;
+            }
+            $price = array_column($result2, 'perc');
+
+            array_multisort($price, SORT_DESC, $result2);
+            foreach ($result2 as $result55) {
+                $sim = similar_text($result55->shop_name, $search, $perc);
                 $result55->perc = $perc;
             }
             $price = array_column($result2, 'perc');

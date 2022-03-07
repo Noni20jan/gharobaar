@@ -253,20 +253,20 @@
 <!-- Wrapper -->
 <div id="wrapper">
     <div class="container">
-        <div class="feedback">
-            <?php if ($this->session->flashdata('success')) : ?>
-                <div class="m-b-15" style="max-width: 462px;margin-left: 401px;">
-                    <div class="alert alert-success alert-dismissable">
-                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        <h4>
-                            <i class="icon fa fa-check"></i>
-                            <?php echo $this->session->flashdata('success'); ?>
-                        </h4>
-                    </div>
-                </div>
-            <?php endif; ?>
-        </div>
         <div class="row webOrderView">
+            <div class="feedback">
+                <?php if ($this->session->flashdata('success')) : ?>
+                    <div class="m-b-15" style="max-width: 462px;margin-left: 401px;">
+                        <div class="alert alert-success alert-dismissable">
+                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                            <h4>
+                                <i class="icon fa fa-check"></i>
+                                <?php echo $this->session->flashdata('success'); ?>
+                            </h4>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
             <!-- <div class=""> -->
             <!-- <div class=""> -->
             <div class="order-head" style="margin-left:12px;">
