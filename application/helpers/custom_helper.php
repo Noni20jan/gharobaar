@@ -151,6 +151,16 @@ if (!function_exists('get_products_by_discount_order')) {
     }
 }
 
+//Top discount products from mv
+if (!function_exists('get_top_disc_product_from_mv')) {
+    function get_top_disc_product_from_mv()
+    {
+        $ci = &get_instance();
+        return $ci->product_model->get_top_disc_product_from_mv();
+    }
+}
+
+
 //products subcategories for shop by product section
 if (!function_exists('shop_by_product_categories')) {
     function shop_by_product_categories($id)
@@ -3167,7 +3177,7 @@ if (!function_exists('breadcrumbs')) {
             return $cart_seller_value;
         }
     }
-    
+
 
 
     if (!function_exists('get_seller_order_value')) {
@@ -3178,6 +3188,4 @@ if (!function_exists('breadcrumbs')) {
             return $seller_order_value;
         }
     }
-
-
 }

@@ -758,7 +758,7 @@
             </div>
         </section>
         <!-- code start for seller specific banners -->
-        <?php $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']);
+        <?php // $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); 
         ?>
         <!-- code end for seller specific banners -->
 
@@ -795,7 +795,7 @@
 
 <div class="section-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
-        $this->load->view("partials/_main_slider_2", ["second_slider_items" => $second_slider_items]);
+    // $this->load->view("partials/_main_slider_2", ["second_slider_items" => $second_slider_items]);
     endif; ?>
 </div>
 
@@ -865,7 +865,30 @@
 
         <div class="col-12 sides-gap-equal section section-latest-products">
             <h3 class="find-your-seller" id="top_picks">Top Picks</h3>
-
+            <div class="row row-product shop-by" id="top-picks-container-2">
+                <!--print products-->
+                <?php if (($this->auth_check) && (count($top_picks) >= 5)) : ?>
+                    <?php foreach ($top_picks as $product) : ?>
+                        <?php if ($product->is_shop_open == "1") :
+                        ?>
+                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">
+                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                            </div>
+                        <?php endif;
+                        ?>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <?php foreach ($most_ordered_products as $product) : ?>
+                        <?php if ($product->is_shop_open == "1") :
+                        ?>
+                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">
+                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                            </div>
+                        <?php endif;
+                        ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
             <!-- <div id="top-picks-container_nav-2" class="index-products-slider-nav">
                 <button class="prev"><i class="icon-arrow-left"></i></button>
                 <button class="next"><i class="icon-arrow-right"></i></button>
@@ -895,7 +918,7 @@
 </div>
 <div class="section-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
-        $this->load->view("partials/_main_slider_concern_new", ["second_slider_items" => $concern_slider_items]);
+    //  $this->load->view("partials/_main_slider_concern_new", ["second_slider_items" => $concern_slider_items]);
     endif; ?>
 </div>
 <div class="modal fade" id="hide_home_cook" tabindex="-1" role="dialog" aria-hidden="true">
@@ -926,7 +949,60 @@
 
 
 <div class="index-wrapper" id="wrapper">
+    <div class="container">
+        <?php //$this->load->view("product/_index_banners", ['banner_location' => 'featured_products']); 
+        ?>
+        <?php $product_clothing = get_products_by_discount_order(); ?>
+        <?php if (!empty($product_clothing)) : ?>
+            <div id="top_discounts" class="col-12 sides-gap-equal section category-style" style="margin-top: 30px;">
+                <h3 class="find-your-seller">Top Discounts</h3>
+                <div class="row row-product shop-by" id="top-discounts-container">
+                    <!--print products-->
+                    <?php foreach ($product_clothing as $product) : ?>
+                        <?php if ($product->is_shop_open == "1") : ?>
+                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">
+                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
 
+                <div class="text-center" style="margin-bottom:8%;">
+                    <div class="index_btn_text index_btn btn btn-md btn-custom m-t-15">
+                        <a href="<?= generate_url("products") . '?sort=' . 'top_discount'; ?>">
+                            View More Products</a>
+                    </div>
+                </div>
+                <!-- <div id="top-discounts-container_nav" class="index-products-slider-nav">
+                    <button class="prev"><i class="icon-arrow-left"></i></button>
+
+                    <button class="next"><i class="icon-arrow-right"></i></button>
+                </div> -->
+            </div>
+        <?php endif; ?>
+
+
+        <?php $this->load->view('product/_index_category_products', ['index_categories' => $index_categories]); ?>
+
+        <div class="col-12 sides-gap-equal">
+            <div class="row-custom row-bn">
+                <!--Include banner-->
+                <?php $this->load->view("partials/_ad_spaces", ["ad_space" => "index_2", "class" => ""]); ?>
+            </div>
+        </div>
+        <?php if ($this->general_settings->index_blog_slider == 1 && !empty($blog_slider_posts)) : ?>
+            <div class="col-12 sides-gap-equal section section-blog m-0">
+                <h3 class="title">
+                    <a href="<?= generate_url('blog'); ?>"><?= trans("latest_blog_posts"); ?></a>
+                </h3>
+                <p class="title-exp"><?php echo trans("latest_blog_posts_exp"); ?></p>
+                <div class="row-custom">
+                    <!-- main slider -->
+                    <?php $this->load->view("blog/_blog_slider", ['blog_slider_posts' => $blog_slider_posts]); ?>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>
 <?php if ($this->general_settings->free_ship_popup == 1) : ?>
     <div class="modal fade" id="freeshipModal" role="dialog">

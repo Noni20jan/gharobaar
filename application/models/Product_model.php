@@ -3129,6 +3129,12 @@ order by id desc LIMIT 1";
         return $this->db->get('products')->result();
     }
 
+    //get top discounts section from  materialized view
+    public function get_top_disc_product_from_mv()
+    {
+        return $this->db->get('mv_top_disc_products')->result();
+    }
+
     //get rss products by category
     public function get_rss_products_by_category($category_id)
     {
