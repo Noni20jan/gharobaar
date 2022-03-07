@@ -52,7 +52,7 @@
         }
 
         .body {
-            background-color: #E5E5E5;
+            background-color: #ffffff;
             width: 100%;
         }
 
