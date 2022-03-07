@@ -539,7 +539,7 @@ $config['app_key'] = 'cbLQtiQWnKjEfgoIRvXyc5hgqbfIbU6atljuyqx5dfgte';
 */
 require_once(BASEPATH . 'database/DB.php');
 $db = &DB();
-$config['general_settings'] = $db->get('general_settings')->row();
+$config['general_settings'] = $db->where('id', 1)->get('general_settings')->row();
 $config['languages'] = $db->where('status', 1)->order_by('language_order')->get('languages')->result();
 $routes = $db->select('route_key, route')->get('routes')->result();
 $obj_routes = new stdClass();

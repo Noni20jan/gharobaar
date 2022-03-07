@@ -757,20 +757,20 @@
 
     </div>
     <div class="container mobileOrderView">
-        <div class="feedback">
-            <?php if ($this->session->flashdata('success')) : ?>
-                <div class="m-b-15">
-                    <div class="alert alert-success alert-dismissable">
-                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        <h4>
-                            <i class="icon fa fa-check"></i>
-                            <?php echo $this->session->flashdata('success'); ?>
-                        </h4>
-                    </div>
-                </div>
-            <?php endif; ?>
-        </div>
         <div class="row">
+            <div class="feedback">
+                <?php if ($this->session->flashdata('success')) : ?>
+                    <div class="m-b-15">
+                        <div class="alert alert-success alert-dismissable">
+                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                            <h4>
+                                <i class="icon fa fa-check"></i>
+                                <?php echo $this->session->flashdata('success'); ?>
+                            </h4>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
             <div class="col-sm-12">
                 <div class="order-details-container">
                     <div class="order-head">
