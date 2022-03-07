@@ -952,7 +952,7 @@
     <div class="container">
         <?php //$this->load->view("product/_index_banners", ['banner_location' => 'featured_products']); 
         ?>
-        <?php $product_clothing = get_products_by_discount_order(); ?>
+        <?php $product_clothing = get_top_disc_product_from_mv(); ?>
         <?php if (!empty($product_clothing)) : ?>
             <div id="top_discounts" class="col-12 sides-gap-equal section category-style" style="margin-top: 30px;">
                 <h3 class="find-your-seller">Top Discounts</h3>
