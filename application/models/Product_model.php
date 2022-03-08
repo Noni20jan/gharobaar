@@ -3699,9 +3699,6 @@ order by id desc LIMIT 1";
         return $this->db->get('products')->result();
     }
 
-
-
-
     public function get_most_ordered_products($limit)
     {
         $this->build_query();
@@ -3714,10 +3711,12 @@ order by id desc LIMIT 1";
         return $this->db->get('products')->result();
     }
 
+    //get top pick product from mv
 
-
-
-
+    public function get_most_ordered_products_from_mv()
+    {
+        return $this->db->get('mv_top_picks_products')->result();
+    }
 
     //Check for exibition enabled
     public function check_exhibition_enabled($product_id)

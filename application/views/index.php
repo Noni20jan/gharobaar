@@ -862,6 +862,36 @@
         </div>
         <!-- end of mobile-collage -->
 
+        <!-- top picks product section start -->
+        <div class="col-12 sides-gap-equal section section-latest-products">
+            <h3 class="find-your-seller" id="top_picks">Top Picks</h3>
+            <div class="row row-product shop-by" id="top-picks-container-2">
+                <!--print products-->
+                <?php if (($this->auth_check) && (count($top_picks) >= 5)) : ?>
+                    <?php foreach ($top_picks as $product) : ?>
+                        <?php if ($product->is_shop_open == "1") :
+                        ?>
+                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">
+                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                            </div>
+                        <?php endif;
+                        ?>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <?php foreach ($most_ordered_products as $product) : ?>
+                        <?php if ($product->is_shop_open == "1") :
+                        ?>
+                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">
+                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                            </div>
+                        <?php endif;
+                        ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- top picks product section end -->
 
 
         <!-- <div class="col-12 sides-gap-equal">
@@ -877,7 +907,6 @@
         </div>
     </div>
 </div>
-
 
 
 <div class="col-12 sides-gap-equal">
