@@ -1062,7 +1062,7 @@ class Order_model extends CI_Model
             $data["user_id"] = $this->auth_user->id;
             $data["user_type"] = "registered";
             $user = get_user($this->auth_user->id);
-            $data["buyer_type"] = $user->user_type;
+            $data["user_type"] = $user->user_type;
         }
         $ip = $this->input->ip_address();
         if (!empty($ip)) {
@@ -1122,7 +1122,7 @@ class Order_model extends CI_Model
             $data["user_id"] = $this->auth_user->id;
             $data["user_type"] = "registered";
             $user = get_user($this->auth_user->id);
-            $data["buyer_type"] = $user->user_type;
+            $data["user_type"] = $user->user_type;
         }
         $ip = $this->input->ip_address();
         if (!empty($ip)) {
@@ -1692,7 +1692,7 @@ class Order_model extends CI_Model
             $data["user_id"] = $this->auth_user->id;
             $data["user_type"] = "registered";
             $user = get_user($this->auth_user->id);
-            $data["buyer_type"] = $user->user_type;
+            $data["user_type"] = $user->user_type;
         }
         $ip = $this->input->ip_address();
         if (!empty($ip)) {
