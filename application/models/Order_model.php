@@ -74,7 +74,7 @@ class Order_model extends CI_Model
 
 
             if ($this->auth_check) {
-                $data["buyer_type"] = "registered";
+                // $data["buyer_type"] = "registered";
                 $data["buyer_id"] = $this->auth_user->id;
                 $user = get_user($this->auth_user->id);
                 $data["buyer_type"] = $user->user_type;
@@ -189,6 +189,8 @@ class Order_model extends CI_Model
             if ($this->auth_check) {
                 $data["buyer_type"] = "registered";
                 $data["buyer_id"] = $this->auth_user->id;
+                $user = get_user($this->auth_user->id);
+                $data["buyer_type"] = $user->user_type;
             }
             // //cod seller payable
             // $this->calc_seller_payable(1);die();
@@ -867,6 +869,8 @@ class Order_model extends CI_Model
                     if ($this->auth_check) {
                         $data["buyer_id"] = $this->auth_user->id;
                         $data["buyer_type"] = "registered";
+                        $user = get_user($this->auth_user->id);
+                        $data["buyer_type"] = $user->user_type;
                     }
                     if (!empty($cart_item->expected_delivery_date)) {
                         $data["expected_delivery_date"] = $cart_item->expected_delivery_date;
@@ -1057,6 +1061,8 @@ class Order_model extends CI_Model
         if ($this->auth_check) {
             $data["user_id"] = $this->auth_user->id;
             $data["user_type"] = "registered";
+            $user = get_user($this->auth_user->id);
+            $data["buyer_type"] = $user->user_type;
         }
         $ip = $this->input->ip_address();
         if (!empty($ip)) {
@@ -1115,6 +1121,8 @@ class Order_model extends CI_Model
         if ($this->auth_check) {
             $data["user_id"] = $this->auth_user->id;
             $data["user_type"] = "registered";
+            $user = get_user($this->auth_user->id);
+            $data["buyer_type"] = $user->user_type;
         }
         $ip = $this->input->ip_address();
         if (!empty($ip)) {
@@ -1683,6 +1691,8 @@ class Order_model extends CI_Model
         if ($this->auth_check) {
             $data["user_id"] = $this->auth_user->id;
             $data["user_type"] = "registered";
+            $user = get_user($this->auth_user->id);
+            $data["buyer_type"] = $user->user_type;
         }
         $ip = $this->input->ip_address();
         if (!empty($ip)) {
