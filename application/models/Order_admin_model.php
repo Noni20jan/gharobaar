@@ -200,8 +200,7 @@ class Order_admin_model extends CI_Model
                 if (!empty($data['dropdown_search'] && !empty($data['q']))){
                     if($data["dropdown_search"]=="Total Value"){
             
-        $this->db->like('orders.price_total',$data['q'],'after');
-            
+        $this->db->where('orders.price_total',intval($data['q']*100));
                     }
                     }
                     if (!empty($data['dropdown_search'] && !empty($data['q']))){
