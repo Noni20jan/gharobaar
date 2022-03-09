@@ -5,17 +5,19 @@
     }
 
     .red-link:hover {
-        color: red;
+        /* color: red; */
+        color:#007C05!important;
     }
 
     .red-link {
         font-weight: 700;
         padding: 12px 10px;
-        border: 1px solid #E55451;
+        border: 1px solid #007C05;
         margin-right: 8px;
         font-size: 14px;
         position: relative;
-        color: red;
+        color:#007C05 !important;
+
 
     }
 

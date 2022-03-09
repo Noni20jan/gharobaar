@@ -4,6 +4,7 @@
 $seller_wise_data = get_shipping_cod_changes_seller_wise($this->auth_user->id, $order->id);
 if (!empty($seller_wise_data)) :
     $seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_data->total_cod_cost) / 100;
+
 endif;
 ?>
 
@@ -140,6 +141,7 @@ endif;
                         $order_status = 1;
                     }
                 endforeach;
+
                 if ($order_status == 1) : ?>
                     <div class="vertical-center">
                         <label class="label label-default"><?= trans("completed"); ?></label>
@@ -163,6 +165,7 @@ endif;
                 </div>
                 <strong class="font-600"><?= trans($order->payment_status); ?></strong>
             </div> -->
+
             <div class="line-detail">
                 <div class="left">
                     <span><?= trans("payment_method"); ?></span>
@@ -271,7 +274,6 @@ endif;
                 </div>
             </div>
         <?php endif; ?>
-
         <!-- check for schedule shipment buttom -->
         <?php
         $show = 0;
@@ -291,10 +293,11 @@ endif;
         <div class="row">
             <div class="pull-right">
                 <?php if ($item_order->product_delivery_partner == "SHIPROCKET") : ?>
-                    <?php if ($orders_count >= 1) : ?>
+                    <?php if ($orders_count >= 1 ) : ?>
                         <button class="btn btn-md btn-block btn-info btn-table-delete" id="schedule_sipment" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
 
                     <?php endif; ?>
+
                 <?php elseif ($item->product_delivery_partner == "NOW-BIKES") : ?>
                     <?php if ($show) : ?>
                         <button class="btn btn-md btn-block btn-info btn-table-delete" id="schedule_sipment" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
@@ -307,7 +310,7 @@ endif;
 
 
                 <?php $product = get_product($item->product_id); ?>
-                <?php $current_date = new DateTime(); ?>
+                <?php $current_date = date("Y-m-d H:i:s");; ?>
                 <?php $order_date = strtotime($order->created_at); ?>
                 <?php $ordered_date = date("dS M Y", $order_date); ?>
                 <?php $shipping_time = $product->shipping_time; ?>
@@ -319,7 +322,7 @@ endif;
                     <?php $order_create = strtotime("$ship_time day", strtotime($order->created_at)); ?>
 
                     <?php $ship_date = (date("dS M Y", $order_create)); ?>
-                    <?php $shipping_date = new DateTime($ship_date); ?>
+                    <?php $shipping_date = date('Y-m-d H:i:s',$order_create); ?>
 
                     <?php if ($orders_count >= 1) : ?>
 
@@ -346,8 +349,8 @@ endif;
                     <?php $created_at = strtotime($order->created_at); ?>
                     <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
                     <?php $shipped_date = (date("dS M Y", $order_create)); ?>
-                    <?php $shipp_date = new DateTime($shipped_date); ?>
-                    <?php if ($orders_count >= 1) : ?>
+                    <?php $shipp_date = date('Y-m-d H:i:s',$order_create); ?>
+                    <?php if ($orders_count>=1) : ?>
                         <?php if ($shipp_date >= $current_date) : ?>
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
 
@@ -369,7 +372,7 @@ endif;
 
                     <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
                     <?php $shipped_date = (date("dS M Y", $order_create)); ?>
-                    <?php $shipp_date = new DateTime($shipped_date); ?>
+                    <?php $shipp_date =date('Y-m-d H:i:s',$order_create); ?>
                     <?php if ($shipp_date >= $current_date) : ?>
                         <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
                     <?php else : ?>
@@ -594,7 +597,7 @@ endif;
                                                             data[csfr_token_name] = $.cookie(csfr_cookie_name);
 
                                                             var url = base_url + "update-order-status-after-timer-up";
-                                                            $('#cover-spin').show();
+                                                            // $('#cover-spin').show();
                                                             $.ajax({
                                                                 url: url,
                                                                 type: "post",
@@ -698,7 +701,7 @@ endif;
                                                     </p>
 
                                                     <div id='loader' style='display: none;'>
-                                                        <img src='reload.gif' width='32px' height='32px'>
+                                                        <img src='<?php echo base_url();?>assets/reload.gif' width='32px' height='32px'>
                                                     </div>
                                                     <!-- Image loader -->
 
@@ -1291,7 +1294,6 @@ endforeach; ?>
             total_quantity_price += quantity_price_array[j];
         }
         var ref_order_id = Date.now().toString() + "-" + '<?php echo $order->id; ?>';
-
         var required_data = {
             "order_id": ref_order_id,
             "order_date": "<?php echo date('Y-m-d H:i', strtotime($order->created_at)) ?>",
@@ -1393,7 +1395,7 @@ endforeach; ?>
             },
             error: function(response) {
                 $('#cover-spin').hide();
-                alert(response.responseJSON.message)
+                alert(response)
             }
 
         });
