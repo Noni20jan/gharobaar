@@ -11,25 +11,18 @@
                 <option value="100" <?php echo ($this->input->get('show', true) == '100') ? 'selected' : ''; ?>>100</option>
             </select>
         </div>
-
         <div class="item-table-filter">
-            <label><?php echo trans("status"); ?></label>
-            <select name="status" class="form-control">
-                <option value="" selected><?php echo trans("all"); ?></option>
-                <option value="completed" <?php echo ($this->input->get('status', true) == 'completed') ? 'selected' : ''; ?>><?php echo trans("completed"); ?></option>
-                <option value="processing" <?php echo ($this->input->get('status', true) == 'processing') ? 'selected' : ''; ?>><?php echo trans("order_processing"); ?></option>
+            <label><?php echo trans("search_type");?></label>
+            <select name="dropdown_search" class="form-control">
+                <option value="" selected>Select an option you want to search</option>
+                <option value="order_date" <?php echo ($this->input->get('dropdown_search', true) == 'order_date') ? 'selected' : ''; ?>> Order Date</option>
+                <option value="OrderId" <?php echo ($this->input->get('dropdown_search', true) == 'OrderId') ? 'selected' : ''; ?>>Order Number</option>
+                <option value="Payment Method" <?php echo ($this->input->get('dropdown_search', true) == 'Payment Method') ? 'selected' : ''; ?>>Payment Method</option>
+                <option value="BuyerType" <?php echo ($this->input->get('dropdown_search', true) == 'BuyerType') ? 'selected' : ''; ?>>Buyer</option>
+                <option value="Total Value" <?php echo ($this->input->get('dropdown_search', true) == 'Total Value') ? 'selected' : ''; ?>>Total Ordered Value</option>
             </select>
         </div>
-
-        <div class="item-table-filter">
-            <label><?php echo trans("payment_status"); ?></label>
-            <select name="payment_status" class="form-control">
-                <option value="" selected><?php echo trans("all"); ?></option>
-                <option value="payment_received" <?php echo ($this->input->get('payment_status', true) == 'payment_received') ? 'selected' : ''; ?>><?php echo trans("payment_received"); ?></option>
-                <option value="awaiting_payment" <?php echo ($this->input->get('payment_status', true) == 'awaiting_payment') ? 'selected' : ''; ?>><?php echo trans("awaiting_payment"); ?></option>
-            </select>
-        </div>
-
+        
         <div class="item-table-filter">
             <label><?php echo trans("search"); ?></label>
             <input name="q" class="form-control" placeholder="<?php echo trans("order_id"); ?>" type="search" value="<?php echo html_escape($this->input->get('q', true)); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>>
