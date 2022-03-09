@@ -864,12 +864,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/jquery.dm-uploader.min.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/styles.css" />
-
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/file-manager/file-manager.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/slick-theme.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/speech-input.css" />
-
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/slick.css" />
+
+    <link rel="preload" href="<?php echo base_url(); ?>assets/css/colors/default.min.css" as="style">
 
     <meta property="og:locale" content="en-US" />
     <meta property="og:site_name" content="<?php echo xss_clean($this->general_settings->application_name); ?>" />

@@ -758,7 +758,7 @@
             </div>
         </section>
         <!-- code start for seller specific banners -->
-        <?php // $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); 
+        <?php  $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']); 
         ?>
         <!-- code end for seller specific banners -->
 
@@ -795,7 +795,7 @@
 
 <div class="section-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
-    // $this->load->view("partials/_main_slider_2", ["second_slider_items" => $second_slider_items]);
+     $this->load->view("partials/_main_slider_2", ["second_slider_items" => $second_slider_items]);
     endif; ?>
 </div>
 
@@ -914,7 +914,7 @@
 </div>
 <div class="section-slider">
     <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
-    //  $this->load->view("partials/_main_slider_concern_new", ["second_slider_items" => $concern_slider_items]);
+      $this->load->view("partials/_main_slider_concern_new", ["second_slider_items" => $concern_slider_items]);
     endif; ?>
 </div>
 <div class="modal fade" id="hide_home_cook" tabindex="-1" role="dialog" aria-hidden="true">
