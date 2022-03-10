@@ -204,7 +204,7 @@
                 <ul class="navbar-nav">
                 <?php $valentines = trans("festival_occasion"); ?>
                 <?php if ($this->general_settings->valentine_visibility == 1) : ?>
-                   <li class="nav-item"><a class="nav-link occasion" href="<?php echo lang_base_url() . 'banner_by_product' . '/' . $valentines; ?>"><?php echo trans("valentines_day"); ?></a></li>
+                   <li class="nav-item"><a class="nav-link" href="<?php echo lang_base_url() . 'banner_by_product' . '/' . $valentines; ?>"><img class="holi" src="<?php echo base_url();?>assets/img/Holi_Specials.png"></a></li>
                 <?php endif; ?>
                     <li class="nav-item"><a class="nav-link" href="<?php echo lang_base_url() . 'shop-by-concern'; ?>"><?php echo trans("shop_by_concern"); ?></a></li>
                     <li class="nav-item"><a class="nav-link" href="<?php echo lang_base_url() . 'shop-by-occasion'; ?>"><?php echo trans("shop_by_occasion"); ?></a></li>
