@@ -4,23 +4,13 @@
         list-style-type: none;
     }
 
-    .red-link:hover {
-        /* color: red; */
-        color:#007C05!important;
-    }
-
-    .red-link {
-        font-weight: 700;
-        padding: 12px 10px;
-        border: 1px solid #007C05;
-        margin-right: 8px;
-        font-size: 14px;
-        position: relative;
-        color:#007C05 !important;
-
-
-    }
-
+   .holi{
+       padding:4px;
+   }
+   .mega-menu .nav-item {
+    position: inherit;
+    padding: 0 10px;
+}
     .collapsible-nav-bar-content {
         display: flex;
         margin-bottom: 0px;
@@ -156,7 +146,7 @@ if ($this->general_settings->selected_navigation == 1) : ?>
                 endif; ?>
                 <?php $valentines = trans("festival_occasion"); ?>
                 <?php if ($this->general_settings->valentine_visibility == 1) : ?>
-                    <a class="red-link" href="<?php echo lang_base_url() . 'banner_by_product' . '/' . $valentines; ?>"><?php echo trans("valentines_day"); ?></a>
+                    <a class="red-link" href="<?php echo lang_base_url() . 'banner_by_product' . '/' . $valentines; ?>"><img class="holi" src="<?php echo base_url();?>assets/img/Holi_Specials.png"></a>
                 <?php endif; ?>
             </ul>
 
