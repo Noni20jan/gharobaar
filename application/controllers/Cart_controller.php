@@ -1842,8 +1842,8 @@ class Cart_controller extends Home_Core_Controller
                 $this->cart_model->set_sess_cart_payment_method_from_db($user_cart);
             }
         endif;
-        $order_amount =  $this->input->post('orderAmount', true);
-        $cart_amount = number_format((float)$user_details->cart_total, 2, '.', '');
+        $order_amount =  (int)$this->input->post('orderAmount', true);
+        $cart_amount = (int)$user_details->cart_total;
         if ($order_amount != $cart_amount) {
             $match = "no";
         } else {
@@ -1866,7 +1866,7 @@ class Cart_controller extends Home_Core_Controller
             'paymentOption' => $paymentOption,
             'paymentCode' => $paymentCode,
             'paymentModes' => $paymentModes,
-            'match_amount' => $match
+            'match_status' => $match
         );
         // var_dump($data_transaction['payment_amount']);
         // var_dump($user_data['cart_total']);
