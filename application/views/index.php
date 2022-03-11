@@ -1014,7 +1014,7 @@
 <?php endif; ?>
 
 <!-- code for video add functionality -->
-<?php if ($this->general_settings->free_ship_popup == 1) : ?>
+<?php if ($this->general_settings->is_chat_video_enable == 1) : ?>
 <div id="tolstoy-container" style="line-height:0;overflow:hidden;height:100%;width:100%;text-align:center">
         <iframe id="tolstoy" src="https://player.gotolstoy.com/phzz3s3oayacm?host"
                 style="width:100%;height:540px;max-width:960px"
