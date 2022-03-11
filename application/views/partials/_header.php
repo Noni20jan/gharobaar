@@ -6288,6 +6288,16 @@
     <?php endif; ?>
     <!-- chat system end -->
 
+    <?php if ($this->general_settings->is_chat_video_enable == 1) : ?>
+<div id="tolstoy-container" style="line-height:0;overflow:hidden;height:100%;width:100%;text-align:center">
+        <iframe id="tolstoy" src="https://player.gotolstoy.com/phzz3s3oayacm?host"
+                style="width:100%;height:540px;max-width:960px"
+                scrolling="no" frameborder="0" allow="autoplay ; clipboard-write ;camera ; microphone ; encrypted-media ; fullscreen ; display-capture ;">
+        </iframe>
+        <script src="https://widget.gotolstoy.com/script.js" defer></script>
+      </div>
+      <?php endif; ?>
+
     <!-- whatsaap chat -->
     <?php if ($this->general_settings->is_whatsapp_enable == 1) : ?>
         <script src="https://apps.elfsight.com/p/platform.js" defer></script>
