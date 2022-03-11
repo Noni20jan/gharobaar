@@ -1,5 +1,4 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-
 <style>
     .zoom {
         transition: transform .2s;
@@ -24,7 +23,54 @@
             background-color: red;
         }
     }
-
+    .dispatch_alert{
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    font-weight: 400;
+    font-size: 9px;
+    border-radius: 0.1rem;
+    padding: 0.3em 0.6em;
+    background-color: #46af4a;
+    color: #fff;
+}
+@media(max-width:768px){
+.dispatch_alert{
+    position: absolute;
+    right: 5px;
+    top: 8px;
+    font-weight: 400;
+    font-size: 8px;
+    border-radius: 0.1rem;
+    padding: 0.3em 0.6em;
+    background-color: #46af4a;
+    color: #fff;
+}
+}
+.made_to_order{
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    font-weight: 400;
+    font-size: 8px;
+    border-radius: 0.1rem;
+    padding: 0.3em 0.6em;
+    background-color: #46af4a;
+    color: #fff;
+}
+@media(max-width:768px){
+.made_to_order{
+    position: absolute;
+    right: 5px;
+    top: 8px;
+    font-weight: 400;
+    font-size: 8px;
+    border-radius: 0.1rem;
+    padding: 0.3em 0.6em;
+    background-color: #46af4a;
+    color: #fff;
+}
+}
     .zoom:hover {
         -ms-transform: scale(1.25);
         /* IE 9 */
@@ -36,21 +82,24 @@
 <?php //var_dump($product);
 //die();
 ?>
-<?php if ($product->add_meet == "Made to stock") : ?>
-    <?php $variation = $this->variation_model->get_product_variations($product->id);
+<?php //if ($product->add_meet == "Made to stock") : 
+?>
+<?php $variation = $this->variation_model->get_product_variations($product->id);
 
-    if (!empty($variation)) { ?>
+if (!empty($variation)) { ?>
 
-        <?php $variations_stock = 0; //var_dump($variation);
-        foreach ($variation as $variations) :
-            $variation_option = $this->variation_model->get_variation_options($variations->id);
+    <?php $variations_stock = 0; //var_dump($variation);
+    foreach ($variation as $variations) :
+        $variation_option = $this->variation_model->get_variation_options($variations->id);
 
-            foreach ($variation_option as $variation_stock) :
-                $variations_stock = $variations_stock + $variation_stock->stock;
-            endforeach;
-        endforeach; ?>
-    <?php } ?>
-<?php endif; ?>
+        foreach ($variation_option as $variation_stock) :
+            $variations_stock = $variations_stock + $variation_stock->stock;
+
+        endforeach;
+    endforeach; ?>
+<?php } ?>
+<?php //endif; 
+?>
 <div class="product-item">
     <div class="row-custom<?php echo (!empty($product->image_second)) ? ' product-multiple-image' : ''; ?>">
         <a class="item-wishlist-button item-wishlist-enable <?php echo (is_product_in_wishlist($product) == 1) ? 'item-wishlist' : ''; ?>" data-product-id="<?php echo $product->id; ?>"></a>
@@ -69,6 +118,9 @@
                         <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_item_image($product, true); ?>" alt="<?php echo get_product_title($product); ?>" class="lazyload img-fluid img-product img-second">
                     <?php endif; ?>
                 </a>
+            <?php endif; ?>
+            <?php if (!empty($product->discount_rate) && $product->discount_rate > 10) : ?>
+                <span class="badge badge-dark badge-promoted">-<?= $product->discount_rate; ?>%</span>
             <?php endif; ?>
             <?php if (!empty($this->auth_check) && $this->auth_user->role == "vendor" && $product->user_id == $this->auth_user->id) : ?>
                 <!-- <div class="cart-top">
@@ -98,13 +150,23 @@
                 </div>
             <?php endif; ?>
             <?php if (empty($variation)) { ?>
-                <?php if (!check_product_stock($product)) { ?>
-                    <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
-                <?php } ?>
+                <?php if (!check_product_stock($product)) {
+                    if ($product->add_meet == "Made to stock") :
+                ?>
+                        <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
+                    <?php else : ?>
+                        <!-- <span class="badge badge-dark badge-promoted" id="cvl">Not Available</span> -->
+                <?php endif;
+                } ?>
             <?php } else { ?>
-                <?php if ($variations_stock == 0) { ?>
-                    <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
-                <?php } ?>
+                <?php if ($variations_stock == 0) {
+                    if ($product->add_meet == "Made to stock") :
+                ?>
+                        <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
+                    <?php else : ?>
+                        <!-- <span class="badge badge-dark badge-promoted" id="cvl">Not Available</span> -->
+                <?php endif;
+                } ?>
             <?php } ?>
             <?php if (get_vendor_shop_status($product->user_id) == 0) : ?>
 
@@ -144,14 +206,27 @@
                         <?php endif; ?>
             </div>
 
-            <?php if (!empty($product->discount_rate) && !empty($discount_label)) : ?>
+           
+        </div>
+        <!-- <?php if ($product->is_promoted && $this->general_settings->promoted_products == 1 && isset($promoted_badge) && $promoted_badge == true) : ?>
+            <span class="badge badge-dark badge-promoted"><?php echo trans("featured"); ?></span>
+        <?php endif; ?> -->
+    </div>
+    <?php if (!empty($product->discount_rate) && !empty($discount_label)) : ?>
                 <span class="badge-discount">-<?= $product->discount_rate; ?>%</span>
             <?php endif; ?>
-        </div>
-        <?php if ($product->is_promoted && $this->general_settings->promoted_products == 1 && isset($promoted_badge) && $promoted_badge == true) : ?>
-            <span class="badge badge-dark badge-promoted"><?php echo trans("featured"); ?></span>
-        <?php endif; ?>
-    </div>
+            <?php $x=intval($product->shipping_time);?>
+    <?php if($product->add_meet=="Made to stock" && $product->stock > 0 && $x==1 ):?>
+        <span class="dispatch_alert">Next Day Dispatch</span>
+
+        <?php endif;?>
+        <?php if($product->add_meet=="Made to stock" && $product->stock > 0 && $x==1 ):?>
+        <span class="dispatch_alert">Next Day Dispatch</span>
+
+        <?php endif;?>
+        <?php if($product->add_meet=="Made to order"):?>
+                <span class="made_to_order">Made To Order</span>
+<?php endif;?>
     <div class="row-custom item-details">
         <h3 class="product-title">
             <a href="<?php echo generate_product_url($product); ?>"><?= get_product_title($product); ?></a>
