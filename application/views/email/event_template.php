@@ -245,12 +245,12 @@
         }
 
         .dynamic-text {
-            padding: 3% 10%;
+            padding: 3% 0%;
             font-family: 'lato', sans-serif;
         }
 
         .dynamic-footer {
-            padding: 3% 10%;
+            padding: 3% 0%;
             font-family: 'lato', sans-serif;
             font-size: 80%;
         }
@@ -265,6 +265,11 @@
         .web-product {
             height: 15%;
             width: 15%;
+        }
+
+        .body9 {
+            padding-left: 3%;
+            padding-right: 3%;
         }
 
         @media only screen and (max-width: 620px) {
@@ -378,23 +383,32 @@
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
                         <tr>
                             <td style="text-align: center;">
-                                <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic11.png">
-                                <div style="padding: 3%;">
-                                    <a href="https://www.gharobaar.com/profile/nupurghundiyalgmailcom"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic2.png"></a>
-                                    <a href="https://www.gharobaar.com/profile/namratha1011gmailcom"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic3.png"></a>
-                                    <a href="https://www.gharobaar.com/profile/infotheiascapegmailcom"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic4.png"></a>
-                                    <a href="https://www.gharobaar.com/profile/happinesswhitelightelementsin"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic5.png"></a>
-                                    <a href="https://www.gharobaar.com/profile/salesshuddhpureshop"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic6.png"></a>
 
 
-                                    <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic7.png">
+                                <a href="https://www.gharobaar.com/luxe-earth-conscious-holi-hamper-8552"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOLI+MAIL/Mask_group.png"></a>
+                                <div class="body9">
+                                    <a href="https://www.gharobaar.com/holi-natural-colour-75grm-manmohak-gulabi-8237"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOLI+MAIL/Mask_group_1.png"></a>
                                 </div>
+                                <a href="https://www.gharobaar.com/rangrez-holi-art-kit-eco-friendly-holi-gulals-postcards-8553">
+                                    <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOLI+MAIL/Mask_group_2.png"></a>
+                                <div class="body9">
+                                    <a href="https://www.gharobaar.com/black-carrot-kanji-8100">
+                                        <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOLI+MAIL/Mask_group_3.png"></a>
+                                </div>
+                                <a href="https://www.gharobaar.com/thandai-mix-8550"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOLI+MAIL/Mask_group_4.png"></a>
+                                <div class="body9">
+                                    <a href="https://www.gharobaar.com/multani-mitti-body-_-face-wash-for-oil-control-by-sunita-devi-7109"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOLI+MAIL/Mask_group_5.png"></a>
+                                </div>
+                                <a href="https://www.gharobaar.com/"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOLI+MAIL/shop.png"></a>
 
-                                <a href="https://www.gharobaar.com/shop-by-seller"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic10.png"></a>
+
+
+                                <!-- <a href="https://www.gharobaar.com/shop-by-seller"> <img
+                                        src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic10.png"></a> -->
 
 
                                 <div class="footer-image">
-                                    <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic12.png" width="30%">
+
 
 
                                     <table border="0" cellpadding="0" cellspacing="0">
@@ -411,10 +425,10 @@
                                                             <a href="https://www.facebook.com/gharobaar.official" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener">
                                                                 <img src="https://gharobaar.com/assets/img/social-icons/facebook.png" width="32" />
                                                             </a>
-                                                            <a href="https://www.instagram.com/gharobaar_official/" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/instagram.png" width="32" />
+                                                            <a href="https://www.instagram.com/gharobaar_official/" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOLI+MAIL/instagram.png" width="32" />
                                                             </a> <a href="https://www.youtube.com/channel/UC2jOkQl0OR1cIJgo2WJZWqw" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/youtube.png" width="32" />
                                                             </a>
-                                                            <a href="https://www.linkedin.com/company/gharobaar" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://gharobaar.com/assets/img/social-icons/linkedin.png" width="32" />
+                                                            <a href="https://www.linkedin.com/company/gharobaar" target="_blank" style="color: #ffffff; text-decoration: none; margin-left: 10px; display: inline-block; height: 32px; line-height: 32px;" rel="noopener"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOLI+MAIL/linkedin.png" width="32" />
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -422,6 +436,7 @@
                                             </td>
                                         </tr>
                                     </table>
+                                    <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic12.png" width="30%">
                                     <br>
                                     <br>
                                 </div>
