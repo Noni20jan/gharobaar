@@ -6287,17 +6287,18 @@
         </script>
     <?php endif; ?>
     <!-- chat system end -->
-
+<!-- code for video add functionality -->
     <?php if ($this->general_settings->is_chat_video_enable == 1) : ?>
-<div id="tolstoy-container" style="line-height:0;overflow:hidden;height:100%;width:100%;text-align:center">
-        <iframe id="tolstoy" src="https://player.gotolstoy.com/phzz3s3oayacm?host"
-                style="width:100%;height:540px;max-width:960px"
-                scrolling="no" frameborder="0" allow="autoplay ; clipboard-write ;camera ; microphone ; encrypted-media ; fullscreen ; display-capture ;">
-        </iframe>
-        <script src="https://widget.gotolstoy.com/script.js" defer></script>
-      </div>
+        <script>
+      window.tolstoyAppKey="ada7e199-9023-48dd-8a98-e3f1f70c6886";
+      var s = document.createElement("script");
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://widget.gotolstoy.com/widget/widget.js";
+      document.head.appendChild(s);
+    </script>
       <?php endif; ?>
-
+<!-- end code for video add functionality -->
     <!-- whatsaap chat -->
     <?php if ($this->general_settings->is_whatsapp_enable == 1) : ?>
         <script src="https://apps.elfsight.com/p/platform.js" defer></script>
