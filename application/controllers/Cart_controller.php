@@ -513,27 +513,27 @@ class Cart_controller extends Home_Core_Controller
         //check for exhibition enabled products
         $data['check_exhibition'] = $this->order_model->check_exhibition_enabled($data['c_items']);
 
-       
+
         $data['mds_payment_type'] = "sale";
 
 
         //check is set cart payment method
         $data['cart_payment_method'] = $this->cart_model->get_sess_cart_payment_method();
-        
-            $this->cart_model->validate_cart();
-            //sale payment
-            $data['cart_items'] = $this->cart_model->get_sess_cart_items();
-            if ($data['cart_items'] == null) {
-                redirect(generate_url("cart"));
-            }
-            $data['cart_total'] = $this->cart_model->get_sess_cart_total();
-            $data["shipping_address"] = $this->cart_model->get_sess_cart_shipping_address();
-            $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
-            //total amount
-            $data['total_amount'] = $data['cart_total']->total_price;
-            $data['currency'] = $this->payment_settings->default_currency;
-        
-            $payment_type = input_get('payment_type');
+
+        $this->cart_model->validate_cart();
+        //sale payment
+        $data['cart_items'] = $this->cart_model->get_sess_cart_items();
+        if ($data['cart_items'] == null) {
+            redirect(generate_url("cart"));
+        }
+        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+        $data["shipping_address"] = $this->cart_model->get_sess_cart_shipping_address();
+        $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
+        //total amount
+        $data['total_amount'] = $data['cart_total']->total_price;
+        $data['currency'] = $this->payment_settings->default_currency;
+
+        $payment_type = input_get('payment_type');
         if ($payment_type != "membership" && $payment_type != "promote") {
             $payment_type = "sale";
         }
@@ -1348,7 +1348,6 @@ class Cart_controller extends Home_Core_Controller
         $cart_items = $this->cart_model->get_sess_cart_items();
         $cart_total = $this->cart_model->get_sess_cart_total();
         $shipping_detail = json_decode($this->order_model->get_shipping_cost($cart_total));
-
         $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
 
         $total_amount = $cart_total->total_price;
@@ -1580,7 +1579,7 @@ class Cart_controller extends Home_Core_Controller
                 }
             }
 
-            $object->shipping=0;
+            $object->shipping = 0;
             // condition for shipping slabs
             $slab = true;
             if ($slab == true) {
@@ -1598,17 +1597,17 @@ class Cart_controller extends Home_Core_Controller
             //     }
             // }
             // condition end
-            $object->shipping_charge_to_gharobaar=0;
-            $object->shipping=0;
+            $object->shipping_charge_to_gharobaar = 0;
+            $object->shipping = 0;
             if (!empty($pan_number)) {
                 if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                     // $object->tds_amount = 0;
-                    $object->shipping=0;
+                    $object->shipping = 0;
 
                     $object->tds_amount_shipping = 0;
                     $object->tds_amount_shipping_huf_ind = 0.01 * ($object->shipping);
                 } else {
-                    $object->shipping=0;
+                    $object->shipping = 0;
 
                     // $object->tds_amount = 0.01 * ($psd->total_price_without_gst);
                     $object->tds_amount_shipping = 0.01 * ($object->shipping);
@@ -1635,7 +1634,7 @@ class Cart_controller extends Home_Core_Controller
             // } else {
             //     $object->tcs_amount = 0;
             // }
-            $object->shipping_charge_with_gst=0;
+            $object->shipping_charge_with_gst = 0;
             $object->gateway_amount = round(($object->shipping_charge_with_gst + $object->total_amount_with_gst) * ($object->gateway_charge / 100));
             $object->gateway_amount_gst = round($object->gateway_amount * 0.18);
             $object->gateway_amount_with_gst = round($object->gateway_amount + $object->gateway_amount_gst);
@@ -1763,6 +1762,8 @@ class Cart_controller extends Home_Core_Controller
                 $this->order_model->save_cashfree_seller_payable_payouts($sp);
             }
         }
+
+        $this->auth_model->update_user_login_session_data($data['orderAmount']);
         $this->load->view('cart/cashfree_form', $data);
     }
 
@@ -1814,6 +1815,7 @@ class Cart_controller extends Home_Core_Controller
                 'modesy_sess_user_role' => $user_details->modesy_sess_user_role,
                 'modesy_sess_logged_in' => true,
                 'modesy_sess_app_key' => $user_details->modesy_sess_app_key,
+                "cart_total" => $user_details->cart_total,
             );
             $this->session->set_userdata($user_data);
 
@@ -1836,13 +1838,17 @@ class Cart_controller extends Home_Core_Controller
                 $this->cart_model->get_sess_cart_items();
                 $this->cart_model->add_delivery_distance();
                 $this->cart_model->set_cart_total_from_db($user_cart);
-                $this->cart_model->calculate_cart_total();
+                $cart_total = $this->cart_model->calculate_cart_total();
                 $this->cart_model->set_sess_cart_payment_method_from_db($user_cart);
             }
         endif;
-
-
-
+        $order_amount =  $this->input->post('orderAmount', true);
+        $cart_amount = number_format((float)$user_details->cart_total, 2, '.', '');
+        if ($order_amount != $cart_amount) {
+            $match = "no";
+        } else {
+            $match = "yes";
+        }
         $data_transaction = array(
             'payment_method' => "Cashfree",
             'payment_id' => $this->input->post('referenceId', true),
@@ -1859,9 +1865,13 @@ class Cart_controller extends Home_Core_Controller
             'session_id' => $sess_unique_id,
             'paymentOption' => $paymentOption,
             'paymentCode' => $paymentCode,
-            'paymentModes' => $paymentModes
+            'paymentModes' => $paymentModes,
+            'match_amount' => $match
         );
-
+        // var_dump($data_transaction['payment_amount']);
+        // var_dump($user_data['cart_total']);
+        // die();
+        // if ($user_details->cart_total == $data_transaction['payment_amount']) {
 
         if (!$this->cashfree_signature_verfication($data_transaction)) {
             // echo "payment success";
@@ -1875,6 +1885,7 @@ class Cart_controller extends Home_Core_Controller
             //add order
             $response = $this->execute_payment($data_transaction, 'sale', lang_base_url());
             if ($response->result == 1) {
+
                 $this->session->set_flashdata('success', $response->message);
                 header("Location: $response->redirect_url");
                 exit();
@@ -1887,6 +1898,10 @@ class Cart_controller extends Home_Core_Controller
                 // ]);
             }
         }
+        // } 
+        // else {
+        //     var_dump("7645758697");
+        // }
     }
 
 
@@ -2132,41 +2147,41 @@ class Cart_controller extends Home_Core_Controller
         redirect($this->agent->referrer());
     }
 
-public function load_pay_view(){
+    public function load_pay_view()
+    {
 
- $pay_method = $this->input->post('pay_method', true);
- $std = new stdClass();
- $std->payment_option = $pay_method;
- $this->session->set_userdata('mds_cart_payment_method', $std);
- $data['mds_payment_type'] = "sale";
- //check is set cart payment method
- $data['cart_payment_method'] = $this->cart_model->get_sess_cart_payment_method();
- 
-     $this->cart_model->validate_cart();
-     $data['cart_items'] = $this->cart_model->get_sess_cart_items();
-     if ($data['cart_items'] == null) {
-         redirect(generate_url("cart"));
-     }
-     $data['cart_payment_method'] = $this->cart_model->get_sess_cart_payment_method();
-     
-     $data['cart_total'] = $this->cart_model->get_sess_cart_total();
-     $data["shipping_address"] = $this->cart_model->get_sess_cart_shipping_address();
-     $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
-     //total amount
-     $data['total_amount'] = $data['cart_total']->total_price;
-     $data['currency'] = $this->payment_settings->default_currency;
+        $pay_method = $this->input->post('pay_method', true);
+        $std = new stdClass();
+        $std->payment_option = $pay_method;
+        $this->session->set_userdata('mds_cart_payment_method', $std);
+        $data['mds_payment_type'] = "sale";
+        //check is set cart payment method
+        $data['cart_payment_method'] = $this->cart_model->get_sess_cart_payment_method();
 
-     if($pay_method=='cashfree'){
-        $pay_view= $this->load->view("cart/payment_methods/cashfree", $data, true);
+        $this->cart_model->validate_cart();
+        $data['cart_items'] = $this->cart_model->get_sess_cart_items();
+        if ($data['cart_items'] == null) {
+            redirect(generate_url("cart"));
         }
-        else{
-            $pay_view= $this->load->view("cart/payment_methods/_cash_on_delivery", $data, true);
+        $data['cart_payment_method'] = $this->cart_model->get_sess_cart_payment_method();
+
+        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+        $data["shipping_address"] = $this->cart_model->get_sess_cart_shipping_address();
+        $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
+        //total amount
+        $data['total_amount'] = $data['cart_total']->total_price;
+        $data['currency'] = $this->payment_settings->default_currency;
+
+        if ($pay_method == 'cashfree') {
+            $pay_view = $this->load->view("cart/payment_methods/cashfree", $data, true);
+        } else {
+            $pay_view = $this->load->view("cart/payment_methods/_cash_on_delivery", $data, true);
         }
-    $response = array(
-        "status" => true,
-        "pay_view"=>$pay_view,
-        
-    );
-    echo json_encode($response);
-}
+        $response = array(
+            "status" => true,
+            "pay_view" => $pay_view,
+
+        );
+        echo json_encode($response);
+    }
 }

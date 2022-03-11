@@ -22,7 +22,11 @@ class Order_model extends CI_Model
     //add order
     public function add_order($data_transaction)
     {
-        $order_product_status = "processing";
+        if ($data_transaction['match_status'] == "yes") {
+            $order_product_status = "processing";
+        } else {
+            $order_product_status = "pending";
+        }
         $cashfree_order_id = $data_transaction["cashfree_order_id"];
         $cart_total = $this->cart_model->get_sess_cart_total();
         if (!empty($cart_total)) {
@@ -1413,7 +1417,7 @@ class Order_model extends CI_Model
     {
         $this->db->where('order_id', clean_number($order_id));
         $this->db->where('seller_id', clean_number($seller_id));
-        $this->db->where('order_status','processing');
+        $this->db->where('order_status', 'processing');
         $query = $this->db->get('order_products');
         return $query->num_rows();
     }
@@ -2251,12 +2255,11 @@ class Order_model extends CI_Model
                 $this->db->where('order_id', $order_id);
                 $this->db->where_in('id', $data1);
                 $this->db->update('order_products', $data);
-                
+
                 return true;
             }
             return false;
         }
-    
     }
     //decrease product stock after sale
     public function decrease_product_stock_after_sale($order_id)
@@ -2886,20 +2889,20 @@ class Order_model extends CI_Model
     public function get_actual_shipping_charges($pickuppostcode, $deliverypostcode, $cashond, $weightobject)
     {
 
-        if($this->general_settings->shiprocket_check == 1){
+        if ($this->general_settings->shiprocket_check == 1) {
 
-        $curl = curl_init();
+            $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://apiv2.shiprocket.in/v1/external/courier/serviceability',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            $body = '{
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://apiv2.shiprocket.in/v1/external/courier/serviceability',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                $body = '{
                 "pickup_postcode": ' . $pickuppostcode . ',
                  "delivery_postcode": ' . $deliverypostcode . ',
                  "cod":' . $cashond . ',
@@ -2907,36 +2910,36 @@ class Order_model extends CI_Model
            
         }',
 
-            CURLOPT_POSTFIELDS => $body,
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'Authorization: Bearer' . $_SESSION['modesy_sess_user_shiprocket_token'],
-            ),
+                CURLOPT_POSTFIELDS => $body,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json',
+                    'Authorization: Bearer' . $_SESSION['modesy_sess_user_shiprocket_token'],
+                ),
 
-        ));
+            ));
 
-        $response = curl_exec($curl);
-        curl_close($curl);
-        // var_dump($response);
+            $response = curl_exec($curl);
+            curl_close($curl);
+            // var_dump($response);
 
-        // $shipping_data = array(
-        //     'actual_shipping_charges' => json_decode($response)->data->available_courier_companies[0]->rate * 100,
-        //     'cod_charges' => json_decode($response)->data->available_courier_companies[0]->cod_charges * 100,
-        //     'freight_charges' => json_decode($response)->data->available_courier_companies[0]->freight_charge * 100,
-        // );
-        // var_dump(json_decode($response)->data);
-        $shipping_data = array(
-            'actual_shipping_charges_with_gst' => intval((json_decode($response)->data->available_courier_companies[0]->rate) * 100),
-            'actual_shipping_charges' => intval((json_decode($response)->data->available_courier_companies[0]->rate / (1 + (18 / 100))) * 100),
-            'cod_charges' => intval((json_decode($response)->data->available_courier_companies[0]->cod_charges  / (1 + (18 / 100))) * 100),
-            'freight_charges' => intval((json_decode($response)->data->available_courier_companies[0]->freight_charge  / (1 + (18 / 100))) * 100),
-        );
-        // var_dump($shipping_data);
-        $this->session->set_userdata($shipping_data);
-        // $shipping_cost = $shipping_data['actual_shipping_charges'] * 100;
+            // $shipping_data = array(
+            //     'actual_shipping_charges' => json_decode($response)->data->available_courier_companies[0]->rate * 100,
+            //     'cod_charges' => json_decode($response)->data->available_courier_companies[0]->cod_charges * 100,
+            //     'freight_charges' => json_decode($response)->data->available_courier_companies[0]->freight_charge * 100,
+            // );
+            // var_dump(json_decode($response)->data);
+            $shipping_data = array(
+                'actual_shipping_charges_with_gst' => intval((json_decode($response)->data->available_courier_companies[0]->rate) * 100),
+                'actual_shipping_charges' => intval((json_decode($response)->data->available_courier_companies[0]->rate / (1 + (18 / 100))) * 100),
+                'cod_charges' => intval((json_decode($response)->data->available_courier_companies[0]->cod_charges  / (1 + (18 / 100))) * 100),
+                'freight_charges' => intval((json_decode($response)->data->available_courier_companies[0]->freight_charge  / (1 + (18 / 100))) * 100),
+            );
+            // var_dump($shipping_data);
+            $this->session->set_userdata($shipping_data);
+            // $shipping_cost = $shipping_data['actual_shipping_charges'] * 100;
 
-        return $shipping_data;
-    }
+            return $shipping_data;
+        }
     }
 
     public function get_supplier()
@@ -3139,147 +3142,147 @@ class Order_model extends CI_Model
                         array_push($supp_data_array_copy, $suppqq);
                     }
                 } else if ($prod_details->delivery_partner == "SHIPROCKET") {
-                    if($this->general_settings->shiprocket_check == 1){
+                    if ($this->general_settings->shiprocket_check == 1) {
 
-                    $shiprocket_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
-                    $Supplier_Shipping_cost_with_gst = intval($shiprocket_charges["freight_charges"] + ($shiprocket_charges["freight_charges"] * 18 / 100));
+                        $shiprocket_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
+                        $Supplier_Shipping_cost_with_gst = intval($shiprocket_charges["freight_charges"] + ($shiprocket_charges["freight_charges"] * 18 / 100));
 
-                    if (!$prod_details->free_shipping) :
-                        if ($psd->total_price >= 200000) {
-                            $actual_shipping_charges = array(
-                                "freight_charges" => 0
-                            );
-                            if (!$cod) {
-                                $actual_shipping_charges["cod_charges"] = 0;
+                        if (!$prod_details->free_shipping) :
+                            if ($psd->total_price >= 200000) {
+                                $actual_shipping_charges = array(
+                                    "freight_charges" => 0
+                                );
+                                if (!$cod) {
+                                    $actual_shipping_charges["cod_charges"] = 0;
+                                } else {
+                                    $actual_shipping_charges["cod_charges"] = (50) * 100;
+                                }
+                                $tax_charges = intval((($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100)));
+                                $actual_shipping_charges["tax_charges"] = $tax_charges;
+                            } elseif ($psd->total_price >= 50000 && $psd->total_price < 200000) {
+                                $actual_shipping_charges = array(
+                                    "freight_charges" => 10000
+                                );
+                                if (!$cod) {
+                                    $actual_shipping_charges["cod_charges"] = 0;
+                                } else {
+                                    $actual_shipping_charges["cod_charges"] = (50) * 100;
+                                }
+                                $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                                $actual_shipping_charges["tax_charges"] = $tax_charges;
                             } else {
-                                $actual_shipping_charges["cod_charges"] = (50) * 100;
+                                $actual_shipping_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
+                                $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                                $actual_shipping_charges["tax_charges"] = $tax_charges;
                             }
-                            $tax_charges = intval((($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100)));
-                            $actual_shipping_charges["tax_charges"] = $tax_charges;
-                        } elseif ($psd->total_price >= 50000 && $psd->total_price < 200000) {
+                        // if ($psd->total_price >= 100000) {
+                        //     $actual_shipping_charges = array(
+                        //         "freight_charges" => 0
+                        //     );
+                        //     if (!$cod) {
+                        //         $actual_shipping_charges["cod_charges"] = 0;
+                        //     } else {
+                        //         $actual_shipping_charges["cod_charges"] = (50) * 100;
+                        //     }
+                        //     $tax_charges = intval((($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100)));
+                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                        // } elseif ($psd->total_price >= 0 && $psd->total_price < 100000) {
+                        //     $actual_shipping_charges = array(
+                        //         "freight_charges" => 10000
+                        //     );
+                        //     if (!$cod) {
+                        //         $actual_shipping_charges["cod_charges"] = 0;
+                        //     } else {
+                        //         $actual_shipping_charges["cod_charges"] = (50) * 100;
+                        //     }
+                        //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                        // } else {
+                        //     $actual_shipping_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
+                        //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                        //     $actual_shipping_charges["tax_charges"] = $tax_charges;
+                        // }
+                        else :
                             $actual_shipping_charges = array(
-                                "freight_charges" => 10000
+                                "freight_charges" => 0,
+                                "cod_charges" => (!$cod) ? 0 : 50 * 100
                             );
-                            if (!$cod) {
-                                $actual_shipping_charges["cod_charges"] = 0;
-                            } else {
-                                $actual_shipping_charges["cod_charges"] = (50) * 100;
-                            }
                             $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
                             $actual_shipping_charges["tax_charges"] = $tax_charges;
-                        } else {
-                            $actual_shipping_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
-                            $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
-                            $actual_shipping_charges["tax_charges"] = $tax_charges;
+
+                        endif;
+
+                        $shipping_tax_charges = (($actual_shipping_charges["freight_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                        $actual_shipping_charges["shipping_tax_charges"] = $shipping_tax_charges;
+
+
+                        $cod_tax_charges = (($actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                        $actual_shipping_charges["cod_tax_charges"] = $cod_tax_charges;
+
+                        $suppqq = array(
+                            "SupplierId" => $psd->seller_id,
+                            "delivery_partner" => "SHIPROCKET",
+                            "Supplier_Shipping_cost" => intval($actual_shipping_charges["freight_charges"]),
+                            "cod_charges" => intval($actual_shipping_charges["cod_charges"]),
+                            "tax_charges" => intval($actual_shipping_charges["tax_charges"]),
+                            "shipping_tax_charges" => intval($actual_shipping_charges["shipping_tax_charges"]),
+                            "cod_tax_charges" => intval($actual_shipping_charges["cod_tax_charges"]),
+                            "shipping_cod_gst_rate" => $psd->seller_gst_rate
+                        );
+
+                        if ($psd->seller_gst_rate == 0) {
+                            $suppqq["Supplier_Shipping_cost"] = intval($suppqq["Supplier_Shipping_cost"] + ($suppqq["Supplier_Shipping_cost"] * 18 / 100));
                         }
-                    // if ($psd->total_price >= 100000) {
-                    //     $actual_shipping_charges = array(
-                    //         "freight_charges" => 0
-                    //     );
-                    //     if (!$cod) {
-                    //         $actual_shipping_charges["cod_charges"] = 0;
-                    //     } else {
-                    //         $actual_shipping_charges["cod_charges"] = (50) * 100;
-                    //     }
-                    //     $tax_charges = intval((($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100)));
-                    //     $actual_shipping_charges["tax_charges"] = $tax_charges;
-                    // } elseif ($psd->total_price >= 0 && $psd->total_price < 100000) {
-                    //     $actual_shipping_charges = array(
-                    //         "freight_charges" => 10000
-                    //     );
-                    //     if (!$cod) {
-                    //         $actual_shipping_charges["cod_charges"] = 0;
-                    //     } else {
-                    //         $actual_shipping_charges["cod_charges"] = (50) * 100;
-                    //     }
-                    //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
-                    //     $actual_shipping_charges["tax_charges"] = $tax_charges;
-                    // } else {
-                    //     $actual_shipping_charges = $this->order_model->get_actual_shipping_charges($psd->product_pickup_code,   $psd->delivery_code, $cod,  $psd->total_weight / 1000);
-                    //     $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
-                    //     $actual_shipping_charges["tax_charges"] = $tax_charges;
-                    // }
-                    else :
+                        $suppqq["Supplier_Shipping_cost_with_gst"] = $Supplier_Shipping_cost_with_gst;
+
+                        if (!in_array($suppqq, $supp_data_array_copy)) {
+                            array_push($supp_data_array_copy, $suppqq);
+                        }
+                    } else if ($prod_details->delivery_partner == "SELF") {
                         $actual_shipping_charges = array(
                             "freight_charges" => 0,
                             "cod_charges" => (!$cod) ? 0 : 50 * 100
                         );
-                        $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
-                        $actual_shipping_charges["tax_charges"] = $tax_charges;
+                        if (!$prod_details->free_shipping) :
+                            $seller_shipping_details = get_user_shipping_type($psd->seller_id);
 
-                    endif;
-
-                    $shipping_tax_charges = (($actual_shipping_charges["freight_charges"]) * (floatval($psd->seller_gst_rate) / 100));
-                    $actual_shipping_charges["shipping_tax_charges"] = $shipping_tax_charges;
-
-
-                    $cod_tax_charges = (($actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
-                    $actual_shipping_charges["cod_tax_charges"] = $cod_tax_charges;
-
-                    $suppqq = array(
-                        "SupplierId" => $psd->seller_id,
-                        "delivery_partner" => "SHIPROCKET",
-                        "Supplier_Shipping_cost" => intval($actual_shipping_charges["freight_charges"]),
-                        "cod_charges" => intval($actual_shipping_charges["cod_charges"]),
-                        "tax_charges" => intval($actual_shipping_charges["tax_charges"]),
-                        "shipping_tax_charges" => intval($actual_shipping_charges["shipping_tax_charges"]),
-                        "cod_tax_charges" => intval($actual_shipping_charges["cod_tax_charges"]),
-                        "shipping_cod_gst_rate" => $psd->seller_gst_rate
-                    );
-
-                    if ($psd->seller_gst_rate == 0) {
-                        $suppqq["Supplier_Shipping_cost"] = intval($suppqq["Supplier_Shipping_cost"] + ($suppqq["Supplier_Shipping_cost"] * 18 / 100));
-                    }
-                    $suppqq["Supplier_Shipping_cost_with_gst"] = $Supplier_Shipping_cost_with_gst;
-
-                    if (!in_array($suppqq, $supp_data_array_copy)) {
-                        array_push($supp_data_array_copy, $suppqq);
-                    }
-                } else if ($prod_details->delivery_partner == "SELF") {
-                    $actual_shipping_charges = array(
-                        "freight_charges" => 0,
-                        "cod_charges" => (!$cod) ? 0 : 50 * 100
-                    );
-                    if (!$prod_details->free_shipping) :
-                        $seller_shipping_details = get_user_shipping_type($psd->seller_id);
-
-                        $shipping_threshold = get_user_shipping_threshold($seller_shipping_details->id);
-                        foreach ($shipping_threshold as $s_th) {
-                            if ($psd->total_price > intval($s_th->min_value) && $psd->total_price < intval($s_th->max_value)) {
-                                $actual_shipping_charges["freight_charges"] = $s_th->shipping_charges * 100;
+                            $shipping_threshold = get_user_shipping_threshold($seller_shipping_details->id);
+                            foreach ($shipping_threshold as $s_th) {
+                                if ($psd->total_price > intval($s_th->min_value) && $psd->total_price < intval($s_th->max_value)) {
+                                    $actual_shipping_charges["freight_charges"] = $s_th->shipping_charges * 100;
+                                }
                             }
+                        else :
+                            $actual_shipping_charges["freight_charges"] = 0;
+                        endif;
+                        $suppqq = array(
+                            "SupplierId" => $psd->seller_id,
+                            "delivery_partner" => "SELF",
+                            "Supplier_Shipping_cost" => intval($actual_shipping_charges["freight_charges"]),
+                            "cod_charges" => intval($actual_shipping_charges["cod_charges"]),
+                            "tax_charges" => 0,
+                            "shipping_tax_charges" => 0,
+                            "cod_tax_charges" => 0,
+                            "shipping_cod_gst_rate" => $psd->seller_gst_rate
+
+                        );
+                        $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                        $suppqq["tax_charges"] = intval($tax_charges);
+
+                        $shipping_tax_charges = (($actual_shipping_charges["freight_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                        $suppqq["shipping_tax_charges"] = intval($shipping_tax_charges);
+
+                        $cod_tax_charges = (($actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
+                        $suppqq["cod_tax_charges"] = intval($cod_tax_charges);
+
+                        $suppqq["Supplier_Shipping_cost_with_gst"] = $suppqq["Supplier_Shipping_cost"] + $suppqq["shipping_tax_charges"];
+
+                        if (!in_array($suppqq, $supp_data_array_copy)) {
+                            array_push($supp_data_array_copy, $suppqq);
                         }
-                    else :
-                        $actual_shipping_charges["freight_charges"] = 0;
-                    endif;
-                    $suppqq = array(
-                        "SupplierId" => $psd->seller_id,
-                        "delivery_partner" => "SELF",
-                        "Supplier_Shipping_cost" => intval($actual_shipping_charges["freight_charges"]),
-                        "cod_charges" => intval($actual_shipping_charges["cod_charges"]),
-                        "tax_charges" => 0,
-                        "shipping_tax_charges" => 0,
-                        "cod_tax_charges" => 0,
-                        "shipping_cod_gst_rate" => $psd->seller_gst_rate
-
-                    );
-                    $tax_charges = (($actual_shipping_charges["freight_charges"] + $actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
-                    $suppqq["tax_charges"] = intval($tax_charges);
-
-                    $shipping_tax_charges = (($actual_shipping_charges["freight_charges"]) * (floatval($psd->seller_gst_rate) / 100));
-                    $suppqq["shipping_tax_charges"] = intval($shipping_tax_charges);
-
-                    $cod_tax_charges = (($actual_shipping_charges["cod_charges"]) * (floatval($psd->seller_gst_rate) / 100));
-                    $suppqq["cod_tax_charges"] = intval($cod_tax_charges);
-
-                    $suppqq["Supplier_Shipping_cost_with_gst"] = $suppqq["Supplier_Shipping_cost"] + $suppqq["shipping_tax_charges"];
-
-                    if (!in_array($suppqq, $supp_data_array_copy)) {
-                        array_push($supp_data_array_copy, $suppqq);
                     }
                 }
             }
-        }
         }
 
         $ship_data_copy = json_encode($supp_data_array_copy);
@@ -4353,7 +4356,8 @@ class Order_model extends CI_Model
     {
         $order_id = clean_number($order_id);
         $data = array(
-            'order_id' => $order_id
+            'order_id' => $order_id,
+            'is_active' => 0
         );
         $this->db->where('cashfree_order_id', $cashfree_order_id);
         $this->db->update('cashfree_seller_payout', $data);
@@ -5188,16 +5192,16 @@ class Order_model extends CI_Model
     {
 
         $order_id = trim($this->input->post('order_id', true));
-    
+
         $order_products = $this->order_model->get_order_products($order_id);
 
-  
+
         foreach ($order_products as $order_p) {
             $product = $this->order_model->get_product_detail($order_p->product_id);
-         
+
             $lookup_table_data = $this->order_model->get_product_shipping_days_from_db($product[0]->shipping_time);
             $estimated_days = $lookup_table_data->lookup_int_val;
-       
+
             $created_date = date('Y-m-d h:i:s', strtotime($order_p->created_at));
             $current_date = date('Y-m-d h:i:s');
 
@@ -5207,18 +5211,17 @@ class Order_model extends CI_Model
                     $lead_time_in_sec = $order_p->lead_time;
                     $order_accepted_at = $order_p->accepted_at;
                     $accepted_at_in_sec = strtotime($order_accepted_at);
-                  
+
                     $total_estimated_dispatch_in_sec = $accepted_at_in_sec + $lead_time_in_sec;
                     $estimated_dispatch_date = date('Y-m-d H:i:s', $total_estimated_dispatch_in_sec);
                 } elseif ($p->add_meet == 'Made to stock') {
-                    $date=strtotime($created_date);
-                    $estimated_dispatch_date =strtotime("$estimated_days day", $date);
-                    $dispatch_date= date('Y-m-d h:i:s',$estimated_dispatch_date);
-              
+                    $date = strtotime($created_date);
+                    $estimated_dispatch_date = strtotime("$estimated_days day", $date);
+                    $dispatch_date = date('Y-m-d h:i:s', $estimated_dispatch_date);
                 }
-           
-  
-                if ($dispatch_date < $current_date && $order_p->order_status=="processing") {
+
+
+                if ($dispatch_date < $current_date && $order_p->order_status == "processing") {
                     $data = array(
                         'order_number' => $order_p->order_id,
                         'order_product_id' => $order_p->id,
@@ -5231,13 +5234,13 @@ class Order_model extends CI_Model
                         "penalty_amount" => $this->general_settings->penalty_amount * 100,
                         "currency" => 'INR',
                         "order_date" =>  $order_p->created_at,
-                         "dispatch_date" => $dispatch_date,
+                        "dispatch_date" => $dispatch_date,
                         "created_at" => date('Y-m-d H:i:s'),
                         "add_meet" =>  $p->add_meet
 
 
                     );
-                  
+
                     $this->db->insert('penalty', $data);
                 }
             }
@@ -5260,7 +5263,7 @@ class Order_model extends CI_Model
             $shipped = 0;
             $processing = 0;
             $rejected = 0;
-            $awaiting_pickup=0;
+            $awaiting_pickup = 0;
             foreach ($order_products as $order_product) {
                 if ($order_product->order_status == "completed") {
                     $completed++;
@@ -5272,8 +5275,7 @@ class Order_model extends CI_Model
                     $cancelled++;
                 } else if ($order_product->order_status == "rejected") {
                     $rejected++;
-                }
-                else if ($order_product->order_status == "awaiting_pickup") {
+                } else if ($order_product->order_status == "awaiting_pickup") {
                     $awaiting_pickup++;
                 }
             }
@@ -5284,11 +5286,9 @@ class Order_model extends CI_Model
                 $data["status"] = "cancelled";
             } else if ($count_order_items == $shipped) {
                 $data["status"] = "shipped";
-            }
-            else if ($count_order_items == ($shipped+$cancelled+$rejected)) {
+            } else if ($count_order_items == ($shipped + $cancelled + $rejected)) {
                 $data["status"] = "shipped";
-            }
-            else if ($count_order_items == $processing) {
+            } else if ($count_order_items == $processing) {
                 $data["status"] = "processing";
             } else if ($count_order_items == $rejected) {
                 $data["status"] = "rejected";
@@ -5302,10 +5302,9 @@ class Order_model extends CI_Model
                 $data["status"] = "completed";
             } else if ($count_order_items == $awaiting_pickup) {
                 $data["status"] = "awaiting_pickup";
-            } else if ($count_order_items == ($awaiting_pickup+$cancelled+$rejected)) {
+            } else if ($count_order_items == ($awaiting_pickup + $cancelled + $rejected)) {
                 $data["status"] = "awaiting_pickup";
-            }
-            else {
+            } else {
                 $data["status"] = "pending";
             }
         }

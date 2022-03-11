@@ -244,7 +244,7 @@ class Email_model extends CI_Model
                 'event_type' => 'Order Placement',
                 'subject' => $subject,
                 'message' => $message,
-                'remark' => "Your Order for " . $order_product->product_title . " has been succefully placed vide Order #" . $order_details->order_number . " and the product will be dispatched soon",
+                'remark' => "Your Order for " . $order_product->product_title . " has been successfully placed vide Order #" . $order_details->order_number . " and the product will be dispatched soon",
                 'to' => $email,
                 'template_path' => "email/email_newsletter",
                 'subscriber' => "",

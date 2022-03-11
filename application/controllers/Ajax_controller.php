@@ -646,7 +646,7 @@ class Ajax_controller extends Home_Core_Controller
                     'to' => $to,
                     'buyer_name' => $buyer_name,
                     'template_path' => "email/email_new_order",
-                    'remark' => "Your Order has been succefully placed vide Order #" . $order_id . " and the product will be dispatched soon     .",
+                    'remark' => "Your Order has been successfully placed vide Order #" . $order_id . " and the product will be dispatched soon     .",
                     'event_type' => "Order Placement"
                 );
                 $this->email_model->send_email($data);

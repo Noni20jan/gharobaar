@@ -229,6 +229,20 @@ class Auth_model extends CI_Model
         }
     }
 
+
+    // update session data in db cart value
+    public function update_user_login_session_data($cart_price)
+    {
+        $sessiondata = $this->session->get_userdata();
+        $session_user_data = array(
+            'cart_total' => $cart_price
+        );
+        if (!empty($session_user_data)) {
+            $this->db->where('modesy_sess_unique_id', $sessiondata["modesy_sess_unique_id"]);
+            $this->db->update('session_user_details', $session_user_data);
+        }
+    }
+
     //login direct
     public function login_direct($user)
     {

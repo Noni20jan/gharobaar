@@ -170,7 +170,7 @@ class Item extends REST_Controller
                     $data1 = array(
                         'message' => "",
                         // 'title' => "Your Product is Successfully Delivered",
-                        'remark' => "Your order for " . $title->title . " vide Order #" . $order_id . " has been succefully delivered as per our shipping partner.In order to raise any concerns or issue with the products received kindly click on the link <a href='" . base_url() . "order-details/" . $order_no->order_number . "'>Order Details</a>",
+                        'remark' => "Your order for " . $title->title . " vide Order #" . $order_id . " has been successfully delivered as per our shipping partner.In order to raise any concerns or issue with the products received kindly click on the link <a href='" . base_url() . "order-details/" . $order_no->order_number . "'>Order Details</a>",
                         // 'for_user' =>,
                         'created_by' => '2',
                         'last_updated_by' => '2',
@@ -189,7 +189,7 @@ class Item extends REST_Controller
                 $data2 = array(
                     // 'title' => "Your Product is Successfully Delivered",
                     'message' => "",
-                    'remark' => "Your Order No #" .  $order_no->order_number . " Has been succefully deliverd to the buyer.",
+                    'remark' => "Your Order No #" .  $order_no->order_number . " Has been successfully deliverd to the buyer.",
                     // 'for_user' =>,
                     'created_by' => '2',
                     'last_updated_by' => '2',
