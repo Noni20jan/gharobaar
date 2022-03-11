@@ -218,7 +218,7 @@
 								}
 								var time_format = Json_data[i].updated_at;
 								time_ago_format = time_ago(time_format);
-								$('#table_' + order_number).append("<tr><td>" + Json_data[i].product_id + "</td><td>" + Json_data[i].product_title + "</td><td>" + "₹" + Json_data[i].product_unit_price / 100 + "</td><td>" + Json_data[i].product_quantity + "</td><td>" + "₹" + Json_data[i].product_gst / 100 + "</td><td>" + "₹" + Json_data[i].product_shipping_cost / 100 + "</td><td>" + "₹" + Json_data[i].product_total_price / 100 + "</td><td>" + new_order_status + "</td><td>" + time_ago_format + "</td><td>")
+								$('#table_'+order_number).append("<tr><td>" + Json_data[i].product_id + "</td><td>" + Json_data[i].product_title + "</td><td>" + Json_data[i].shop_name + "</td><td>" +"₹"+ Json_data[i].product_unit_price/100 + "</td><td>" + Json_data[i].product_quantity + "</td><td>" +"₹"+ Json_data[i].product_gst/100 + "</td><td>" +"₹"+ Json_data[i].product_shipping_cost/100 + "</td><td>" +"₹"+ Json_data[i].product_total_price/100 + "</td><td>" + new_order_status + "</td><td>"+ time_ago_format + "</td><td>")
 							}
 						}
 					}

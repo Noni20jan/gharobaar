@@ -59,7 +59,7 @@ class Order_admin_controller extends Admin_Core_Controller
 		// if (empty($data['order'])) {
 		// 	redirect(admin_url() . "orders");
 		// }
-		$order_products = $this->order_admin_model->get_order_products($id);
+		$order_products = $this->order_admin_model->get_order_products_expandable($id);
 		// $data["session"] = get_user_session();
 		echo json_encode($order_products);
 		// $this->load->view('admin/includes/_header', $data);
