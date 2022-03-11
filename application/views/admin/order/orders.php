@@ -112,6 +112,7 @@
                                     <tr role="row">
                                         <th><?php echo trans('product_id'); ?></th>
                                         <th><?php echo trans('product'); ?></th>
+										<th><?php echo trans('shop_name'); ?></th>
                                         <th><?php echo trans('unit_price'); ?></th>
                                         <th><?php echo trans('quantity'); ?></th>
                                         <th><?php echo trans('vat'); ?></th>
@@ -168,7 +169,7 @@
 		}
 		});
 </script>
-<!-- script for expandable orders -->
+<!-- end for expandable orders -->
 <script>
     
         var dataa=1;
@@ -233,7 +234,7 @@
                         }
                         var time_format =Json_data[i].updated_at;
                         time_ago_format= time_ago(time_format);
-                        $('#table_'+order_number).append("<tr><td>" + Json_data[i].product_id + "</td><td>" + Json_data[i].product_title + "</td><td>" +"₹"+ Json_data[i].product_unit_price/100 + "</td><td>" + Json_data[i].product_quantity + "</td><td>" +"₹"+ Json_data[i].product_gst/100 + "</td><td>" +"₹"+ Json_data[i].product_shipping_cost/100 + "</td><td>" +"₹"+ Json_data[i].product_total_price/100 + "</td><td>" + new_order_status + "</td><td>"+ time_ago_format + "</td><td>")
+                        $('#table_'+order_number).append("<tr><td>" + Json_data[i].product_id + "</td><td>" + Json_data[i].product_title + "</td><td>" + Json_data[i].shop_name + "</td><td>" +"₹"+ Json_data[i].product_unit_price/100 + "</td><td>" + Json_data[i].product_quantity + "</td><td>" +"₹"+ Json_data[i].product_gst/100 + "</td><td>" +"₹"+ Json_data[i].product_shipping_cost/100 + "</td><td>" +"₹"+ Json_data[i].product_total_price/100 + "</td><td>" + new_order_status + "</td><td>"+ time_ago_format + "</td><td>")
                     }
                 }
                         }
@@ -265,8 +266,8 @@
         [86400, 'hours', 3600], // 60*60*24, 60*60
         [172800, '1 day ago', 'Tomorrow'], // 60*60*24*2
         [604800, 'days', 86400], // 60*60*24*7, 60*60*24
-        [1209600, 'Last week', 'Next week'], // 60*60*24*7*4*2
-        [2419200, 'weeks', 604800], // 60*60*24*7*4, 60*60*24*7
+        // [1209600, 'Last week', 'Next week'], // 60*60*24*7*4*2
+        // [2419200, 'weeks', 604800], // 60*60*24*7*4, 60*60*24*7
         [4838400, 'Last month', 'Next month'], // 60*60*24*7*4*2
         [29030400, 'months', 2419200], // 60*60*24*7*4*12, 60*60*24*7*4
         [58060800, 'Last year', 'Next year'], // 60*60*24*7*4*12*2
@@ -298,8 +299,5 @@
         return time;
         }
 
-        // var aDay = 24 * 60 * 60 * 1000;
-        // console.log(time_ago(new Date(Date.now() - aDay)));
-        // console.log(time_ago(new Date(Date.now() - aDay * 2)));
 </script>
 <!-- script end for expandable orders -->
