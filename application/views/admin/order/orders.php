@@ -109,6 +109,7 @@
 												<tr role="row">
 													<th><?php echo trans('product_id'); ?></th>
 													<th><?php echo trans('product'); ?></th>
+													<th><?php echo trans('shop_name'); ?></th>
 													<th><?php echo trans('unit_price'); ?></th>
 													<th><?php echo trans('quantity'); ?></th>
 													<th><?php echo trans('vat'); ?></th>
