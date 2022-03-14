@@ -125,7 +125,11 @@ class Order_model extends CI_Model
                 $this->cart_model->clear_cart();
 
                 //update order id in casfree prepaid payouts
-                $this->update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id);
+                if ($data_transaction['match_status'] == "yes") {
+                    $this->update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id, 1);
+                } else {
+                    $this->update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id, 0);
+                }
 
                 return $order_id;
             }
@@ -4352,12 +4356,12 @@ class Order_model extends CI_Model
         }
     }
 
-    public function update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id)
+    public function update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id, $active)
     {
         $order_id = clean_number($order_id);
         $data = array(
             'order_id' => $order_id,
-            'is_active' => 0
+            'is_active' => $active
         );
         $this->db->where('cashfree_order_id', $cashfree_order_id);
         $this->db->update('cashfree_seller_payout', $data);
