@@ -123,9 +123,9 @@
             $("#submit").click(function() {
                 // alert("wqrw");
                 event.preventDefault();
-
+                var reset_data = document.getElementById("form");
                 var form = this.form;
-                // prepare data
+
                 var data = new FormData(form);
 
                 data.append(csfr_token_name, $.cookie(csfr_cookie_name));
