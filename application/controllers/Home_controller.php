@@ -2929,19 +2929,23 @@ class Home_controller extends Home_Core_Controller
             if ($product->user_id != $this->auth_user->id) {
                 $review = $this->review_model->get_review($product_id, $this->auth_user->id);
                 if (!empty($review)) {
-                    $this->review_model->update_review($review->id, $rating, $product_id, $review_text);
-                    $this->session->set_flashdata('success', trans("thanks_feeedback"));
+                    $reviews = $this->review_model->update_review($review->id, $rating, $product_id, $review_text);
+                    echo json_encode($reviews);
                 } else {
                     $last_id = $this->review_model->add_review($rating, $product_id, $review_text);
                     if (!empty($last_id)) {
                         $this->load->model('upload_model');
-                        $img_path = $this->upload_model->upload_buyer_image('file_[]', $last_id, $product_id);
-                        $this->session->set_flashdata('success', trans("thanks_feeedback"));
+                        $img_path = $this->upload_model->upload_buyer_image('file_', $last_id, $product_id);
+                        $feedback = TRUE;
+                    } else {
+                        $feedback = FALSE;
                     }
+                    echo json_encode($feedback);
                 }
             }
         }
-        redirect($this->agent->referrer());
+
+        // redirect($this->agent->referrer());
     }
 
     /**
