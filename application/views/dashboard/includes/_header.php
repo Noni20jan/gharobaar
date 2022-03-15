@@ -430,7 +430,7 @@ $user = get_user($this->auth_user->id);
                         </li>
                     <?php endif ?>
 
-                    <?php if ($this->general_settings->enable_seller_payout_report == 1) : ?>
+                    <?php if ($this->general_settings->enable_seller_payout_report == 1 && $this->auth_user->id == 317) : ?>
 
                         <li class="treeview<?php is_admin_nav_active(['payment-history']); ?>">
                             <a href="#">

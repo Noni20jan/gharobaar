@@ -88,6 +88,12 @@ class Review_model extends CI_Model
             $this->db->where('product_id', $product_id);
             $this->db->where('user_id', $this->auth_user->id);
             $this->db->update('reviews', $data);
+            $data = $this->db->last_query();
+            if (!empty($data)) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
             //update product rating
             // $this->update_product_rating($product_id);
         }
