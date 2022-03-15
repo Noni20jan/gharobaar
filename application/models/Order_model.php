@@ -488,85 +488,86 @@ class Order_model extends CI_Model
 
                     $object->shipping_charge_to_gharobaar = $object->supplier_shipping_cost_with_gst;
                 }
-            }
 
 
-            // condition for shipping slabs
-            $slab = true;
-            if ($slab == true) {
-                if ($object->total_amount_with_gst >= 50000) {
-                    $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
-                } else if ($object->total_amount_with_gst >= 200000) {
-                    $object->shipping_charge_to_gharobaar = 0;
+
+                // condition for shipping slabs
+                $slab = true;
+                if ($slab == true) {
+                    if ($object->total_amount_with_gst >= 50000) {
+                        $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
+                    } else if ($object->total_amount_with_gst >= 200000) {
+                        $object->shipping_charge_to_gharobaar = 0;
+                    }
                 }
-            }
-            // if ($slab == true) {
-            //     if ($object->total_amount_with_gst > 0 && $object->total_amount_with_gst < 100000) {
-            //         $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
-            //     } else if ($object->total_amount_with_gst >= 100000) {
-            //         $object->shipping_charge_to_gharobaar = 0;
-            //     }
-            // }
-            // condition end
+                // if ($slab == true) {
+                //     if ($object->total_amount_with_gst > 0 && $object->total_amount_with_gst < 100000) {
+                //         $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
+                //     } else if ($object->total_amount_with_gst >= 100000) {
+                //         $object->shipping_charge_to_gharobaar = 0;
+                //     }
+                // }
+                // condition end
 
 
-            if (!empty($pan_number)) {
-                if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
-                    $object->tds_amount_shipping = 0;
-                    $object->total_tds_cod = 0;
-                    $object->tds_amount_shipping_huf_ind = 0.01 * ($object->shipping);
-                    $object->total_tds_cod_huf_ind = 0.01 * $object->cod_charges_without_gst;
+                if (!empty($pan_number)) {
+                    if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                        $object->tds_amount_shipping = 0;
+                        $object->total_tds_cod = 0;
+                        $object->tds_amount_shipping_huf_ind = 0.01 * ($object->shipping);
+                        $object->total_tds_cod_huf_ind = 0.01 * $object->cod_charges_without_gst;
+                    } else {
+                        $object->tds_amount_shipping = 0.01 * ($object->shipping);
+                        $object->total_tds_cod = 0.01 * $object->cod_charges_without_gst;
+                    }
                 } else {
-                    $object->tds_amount_shipping = 0.01 * ($object->shipping);
-                    $object->total_tds_cod = 0.01 * $object->cod_charges_without_gst;
+                    $object->tds_amount_shipping = 0.05 * ($object->shipping);
+                    $object->total_tds_cod = 0.05 * $object->cod_charges_without_gst;
                 }
-            } else {
-                $object->tds_amount_shipping = 0.05 * ($object->shipping);
-                $object->total_tds_cod = 0.05 * $object->cod_charges_without_gst;
+
+
+                if ($object->total_tcs_amount_product == 0) {
+                    $object->total_tcs_shipping = 0;
+                    $object->total_tcs_cod = 0;
+                } elseif ($object->total_tcs_amount_product != 0) {
+                    $object->total_tcs_shipping = ($object->shipping) * 0.01;
+                    $object->total_tcs_cod = 0.01 * $object->cod_charges_without_gst;
+                }
+
+                $object->tcs_amount = $object->total_tcs_amount_product + $object->total_tcs_shipping + $object->total_tcs_cod;
+
+
+                $object->tds_amount = $object->total_tds_amount_product + $object->tds_amount_shipping + $object->total_tds_cod;
+                // var_dump($object->cod_charge);
+                // echo "</br>";
+                // var_dump($object->shipping_charge_to_gharobaar);
+                // echo "</br>";
+                // var_dump($object->tcs_amount);
+                // echo "</br>";
+                // var_dump($object->commission_amount_with_gst);
+                // echo "</br>";
+                // var_dump($object->tds_amount);
+                // echo "</br>";
+
+                // die();
+                $object->total_deduction = round($object->cod_charge + $object->shipping_charge_to_gharobaar + $object->tcs_amount + $object->commission_amount_with_gst + $object->tds_amount);
+
+                // var_dump($object->total_amount_with_gst);
+                // echo "</br>";
+                // var_dump($cod_charges_with_gst);
+                // echo "</br>";
+                // var_dump($object->shipping_charge_with_gst);die();
+
+                $object->net_seller_payable = round($object->total_amount_with_gst + $cod_inc_gst_in_invoice + $object->shipping_charge_with_gst - $object->total_deduction);
+
+
+                $total_amount_paid += $object->net_seller_payable;
+
+                $object->payment_mode = $payment_mode;
+                $object->order_id = $order_id;
+
+                array_push($seller_settlement, $object);
             }
-
-
-            if ($object->total_tcs_amount_product == 0) {
-                $object->total_tcs_shipping = 0;
-                $object->total_tcs_cod = 0;
-            } elseif ($object->total_tcs_amount_product != 0) {
-                $object->total_tcs_shipping = ($object->shipping) * 0.01;
-                $object->total_tcs_cod = 0.01 * $object->cod_charges_without_gst;
-            }
-
-            $object->tcs_amount = $object->total_tcs_amount_product + $object->total_tcs_shipping + $object->total_tcs_cod;
-
-
-            $object->tds_amount = $object->total_tds_amount_product + $object->tds_amount_shipping + $object->total_tds_cod;
-            // var_dump($object->cod_charge);
-            // echo "</br>";
-            // var_dump($object->shipping_charge_to_gharobaar);
-            // echo "</br>";
-            // var_dump($object->tcs_amount);
-            // echo "</br>";
-            // var_dump($object->commission_amount_with_gst);
-            // echo "</br>";
-            // var_dump($object->tds_amount);
-            // echo "</br>";
-
-            // die();
-            $object->total_deduction = round($object->cod_charge + $object->shipping_charge_to_gharobaar + $object->tcs_amount + $object->commission_amount_with_gst + $object->tds_amount);
-
-            // var_dump($object->total_amount_with_gst);
-            // echo "</br>";
-            // var_dump($cod_charges_with_gst);
-            // echo "</br>";
-            // var_dump($object->shipping_charge_with_gst);die();
-
-            $object->net_seller_payable = round($object->total_amount_with_gst + $cod_inc_gst_in_invoice + $object->shipping_charge_with_gst - $object->total_deduction);
-
-
-            $total_amount_paid += $object->net_seller_payable;
-
-            $object->payment_mode = $payment_mode;
-            $object->order_id = $order_id;
-
-            array_push($seller_settlement, $object);
         }
         // var_dump($seller_settlement);
         // die();
@@ -5326,5 +5327,19 @@ class Order_model extends CI_Model
         $this->db->where('seller_id', $seller_id);
         $query = $this->db->get('order_products');
         return $query->result();
+    }
+
+    public function if_preapid_transfer_id($refrence_id)
+    {
+        $sql = "SELECT count(referenceId) AS 'count' FROM cashfree_seller_payout where referenceId= $refrence_id";
+        $query = $this->db->query($sql);
+        return $query->row()->count;
+    }
+
+    public function if_cod_transfer_id($refrence_id)
+    {
+        $sql = "SELECT count(referenceId) AS 'count' FROM cod_seller_payable where referenceId= $refrence_id";
+        $query = $this->db->query($sql);
+        return $query->row()->count;
     }
 }
