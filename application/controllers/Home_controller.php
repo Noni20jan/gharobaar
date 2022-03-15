@@ -2936,11 +2936,15 @@ class Home_controller extends Home_Core_Controller
                     if (!empty($last_id)) {
                         $this->load->model('upload_model');
                         $img_path = $this->upload_model->upload_buyer_image('file_', $last_id, $product_id);
-                        $feedback = TRUE;
+                        if (!empty($img_path)) {
+                            $data = TRUE;
+                        } else {
+                            $data = FALSE;
+                        }
                     } else {
-                        $feedback = FALSE;
+                        $data = FALSE;
                     }
-                    echo json_encode($feedback);
+                    echo json_encode($data);
                 }
             }
         }
