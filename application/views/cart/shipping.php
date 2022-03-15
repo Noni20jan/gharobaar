@@ -629,8 +629,6 @@
                                                 <?php endif; ?>
                                             <?php endforeach; ?>
                                         </div>
-
-
                                         <div class="row">
                                             <div class="col-12 cart-form-shipping-address text-center">
                                                 <button type="button" name="select-address" class="btn btn-custom btn-lg" onclick="show()" id="select-address_new" width="16" height="16" viewBox="0 0 16 16" value="0"><i class="glyphicon glyphicon-plus"></i>Add New Address</button>
@@ -665,7 +663,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
 
                                             <!-- <div class="form-group">
                                                 <label><?php echo trans("address_2"); ?> (<?php echo trans("optional"); ?>)</label>
@@ -852,10 +849,7 @@
                                             </div>
                                         </div>
                                     <?php endif; ?>
-
-
                                 </div>
-
                                 <div class="form-group m-t-15" id="paymentMethodButtonDiv">
                                     <a href="<?php echo generate_url("cart"); ?>" class="btn btn-lg btn-custom" style="  text-decoration: underline;">
                                         <&nbsp;<?php echo trans("return_to_cart"); ?> </a>
@@ -865,7 +859,10 @@
                                                 <button type="submit" id="payment_button" name="submit" value="update" class="btn btn-lg btn-custom" id="payment" <?php echo (empty($get_address)) ? "disabled" : "" ?>><?php echo trans("place_order") ?></button>
                                             <?php endif; ?>
                                 </div>
+                                <?php echo form_close(); ?>
+                                <!-- hidden form end to store the shipping and billing data -->
 
+                                <!-- paymemt section start -->
                                 <div class="col-12" id='load_payment_page'>
                                     <div class="tab-checkout tab-checkout-closed-bordered">
                                         <h2 class="title">2.&nbsp;&nbsp;<?php echo trans("payment_method"); ?></h2>
@@ -875,8 +872,9 @@
                                         <h2 class="title">3.&nbsp;&nbsp;<?php echo trans("payment"); ?></h2>
                                     </div>
                                 </div>
+                                <!-- paymemt section end -->
                             </div>
-
+                            <div id="load_payment_page1"></div>
 
                         </div>
                         <?php if ($mds_payment_type == 'promote') {
@@ -1246,7 +1244,7 @@
 
     }
 </script>
-
+<!-- script to store the address -->
 <script>
     function addAdress() {
 
@@ -1669,7 +1667,7 @@
 
     }
 </script>
-
+<!-- save new address on db -->
 <script>
     function addAddress1() {
 
@@ -2001,26 +1999,93 @@
 
     }
 </script>
-
-
 <script>
-    function Payment() {
+    function place_cod_orders() {
         // e.preventDefault();
-        var form = $('#form_submit_disable');
-
+        // var form = $('#form_submit_disable');
+        var t = {
+            // pay_method: pay_method,
+            // sys_lang_id: 1,
+            value: "update"
+        };
+        t[csfr_token_name] = $.cookie(csfr_cookie_name);
         $.ajax({
             type: "POST",
-            url: base_url + "cart_controller/payment_cashfree",
-            data: form.serialize(),
+            url: base_url + "cart_controller/cash_on_delivery_payment_post",
+            data: t,
             success: function(e) {
                 res = JSON.parse(e);
-                $("#load_payment_page")[0].innerHTML = res.pay_view_page;
-                $("#paymentMethodButtonDiv").hide();
-                console.log(e);
+                if (res.order_completed == "yes") {
+                    window.location.href = base_url + "order-completed";
+                } else {
+                    window.location.href = base_url + "cart/payment";
+                }
+                // $("#load_payment_page")[0].innerHTML = res.pay_view_page;
+                // $("#paymentMethodButtonDiv").hide();
+                // console.log(e);
                 // alert($response.pay_view);
             },
         });
 
 
+    }
+</script>
+
+<script>
+    function Payment() {
+        // e.preventDefault();
+        // var form = $('#form_submit_disable');
+        var payment_mode = $('#payment_mode').val();
+        var orderId = $('#orderId').val();
+        var orderamount = $('#orderamount').val();
+        var bank_select = $('#bank_select').val();
+        var wallet_select = $('#wallet_select').val();
+
+        var t = {
+            // pay_method: pay_method,
+            sys_lang_id: 1,
+            payment_mode: payment_mode,
+            bank_select: bank_select,
+            wallet_select: wallet_select,
+            orderid: orderId,
+            orderamount: orderamount
+        };
+        t[csfr_token_name] = $.cookie(csfr_cookie_name);
+        $.ajax({
+            type: "POST",
+            url: base_url + "cart_controller/payment_cashfree",
+            data: t,
+            success: function(e) {
+                res = JSON.parse(e);
+                window.location.href = base_url + "cashfree_form";
+
+                // alert($response.pay_view);
+            },
+        });
+
+
+    }
+</script>
+<script>
+    function check_mode(val) {
+        var element = $("#nb_banks");
+        var element2 = $("#wallets");
+        if (val == 'nb') {
+            // element.show();
+            $("#nb_banks").css("display", "block");
+            element2.hide();
+            document.getElementById('bank_select').required = true;
+            document.getElementById('wallet_select').required = false;
+        } else if (val == 'wallet') {
+            element2.show();
+            element.hide();
+            document.getElementById('wallet_select').required = true;
+            document.getElementById('bank_select').required = false;
+        } else {
+            element.hide();
+            document.getElementById('bank_select').required = false;
+            document.getElementById('bank_select').required = false;
+            element2.hide();
+        }
     }
 </script>

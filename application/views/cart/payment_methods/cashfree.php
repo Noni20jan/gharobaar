@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php echo form_open('', ['id' => 'form_submit_disable','onsubmit'=> 'Payment()']); ?>
+<?php //echo form_open('', ['id' => 'form_submit_disable', 'onsubmit' => 'Payment()']); 
+?>
 <style>
     .shipping_details {
         text-align: justify;
@@ -109,8 +110,8 @@
 </style>
 
 
-<input type="hidden" name="orderid" value="<?php echo (uniqid()) ?>">
-<input type="hidden" name="orderamount" value="<?php echo ($total_amount) / 100 ?>">
+<input type="hidden" name="orderid" id="orderId" value="<?php echo (uniqid()) ?>">
+<input type="hidden" name="orderamount" id="orderamount" value="<?php echo ($total_amount) / 100 ?>">
 
 <div id="payment-button-container">
     <div class="row">
@@ -245,43 +246,22 @@
             <a href="<?php echo generate_url("cart", "shipping"); ?>" class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 10px !important;"> <?php echo trans("change_address"); ?></a>
         </div>
         <div class="col-sm-6">
-            <button type="submit" id="cashfreebtn" class="cash_free_btn btn btn-lg float-right" style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
+            <button onclick="Payment();" class="cash_free_btn btn btn-lg float-right" style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
         </div>
     </div>
     <div class="row" style="margin-top: 3%;" id="paynow-for-mobile">
         <div class="col-sm-6">
-            <button type="submit" id="cashfreebtn" class="cash_free_btn btn btn-lg float-right" style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
+            <button onclick="Payment();" class="cash_free_btn btn btn-lg float-right" style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
         </div>
         <div class="col-sm-6">
             <!-- <a class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>'><?php echo trans("change_pay_method") ?></a> -->
-            <a href="<?php echo generate_url("cart", "shipping"); ?>"class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;"> <?php echo trans("change_address"); ?></a>
+            <a href="<?php echo generate_url("cart", "shipping"); ?>" class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;"> <?php echo trans("change_address"); ?></a>
         </div>
     </div>
 </div>
-<?php echo form_close(); ?>
-<script>
-    function check_mode(val) {
-        var element = $("#nb_banks");
-        var element2 = $("#wallets");
-        if (val == 'nb') {
-            // element.show();
-            $("#nb_banks").css("display", "block");
-            element2.hide();
-            document.getElementById('bank_select').required = true;
-            document.getElementById('wallet_select').required = false;
-        } else if (val == 'wallet') {
-            element2.show();
-            element.hide();
-            document.getElementById('wallet_select').required = true;
-            document.getElementById('bank_select').required = false;
-        } else {
-            element.hide();
-            document.getElementById('bank_select').required = false;
-            document.getElementById('bank_select').required = false;
-            element2.hide();
-        }
-    }
-</script>
+<?php //echo form_close(); 
+?>
+
 <script>
     $(document).ready(function() {
 
