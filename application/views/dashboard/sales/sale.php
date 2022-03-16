@@ -6,6 +6,7 @@ if (!empty($seller_wise_data)) :
     $seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_data->total_cod_cost) / 100;
 
 endif;
+
 ?>
 
 <style>
@@ -305,6 +306,7 @@ endif;
                 <?php endif; ?>
             </div>
         </div>
+   
         <?php if (($item->product_delivery_partner) == "SHIPROCKET") : ?>
             <?php if (empty($shiprocket_order_details)) : ?>
 
@@ -429,6 +431,11 @@ endif;
                                     $product_details = get_product($item->product_id);
                                     // var_dump(json_encode($product_details));
                             ?>
+                            <?php $half_width_product_variations = json_encode($this->variation_model->get_half_width_product_variations($item->product_id));
+
+                            ?>
+                    <?php $full_width_product_variations =  json_encode($this->variation_model->get_full_width_product_variations($item->product_id));
+                    ?>
                                     <tr>
 
                                         <td><input type="checkbox" <?php if ($item->order_status != "processing") {
@@ -438,6 +445,7 @@ endif;
                                             <div class="table-item-product">
                                                 <div class="left">
                                                     <?php $variation_option = generate_product_variation_image($item);
+                                                
                                                     if (!empty($variation_option)) :
                                                         if ($variation_option->is_default != 0) : ?>
                                                             <a href="<?php echo generate_product_url_by_slug($item->product_slug); ?>" target="_blank">
@@ -1258,9 +1266,6 @@ endforeach; ?>
 <script>
     function wrapper_multiple_product(products_array, order_items_array) {
         $("#schedule_multiple_products").modal('hide');
-
-
-
         function uuidv4() {
             return 'yxxyxxx'.replace(/[xy]/g, function(c) {
                 var r = Math.random() * 16 | 0,
@@ -1276,8 +1281,11 @@ endforeach; ?>
         var base_url = '<?php echo base_url() ?>';
         var order_items = [];
         var quantity_price_array = [];
-        for (var i = 0; i < products_array.length; i++) {
 
+        for (var i = 0; i < products_array.length; i++) {
+            var r=<?php echo $half_width_product_variations;?>;
+            var n=<?php  echo $full_width_product_variations;?>;
+            if(r.length==0 && n.length==0){
             order_items.push({
 
                 name: order_items_array[i].product_title,
@@ -1289,6 +1297,20 @@ endforeach; ?>
             product_id_array.push(products_array[i].id);
             order_item_id_array.push(order_items_array[i].id)
             quantity_price_array.push(order_items_array[i].product_quantity * order_items_array[i].price_after_discount / 100);
+        }
+        else{
+            order_items.push({
+
+name: order_items_array[i].product_title,
+sku: products_array[i].sku_code,
+units: order_items_array[i].product_quantity,
+selling_price: order_items_array[i].price_after_discount / 100
+
+});
+product_id_array.push(products_array[i].id);
+order_item_id_array.push(order_items_array[i].id)
+quantity_price_array.push(order_items_array[i].product_quantity * order_items_array[i].price_after_discount / 100);
+        }
         }
         for (var j = 0; j < quantity_price_array.length; j++) {
             total_quantity_price += quantity_price_array[j];
