@@ -77,11 +77,12 @@ class Dashboard_controller extends Home_Core_Controller
         // var_dump($status);
 
         curl_close($curl);
-
-        $user_data = array(
-            'modesy_sess_user_shiprocket_token' => json_decode($response)->token
-        );
-        $this->session->set_userdata($user_data);
+        if ($status == 200) {
+            $user_data = array(
+                'modesy_sess_user_shiprocket_token' => json_decode($response)->token
+            );
+            $this->session->set_userdata($user_data);
+        }
     }
 
 
@@ -643,17 +644,17 @@ class Dashboard_controller extends Home_Core_Controller
         $product_delivery_partner = get_order_product($product_ids[0])->product_delivery_partner;
 
         if (!empty($product_ids)) {
-            
+
             foreach ($product_ids as $id) {
-                if(get_order_product($id)->order_status=="processing"){
-                array_push($items_ids, $id);
-                $product = get_product(get_order_product($id)->product_id);
-                if (strcasecmp($product_address, $product->product_address) == 0 && strcasecmp($product_landmark, $product->landmark) == 0 && strcasecmp($product_area, $product->product_area) == 0 && strcasecmp($product_city, $product->product_city) == 0 && strcasecmp($product_pincode, $product->product_pincode) == 0) {
-                    $pickup_location_matched = 0;
-                } else {
-                    $pickup_location_matched++;
+                if (get_order_product($id)->order_status == "processing") {
+                    array_push($items_ids, $id);
+                    $product = get_product(get_order_product($id)->product_id);
+                    if (strcasecmp($product_address, $product->product_address) == 0 && strcasecmp($product_landmark, $product->landmark) == 0 && strcasecmp($product_area, $product->product_area) == 0 && strcasecmp($product_city, $product->product_city) == 0 && strcasecmp($product_pincode, $product->product_pincode) == 0) {
+                        $pickup_location_matched = 0;
+                    } else {
+                        $pickup_location_matched++;
+                    }
                 }
-            }
             }
         }
 
@@ -682,18 +683,42 @@ class Dashboard_controller extends Home_Core_Controller
 
         if (!empty($product_ids)) {
             foreach ($product_ids as $id) {
-                if(get_order_product($id)->order_status=="processing"){
 
-                $product = get_product(get_order_product($id)->product_id);
-                $order_product = get_order_product($id);
-                $total_length += intval($product->packed_product_length);
-                $total_width += intval($product->packed_product_width);
-                $total_height += intval($product->packed_product_height);
-                $total_weight += intval($order_product->product_weight);
-                array_push($products_array, $product);
-                array_push($order_items, $order_product);
+                if (get_order_product($id)->order_status == "processing") {
+                    $half_width_product_variations = $this->variation_model->get_half_width_product_variations(get_order_product($id)->product_id);
+                    $full_width_product_variations = $this->variation_model->get_full_width_product_variations(get_order_product($id)->product_id);
+                    if (empty($half_width_product_variations) && empty($full_width_product_variations)) {
+                        $product = get_product(get_order_product($id)->product_id);
+                        $order_product = get_order_product($id);
+                        $total_length += intval($product->packed_product_length);
+                        $total_width += intval($product->packed_product_width);
+                        $total_height += intval($product->packed_product_height);
+                        $total_weight += intval($order_product->product_weight);
+                        array_push($products_array, $product);
+                        array_push($order_items, $order_product);
+                    } else {
+                            $variation = $this->variation_model->get_product_variations(get_order_product($id)->product_id);
+                            foreach ($variation as $variations) :
+                            endforeach;
+                            $option = $this->variation_model->get_variation_options($variations->id);
+                            foreach($option as $opt):
+                        $product = $this->product_model->get_variation_options_by_id(get_order_product($id)->product_id,$opt->id);
+                            $order_product = get_order_product($id);
+
+
+                        array_push($products_array, $product);
+
+                            endforeach;
+                            $total_length += intval($product->packed_product_length);
+                            $total_width += intval($product->packed_product_width);
+                            $total_height += intval($product->packed_product_height);
+                            $total_weight += intval($order_product->product_weight);
+
+                        array_push($order_items, $order_product);
+
+                    }
+                }
             }
-        }
         }
 
 
@@ -2185,8 +2210,8 @@ class Dashboard_controller extends Home_Core_Controller
         if (!$this->order_model->check_order_seller($data["order"]->id)) {
             redirect(lang_base_url());
         }
-        if(empty($_SESSION['modesy_sess_user_shiprocket_token'])){
-        $data["shiprocket"]=$this->shiprocket();
+        if (empty($_SESSION['modesy_sess_user_shiprocket_token'])) {
+            $data["shiprocket"] = $this->shiprocket();
         }
         $data['order_supplier'] = $this->order_model->get_charges_seller_wise1($data['order']->id);
         $data["order_products"] = $this->order_model->get_order_products($data["order"]->id);
@@ -2202,7 +2227,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data["products_order"] = $this->order_model->get_products_order($data["order"]->id, $this->auth_user->id);
         $data["order_count"] = $this->order_model->count_order_products($data["order"]->id, $this->auth_user->id);
         // $data['check'] = $this->order_model->get_stats($data["order"]->id, ($order_details->product_id));
-        $data["orders_count"]=$this->order_model->get_seller_count_order_products($data["order"]->id,$this->auth_user->id);
+        $data["orders_count"] = $this->order_model->get_seller_count_order_products($data["order"]->id, $this->auth_user->id);
         $this->load->view('dashboard/includes/_header', $data);
         $this->load->view('dashboard/sales/sale', $data);
         $this->load->view('dashboard/includes/_footer');
@@ -2953,7 +2978,6 @@ class Dashboard_controller extends Home_Core_Controller
         post_method();
         $this->order_model->schedule_penalty();
         $this->order_model->shiprocket_response();
-
     }
 
 
