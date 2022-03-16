@@ -626,7 +626,7 @@ class Dashboard_controller extends Home_Core_Controller
             redirect($this->agent->referrer());
         }
     }
-    public function schedule_multiple_order_shipment()
+       public function schedule_multiple_order_shipment()
     {
         $pickup_location_matched = 0;
         $delivery_partner_matched = 0;
@@ -699,18 +699,18 @@ class Dashboard_controller extends Home_Core_Controller
                     } else {
                             $variation = $this->variation_model->get_product_variations(get_order_product($id)->product_id);
                             foreach ($variation as $variations) :
+                            endforeach;
                             $option = $this->variation_model->get_variation_options($variations->id);
-                        endforeach;
-
-
-foreach($option as $opt):
-                        $product = $this->product_model->get_variation_options_by_id(get_order_product($id)->product_id,$opt->id);
-
-                    endforeach;
-                        array_push($order_items, $order_product);
+                            $data=unserialize(get_order_product($id)->variation_option_ids);
+                            foreach($data as $a){
+                               
+                        $product = $this->product_model->get_variation_options_by_id(get_order_product($id)->product_id,$a);
 
                         array_push($products_array, $product);
-              
+}
+                        array_push($order_items, $order_product);
+
+                
                         $order_product = get_order_product($id);
                         $total_length += intval($product->packed_product_length);
                         $total_width += intval($product->packed_product_width);
@@ -745,6 +745,8 @@ foreach($option as $opt):
         echo json_encode($data);
     }
 }
+
+
     
     public function edit_addresses()
     {
