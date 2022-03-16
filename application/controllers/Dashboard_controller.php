@@ -699,27 +699,28 @@ class Dashboard_controller extends Home_Core_Controller
                     } else {
                             $variation = $this->variation_model->get_product_variations(get_order_product($id)->product_id);
                             foreach ($variation as $variations) :
-                            endforeach;
                             $option = $this->variation_model->get_variation_options($variations->id);
-                            foreach($option as $opt):
-                        $product = $this->product_model->get_variation_options_by_id(get_order_product($id)->product_id,$opt->id);
-                            $order_product = get_order_product($id);
+                        endforeach;
 
+
+foreach($option as $opt):
+                        $product = $this->product_model->get_variation_options_by_id(get_order_product($id)->product_id,$opt->id);
+
+                    endforeach;
+                        array_push($order_items, $order_product);
 
                         array_push($products_array, $product);
-
-                            endforeach;
-                            $total_length += intval($product->packed_product_length);
-                            $total_width += intval($product->packed_product_width);
-                            $total_height += intval($product->packed_product_height);
-                            $total_weight += intval($order_product->product_weight);
-
-                        array_push($order_items, $order_product);
+              
+                        $order_product = get_order_product($id);
+                        $total_length += intval($product->packed_product_length);
+                        $total_width += intval($product->packed_product_width);
+                        $total_height += intval($product->packed_product_height);
+                        $total_weight += intval($order_product->product_weight);
 
                     }
                 }
             }
-        }
+        
 
 
         $vars = array(
@@ -743,6 +744,8 @@ class Dashboard_controller extends Home_Core_Controller
         );
         echo json_encode($data);
     }
+}
+    
     public function edit_addresses()
     {
         $id = $this->input->post('address_id', true);
