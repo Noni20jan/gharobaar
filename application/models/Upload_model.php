@@ -139,7 +139,6 @@ class Upload_model extends CI_Model
                     $img_path = $this->upload_model->review_buyer_image($temp_path);
                     $this->review_model->upload_review_images($last_id, $img_path, $product_id);
                 }
-                // return null;
             } else {
                 return null;
             }
@@ -264,6 +263,8 @@ class Upload_model extends CI_Model
     //product default image upload
     public function product_default_image_upload($path, $folder)
     {
+        $valid_ext = array('png', 'jpeg', 'jpg', 'gif');
+
         $new_name = 'img_x500_' . generate_unique_id() . '.jpg';
         $new_path = 'uploads/' . $folder . '/' . $new_name;
         if ($folder == 'images') {
@@ -271,6 +272,14 @@ class Upload_model extends CI_Model
             $new_name = $directory . $new_name;
             $new_path = 'uploads/images/' . $new_name;
         }
+        $file_extension = pathinfo($new_path, PATHINFO_EXTENSION);
+        $file_extension = strtolower($file_extension);
+        if (in_array($file_extension, $valid_ext)) {
+
+            // Compress Image
+            $this->compressImage($new_path, $new_path, 60);
+        }
+
         $img = Image::make($path)->orientate();
         $img->resize(null, 500, function ($constraint) {
             $constraint->aspectRatio();
@@ -289,11 +298,21 @@ class Upload_model extends CI_Model
     {
         $new_name = 'img_1920x_' . generate_unique_id() . '.jpg';
         $new_path = 'uploads/' . $folder . '/' . $new_name;
+        $valid_ext = array('png', 'jpeg', 'jpg', 'gif');
+
         if ($folder == 'images') {
             $directory = $this->create_upload_directory('images');
             $new_name = $directory . $new_name;
             $new_path = 'uploads/images/' . $new_name;
         }
+        $file_extension = pathinfo($new_path, PATHINFO_EXTENSION);
+        $file_extension = strtolower($file_extension);
+        if (in_array($file_extension, $valid_ext)) {
+
+            // Compress Image
+            $this->compressImage($new_path, $new_path, 60);
+        }
+
         $img = Image::make($path)->orientate();
         $img->resize(1920, null, function ($constraint) {
             $constraint->aspectRatio();
@@ -313,10 +332,19 @@ class Upload_model extends CI_Model
     {
         $new_name = 'img_x300_' . generate_unique_id() . '.jpg';
         $new_path = 'uploads/' . $folder . '/' . $new_name;
+        $valid_ext = array('png', 'jpeg', 'jpg', 'gif');
+
         if ($folder == 'images') {
             $directory = $this->create_upload_directory('images');
             $new_name = $directory . $new_name;
             $new_path = 'uploads/images/' . $new_name;
+        }
+        $file_extension = pathinfo($new_path, PATHINFO_EXTENSION);
+        $file_extension = strtolower($file_extension);
+        if (in_array($file_extension, $valid_ext)) {
+
+            // Compress Image
+            $this->compressImage($new_path, $new_path, 60);
         }
         $img = Image::make($path)->orientate();
         $img->resize(null, 300, function ($constraint) {
@@ -801,5 +829,23 @@ class Upload_model extends CI_Model
         }
 
         return $directory . "/";
+    }
+    function compressImage($source, $destination, $quality)
+    {
+
+        $info = getimagesize($source);
+
+        if ($info['mime'] == 'image/jpeg')
+            $image = imagecreatefromjpeg($source);
+
+        elseif ($info['mime'] == 'image/gif')
+            $image = imagecreatefromgif($source);
+
+        elseif ($info['mime'] == 'image/png')
+            $image = imagecreatefrompng($source);
+
+
+        imagejpeg($image, $destination, $quality);
+        return $destination;
     }
 }

@@ -2903,9 +2903,9 @@ class Home_controller extends Home_Core_Controller
                     } else {
                         $data = False;
                     }
+                    echo json_encode($data);
                 }
             }
-            echo json_encode($data);
         }
 
         // redirect($this->agent->referrer());
