@@ -85,7 +85,7 @@
                 <label for="meeting-time">Start date & Time:</label>
             </div>
             <div class="col-sm-6">
-                <input type="datetime-local" id="start_date" onchange="startend()" class="form-control" name="start_date" value="<?php $date_time = new DateTime();
+                <input type="datetime-local" id="start_date" onkeydown="return false" onchange="startend()" class="form-control" name="start_date" value="<?php $date_time = new DateTime();
                                                                                                                                     echo $date_time->format("Y-m-d\TH:i:s"); ?>" required>
 
             </div>
@@ -97,7 +97,7 @@
                 <label for="meeting-time">End date & Time:</label>
             </div>
             <div class="col-sm-6">
-                <span><input type="datetime-local" id="end_date" onchange="startend()" class="form-control" name="end_date" value="<?php $date_time = new DateTime();
+                <span><input type="datetime-local" id="end_date" onkeydown="return false" onchange="startend()" class="form-control" name="end_date" value="<?php $date_time = new DateTime();
                                                                                                                                     echo $date_time->format("Y-m-d\TH:i:s"); ?>" required></span>
                 <span id="spanend_date1" style="color:red;">Enter a valid date</span>
             </div>
