@@ -643,17 +643,17 @@ class Dashboard_controller extends Home_Core_Controller
         $product_delivery_partner = get_order_product($product_ids[0])->product_delivery_partner;
 
         if (!empty($product_ids)) {
-            
+
             foreach ($product_ids as $id) {
-                if(get_order_product($id)->order_status=="processing"){
-                array_push($items_ids, $id);
-                $product = get_product(get_order_product($id)->product_id);
-                if (strcasecmp($product_address, $product->product_address) == 0 && strcasecmp($product_landmark, $product->landmark) == 0 && strcasecmp($product_area, $product->product_area) == 0 && strcasecmp($product_city, $product->product_city) == 0 && strcasecmp($product_pincode, $product->product_pincode) == 0) {
-                    $pickup_location_matched = 0;
-                } else {
-                    $pickup_location_matched++;
+                if (get_order_product($id)->order_status == "processing") {
+                    array_push($items_ids, $id);
+                    $product = get_product(get_order_product($id)->product_id);
+                    if (strcasecmp($product_address, $product->product_address) == 0 && strcasecmp($product_landmark, $product->landmark) == 0 && strcasecmp($product_area, $product->product_area) == 0 && strcasecmp($product_city, $product->product_city) == 0 && strcasecmp($product_pincode, $product->product_pincode) == 0) {
+                        $pickup_location_matched = 0;
+                    } else {
+                        $pickup_location_matched++;
+                    }
                 }
-            }
             }
         }
 
@@ -682,42 +682,44 @@ class Dashboard_controller extends Home_Core_Controller
 
         if (!empty($product_ids)) {
             foreach ($product_ids as $id) {
-                if(get_order_product($id)->order_status=="processing"){
 
-                $product = get_product(get_order_product($id)->product_id);
-                $order_product = get_order_product($id);
-                $total_length += intval($product->packed_product_length);
-                $total_width += intval($product->packed_product_width);
-                $total_height += intval($product->packed_product_height);
-                $total_weight += intval($order_product->product_weight);
-                array_push($products_array, $product);
-                array_push($order_items, $order_product);
+                if (get_order_product($id)->order_status == "processing") {
+                    $half_width_product_variations = $this->variation_model->get_half_width_product_variations(get_order_product($id)->product_id);
+                    $full_width_product_variations = $this->variation_model->get_full_width_product_variations(get_order_product($id)->product_id);
+                    if (empty($half_width_product_variations) && empty($full_width_product_variations)) {
+                        $product = get_product(get_order_product($id)->product_id);
+                        $order_product = get_order_product($id);
+                        $total_length += intval($product->packed_product_length);
+                        $total_width += intval($product->packed_product_width);
+                        $total_height += intval($product->packed_product_height);
+                        $total_weight += intval($order_product->product_weight);
+                        array_push($products_array, $product);
+                        array_push($order_items, $order_product);
+                    } else {
+                            $variation = $this->variation_model->get_product_variations(get_order_product($id)->product_id);
+                            foreach ($variation as $variations) :
+                            endforeach;
+                            $option = $this->variation_model->get_variation_options($variations->id);
+foreach($option as $opt):
+                        $product = $this->product_model->get_variation_options_by_id(get_order_product($id)->product_id,$opt->id);
+
+
+                        array_push($order_items, $order_product);
+
+                        array_push($products_array, $product);
+                        endforeach;
+                        $order_product = get_order_product($id);
+                        $total_length += intval($product->packed_product_length);
+                        $total_width += intval($product->packed_product_width);
+                        $total_height += intval($product->packed_product_height);
+                        $total_weight += intval($order_product->product_weight);
+
+                    }
+                }
             }
         }
-        }
 
 
-        $vars = array(
-            "products" => $products_array,
-            "total_length" => $total_length,
-            "total_width" => $total_width,
-            "total_height" => $total_height,
-            "total_weight" => $total_weight,
-            "pickup_location_matched" => $pickup_location_matched,
-            "order_items" => $order_items,
-            "delivery_partner_matched" => $delivery_partner_matched,
-            "sale_total_price" => $sale_total_price,
-            "item_ids" => $items_ids
-
-        );
-        $html_content = $this->load->view('dashboard/schedule_shipment_view', $vars, true);
-        $data = array(
-            'result' => 1,
-            'html_content' => $html_content,
-            'vars' => $vars
-        );
-        echo json_encode($data);
-    }
     public function edit_addresses()
     {
         $id = $this->input->post('address_id', true);
