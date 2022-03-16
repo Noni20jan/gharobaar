@@ -4061,7 +4061,7 @@ order by id desc LIMIT 1";
 
     public function get_variation_options_by_id($id,$variation_id){
         
-        $this->db->select('products.*,variation_options.id,variation_options.sku_code');
+        $this->db->select('products.*,variation_options.sku_code');
          $this->db->join('variations','variations.product_id=products.id');
         $this->db->join('variation_options','variation_options.variation_id=variations.id');
         $this->db->where('variation_options.id', $variation_id);
