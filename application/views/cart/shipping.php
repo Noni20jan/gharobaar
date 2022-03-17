@@ -2,6 +2,14 @@
 <script src="<?= base_url(); ?>assets/js/main-1.7.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/progress-tracker.css">
 <style>
+    .order_summary {
+        width: 40% !important;
+    }
+
+    .col-lg-5 {
+        max-width: 100% !important;
+    }
+
     .checkout-steps .divider {
         display: inline-block;
         border-top: 1px solid #696b79;
@@ -53,6 +61,10 @@
         .order-summary-container {
             margin-top: 0px !important;
 
+        }
+
+        .order_summary {
+            width: 100% !important;
         }
 
         .btn-lg {
@@ -880,7 +892,12 @@
                         <?php if ($mds_payment_type == 'promote') {
                             $this->load->view("cart/_order_summary_promote");
                         } else {
-                            $this->load->view("cart/_order_summary");
+                        ?>
+                            <div class="order_summary" id="order_summary">
+                                <?php
+                                $this->load->view("cart/_order_summary"); ?>
+                            </div>
+                        <?php
                         } ?>
 
                     </div>
@@ -1447,6 +1464,9 @@
         $('#shipping_address_val').val(d)
         $('#shipping_landmark_val').val(e)
         $('[name=address_type_val]').val(c)
+        $("#load_payment_page")[0].innerHTML = "";
+        // $("#order_summary")[0].innerHTML = res.order_summary;
+        $("#paymentMethodButtonDiv").show();
     }
 </script>
 <script>
@@ -1967,6 +1987,7 @@
             success: function(e) {
                 res = JSON.parse(e);
                 $("#load_payment_page")[0].innerHTML = res.pay_view_page;
+                $("#order_summary")[0].innerHTML = res.order_summary;
                 $("#paymentMethodButtonDiv").hide();
                 console.log(e);
                 // alert($response.pay_view);

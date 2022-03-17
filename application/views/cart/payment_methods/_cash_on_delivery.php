@@ -9,6 +9,16 @@
 			text-align: start;
 		}
 
+		.cash_free_btn {
+			background-color: #007C05 !important;
+			cursor: pointer;
+			color: #fff !important;
+			font-weight: 600 !important;
+			padding: .64rem 2.8rem !important;
+			min-width: 200px;
+			max-width: 100% !important;
+		}
+
 		@media only screen and (max-width: 800px) {
 			.shipping_details {
 				text-align: justify;
@@ -32,7 +42,7 @@
 		@media only screen and (max-width: 800px) {
 			#place_order {
 
-				margin-right: 23%;
+				/* margin-right: 23%; */
 				margin-bottom: 14px;
 
 			}
@@ -57,7 +67,14 @@
 			}
 		}
 	</style>
-
+	<?php $is_all_deliverable = 1;
+	foreach ($cart_items as $item) {
+		if (!$item->product_deliverable) {
+			$is_all_deliverable = 0;
+			break;
+		}
+	}
+	?>
 	<?php if ($mds_payment_type != 'promote') : ?>
 		<!--PRODUCT SALES-->
 		<div class="row">
@@ -127,7 +144,7 @@
 			</p> -->
 			<!-- <a class="btn btn-lg btn-custom btn-place-order float-left m-t-30" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>' ><?php echo trans("change_pay_method") ?></a> -->
 			<!-- <a href="<?php echo generate_url("cart", "shipping"); ?>" class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;"> <?php echo trans("change_address"); ?></a> -->
-			<button onclick="place_cod_orders();" class="btn btn-lg btn-custom btn-place-order float-right m-t-30" id="place_order"><?php echo trans("place_order") ?></button>
+			<button onclick="place_cod_orders();" <?= $is_all_deliverable ? "" : "disabled"; ?> class="cash_free_btn btn btn-lg float-right" id="place_order"><?php echo trans("place_order") ?></button>
 		</div>
 		<?php //echo //form_close(); 
 		?>

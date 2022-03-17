@@ -108,7 +108,14 @@
         }
     }
 </style>
-
+<?php $is_all_deliverable = 1;
+foreach ($cart_items as $item) {
+    if (!$item->product_deliverable) {
+        $is_all_deliverable = 0;
+        break;
+    }
+}
+?>
 
 <input type="hidden" name="orderid" id="orderId" value="<?php echo (uniqid()) ?>">
 <input type="hidden" name="orderamount" id="orderamount" value="<?php echo ($total_amount) / 100 ?>">
@@ -246,12 +253,12 @@
             <a href="<?php echo generate_url("cart", "shipping"); ?>" class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 10px !important;"> <?php echo trans("change_address"); ?></a>
         </div>
         <div class="col-sm-6">
-            <button onclick="Payment();" class="cash_free_btn btn btn-lg float-right" style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
+            <button onclick="Payment();" <?= $is_all_deliverable ? "" : "disabled"; ?> class="cash_free_btn btn btn-lg float-right" style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
         </div>
     </div>
     <div class="row" style="margin-top: 3%;" id="paynow-for-mobile">
         <div class="col-sm-6">
-            <button onclick="Payment();" class="cash_free_btn btn btn-lg float-right" style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
+            <button onclick="Payment();" class="cash_free_btn btn btn-lg float-right" <?= $is_all_deliverable ? "" : "disabled"; ?> style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
         </div>
         <div class="col-sm-6">
             <!-- <a class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>'><?php echo trans("change_pay_method") ?></a> -->
