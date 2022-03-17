@@ -2975,7 +2975,7 @@
 
     <!-- chat systems  -->
     <!-- <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script> -->
-
+    <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
     <?php if ($this->general_settings->is_tawkto_enable == 1) : ?>
         <script type="text/javascript">
             var Tawk_API = Tawk_API || {},
@@ -3219,7 +3219,7 @@
                         ($(".cart_a").append(),
                             $.notify({
                                 title: "<strong></strong> ",
-                                message: "Your Cart Is Empty!",
+                                message: "Added To Wishlist",
                             }))
 
 

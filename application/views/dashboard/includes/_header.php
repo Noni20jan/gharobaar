@@ -92,6 +92,8 @@ $user = get_user($this->auth_user->id);
         var csfr_token_name = "<?= $this->security->get_csrf_token_name(); ?>";
         var csfr_cookie_name = "<?= $this->config->item('csrf_cookie_name'); ?>";
     </script>
+    <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
+
     <style>
         .switch-field {
             display: flex;

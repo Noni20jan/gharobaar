@@ -84,12 +84,12 @@ class Review_model extends CI_Model
         if (!empty($ip)) {
             $data['ip_address'] = $ip;
         }
-        if (!empty($data['rating']) && !empty($data['review'])) {
+        if (!empty($data['rating'])) {
             $this->db->where('product_id', $product_id);
             $this->db->where('user_id', $this->auth_user->id);
             $this->db->update('reviews', $data);
-            $data = $this->db->last_query();
-            if (!empty($data)) {
+            $feedback = $this->db->last_query();
+            if (!empty($feedback)) {
                 return TRUE;
             } else {
                 return FALSE;
