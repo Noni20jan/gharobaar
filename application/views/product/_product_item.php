@@ -13,11 +13,12 @@
         background-color: red;
     }
 
+    
     @media(max-width:700px) {
         #cvl {
             position: absolute;
 
-            left: 57px;
+            left: 77px;
             float: right;
             color: #fff;
             background-color: red;
@@ -52,7 +53,7 @@
     right: 10px;
     top: 8px;
     font-weight: 400;
-    font-size: 8px;
+    font-size: 9px;
     border-radius: 0.1rem;
     padding: 0.3em 0.6em;
     background-color: #46af4a;
