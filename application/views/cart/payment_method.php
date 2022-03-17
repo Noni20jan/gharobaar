@@ -372,9 +372,9 @@ foreach ($cart_items as $item) {
 
                                             <!-- <div class="form-group m-t-15">
                                                 <?php if ($mds_payment_type == "sale") : ?> -->
-                                                    <!-- <a href="<?php echo generate_url("cart"); ?>" class="btn btn-lg btn-custom">
+                                            <!-- <a href="<?php echo generate_url("cart"); ?>" class="btn btn-lg btn-custom">
                                                         &nbsp;<?php echo trans("return_to_cart"); ?></a> -->
-                                                    <!-- <a href="<?php echo generate_url("cart", "shipping"); ?>" class="btn btn-lg btn-custom btn-continue-payment float-left" style="margin-bottom: 10px !important;"> <?php echo trans("change_address"); ?></a>
+                                            <!-- <a href="<?php echo generate_url("cart", "shipping"); ?>" class="btn btn-lg btn-custom btn-continue-payment float-left" style="margin-bottom: 10px !important;"> <?php echo trans("change_address"); ?></a>
                                                 <?php endif; ?>
                                                 <button type="submit" name="submit" value="update" class="btn btn-lg btn-custom btn-continue-payment float-right" <?= $is_all_deliverable ? "" : "disabled"; ?>><?php echo trans("continue_to_payment") ?></button>
                                             </div> -->
@@ -394,10 +394,10 @@ foreach ($cart_items as $item) {
                                     </h2>
                                     <div id='pay_view_load' style="margin-top: 30px;">
                                         <?php if (!empty($cart_has_physical_product) && $this->form_settings->shipping == 1 && $mds_payment_type == "sale") {
-                                        $data = array('total_amount' => $total_amount, 'currency' => $currency, 'mds_payment_type' => $mds_payment_type, 'cart_total' => $cart_total, 'cart_items'=>$cart_items);
-                                        $this->load->view("cart/payment_methods/cashfree", $data); 
-                                    }
-                                    ?>
+                                            $data = array('total_amount' => $total_amount, 'currency' => $currency, 'mds_payment_type' => $mds_payment_type, 'cart_total' => $cart_total, 'cart_items' => $cart_items);
+                                            $this->load->view("cart/payment_methods/cashfree", $data);
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -427,32 +427,28 @@ foreach ($cart_items as $item) {
 
 
 <script>
+    $('input[name="payment_option"]').on("click", function(e) {
 
+        var pay_method = document.querySelector('input[name="payment_option"]:checked').value;
 
-
-$('input[name="payment_option"]').on("click", function(e) {
-
-    var pay_method=document.querySelector('input[name="payment_option"]:checked').value;
-
-    var e = $(this).val(),
-      t = {
-        pay_method: pay_method,
-        sys_lang_id: 1,
-      };
-    (t[csfr_token_name] = $.cookie(csfr_cookie_name)),
-      $.ajax({
-        type: "POST",
-        url: base_url + "cart_controller/load_pay_view",
-        data: t,
-        success: function (e) {
-            res = JSON.parse(e);
-            $("#pay_view_load")[0].innerHTML = res.pay_view;
-            console.log(res);
-            // alert($response.pay_view);
-        },
-      });
-  })
-
+        var e = $(this).val(),
+            t = {
+                pay_method: pay_method,
+                sys_lang_id: 1,
+            };
+        (t[csfr_token_name] = $.cookie(csfr_cookie_name)),
+        $.ajax({
+            type: "POST",
+            url: base_url + "cart_controller/load_pay_view",
+            data: t,
+            success: function(e) {
+                res = JSON.parse(e);
+                $("#pay_view_load")[0].innerHTML = res.pay_view;
+                console.log(res);
+                // alert($response.pay_view);
+            },
+        });
+    })
 </script>
 
 <!-- Wrapper End-->

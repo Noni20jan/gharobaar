@@ -1781,6 +1781,7 @@ class Cart_controller extends Home_Core_Controller
     }
     public function cashfree_form()
     {
+
         $sessiondata = $this->session->userdata("cashfree_form");
         if ($this->general_settings->enable_easysplit == 1) {
             if (auth_check()) :
@@ -1840,8 +1841,8 @@ class Cart_controller extends Home_Core_Controller
             $data["paymentCode"] = $sessiondata['paymentCode'];
             $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentOption=" . $data["paymentOption"] . "&paymentCode=" . $data["paymentCode"];
         } elseif ($sessiondata['paymentModes'] == "wallet") {
-            $data["paymentOption"] = $sessiondata['payment_mode'];
-            $data["paymentCode"] = $sessiondata['payment_mode'];
+            $data["paymentOption"] = $sessiondata['paymentModes'];
+            $data["paymentCode"] = $sessiondata['paymentCode'];
             $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentOption=" . $data["paymentOption"] . "&paymentCode=" . $data["paymentCode"];
         } elseif ($sessiondata['paymentModes'] == "cc" || $sessiondata['paymentModes'] == "dc" || $sessiondata['paymentModes'] == "upi") {
             $data["paymentModes"] = $sessiondata['paymentModes'];
@@ -1870,7 +1871,6 @@ class Cart_controller extends Home_Core_Controller
 
     public function cashfree_payment_post()
     {
-
         $sess_unique_id = trim($this->input->get('session_id', TRUE));
         $paymentOption = $this->input->get('paymentOption', TRUE);
         $paymentCode = $this->input->get('paymentCode', TRUE);
@@ -2337,10 +2337,12 @@ class Cart_controller extends Home_Core_Controller
         }
 
         if ($data['cart_total']->total_price != 0) {
+            $order_summary = $this->load->view("cart/_order_summary", $data, true);
             $pay_view = $this->load->view('cart/payment_method_ajax', $data, true);
             $response = array(
                 "status" => true,
                 "pay_view_page" => $pay_view,
+                "order_summary" => $order_summary,
 
             );
             echo json_encode($response);

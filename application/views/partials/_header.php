@@ -2360,7 +2360,7 @@
     <!--include mobile menu-->
     <?php $this->load->view("partials/_nav_mobile"); ?>
     <input type="hidden" class="search_type_input" name="search_type" value="product">
-    <?php if (!$this->auth_check || $this->auth_user->user_type == "guest") : ?>
+    <?php if (!$this->auth_check) : ?>
         <!-- Login Modal -->
         <div class="modal fade" id="loginModal" role="dialog">
             <div class="modal-dialog modal-dialog-centered login-modal" role="document">
