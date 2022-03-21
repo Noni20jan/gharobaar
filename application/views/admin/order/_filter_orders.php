@@ -20,6 +20,7 @@
                 <option value="Payment Method" <?php echo ($this->input->get('dropdown_search', true) == 'Payment Method') ? 'selected' : ''; ?>>Payment Method</option>
                 <option value="BuyerType" <?php echo ($this->input->get('dropdown_search', true) == 'BuyerType') ? 'selected' : ''; ?>>Buyer</option>
                 <option value="Total Value" <?php echo ($this->input->get('dropdown_search', true) == 'Total Value') ? 'selected' : ''; ?>>Total Ordered Value</option>
+                <option value="Status" <?php echo ($this->input->get('dropdown_search', true) == 'Status') ? 'selected' : ''; ?>>Status</option>
             </select>
         </div>
         

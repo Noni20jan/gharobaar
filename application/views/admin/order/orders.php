@@ -24,6 +24,7 @@
 								<th>Payment Method</th>
 								<th><?php echo trans('buyer'); ?></th>
 								<th>Total Order Value</th>
+								<th><?php echo trans('status'); ?></th>
 								<!-- <th><?php echo trans('updated'); ?></th> -->
 								<th class="max-width-120"><?php echo trans('options'); ?></th>
 							</tr>
@@ -73,6 +74,13 @@
 										?>
 									</td>
 									<td><strong><?php echo price_formatted($item->price_total, $item->price_currency); ?></strong></td>
+									<td>
+									<?php if ($item->status == 1): ?>
+										<label class="label label-success"><?php echo trans("completed"); ?></label>
+									<?php else: ?>
+										<label class="label label-default"><?php echo trans("order_processing"); ?></label>
+									<?php endif; ?>
+								</td>
 									<!-- <td><?php echo time_ago($item->updated_at); ?></td> -->
 
 									<td>
