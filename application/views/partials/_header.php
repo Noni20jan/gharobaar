@@ -3219,7 +3219,7 @@
                         ($(".cart_a").append(),
                             $.notify({
                                 title: "<strong></strong> ",
-                                message: "Added To Wishlist",
+                                message: "Your Cart is Empty",
                             }))
 
 

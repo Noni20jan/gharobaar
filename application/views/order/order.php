@@ -253,19 +253,6 @@
 <!-- Wrapper -->
 <div id="wrapper">
     <div class="row webOrderView">
-        <div class="feedback">
-            <?php if ($this->session->flashdata('success')) : ?>
-                <div class="m-b-15" style="max-width: 462px;margin-left: 401px;">
-                    <div class="alert alert-success alert-dismissable">
-                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        <h4>
-                            <i class="icon fa fa-check"></i>
-                            <?php echo $this->session->flashdata('success'); ?>
-                        </h4>
-                    </div>
-                </div>
-            <?php endif; ?>
-        </div>
         < <div class="order-head" style="margin-left:12px;">
             <h2 class="title"><?php echo trans("order"); ?>:&nbsp;#<?php echo $order->order_number; ?></h2>
 
@@ -756,19 +743,6 @@
 
 </div>
 <div class="container mobileOrderView">
-    <div class="feedback">
-        <?php if ($this->session->flashdata('success')) : ?>
-            <div class="m-b-15">
-                <div class="alert alert-success alert-dismissable">
-                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                    <h4>
-                        <i class="icon fa fa-check"></i>
-                        <?php echo $this->session->flashdata('success'); ?>
-                    </h4>
-                </div>
-            </div>
-        <?php endif; ?>
-    </div>
     <div class="row">
         <div class="col-sm-12">
             <div class="order-details-container">
@@ -1396,8 +1370,6 @@
         $("#rateProductModal #review_product_id").val(product_id);
 
     });
-    var timeout = 8000;
-    $('.feedback').delay(timeout).fadeOut(300);
 </script>
 <script>
     $('input[name="checkbox-table"]').click(function() {

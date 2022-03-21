@@ -2975,7 +2975,6 @@ class Product_model extends Core_Model
                     'is_active' => 0,
                 );
                 $this->db->update('wishlist', $data);
-                return json_encode($data);
             } else {
                 $data = array(
                     'user_id' => $this->auth_user->id,
@@ -2983,8 +2982,8 @@ class Product_model extends Core_Model
                     'is_active' => 1
                 );
                 $this->db->insert('wishlist', $data);
-                return json_encode($data);
             }
+            echo json_encode($data);
         } else {
             if ($this->is_product_in_wishlist($product_id)) {
                 $wishlist = array();
