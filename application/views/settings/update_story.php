@@ -335,7 +335,7 @@
             <?php else : ?>
               <img id="brand-image" class="profileImage" src="<?php echo base_url() . $this->auth_user->brand_logo; ?>" style="border-radius:50%" />
             <?php endif; ?>
-            <input type="file" name="logo-image" id="brand-logo" style="display: none;" onchange="imageShow(this,'brand-image')" />
+            <input type="file" name="logo-image" id="brand-logo" style="display: none;"accept=".jpg, .jpeg, .gif" onchange="imageShow(this,'brand-image')" />
             <!-- <i class=" fa fa-image fa-4x story"></i> -->
             <script>
               $('#brand-image').click(function() {

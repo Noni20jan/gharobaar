@@ -155,7 +155,7 @@ class Order_admin_model extends CI_Model
     }
 
 
-    
+
     //filter by values
     public function filter_orders()
     {
@@ -171,6 +171,45 @@ class Order_admin_model extends CI_Model
                 $this->db->where('orders.status', 0);
             }
         }
+        $data['q'] = trim($data['q']);
+
+        if (!empty($data['dropdown_search'] && !empty($data['q']))) {
+            if ($data["dropdown_search"] == "order_date") {
+                $this->db->like('orders.created_at', $data['q'], 'after');
+            }
+        }
+        if (!empty($data['dropdown_search'] && !empty($data['q']))) {
+            if ($data["dropdown_search"] == "OrderId") {
+
+                $this->db->like('orders.order_number', $data['q'], 'after');
+            }
+        }
+        if (!empty($data['dropdown_search'] && !empty($data['q']))) {
+            if ($data["dropdown_search"] == "Status") {
+                if ($data['q'] == 'completed') {
+                    $this->db->where('orders.status', 1);
+                } elseif ($data['q'] == 'processing') {
+                    $this->db->where('orders.status', 0);
+                }
+            }
+        }
+        if (!empty($data['dropdown_search'] && !empty($data['q']))) {
+            if ($data["dropdown_search"] == "Payment Method") {
+                $this->db->like('orders.payment_method', $data['q'], 'after');
+            }
+        }
+        if (!empty($data['dropdown_search'])) {
+            if ($data["dropdown_search"] == "Total Value") {
+                $this->db->where('orders.price_total', intval($data['q'] * 100));
+            }
+        }
+        if (!empty($data['dropdown_search'] && !empty($data['q']))) {
+            if ($data["dropdown_search"] == "BuyerType") {
+
+                $this->db->like('concat_ws(order_shipping.shipping_first_name,"",order_shipping.shipping_last_name)', ($data['q']));
+            }
+        }
+
         if (!empty($data['payment_status'])) {
             $this->db->where('orders.payment_status', $data['payment_status']);
         }
@@ -186,7 +225,7 @@ class Order_admin_model extends CI_Model
     {
         $this->filter_orders();
         $this->db->select('orders.created_at,orders.id,orders.order_number,orders.buyer_id,orders.price_total,orders.price_currency,orders.payment_method,orders.price_currency,orders.updated_at,orders.payment_status,CONCAT(order_shipping.shipping_first_name," ",order_shipping.shipping_last_name) as name,orders.status');
-        $this->db->join('order_shipping','order_shipping.order_id=orders.id');
+        $this->db->join('order_shipping', 'order_shipping.order_id=orders.id');
         $query = $this->db->get('orders');
         return $query->num_rows();
     }
@@ -213,10 +252,10 @@ class Order_admin_model extends CI_Model
     {
         $this->filter_orders();
         $this->db->select('orders.created_at,orders.id,orders.order_number,orders.buyer_id,orders.price_total,orders.price_currency,orders.payment_method,orders.price_currency,orders.updated_at,orders.payment_status,order_shipping.shipping_first_name,order_shipping.shipping_last_name,CONCAT(order_shipping.shipping_first_name," ", order_shipping.shipping_last_name) as name,orders.status');
-        $this->db->join('order_shipping','order_shipping.order_id=orders.id');
+        $this->db->join('order_shipping', 'order_shipping.order_id=orders.id');
         $this->db->order_by('orders.created_at', 'DESC');
         $this->db->limit($per_page, $offset);
-        $query=$this->db->get('orders');
+        $query = $this->db->get('orders');
         return $query->result();
     }
     //get order products
