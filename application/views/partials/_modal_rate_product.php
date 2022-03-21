@@ -142,6 +142,7 @@
                         var i = JSON.parse(response);
 
                         if (i == true) {
+                            //console.log(i);
                             reset_data.reset();
                             $('#rateProductModal').modal('hide');
                             $('#feedback_msg').modal('show');
@@ -149,9 +150,9 @@
                             setTimeout(function() {
                                 $('#feedback_msg').modal('hide');
                             }, 6000);
-
-
-
+                        } else {
+                            reset_data.reset();
+                            $('#rateProductModal').modal('hide');
                         }
                     }
                 });
