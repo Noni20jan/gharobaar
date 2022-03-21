@@ -12060,6 +12060,36 @@ img {
   right: 44px;
   text-align: center;
 }
+
+@media (max-width: 700px) {
+  .product-item-options {
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 105px;
+    right: 0;
+    text-align: center;
+  }
+
+  .cart-top {
+    width: auto;
+    height: auto;
+    position: relative;
+    top: 105px !important;
+    right: 44px !important;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-top .item-options {
+    opacity: 1;
+  }
+  .product-item-options .item-option {
+    opacity: 1;
+  }
+}
+
 .cart-top .item-options {
   display: block;
   position: relative;

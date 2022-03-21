@@ -415,6 +415,29 @@ foreach ($sellers as $seller) {
             top: 9px;
         }
     }
+
+
+    @media (max-width: 700px) {
+        .product-item-options {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 170px;
+            right: 0;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .cart-top {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 170px !important;
+            right: 44px !important;
+            text-align: center;
+        }
+    }
 </style>
 
 <?php if ($this->auth_check) {

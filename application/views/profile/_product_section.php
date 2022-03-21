@@ -151,10 +151,16 @@
     }
   }
 
-
-
-
-
+  @media(max-width:768px){
+.product-item-options {
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 189px;
+    right: 0;
+    text-align: center;
+}
+}
 
   .switch input {
     display: none;
