@@ -162,7 +162,9 @@ class Order_admin_model extends CI_Model
         $data = array(
             'status' => $this->input->get('status', true),
             'payment_status' => $this->input->get('payment_status', true),
+            'dropdown_search' => $this->input->get('dropdown_search', true),
             'q' => $this->input->get('q', true),
+            'payment_method' =>  $this->input->get('payment_method', true)
         );
         if (!empty($data['status'])) {
             if ($data['status'] == 'completed') {
