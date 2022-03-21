@@ -63,12 +63,13 @@
                                 <input type="hidden" name="rating" id="user_rating">
                                 <input type="hidden" name="product_id" id="review_product_id">
                             </div>
-                            <div class="upload_image">
-                                <input type="file" id="fileuploadbasic" name="file_[]" size="40" multiple="multiple" accept=".jpg, .jpeg,.png">
-                            </div>
-                            <span class="upload_image_span">*Maximun 4 images allowed</span>
+
                         </div>
                     </div>
+                    <div class="upload_image">
+                        <input type="file" id="fileuploadbasic" name="file_[]" size="40" multiple="multiple" accept=".jpg, .jpeg,.png">
+                    </div>
+                    <span class="upload_image_span">*Maximun 4 images allowed</span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-md btn-red" data-dismiss="modal"><?php echo trans("close"); ?></button>
