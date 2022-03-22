@@ -166,6 +166,7 @@ class Order_admin_model extends CI_Model
             'q' => $this->input->get('q', true),
             'payment_method' =>  $this->input->get('payment_method', true)
         );
+
         if (!empty($data['status'])) {
             if ($data['status'] == 'completed') {
                 $this->db->where('orders.status', 1);
@@ -215,10 +216,8 @@ class Order_admin_model extends CI_Model
         if (!empty($data['payment_status'])) {
             $this->db->where('orders.payment_status', $data['payment_status']);
         }
-        $data['q'] = trim($data['q']);
-        if (!empty($data['q'])) {
-            $data['q'] = str_replace("#", "", $data['q']);
-            $this->db->where('orders.order_number', $data['q']);
+        if (!empty($data['payment_method'])) {
+            $this->db->where('orders.payment_method', $data['payment_method']);
         }
     }
 
@@ -266,20 +265,6 @@ class Order_admin_model extends CI_Model
         $order_id = clean_number($order_id);
         $this->db->where('order_id', $order_id);
         $query = $this->db->get('order_products');
-        // var_dump($this->db->last_query());
-        // die();
-        return $query->result();
-    }
-
-
-    public function get_order_products_expandable($order_id)
-    {
-        $order_id = clean_number($order_id);
-        $this->db->where('order_id', $order_id);
-        $this->db->join('users', 'order_products.seller_id = users.id');
-        $query = $this->db->get('order_products');
-        // var_dump($this->db->last_query());
-        // die();
         return $query->result();
     }
 
