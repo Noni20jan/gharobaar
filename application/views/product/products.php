@@ -30,7 +30,27 @@ foreach ($sellers as $seller) {
         }
 
         .cart-top .item-options {
-            opacity: 1;
+            opacity: 1 !important;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .product-item-options {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 105px;
+            right: 0;
+            text-align: center;
+        }
+
+        .cart-top {
+            width: auto;
+            height: auto;
+            position: relative;
+            top: 105px !important;
+            right: 44px !important;
+            text-align: center;
         }
     }
 
