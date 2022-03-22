@@ -12034,16 +12034,6 @@ img {
 .btn-wishlist .icon-heart {
   color: #f15e4f !important;
 }
-@media (max-width: 768px) {
-  .product-item-options {
-    width: auto;
-    height: auto;
-    position: absolute;
-    top: 3px !important;
-    left: 14px !important;
-    text-align: center;
-  }
-}
 .product-item-options {
   width: auto;
   height: auto;
