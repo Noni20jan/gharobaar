@@ -28,7 +28,12 @@ foreach ($sellers as $seller) {
             font-weight: 600;
             top: 78%;
         }
+
+        .cart-top .item-options {
+            opacity: 1;
+        }
     }
+
 
     .non_veg {
         position: relative;
