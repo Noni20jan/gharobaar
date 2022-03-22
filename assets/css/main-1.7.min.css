@@ -12294,7 +12294,7 @@ img {
 .product-slider .img-product-slider {
   position: absolute;
   width: auto !important;
-  height: 100% !important;
+  height: auto !important;
   z-index: 100;
   top: 0;
   bottom: 0;
