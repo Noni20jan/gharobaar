@@ -267,6 +267,16 @@ class Order_admin_model extends CI_Model
         $query = $this->db->get('order_products');
         return $query->result();
     }
+    public function get_order_products_expandable($order_id)
+    {
+        $order_id = clean_number($order_id);
+        $this->db->where('order_id', $order_id);
+        $this->db->join('users', 'order_products.seller_id = users.id');
+        $query = $this->db->get('order_products');
+        // var_dump($this->db->last_query());
+        // die();
+        return $query->result();
+    }
 
     //get order
     public function get_order($id)
