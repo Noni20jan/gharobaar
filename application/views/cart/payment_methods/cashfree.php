@@ -118,7 +118,7 @@ foreach ($cart_items as $item) {
 ?>
 
 <input type="hidden" name="orderid" id="orderId" value="<?php echo (uniqid()) ?>">
-<input type="hidden" name="orderamount" id="orderamount" value="<?php echo ($total_amount) / 100 ?>">
+<input type="hidden" name="orderamount" id="orderamount" value=100>
 
 <div id="payment-button-container">
     <div class="row">
