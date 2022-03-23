@@ -254,8 +254,8 @@ class Email_model extends CI_Model
     {
         $bcc = array("harshitgoyal20jan@gmail.com", "sakshi@gharobaar.com", "aditya@gharobaar.com");
 
-        $subject = "Test Mail: Someone has ordered wrong order";
-        $message = "Someone has ordered wrong order by order id :" . $order_id . "<br> Actual Amount: Rs. " . $data['price_total'] / 100 . "Amount Paid: Rs. " . $data_transaction['order_amount'];
+        $subject = "Someone has ordered wrong order";
+        $message = "Someone has ordered wrong order by order id :" . $order_id . "<br> Actual Amount: Rs. " . $data['price_total'] / 100 . "<br>Amount Paid: Rs. " . $data_transaction['order_amount'];
         $data1 = array(
             'source' => 'wrong_order',
             'remark' => "Someone has ordered wrong order by order id :" . $order_id,
