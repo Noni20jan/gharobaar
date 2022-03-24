@@ -530,12 +530,12 @@
                                                                             </div>
                                                                         <?php endif; ?>
                                                                         <?php if ($product->add_meet == "Made to stock") : ?>
-                                                                            <?php if (empty(check_product_stock($product))) : ?>
+                                                                            <?php if (!check_product_stock($product)) : ?>
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?>
                                                                                 </div>
                                                                             <?php endif; ?>
                                                                         <?php else : ?>
-                                                                            <?php if (empty(check_product_stock($product))) : ?>
+                                                                            <?php if (!check_product_stock($product)) : ?>
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?></div>
                                                                         <?php endif;
                                                                         endif; ?>
