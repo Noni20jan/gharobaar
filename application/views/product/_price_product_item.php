@@ -1,4 +1,13 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<style>
+    .discount_rate{
+float:right;
+color:#fff;
+padding-left: 8px;
+    padding-right: 4px;
+    background-color: #46af4a;
+}
+</style>
 <?php if ($product->is_free_product == 1) : ?>
     <span class="price-free"><?php echo trans("free"); ?></span>
 <?php else : ?>
@@ -9,9 +18,12 @@
 
         <?php if (!empty($product->price)) :
             if (!empty($product->discount_rate)) : ?>
-                <del class="discount-original-price" style="float: right;">
+                <del class="discount-original-price" style="left:6px;">
                     <?php echo price_formatted($product->price, $product->currency); ?>
                 </del>
+                <?php if ($product->discount_rate > 10) : ?>
+                <span class="discount_rate" style="float:right;">-<?= $product->discount_rate; ?>%</span>
+                <?php endif;?>
             <?php endif; ?>
 <?php endif;
     endif;

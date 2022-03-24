@@ -18,30 +18,33 @@
     * {
       box-sizing: border-box;
     }
-.video_url{
-  width: 70%;
-    height: 42px;
-    left: 141px;
-    border: 1px solid #ced4da;
 
-    position: relative;
-}
-@media(max-width:1024px){
-  .video_url{
-  width: 100%;
-  display: block;
-    height: 36px;
-    left: 52px;
-    padding: 6px 61px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    position: relative;
-}
-}
+    .video_url {
+      width: 70%;
+      height: 42px;
+      left: 141px;
+      border: 1px solid #ced4da;
+
+      position: relative;
+    }
+
+    @media(max-width:1024px) {
+      .video_url {
+        width: 100%;
+        display: block;
+        height: 36px;
+        left: 52px;
+        padding: 6px 61px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        position: relative;
+      }
+    }
+
     .input,
     textarea {
       width: 100%;
@@ -160,7 +163,7 @@
       line-height: 200%;
       font-size: 1em;
       position: relative;
-      left:79px;
+      left: 79px;
     }
 
     .control-label1 {
@@ -218,7 +221,7 @@
     }
 
     .Brand-name {
-    display:inline-block;
+      display: inline-block;
     }
 
     .Brand-1 {
@@ -349,7 +352,7 @@
           <div class="row text-center">
             <label>Upload Profile Pic</label>
           </div>
-         
+
         </div>
         <div class="col-sm-6 m-b-30 groove">
           <h><label class="control-label1">Hi <?php echo ucfirst($this->auth_user->first_name); ?><?php echo "!" ?> </label></h>
@@ -381,9 +384,9 @@
 
         <div class="form-group">
           <div class="row Brand-1">
-          
+
             <div class="col-md-12 Brand-name">
-            <label id="formlabel">Your Video URL </label> <input type='text' name="story_vedio_url" id="story_vedio_url" class="video_url" value="<?php echo html_escape($this->auth_user->supplier_story_url); ?>">
+              <label id="formlabel">Your Video URL </label> <input type='text' name="story_vedio_url" id="story_vedio_url" class="video_url" value="<?php echo html_escape($this->auth_user->supplier_story_url); ?>">
             </div>
           </div>
         </div>
@@ -1184,54 +1187,103 @@
 
   function readURL(input, id) {
     var fileInput = document.getElementById('brand-logo');
-       var profileInput=document.getElementById('myfile');       
-            var filePath = fileInput.value;
-          var profilePath=profileInput.value;
-            // Allowing file type
-            var allowedExtensions = 
-                    /(\.jpg|\.jpeg)$/i;
-            if(!allowedExtensions.exec(filePath) && filePath.length!=0){
-              if(profilePath.length!=0){
-                if(!allowedExtensions.exec(profilePath)){
-                document.getElementById('demo').style.display="block";
+    var profileInput = document.getElementById('myfile');
+    var filePath = fileInput.value;
+    var profilePath = profileInput.value;
+    // Allowing file type
+    var allowedExtensions =
+      /(\.jpg|\.jpeg)$/i;
+    if (!allowedExtensions.exec(filePath) && filePath.length != 0) {
+      if (profilePath.length != 0) {
+        if (!allowedExtensions.exec(profilePath)) {
+          document.getElementById('demo').style.display = "block";
 
-                document.getElementById("profile_validation").style.display="block";
-              }
+          document.getElementById("profile_validation").style.display = "block";
+        } else if (allowedExtensions.exec(profilePath)) {
+          document.getElementById("profile_validation").style.display = "none";
+
+
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+
+              $('#' + id).attr('src', e.target.result);
             }
-                document.getElementById('demo').style.display="block";
-              
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
           }
-            
-            else if(!allowedExtensions.exec(profilePath) && profilePath.length!=0){
-              if(filePath.length!=0){
-                if(!allowedExtensions.exec(filePath)){
-                document.getElementById('demo').style.display="block";
 
-                document.getElementById("profile_validation").style.display="block";
-              }
-            }
-              
-            document.getElementById("profile_validation").style.display="block";
+        }
 
-            }
-            
-            
-             else{
-              document.getElementById('demo').style.display="none";
-                // fileInput.value = '';
-                document.getElementById('profile_validation').style.display="none";
+      } else {
+        document.getElementById("demo").style.display = "block";
 
-           
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-
-      reader.onload = function(e) {
-        
-        $('#' + id).attr('src', e.target.result);
       }
-      reader.readAsDataURL(input.files[0]); // convert to base64 string
+
+
+
+    } else if (allowedExtensions.exec(profilePath) && profilePath.length != 0) {
+      document.getElementById("profile_validation").style.display = "none";
+
+
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+
+          $('#' + id).attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+      }
+    } else if (!allowedExtensions.exec(profilePath) && profilePath.length != 0) {
+      if (filePath.length != 0) {
+        if (!allowedExtensions.exec(filePath)) {
+          document.getElementById('demo').style.display = "block";
+
+          document.getElementById("profile_validation").style.display = "block";
+        } else if (allowedExtensions.exec(filePath) && filePath.length != 0) {
+          document.getElementById("demo").style.display = "none";
+
+
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+
+              $('#' + id).attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+          }
+        }
+        else{
+          document.getElementById("profile_validation").style.display = "block";
+
+        }
+
+
+      } else {
+        document.getElementById("profile_validation").style.display = "block";
+
+      }
+
+
+
+    } else {
+      document.getElementById('demo').style.display = "none";
+      // fileInput.value = '';
+      document.getElementById('profile_validation').style.display = "none";
+
+
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+
+          $('#' + id).attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+      }
     }
-  }
   }
 </script>
 <script>

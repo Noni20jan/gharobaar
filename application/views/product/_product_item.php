@@ -12,8 +12,6 @@
         color: #fff;
         background-color: red;
     }
-
-    
     @media(max-width:700px) {
         #cvl {
             position: absolute;
@@ -24,54 +22,7 @@
             background-color: red;
         }
     }
-    .dispatch_alert{
-    position: absolute;
-    right: 10px;
-    top: 8px;
-    font-weight: 400;
-    font-size: 9px;
-    border-radius: 0.1rem;
-    padding: 0.3em 0.6em;
-    background-color: #46af4a;
-    color: #fff;
-}
-@media(max-width:768px){
-.dispatch_alert{
-    position: absolute;
-    right: 5px;
-    top: 8px;
-    font-weight: 400;
-    font-size: 8px;
-    border-radius: 0.1rem;
-    padding: 0.3em 0.6em;
-    background-color: #46af4a;
-    color: #fff;
-}
-}
-.made_to_order{
-    position: absolute;
-    right: 10px;
-    top: 8px;
-    font-weight: 400;
-    font-size: 9px;
-    border-radius: 0.1rem;
-    padding: 0.3em 0.6em;
-    background-color: #46af4a;
-    color: #fff;
-}
-@media(max-width:768px){
-.made_to_order{
-    position: absolute;
-    right: 5px;
-    top: 8px;
-    font-weight: 400;
-    font-size: 8px;
-    border-radius: 0.1rem;
-    padding: 0.3em 0.6em;
-    background-color: #46af4a;
-    color: #fff;
-}
-}
+
     .zoom:hover {
         -ms-transform: scale(1.25);
         /* IE 9 */
@@ -120,8 +71,11 @@ if (!empty($variation)) { ?>
                     <?php endif; ?>
                 </a>
             <?php endif; ?>
-            <?php if (!empty($product->discount_rate) && $product->discount_rate > 10) : ?>
-                <span class="badge badge-dark badge-promoted">-<?= $product->discount_rate; ?>%</span>
+            <?php if ($product->add_meet=="Made to order") : ?>
+                <span class="badge badge-dark badge-promoted">Made To Order</span>
+            <?php endif; ?>
+            <?php if ($product->add_meet=="Made to stock" &&  $product->stock > 0 && intval($product->shipping_time==1)) : ?>
+                <span class="badge badge-dark badge-promoted">Next Day Dispatch</span>
             <?php endif; ?>
             <?php if (!empty($this->auth_check) && $this->auth_user->role == "vendor" && $product->user_id == $this->auth_user->id) : ?>
                 <!-- <div class="cart-top">
@@ -213,21 +167,7 @@ if (!empty($variation)) { ?>
             <span class="badge badge-dark badge-promoted"><?php echo trans("featured"); ?></span>
         <?php endif; ?> -->
     </div>
-    <?php if (!empty($product->discount_rate) && !empty($discount_label)) : ?>
-                <span class="badge-discount">-<?= $product->discount_rate; ?>%</span>
-            <?php endif; ?>
-            <?php $x=intval($product->shipping_time);?>
-    <?php if($product->add_meet=="Made to stock" && $product->stock > 0 && $x==1 ):?>
-        <span class="dispatch_alert">Next Day Dispatch</span>
-
-        <?php endif;?>
-        <?php if($product->add_meet=="Made to stock" && $product->stock > 0 && $x==1 ):?>
-        <span class="dispatch_alert">Next Day Dispatch</span>
-
-        <?php endif;?>
-        <?php if($product->add_meet=="Made to order"):?>
-                <span class="made_to_order">Made To Order</span>
-<?php endif;?>
+    
     <div class="row-custom item-details">
         <h3 class="product-title">
             <a href="<?php echo generate_product_url($product); ?>"><?= get_product_title($product); ?></a>
