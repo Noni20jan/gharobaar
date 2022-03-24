@@ -23,8 +23,8 @@ class Order_model extends CI_Model
     public function add_order($data_transaction)
     {
         $cart_total = $this->cart_model->get_sess_cart_total();
-
-        if ($data_transaction['order_amount'] == $cart_total->total_price / 100) {
+        $total_price1 = $cart_total->total_price / 100;
+        if ((float)$data_transaction['payment_amount'] == $total_price1 && $data_transaction['match_status'] == "yes") {
             $order_product_status = "processing";
         } else {
             $order_product_status = "pending";
