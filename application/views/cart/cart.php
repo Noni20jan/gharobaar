@@ -533,10 +533,16 @@
                                                                             <?php if (!check_product_stock($product)) : ?>
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?>
                                                                                 </div>
+                                                                            <?php elseif ($product->stock < (int)$cart_item->quantity) : ?>
+                                                                                <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?>
+                                                                                </div>
                                                                             <?php endif; ?>
                                                                         <?php else : ?>
                                                                             <?php if (!check_product_stock($product)) : ?>
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?></div>
+                                                                            <?php elseif ($product->stock < (int)$cart_item->quantity) : ?>
+                                                                                <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?>
+                                                                                </div>
                                                                         <?php endif;
                                                                         endif; ?>
                                                                     <?php else : ?>
