@@ -1950,7 +1950,8 @@ class Cart_controller extends Home_Core_Controller
             'paymentOption' => $paymentOption,
             'paymentCode' => $paymentCode,
             'paymentModes' => $paymentModes,
-            'match_status' => $match
+            'match_status' => $match,
+            'order_amount' => $order_amount
         );
         // var_dump($data_transaction['payment_amount']);
         // var_dump($user_data['cart_total']);

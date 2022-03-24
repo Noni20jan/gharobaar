@@ -22,13 +22,15 @@ class Order_model extends CI_Model
     //add order
     public function add_order($data_transaction)
     {
-        if ($data_transaction['match_status'] == "yes") {
+        $cart_total = $this->cart_model->get_sess_cart_total();
+
+        if ($data_transaction['order_amount'] == $cart_total->total_price / 100) {
             $order_product_status = "processing";
         } else {
             $order_product_status = "pending";
         }
         $cashfree_order_id = $data_transaction["cashfree_order_id"];
-        $cart_total = $this->cart_model->get_sess_cart_total();
+
         if (!empty($cart_total)) {
             $data = array(
                 'order_number' => uniqid(),
@@ -130,7 +132,11 @@ class Order_model extends CI_Model
                 } else {
                     $this->update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id, 0);
                 }
-
+                if ($data_transaction['order_amount'] != $cart_total->total_price / 100) {
+                    $this->load->model("email_model");
+                    $this->email_model->wrong_order($data_transaction, $data, $order_id);
+                    // die();
+                }
                 return $order_id;
             }
             return false;

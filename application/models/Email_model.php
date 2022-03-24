@@ -202,8 +202,6 @@ class Email_model extends CI_Model
         <b>Total Amount</b> :" . price_formatted($order_product->product_total_price, $order_product->product_currency);
 
 
-        // var_dump($message);
-        // die();
         if (!empty($email)) {
             $data = array(
                 'source' => '',
@@ -252,18 +250,32 @@ class Email_model extends CI_Model
             return $this->send_email($data);
         }
     }
+    public function wrong_order($data_transaction, $data, $order_id)
+    {
+        $bcc = array("harshitgoyal20jan@gmail.com", "sakshi@gharobaar.com", "aditya@gharobaar.com");
+
+        $subject = "Someone has ordered wrong order";
+        $message = "Someone has ordered wrong order by order id :" . $order_id . "<br> Actual Amount: Rs. " . $data['price_total'] / 100 . "<br>Amount Paid: Rs. " . $data_transaction['order_amount'];
+        $data1 = array(
+            'source' => 'wrong_order',
+            'remark' => "Someone has ordered wrong order by order id :" . $order_id,
+            'source_id' => $order_id,
+            'event_type' => 'wrong_order',
+            'subject' => $subject,
+            'message' => $message,
+            'to' => $this->general_settings->mail_username,
+            'template_path' => "email/email_newsletter",
+        );
+        return $this->send_email_members($data1, $bcc);
+    }
 
     public function approve_product($product_id)
     {
-        // if (get_product($product_id) {
         $product = get_product($product_id);
         $user = get_user($product->user_id);
         $title = $this->product_model->get_title($product_id);
-        // var_dump($title);
-        // die();
+
         $subject = "Your Product " . $title->title . " is Approved by admin";
-        // var_dump($subject);
-        // die();
         $message = "Dear "  . ucfirst($user->first_name) . ",<br>Your product" . $title->title . " is accepted by Admin. Your product is now listed on our website.
             <br>
             <b>Product Details</b>
@@ -271,15 +283,7 @@ class Email_model extends CI_Model
             <b>Product Id</b> :" . $product->id . "<br>
             <b>Product </b> :" . $title->title . "<br>
             <b>Product Unit Price</b> :" . price_formatted($product->listing_price, $product->currency) . "<br><br>Team Gharobaar";
-        // } else {
-        //     $message = "Dear "  . ucfirst($supplier->first_name) . ",<br> We see that the order has been cancelled by the buyer. We know that cancellations are dissapointing, they are disheartenting for us as well. We hope that such experiences would remain exceptions and more & more buyers would order your products in future.
-        //     <br>
-        //     <b>Order Details</b>
-        //     <br><b>order number</b> :" . $order->order_number . "<br>
-        //     <b>Product </b> :" . $order_product->product_title . "<br>
-        //     <b>Quantity</b> :" . $order_product->product_quantity . "<br>
-        //     <b>Product Unit Price</b> :" . price_formatted($order_product->product_unit_price, $order_product->product_currency) . "<br><br>Team Gharobaar";
-        // }
+
         $data1 = array(
             'source' => 'products',
             'remark' => "Your product " . $title->title . " has been approved and is now live on the platform. Click on the link to view your listing .<a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>",
