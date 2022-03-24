@@ -1199,20 +1199,14 @@
           document.getElementById('demo').style.display = "block";
 
           document.getElementById("profile_validation").style.display = "block";
-        } else if (allowedExtensions.exec(profilePath)) {
+        } else if (allowedExtensions.exec(profilePath) && !allowedExtensions.exec(filePath)) {
           document.getElementById("profile_validation").style.display = "none";
+          document.getElementById("demo").style.display="block";
 
-
-          if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-
-              $('#' + id).attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]); // convert to base64 string
-          }
-
+        }
+        else if(allowedExtensions.exec(filePath) && !allowedExtensions.exec(profilePath)){
+          document.getElementById("demo").style.display = "none";
+          document.getElementById("profile_validation").style.display="block";
         }
 
       } else {
@@ -1222,38 +1216,21 @@
 
 
 
-    } else if (allowedExtensions.exec(profilePath) && profilePath.length != 0) {
-      document.getElementById("profile_validation").style.display = "none";
-
-
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-
-          $('#' + id).attr('src', e.target.result);
-        }
-        reader.readAsDataURL(input.files[0]); // convert to base64 string
-      }
-    } else if (!allowedExtensions.exec(profilePath) && profilePath.length != 0) {
+    } 
+     else if (!allowedExtensions.exec(profilePath) && profilePath.length != 0) {
       if (filePath.length != 0) {
         if (!allowedExtensions.exec(filePath)) {
           document.getElementById('demo').style.display = "block";
 
           document.getElementById("profile_validation").style.display = "block";
-        } else if (allowedExtensions.exec(filePath) && filePath.length != 0) {
+        } else if (allowedExtensions.exec(profilePath) && !allowedExtensions.exec(filePath)) {
+          document.getElementById("profile_validation").style.display = "none";
+          document.getElementById("demo").style.display="block";
+
+        }
+        else if(allowedExtensions.exec(filePath) && !allowedExtensions.exec(profilePath)){
           document.getElementById("demo").style.display = "none";
-
-
-          if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-
-              $('#' + id).attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]); // convert to base64 string
-          }
+          document.getElementById("profile_validation").style.display="block";
         }
         else{
           document.getElementById("profile_validation").style.display = "block";
