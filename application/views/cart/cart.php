@@ -553,6 +553,7 @@
                                                                     <div class="row">
                                                                         <span id="maximum_stock_reached-<?php echo $cart_item->cart_item_id; ?>" style="color:red; margin-left:15px;"></span>
                                                                     </div>
+
                                                                 </div>
                                                                 <div class="list-item seller">
                                                                     <?php echo trans("by"); ?>&nbsp;<a href="<?php echo generate_profile_url($product->user_slug); ?>" title="<?php echo get_brand_name_product($product); ?>" class="word-cut"><?php echo get_brand_name_product($product); ?></a>
