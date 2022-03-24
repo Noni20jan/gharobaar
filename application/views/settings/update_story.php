@@ -18,7 +18,30 @@
     * {
       box-sizing: border-box;
     }
+.video_url{
+  width: 70%;
+    height: 42px;
+    left: 141px;
+    border: 1px solid #ced4da;
 
+    position: relative;
+}
+@media(max-width:1024px){
+  .video_url{
+  width: 100%;
+  display: block;
+    height: 36px;
+    left: 52px;
+    padding: 6px 61px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    position: relative;
+}
+}
     .input,
     textarea {
       width: 100%;
@@ -132,11 +155,12 @@
     }
 
     #formlabel {
-      display: block;
+      display: inline-block;
       text-align: center;
       line-height: 200%;
       font-size: 1em;
-      padding-right: 150px;
+      position: relative;
+      left:79px;
     }
 
     .control-label1 {
@@ -194,7 +218,7 @@
     }
 
     .Brand-name {
-      padding-right: 40px;
+    display:inline-block;
     }
 
     .Brand-1 {
@@ -304,7 +328,7 @@
     <?php $this->load->view('partials/_messages'); ?>
     <?php echo form_open_multipart("update-supplier-profile-logo", ['id' => 'form_validate1']); ?>
     <div class="row">
-      <div class="col-sm-12 m-b-30 groove" style="padding-top: 2%;">
+      <div class="col-sm-12 m-b-30 groove" style="padding-top:2%;">
         <div class="col-sm-3 m-b-30">
           <div class="row text-center">
             <?php if (!isset($this->auth_user->avatar)) : ?>
@@ -314,6 +338,8 @@
             <?php endif; ?>
             <input type="file" name="profile-image" id="myfile" style="display: none;" onchange="imageShow(this,'image')" />
             <!-- <i class=" fa fa-image fa-4x story"></i> -->
+            <div id="profile_validation" style="color:red;font-size:9px;display:none;">*Only images allowed(.jpg,.jpeg)</div>
+
             <script>
               $('#image').click(function() {
                 $('#myfile').click()
@@ -323,6 +349,7 @@
           <div class="row text-center">
             <label>Upload Profile Pic</label>
           </div>
+         
         </div>
         <div class="col-sm-6 m-b-30 groove">
           <h><label class="control-label1">Hi <?php echo ucfirst($this->auth_user->first_name); ?><?php echo "!" ?> </label></h>
@@ -335,8 +362,11 @@
             <?php else : ?>
               <img id="brand-image" class="profileImage" src="<?php echo base_url() . $this->auth_user->brand_logo; ?>" style="border-radius:50%" />
             <?php endif; ?>
-            <input type="file" name="logo-image" id="brand-logo" style="display: none;"accept=".jpg, .jpeg, .gif" onchange="imageShow(this,'brand-image')" />
+            <input type="file" name="logo-image" id="brand-logo" style="display: none;" onchange="imageShow(this,'brand-image')" />
             <!-- <i class=" fa fa-image fa-4x story"></i> -->
+            <div id="demo" style="color:red;font-size:9px;display:none;">*Only images allowed(.jpg,.jpeg)</div>
+
+
             <script>
               $('#brand-image').click(function() {
                 $('#brand-logo').click()
@@ -351,12 +381,13 @@
 
         <div class="form-group">
           <div class="row Brand-1">
-            <div class="col-md-3" id="formlabel"><label>Your Video URL </label></div>
-            <div class="col-md-9 Brand-name">
-              <input type='text' name="story_vedio_url" id="story_vedio_url" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->supplier_story_url); ?>">
+          
+            <div class="col-md-12 Brand-name">
+            <label id="formlabel">Your Video URL </label> <input type='text' name="story_vedio_url" id="story_vedio_url" class="video_url" value="<?php echo html_escape($this->auth_user->supplier_story_url); ?>">
             </div>
           </div>
         </div>
+
 
         <div>
 
@@ -1152,14 +1183,55 @@
 
 
   function readURL(input, id) {
+    var fileInput = document.getElementById('brand-logo');
+       var profileInput=document.getElementById('myfile');       
+            var filePath = fileInput.value;
+          var profilePath=profileInput.value;
+            // Allowing file type
+            var allowedExtensions = 
+                    /(\.jpg|\.jpeg)$/i;
+            if(!allowedExtensions.exec(filePath) && filePath.length!=0){
+              if(profilePath.length!=0){
+                if(!allowedExtensions.exec(profilePath)){
+                document.getElementById('demo').style.display="block";
+
+                document.getElementById("profile_validation").style.display="block";
+              }
+            }
+                document.getElementById('demo').style.display="block";
+              
+          }
+            
+            else if(!allowedExtensions.exec(profilePath) && profilePath.length!=0){
+              if(filePath.length!=0){
+                if(!allowedExtensions.exec(filePath)){
+                document.getElementById('demo').style.display="block";
+
+                document.getElementById("profile_validation").style.display="block";
+              }
+            }
+              
+            document.getElementById("profile_validation").style.display="block";
+
+            }
+            
+            
+             else{
+              document.getElementById('demo').style.display="none";
+                // fileInput.value = '';
+                document.getElementById('profile_validation').style.display="none";
+
+           
     if (input.files && input.files[0]) {
       var reader = new FileReader();
 
       reader.onload = function(e) {
+        
         $('#' + id).attr('src', e.target.result);
       }
       reader.readAsDataURL(input.files[0]); // convert to base64 string
     }
+  }
   }
 </script>
 <script>
