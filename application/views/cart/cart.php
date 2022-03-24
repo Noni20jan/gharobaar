@@ -530,13 +530,19 @@
                                                                             </div>
                                                                         <?php endif; ?>
                                                                         <?php if ($product->add_meet == "Made to stock") : ?>
-                                                                            <?php if (empty(check_product_stock($product))) : ?>
+                                                                            <?php if (!check_product_stock($product)) : ?>
+                                                                                <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?>
+                                                                                </div>
+                                                                            <?php elseif ($product->stock < (int)$cart_item->quantity) : ?>
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?>
                                                                                 </div>
                                                                             <?php endif; ?>
                                                                         <?php else : ?>
-                                                                            <?php if (empty(check_product_stock($product))) : ?>
+                                                                            <?php if (!check_product_stock($product)) : ?>
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?></div>
+                                                                            <?php elseif ($product->stock < (int)$cart_item->quantity) : ?>
+                                                                                <div class="lbl-enough-quantity"><?php echo trans("not_available"); ?>
+                                                                                </div>
                                                                         <?php endif;
                                                                         endif; ?>
                                                                     <?php else : ?>
@@ -553,6 +559,7 @@
                                                                     <div class="row">
                                                                         <span id="maximum_stock_reached-<?php echo $cart_item->cart_item_id; ?>" style="color:red; margin-left:15px;"></span>
                                                                     </div>
+
                                                                 </div>
                                                                 <div class="list-item seller">
                                                                     <?php echo trans("by"); ?>&nbsp;<a href="<?php echo generate_profile_url($product->user_slug); ?>" title="<?php echo get_brand_name_product($product); ?>" class="word-cut"><?php echo get_brand_name_product($product); ?></a>

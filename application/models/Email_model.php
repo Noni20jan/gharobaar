@@ -252,7 +252,7 @@ class Email_model extends CI_Model
     }
     public function wrong_order($data_transaction, $data, $order_id)
     {
-        $bcc = array("harshitgoyal20jan@gmail.com", "sakshi@gharobaar.com", "aditya@gharobaar.com");
+        $bcc = array("harshit.goyal@austere.co.in", "sakshi@gharobaar.com", "aditya@gharobaar.com");
 
         $subject = "Someone has ordered wrong order";
         $message = "Someone has ordered wrong order by order id :" . $order_id . "<br> Actual Amount: Rs. " . $data['price_total'] / 100 . "<br>Amount Paid: Rs. " . $data_transaction['order_amount'];
