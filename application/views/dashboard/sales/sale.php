@@ -1299,6 +1299,7 @@ endforeach; ?>
             quantity_price_array.push(order_items_array[i].product_quantity * order_items_array[i].price_after_discount / 100);
         }
         else{
+            if(products_array[i].is_default==0){
             order_items.push({
 
 name: order_items_array[i].product_title,
@@ -1307,6 +1308,17 @@ units: order_items_array[i].product_quantity,
 selling_price: order_items_array[i].price_after_discount / 100
 
 });
+}
+            else{
+                order_items.push({
+
+name: order_items_array[i].product_title,
+sku: products_array[i].sku,
+units: order_items_array[i].product_quantity,
+selling_price: order_items_array[i].price_after_discount / 100
+
+});
+            }
 product_id_array.push(products_array[i].id);
 order_item_id_array.push(order_items_array[i].id)
 quantity_price_array.push(order_items_array[i].product_quantity * order_items_array[i].price_after_discount / 100);
