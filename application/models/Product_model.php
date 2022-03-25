@@ -4058,11 +4058,12 @@ order by id desc LIMIT 1";
         return $this->db->get('products')->result();
     }
 
-    public function get_variation_options_by_id($id,$variation_id){
-        
-        $this->db->select('products.*,variation_options.sku_code');
-         $this->db->join('variations','variations.product_id=products.id');
-        $this->db->join('variation_options','variation_options.variation_id=variations.id');
+    public function get_variation_options_by_id($id, $variation_id)
+    {
+
+        $this->db->select('products.*,variation_options.sku_code,variation_options.is_default');
+        $this->db->join('variations', 'variations.product_id=products.id');
+        $this->db->join('variation_options', 'variation_options.variation_id=variations.id');
         $this->db->where('variation_options.id', $variation_id);
         $this->db->where('products.id', clean_number($id));
         return $this->db->get('products')->row();
