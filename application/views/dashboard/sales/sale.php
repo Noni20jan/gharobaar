@@ -290,7 +290,7 @@ endif;
         endforeach;
 
         ?>
-        
+
         <div class="row">
             <div class="pull-right">
                 <?php if ($item_order->product_delivery_partner == "SHIPROCKET") : ?>
@@ -326,7 +326,7 @@ endif;
                     <?php $ship_date = (date("dS M Y", $order_create)); ?>
                     <?php $shipping_date = date('Y-m-d H:i:s',$order_create); ?>
 
-                    <?php if ($orders_count>=1) : ?>
+                    <?php if ($orders_count >= 1) : ?>
 
                         <?php if ($shipping_date >= $current_date) : ?>
 
@@ -703,9 +703,9 @@ endif;
                                                     <?php echo form_close(); ?>
                                                 <?php else : ?>
                                                     <p class="m-b-5">
-                                                        <?php if($item->product_delivery_partner=="SELF"):?>
-                                                        <button type="button" class="btn btn-md btn-block btn-success" data-toggle="modal" data-target="#updateStatusModal_<?php echo $item->id; ?>"><?php echo trans('update_order_status'); ?></button>
-                                                        <?php endif;?>
+                                                        <?php if ($item->product_delivery_partner == "SELF") : ?>
+                                                            <button type="button" class="btn btn-md btn-block btn-success" data-toggle="modal" data-target="#updateStatusModal_<?php echo $item->id; ?>"><?php echo trans('update_order_status'); ?></button>
+                                                        <?php endif; ?>
                                                     </p>
 
                                                     <div id='loader' style='display: none;'>
@@ -900,7 +900,7 @@ endif;
                         </div>
                     <?php endif; ?>
 
-                        <div class="row">
+                    <div class="row">
                         <div class="col-12 m-b-15">
                             <div class="row-seperator"></div>
                         </div>
@@ -910,12 +910,12 @@ endif;
                             <?php echo trans("total"); ?>
                         </div>
                         <div class="col-sm-6 col-xs-6 col-right">
-                            <?php if(!is_null($seller_wise_data)):?>
-                            <strong><?php echo price_formatted($order_supplier->Sup_total_prd, $order->price_currency); ?>/-</strong>
-                            <?php else:?>
+                            <?php if (!is_null($seller_wise_data)) : ?>
+                                <strong><?php echo price_formatted($order_supplier->Sup_total_prd, $order->price_currency); ?>/-</strong>
+                            <?php else : ?>
                                 <strong><?php echo price_formatted($sale_subtotal, $order->price_currency); ?>/-</strong>
 
-                            <?php endif;?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -1299,6 +1299,7 @@ endforeach; ?>
             quantity_price_array.push(order_items_array[i].product_quantity * order_items_array[i].price_after_discount / 100);
         }
         else{
+            if(products_array[i].is_default==0){
             order_items.push({
 
 name: order_items_array[i].product_title,
@@ -1307,6 +1308,17 @@ units: order_items_array[i].product_quantity,
 selling_price: order_items_array[i].price_after_discount / 100
 
 });
+}
+            else{
+                order_items.push({
+
+name: order_items_array[i].product_title,
+sku: products_array[i].sku,
+units: order_items_array[i].product_quantity,
+selling_price: order_items_array[i].price_after_discount / 100
+
+});
+            }
 product_id_array.push(products_array[i].id);
 order_item_id_array.push(order_items_array[i].id)
 quantity_price_array.push(order_items_array[i].product_quantity * order_items_array[i].price_after_discount / 100);
@@ -1419,11 +1431,9 @@ quantity_price_array.push(order_items_array[i].product_quantity * order_items_ar
                 $('#cover-spin').hide();
                 alert(response)
             }
-        
+
         });
     }
-    
-    
 </script>
 
 
