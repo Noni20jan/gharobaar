@@ -5,7 +5,7 @@ float:right;
 color:#fff;
 padding-left: 8px;
     padding-right: 4px;
-    background-color: #46af4a;
+    background-color: #6c7f5d;
 }
 </style>
 <?php if ($product->is_free_product == 1) : ?>
