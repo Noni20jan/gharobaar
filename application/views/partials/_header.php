@@ -1437,7 +1437,8 @@
                                                     <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
                                                         <?php $count_array = $this->notification_model->get_notification_count();
                                                         $count = count($count_array); ?>
-                                                        <i class="far fa-bell" style="color:white;"></i><span class="badge notification-count"><?php echo $count; ?></span>
+                                                        <i class="far fa-bell" style="color:white;"></i><?php if ($count > 0) : ?><span class="badge notification-count"><?php echo $count;
+                                                                                                                                                                endif; ?></span>
                                                     </a>
 
                                                     <!-- <div id='wishlist'> -->
@@ -6287,18 +6288,18 @@
         </script>
     <?php endif; ?>
     <!-- chat system end -->
-<!-- code for video add functionality -->
+    <!-- code for video add functionality -->
     <?php if ($this->general_settings->is_chat_video_enable == 1) : ?>
         <script>
-      window.tolstoyAppKey="ada7e199-9023-48dd-8a98-e3f1f70c6886";
-      var s = document.createElement("script");
-      s.type = "text/javascript";
-      s.async = true;
-      s.src = "https://widget.gotolstoy.com/widget/widget.js";
-      document.head.appendChild(s);
-    </script>
-      <?php endif; ?>
-<!-- end code for video add functionality -->
+            window.tolstoyAppKey = "ada7e199-9023-48dd-8a98-e3f1f70c6886";
+            var s = document.createElement("script");
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://widget.gotolstoy.com/widget/widget.js";
+            document.head.appendChild(s);
+        </script>
+    <?php endif; ?>
+    <!-- end code for video add functionality -->
     <!-- whatsaap chat -->
     <?php if ($this->general_settings->is_whatsapp_enable == 1) : ?>
         <script src="https://apps.elfsight.com/p/platform.js" defer></script>

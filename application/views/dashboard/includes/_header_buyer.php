@@ -4492,7 +4492,8 @@
                                                     <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
                                                         <?php $count_array = $this->notification_model->get_notification_count();
                                                         $count = count($count_array); ?>
-                                                        <i class="far fa-bell notification-button"></i><span class="badge notification-count" style="right: 27%;"><?php echo $count; ?></span>
+                                                        <i class="far fa-bell notification-button"></i><?php if ($count > 0) : ?><span class="badge notification-count"><?php echo $count;
+                                                                                                                                                                    endif; ?></span>
                                                     </a>
                                                     <ul class="dropdown close-notify" id="notify_dropdown" name="notificationMenu" style="z-index:100; width:100%; right: 20px;">
                                                         <li class="notification-group">
@@ -5100,7 +5101,7 @@
                                             <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
                                                 <?php $count_array = $this->notification_model->get_notification_count();
                                                 $count = count($count_array); ?>
-                                                <i class="far fa-bell notification-button"></i></i><span class="badge notification-count" style="right: 9%;top: 12%;"><?php echo $count; ?></span>
+                                                <i class="far fa-bell" style="font-size:21px;"></i>
                                             </a>
                                             <ul class="dropdown close-notify" name="notificationMenu" style="z-index:100; width:100%; right:0px!important;">
                                                 <li class="notification-group">
