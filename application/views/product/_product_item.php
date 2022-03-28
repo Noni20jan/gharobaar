@@ -3,7 +3,7 @@
     .zoom {
         transition: transform .2s;
     }
-
+    
     #cvl {
         position: absolute;
 
@@ -23,6 +23,32 @@
         }
     }
 
+.made_to_order{
+    
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 10px;
+    border-radius: 12px 0px 12px 0px;
+    padding: 6px;
+    background-color: #Ff763c;
+}
+@media(max-width:700px){
+.made_to_order{
+    
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 9px;
+    border-radius: 12px 0px 12px 0px;
+    padding: 6px;
+    background-color: #Ff763c;
+}
+}
     .zoom:hover {
         -ms-transform: scale(1.25);
         /* IE 9 */
@@ -72,10 +98,10 @@ if (!empty($variation)) { ?>
                 </a>
             <?php endif; ?>
             <?php if ($product->add_meet=="Made to order") : ?>
-                <span class="badge badge-dark badge-promoted">Made To Order</span>
+                <span class="made_to_order">MADE TO ORDER</span>
             <?php endif; ?>
             <?php if ($product->add_meet=="Made to stock" &&  $product->stock > 0 && intval($product->shipping_time==1)) : ?>
-                <span class="badge badge-dark badge-promoted">Next Day Dispatch</span>
+                <span class="made_to_order">NEXT DAY DISPATCH</span>
             <?php endif; ?>
             <?php if (!empty($this->auth_check) && $this->auth_user->role == "vendor" && $product->user_id == $this->auth_user->id) : ?>
                 <!-- <div class="cart-top">
