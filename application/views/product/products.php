@@ -34,21 +34,21 @@ foreach ($sellers as $seller) {
         }
     }
 
-    @media (max-width: 700px) {
+    @media(max-width: 700px) {
         .product-item-options {
             width: auto;
             height: auto;
             position: absolute;
-            top: 105px;
-            right: 0;
+            top: 170px !important;
+            right: 0 !important;
             text-align: center;
         }
 
         .cart-top {
             width: auto;
             height: auto;
-            position: relative;
-            top: 105px !important;
+            position: absolute;
+            top: 170px !important;
             right: 44px !important;
             text-align: center;
         }
