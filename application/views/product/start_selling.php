@@ -3279,7 +3279,7 @@ $pincode = get_pincode(281204);
     <script>
         $('input[name="type_of_goods"]').click(function() {
             if ($(this).is(':checked') && $(this).val() == 'exempted_goods') {
-                document.getElementById("turnover").required = false;
+                document.getElementById("turnover").required = true;
                 $("#turnover-req")[0].innerHTML = "";
                 $('#start-exempted-modal').modal('show');
                 if ($('#turnover option').length <= 4) {
@@ -3287,7 +3287,7 @@ $pincode = get_pincode(281204);
                 }
             }
             if ($(this).is(':checked') && $(this).val() == 'none') {
-                document.getElementById("turnover").required = false;
+                document.getElementById("turnover").required = true;
                 $("#turnover-req")[0].innerHTML = "";
                 $(this)[0].checked = false;
                 $('#none-modal').modal('show');
@@ -3306,6 +3306,9 @@ $pincode = get_pincode(281204);
             var exempted = [];
             $.each($("input[name='selling_exempted_goods[]']:checked"), function() {
                 exempted.push($(this).val());
+                document.getElementById("turnover").required = true;
+                $("#turnover-req")[0].innerHTML = " *";
+
             });
             console.log(exempted.length);
             if (exempted.length < 1) {
@@ -3362,7 +3365,8 @@ $pincode = get_pincode(281204);
                     });
                     document.getElementById("gsthave2").required = false;
                     $("#gsthave2").rules("remove");
-                    // document.getElementById("turnover").required = false;
+                    // document.getElementById("turnover").required = true;
+                    // $("#turnover-req")[0].innerHTML = " *";
                     $("#have_gst1").hide();
                 } else {
                     $("#not_have_gst1").hide();
@@ -3399,12 +3403,16 @@ $pincode = get_pincode(281204);
             if ($(this)[0].id == "gst_have_yes" || $(this)[0].id == "gst_applied_for") {
                 if ($(this)[0].id == "gst_have_yes") {
                     $("#gst_have")[0].checked = true;
+
                 }
                 if ($(this)[0].id == "gst_applied_for") {
                     $("#gst_do_not_have")[0].checked = true;
+
                 }
                 byPassGstSelection();
-
+                $("#turnover option[value='Above 20 lakh']").remove();
+                document.getElementById("turnover").required = true;
+                $("#turnover-req")[0].innerHTML = " *";
                 // $("#selected_yes").removeClass("hideMe");
                 $("#selected_no").addClass("hideMe");
                 $('input[name=type_of_goods]').each(function() {
@@ -3466,7 +3474,7 @@ $pincode = get_pincode(281204);
                     }
                 });
                 if ($('input[name="type_of_goods"]').is(':checked') && $('input[name="type_of_goods"]').val() == 'exempted_goods') {
-                    document.getElementById("turnover").required = false;
+                    document.getElementById("turnover").required = true;
                     $("#turnover-req")[0].innerHTML = "";
                     $('#start-exempted-modal').modal('show');
                     if ($('#turnover option').length <= 4) {
@@ -3494,12 +3502,26 @@ $pincode = get_pincode(281204);
             if ($("input[name=gst_yes_no]")[0].id == "gst_have_yes" || $("input[name=gst_yes_no]")[0].id == "gst_applied_for") {
                 if ($("input[name=gst_yes_no]")[0].id == "gst_have_yes") {
                     $("#gst_have")[0].checked = true;
+
+
                 }
+                if ($("input[name=gst_yes_no]")[0].id == "gst_have_yes") {
+                    $("#gst_have")[0].checked = true;
+
+
+                }
+
                 if ($("input[name=gst_yes_no]")[0].id == "gst_applied_for") {
                     $("#gst_do_not_have")[0].checked = true;
+
                 }
                 byPassGstSelection();
                 // $("#selected_yes").removeClass("hideMe");
+                console.log('12345678')
+                $("#turnover option[value='Above 20 lakh']").remove();
+                document.getElementById("turnover").required = true;
+                $("#turnover-req")[0].innerHTML = " *";
+
                 $("#selected_no").addClass("hideMe");
                 $('input[name=type_of_goods]').each(function() {
                     $("input[name=gst_yes_no]")[0].required = false;
@@ -3518,6 +3540,8 @@ $pincode = get_pincode(281204);
                                 regexGST: "^" + regexGST + "$"
                             });
                             document.getElementById("gstdonothave1").required = false;
+
+
                         } else if ($("input[name=gst_yes_no]")[0].id == "gst_do_not_have") {
                             $("#not_have_gst").show();
                             document.getElementById("gstdonothave1").required = true;
