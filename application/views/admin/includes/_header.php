@@ -493,11 +493,17 @@
                         <span><?php echo trans("contact_messages"); ?></span>
                     </a>
                 </li>
-                <li class="nav-reviews">
-                    <a href="<?php echo admin_url(); ?>reviews">
+                <li class="nav-reviews treeview<?php is_admin_nav_active(['approved-reviews', 'not-approved-reviews']); ?>">
+                    <a href="#">
                         <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/reviews-icon.jpg" alt="" style="width: 20px; height: 20px;" />
                         <span><?php echo trans("reviews"); ?></span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
+                    <ul class="treeview-menu">
+                        <li class="nav-approved-reviews"> <a href="<?php echo admin_url(); ?>reviews"><?php echo trans("approved_reviews"); ?></a></li>
+                        <li class="nav-not-approved-reviews"> <a href="<?php echo admin_url(); ?>reviews_not_approved"><?php echo trans("not_approved_reviews"); ?></a></li>
+
+                    </ul>
                 </li>
                 <li class="treeview<?php is_admin_nav_active(['pending-product-comments', 'pending-blog-comments', 'product-comments', 'blog-comments']); ?>">
                     <a href="#">
