@@ -63,6 +63,26 @@
         }
     }
 
+    @media (max-width: 700px) {
+        .product-item-options {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 105px !important;
+            text-align: center;
+        }
+
+        .cart-top {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 105px !important;
+            right: 44px !important;
+            text-align: center;
+        }
+
+    }
+
 
     @media(max-width:786px) {
         .shop-by {
