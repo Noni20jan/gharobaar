@@ -167,6 +167,8 @@ class Review_model extends CI_Model
         $this->db->join('users', 'users.id = reviews.user_id');
         $this->db->join('products', 'products.id = reviews.product_id');
         $this->db->select('reviews.*, users.username AS user_username, users.slug AS user_slug');
+        $this->db->where('reviews.is_approved', '1');
+
         $this->db->order_by('reviews.created_at', 'DESC');
         $query = $this->db->get('reviews');
         return $query->result();
@@ -335,5 +337,16 @@ class Review_model extends CI_Model
                 $this->delete_review($id);
             }
         }
+    }
+
+    public function get_not_approved_reviews()
+    {
+        $this->db->join('users', 'users.id = reviews.user_id');
+        $this->db->join('products', 'products.id = reviews.product_id');
+        $this->db->select('reviews.*, users.username AS user_username, users.slug AS user_slug');
+        $this->db->where('reviews.is_approved', '0');
+        $this->db->order_by('reviews.created_at', 'DESC');
+        $query = $this->db->get('reviews');
+        return $query->result();
     }
 }

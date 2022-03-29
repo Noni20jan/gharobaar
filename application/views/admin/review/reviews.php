@@ -26,7 +26,6 @@
                                 <th><?php echo trans('review'); ?></th>
                                 <th style="min-width: 20%"><?php echo trans('product'); ?></th>
                                 <th><?php echo trans('ip_address'); ?></th>
-                                <th><?php echo trans('status'); ?></th>
                                 <th style="min-width: 10%"><?php echo trans('date'); ?></th>
                                 <th class="max-width-120"><?php echo trans('options'); ?></th>
                             </tr>
@@ -55,12 +54,6 @@
                                         <?php endif; ?>
                                     </td>
                                     <td><?php echo $item->ip_address; ?></td>
-                                    <td><?php if ($item->is_approved == 0) :
-                                            echo ('not approved') ?>
-                                        <?php endif; ?>
-                                        <?php if ($item->is_approved == 1) :
-                                            echo ('approved') ?> <?php endif; ?>
-                                    </td>
                                     <td><?php echo formatted_date($item->created_at); ?></td>
                                     <td>
                                         <div class="dropdown">
@@ -71,11 +64,7 @@
                                                 <li>
                                                     <a href="javascript:void(0)" onclick="delete_item('product_controller/delete_review','<?php echo $item->id; ?>','<?php echo trans("confirm_review"); ?>');"><i class="fa fa-trash option-icon"></i><?php echo trans('delete'); ?></a>
                                                 </li>
-                                                <?php if ($item->is_approved == 0) : ?>
-                                                    <li>
-                                                        <a href="javascript:void(0)" onclick="delete_item('product_controller/approve_review','<?php echo $item->id; ?>','<?php echo trans("confirm_approve_review"); ?>');"><i class="fa fa-check-circle  option-icon"></i><?php echo trans('approve'); ?></a>
-                                                    </li>
-                                                <?php endif; ?>
+
 
                                             </ul>
                                         </div>

@@ -502,6 +502,8 @@ $route[getr('admin', $rts) . '/pending-blog-comments'] = 'blog_controller/pendin
 $route[getr('admin', $rts) . '/blog-comments'] = 'blog_controller/comments';
 /*review routes*/
 $route[getr('admin', $rts) . '/reviews'] = 'product_controller/reviews';
+$route[getr('admin', $rts) . '/reviews_not_approved'] = 'product_controller/reviews_not_approved';
+
 /*ad spaces routes*/
 $route[getr('admin', $rts) . '/ad-spaces'] = 'admin_controller/ad_spaces';
 /*seo tools routes*/
