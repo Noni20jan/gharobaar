@@ -863,4 +863,13 @@ class Product_controller extends Admin_Core_Controller
         $review = $this->input->post('admin_review');
         $this->product_admin_model->get_admin_review($id, $review);
     }
+    public function reviews_not_approved()
+    {
+
+        $data['title'] = trans("reviews");
+        $data['reviews'] = $this->review_model->get_not_approved_reviews();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/review/reviews_not_approved', $data);
+        $this->load->view('admin/includes/_footer');
+    }
 }
