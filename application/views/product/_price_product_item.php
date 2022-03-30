@@ -7,6 +7,15 @@ padding-left: 8px;
     padding-right: 4px;
     background-color: #6c7f5d;
 }
+@media(max-width:700px){
+    .discount_rate{
+    float:right;
+color:#fff;
+padding-left: 0px;
+    padding-right: 0px;
+    background-color: #6c7f5d;
+    }
+}
 </style>
 <?php if ($product->is_free_product == 1) : ?>
     <span class="price-free"><?php echo trans("free"); ?></span>
