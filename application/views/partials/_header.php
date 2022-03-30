@@ -1438,7 +1438,7 @@
                                                         <?php $count_array = $this->notification_model->get_notification_count();
                                                         $count = count($count_array); ?>
                                                         <i class="far fa-bell" style="color:white;"></i><?php if ($count > 0) : ?><span class="badge notification-count"><?php echo $count;
-                                                                                                                                                                endif; ?></span>
+                                                                                                                                                                        endif; ?></span>
                                                     </a>
 
                                                     <!-- <div id='wishlist'> -->
@@ -6663,7 +6663,7 @@
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <!-- <script src="https://www.googletagmanager.com/gtag/js?id=UA-199516838-1"></script> -->
-    <script>
+    <!-- <script>
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {
@@ -6672,7 +6672,7 @@
         gtag('js', new Date());
 
         gtag('config', 'UA-199516838-1');
-    </script>
+    </script> -->
 
     <!-- Google Tag Manager (noscript) -->
     <!-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGZRFDN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> -->
