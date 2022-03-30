@@ -1,4 +1,17 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<style>
+    span a {
+        color: -webkit-link;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    span a:hover {
+        color: -webkit-link;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+</style>
 <!-- Wrapper -->
 <div id="wrapper">
     <div class="container">
