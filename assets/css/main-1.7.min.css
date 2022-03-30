@@ -11804,6 +11804,30 @@ img {
   z-index: 99;
   pointer-events: none !important;
 }
+.made_to_order{
+    
+  position: absolute;
+  color: #fff;
+  left:0px;
+  font-weight: 600;
+  font-size: 10px;
+  border-radius: 12px 0px 12px 0px;
+  padding: 6px;
+  background-color: #Ff763c;
+}
+@media(max-width:700px){
+.made_to_order{
+  position: absolute;
+  color: #fff;
+  left:0px;
+  font-weight: 600;
+  font-size: 9px;
+  border-radius: 12px 0px 12px 0px;
+  padding: 6px;
+  background-color: #Ff763c;
+}
+}
+
 .index-products-slider-nav button {
   border: 0 !important;
   color: #555;
@@ -12067,7 +12091,7 @@ img {
   height: 40px;
   line-height: 40px;
   text-align: center;
-  background-color: #423f3f85;
+  background-color: rgba(0, 0, 0, 0.18);
   color: #fff;
   border-radius: 100%;
   opacity: 0;

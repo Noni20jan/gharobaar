@@ -8,6 +8,7 @@
         position: absolute;
 
         left: 114px;
+
         float: right;
         color: #fff;
         background-color: red;
@@ -15,40 +16,15 @@
     @media(max-width:700px) {
         #cvl {
             position: absolute;
-
-            left: 77px;
+            font-weight: 400;
+            left: 60px;
             float: right;
             color: #fff;
             background-color: red;
         }
     }
 
-.made_to_order{
-    
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    color: #fff;
-    font-weight: 600;
-    font-size: 10px;
-    border-radius: 12px 0px 12px 0px;
-    padding: 6px;
-    background-color: #Ff763c;
-}
-@media(max-width:700px){
-.made_to_order{
-    
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    color: #fff;
-    font-weight: 600;
-    font-size: 9px;
-    border-radius: 12px 0px 12px 0px;
-    padding: 6px;
-    background-color: #Ff763c;
-}
-}
+
     .zoom:hover {
         -ms-transform: scale(1.25);
         /* IE 9 */
@@ -140,7 +116,7 @@ if (!empty($variation)) { ?>
                 ?>
                         <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
                     <?php else : ?>
-                        <!-- <span class="badge badge-dark badge-promoted" id="cvl">Not Available</span> -->
+                        <span class="badge badge-dark badge-promoted" id="cvl">Not Available</span>
                 <?php endif;
                 } ?>
             <?php } else { ?>
@@ -149,7 +125,7 @@ if (!empty($variation)) { ?>
                 ?>
                         <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
                     <?php else : ?>
-                        <!-- <span class="badge badge-dark badge-promoted" id="cvl">Not Available</span> -->
+                        <span class="badge badge-dark badge-promoted" id="cvl">Not Available</span>
                 <?php endif;
                 } ?>
             <?php } ?>
