@@ -24,32 +24,7 @@
         }
     }
 
-.made_to_order{
-    
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    color: #fff;
-    font-weight: 600;
-    font-size: 10px;
-    border-radius: 12px 0px 12px 0px;
-    padding: 6px;
-    background-color: #Ff763c;
-}
-@media(max-width:700px){
-.made_to_order{
-    
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    color: #fff;
-    font-weight: 600;
-    font-size: 9px;
-    border-radius: 12px 0px 12px 0px;
-    padding: 6px;
-    background-color: #Ff763c;
-}
-}
+
     .zoom:hover {
         -ms-transform: scale(1.25);
         /* IE 9 */
