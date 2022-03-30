@@ -8,7 +8,24 @@
         margin-bottom: 20px;
         border-radius: .1875rem
     }
-
+    .product-item-options {
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 187px !important;
+    right: 0;
+    text-align: center;
+  }
+  @media(max-width:700px){
+    .product-item-options {
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 189px !important;
+    right: 0;
+    text-align: center;
+  }
+}
     .profile-page-top {
         margin-top: 5%;
     }
