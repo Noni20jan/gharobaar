@@ -8,6 +8,7 @@
         position: absolute;
 
         left: 114px;
+
         float: right;
         color: #fff;
         background-color: red;
@@ -15,8 +16,8 @@
     @media(max-width:700px) {
         #cvl {
             position: absolute;
-
-            left: 77px;
+            font-weight: 400;
+            left: 60px;
             float: right;
             color: #fff;
             background-color: red;
@@ -136,7 +137,7 @@ if (!empty($variation)) { ?>
                 ?>
                         <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
                     <?php else : ?>
-                        <!-- <span class="badge badge-dark badge-promoted" id="cvl">Not Available</span> -->
+                        <span class="badge badge-dark badge-promoted" id="cvl">Not Available</span>
                 <?php endif;
                 } ?>
             <?php } else { ?>
@@ -145,7 +146,7 @@ if (!empty($variation)) { ?>
                 ?>
                         <span class="badge badge-dark badge-promoted" id="cvl">Out Of Stock</span>
                     <?php else : ?>
-                        <!-- <span class="badge badge-dark badge-promoted" id="cvl">Not Available</span> -->
+                        <span class="badge badge-dark badge-promoted" id="cvl">Not Available</span>
                 <?php endif;
                 } ?>
             <?php } ?>
