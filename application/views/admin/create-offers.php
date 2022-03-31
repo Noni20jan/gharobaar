@@ -37,6 +37,7 @@
             document.getElementById("btn-submit").disabled = true;
             document.getElementById("spanend_date1").style.display = "block";
         } else {
+            document.getElementById("btn-submit").disabled = false;
             document.getElementById("spanend_date1").style.display = "none";
 
         }
