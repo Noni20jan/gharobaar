@@ -629,30 +629,17 @@
     }
 
     .notification-count {
-        background: red !important;
-        position: absolute;
-        top: 0;
-        color: white;
-        border-radius: 20px;
-        font-size: 11px !important;
-
-    }
-
-    .notification-count-mobile {
-        background: #007c05;
-        position: absolute;
-        top: 0px;
-        color: white;
-        border-radius: 50%;
-        font-size: 11px !important;
-        margin-left: 9px;
-        font-weight: 600;
-    }
-
-    .cart-icon-number a .notification {
-
+        position: absolute !important;
+        display: inline-block;
+        font-size: 12px;
         background-color: red;
+        border-radius: 50%;
+        top: 0;
+        height: 18px;
+        width: 18px;
 
+        color: #fff;
+        font-weight: 600
     }
 
     .notification-button {
@@ -973,6 +960,19 @@
             .promo-bar {
                 opacity: 1;
             }
+        }
+
+        .notification-count-mobile {
+            background: #007c05;
+            position: absolute;
+            top: 2px;
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 11px !important;
+            right: 43px;
+            font-weight: 600;
         }
     </style>
     <!-- <script src="<?= base_url(); ?>assets/js/fselect.js"></script> -->
@@ -1503,7 +1503,7 @@
                                                                 <?php $order_placements = $this->notification_model->get_order_placement($this->auth_user->email); ?>
                                                                 <?php $order_placement_count = 0; ?>
                                                                 <?php foreach ($order_placements as $order_placement) : ?>
-                                                                    <?php if ($order_placement->read != 1) { ?>
+                                                                    <?php if ($order_placement->read == 0) { ?>
                                                                         <?php $order_placement_count = $order_placement_count + 1; ?>
                                                                 <?php }
                                                                 endforeach; ?>
@@ -2011,11 +2011,10 @@
                                                 <?php $count_array = $this->notification_model->get_notification_count();
                                                 $count = count($count_array);
                                                 ?>
-                                                <i class="far fa-bell" style="color:white;"></i><?php if ($count > 0) : ?><span class="badge notification-count-mobile"><?php echo $count;
+                                                <i class="far fa-bell" style="color:#222;"></i><?php if ($count > 0) : ?><span class="badge notification-count-mobile"><?php echo $count;
                                                                                                                                                                     endif; ?></span>
                                             </a>
-                                            <i class="far fa-bell" style="font-size:21px;"></i>
-                                            </a>
+
                                             <ul class="dropdown close-notify" name="notificationMenu" style="z-index:100; width:100%; right:0px!important;">
                                                 <li class="notification-group">
                                                     <div class="notification-tab gharobar_updates">
