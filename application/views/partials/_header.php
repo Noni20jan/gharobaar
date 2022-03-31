@@ -629,12 +629,14 @@
     }
 
     .notification-count {
-        background: red !important;
+        background: #d21f3c;
         position: absolute;
-        top: 0;
+        top: 0px;
         color: white;
-        border-radius: 20px;
+        border-radius: 50%;
         font-size: 11px !important;
+        margin-left: 9px;
+        font-weight: 600;
     }
 
     .notification-button {
@@ -1222,7 +1224,7 @@
 
         .mobile-notify-icon {
             border-radius: 50%;
-            color: white;
+            color: #222 !important;
             font-size: 15px;
             line-height: 0px;
             list-style: none;
@@ -1429,16 +1431,20 @@
                                                 </a>
                                             </li>
                                         <?php endif; ?>
+
+
                                         <?php if ($this->auth_check) : ?>
                                             <li class="icon-bg notify-styles">
                                                 <!--span class="notification-label"></span-->
                                                 <!-- <div id='wishlist'> -->
+
                                                 <div class="dropdown-container">
                                                     <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
                                                         <?php $count_array = $this->notification_model->get_notification_count();
-                                                        $count = count($count_array); ?>
+                                                        $count = count($count_array);
+                                                        ?>
                                                         <i class="far fa-bell" style="color:white;"></i><?php if ($count > 0) : ?><span class="badge notification-count"><?php echo $count;
-                                                                                                                                                                endif; ?></span>
+                                                                                                                                                                        endif; ?></span>
                                                     </a>
 
                                                     <!-- <div id='wishlist'> -->
@@ -1536,7 +1542,7 @@
                                                                 <?php $order_cancellation_seller_updates = $this->notification_model->get_order_cancellation_by_seller($this->auth_user->email); ?>
                                                                 <?php $order_cancellation_seller_updates_count = 0; ?>
                                                                 <?php foreach ($order_cancellation_seller_updates as $order_cancellation_seller_update) : ?>
-                                                                    <?php if ($order_cancellation_seller_update->read != 0) { ?>
+                                                                    <?php if ($order_cancellation_seller_update->read != 1) { ?>
                                                                         <?php $order_cancellation_seller_updates_count = $order_cancellation_seller_updates_count + 1; ?>
                                                                 <?php }
                                                                 endforeach; ?>
@@ -1986,7 +1992,13 @@
                                         <!--span class="notification-label"></span-->
                                         <div class="dropdown-container">
                                             <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
-                                                <i class="far fa-bell" style="font-size:21px;"></i>
+                                                <?php $count_array = $this->notification_model->get_notification_count();
+                                                $count = count($count_array);
+                                                ?>
+                                                <i class="far fa-bell" style="color:white;"></i><?php if ($count > 0) : ?><span class="badge notification-count"><?php echo $count;
+                                                                                                                                                                endif; ?></span>
+                                            </a>
+                                            <i class="far fa-bell" style="font-size:21px;"></i>
                                             </a>
                                             <ul class="dropdown close-notify" name="notificationMenu" style="z-index:100; width:100%; right:0px!important;">
                                                 <li class="notification-group">
@@ -2077,7 +2089,7 @@
                                                         <?php $order_cancellation_seller_updates = $this->notification_model->get_order_cancellation_by_seller($this->auth_user->email); ?>
                                                         <?php $order_cancellation_seller_updates_count = 0; ?>
                                                         <?php foreach ($order_cancellation_seller_updates as $order_cancellation_seller_update) : ?>
-                                                            <?php if ($order_cancellation_seller_update->read != 0) { ?>
+                                                            <?php if ($order_cancellation_seller_update->read != 1) { ?>
                                                                 <?php $order_cancellation_seller_updates_count = $order_cancellation_seller_updates_count + 1; ?>
                                                         <?php }
                                                         endforeach; ?>
