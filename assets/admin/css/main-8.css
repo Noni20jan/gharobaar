@@ -26135,6 +26135,7 @@ a.plyr__control::before {
     padding: 6px;
     background-color: #Ff763c;
   }
+  
   @media(max-width:700px){
   .made_to_order{
     position: absolute;
