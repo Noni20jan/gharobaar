@@ -1145,22 +1145,29 @@ class Product_model extends Core_Model
             $this->db->join('product_details', 'product_details.product_id = products.id');
             $this->db->where('product_details.lang_id', clean_number($this->selected_lang->id));
             $this->db->group_start();
+
+            $this->db->like('product_details.title', $search);
             foreach ($array_search_words as $word) {
+
                 // $user_id=get_user_by_shop_name($word);
                 if (!empty($word)) {
+                    $search_word = $word;
+                    // var_dump($word);
+                    // var_dump($search_word);
+                    // die();
                     // $this->db->or_like(array('product_details.title' => $word, 'product_details.description' => $word,'product_details.seo_keywords' => $word,'product_details.seo_title' => $word));
+                    // $this->db->like('product_details.title', $word);
 
-
-                    $this->db->group_start();
-                    $this->db->like('product_details.title', $word);
+                    // $this->db->group_start();
+                    $this->db->or_like('product_details.title',  $search_word);
                     // $this->db->or_like('product_details.description', $word);
                     // $this->db->or_like('product_details.seo_title', $word);
                     // $this->db->or_like('product_details.seo_keywords', $word);
                     //$this->db->or_like('product_details.user_id', );
-                    $this->db->or_like('shop_name', $word);
-                    $this->db->or_like('brand_name', $word);
+                    $this->db->or_like('shop_name', $search_word);
+                    $this->db->or_like('brand_name',  $search_word);
 
-                    $this->db->group_end();
+                    // $this->db->group_end();
                 }
             }
             $this->db->group_end();
@@ -1232,14 +1239,11 @@ class Product_model extends Core_Model
             $this->db->order_by('products.created_at', 'ASC');
         } elseif (!empty($sort) && $sort == "top_discount") {
             $this->db->order_by('cast(products.discount_rate as decimal(16,2)) DESC');
-
-        } 
-        elseif (!empty($sort) && $sort == "most_recent") {
-            $date=date('Y-m-d h-i-s',strtotime('-30 days'));
+        } elseif (!empty($sort) && $sort == "most_recent") {
+            $date = date('Y-m-d h-i-s', strtotime('-30 days'));
             $this->db->where('products.created_at>', $date);
             $this->db->order_by('products.created_at', 'DESC');
-        }
-        else {
+        } else {
             // $this->db->order_by('rand()');
             $this->db->order_by('rand_val');
         }
@@ -1851,13 +1855,11 @@ class Product_model extends Core_Model
             $this->db->order_by('products.created_at', 'ASC');
         } elseif (!empty($sort) && $sort == "top_discount") {
             $this->db->order_by('cast(products.discount_rate as decimal(16,2)) DESC');
-        } 
-        elseif (!empty($sort) && $sort == "most_recent") {
-            $date=date('Y-m-d h-i-s',strtotime('-30 days'));
+        } elseif (!empty($sort) && $sort == "most_recent") {
+            $date = date('Y-m-d h-i-s', strtotime('-30 days'));
             $this->db->where('products.created_at>', $date);
             $this->db->order_by('products.created_at', 'DESC');
-        }
-        else {
+        } else {
             // $this->db->order_by('rand()');
             $this->db->order_by('rand_val');
         }
@@ -1900,9 +1902,9 @@ class Product_model extends Core_Model
             $array = explode(' ', $search);
             $user_id = $this->auth_user->id;
             if (!empty($user_id)) {
-
+                $word = str_replace("'", "\'", $search);
                 // $sql = "SELECT count(search_text) FROM search_keyword where search_text like   '$search%'   and user_id=$user_id;";
-                $sql = "SELECT COUNT(*) as count FROM search_keyword where search_text='$search' AND user_id='$user_id';";
+                $sql = "SELECT COUNT(*) as count FROM search_keyword where search_text='$word' AND user_id='$user_id';";
                 $query = $this->db->query($sql);
                 $count = $query->row();
                 // var_dump($count->count);die();
@@ -2113,6 +2115,12 @@ class Product_model extends Core_Model
         $query = $this->db->get('products');
         return $query->result();
     }
+    //get promoted products
+    public function get_promoted_products_from_mv()
+    {
+        $query = $this->db->get('mv_featured_products');
+        return $query->result();
+    }
 
     //get promoted products count
     public function get_promoted_products_count()
@@ -2197,10 +2205,15 @@ class Product_model extends Core_Model
                     // }
                 }
             }
+            $search = remove_special_characters(trim($this->input->get('search', true)));
             // $result3 = array();
             // $result3 = array_unique($result1);
             // $result2 = (object)$result1;
             $result2 = json_decode(json_encode($result));
+            foreach ($result2 as $result55) {
+                $sim = similar_text($result55->title, $search, $perc);
+                $result55->perc = $perc;
+            }
             // var_dump($result2);
             // die();
             return $result2;
@@ -2987,7 +3000,6 @@ class Product_model extends Core_Model
                     'is_active' => 0,
                 );
                 $this->db->update('wishlist', $data);
-                return json_encode($data);
             } else {
                 $data = array(
                     'user_id' => $this->auth_user->id,
@@ -2995,8 +3007,8 @@ class Product_model extends Core_Model
                     'is_active' => 1
                 );
                 $this->db->insert('wishlist', $data);
-                return json_encode($data);
             }
+            echo json_encode($data);
         } else {
             if ($this->is_product_in_wishlist($product_id)) {
                 $wishlist = array();
@@ -3113,6 +3125,12 @@ order by id desc LIMIT 1";
         $this->db->order_by('cast(products.discount_rate as DECIMAL(16,2)) DESC');
         $this->db->group_by('products.user_id');
         return $this->db->get('products')->result();
+    }
+
+    //get top discounts section from  materialized view
+    public function get_top_disc_product_from_mv()
+    {
+        return $this->db->get('mv_top_disc_products')->result();
     }
 
     //get rss products by category
@@ -3660,9 +3678,6 @@ order by id desc LIMIT 1";
         return $this->db->get('products')->result();
     }
 
-
-
-
     public function get_most_ordered_products($limit)
     {
         $this->build_query();
@@ -3675,10 +3690,12 @@ order by id desc LIMIT 1";
         return $this->db->get('products')->result();
     }
 
+    //get top pick product from mv
 
-
-
-
+    public function get_most_ordered_products_from_mv()
+    {
+        return $this->db->get('mv_top_picks_products')->result();
+    }
 
     //Check for exibition enabled
     public function check_exhibition_enabled($product_id)
@@ -4013,5 +4030,22 @@ order by id desc LIMIT 1";
             }
         }
         return $parent_cat_array;
+    }
+    public function get_product_by_seller($user_id)
+    {
+        $this->build_query();
+        $this->db->where('users.id', $user_id);
+        return $this->db->get('products')->result();
+    }
+
+    public function get_variation_options_by_id($id, $variation_id)
+    {
+
+        $this->db->select('products.*,variation_options.sku_code,variation_options.is_default');
+        $this->db->join('variations', 'variations.product_id=products.id');
+        $this->db->join('variation_options', 'variation_options.variation_id=variations.id');
+        $this->db->where('variation_options.id', $variation_id);
+        $this->db->where('products.id', clean_number($id));
+        return $this->db->get('products')->row();
     }
 }
