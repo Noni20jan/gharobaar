@@ -4339,6 +4339,17 @@
             border-radius: 20px;
         }
 
+        .notification-count-mobile {
+            background: #007c05;
+            position: absolute;
+            top: 0px;
+            color: white;
+            border-radius: 50%;
+            font-size: 11px !important;
+            margin-left: 9px;
+            font-weight: 600;
+        }
+
         .notification-button {
             background: #007C05;
             border-color: #007C05;
@@ -4587,7 +4598,7 @@
                                                                 <?php $order_cancellation_seller_updates = $this->notification_model->get_order_cancellation_by_seller($this->auth_user->email); ?>
                                                                 <?php $order_cancellation_seller_updates_count = 0; ?>
                                                                 <?php foreach ($order_cancellation_seller_updates as $order_cancellation_seller_update) : ?>
-                                                                    <?php if ($order_cancellation_seller_update->read != 0) { ?>
+                                                                    <?php if ($order_cancellation_seller_update->read != 1) { ?>
                                                                         <?php $order_cancellation_seller_updates_count = $order_cancellation_seller_updates_count + 1; ?>
                                                                 <?php }
                                                                 endforeach; ?>
@@ -5101,7 +5112,8 @@
                                             <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
                                                 <?php $count_array = $this->notification_model->get_notification_count();
                                                 $count = count($count_array); ?>
-                                                <i class="far fa-bell" style="font-size:21px;"></i>
+                                                <i class="far fa-bell" style="font-size:21px;"></i><?php if ($count > 0) : ?><span class="badge notification-count-mobile"><?php echo $count;
+                                                                                                                                                                        endif; ?></span>
                                             </a>
                                             <ul class="dropdown close-notify" name="notificationMenu" style="z-index:100; width:100%; right:0px!important;">
                                                 <li class="notification-group">

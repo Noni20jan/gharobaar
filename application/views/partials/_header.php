@@ -629,7 +629,17 @@
     }
 
     .notification-count {
-        background: #d21f3c;
+        background: red !important;
+        position: absolute;
+        top: 0;
+        color: white;
+        border-radius: 20px;
+        font-size: 11px !important;
+
+    }
+
+    .notification-count-mobile {
+        background: #007c05;
         position: absolute;
         top: 0px;
         color: white;
@@ -637,6 +647,12 @@
         font-size: 11px !important;
         margin-left: 9px;
         font-weight: 600;
+    }
+
+    .cart-icon-number a .notification {
+
+        background-color: red;
+
     }
 
     .notification-button {
@@ -1995,8 +2011,8 @@
                                                 <?php $count_array = $this->notification_model->get_notification_count();
                                                 $count = count($count_array);
                                                 ?>
-                                                <i class="far fa-bell" style="color:white;"></i><?php if ($count > 0) : ?><span class="badge notification-count"><?php echo $count;
-                                                                                                                                                                endif; ?></span>
+                                                <i class="far fa-bell" style="color:white;"></i><?php if ($count > 0) : ?><span class="badge notification-count-mobile"><?php echo $count;
+                                                                                                                                                                    endif; ?></span>
                                             </a>
                                             <i class="far fa-bell" style="font-size:21px;"></i>
                                             </a>
