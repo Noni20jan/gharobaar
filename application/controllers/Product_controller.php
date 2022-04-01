@@ -857,6 +857,11 @@ class Product_controller extends Admin_Core_Controller
         $review_ids = $this->input->post('review_ids', true);
         $this->review_model->delete_multi_reviews($review_ids);
     }
+    public function approve_selected_reviews()
+    {
+        $review_ids = $this->input->post('review_ids', true);
+        $this->review_model->approve_multi_reviews($review_ids);
+    }
     public function admin_updated_remark()
     {
         $id = $this->input->post('adminid');

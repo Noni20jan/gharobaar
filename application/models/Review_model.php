@@ -349,4 +349,13 @@ class Review_model extends CI_Model
         $query = $this->db->get('reviews');
         return $query->result();
     }
+
+    public function approve_multi_reviews($review_ids)
+    {
+        if (!empty($review_ids)) {
+            foreach ($review_ids as $id) {
+                $this->approve_review($id);
+            }
+        }
+    }
 }
