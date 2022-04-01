@@ -260,8 +260,32 @@ function delete_item(url, id, message) {
         }
     });
 };
+// function approve_item(url, id, message) {
+//     swal({
+//         text: message,
+//         icon: "warning",
+//         buttons: true,
+//         buttons: [sweetalert_cancel, sweetalert_ok],
+//         dangerMode: true,
+//     }).then(function (willDelete) {
+//         if (willDelete) {
+//             var data = {
+//                 'id': id,
+//             };
+//             data[csfr_token_name] = $.cookie(csfr_cookie_name);
+//             $.ajax({
+//                 type: "POST",
+//                 url: base_url + url,
+//                 data: data,
+//                 success: function (response) {
+//                     location.reload();
+//                 }
+//             });
+//         }
+//     });
+// };
 //delete by name
-function delete_tagged_item(url,feature_id,product_id, message) {
+function delete_tagged_item(url, feature_id, product_id, message) {
     swal({
         text: message,
         icon: "warning",
@@ -271,8 +295,8 @@ function delete_tagged_item(url,feature_id,product_id, message) {
     }).then(function (willDelete) {
         if (willDelete) {
             var data = {
-            
-                'feature_id':feature_id,
+
+                'feature_id': feature_id,
                 'product_id': product_id
             };
             data[csfr_token_name] = $.cookie(csfr_cookie_name);
@@ -281,7 +305,7 @@ function delete_tagged_item(url,feature_id,product_id, message) {
                 url: base_url + url,
                 data: data,
                 success: function (response) {
-                     location.reload();
+                    location.reload();
                 }
             });
         }
@@ -521,6 +545,30 @@ function delete_item(url, id, message) {
         }
     });
 };
+// function approve_item(url, id, message) {
+//     swal({
+//         text: message,
+//         icon: "warning",
+//         buttons: true,
+//         buttons: [sweetalert_cancel, sweetalert_ok],
+//         dangerMode: true,
+//     }).then(function (willDelete) {
+//         if (willDelete) {
+//             var data = {
+//                 'id': id,
+//             };
+//             data[csfr_token_name] = $.cookie(csfr_cookie_name);
+//             $.ajax({
+//                 type: "POST",
+//                 url: base_url + url,
+//                 data: data,
+//                 success: function (response) {
+//                     location.reload();
+//                 }
+//             });
+//         }
+//     });
+// };
 //delete selected reviews
 function delete_selected_reviews(message) {
     swal({
@@ -543,6 +591,36 @@ function delete_selected_reviews(message) {
             $.ajax({
                 type: "POST",
                 url: base_url + "product_controller/delete_selected_reviews",
+                data: data,
+                success: function (response) {
+                    location.reload();
+                }
+            });
+
+        }
+    });
+};
+function approve_selected_reviews(message) {
+    swal({
+        text: message,
+        icon: "warning",
+        buttons: true,
+        buttons: [sweetalert_cancel, sweetalert_ok],
+        dangerMode: true,
+    }).then(function (willApprove) {
+        if (willApprove) {
+
+            var review_ids = [];
+            $("input[name='checkbox-table']:checked").each(function () {
+                review_ids.push(this.value);
+            });
+            var data = {
+                'review_ids': review_ids,
+            };
+            data[csfr_token_name] = $.cookie(csfr_cookie_name);
+            $.ajax({
+                type: "POST",
+                url: base_url + "product_controller/approve_selected_reviews",
                 data: data,
                 success: function (response) {
                     location.reload();

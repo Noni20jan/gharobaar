@@ -14,6 +14,13 @@
                 <?php $this->load->view('admin/includes/_messages'); ?>
             </div>
         </div>
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="pull-left">
+                    <button class="btn btn-sm btn-success btn-table-delete" onclick="approve_selected_reviews('<?php echo trans("confirm_approve_review"); ?>');"><?php echo trans('approve'); ?></button>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="table-responsive">
