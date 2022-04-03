@@ -486,6 +486,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data['title'] = trans("add_product");
         $data['description'] = trans("add_product") . " - " . $this->app_name;
         $data['keywords'] = trans("add_product") . "," . $this->app_name;
+        $data["sku"]=$this->product_model->get_sku();
 
         $data['modesy_images'] = $this->file_model->get_sess_product_images_array();
         $data["file_manager_images"] = $this->file_model->get_user_file_manager_images();
@@ -671,8 +672,6 @@ class Dashboard_controller extends Home_Core_Controller
             }
         }
 
-
-
         $order_items = array();
 
         $total_length = 0;
@@ -814,6 +813,8 @@ class Dashboard_controller extends Home_Core_Controller
         if (empty($data["product"])) {
             redirect($this->agent->referrer());
         }
+        $data["sku"]=$this->product_model->get_sku();
+
         if ($data["product"]->is_deleted == 1) {
             if ($this->auth_user->role != "admin") {
                 redirect($this->agent->referrer());
@@ -979,6 +980,8 @@ class Dashboard_controller extends Home_Core_Controller
     {
         $data['product'] = $this->product_admin_model->get_product($id);
         $data["user"] = $this->product_admin_model->get_user($data['product']->user_id);
+        $data["sku"]=$this->product_model->get_sku_variation_options();
+
         if (empty($data['product'])) {
             redirect($this->agent->referrer());
         }

@@ -1859,6 +1859,7 @@ class Product_model extends Core_Model
             $date = date('Y-m-d h-i-s', strtotime('-30 days'));
             $this->db->where('products.created_at>', $date);
             $this->db->order_by('products.created_at', 'DESC');
+
         } else {
             // $this->db->order_by('rand()');
             $this->db->order_by('rand_val');
@@ -4047,5 +4048,13 @@ order by id desc LIMIT 1";
         $this->db->where('variation_options.id', $variation_id);
         $this->db->where('products.id', clean_number($id));
         return $this->db->get('products')->row();
+    }
+    public function get_sku(){
+        $this->db->select('sku');
+        return  $this->db->get('products')->result();
+    }
+    public function get_sku_variation_options(){
+        $this->db->select('sku_code');
+        return  $this->db->get('variation_options')->result();
     }
 }
