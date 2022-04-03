@@ -32,9 +32,9 @@
                 </div>
                 <?php echo form_open_multipart('add-product-post', ['id' => 'form_validate', 'onkeypress' => "return event.keyCode != 13;", 'onsubmit' => "return validate_add_product();"]); ?>
 
-
                 <?php if ($this->general_settings->physical_products_system == 1 && $this->general_settings->digital_products_system == 0) : ?>
                     <input type="hidden" name="product_type" value="physical">
+    
                     <div class="form-group">
                         <label class="control-label"><?= trans('product_type'); ?></label>
                         <div class="row">
@@ -101,7 +101,7 @@
                 <div class="form-group">
                     <label class="control-label"><?php echo trans("sku"); ?>&nbsp;(<?php echo trans("product_code"); ?>)<span class="Validation_error"> *</span></label>
                     <div class="position-relative">
-                        <input type="text" autocomplete="off" name="sku" id="input_sku" class="form-control auth-form-input" placeholder="<?php echo trans("sku_desc"); ?>" required>
+                        <input type="text" autocomplete="off" name="sku" id="input_sku" class="form-control auth-form-input"   placeholder="<?php echo trans("sku_desc"); ?>" required value="<?php echo $this->input->get('sku');?>">
                         <button type="button" class="btn btn-default btn-generate-sku" onclick="get_automated_SKU($('#categories'),$(this))">
                             <div id="sp-options-add" class="spinner spinner-btn-add-variation">
                                 <div class="bounce1"></div>
@@ -111,6 +111,8 @@
                             <div id="form-variation-add-text"><?= trans("generate"); ?></div>
                         </button>
                         <p class="Validation_error hideMe" id="input_sku_p">Please select category first to generate SKU</p>
+                        <div class="Validation_error hideMe" id="input_sku_check">SKU already exists</div>
+
                     </div>
                 </div>
             </div>
@@ -158,7 +160,7 @@
     </div>
 
     <div class="col-sm-12">
-        <button type="submit" class="btn btn-lg btn-success pull-right"><?php echo trans("save_and_continue"); ?></button>
+        <button type="submit" id="sub" class="btn btn-lg btn-success pull-right"><?php echo trans("save_and_continue"); ?></button>
     </div>
 </div>
 <?php echo form_close(); ?>
@@ -225,9 +227,23 @@
             </div>
         </div>
     </div>
-</div>
-
+</div>       
 <script>
+     $("#input_sku").keyup(function(){
+let z=$(this).val();
+ var x=<?php echo json_encode($sku);?>;
+
+  if(x.some(e => e.sku == z)){
+    document.getElementById("input_sku_check").style.display="block";
+    document.getElementById("sub").disabled=true;
+       }
+       else{
+        document.getElementById("input_sku_check").style.display="none";
+        document.getElementById("sub").disabled=false;
+
+
+       }
+    });
     function get_automated_SKU(element, button) {
         var valid = true;
         $("select[name='" + element[0].name + "'").each(function() {
@@ -376,6 +392,7 @@
             success: function(data) {
                 valid = data.result;
                 msg = data.message;
+
             }
         });
         if (valid) {

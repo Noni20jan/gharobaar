@@ -150,6 +150,8 @@
 
                         </button>
                         <p class="Validation_error hideMe" id="input_sku_p">Please select category first to generate SKU</p>
+                        <div class="Validation_error hideMe" id="input_sku_check">SKU already exists</div>
+
                     </div>
                 </div>
 
@@ -219,7 +221,7 @@
             <button type="submit" class="btn btn-lg btn-success pull-right"><?php echo trans("save_and_continue"); ?></button>
         <?php else : ?>
             <a href="<?php echo generate_dash_url("product", "product_details") . "/" . $product->id; ?>" class="btn btn-lg btn-custom pull-right"><?php echo trans("edit_details"); ?></a>
-            <button type="submit" class="btn btn-lg btn-success pull-right m-r-10"><?php echo trans("save_changes"); ?></button>
+            <button type="submit"  id="disable_sku" class="btn btn-lg btn-success pull-right m-r-10"><?php echo trans("save_changes"); ?></button>
         <?php endif; ?>
     </div>
 </div>
@@ -288,8 +290,26 @@
         </div>
     </div>
 </div>
-
 <script>
+     $("#input_sku").keyup(function(){
+let z=$(this).val();
+let m="<?php echo $product->sku;?>";
+console.log(m);
+ var x=<?php echo json_encode($sku);?>;
+
+  if(x.some(e => e.sku == z) && z!=m){
+
+    document.getElementById("input_sku_check").style.display="block";
+    document.getElementById("disable_sku").disabled=true;
+
+       }
+       else{
+        document.getElementById("input_sku_check").style.display="none";
+        document.getElementById("disable_sku").disabled=false;
+
+
+       }
+    });
     function get_automated_SKU(element, button) {
         var valid = true;
         $("select[name='" + element[0].name + "'").each(function() {
