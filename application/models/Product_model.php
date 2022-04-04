@@ -4050,11 +4050,13 @@ order by id desc LIMIT 1";
         return $this->db->get('products')->row();
     }
     public function get_sku(){
-        $this->db->select('sku');
-        return  $this->db->get('products')->result();
+        $sql="SELECT products.sku,variation_options.sku_code";
+        $query=$this->db->query($sql);
+        return  $query->result();
     }
     public function get_sku_variation_options(){
-        $this->db->select('sku_code');
-        return  $this->db->get('variation_options')->result();
+        $sql="SELECT products.sku,variation_options.sku_code";
+        $query=$this->db->query($sql);
+        return  $query->result();
     }
 }
