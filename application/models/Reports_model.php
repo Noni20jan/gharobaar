@@ -18,6 +18,7 @@ class Reports_model extends CI_Model
         $sql = "SELECT distinct
         op.created_at as 'Order_Date',
         op.order_id as 'GBT_Order_No',
+        op.id as Item_id,
         cast(sod.created_at AS date) as 'Schedule_Shipment_Date',
         cast(sod.created_at AS time) as 'Schedule_Shipment_Time',
         sod.pickup_scheduled_date as 'Pickup_Schedule_Date',
@@ -52,13 +53,16 @@ class Reports_model extends CI_Model
         order_shipping as oship
     WHERE op.product_id = p.id
     AND op.order_id = sod.order_id
+    AND op.id = sod.order_product_id
     AND op.seller_id = seller.id
     AND op.buyer_id = buyer.id
     AND op.order_id = os.order_id
     AND op.seller_id = os.seller_id
+    AND os.seller_id = seller.id
     AND op.order_id = oship.order_id
     AND op.created_at >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
       AND op.created_at <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
+	AND sod.is_active = 1
     order by op.order_id";
         $query = $this->db->query($sql);
         return $query->result();
@@ -896,6 +900,7 @@ class Reports_model extends CI_Model
         $sql = "SELECT distinct
         op.created_at as 'Order_Date',
         op.order_id as 'GBT_Order_No',
+        op.id as Item_id,
         cast(sod.created_at AS date) as 'Schedule_Shipment_Date',
         cast(sod.created_at AS time) as 'Schedule_Shipment_Time',
         sod.pickup_scheduled_date as 'Pickup_Schedule_Date',
@@ -930,14 +935,17 @@ class Reports_model extends CI_Model
         order_shipping as oship
     WHERE op.product_id = p.id
     AND op.order_id = sod.order_id
+    AND op.id = sod.order_product_id
     AND op.seller_id = seller.id
     AND op.buyer_id = buyer.id
     AND op.order_id = os.order_id
     AND op.seller_id = os.seller_id
+    AND os.seller_id = seller.id
     AND op.order_id = oship.order_id
-      AND YEAR(op.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+    AND YEAR(op.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
         AND MONTH(op.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
-       order by op.order_id";
+	AND sod.is_active = 1
+    order by op.order_id";
         $query = $this->db->query($sql);
         return $query->result();
     }
