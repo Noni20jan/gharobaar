@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped dataTable" id="cs_datatable" role="grid" aria-describedby="example1_info">
+                    <table class="table table-bordered table-striped dataTable" id="cs_datatable1" role="grid" aria-describedby="example1_info">
                         <thead>
                             <tr role="row">
                                 <th width="20" class="table-no-sort" style="text-align: center !important;"><input type="checkbox" class="checkbox-table" id="checkAll"></th>
@@ -104,3 +104,18 @@
         </div>
     </div><!-- /.box-body -->
 </div>
+<script>
+    $(document).ready(function() {
+        $('#cs_datatable1').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            "aLengthMenu": [
+                [15, 30, 60, 100],
+                [15, 30, 60, 100, "All"],
+            ],
+            iDisplayLength: 100
+
+        });
+    });
+</script>
