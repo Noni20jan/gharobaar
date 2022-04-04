@@ -1522,7 +1522,53 @@
             $(".li-dm-media-preview").css("visibility", "visible");
         });
     </script>
+             <script>
+                            function sku_code_validation(){
+                                $("#input_sku_option").keyup(function(){
+var z=$(this).val();
+var x=<?php echo json_encode($sku);?>;
+if(x.some(e => e.sku_code == z)){
+    document.getElementById("input_sku_check").style.display="block";
+    document.getElementById("btn_add_variation_option").disabled=true;
+    //   document.getElementById("disable_sku").disabled=true;
+    document.getElementById("btn_save_variation_option").disabled=true;
 
+     }
+     else{
+        document.getElementById("input_sku_check").style.display="none";
+        document.getElementById("btn_add_variation_option").disabled=false;
+        document.getElementById("btn_save_variation_option").disabled=false;
+
+
+
+     }
+
+    })
+
+}
+function sku_code_edit_validate(){
+    var m=document.getElementById("input_sku").value;
+    $("#input_sku").change(function(){
+var z=$(this).val();
+
+var x=<?php echo json_encode($sku);?>;
+if(x.some(e => e.sku_code == z)){
+
+    document.getElementById("sku_check").style.display="block";
+    document.getElementById("btn_edit_variation_option").disabled=true;
+     
+    }
+     else{
+        document.getElementById("sku_check").style.display="none";
+        document.getElementById("btn_edit_variation_option").disabled=false;
+
+     }
+    
+    })
+    
+}
+
+    </script>
     <script>
         $.fn.datepicker.dates['en'] = {
             days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -1722,8 +1768,10 @@
             ShowHideDiv();
         });
     </script>
+  
 
     <script>
+
         function get_automated_SKU_option(button) {
             // console.log("<?php echo $product->sku; ?>");
             // var valid = true;
@@ -1930,6 +1978,8 @@
         })
     </script>
     <script>
+
+      
         $("#button_to_submit").click(function() {
             var required = $('input,textarea,select').filter('[required]:visible');
             console.log(required)

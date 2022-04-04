@@ -1027,7 +1027,8 @@
 
                         <div class="col-sm-6  hide-if-default">
                             <label class="control-label"><?php echo trans("sku"); ?></label>
-                            <input type="text" name="sku-variation" id="input_sku_option" class="form-control auth-form-input" placeholder="<?php echo trans("sku_desc"); ?>" required>
+                            <input type="text" name="sku-variation" id="input_sku_option" onkeyup="sku_code_validation()" class="form-control auth-form-input" placeholder="<?php echo trans("sku_desc"); ?>" required value="<?php echo $this->input->get('sku-variation');?>">
+               
                             <button type="button" class="btn btn-default btn-generate-option-sku" onclick="generateUniqueProductVariationCode($(this),'<?php echo $product->id ?>','<?php echo $product->sku ?>')">
                                 <div id="sp-options-add" class="spinner spinner-btn-add-variation spinner-variation-options">
                                     <div class="bounce1"></div>
@@ -1036,7 +1037,10 @@
                                 </div>
                                 <div id="form-variation-option-add-text"><?= trans("generate"); ?></div>
                             </button>
+                            <div class="Validation_error hideMe" id="input_sku_check">SKU already exists</div>
+
                         </div>
+
                         <div class="col-sm-6  hide-if-default">
                             <label class="control-label">Packaged Weight(in grams)<span class="Validation_error"> *</span></label>
                             <input type="number" required name="package_weight" class="form-control auth-form-input" placeholder="Enter Product Weight After Packaging">
