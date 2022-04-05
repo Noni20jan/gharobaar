@@ -4052,12 +4052,12 @@ order by id desc LIMIT 1";
         return $this->db->get('products')->row();
     }
     public function get_sku(){
-        $sql="SELECT products.sku,variation_options.sku_code";
+        $sql="SELECT products.sku,variation_options.sku_code from products,variation_options";
         $query=$this->db->query($sql);
         return  $query->result();
     }
     public function get_sku_variation_options(){
-        $sql="SELECT products.sku,variation_options.sku_code";
+        $sql="SELECT products.sku,variation_options.sku_code from products,variation_options";
         $query=$this->db->query($sql);
         return  $query->result();
     }
