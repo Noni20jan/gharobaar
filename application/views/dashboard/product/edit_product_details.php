@@ -1527,7 +1527,7 @@
                                 $("#input_sku_option").keyup(function(){
 var z=$(this).val();
 var x=<?php echo json_encode($sku);?>;
-if(x.some(e => e.sku_code == z)){
+if(x.some(e => e.sku_code == z || e.sku==z)){
     document.getElementById("input_sku_check").style.display="block";
     document.getElementById("btn_add_variation_option").disabled=true;
     //   document.getElementById("disable_sku").disabled=true;

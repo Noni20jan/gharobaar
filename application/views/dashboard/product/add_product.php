@@ -233,7 +233,7 @@
 let z=$(this).val();
  var x=<?php echo json_encode($sku);?>;
 
-  if(x.some(e => e.sku == z)){
+  if(x.some(e => e.sku == z || e.sku_code==z)){
     document.getElementById("input_sku_check").style.display="block";
     document.getElementById("sub").disabled=true;
        }
