@@ -1151,7 +1151,6 @@
                             </div>
                         <?php endif; ?>
 
-
                         <?php if ($this->form_settings->variations == 1 && $product->listing_type != 'ordinary_listing') : ?>
                             <div class="form-box">
                                 <div class="form-box-head">
@@ -1547,12 +1546,10 @@ if(x.some(e => e.sku_code == z || e.sku==z)){
 
 }
 function sku_code_edit_validate(){
-    var m=document.getElementById("input_sku").value;
-    $("#input_sku").change(function(){
+    $("#input_sku").keyup(function(){
 var z=$(this).val();
-
 var x=<?php echo json_encode($sku);?>;
-if(x.some(e => e.sku_code == z)){
+if(x.some(e => e.sku_code ==z)){
 
     document.getElementById("sku_check").style.display="block";
     document.getElementById("btn_edit_variation_option").disabled=true;
