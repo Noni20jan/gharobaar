@@ -2014,6 +2014,7 @@
                 res = JSON.parse(e);
                 $("#pay_view_load")[0].innerHTML = res.pay_view;
                 console.log(res);
+                $(".cash_free_btn").prop('disabled', false);
                 // alert($response.pay_view);
             },
         });
@@ -2022,6 +2023,7 @@
 </script>
 <script>
     function place_cod_orders() {
+        $(".cash_free_btn").prop('disabled', true);
         // e.preventDefault();
         // var form = $('#form_submit_disable');
         var t = {
@@ -2054,6 +2056,7 @@
 
 <script>
     function Payment() {
+        $(".cash_free_btn").prop('disabled', true);
         // e.preventDefault();
         // var form = $('#form_submit_disable');
         var payment_mode = $('#payment_mode').val();
