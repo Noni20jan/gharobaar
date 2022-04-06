@@ -294,7 +294,7 @@ endif;
         <div class="row">
             <div class="pull-right">
                 <?php if ($item_order->product_delivery_partner == "SHIPROCKET") : ?>
-                    <?php if ($orders_count >= 1 ) : ?>
+                    <?php if ($orders_count >= 1) : ?>
                         <button class="btn btn-md btn-block btn-info btn-table-delete" id="schedule_sipment" onclick="Schedule_Multiple_shipment()">Schedule Shipment</button>
 
                     <?php endif; ?>
@@ -306,7 +306,7 @@ endif;
                 <?php endif; ?>
             </div>
         </div>
-   
+
         <?php if (($item->product_delivery_partner) == "SHIPROCKET") : ?>
             <?php if (empty($shiprocket_order_details)) : ?>
 
@@ -324,7 +324,7 @@ endif;
                     <?php $order_create = strtotime("$ship_time day", strtotime($order->created_at)); ?>
 
                     <?php $ship_date = (date("dS M Y", $order_create)); ?>
-                    <?php $shipping_date = date('Y-m-d H:i:s',$order_create); ?>
+                    <?php $shipping_date = date('Y-m-d H:i:s', $order_create); ?>
 
                     <?php if ($orders_count >= 1) : ?>
 
@@ -351,8 +351,8 @@ endif;
                     <?php $created_at = strtotime($order->created_at); ?>
                     <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
                     <?php $shipped_date = (date("dS M Y", $order_create)); ?>
-                    <?php $shipp_date = date('Y-m-d H:i:s',$order_create); ?>
-                    <?php if ($orders_count>=1) : ?>
+                    <?php $shipp_date = date('Y-m-d H:i:s', $order_create); ?>
+                    <?php if ($orders_count >= 1) : ?>
                         <?php if ($shipp_date >= $current_date) : ?>
                             <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
 
@@ -374,7 +374,7 @@ endif;
 
                     <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
                     <?php $shipped_date = (date("dS M Y", $order_create)); ?>
-                    <?php $shipp_date =date('Y-m-d H:i:s',$order_create); ?>
+                    <?php $shipp_date = date('Y-m-d H:i:s', $order_create); ?>
                     <?php if ($shipp_date >= $current_date) : ?>
                         <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
                     <?php else : ?>
@@ -431,11 +431,11 @@ endif;
                                     $product_details = get_product($item->product_id);
                                     // var_dump(json_encode($product_details));
                             ?>
-                            <?php $half_width_product_variations = json_encode($this->variation_model->get_half_width_product_variations($item->product_id));
+                                    <?php $half_width_product_variations = json_encode($this->variation_model->get_half_width_product_variations($item->product_id));
 
-                            ?>
-                    <?php $full_width_product_variations =  json_encode($this->variation_model->get_full_width_product_variations($item->product_id));
-                    ?>
+                                    ?>
+                                    <?php $full_width_product_variations =  json_encode($this->variation_model->get_full_width_product_variations($item->product_id));
+                                    ?>
                                     <tr>
 
                                         <td><input type="checkbox" <?php if ($item->order_status != "processing") {
@@ -445,7 +445,7 @@ endif;
                                             <div class="table-item-product">
                                                 <div class="left">
                                                     <?php $variation_option = generate_product_variation_image($item);
-                                                
+
                                                     if (!empty($variation_option)) :
                                                         if ($variation_option->is_default != 0) : ?>
                                                             <a href="<?php echo generate_product_url_by_slug($item->product_slug); ?>" target="_blank">
@@ -709,7 +709,7 @@ endif;
                                                     </p>
 
                                                     <div id='loader' style='display: none;'>
-                                                        <img src='<?php echo base_url();?>assets/reload.gif' width='32px' height='32px'>
+                                                        <img src='<?php echo base_url(); ?>assets/reload.gif' width='32px' height='32px'>
                                                     </div>
                                                     <!-- Image loader -->
 
@@ -1266,6 +1266,7 @@ endforeach; ?>
 <script>
     function wrapper_multiple_product(products_array, order_items_array) {
         $("#schedule_multiple_products").modal('hide');
+
         function uuidv4() {
             return 'yxxyxxx'.replace(/[xy]/g, function(c) {
                 var r = Math.random() * 16 | 0,
@@ -1283,46 +1284,44 @@ endforeach; ?>
         var quantity_price_array = [];
 
         for (var i = 0; i < products_array.length; i++) {
-            var r=<?php echo $half_width_product_variations;?>;
-            var n=<?php  echo $full_width_product_variations;?>;
-            if(r.length==0 && n.length==0){
-            order_items.push({
-
-                name: order_items_array[i].product_title,
-                sku: products_array[i].sku,
-                units: order_items_array[i].product_quantity,
-                selling_price: order_items_array[i].price_after_discount / 100
-
-            });
-            product_id_array.push(products_array[i].id);
-            order_item_id_array.push(order_items_array[i].id)
-            quantity_price_array.push(order_items_array[i].product_quantity * order_items_array[i].price_after_discount / 100);
-        }
-        else{
-            if(products_array[i].is_default==0){
-            order_items.push({
-
-name: order_items_array[i].product_title,
-sku: products_array[i].sku_code,
-units: order_items_array[i].product_quantity,
-selling_price: order_items_array[i].price_after_discount / 100
-
-});
-}
-            else{
+            var r = <?php echo $half_width_product_variations; ?>;
+            var n = <?php echo $full_width_product_variations; ?>;
+            if (r.length == 0 && n.length == 0) {
                 order_items.push({
 
-name: order_items_array[i].product_title,
-sku: products_array[i].sku,
-units: order_items_array[i].product_quantity,
-selling_price: order_items_array[i].price_after_discount / 100
+                    name: order_items_array[i].product_title,
+                    sku: products_array[i].sku,
+                    units: order_items_array[i].product_quantity,
+                    selling_price: order_items_array[i].price_after_discount / 100
 
-});
+                });
+                product_id_array.push(products_array[i].id);
+                order_item_id_array.push(order_items_array[i].id)
+                quantity_price_array.push(order_items_array[i].product_quantity * order_items_array[i].price_after_discount / 100);
+            } else {
+                if (products_array[i].is_default == 0) {
+                    order_items.push({
+
+                        name: order_items_array[i].product_title,
+                        sku: products_array[i].sku_code,
+                        units: order_items_array[i].product_quantity,
+                        selling_price: order_items_array[i].price_after_discount / 100
+
+                    });
+                } else {
+                    order_items.push({
+
+                        name: order_items_array[i].product_title,
+                        sku: products_array[i].sku,
+                        units: order_items_array[i].product_quantity,
+                        selling_price: order_items_array[i].price_after_discount / 100
+
+                    });
+                }
+                product_id_array.push(products_array[i].id);
+                order_item_id_array.push(order_items_array[i].id)
+                quantity_price_array.push(order_items_array[i].product_quantity * order_items_array[i].price_after_discount / 100);
             }
-product_id_array.push(products_array[i].id);
-order_item_id_array.push(order_items_array[i].id)
-quantity_price_array.push(order_items_array[i].product_quantity * order_items_array[i].price_after_discount / 100);
-        }
         }
         for (var j = 0; j < quantity_price_array.length; j++) {
             total_quantity_price += quantity_price_array[j];
@@ -1341,7 +1340,7 @@ quantity_price_array.push(order_items_array[i].product_quantity * order_items_ar
             "billing_country": "<?php echo ($shipping->billing_country) ?>",
             "billing_email": "<?php echo ($shipping->billing_email) ?>",
             "billing_phone": <?php echo ($shipping->billing_phone_number) ?>,
-            "shipping_is_billing": <?php echo ($shipping->use_same_address_for_billing == 1) ? true : false; ?>,
+            "shipping_is_billing": <?php echo ($shipping->use_same_address_for_billing); ?>,
             "shipping_customer_name": "<?php echo $shipping->shipping_first_name ?>",
             "shipping_last_name": "<?php echo $shipping->shipping_last_name ?>",
             "shipping_address": "<?php echo ($shipping->shipping_address_1 . ',' . $shipping->shipping_area) ?>",
