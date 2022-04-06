@@ -506,7 +506,7 @@
 
                                 <div class="row-custom">
                                     <ul>
-                                        <li><a href="mailto:contact@gharobaar.com" id=response> <?php echo trans("contact_gharobaar"); ?></a></li>
+                                        <li><a href="mailto:letstalk@gharobaar.com" id=response> <?php echo trans("contact_gharobaar"); ?></a></li>
                                         <li><a href="tel:+91-<?php echo $this->settings->contact_phone; ?>" id="respond"><?php echo trans("customer_care"); ?><?php echo $this->settings->contact_phone; ?></a></li>
                                     </ul>
                                 </div>
