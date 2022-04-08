@@ -210,26 +210,26 @@
                         <?php $this->load->view("dashboard/product/_edit_price", ['user' => $user]); ?>
 
                         <?php
-                            $categories = get_parent_categories_tree($product->category_id, false);
-                            if ($categories[1]->id == 38 && $categories[1]->slug == 'apparel') :
-                            ?>
-                                <div class="form-box">
-                                    <div class="row ">
-                                        <div class="col-sm-12 col-md-6 m-b-sm-15">
-                                            <label><?php echo ('Product Suitable For'); ?></label><span class="Validation_error"> *</span>
-                                            
-                                                <select name="suitable_for_kids" id="suitable_for" class="form-control custom-select m-0" required>
-                                                    <option disabled selected value> -- Select an option -- </option>
-                                                    <option value="male" <?php echo ($product->suitable_for == "male") ? 'selected' : ''; ?>>Male</option>
-                                                    <option value="female" <?php echo ($product->suitable_for == "female") ? 'selected' : ''; ?>>Female</option>
-                                                    <option value="unisex" <?php echo ($product->suitable_for == "unisex") ? 'selected' : ''; ?>>Unisex</option>
-                                                </select>
-                                            </div>
-                                        
+                        $categories = get_parent_categories_tree($product->category_id, false);
+                        if ($categories[1]->id == 38 && $categories[1]->slug == 'apparel') :
+                        ?>
+                            <div class="form-box">
+                                <div class="row ">
+                                    <div class="col-sm-12 col-md-6 m-b-sm-15">
+                                        <label><?php echo ('Product Suitable For'); ?></label><span class="Validation_error"> *</span>
+
+                                        <select name="suitable_for_kids" id="suitable_for" class="form-control custom-select m-0" required>
+                                            <option disabled selected value> -- Select an option -- </option>
+                                            <option value="male" <?php echo ($product->suitable_for == "male") ? 'selected' : ''; ?>>Male</option>
+                                            <option value="female" <?php echo ($product->suitable_for == "female") ? 'selected' : ''; ?>>Female</option>
+                                            <option value="unisex" <?php echo ($product->suitable_for == "unisex") ? 'selected' : ''; ?>>Unisex</option>
+                                        </select>
                                     </div>
+
                                 </div>
-                            <?php endif;
-                            ?>
+                            </div>
+                        <?php endif;
+                        ?>
 
                         <?php if ($this->form_settings->shipping == 1 && $product->product_type == 'physical') : ?>
                             <div class="form-box">
@@ -1151,7 +1151,6 @@
                             </div>
                         <?php endif; ?>
 
-
                         <?php if ($this->form_settings->variations == 1 && $product->listing_type != 'ordinary_listing') : ?>
                             <div class="form-box">
                                 <div class="form-box-head">
@@ -1522,52 +1521,35 @@
             $(".li-dm-media-preview").css("visibility", "visible");
         });
     </script>
-             <script>
-                            function sku_code_validation(){
-                                $("#input_sku_option").keyup(function(){
-var z=$(this).val();
-var x=<?php echo json_encode($sku);?>;
-if(x.some(e => e.sku_code == z || e.sku==z)){
-    document.getElementById("input_sku_check").style.display="block";
-    document.getElementById("btn_add_variation_option").disabled=true;
-    //   document.getElementById("disable_sku").disabled=true;
-    document.getElementById("btn_save_variation_option").disabled=true;
-
-     }
-     else{
-        document.getElementById("input_sku_check").style.display="none";
-        document.getElementById("btn_add_variation_option").disabled=false;
-        document.getElementById("btn_save_variation_option").disabled=false;
-
-
-
-     }
-
-    })
-
-}
-function sku_code_edit_validate(){
-    var m=document.getElementById("input_sku").value;
-    $("#input_sku").change(function(){
-var z=$(this).val();
-
-var x=<?php echo json_encode($sku);?>;
-if(x.some(e => e.sku_code == z)){
-
-    document.getElementById("sku_check").style.display="block";
-    document.getElementById("btn_edit_variation_option").disabled=true;
-     
-    }
-     else{
-        document.getElementById("sku_check").style.display="none";
-        document.getElementById("btn_edit_variation_option").disabled=false;
-
-     }
-    
-    })
-    
-}
-
+    <script>
+        function sku_code_validation() {
+            $("#input_sku_option").keyup(function() {
+                var z = $(this).val();
+                var x = <?php echo json_encode($sku); ?>;
+                if (x.some(e => e.sku_id == z)) {
+                    document.getElementById("input_sku_check").style.display = "block";
+                    document.getElementById("btn_add_variation_option").disabled = true;
+                    document.getElementById("btn_save_variation_option").disabled = true;
+                } else {
+                    document.getElementById("input_sku_check").style.display = "none";
+                    document.getElementById("btn_add_variation_option").disabled = false;
+                    document.getElementById("btn_save_variation_option").disabled = false;
+                }
+            })
+        }
+        function sku_code_edit_validate() {
+            $("#input_sku").keyup(function() {
+                var z = $(this).val();
+                var x = <?php echo json_encode($sku); ?>;
+                if (x.some(e => e.sku_id == z)) {
+                    document.getElementById("sku_check").style.display = "block";
+                    document.getElementById("btn_edit_variation_option").disabled = true;
+                } else {
+                    document.getElementById("sku_check").style.display = "none";
+                    document.getElementById("btn_edit_variation_option").disabled = false;
+                }
+            })
+        }
     </script>
     <script>
         $.fn.datepicker.dates['en'] = {
@@ -1768,10 +1750,9 @@ if(x.some(e => e.sku_code == z)){
             ShowHideDiv();
         });
     </script>
-  
+
 
     <script>
-
         function get_automated_SKU_option(button) {
             // console.log("<?php echo $product->sku; ?>");
             // var valid = true;
@@ -1978,8 +1959,6 @@ if(x.some(e => e.sku_code == z)){
         })
     </script>
     <script>
-
-      
         $("#button_to_submit").click(function() {
             var required = $('input,textarea,select').filter('[required]:visible');
             console.log(required)

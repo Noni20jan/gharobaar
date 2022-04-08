@@ -980,7 +980,7 @@ class Dashboard_controller extends Home_Core_Controller
     {
         $data['product'] = $this->product_admin_model->get_product($id);
         $data["user"] = $this->product_admin_model->get_user($data['product']->user_id);
-        $data["sku"]=$this->product_model->get_sku_variation_options();
+        $data["sku"]=$this->product_model->get_sku();
 
         if (empty($data['product'])) {
             redirect($this->agent->referrer());
@@ -1013,7 +1013,6 @@ class Dashboard_controller extends Home_Core_Controller
 
         $data["custom_fields"] = $this->field_model->get_custom_fields_by_category($data["product"]->category_id);
         $data["product_variations"] = $this->variation_model->get_product_variations($data["product"]->id);
-
         $data["user_variations"] = $this->variation_model->get_variation_by_user_id($data["product"]->user_id);
         $data['form_settings'] = $this->settings_model->get_form_settings();
         $data['license_keys'] = $this->product_model->get_license_keys($data["product"]->id);
@@ -1141,7 +1140,6 @@ class Dashboard_controller extends Home_Core_Controller
         $data['form_settings'] = $this->settings_model->get_form_settings();
         $data['license_keys'] = $this->product_model->get_license_keys($data["product"]->id);
         $data['main_settings'] = get_main_settings();
-
         $this->load->view('dashboard/includes/_header', $data);
         $this->load->view('dashboard/service/edit_service_details', $data);
         $this->load->view('dashboard/includes/_footer');

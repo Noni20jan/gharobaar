@@ -911,7 +911,7 @@ class Product_model extends Core_Model
         //add product filter options
         if (!empty($category_ids)) {
             $this->db->where_in("products.category_id", $category_ids, FALSE);
-            $this->db->order_by('products.is_promoted', 'DESC');
+            // $this->db->order_by('products.is_promoted', 'DESC');
         }
         //product type array
         $array_product_type = @explode(',', $add_meet);
@@ -3955,13 +3955,12 @@ order by id desc LIMIT 1";
             // }
         }
         $where1 = "title = '$word' ) ";
-        $wherecon = " and users.is_shop_open='1' and users.banned ='0' and products.is_draft='0' and products.is_deleted='0' and products.visibility='1' and status='1' order by products.is_promoted desc limit 5) ";
+        $wherecon = " and users.is_shop_open=1 and users.banned =0 and products.is_draft=0 and products.is_deleted=0 and products.visibility=1 and status=1 order by products.is_promoted desc limit 5) ";
         $sselect = " UNION (SELECT title,brand_name,products.slug FROM product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where (";
         $union = " (select title,brand_name,products.slug from product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where title like ('%$word%') OR brand_name = ('$word')  ";
         $sql5 = $union . $wherecon .  $sselect . $where . $where1 . $wherecon;
-        // var_dump($sql5);
-        // die();
-        $query8 = $this->db->query($sql5);
+       $query8 = $this->db->query($sql5);
+        
         return $query8->result();
     }
 
@@ -4052,13 +4051,21 @@ order by id desc LIMIT 1";
         return $this->db->get('products')->row();
     }
     public function get_sku(){
-        $sql="SELECT products.sku,variation_options.sku_code from products,variation_options";
+
+        $sql="SELECT DISTINCT temp.sku_id  FROM (
+            SELECT p2.sku as sku_id
+            from products as p2
+            where p2.sku!='' AND is_draft=0 AND is_deleted=0
+            UNION
+            SELECT 
+                vo.sku_code as sku_id
+            FROM
+                variation_options AS vo
+            WHERE
+                vo.sku_code != '' ) as temp";
         $query=$this->db->query($sql);
+        
         return  $query->result();
     }
-    public function get_sku_variation_options(){
-        $sql="SELECT products.sku,variation_options.sku_code from products,variation_options";
-        $query=$this->db->query($sql);
-        return  $query->result();
-    }
+  
 }
