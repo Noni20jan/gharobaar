@@ -1524,7 +1524,7 @@
     <script>
         function sku_code_validation() {
             $("#input_sku_option").keyup(function() {
-                var z = $(this).val();
+                let z = $(this).val().replace(/^\s+|\s+$/gm,'');
                 var x = <?php echo json_encode($sku); ?>;
                 if (x.some(e => e.sku_id == z)) {
                     document.getElementById("input_sku_check").style.display = "block";
@@ -1539,7 +1539,7 @@
         }
         function sku_code_edit_validate() {
             $("#input_sku").keyup(function() {
-                var z = $(this).val();
+                var z = $(this).val().replace(/^\s+|\s+$/gm,'');
                 var x = <?php echo json_encode($sku); ?>;
                 if (x.some(e => e.sku_id == z)) {
                     document.getElementById("sku_check").style.display = "block";

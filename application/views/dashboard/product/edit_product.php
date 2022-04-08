@@ -311,6 +311,8 @@ let m="<?php echo $product->sku;?>";
     });
     function get_automated_SKU(element, button) {
         var valid = true;
+        document.getElementById("input_sku_check").style.display = "none";
+
         $("select[name='" + element[0].name + "'").each(function() {
             if ($(this).val() == "")
                 valid = false;
