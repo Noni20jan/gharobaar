@@ -294,10 +294,9 @@
      $("#input_sku").keyup(function(){
 let z=$(this).val();
 let m="<?php echo $product->sku;?>";
-console.log(m);
  var x=<?php echo json_encode($sku);?>;
 
-  if(x.some(e => e.sku == z) && z!=m){
+  if(x.some(e => e.sku_id== z) && z!=m){
 
     document.getElementById("input_sku_check").style.display="block";
     document.getElementById("disable_sku").disabled=true;

@@ -34,7 +34,7 @@
 
                 <?php if ($this->general_settings->physical_products_system == 1 && $this->general_settings->digital_products_system == 0) : ?>
                     <input type="hidden" name="product_type" value="physical">
-    
+
                     <div class="form-group">
                         <label class="control-label"><?= trans('product_type'); ?></label>
                         <div class="row">
@@ -101,7 +101,7 @@
                 <div class="form-group">
                     <label class="control-label"><?php echo trans("sku"); ?>&nbsp;(<?php echo trans("product_code"); ?>)<span class="Validation_error"> *</span></label>
                     <div class="position-relative">
-                        <input type="text" autocomplete="off" name="sku" id="input_sku" class="form-control auth-form-input"   placeholder="<?php echo trans("sku_desc"); ?>" required value="<?php echo $this->input->get('sku');?>">
+                        <input type="text" autocomplete="off" name="sku" id="input_sku" class="form-control auth-form-input" placeholder="<?php echo trans("sku_desc"); ?>" required value="">
                         <button type="button" class="btn btn-default btn-generate-sku" onclick="get_automated_SKU($('#categories'),$(this))">
                             <div id="sp-options-add" class="spinner spinner-btn-add-variation">
                                 <div class="bounce1"></div>
@@ -227,23 +227,25 @@
             </div>
         </div>
     </div>
-</div>       
+</div>
 <script>
-     $("#input_sku").keyup(function(){
-let z=$(this).val();
- var x=<?php echo json_encode($sku);?>;
-
-  if(x.some(e => e.sku == z || e.sku_code==z)){
-    document.getElementById("input_sku_check").style.display="block";
-    document.getElementById("sub").disabled=true;
-       }
-       else{
-        document.getElementById("input_sku_check").style.display="none";
-        document.getElementById("sub").disabled=false;
+    $("#input_sku").keyup(function() {
+        let z = $(this).val();
+        var x = <?php echo json_encode($sku); ?>;
 
 
-       }
+
+        if (x.some(e => e.sku_id == z)) {
+            document.getElementById("input_sku_check").style.display = "block";
+            document.getElementById("sub").disabled = true;
+        } else {
+            document.getElementById("input_sku_check").style.display = "none";
+            document.getElementById("sub").disabled = false;
+
+
+        }
     });
+
     function get_automated_SKU(element, button) {
         var valid = true;
         $("select[name='" + element[0].name + "'").each(function() {
