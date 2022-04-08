@@ -496,11 +496,18 @@ $user = get_user($this->auth_user->id);
 
                     <?php if ($user->supplier_type == "Goods") { ?>
                         <li class="header_color header"><?php echo trans("products"); ?></li>
-                        <li class="nav-product-inventory">
-                            <a href="<?= generate_dash_url("product_inventory"); ?>">
+                        <li class="treeview<?php is_admin_nav_active(['product_with_variation', 'product_without_variation',]); ?>">
+                            <a href="#">
                                 <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/product-upload-icon.png" alt="" style="width: 20px; height: 20px;" />
-                                <span>Manage Product Inventory</span>
+                                <span>Product Inventory</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+
                             </a>
+                            <ul class="treeview-menu">
+                                <!-- `<li class="nav-products"><a href="<?= generate_dash_url("product_inventory"); ?>"><?= trans("product_with_variation"); ?></a></li> -->
+                                `<li class="nav-products"><a href="<?= generate_dash_url("with_variaton"); ?>"><?= trans("product_with_variation"); ?></a></li>
+                                <li class="nav-pending-products"><a href="<?= generate_dash_url("without_variation"); ?>"><?= trans("product_without_variation"); ?></a></li>`
+                            </ul>
                         </li>
                         <li class="nav-add-product">
                             <a href="<?= generate_dash_url("add_product"); ?>">

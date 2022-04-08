@@ -303,6 +303,9 @@ foreach ($languages as $language) {
         $route[$key . getr('dashboard', $rts) . '/' . getr('update_seller_info_services', $rts)]['GET'] = 'profile_controller/update_seller_info_services';
         $route[$key . getr('dashboard', $rts) . '/' . getr('add_product', $rts)]['GET'] = 'dashboard_controller/add_product';
         $route[$key . getr('dashboard', $rts) . '/' . getr('product_inventory', $rts)]['GET'] = 'dashboard_controller/product_inventory';
+        $route[$key . getr('dashboard', $rts) . '/' . getr('with_variaton', $rts)]['GET'] = 'dashboard_controller/with_variaton_products';
+        $route[$key . getr('dashboard', $rts) . '/' . getr('without_variation', $rts)]['GET'] = 'dashboard_controller/without_variaton_products';
+
         $route[$key . getr('dashboard', $rts) . '/' . getr('update_business_information', $rts)]['GET'] = 'dashboard_controller/update_story';
         $route[$key . getr('dashboard', $rts) . '/' . getr('profile', $rts)]['GET'] = 'dashboard_controller/update_profile';
         $route[$key . getr('dashboard', $rts) . '/' . getr('buyer_panel', $rts)]['GET'] = 'dashboard_controller/buyer_panel';

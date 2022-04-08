@@ -626,7 +626,7 @@ class Dashboard_controller extends Home_Core_Controller
             redirect($this->agent->referrer());
         }
     }
-       public function schedule_multiple_order_shipment()
+    public function schedule_multiple_order_shipment()
     {
         $pickup_location_matched = 0;
         $delivery_partner_matched = 0;
@@ -695,57 +695,56 @@ class Dashboard_controller extends Home_Core_Controller
                         array_push($products_array, $product);
                         array_push($order_items, $order_product);
                     } else {
-                            $variation = $this->variation_model->get_product_variations(get_order_product($id)->product_id);
-                            foreach ($variation as $variations) :
-                            endforeach;
-                            $option = $this->variation_model->get_variation_options($variations->id);
-                            $data=unserialize(get_order_product($id)->variation_option_ids);
-                            foreach($data as $a){
-                               
-                        $product = $this->product_model->get_variation_options_by_id(get_order_product($id)->product_id,$a);
+                        $variation = $this->variation_model->get_product_variations(get_order_product($id)->product_id);
+                        foreach ($variation as $variations) :
+                        endforeach;
+                        $option = $this->variation_model->get_variation_options($variations->id);
+                        $data = unserialize(get_order_product($id)->variation_option_ids);
+                        foreach ($data as $a) {
 
-                        array_push($products_array, $product);
-}
+                            $product = $this->product_model->get_variation_options_by_id(get_order_product($id)->product_id, $a);
+
+                            array_push($products_array, $product);
+                        }
                         array_push($order_items, $order_product);
 
-                
+
                         $order_product = get_order_product($id);
                         $total_length += intval($product->packed_product_length);
                         $total_width += intval($product->packed_product_width);
                         $total_height += intval($product->packed_product_height);
                         $total_weight += intval($order_product->product_weight);
-
                     }
                 }
             }
-        
 
 
-        $vars = array(
-            "products" => $products_array,
-            "total_length" => $total_length,
-            "total_width" => $total_width,
-            "total_height" => $total_height,
-            "total_weight" => $total_weight,
-            "pickup_location_matched" => $pickup_location_matched,
-            "order_items" => $order_items,
-            "delivery_partner_matched" => $delivery_partner_matched,
-            "sale_total_price" => $sale_total_price,
-            "item_ids" => $items_ids
 
-        );
-        $html_content = $this->load->view('dashboard/schedule_shipment_view', $vars, true);
-        $data = array(
-            'result' => 1,
-            'html_content' => $html_content,
-            'vars' => $vars
-        );
-        echo json_encode($data);
+            $vars = array(
+                "products" => $products_array,
+                "total_length" => $total_length,
+                "total_width" => $total_width,
+                "total_height" => $total_height,
+                "total_weight" => $total_weight,
+                "pickup_location_matched" => $pickup_location_matched,
+                "order_items" => $order_items,
+                "delivery_partner_matched" => $delivery_partner_matched,
+                "sale_total_price" => $sale_total_price,
+                "item_ids" => $items_ids
+
+            );
+            $html_content = $this->load->view('dashboard/schedule_shipment_view', $vars, true);
+            $data = array(
+                'result' => 1,
+                'html_content' => $html_content,
+                'vars' => $vars
+            );
+            echo json_encode($data);
+        }
     }
-}
 
 
-    
+
     public function edit_addresses()
     {
         $id = $this->input->post('address_id', true);
@@ -1952,7 +1951,48 @@ class Dashboard_controller extends Home_Core_Controller
         $this->load->view('dashboard/product/inventory', $data);
         $this->load->view('dashboard/includes/_footer');
     }
+    public function with_variaton_products()
+    {
+        if (!$this->is_sale_active) {
 
+
+            redirect(dashboard_url());
+        }
+        $data['title'] = "Inventory";
+        $data['description'] = "Inventory" . " - " . $this->app_name;
+        $data['keywords'] = "Inventory" . "," . $this->app_name;
+        $data['active_page'] = "product-inventory";
+        $data['page_url'] = generate_dash_url("product_inventory");
+        $data['num_rows'] = $this->product_model->get_user_products_count($this->auth_user->id, 'active');
+        $pagination = $this->paginate($data['page_url'], $data['num_rows'], $this->per_page);
+        $data['products'] = $this->product_model->get_paginated_user_products($this->auth_user->id, 'active', $pagination['per_page'], $pagination['offset']);
+
+
+        $this->load->view('dashboard/includes/_header', $data);
+        $this->load->view('dashboard/product/with_variaton_products', $data);
+        $this->load->view('dashboard/includes/_footer');
+    }
+    public function without_variaton_products()
+    {
+        if (!$this->is_sale_active) {
+
+
+            redirect(dashboard_url());
+        }
+        $data['title'] = "Inventory";
+        $data['description'] = "Inventory" . " - " . $this->app_name;
+        $data['keywords'] = "Inventory" . "," . $this->app_name;
+        $data['active_page'] = "product-inventory";
+        $data['page_url'] = generate_dash_url("product_inventory");
+        $data['num_rows'] = $this->product_model->get_user_products_count($this->auth_user->id, 'active');
+        $pagination = $this->paginate($data['page_url'], $data['num_rows'], $this->per_page);
+        $data['products'] = $this->product_model->get_paginated_user_products($this->auth_user->id, 'active', $pagination['per_page'], $pagination['offset']);
+
+
+        $this->load->view('dashboard/includes/_header', $data);
+        $this->load->view('dashboard/product/without_variaton_products', $data);
+        $this->load->view('dashboard/includes/_footer');
+    }
 
     /*
     *------------------------------------------------------------------------------------------
@@ -2346,25 +2386,34 @@ class Dashboard_controller extends Home_Core_Controller
     {
         $id = $this->input->post('id', true);
         $stock = $this->input->post('stock', true);
-        $product = $this->product_model->get_product_by_id($id);
+        // $product = $this->product_model->get_product_by_id($id);
 
-        if (!empty($product)) {
-            if ($this->product_model->update_stock($id, $stock)) {
+        if (!empty($id)) {
+            $i = 0;
+            foreach ($id as $ids) {
+                if ($this->product_model->update_stock($ids, $stock[$i])) {
+                }
+                $i++;
             }
         }
-        redirect($this->agent->referrer());
+        // redirect($this->agent->referrer());
     }
     public function update_stock_post_variation()
     {
         $id = $this->input->post('id', true);
         $stock = $this->input->post('stock', true);
-        $product = $this->variation_model->get_variation_option($id);
 
-        if (!empty($product)) {
-            if ($this->product_model->update_variation_stock($id, $stock)) {
+        // $product = $this->variation_model->get_product_variation_option($id);
+        // var_dump($product);
+        // die();var
+        if (!empty($id)) {
+            $i = 0;
+            foreach ($id as $ids) {
+                if ($this->product_model->update_variation_stock($ids, $stock[$i])) {
+                }
+                $i++;
             }
         }
-        redirect($this->agent->referrer());
     }
 
     /**
