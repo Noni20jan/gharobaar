@@ -503,7 +503,7 @@
         data[csfr_token_name] = $.cookie(csfr_cookie_name);
         $.ajax({
             type: "POST",
-            url: base_url + "dashboard_controller/update_stock_post_variation",
+            url: base_url + "dashboard_controller/update_stock_variation_product",
             data: data,
             success: function(response) {
                 location.reload();

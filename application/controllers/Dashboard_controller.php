@@ -2391,6 +2391,36 @@ class Dashboard_controller extends Home_Core_Controller
         $stock = $this->input->post('stock', true);
         // $product = $this->product_model->get_product_by_id($id);
 
+        $product = $this->product_model->get_product_by_id($id);
+
+        if (!empty($product)) {
+            if ($this->product_model->update_stock($id, $stock)) {
+            }
+        }
+        redirect($this->agent->referrer());
+        // redirect($this->agent->referrer());
+    }
+    public function update_stock_post_variation()
+    {
+        $id = $this->input->post('id', true);
+        $stock = $this->input->post('stock', true);
+
+
+        $product = $this->variation_model->get_variation_option($id);
+
+        if (!empty($product)) {
+            if ($this->product_model->update_variation_stock($id, $stock)) {
+            }
+        }
+        redirect($this->agent->referrer());
+    }
+
+    public function update_stock_without_variation_products()
+    {
+        $id = $this->input->post('id', true);
+        $stock = $this->input->post('stock', true);
+        // $product = $this->product_model->get_product_by_id($id);
+
         if (!empty($id)) {
             $i = 0;
             foreach ($id as $ids) {
@@ -2401,7 +2431,7 @@ class Dashboard_controller extends Home_Core_Controller
         }
         // redirect($this->agent->referrer());
     }
-    public function update_stock_post_variation()
+    public function update_stock_variation_product()
     {
         $id = $this->input->post('id', true);
         $stock = $this->input->post('stock', true);
@@ -2418,6 +2448,8 @@ class Dashboard_controller extends Home_Core_Controller
             }
         }
     }
+
+
 
     /**
      * Add Shipping Tracking Number Post
