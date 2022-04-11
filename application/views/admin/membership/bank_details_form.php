@@ -512,7 +512,7 @@
                             <?php if (empty($user->cheque_image_url)) : ?>
                                 <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/upload.jpg'; ?> " style="border-radius:10%" />
                             <?php else : ?>
-                                <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/cheque_image.jpeg'; ?>" style="border-radius:10%" />
+                                <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . $user->cheque_image_url; ?>" style="border-radius:10%" />
                             <?php endif; ?>
                             <input type="file" name="cheque-image" id="cheque-logo" style="display: none;" value="<?php echo (!empty($user->cheque_image_url)) ? $user->cheque_image_url : ''; ?>" />
                             <p id="file-upload-filename" style="margin-bottom:0;"></p>
