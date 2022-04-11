@@ -420,7 +420,7 @@
         data[csfr_token_name] = $.cookie(csfr_cookie_name);
         $.ajax({
             type: "POST",
-            url: base_url + "dashboard_controller/update_stock_post",
+            url: base_url + "dashboard_controller/update_stock_without_variation_products",
             data: data,
             success: function(response) {
                 location.reload();
