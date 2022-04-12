@@ -230,7 +230,7 @@
 </div>
 <script>
     $("#input_sku").keyup(function() {
-        let z = $(this).val().replace();
+    let z = $(this).val().replace(/^\s+|\s+$/gm,'');
         var x = <?php echo json_encode($sku); ?>;
 
 
@@ -248,7 +248,6 @@
 
     function get_automated_SKU(element, button) {
         var valid = true;
-        document.getElementById("input_sku_check").style.display = "none";
 
         $("select[name='" + element[0].name + "'").each(function() {
             if ($(this).val() == "")
@@ -260,6 +259,7 @@
             return false;
         } else {
             $("#input_sku_p").hide();
+            document.getElementById("input_sku_check").style.display = "none";
             generateUniqueProductCode(element, button);
         }
 

@@ -563,7 +563,6 @@ function generateUniqueProductCode(element, button) {
 function generateUniqueProductVariationCode(button, product_id, sku) {
     $("#form-variation-option-add-text").hide();
     $(".spinner-variation-options").show();
-    document.getElementById("input_sku_check").style.display = "none";
 
     button.disabled = true;
     var data = {
@@ -580,6 +579,8 @@ function generateUniqueProductVariationCode(button, product_id, sku) {
         success: function (res) {
             var obj = JSON.parse(res);
             //console.log(obj);
+            document.getElementById("input_sku_check").style.display = "none";
+
             $("#input_sku_option").val(obj.sku_option);
             $("#form-variation-option-add-text").show();
             $(".spinner-variation-options").hide();
