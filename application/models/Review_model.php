@@ -18,6 +18,17 @@ class Review_model extends CI_Model
         if (!empty($ip)) {
             $data['ip_address'] = $ip;
         }
+        if (!empty($rating) && !empty($product_id)   && empty($review_text)) {
+            $data = array(
+                'product_id' => $product_id,
+                'user_id' => $this->auth_user->id,
+                'rating' => $rating,
+                'ip_address' => 0,
+                'created_at' => date("Y-m-d H:i:s"),
+                'is_approved' => 1
+            );
+        }
+
         if (!empty($data['product_id']) && !empty($data['user_id']) && !empty($data['rating'])) {
             $this->db->insert('reviews', $data);
             $last_id = $this->db->insert_id();
