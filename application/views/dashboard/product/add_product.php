@@ -111,7 +111,7 @@
                             <div id="form-variation-add-text"><?= trans("generate"); ?></div>
                         </button>
                         <p class="Validation_error hideMe" id="input_sku_p">Please select category first to generate SKU</p>
-                        <div class="Validation_error hideMe" id="input_sku_check">SKU already exists</div>
+                        <div class="Validation_error hideMe" id="input_sku_check" style="display:none;">SKU already exists</div>
 
                     </div>
                 </div>
@@ -230,7 +230,7 @@
 </div>
 <script>
     $("#input_sku").keyup(function() {
-        let z = $(this).val();
+        let z = $(this).val().replace();
         var x = <?php echo json_encode($sku); ?>;
 
 
@@ -248,6 +248,8 @@
 
     function get_automated_SKU(element, button) {
         var valid = true;
+        document.getElementById("input_sku_check").style.display = "none";
+
         $("select[name='" + element[0].name + "'").each(function() {
             if ($(this).val() == "")
                 valid = false;

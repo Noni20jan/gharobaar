@@ -560,10 +560,11 @@ function generateUniqueProductCode(element, button) {
 
 }
 
-
 function generateUniqueProductVariationCode(button, product_id, sku) {
     $("#form-variation-option-add-text").hide();
     $(".spinner-variation-options").show();
+    document.getElementById("input_sku_check").style.display = "none";
+
     button.disabled = true;
     var data = {
         "product_id": product_id,
