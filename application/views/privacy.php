@@ -2,8 +2,6 @@
 <style>
     .shipping_policy {
         text-align: center;
-        margin-bottom: 8%;
-        margin-top: 5%;
     }
 
     #wrapper {
@@ -21,7 +19,6 @@
     }
 
     .shipping-content {
-        font-size: 20px;
         font-weight: normal;
         text-align: justify;
         width: 91%;
@@ -56,7 +53,7 @@
 <div id="wrapper" class="index-wrapper">
     <div class="container">
         <div class="shipping_policy">
-            <h1 style="font-weight:700;">Privacy Policy</h1>
+            <h4 style="font-weight:700;">Privacy Policy</h1>
         </div>
         <div class="shipping-content">
             <p>

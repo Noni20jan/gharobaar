@@ -15,7 +15,6 @@
         line-height: 25px;
         font-weight: 500;
         margin-top: 6%;
-        font-size: 20px;
     }
 
     .please-note {
@@ -38,25 +37,25 @@
 
 
     @media (max-width: 768px) {
-        .return-exchange-content {
+        /* .return-exchange-content {
             font-size: 18px;
-        }
+        } */
     }
 </style>
 
 <div id="wrapper" class="index-wrapper">
     <div class="container">
         <div class="shipping_policy">
-            <h2 class="return-heading">Returns, Exchange and Cancellation Policy</h2>
+            <h4 class="return-heading">Returns, Exchange and Cancellation Policy</h2>
         </div>
         <div class="return-exchange-content">
-            <h3>Return and Exchange</h3>
+            <h4>Return and Exchange</h4>
             <p>We understand that the decision to return a product is taken due to compelling reasons.</p>
             <p>However, we would like to bring to your notice that these product(s) are from suppliers who
                 are small scale homepreneurs, making them at home with limited means. Thus, we do not
                 offer a no question-based Return or exchange on any product (unless the same is provided
                 by the seller in his/her individual capacity).</p>
-            <p>In order to place a return/exchange request, please write to us at <a class="for-contact" href="mailto: <?php echo trans("contact_gharobaar");?>"><?php echo trans("contact_gharobaar");?></a> within 48 hours of receiving the product. You email must contain your order number, detailed description of the nature of concern, and relevant pictures (in case the product is damaged or different from what was ordered).</p>
+            <p>In order to place a return/exchange request, please write to us at <a class="for-contact" href="mailto: <?php echo trans("contact_gharobaar"); ?>"><?php echo trans("contact_gharobaar"); ?></a> within 48 hours of receiving the product. You email must contain your order number, detailed description of the nature of concern, and relevant pictures (in case the product is damaged or different from what was ordered).</p>
             <p>Once your return request is received and reviewed, we will contact you for the next steps.</p>
             <h5>Please Note:</h5>
             <ul class="please-note">

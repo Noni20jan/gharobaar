@@ -88,7 +88,7 @@
 
             <div class="modal-body" style="padding:0px;">
 
-                <img src="<?php echo base_url(); ?>assets/img/Feedback.png" style="width: 100%;">
+                <img src="<?php echo base_url(); ?>assets/img/NewFeedback.png" style="width: 100%;">
             </div>
 
         </div>
