@@ -49,7 +49,16 @@ class Review_model extends CI_Model
             'ip_address' => 0,
             'created_at' => date("Y-m-d H:i:s")
         );
-
+        if (!empty($rating) && !empty($product_id)   && empty($review_text)) {
+            $data = array(
+                'product_id' => $product_id,
+                'user_id' => $this->auth_user->id,
+                'rating' => $rating,
+                'ip_address' => 0,
+                'created_at' => date("Y-m-d H:i:s"),
+                'is_approved' => 1
+            );
+        }
 
         $ip = $this->input->ip_address();
         if (!empty($ip)) {
