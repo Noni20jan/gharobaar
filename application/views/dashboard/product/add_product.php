@@ -259,8 +259,10 @@
             return false;
         } else {
             $("#input_sku_p").hide();
-            document.getElementById("input_sku_check").style.display = "none";
             generateUniqueProductCode(element, button);
+            document.getElementById("sub").disabled = false;
+            document.getElementById("input_sku_check").style.display = "none";
+
         }
 
     }

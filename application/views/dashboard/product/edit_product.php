@@ -323,6 +323,7 @@ let m="<?php echo $product->sku;?>";
         } else {
             $("#input_sku_p").hide();
             document.getElementById("input_sku_check").style.display = "none";
+            document.getElementById("disable_sku").disabled=false;
 
             button.disabled = true;
             generateUniqueProductCode(element, button);
