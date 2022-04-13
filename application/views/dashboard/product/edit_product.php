@@ -292,7 +292,7 @@
 </div>
 <script>
      $("#input_sku").keyup(function(){
-let z=$(this).val();
+let z = $(this).val().replace(/^\s+|\s+$/gm,'');
 let m="<?php echo $product->sku;?>";
  var x=<?php echo json_encode($sku);?>;
 
@@ -311,7 +311,6 @@ let m="<?php echo $product->sku;?>";
     });
     function get_automated_SKU(element, button) {
         var valid = true;
-        document.getElementById("input_sku_check").style.display = "none";
 
         $("select[name='" + element[0].name + "'").each(function() {
             if ($(this).val() == "")
@@ -323,6 +322,9 @@ let m="<?php echo $product->sku;?>";
             return false;
         } else {
             $("#input_sku_p").hide();
+            document.getElementById("input_sku_check").style.display = "none";
+            document.getElementById("disable_sku").disabled=false;
+
             button.disabled = true;
             generateUniqueProductCode(element, button);
 
