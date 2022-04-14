@@ -110,7 +110,7 @@
                         <table class="even table table-striped table-products" id="myTable">
                             <thead>
                                 <tr class="rock">
-                                    <th width="20" class="table-no-sort" style="text-align: center !important;"><input type="checkbox" class="product-checkbox" id="checkAll" name="product-checkbox"></th>
+                                    <th width="20" class="table-no-sort" style="text-align: center !important;"><input type="checkbox" class="product-checkbox" id="checkAll"></th>
                                     <th width="20"><?php echo trans('id'); ?></th>
                                     <th><?php echo trans('product'); ?></th>
                                     <th><?php echo trans('sku'); ?></th>
@@ -183,8 +183,7 @@
 
                                                             <div>
                                                                 <div style="float:left;">
-                                                                    <input type="number" name="stock" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>">
-                                                                    </br><span class="notify-stock" id="notify-stock" style="font-size: 12px;color: red; display:none">*please update stock*</span>
+                                                                    <input type="number" name="stock" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="<?php echo $options->stock; ?>">
 
                                                                 </div>
 
@@ -257,8 +256,7 @@
                                                             <div>
                                                                 <div style="float:left;">
 
-                                                                    <input type="number" name="stock" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>">
-                                                                    </br><span class="notify-stock" id="notify-stock" style="font-size: 12px;color: red; display:none">*please update stock*</span>
+                                                                    <input type="number" name="stock" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="<?php echo $options->stock; ?>">
 
                                                                 </div>
 
@@ -348,7 +346,7 @@
 </script>
 <script>
     $(document).ready(function() {
-        $("#saveall").prop('disabled', true);
+        // $("#saveall").prop('disabled', true);
 
         // Setup - add a text input to each footer cell
         $('#myTable thead tr')
@@ -493,7 +491,6 @@
 </script> -->
 <script>
     function savedata() {
-
         var stock = [];
         $("input[name='stock']").each(function() {
             stock.push(this.value);
@@ -517,25 +514,30 @@
             data: data,
             success: function(response) {
                 console.log(response);
-                location.reload();
+                // var i = JSON.parse(response);
 
+                // if (i == true) {
+                //     //console.log(i);
+                //     location.reload();
 
+                // } else {
+                //     $('#notify-stock').show();
+                // }
             }
         });
-
     }
-    $("input[name=product-checkbox]").change(function() {
-        var stock = $('#stock').val();
-        if ($('input[name="product-checkbox"]').is(':checked')) {
+    // $("input[name=product-checkbox]").click(function() {
+    //     var stock = $('#stock').val();
+    //     if (($("#product").is(":checked")) && stock > 0) {
 
-            $("#saveall").prop('disabled', false);
+    //         $("#saveall").prop('disabled', false);
+
+    //         // document.getElementById('stock').required = true;
+    //     } else {
+    //         $("#saveall").prop('disabled', true);
+    //         // document.getElementById('stock').required = false;
 
 
-        } else {
-            $("#saveall").prop('disabled', true);
-            // document.getElementById('stock').required = false;
-
-
-        }
-    });
+    //     }
+    // });
 </script>
