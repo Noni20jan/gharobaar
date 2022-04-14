@@ -171,7 +171,7 @@
 
                                                     <div>
                                                         <div style="float:left;">
-                                                            <input type="number" name="stock" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>" required>
+                                                            <input type="number" name="stock" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="<?php echo $item->stock; ?>" placeholder="<?php echo trans("stock"); ?>" required>
                                                         </div>
                                                         <div style="float:left;">
                                                             <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('save'); ?></button>
