@@ -122,6 +122,7 @@
         })
     });
 
+    
     $('input[type=radio][name=source_type]').change(function() {
         if (this.value == 'products') {
             $('#save_button').hide();
