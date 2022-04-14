@@ -3,7 +3,7 @@
 </link>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <style>
     #boxbg {
         background-position: center;
@@ -100,7 +100,7 @@
                 <h3 class="box-title"><?= html_escape($title); ?></h3>
             </div>
         </div>
-        <button type="submit" class="btn btn-md btn-success" onclick="savedata()"><i class="fa fa-edit option-icon"></i><?php echo trans('save'); ?></button>
+        <button type="submit" class="btn btn-md btn-success" id="saveall" onclick="savedata()"><i class="fa fa-edit option-icon"></i><?php echo trans('save'); ?></button>
 
         <?php $i = 0; ?>
         <div class="box-body">
@@ -110,7 +110,7 @@
                         <table class="even table table-striped table-products" id="myTable">
                             <thead>
                                 <tr class="rock">
-                                    <th width="20" class="table-no-sort" style="text-align: center !important;"><input type="checkbox" class="product-checkbox" id="checkAll"></th>
+                                    <th width="20" class="table-no-sort" style="text-align: center !important;"><input type="checkbox" class="product-checkbox" id="checkAll" name="product-checkbox"></th>
                                     <th width="20"><?php echo trans('id'); ?></th>
                                     <th><?php echo trans('product'); ?></th>
                                     <th><?php echo trans('sku'); ?></th>
@@ -141,7 +141,7 @@
                                                     <?php $i++; ?>
                                                     <tr>
 
-                                                        <td style="text-align: center !important;"><input type="checkbox" name="product-checkbox" class="product-checkbox" value="<?php echo $options->id; ?>"></td>
+                                                        <td style="text-align: center !important;"><input type="checkbox" name="product-checkbox" id="product" class="product-checkbox" value="<?php echo $options->id; ?>"></td>
                                                         <td><?php echo html_escape($item->id); ?></td>
 
                                                         <td class="td-product">
@@ -183,8 +183,11 @@
 
                                                             <div>
                                                                 <div style="float:left;">
-                                                                    <input type="number" name="stock" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>" required>
+                                                                    <input type="number" name="stock" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>">
+                                                                    </br><span class="notify-stock" id="notify-stock" style="font-size: 12px;color: red; display:none">*please update stock*</span>
+
                                                                 </div>
+
                                                                 <div style="float:left;">
                                                                     <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('save'); ?></button>
                                                                 </div>
@@ -212,7 +215,7 @@
                                                     $option_name = get_variation_option_name($options->option_names, $this->selected_lang->id);
                                         ?> <?php $i++; ?>
                                                     <tr>
-                                                        <td style="text-align: center !important;"><input type="checkbox" name="product-checkbox" class="product-checkbox" value="<?php echo $options->id; ?>"></td>
+                                                        <td style="text-align: center !important;"><input type="checkbox" name="product-checkbox" class="product-checkbox" id="product" value="<?php echo $options->id; ?>"></td>
                                                         <td><?php echo html_escape($item->id); ?></td>
                                                         <td class="td-product">
                                                             <?php if ($item->is_promoted == 1) : ?>
@@ -253,8 +256,12 @@
 
                                                             <div>
                                                                 <div style="float:left;">
-                                                                    <input type="number" name="stock" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>" required>
+
+                                                                    <input type="number" name="stock" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>">
+                                                                    </br><span class="notify-stock" id="notify-stock" style="font-size: 12px;color: red; display:none">*please update stock*</span>
+
                                                                 </div>
+
                                                                 <div style="float:left;">
                                                                     <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('save'); ?></button>
                                                                 </div>
@@ -341,6 +348,8 @@
 </script>
 <script>
     $(document).ready(function() {
+        $("#saveall").prop('disabled', true);
+
         // Setup - add a text input to each footer cell
         $('#myTable thead tr')
             .clone(true)
@@ -492,6 +501,7 @@
 
         var Ids = [];
         $("input[name='product-checkbox']:checked").each(function() {
+
             Ids.push(this.value);
         });
         var data = {
@@ -506,11 +516,26 @@
             url: base_url + "dashboard_controller/update_stock_variation_product",
             data: data,
             success: function(response) {
+                console.log(response);
                 location.reload();
+
+
             }
         });
 
-
-
     }
+    $("input[name=product-checkbox]").change(function() {
+        var stock = $('#stock').val();
+        if ($('input[name="product-checkbox"]').is(':checked')) {
+
+            $("#saveall").prop('disabled', false);
+
+
+        } else {
+            $("#saveall").prop('disabled', true);
+            // document.getElementById('stock').required = false;
+
+
+        }
+    });
 </script>
