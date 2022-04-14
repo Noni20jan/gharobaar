@@ -514,6 +514,7 @@
             data: data,
             success: function(response) {
                 console.log(response);
+                location.reload();
                 // var i = JSON.parse(response);
 
                 // if (i == true) {
