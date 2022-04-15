@@ -790,6 +790,8 @@ class Product_model extends Core_Model
         $pet_age = $this->input->get("pet_age", true);
         $cash_on_delivery = $this->input->get("cash_on_delivery", true);
         $food_preference = $this->input->get("food_preference", true);
+        $shipping_time = $this->input->get("shipping_time", true);
+
         $blouse_details =  str_replace('_', ' ', $this->input->get("blouse_details", true));
         $available_for_return_or_exchange = $this->input->get("available_for_return_or_exchange", true);
         $availability = $this->input->get("availability", true);
@@ -799,7 +801,6 @@ class Product_model extends Core_Model
         $rating = remove_special_characters($this->input->get("rating", true));
         $seller_type = remove_special_characters($this->input->get("seller_type", true));
         $search = remove_special_characters(trim($this->input->get('search', true)));
-
         //--------  category filter  --------
         $filterCategory = input_get('category');
         $filter_category_ids = array();
@@ -850,7 +851,7 @@ class Product_model extends Core_Model
 
 
             foreach ($query_string_array as $key => $array_values) {
-                $keyExistArr = array("product_type", "meal_type", "cash_on_delivery", "blouse_details", "pet_age", "available", "gender", "discount", "food_type", "jewellery_type", "rating", "p_min", "p_max", "sort", "search", "seller_type", "origin_of_product", "food_preference", "available_for_return_or_exchange", "availability", "suitable_for", "is_personalised", "category");
+                $keyExistArr = array("product_type", "meal_type", "cash_on_delivery", "blouse_details", "pet_age", "available", "gender", "discount", "food_type", "jewellery_type", "rating", "p_min", "p_max", "sort", "search", "seller_type", "origin_of_product", "food_preference", "available_for_return_or_exchange", "availability", "suitable_for", "is_personalised", "category","shipping_time");
                 if (!in_array($key, $keyExistArr)) {
                     $item = new stdClass();
                     $item->key = $key;
@@ -948,6 +949,15 @@ class Product_model extends Core_Model
             $this->db->group_start();
             $this->db->where_in("products.available_for_return_or_exchange", $array_available_for_return_or_exchange);
             $this->db->group_end();
+        }
+        $array_shipping_time = @explode(',', $shipping_time);
+        if (!empty($array_shipping_time) && !empty($array_shipping_time[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.shipping_time", $array_shipping_time);
+            $this->db->where('products.add_meet',"Made to stock");
+            $this->db->where('products.stock >',0);
+            $this->db->group_end();
+
         }
         //Kids Corner
         $array_kids_corner = @explode(',', $suitable_for);
@@ -1266,11 +1276,13 @@ class Product_model extends Core_Model
         $food_preference = $this->input->get("food_preference", true);
         $blouse_details =  str_replace('_', ' ', $this->input->get("blouse_details", true));
         $available_for_return_or_exchange = $this->input->get("available_for_return_or_exchange", true);
+
         $availability = $this->input->get("availability", true);
         $personalised = $this->input->get("is_personalised", true);
         $suitable_for = $this->input->get("suitable_for", true);
         $add_meet = str_replace('_', ' ', $this->input->get("product_type", true));
         $rating = remove_special_characters($this->input->get("rating", true));
+        $shipping_time=$this->input->get("shipping_time",true);
         $seller_type = remove_special_characters($this->input->get("seller_type", true));
         $search = remove_special_characters(trim($this->input->get('search', true)));
 
@@ -1310,7 +1322,7 @@ class Product_model extends Core_Model
 
 
             foreach ($query_string_array as $key => $array_values) {
-                if ($key != "product_type" && $key != "meal_type" && $key != "cash_on_delivery" && $key != "blouse_details" && $key != "pet_age" && $key != "available"  && $key != "gender" && $key != "discount"  && $key != "food_type" && $key != "jewellery_type"  && $key != "rating"  && $key != "p_min" && $key != "p_max" && $key != "sort" && $key != "search" && $key != "seller_type" && $key != "origin_of_product" && $key != "food_preference" && $key != "available_for_return_or_exchange" && $key != "availability" && $key != "suitable_for" && $key != "is_personalised") {
+                if ($key != "product_type" && $key != "meal_type" && $key != "cash_on_delivery" && $key != "blouse_details" && $key != "pet_age" && $key != "available"  && $key != "gender" && $key != "discount"  && $key != "food_type" && $key != "jewellery_type"  && $key != "rating"  && $key != "p_min" && $key != "p_max" && $key != "sort" && $key != "search" && $key != "seller_type" && $key != "origin_of_product" && $key != "food_preference" && $key != "available_for_return_or_exchange" && $key != "availability" && $key != "suitable_for" && $key != "is_personalised" && $key != "shipping_time") {
                     $item = new stdClass();
                     $item->key = $key;
                     $updated_array_values = array();
@@ -1403,6 +1415,15 @@ class Product_model extends Core_Model
             $this->db->where_in("products.available_for_return_or_exchange", $array_available_for_return_or_exchange);
             $this->db->group_end();
         }
+        $array_shipping_time = @explode(',', $shipping_time);
+        if (!empty($array_shipping_time) && !empty($array_shipping_time[0])) {
+            $this->db->group_start();
+            $this->db->where_in("products.shipping_time", $array_shipping_time);
+            $this->db->where('products.add_meet',"Made to stock");
+            $this->db->where('products.stock >',0);
+            $this->db->group_end();            
+        }
+        
         //Kids Corner
         $array_kids_corner = @explode(',', $suitable_for);
         if (!empty($array_kids_corner) && !empty($array_kids_corner[0])) {
@@ -1525,6 +1546,7 @@ class Product_model extends Core_Model
                 $this->db->group_start();
                 $this->db->where_in("products.user_id", $speciality_array);
                 $this->db->group_end();
+                var_dump($this->db->last_query());
             } else {
                 $this->db->where_in("products.user_id", 0);
             }

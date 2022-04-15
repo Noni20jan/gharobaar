@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- custom style style -->
+<!-- <script src="/scripts/js/jquery.min.js"></script> -->
 <?php $sellers = get_products();
 $unique_state_array = array();
 foreach ($sellers as $seller) {
@@ -27,7 +28,32 @@ foreach ($sellers as $seller) {
             font-weight: 600;
             top: 78%;
         }
+
+        .cart-top .item-options {
+            opacity: 1 !important;
+        }
     }
+
+    @media(max-width: 700px) {
+        .product-item-options {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 170px !important;
+            right: 0 !important;
+            text-align: center;
+        }
+
+        .cart-top {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 170px !important;
+            right: 44px !important;
+            text-align: center;
+        }
+    }
+
 
     .non_veg {
         position: relative;
@@ -298,7 +324,7 @@ foreach ($sellers as $seller) {
         border-radius: 20px !important;
         line-height: 1.5 !important;
         color: #fff !important;
-        background-color: #d21f3c;
+        background-color: #007C05;
     }
 
     .active_cod {
@@ -306,7 +332,7 @@ foreach ($sellers as $seller) {
         border-radius: 20px !important;
         line-height: 1.5 !important;
         color: #fff !important;
-        background-color: #d21f3c;
+        background-color: #007C05;
     }
 
     @media only screen and (max-width: 900px) {
@@ -315,7 +341,7 @@ foreach ($sellers as $seller) {
             border-radius: 20px !important;
             line-height: 1.5 !important;
             color: #fff !important;
-            background-color: #d21f3c;
+            background-color: #007C05;
         }
     }
 
@@ -346,7 +372,7 @@ foreach ($sellers as $seller) {
             border-radius: 20px !important;
             line-height: 1.5 !important;
             color: #fff !important;
-            background-color: #d21f3c;
+            background-color: #007C05;
         }
     }
 
@@ -377,7 +403,7 @@ foreach ($sellers as $seller) {
         line-height: 1.5 !important;
         color: black !important;
         background-color: transparent;
-        border: 1px solid #d21f3c;
+        border: 1px solid #007C05;
 
     }
 
@@ -388,7 +414,7 @@ foreach ($sellers as $seller) {
             line-height: 1.5 !important;
             color: black !important;
             background-color: transparent;
-            border: 1px solid #d21f3c;
+            border: 1px solid #007C05;
         }
     }
 
@@ -412,6 +438,29 @@ foreach ($sellers as $seller) {
             float: left;
             position: relative;
             top: 9px;
+        }
+    }
+
+
+    @media (max-width: 700px) {
+        .product-item-options {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 170px;
+            right: 0;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .cart-top {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 170px !important;
+            right: 44px !important;
+            text-align: center;
         }
     }
 </style>
@@ -1217,6 +1266,114 @@ foreach ($sellers as $seller) {
                                     </div>
                                 </div>
                             <?php endif; ?>
+                            <?php if (empty($parent_categories)) : ?>
+                                <div>
+                                    <input type="checkbox" class="check-box-size" id="dispatch_date" value="dispatch_date" name="filter_checkbox[]" onclick="show_dispatch_date(this)">
+                                    <label for="dispatch_date" style="margin: 10px;"><b>Dispatch Days</b></label>
+                                </div>
+                                <div class="filter-item" id="dispatch_filter" style="display: none">
+
+                                    <div class="filter-list-container">
+                                        <ul class="filter-list">
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'shipping_time', '1_business_day'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'shipping_time', '1_business_day') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Dispatch Within 1 Day</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'shipping_time', '1_2_business_days'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'shipping_time', '1_2_business_days') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Dispatch Within 1-2 Days</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'shipping_time', '2_3_business_days'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'shipping_time', '2_3_business_days') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Dispatch Within 2-3 Days</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'shipping_time', '4_7_business_days'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'shipping_time', '4_7_business_days') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Dispatch Within 4-7 Days</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'shipping_time', '8_15_business_days'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'shipping_time', '8_15_business_days') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Dispatch Within 8-15 Days</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <?php elseif (!empty($parent_categories) && $parent_categories[0]->id != 2) : ?>
+                                    <div>
+                                    <input type="checkbox" class="check-box-size" id="dispatch_date" value="dispatch_date" name="filter_checkbox[]" onclick="show_dispatch_date(this)">
+                                    <label for="dispatch_date" style="margin: 10px;"><b>Dispatch Date</b></label>
+                                </div>
+                                <div class="filter-item" id="dispatch_filter" style="display: none">
+
+                                    <div class="filter-list-container">
+                                        <ul class="filter-list">
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'shipping_time', '1_business_day'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'shipping_time', '1_business_day') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Dispatch Within 1 Day</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'shipping_time', '1_2_business_days'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'shipping_time', '1_2_business_days') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Dispatch Within 1-2 Days</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'shipping_time', '2_3_business_days'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'shipping_time', '2_3_business_days') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Dispatch Within 2-3 Days</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'shipping_time', '4_7_business_days'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'shipping_time', '4_7_business_days') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Dispatch Within 4-7 Days</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'shipping_time', '8_15_business_days'); ?>">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'shipping_time', '8_15_business_days') ? 'checked' : ''; ?>>
+                                                        <label class="custom-control-label">Dispatch Within 8-15 Days</label>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <?php endif;?>
+
                             <?php if (!empty($user_categories)) : ?>
                                 <?php if ($cat_id != 2) : ?>
                                     <div>
@@ -2042,6 +2199,16 @@ foreach ($sellers as $seller) {
                                             <span><?= html_escape($filter->value); ?></span>
                                         </div>
                                     </div>
+                                    <?php elseif ($filter->key == "shipping_time") : ?>
+                                    <div class="filter-reset-tag">
+                                        <div class="left">
+                                            <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
+                                        </div>
+                                        <div class="right">
+                                            <span class="reset-tag-title">Dispatch Days</span>
+                                            <span><?= html_escape($filter->value); ?></span>
+                                        </div>
+                                    </div>
                                 <?php elseif ($filter->key == "is_personalised") : ?>
                                     <div class="filter-reset-tag">
                                         <div class="left">
@@ -2474,7 +2641,7 @@ foreach ($sellers as $seller) {
         $('#gender').prop('checked', true);
         $('#kids_corner').prop('checked', true);
         $('#is_personalised').prop('checked', true);
-
+        $('#dispatch_date').prop('checked', true);
         $('#days_available').prop('checked', true);
         $('#food').prop('checked', true);
         $('#dynamic1').prop('checked', true);
@@ -2567,6 +2734,11 @@ foreach ($sellers as $seller) {
         } else if ($('#gender').is(":not(:checked)")) {
             document.getElementById("gender_filter").style.display = "none";
         }
+        if ($('#dispatch_date').is(":checked")) {
+            document.getElementById("dispatch_filter").style.display = "block";
+        } else if ($('#dispatch_date').is(":not(:checked)")) {
+            document.getElementById("dispatch_filter").style.display = "none";
+        }
         if ($('#food').is(":checked")) {
             document.getElementById("food_pref").style.display = "block";
             document.getElementById("food_type").style.display = "block";
@@ -2652,7 +2824,10 @@ foreach ($sellers as $seller) {
         var dvPassport = document.getElementById("jewellery_type_filter");
         dvPassport.style.display = check.checked ? "block" : "none";
     }
-
+    function show_dispatch_date(check){
+        var dvPassport = document.getElementById("dispatch_filter");
+        dvPassport.style.display = check.checked ? "block" : "none";
+    }
     function show_gender(check) {
         var dvPassport = document.getElementById("gender_filter");
         dvPassport.style.display = check.checked ? "block" : "none";
