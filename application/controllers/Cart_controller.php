@@ -1175,12 +1175,17 @@ class Cart_controller extends Home_Core_Controller
                     //decrease product quantity after sale
                     $this->order_model->decrease_product_stock_after_sale($order->id);
                     //send email
-                    if ($this->general_settings->send_email_buyer_purchase == 1) {
-                        $email_data = array(
-                            'email_type' => 'new_order',
-                            'order_id' => $order_id
-                        );
-                        $this->session->set_userdata('mds_send_email_data', json_encode($email_data));
+                    $cart_total = $this->cart_model->get_sess_cart_total();
+                    $total_price1 = $cart_total->total_price / 100;
+                    if ((float)$data_transaction['payment_amount'] == $total_price1 && $data_transaction['match_status'] == "yes") {
+
+                        if ($this->general_settings->send_email_buyer_purchase == 1) {
+                            $email_data = array(
+                                'email_type' => 'new_order',
+                                'order_id' => $order_id
+                            );
+                            $this->session->set_userdata('mds_send_email_data', json_encode($email_data));
+                        }
                     }
                     //set response and redirect URLs
                     $response->result = 1;

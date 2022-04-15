@@ -132,7 +132,7 @@ class Order_model extends CI_Model
                 } else {
                     $this->update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id, 0);
                 }
-                if ((float)$data_transaction['payment_amount'] != $total_price1 && $data_transaction['match_status'] == "no") {
+                if ((float)$data_transaction['payment_amount'] != $total_price1 || $data_transaction['match_status'] == "no") {
                     $this->load->model("email_model");
                     $this->email_model->wrong_order($data_transaction, $data, $order_id);
                     // die();
