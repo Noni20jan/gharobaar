@@ -242,6 +242,7 @@ foreach ($languages as $language) {
         $route[$key . getr('more_products', $rts) . '/' . '(:any)']['GET'] = 'home_controller/more_products/$1';
         /*cart*/
         $route[$key . getr('cart', $rts)]['GET'] = 'cart_controller/cart';
+        $route[$key . getr('payment_loader', $rts)]['GET'] = 'cart_controller/payment_loader';
         $route[$key . getr('cart', $rts) . '/' . getr('shipping', $rts)]['GET'] = 'cart_controller/shipping';
         $route[$key . getr('cart', $rts) . '/' . getr('payment_method', $rts)]['GET'] = 'cart_controller/payment_method';
         $route[$key . getr('cart', $rts) . '/' . getr('payment', $rts)]['GET'] = 'cart_controller/payment';

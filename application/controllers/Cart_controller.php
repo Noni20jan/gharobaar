@@ -152,7 +152,6 @@ class Cart_controller extends Home_Core_Controller
     public function add_to_cart_ajax()
     {
         $action = $this->input->post('submit', true);
-        // var_dump($action);die();
         if ($action == "add_to_cart") {
             $product_id = $this->input->post('product_id', true);
             $quantity = $this->input->post('product_quantity', true);
@@ -392,7 +391,6 @@ class Cart_controller extends Home_Core_Controller
             "discount" => $_SESSION["mds_shopping_cart_total"]->discount,
             "total" => ($_SESSION["mds_shopping_cart_total"]->total_price) / 100
         );
-        // var_dump($_SESSION);die();
         echo json_encode($response);
     }
     /**
@@ -404,8 +402,22 @@ class Cart_controller extends Home_Core_Controller
         // var_dump($product);
         exit;
     }
-
-
+    public function payment_loader()
+    {
+        get_method();
+        $data['orderd'] = $this->input->get("orderId", true);
+        $data['ordertoken'] = $this->input->get("token", true);
+        $data['orderd'] = trim($data['orderd'], "{");
+        $data['orderd'] = trim($data['orderd'], "}");
+        // var_dump($data);
+        // $this->cart_model->validate_cart();
+        $data['title'] = trans("shopping_cart");
+        $data['description'] = trans("shopping_cart") . " - " . $this->app_name;
+        $data['keywords'] = trans("shopping_cart") . "," . $this->app_name;
+        $this->load->view('partials/_header', $data);
+        $this->load->view('cart/payment_loader', $data);
+        $this->load->view('partials/_footer');
+    }
     /**
      * Shipping
      */
@@ -1515,16 +1527,11 @@ class Cart_controller extends Home_Core_Controller
                 $object->total_tds_amount_product = $object_product->tds_amount_product;
 
                 $object->seller_earned = ($object->total_price / 100) - $object->total_commission_amount;
-                // var_dump($object->total_price_without_gst);
-                // die();
+
                 array_push($object->products, $object_product);
                 array_push($product_seller_details, $object);
             endif;
-            // var_dump($cart_item);
         }
-        // var_dump($product_seller_details);
-        // echo "<br>";
-        //die();
 
 
         $seller_settlement = array();
@@ -1662,33 +1669,20 @@ class Cart_controller extends Home_Core_Controller
             }
             array_push($seller_settlement, $object);
         }
-        // var_dump($seller_settlement);
-        // die();
         if ($this->general_settings->enable_easysplit == 1) {
             $object = new stdClass();
             $object->vendorId = "Gharobaar";
             $object->cashfree_order_id = $this->input->post("orderid", true);
             $object->net_seller_payable =  $total_amount - $total_amount_paid;
-            // var_dump($object);die();
             array_push($seller_settlement, $object);
         }
-
-
-        // var_dump(json_encode($seller_settlement));die();
-
         $new_seller_settlement = array();
-
         foreach ($seller_settlement as $ss) {
             $object = new stdClass();
             $object->vendorId = $ss->vendorId;
             $object->amount =  $ss->net_seller_payable / 100;
             array_push($new_seller_settlement, $object);
         }
-        // var_dump(json_encode($new_seller_settlement));
-
-
-
-
         $settelment_json = json_encode($new_seller_settlement);
         $settelment_json_base64 = base64_encode($settelment_json);
         $this->session->set_userdata('settelment_json_base64', $settelment_json_base64);
@@ -1768,7 +1762,6 @@ class Cart_controller extends Home_Core_Controller
         // cashfree online payment data save for payouts 
         else if ($this->general_settings->enable_easysplit == 0) {
             $save_payment = $seller_settlement;
-            // var_dump($save_payment);die();
             foreach ($save_payment as $sp) {
                 $this->order_model->save_cashfree_seller_payable_payouts($sp);
             }
@@ -1776,8 +1769,710 @@ class Cart_controller extends Home_Core_Controller
 
         $this->auth_model->update_user_login_session_data($data['orderAmount']);
         $this->session->set_userdata('cashfree_form', $data);
+    }
+    public function check_status()
+    {
+        $order_id = $this->input->post("order_id", true);
+        $curl = curl_init();
+        $cashfree_id = $this->general_settings->cashfree_app_id;
+        $secret_key = $this->general_settings->cashfree_secret_key;
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $this->general_settings->cashfree_curl_url . "orders/" . $order_id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "Accept: application/json",
+                "Content-Type: application/json",
+                "x-api-version: 2021-05-21",
+                "x-client-id:" . $cashfree_id,
+                "x-client-secret:" .  $secret_key,
+            ],
+        ]);
 
-        echo json_encode($data);
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(array("error" => 1));
+            echo "cURL Error #:" . $err;
+            // ();
+        } else {
+            $result = json_decode($response, true);
+            header('Content-Type: application/json; charset=utf-8');
+            $output = array("order_status" => $result["order_status"]);
+            echo json_encode($output);
+            // ();
+        }
+    }
+    public function cashfree_api()
+    {
+        $this->cart_model->set_sess_cart_payment_method();
+
+        if (!empty($_SESSION["modesy_sess_unique_id"])) :
+            $returnUrl = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"];
+        else :
+            $returnUrl = base_url() . "cashfree-return?session_id=''";
+        endif;
+
+
+
+        //easy-split start
+
+        $cart_items = $this->cart_model->get_sess_cart_items();
+        $cart_total = $this->cart_model->get_sess_cart_total();
+        $shipping_detail = json_decode($this->order_model->get_shipping_cost($cart_total));
+
+        $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
+
+        $total_amount = $cart_total->total_price;
+
+        $seller_array = array();
+        $amount_array = array();
+        $product_seller_details = array();
+
+
+        // 
+        $payment_mode = $this->input->post("payment_mode", true);
+        if (auth_check()) :
+            $data = array(
+                "appId" => $this->general_settings->cashfree_app_id,
+                "orderId" => $this->input->post("orderid", true),
+                "orderAmount" => $this->input->post("orderamount", true),
+                "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
+                "customerPhone" => $this->auth_user->phone_number,
+                "customerEmail" => $this->auth_user->email,
+                "returnUrl" => $returnUrl
+            );
+            $addId = $this->general_settings->cashfree_app_id;
+            $orderId = $this->input->post("orderid", true);
+            $orderAmount = $this->input->post("orderamount", true);
+            $customerName = $this->auth_user->first_name . " " . $this->auth_user->last_name;
+            $customerPhone = $this->auth_user->phone_number;
+            $customerEmail = $this->auth_user->email;
+        else :
+            $data = array(
+                "appId" => $this->general_settings->cashfree_app_id,
+                "orderId" => $this->input->post("orderid", true),
+                "orderAmount" => $this->input->post("orderamount", true),
+                "customerName" => $shipping_address->shipping_first_name . " " . $shipping_address->shipping_last_name,
+                "customerPhone" => $shipping_address->shipping_phone_number,
+                "customerEmail" => $shipping_address->shipping_email,
+                "returnUrl" => $returnUrl
+            );
+            $addId = $this->general_settings->cashfree_app_id;
+            $orderId = $this->input->post("orderid", true);
+            $orderAmount = $this->input->post("orderamount", true);
+            $customerName = $shipping_address->shipping_first_name . " " . $shipping_address->shipping_last_name;
+            $customerPhone = $shipping_address->shipping_phone_number;
+            $customerEmail = $shipping_address->shipping_email;
+        endif;
+        // 
+        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+        $orderAmount = $data['cart_total']->total_price / 100;
+        // var_dump($orderAmount);
+        $id = $this->auth_user->id;
+        if (!empty($_SESSION["modesy_sess_unique_id"])) :
+            $returnUrl = base_url() . "cashfree-return?orderId={order_id}&token={order_token}";
+        else :
+            $returnUrl = base_url() . "cashfree-return?session_id=''";
+        endif;
+        $data11 = array(
+            "order_amount" => $orderAmount,
+            "order_currency" => "INR",
+            "customer_details" => array(
+                "customer_id" => $id,
+                "customer_email" => $customerEmail,
+                "customer_phone" => $customerPhone
+            ),
+            "order_meta" => array(
+                "return_url" => $returnUrl,
+                "notify_url" => "",
+            ),
+
+        );
+        $cashfree_id = $this->general_settings->cashfree_app_id;
+        $secret_key = $this->general_settings->cashfree_secret_key;
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $this->general_settings->cashfree_curl_url . "orders",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data11),
+            CURLOPT_HTTPHEADER => [
+                "Accept: application/json",
+                "Content-Type: application/json",
+                "x-api-version: 2022-01-01",
+                "x-client-id:" . $cashfree_id,
+                "x-client-secret:" .  $secret_key,
+            ],
+        ]);
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+        if ($err) {
+            // header('Content-Type: application/json; charset=utf-8');
+            // echo json_encode(array("error" => 1));
+            // echo "cURL Error #:" . $err;
+            // ();
+        } else {
+            $result = json_decode($response, true);
+            header('Content-Type: application/json; charset=utf-8');
+            $cashfree_order_id = $result["order_id"];
+            // var_dump($cashfree_order_id);
+            // die();
+            // echo json_encode($result);
+            // ();
+        }
+        foreach ($cart_items as $cart_item) {
+            $object = new stdClass();
+            $product_details = get_active_product($cart_item->product_id);
+
+            $object->seller_id = $product_details->user_id;
+
+            $pan_number = get_pan_number_by_sellerid($object->seller_id);
+            $pan_forth_char = str_split($pan_number);
+
+            $object->seller_commission_rate = calculate_commission_rate_seller($object->seller_id);
+            $new = true;
+            foreach ($product_seller_details as $psd) {
+                if ($psd->seller_id == $object->seller_id) {
+                    $object_product = new stdClass();
+                    $psd->total_tds_amount_product_huf_ind = 0;
+                    $object_product->product_id = $cart_item->product_id;
+                    $object_product->gst_rate = $product_details->gst_rate;
+                    $object_product->product_total_price = $cart_item->total_price;
+
+                    $object_product->shipping_cost_type = $product_details->shipping_cost_type;
+
+                    // $commission_rate = $this->general_settings->commission_rate;
+
+
+                    $gst_cal = 1 + ($object_product->gst_rate / 100);
+                    $product_price_excluding_gst = round($object_product->product_total_price / $gst_cal, 0);
+                    $amount = $product_price_excluding_gst / 100;
+                    $commission = ($object->seller_commission_rate) / 100;
+                    $commission_amount_without_round = $amount * $commission;
+                    $commission_amount = round($commission_amount_without_round, 2);
+
+                    $object_product->product_price_excluding_gst = $product_price_excluding_gst;
+
+                    $gst_on_commission_amount = $commission_amount * 0.18;
+                    $commission_amount_with_gst = $commission_amount + $gst_on_commission_amount;
+                    // 
+
+                    $object_product->product_commission_amount = $commission_amount;
+                    $object_product->product_gst_on_commission_amount = round($gst_on_commission_amount, 2);
+                    $object_product->product_commission_amount_with_gst = round($commission_amount_with_gst, 2);
+
+                    // $object_product->commission_amount = $commission_amount;
+                    $psd->total_commission_amount += $object_product->product_commission_amount_with_gst;
+                    $psd->total_price += $object_product->product_total_price;
+                    $psd->total_price_without_gst += $object_product->product_price_excluding_gst;
+                    $psd->seller_earned = ($psd->total_price / 100) - $psd->total_commission_amount;
+
+
+
+                    if ($object_product->gst_rate == 0 || $object_product->gst_rate == null) {
+                        $object_product->tcs_amount_product = 0;
+
+                        if (!empty($pan_number)) {
+                            if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                                $object_product->tds_amount_product = 0;
+                                $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_total_price);
+                            } else {
+                                $object_product->tds_amount_product = 0.01 * ($object_product->product_total_price);
+                            }
+                        } else {
+                            $object_product->tds_amount_product = 0.05 * ($object_product->product_total_price);
+                        }
+                    } elseif ($object_product->gst_rate != 0) {
+                        $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
+                        if (!empty($pan_number)) {
+                            if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                                $object_product->tds_amount_product = 0;
+                                $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_price_excluding_gst);
+                            } else {
+                                $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
+                            }
+                        } else {
+                            $object_product->tds_amount_product = 0.05 * ($object_product->product_price_excluding_gst);
+                        }
+                    }
+
+                    $psd->total_tcs_amount_product += $object_product->tcs_amount_product;
+                    $psd->total_tds_amount_product += $object_product->tds_amount_product;
+                    $psd->total_tds_amount_product_huf_ind += $object_product->tds_amount_product_huf_ind;
+                    array_push($psd->products, $object_product);
+                    $new = false;
+                }
+            }
+            if ($new) :
+                $object->products = array();
+                $object_product = new stdClass();
+                $object_product->product_id = $cart_item->product_id;
+                $object_product->gst_rate = $product_details->gst_rate;
+                $object_product->product_total_price = $cart_item->total_price;
+                $object_product->tds_amount_product_huf_ind = 0;
+
+                $object_product->shipping_cost_type = $product_details->shipping_cost_type;
+
+                if ($object_product->shipping_cost_type == 'shipping_buyer_pays') {
+                } elseif ($object_product->shipping_cost_type == 'free_shipping') {
+                }
+
+                $gst_cal = 1 + ($object_product->gst_rate / 100);
+                $product_price_excluding_gst = round($object_product->product_total_price / $gst_cal, 0);
+                $amount = $product_price_excluding_gst / 100;
+                $commission = $object->seller_commission_rate / 100;
+                $commission_amount_without_round = $amount * $commission;
+                $commission_amount = round($commission_amount_without_round, 2);
+
+
+                $object_product->product_price_excluding_gst = $product_price_excluding_gst;
+
+                $gst_on_commission_amount = $commission_amount * 0.18;
+                $commission_amount_with_gst = $commission_amount + $gst_on_commission_amount;
+
+                $object_product->product_commission_amount = $commission_amount;
+                $object_product->product_gst_on_commission_amount = round($gst_on_commission_amount, 2);
+                $object_product->product_commission_amount_with_gst = round($commission_amount_with_gst, 2);
+
+                // $object_product->commission_amount = $commission_amount;
+                $object->total_commission_amount = $object_product->product_commission_amount_with_gst;
+                $object->total_price = $object_product->product_total_price;
+                $object->total_price_without_gst = $object_product->product_price_excluding_gst;
+
+                if ($object_product->gst_rate == 0 || $object_product->gst_rate == null) {
+                    $object_product->tcs_amount_product = 0;
+
+                    if (!empty($pan_number)) {
+                        if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                            $object_product->tds_amount_product = 0;
+                            $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_total_price);
+                        } else {
+                            $object_product->tds_amount_product = 0.01 * ($object_product->product_total_price);
+                        }
+                    } else {
+                        $object_product->tds_amount_product = 0.05 * ($object_product->product_total_price);
+                    }
+                } elseif ($object_product->gst_rate != 0) {
+                    $object_product->tcs_amount_product = $object_product->product_price_excluding_gst * 0.01;
+                    if (!empty($pan_number)) {
+                        if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                            $object_product->tds_amount_product = 0;
+                            $object_product->tds_amount_product_huf_ind = 0.01 * ($object_product->product_price_excluding_gst);
+                        } else {
+                            $object_product->tds_amount_product = 0.01 * ($object_product->product_price_excluding_gst);
+                        }
+                    } else {
+                        $object_product->tds_amount_product = 0.05 * ($object_product->product_price_excluding_gst);
+                    }
+                }
+
+                $object->total_tcs_amount_product = $object_product->tcs_amount_product;
+                $object->total_tds_amount_product = $object_product->tds_amount_product;
+
+                $object->seller_earned = ($object->total_price / 100) - $object->total_commission_amount;
+                array_push($object->products, $object_product);
+                array_push($product_seller_details, $object);
+            endif;
+        }
+
+
+        $seller_settlement = array();
+        $total_amount_paid = 0;
+        foreach ($product_seller_details as $psd) {
+            $object = new stdClass();
+            $object->vendorId = $psd->seller_id;
+
+
+            $gst_number = get_gst_number_by_sellerid($object->vendorId);
+
+            $object->total_tcs_amount_product = $psd->total_tcs_amount_product;
+            $object->total_tds_amount_product = $psd->total_tds_amount_product;
+
+
+            $object->total_amount_with_gst = $psd->total_price;
+            $object->total_amount_without_gst = $psd->total_price_without_gst;
+            $object->commission_rate = $psd->seller_commission_rate;
+            $object->commission_amount = round($object->total_amount_without_gst * ($object->commission_rate / 100));
+            $object->commission_amount_gst = round($object->commission_amount * 0.18);
+            $object->commission_amount_with_gst = round($object->commission_amount_gst + $object->commission_amount);
+
+
+            $object->amount = $psd->seller_earned;
+
+
+
+            if ($payment_mode == 'nb') {
+                $bank_code = $this->input->post("bank_select", true);
+                $com = $this->order_model->get_commission_rate_nb_wallet($payment_mode, $bank_code);
+                $gateway_charge = $com->gateway_charge;
+            } elseif ($payment_mode == 'wallet') {
+                $wallet_code = $this->input->post("wallet_select", true);
+                $com = $this->order_model->get_commission_rate_nb_wallet($payment_mode, $wallet_code);
+                $gateway_charge = 1.85;
+            } elseif ($payment_mode == 'cc') {
+                // $com = $this->order_model->get_commission_rate_dc_cc_wallet($payment_mode);
+                $gateway_charge = 1.85;
+            } elseif ($payment_mode == 'upi') {
+                $gateway_charge = 0.15;
+            } elseif ($payment_mode == 'dc') {
+                $payment_amount = $psd->total_price;
+                if ($payment_amount < 200000) {
+                    $gateway_charge = 0.45;
+                } elseif ($payment_amount >= 200000) {
+                    $gateway_charge = 0.95;
+                }
+            }
+            $object->gateway_charge = $gateway_charge;
+            foreach ($shipping_detail as $ship_detail) {
+                if ($psd->seller_id == $ship_detail->SupplierId) {
+                    $object->shipping = ($ship_detail->Supplier_Shipping_cost);
+                    $object->shipping_tax_charge = ($ship_detail->shipping_tax_charges);
+                    $object->shipping_charge_with_gst = ($object->shipping) + ($object->shipping_tax_charge);
+
+
+                    $object->supplier_shipping_cost_with_gst = ($ship_detail->Supplier_Shipping_cost_with_gst);
+
+                    $object->shipping_charge_to_gharobaar = $object->supplier_shipping_cost_with_gst;
+                }
+            }
+
+            $object->shipping = 0;
+            // condition for shipping slabs
+            $slab = true;
+            if ($slab == true) {
+                if ($object->total_amount_with_gst >= 50000) {
+                    $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
+                } else if ($object->total_amount_with_gst >= 200000) {
+                    $object->shipping_charge_to_gharobaar = 0;
+                }
+            }
+            // if ($slab == true) {
+            //     if ($object->total_amount_with_gst > 0 && $object->total_amount_with_gst < 100000) {
+            //         $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
+            //     } else if ($object->total_amount_with_gst >= 100000) {
+            //         $object->shipping_charge_to_gharobaar = 0;
+            //     }
+            // }
+            // condition end
+            $object->shipping_charge_to_gharobaar = 0;
+            $object->shipping = 0;
+            if (!empty($pan_number)) {
+                if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
+                    // $object->tds_amount = 0;
+                    $object->shipping = 0;
+
+                    $object->tds_amount_shipping = 0;
+                    $object->tds_amount_shipping_huf_ind = 0.01 * ($object->shipping);
+                } else {
+                    $object->shipping = 0;
+
+                    // $object->tds_amount = 0.01 * ($psd->total_price_without_gst);
+                    $object->tds_amount_shipping = 0.01 * ($object->shipping);
+                }
+            } else {
+                // $object->tds_amount = 0.05 * ($psd->total_price_without_gst);
+                $object->tds_amount_shipping = 0.05 * ($object->shipping);
+            }
+
+
+            if ($object->total_tcs_amount_product == 0) {
+                $object->total_tcs_shipping = 0;
+            } elseif ($object->total_tcs_amount_product != 0) {
+                $object->total_tcs_shipping = ($object->shipping) * 0.01;
+            }
+
+            $object->tcs_amount = $object->total_tcs_amount_product + $object->total_tcs_shipping;
+
+
+            $object->tds_amount = $object->total_tds_amount_product + $object->tds_amount_shipping;
+
+            // if (!empty($gst_number)) {
+            //     $object->tcs_amount = round(($object->total_amount_without_gst + $object->shipping) * 0.01);
+            // } else {
+            //     $object->tcs_amount = 0;
+            // }
+            $object->shipping_charge_with_gst = 0;
+            $object->gateway_amount = round(($object->shipping_charge_with_gst + $object->total_amount_with_gst) * ($object->gateway_charge / 100));
+            $object->gateway_amount_gst = round($object->gateway_amount * 0.18);
+            $object->gateway_amount_with_gst = round($object->gateway_amount + $object->gateway_amount_gst);
+            $object->total_deduction = round($object->gateway_amount_with_gst + $object->shipping_charge_to_gharobaar + $object->tcs_amount + $object->commission_amount_with_gst + $object->tds_amount);
+            $object->net_seller_payable = round($object->total_amount_with_gst + $object->shipping_charge_with_gst - $object->total_deduction);
+
+
+            $total_amount_paid += $object->net_seller_payable;
+
+            $object->payment_mode = $payment_mode;
+            $object->cashfree_order_id = $cashfree_order_id;
+            if ($payment_mode == 'nb') {
+                $object->bank_code = $this->input->post("bank_select", true);;
+            } elseif ($payment_mode == 'wallet') {
+                $object->wallet_code = $this->input->post("wallet_select", true);
+            }
+            array_push($seller_settlement, $object);
+        }
+        // var_dump($seller_settlement);
+        // ();
+        if ($this->general_settings->enable_easysplit == 1) {
+            $object = new stdClass();
+            $object->vendorId = "Gharobaar";
+            $object->cashfree_order_id = $cashfree_order_id;
+            $object->net_seller_payable =  $total_amount - $total_amount_paid;
+            // var_dump($object);();
+            array_push($seller_settlement, $object);
+        }
+
+
+        // var_dump(json_encode($seller_settlement));();
+
+        $new_seller_settlement = array();
+
+        foreach ($seller_settlement as $ss) {
+            $object = new stdClass();
+            $object->vendorId = $ss->vendorId;
+            $object->amount =  $ss->net_seller_payable / 100;
+            array_push($new_seller_settlement, $object);
+        }
+        // var_dump(json_encode($new_seller_settlement));
+
+
+
+
+        $settelment_json = json_encode($new_seller_settlement);
+        $settelment_json_base64 = base64_encode($settelment_json);
+        $this->session->set_userdata('settelment_json_base64', $settelment_json_base64);
+        $easysplit = $_SESSION['settelment_json_base64'];
+
+        if ($this->general_settings->enable_easysplit == 1) {
+            if (auth_check()) :
+                $data = array(
+                    "appId" => $this->general_settings->cashfree_app_id,
+                    "orderId" => $this->input->post("orderid", true),
+                    "orderAmount" => $this->input->post("orderamount", true),
+                    // "paymentSplits" => $this->input->post("paymentsplits", true),
+                    "paymentSplits" => $easysplit,
+                    "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
+                    "customerPhone" => $this->auth_user->phone_number,
+                    "customerEmail" => $this->auth_user->email,
+                    "returnUrl" => $returnUrl
+                );
+                $addId = $this->general_settings->cashfree_app_id;
+                $orderId = $this->input->post("orderid", true);
+                $orderAmount = $this->input->post("orderamount", true);
+                $customerName = $this->auth_user->first_name . " " . $this->auth_user->last_name;
+                $customerPhone = $this->auth_user->phone_number;
+                $customerEmail = $this->auth_user->email;
+            else :
+                $data = array(
+                    "appId" => $this->general_settings->cashfree_app_id,
+                    "orderId" => $this->input->post("orderid", true),
+                    "orderAmount" => $this->input->post("orderamount", true),
+                    // "paymentSplits" => $this->input->post("paymentsplits", true),
+                    "paymentSplits" => $easysplit,
+                    "customerName" => $shipping_address->shipping_first_name . " " . $shipping_address->shipping_last_name,
+                    "customerPhone" => $shipping_address->shipping_phone_number,
+                    "customerEmail" => $shipping_address->shipping_email,
+                    "returnUrl" => $returnUrl
+                );
+                $addId = $this->general_settings->cashfree_app_id;
+                $orderId = $this->input->post("orderid", true);
+                $orderAmount = $this->input->post("orderamount", true);
+                $customerName = $shipping_address->shipping_first_name . " " . $shipping_address->shipping_last_name;
+                $customerPhone = $shipping_address->shipping_phone_number;
+                $customerEmail = $shipping_address->shipping_email;
+            endif;
+        } elseif ($this->general_settings->enable_easysplit == 0) {
+        }
+        if ($this->general_settings->enable_easysplit == 1) {
+            $save_payment = $seller_settlement;
+            foreach ($save_payment as $sp) {
+                $this->order_model->save_cashfree_seller_payable($sp);
+            }
+        }
+        // cashfree online payment data save for payouts 
+        else if ($this->general_settings->enable_easysplit == 0) {
+            $save_payment = $seller_settlement;
+            // var_dump($save_payment);();
+            foreach ($save_payment as $sp) {
+                $this->order_model->save_cashfree_seller_payable_payouts($sp);
+            }
+        }
+
+        if ($err) {
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(array("error" => 1));
+            echo "cURL Error #:" . $err;
+            // ();
+        } else {
+            $result = json_decode($response, true);
+            header('Content-Type: application/json; charset=utf-8');
+            // $output = array("order_token" => $result["order_token"]);
+            // var_dump($result);
+            // die();
+            echo json_encode($result);
+            // ();
+        }
+    }
+    public function card_api()
+    {
+
+        $paymentModes = $this->input->post("payment_mode", true);
+        $order_token = $this->input->post("order_token", true);
+        $cashfree_id = $this->general_settings->cashfree_app_id;
+        $secret_key = $this->general_settings->cashfree_secret_key;
+        $curl = curl_init();
+
+        // if (!empty($_SESSION["modesy_sess_unique_id"])) :
+        //     $returnUrl = base_url() . "cashfree-return?orderId={order_id}&token={order_token}";
+        // else :
+        //     $returnUrl = base_url() . "cashfree-return?session_id=''";
+        // endif;
+        if ($paymentModes == 'cc' || $paymentModes == 'dc') {
+            $holder_name = $this->input->post("holder_name", true);
+            $card_number = $this->input->post("card_number", true);
+            $expiry_month = $this->input->post("expiry_month", true);
+            $expiry_year = $this->input->post("expiry_year", true);
+            $cvv = $this->input->post("cvv", true);
+
+            $cred_array = array(
+                "order_token" => $order_token,
+                // "order_meta" => array(
+                //     "return_url" => $returnUrl,
+                //     "notify_url" => "",
+                // ),
+                "payment_method" => array(
+                    "card" => array(
+                        "channel" => "link",
+                        "card_number" => $card_number,
+                        "card_holder_name" => $holder_name,
+                        "card_expiry_mm" => $expiry_month,
+                        "card_expiry_yy" => $expiry_year,
+                        "card_cvv" => $cvv,
+                    )
+                ),
+            );
+        } else if ($paymentModes == 'nb') {
+            $bank_code = (int)$this->input->post("bank_select", true);
+            // var_dump($bank_code);
+            $cred_array = array(
+                "order_token" => $order_token,
+                // "order_meta" => array(
+                //     "return_url" => $returnUrl,
+                //     "notify_url" => "",
+                // ),
+                "payment_method" => array(
+                    "netbanking" => array(
+                        "channel" => "link",
+                        "netbanking_bank_code" => $bank_code,
+                    )
+                ),
+            );
+        } else if ($paymentModes == 'upi') {
+            $minutes_to_add = 5;
+            $upi_id = $this->input->post("upi_id", true);
+            $date_time = new DateTime();
+            $approve_by = $date_time->add(new DateInterval('PT' . $minutes_to_add . 'M'));
+            // $approve_by = date('Y-m-d H:i:s', strtotime(' +10 minutes', strtotime($date_time)));
+            // $approve_by = (object)$date_time;
+            // $date_time = new DateTime();
+            $approve_by = $date_time->format("Y-m-d\TH:i:s");
+            // var_dump($approve_by);
+            // ();
+            // var_dump($bank_code);
+            $cred_array = array(
+                "order_token" => $order_token,
+                // "order_meta" => array(
+                //     "return_url" => $returnUrl,
+                //     "notify_url" => "",
+                // ),
+                "payment_method" => array(
+                    "upi" => array(
+                        "channel" => "collect",
+                        "upi_id" => $upi_id,
+                        // "authorize_only" => false,
+                        // "approve_by" => $approve_by
+                    )
+                ),
+            );
+        } else if ($paymentModes == 'wallet') {
+            $wallet_select = $this->input->post("wallet_select", true);
+            // var_dump($wallet_select);
+            $phone_number = $this->input->post("phone_number", true);
+            // var_dump($bank_code);
+            $cred_array = array(
+                "order_token" => $order_token,
+                // "order_meta" => array(
+                //     "return_url" => $returnUrl,
+                //     "notify_url" => "",
+                // ),
+
+
+                "payment_method" => array(
+                    "app" => array(
+                        "channel" => $wallet_select,
+                        // "provider" => $wallet_select,
+                        "phone" => $phone_number
+                    )
+                ),
+            );
+        }
+
+
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->general_settings->cashfree_curl_url . 'orders/pay',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($cred_array),
+            CURLOPT_HTTPHEADER => [
+                "x-api-version: 2022-01-01",
+                "x-client-id:" . $cashfree_id,
+                "x-client-secret:" .  $secret_key,
+                "Accept: application/json",
+                "Content-Type: application/json",
+
+                // "HOST:" . base_url(),
+            ],
+        ));
+
+        $response = curl_exec($curl);
+        $response = json_decode($response);
+        // var_dump($response);
+        // ();
+        if ($paymentModes == 'cc' || $paymentModes == 'dc' || $paymentModes == 'wallet' || $paymentModes == 'nb') {
+            $data1 = $response->data;
+            // $data1 = json_decode($data1);
+            $paymentLink = $data1->url;
+            // header("Location: $paymentLink");
+            // redirect($paymentLink);
+            echo json_encode($paymentLink);
+        } else   if ($paymentModes == 'upi') {
+            // $data1 = $response->data;
+            // // $data1 = json_decode($data1);
+            // $paymentLink = $data1->url;
+            // // header("Location: $paymentLink");
+            // // redirect($paymentLink);
+            echo json_encode($response);
+        }
     }
     public function cashfree_form()
     {
@@ -1871,12 +2566,14 @@ class Cart_controller extends Home_Core_Controller
 
     public function cashfree_payment_post()
     {
+        // sleep(30);
         $sess_unique_id = trim($this->input->get('session_id', TRUE));
-        $paymentOption = $this->input->get('paymentOption', TRUE);
-        $paymentCode = $this->input->get('paymentCode', TRUE);
-        $paymentModes = $this->input->get('paymentModes', TRUE);
+        $paymentOption = $this->input->post('paymentOption', TRUE);
+        $paymentCode = $this->input->post('paymentCode', TRUE);
+        $paymentModes = $this->input->post('paymentModes', TRUE);
         $user_details = $this->auth_model->get_user_detail_by_unique_sess_id($sess_unique_id);
         // var_dump($_SESSION);
+
         if (!empty($_SESSION["modesy_sess_unique_id"])) {
             // echo "not logout";
             // echo "\n";
@@ -1933,63 +2630,248 @@ class Cart_controller extends Home_Core_Controller
         } else {
             $match = "yes";
         }
+        // if (empty($_SESSION["modesy_sess_unique_id"])) :
+        //     // echo "logout";
+        //     // echo "\n";
+        //     $user_data = array(
+        //         'modesy_sess_unique_id' => $user_details->modesy_sess_unique_id,
+        //         'modesy_sess_user_id' => $user_details->modesy_sess_user_id,
+        //         'modesy_sess_user_email' => $user_details->modesy_sess_user_email,
+        //         'modesy_sess_user_role' => $user_details->modesy_sess_user_role,
+        //         'modesy_sess_logged_in' => true,
+        //         'modesy_sess_app_key' => $user_details->modesy_sess_app_key,
+        //     );
+        // $this->session->set_userdata($user_data);
+        $cashfree_id = $this->general_settings->cashfree_app_id;
+        $secret_key = $this->general_settings->cashfree_secret_key;
+        get_method();
+        $order_id = $this->input->get("orderId", true);
+
+        $order_id = trim($order_id, "{");
+        $order_id = trim($order_id, "}");
+        // var_dump($order_id);
+        // ();
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $this->general_settings->cashfree_curl_url . "orders/" . $order_id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "Accept: application/json",
+                "Content-Type: application/json",
+                "x-api-version: 2021-05-21",
+                "x-client-id:" . $cashfree_id,
+                "x-client-secret:" .  $secret_key,
+            ],
+        ]);
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+        // var_dump($response);
+        // if ($err) {
+        //     header('Content-Type: application/json; charset=utf-8');
+        //     echo json_encode(array("error" => 1));
+        //     echo "cURL Error #:" . $err;
+        //     ();
+        // } else {
+        $result = json_decode($response, true);
+        //     header('Content-Type: application/json; charset=utf-8');
+        //     $output = array("order_token" => $result["order_token"]);
+        // echo json_encode($result);
+        $order_status = $result['order_status'];
+        // var_dump($order_status);
+        // ();
+        // }
+
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $this->general_settings->cashfree_curl_url . "orders/" . $order_id . "/payments",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "Accept: application/json",
+                "Content-Type: application/json",
+                "x-api-version: 2021-05-21",
+                "x-client-id:" . $cashfree_id,
+                "x-client-secret:" .  $secret_key,
+            ],
+        ]);
+        $response1 = curl_exec($curl);
+        $err1 = curl_error($curl);
+        // var_dump($err1);
+        // curl_close($curl);
+        // var_dump($response1);
+        $result1 = json_decode($response1, true);
+        // var_dump($result1);
+        // var_dump($result1[0]['cf_payment_id']);
         $data_transaction = array(
             'payment_method' => "Cashfree",
-            'payment_id' => $this->input->post('referenceId', true),
-            'cashfree_order_id' => $this->input->post('orderId', true),
-            'payment_mode' => $this->input->post('paymentMode', true),
-            'cashfree_signature' => $this->input->post('signature', true),
-            'payment_status' => $this->input->post('txStatus', true),
-            'txMsg' => $this->input->post('txMsg', true),
-            'txStatus' => $this->input->post('txStatus', true),
-            'txTime' => $this->input->post('txTime', true),
-            'currency' => $this->input->post('currency', true),
-            'payment_amount' => $this->input->post('orderAmount', true),
-            'payment_status' => $this->input->post('txStatus', true),
-            'session_id' => $sess_unique_id,
+            'payment_id' => $result1[0]['cf_payment_id'],
+            'cashfree_order_id' => $result1[0]['order_id'],
+            'payment_mode' => $result1[0]['payment_group'],
+            // 'cashfree_signature' => $this->input->post('signature', true),
+            'payment_status' =>   $result1[0]['payment_status'],
+            'txMsg' =>  $result1[0]['payment_message'],
+            'txStatus' =>   $result1[0]['payment_status'],
+            'txTime' => $result['created_at'],
+            'currency' => $result['order_currency'],
+            'payment_amount' => $result['order_amount'],
+            'paymentOption' => $result1[0]['payment_status'],
+            // 'session_id' => $sess_unique_id,
             'paymentOption' => $paymentOption,
             'paymentCode' => $paymentCode,
             'paymentModes' => $paymentModes,
             'match_status' => $match,
-            'order_amount' => $order_amount
-        );
-        // var_dump($data_transaction['payment_amount']);
-        // var_dump($user_data['cart_total']);
-        // die();
-        // if ($user_details->cart_total == $data_transaction['payment_amount']) {
+            'order_amount' => $order_amount,
 
-        if (!$this->cashfree_signature_verfication($data_transaction)) {
-            // echo "payment success";
-            $this->session->set_flashdata('error', 'Invalid signature passed!');
+            // var_dump($data_transaction['payment_amount']);
+            // var_dump($user_data['cart_total']);
+            // ();
+            // if ($user_details->cart_total == $data_transaction['payment_amount']) {
+            'paymentModes' => $result1[0]['payment_status'],
+        );
+        // var_dump($data_transaction);
+        // var_dump($user_data['cart_total']);
+        // ();
+        if ($data_transaction['payment_mode'] == "upi") {
+            if ($data_transaction['payment_status'] == "NOT_ATTEMPTED") {
+                sleep(5);
+                $this->cashfree_payment_post();
+                // var_dump($data_transaction);
+            }
+        }
+        // var_dump($data_transaction);
+        // die();
+        if ($data_transaction['payment_mode'] == "credit_card") {
+            $data_transaction['payment_mode'] = "CREDIT_CARD";
+            $data_transaction['paymentModes'] = "cc";
+        } else if ($data_transaction['payment_mode'] == "debit_card") {
+            $data_transaction['payment_mode'] = "DEBIT_CARD";
+            $data_transaction['paymentModes'] = "dc";
+        } else if ($data_transaction['payment_mode'] == "net_banking") {
+            $data_transaction['payment_mode'] = "NET_BANKING";
+            $data_transaction['paymentModes'] = "nb";
+        } else if ($data_transaction['payment_mode'] == "upi") {
+            $data_transaction['payment_mode'] = "UPI";
+            $data_transaction['paymentModes'] = "upi";
+        }
+        // $this->auth_model->shiprocket_auth_api();
+
+        //check auth
+        $this->auth_check = auth_check();
+        if ($this->auth_check) {
+            $this->auth_user = user();
+        }
+        $user_cart = $this->cart_model->get_user_cart_from_db($this->auth_user->id);
+        // $user_cart_id = $user_cart->id;
+        // echo "\n";
+
+        // if (!empty($user_cart)) {
+        //     $cart_details = $this->cart_model->get_cart_details_by_id($user_cart_id);
+        //     $cart_shipping_details = $this->cart_model->get_cart_shipping_details_by_id($user_cart_id);
+        //     $this->cart_model->add_cart_to_session_from_db($cart_details);
+        //     $this->cart_model->set_sess_cart_shipping_address_from_db($cart_shipping_details);
+        //     $this->cart_model->get_sess_cart_items();
+        //     $this->cart_model->add_delivery_distance();
+        //     $this->cart_model->set_cart_total_from_db($user_cart);
+        //     $this->cart_model->calculate_cart_total();
+        //     $this->cart_model->set_sess_cart_payment_method_from_db($user_cart);
+        // }
+        // endif;
+
+
+
+        // $data_transaction = array(
+        //     'payment_method' => "Cashfree",
+        //     'payment_id' => $this->input->post('referenceId', true),
+        //     'cashfree_order_id' => $this->input->post('orderId', true),
+        //     'payment_mode' => $this->input->post('paymentMode', true),
+        //     // 'cashfree_signature' => $this->input->post('signature', true),
+        //     'payment_status' => $this->input->post('txStatus', true),
+        //     'txMsg' => $this->input->post('txMsg', true),
+        //     'txStatus' => $this->input->post('txStatus', true),
+        //     'txTime' => $this->input->post('txTime', true),
+        //     'currency' => $this->input->post('currency', true),
+        //     'payment_amount' => $this->input->post('transactionAmount', true),
+        //     'payment_status' => $this->input->post('txStatus', true),
+        //     // 'session_id' => $sess_unique_id,
+        //     'paymentOption' => $paymentOption,
+        //     'paymentCode' => $paymentCode,
+        //     'paymentModes' => $paymentModes
+        // );
+
+        // var_dump($data_transaction);
+
+        // if (!$this->cashfree_signature_verfication($data_transaction)) {
+        //     // echo "payment success";
+        //     $this->session->set_flashdata('error', 'Invalid signature passed!');
+        //     echo json_encode([
+        //         'result' => 0
+        //     ]);
+        // } else {
+        // echo "payment success";
+        $mds_payment_type = $this->input->post('mds_payment_type', true);
+        // add order
+        $response = $this->execute_payment($data_transaction, 'sale', lang_base_url());
+        if ($response->result == 1) {
+            $this->session->set_flashdata('success', $response->message);
+            header("Location: $response->redirect_url");
+            // echo json_encode($response->redirect_url);
+            exit();
+        } else {
+            $this->session->set_flashdata('error', $response->message);
+            header("Location: $response->redirect_url");
+            // echo json_encode($response->redirect_url);
+            // exit();
             echo json_encode([
                 'result' => 0
             ]);
-        } else {
-            // echo "payment success";
-            // $mds_payment_type = $this->input->post('mds_payment_type', true);
-            //add order
-            $response = $this->execute_payment($data_transaction, 'sale', lang_base_url());
-            if ($response->result == 1) {
-
-                $this->session->set_flashdata('success', $response->message);
-                header("Location: $response->redirect_url");
-                exit();
-            } else {
-                $this->session->set_flashdata('error', $response->message);
-                header("Location: $response->redirect_url");
-                exit();
-                // echo json_encode([
-                //     'result' => 0
-                // ]);
-            }
         }
-        // } 
-        // else {
-        //     var_dump("7645758697");
         // }
     }
 
+    public function upi_validate()
+    {
+        $upi_id = $this->input->post("upi_id", true);
+        $cashfree_id = $this->general_settings->cashfree_app_id;
+        $secret_key = $this->general_settings->cashfree_secret_key;
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->general_settingd->cashfree_base_url . 'api/v2/upi/validate/' . $upi_id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            // CURLOPT_POSTFIELDS => json_encode($cred_array),
+            CURLOPT_HTTPHEADER => [
+                "x-api-version: 2022-01-01",
+                "x-client-id:" . $cashfree_id,
+                "x-client-secret:" .  $secret_key,
+                // "Accept: application/json",
+                // "Content-Type: application/json",
 
+                // "HOST:" . base_url(),
+            ],
+        ));
+
+
+        $response = curl_exec($curl);
+        $response = json_decode($response);
+        curl_close($curl);
+        echo json_encode($response);
+    }
     public function cashfree_signature_verfication($data_transaction)
     {
         $data = $data_transaction["cashfree_order_id"] . $data_transaction["payment_amount"] . $data_transaction["payment_id"] . $data_transaction["payment_status"] . $data_transaction["payment_mode"] . $data_transaction["txMsg"] . $data_transaction["txTime"];
@@ -2027,7 +2909,6 @@ class Cart_controller extends Home_Core_Controller
         //     "X-Client-Id" => $transfer_id,
         //     "X-Client-Secret" => $transfer_key
         // );
-        // var_dump(json_encode($header_keys)) ;die();
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -2116,7 +2997,7 @@ class Cart_controller extends Home_Core_Controller
 
         );
 
-        // var_dump($post_fields["batchTransferId"]);die();
+        // var_dump($post_fields["batchTransferId"]);();
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -2137,7 +3018,6 @@ class Cart_controller extends Home_Core_Controller
 
         curl_close($curl);
         // echo $response;
-        // die();
 
         $status_code = json_decode($response)->subCode;
         $refrence_id = json_decode($response)->data->referenceId;
@@ -2262,10 +3142,17 @@ class Cart_controller extends Home_Core_Controller
         } else {
             $pay_view = $this->load->view("cart/payment_methods/_cash_on_delivery", $data, true);
         }
+        $is_all_deliverable = 1;
+        foreach ($data['cart_items'] as $item) {
+            if (!$item->product_deliverable) {
+                $is_all_deliverable = 0;
+                break;
+            }
+        }
         $response = array(
             "status" => true,
             "pay_view" => $pay_view,
-
+            "is_all_deliverable" => $is_all_deliverable,
         );
         echo json_encode($response);
     }
@@ -2336,7 +3223,13 @@ class Cart_controller extends Home_Core_Controller
             $data['cart_has_digital_product'] = $this->cart_model->check_cart_has_digital_product();
             $this->cart_model->unset_sess_cart_payment_method();
         }
-
+        $is_all_deliverable = 1;
+        foreach ($data['cart_items'] as $item) {
+            if (!$item->product_deliverable) {
+                $is_all_deliverable = 0;
+                break;
+            }
+        }
         if ($data['cart_total']->total_price != 0) {
             $order_summary = $this->load->view("cart/_order_summary", $data, true);
             $pay_view = $this->load->view('cart/payment_method_ajax', $data, true);
@@ -2344,7 +3237,7 @@ class Cart_controller extends Home_Core_Controller
                 "status" => true,
                 "pay_view_page" => $pay_view,
                 "order_summary" => $order_summary,
-
+                "is_all_deliverable" => $is_all_deliverable,
             );
             echo json_encode($response);
         } else {
