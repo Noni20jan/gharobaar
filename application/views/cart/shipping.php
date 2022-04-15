@@ -1,9 +1,16 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <script src="<?= base_url(); ?>assets/js/main-1.7.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/progress-tracker.css">
+<script src="<?php echo base_url(); ?>assets/js/jquery.payform.min.js" charset="utf-8"></script>
 <style>
     .order_summary {
         width: 40% !important;
+    }
+
+    .d-flex {
+        padding: 35px 20px;
+        border-bottom: 1px solid #e4e4e4;
+        border-top: 1px solid #e4e4e4;
     }
 
     .col-lg-5 {
@@ -113,9 +120,25 @@
         background-color: #3cb371 !important;
     }
 
+    .rounded {
+        border-radius: 1rem
+    }
 
+    .nav-pills .nav-link {
+        color: #555
+    }
 
+    .nav-pills .nav-link.active {
+        color: white
+    }
 
+    input[type="radio"] {
+        margin-right: 5px
+    }
+
+    .bold {
+        font-weight: bold
+    }
 
     .btn-custom {
         font-weight: 600 !important;
@@ -886,7 +909,177 @@
                                 </div>
                                 <!-- paymemt section end -->
                             </div>
+                            <input id="payment_mode" value="" type="hidden">
                             <div id="load_payment_page1"></div>
+                            <div class="row" id="online_methods">
+                                <div class=" mx-auto">
+                                    <div class="card ">
+                                        <div class="card-header">
+                                            <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
+                                                <!-- Credit card form tabs -->
+                                                <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3" id="online_mode">
+                                                    <li class="nav-item"> <a datavalue="cc" data-toggle="pill" href="#credit-card" class="nav-link active"> <i class="fas fa-credit-card mr-2"></i> Credit Card </a> </li>
+                                                    <li class="nav-item"> <a datavalue="dc" data-toggle="pill" href="#debit-card" class="nav-link"> <i class="fas fa-credit-card mr-2"></i></i> Debit Card </a> </li>
+                                                    <li class="nav-item"> <a datavalue="nb" data-toggle="pill" href="#net-banking" class="nav-link"> <i class="fas fa-mobile-alt mr-2"></i> Net Banking </a> </li>
+                                                    <li class="nav-item"> <a datavalue="wallet" data-toggle="pill" href="#wallet" class="nav-link"> <i class="fas fa-mobile-alt mr-2"></i> Wallet </a> </li>
+                                                    <li class="nav-item"> <a datavalue="upi" data-toggle="pill" href="#upi" class="nav-link"> <i class="fas fa-mobile-alt mr-2"></i> UPI </a> </li>
+                                                </ul>
+                                            </div> <!-- End -->
+                                            <!-- Credit card form content -->
+                                            <div class="tab-content">
+                                                <!-- credit card info-->
+                                                <div id="credit-card" class="tab-pane fade show active pt-3">
+                                                    <div id="pay-card">
+                                                        <span id="cdt_error" style="color:red;"> </span>
+                                                        <!-- <form role="form" onsubmit="event.preventDefault()"> -->
+                                                        <div class="form-group"> <label for="username">
+                                                                <h6>Card Owner</h6>
+                                                            </label> <input type="text" name="username" data-card-holder value="" id="holder_name" placeholder="Card Owner Name" required class="form-control "> </div>
+                                                        <div class="form-group"> <label for="cardNumber">
+                                                                <h6>Card number</h6>
+                                                            </label>
+                                                            <div class="input-group"> <input type="text" data-card-number value="" id="card_number" name="cardNumber" placeholder="Valid card number" class="form-control " required>
+                                                                <div class="input-group-append"> <span class="input-group-text text-muted"> <i class="fab fa-cc-visa mx-1"></i> <i class="fab fa-cc-mastercard mx-1"></i> <i class="fab fa-cc-amex mx-1"></i> </span> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-8">
+                                                                <div class="form-group"> <label><span class="hidden-xs">
+                                                                            <h6>Expiration Date</h6>
+                                                                        </span></label>
+                                                                    <div class="input-group"> <input type="number" value="" id="expiry_month" placeholder="MM" data-card-expiry-mm name="" class="form-control" required> <input type="number" id="expiry_year" value="" placeholder="YY" name="" data-card-expiry-yy class="form-control" required> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="form-group mb-4"> <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
+                                                                        <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                                                                    </label> <input type="password" value="" id="cvv" required data-card-cvv class="form-control"> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-footer"> <button id="pay-btn" type="button" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm Payment </button>
+                                                            <!-- </form> -->
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- End -->
+                                                <!-- Paypal info -->
+                                                <div id="debit-card" class="tab-pane fade pt-3">
+                                                    <div id="dbt-pay-card">
+                                                        <span id="dbt_error" style="color:red;"> </span>
+                                                        <!-- <form role="form" onsubmit="event.preventDefault()"> -->
+                                                        <div class="form-group"> <label for="username">
+                                                                <h6>Card Owner</h6>
+                                                            </label> <input type="text" name="username" data-card-holder value="" id="d_holder_name" placeholder="Card Owner Name" required class="form-control "> </div>
+                                                        <div class="form-group"> <label for="cardNumber">
+                                                                <h6>Card number</h6>
+                                                            </label>
+                                                            <div class="input-group"> <input type="text" data-card-number value="" id="d_card_number" name="cardNumber" placeholder="Valid card number" class="form-control " required>
+                                                                <div class="input-group-append"> <span class="input-group-text text-muted"> <i class="fab fa-cc-visa mx-1"></i> <i class="fab fa-cc-mastercard mx-1"></i> <i class="fab fa-cc-amex mx-1"></i> </span> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-8">
+                                                                <div class="form-group"> <label><span class="hidden-xs">
+                                                                            <h6>Expiration Date</h6>
+                                                                        </span></label>
+                                                                    <div class="input-group"> <input type="number" value="" id="d_expiry_month" placeholder="MM" data-card-expiry-mm name="" class="form-control" required> <input type="number" id="d_expiry_year" value="" placeholder="YY" name="" data-card-expiry-yy class="form-control" required> </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="form-group mb-4"> <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
+                                                                        <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                                                                    </label> <input type="password" value="" id="d_cvv" required data-card-cvv class="form-control"> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-footer"> <button id="dbt-pay-btn" type="button" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm Payment </button>
+                                                            <!-- </form> -->
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- End -->
+                                                <!-- bank transfer info -->
+                                                <div id="net-banking" class="tab-pane fade pt-3">
+                                                    <div id="pay-nb" class="form-group "> <label for="Select Your Bank">
+                                                            <h6>Select your Bank</h6>
+                                                        </label>
+                                                        <!-- <select class="form-control" id="ccmonth"> -->
+                                                        <?php $nb_banks = get_nb_banks(); ?>
+                                                        <!-- <div class="row"> -->
+                                                        <!-- <div class="col-md-6">
+                                                            <h6 class="block-title" id="payment"><?php echo trans("select_bank") ?></h6>
+                                                        </div> -->
+                                                        <div class=" method_name">
+                                                            <span id="nb_err" style="color:red"></span>
+                                                            <select name="bank_select" id="bank_select" class="form-control custom-select2" data-netbanking-code>
+                                                                <option value="" disabled selected>Select Bank</option>
+                                                                <?php foreach ($nb_banks as $bank) : ?>
+                                                                    <option value="<?php echo html_escape($bank->option_code); ?>" myTag="<?php $bank->meaning ?>"><?php echo $bank->meaning ?></option>
+                                                                <?php endforeach; ?>
+                                                            </select>
+                                                        </div>
+                                                        <!-- </div> -->
+                                                        <div class="form-group">
+                                                            <p> <button type="button" id="pay-nb-btn" class="btn btn-primary btn-block"><i class="fas fa-mobile-alt mr-2"></i> Proceed Payment</button> </p>
+                                                        </div>
+                                                        <p class="text-muted">Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
+                                                    </div> <!-- End -->
+                                                    <!-- End -->
+                                                </div>
+                                                <!-- End -->
+                                                <!-- bank transfer info -->
+                                                <div id="upi" class="tab-pane fade pt-3">
+                                                    <div id="upi-collect" class="form-group "> <label for="UPI ID">
+                                                            <h6>UPI ID</h6>
+                                                        </label>
+                                                        <!-- <select class="form-control" id="ccmonth"> -->
+                                                        <div class="form-group">
+                                                            <span id="upi_err" style="color:red"></span>
+                                                            </label> <input type="text" data-upi-id id="upi_id" name="upi" placeholder="UPI ID" required class="form-control ">
+                                                        </div>
+                                                        <!-- </div> -->
+                                                        <div class="form-group">
+                                                            <p> <button type="button" id="pay-collect-btn" class="btn btn-primary btn-block"><i class="fas fa-mobile-alt mr-2"></i> Proceed Payment</button> </p>
+                                                        </div>
+                                                        <p class="text-muted">Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
+                                                    </div> <!-- End -->
+                                                    <!-- End -->
+                                                </div>
+                                                <!-- End -->
+                                                <!-- Wallet info -->
+                                                <div id="wallet" class="tab-pane fade pt-3">
+                                                    <div class="form-group "> <label for="Select your wallet">
+                                                            <h6>Select your Wallet</h6>
+                                                        </label>
+                                                        <!-- <select class="form-control" id="ccmonth"> -->
+                                                        <?php $wallets = get_wallets(); ?>
+                                                        <!-- <div class="row"> -->
+                                                        <!-- <div class="col-md-6">
+                                                            <h6 class="block-title" id="payment"><?php echo trans("select_bank") ?></h6>
+                                                        </div> -->
+                                                        <div class=" method_name" id="pay-app">
+                                                            <span id="wallet_err" style="color:red"></span>
+                                                            <select name="wallet_select" data-app-name id="wallet_select" class="form-control custom-select2">
+                                                                <option value="" disabled selected>Select Wallet</option>
+                                                                <?php foreach ($wallets as $wallet) : ?>
+                                                                    <option value="<?php echo html_escape($wallet->option_code); ?>" myTag="<?php $wallet->meaning ?>"><?php echo $wallet->meaning ?></option>
+                                                                <?php endforeach; ?>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            </label> <input type="text" data-app-phone id="phone_number" name="phone" placeholder="Phone number" required class="form-control "> </div>
+                                                        <!-- </div> -->
+                                                        <div class="form-group">
+                                                            <p> <button type="button" id="pay-app-btn" class="btn btn-primary btn-block"><i class="fas fa-mobile-alt mr-2"></i> Proceed Payment</button> </p>
+                                                        </div>
+                                                        <p class="text-muted">Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
+                                                    </div> <!-- End -->
+                                                    <!-- End -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
 
                         </div>
                         <?php if ($mds_payment_type == 'promote') {
@@ -901,7 +1094,6 @@
                         } ?>
 
                     </div>
-
 
                 </div>
             </div>
@@ -932,7 +1124,6 @@
             url: url,
             cache: false,
             success: function(html) {
-                console.log(html)
                 if (html[0].PostOffice == null) {
                     $('#pincode_span')[0].innerHTML = "Please enter a valid pincode.";
                 } else {
@@ -957,7 +1148,6 @@
             url: url,
             cache: false,
             success: function(html) {
-                console.log(html)
                 if (html[0].PostOffice == null) {
                     $('#pincode_span1')[0].innerHTML = "Please enter a valid pincode.";
                 } else {
@@ -984,7 +1174,6 @@
             url: url,
             cache: false,
             success: function(html) {
-                console.log(html)
                 if (html[0].PostOffice == null) {
                     $('#pincode_span')[0].innerHTML = "Please enter a valid pincode.";
                 } else {
@@ -1011,7 +1200,6 @@
             url: url,
             cache: false,
             success: function(html) {
-                console.log(html)
                 if (html[0].PostOffice == null) {
                     $('#pincode_span')[0].innerHTML = "Please enter a valid pincode.";
                 } else {
@@ -1039,7 +1227,7 @@
     //     $('input[name^="bill"]').prop('required', true);
     // })
     $(document).ready(function() {
-
+        $('#payment_mode').val($("#online_mode a").attr("datavalue"));
         $('input[name^="bill"]').prop('required', false);
         $("#login_number").on("blur", function() {
             var mobNum = $(this).val();
@@ -1278,7 +1466,6 @@
             name: "sys_lang_id",
             value: sys_lang_id
         });
-        console.log(b);
 
 
 
@@ -1452,7 +1639,6 @@
 <script>
     function change_address(a, b, c, d, e, f, g, h, i, j, k) {
 
-        console.log(a, b, c, d, e, f, g, h, i, j, k)
         $('#f_name').val(a)
         $('#l_name').val(b)
         $('#email_id').val(k)
@@ -1471,7 +1657,7 @@
 </script>
 <script>
     $(document).ready(function() {
-
+        $('#online_methods').hide();
         change_address('<?php echo $address->f_name; ?>', '<?php echo $address->l_name; ?>', '<?php echo $address->address_type; ?>', '<?php echo $address->h_no; ?>', '<?php echo $address->landmark; ?>', '<?php echo $address->area; ?>', '<?php echo $address->city; ?>', '<?php echo $address->state; ?>', '<?php echo $address->zip_code; ?>', '<?php echo $address->ph_number; ?>', '<?php echo $address->email; ?>')
     });
 </script>
@@ -1504,7 +1690,6 @@
         var fd = new FormData($(myform)[0]);
 
         var b = $("#shipping_address_edit").serializeArray();
-        console.log(b)
         b.push({
             name: csfr_token_name,
             value: $.cookie(csfr_cookie_name)
@@ -1514,7 +1699,6 @@
             name: "sys_lang_id",
             value: sys_lang_id
         });
-        console.log(b);
         let letters = /^[A-Za-z]+$/;
 
         if (letters.test($("#modal_f_name").val()) == false) {
@@ -1694,7 +1878,6 @@
         var myform = document.getElementById("shipping_address_additional");
         var fd = new FormData($(myform)[0]);
         var b = $("#shipping_address_additional").serializeArray();
-        console.log(b)
         b.push({
             name: csfr_token_name,
             value: $.cookie(csfr_cookie_name)
@@ -1704,7 +1887,6 @@
             name: "sys_lang_id",
             value: sys_lang_id
         });
-        console.log(b);
 
 
 
@@ -1901,7 +2083,6 @@
         $(document).ready(function() {
             $.ajax(settings).done(function(response) {
                 result = response
-                console.log(result.data.available_courier_companies[0].rate);
                 var data = {
                     "product_id": product_id,
                     "shipping_amount": result.data.available_courier_companies[0].rate,
@@ -1914,13 +2095,10 @@
                     data: data,
                     dataType: 'json',
                     async: false,
-                    success: function(data) {
-                        console.log(data);
-                    }
+                    success: function(data) {}
                 });
                 if (result['status'] == 404) {
                     message = result['message'];
-                    console.log(message)
                 }
             });
         });
@@ -1989,8 +2167,15 @@
                 $("#load_payment_page")[0].innerHTML = res.pay_view_page;
                 $("#order_summary")[0].innerHTML = res.order_summary;
                 $("#paymentMethodButtonDiv").hide();
-                console.log(e);
-                // alert($response.pay_view);
+                $('#online_methods').show();
+                var is_all_deliverable = res.is_all_deliverable;
+                if (is_all_deliverable == 0) {
+                    $("#pay-btn").attr('disabled', true);
+                    $("#dbt-pay-btn").attr('disabled', true);
+                    $("#pay-nb-btn").attr('disabled', true);
+                    $("#pay-app-btn").attr('disabled', true);
+                    $("#pay-collect-btn").attr('disabled', true);
+                }
             },
         });
 
@@ -2013,8 +2198,21 @@
             success: function(e) {
                 res = JSON.parse(e);
                 $("#pay_view_load")[0].innerHTML = res.pay_view;
+                var is_all_deliverable = res.is_all_deliverable;
                 console.log(res);
                 $(".cash_free_btn").prop('disabled', false);
+                if (pay_method == 'cashfree') {
+                    $('#online_methods').show();
+                    if (is_all_deliverable == 0) {
+                        $("#pay-btn").attr('disabled', true);
+                        $("#dbt-pay-btn").attr('disabled', true);
+                        $("#pay-nb-btn").attr('disabled', true);
+                        $("#pay-app-btn").attr('disabled', true);
+                        $("#pay-collect-btn").attr('disabled', true);
+                    }
+                } else {
+                    $('#online_methods').hide();
+                }
                 // alert($response.pay_view);
             },
         });
@@ -2079,11 +2277,9 @@
             type: "POST",
             url: base_url + "cart_controller/payment_cashfree",
             data: t,
-            success: function(e) {
-                res = JSON.parse(e);
-                window.location.href = base_url + "cashfree_form";
+            success: function(result) {
 
-                // alert($response.pay_view);
+                orderToken = result["order_token"];
             },
         });
 
@@ -2091,25 +2287,671 @@
     }
 </script>
 <script>
-    function check_mode(val) {
-        var element = $("#nb_banks");
-        var element2 = $("#wallets");
-        if (val == 'nb') {
-            // element.show();
-            $("#nb_banks").css("display", "block");
-            element2.hide();
-            document.getElementById('bank_select').required = true;
-            document.getElementById('wallet_select').required = false;
-        } else if (val == 'wallet') {
-            element2.show();
-            element.hide();
-            document.getElementById('wallet_select').required = true;
-            document.getElementById('bank_select').required = false;
-        } else {
-            element.hide();
-            document.getElementById('bank_select').required = false;
-            document.getElementById('bank_select').required = false;
-            element2.hide();
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://sdk.cashfree.com/js/core/1.0.26/bundle.sandbox.js"></script>
+<script>
+    $(document).ready(function(e) {
+        let isCardReadyToPay = true;
+        let isUPIIntentReady = false;
+        let isUPICollectReady = false;
+        let isAppReady = false;
+        let isProviderReady = false;
+
+        const config = {
+            onPaymentSuccess: function(data) {
+                // console.log(data);
+                // // alert("sbdhsfadysafdysafdhadsad");
+                exit;
+                if (data.order.status == "PAID") {
+                    // $.ajax({
+                    //     url: "checkstatus.php?order_id=" + data.order.orderId,
+                    var t = {
+                        sys_lang_id: 1,
+                        order_id: data.order.orderId,
+
+                    };
+                    t[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: "POST",
+                        // url: base_url + "cart_controller/cashfree_api",
+                        url: base_url + "cart_controller/check_status",
+                        data: t,
+                        success: function(result) {
+                            console.log(result)
+                            if (result.order_status == "PAID") {
+                                // alert("Order PAID");
+                                var payment_mode = $("#payment_mode").val();
+                                var bank_select = $('#bank_select').val();
+                                var t1 = {
+                                    sys_lang_id: 1,
+                                    order_id: data.order.orderId,
+                                    txMsg: data.order.txMsg,
+                                    transactionAmount: data.transaction.transactionAmount,
+                                    txStatus: data.transaction.txStatus,
+                                    transactionId: data.transaction.transactionId,
+                                    payment_mode: payment_mode,
+                                    paymentCode: bank_select,
+                                };
+                                t1[csfr_token_name] = $.cookie(csfr_cookie_name);
+                                $.ajax({
+                                    type: "POST",
+                                    // url: base_url + "cart_controller/cashfree_api",
+                                    url: base_url + "cart_controller/cashfree_payment_post",
+                                    data: t1,
+                                    success: function(result) {
+                                        // console.log(result);
+                                        var i = JSON.parse(result);
+                                        window.location.href = i;
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            },
+            onPaymentFailure: function(data) {
+                // alert(data.transaction.txMsg);
+            },
+            onError: function(err) {
+                // alert(err.message);
+            },
+        };
+        const cfCheckout = Cashfree.initializeApp(config);
+        cfCheckout.elements([{
+                pay: document.getElementById('pay-card'),
+                type: 'card',
+                onChange: cardEventHandler
+            },
+            {
+                pay: document.getElementById('dbt-pay-card'),
+                type: 'card',
+                onChange: cardEventHandler
+            },
+            {
+                pay: document.getElementById('pay-intent'),
+                type: 'upi-intent',
+                onChange: upiIntentHandler
+            },
+            {
+                pay: document.getElementById('pay-collect'),
+                type: 'upi-collect',
+                onChange: upiCollectHandler
+            },
+            {
+                pay: document.getElementById('pay-app'),
+                type: 'app',
+                onChange: appEventHandler
+            },
+            {
+                pay: document.getElementById('pay-nb'),
+                type: 'netbanking',
+                onChange: nbEventHandler
+            },
+        ])
+
+        function cardEventHandler(data) {
+            isCardReadyToPay = data.isReadyToPay;
         }
-    }
+
+        function nbEventHandler(data) {
+            isProviderReady = data.isReadyToPay;
+        }
+
+        function upiIntentHandler(data) {
+            // console.log("UPI intent --> ", data)
+            isUPIIntentReady = data.isReadyToPay;
+        }
+
+        function upiCollectHandler(data) {
+            console.log("UPI collect --> ", data);
+            isUPICollectReady = data.isReadyToPay;
+        }
+
+        function appEventHandler(data) {
+            // console.log("App --> ", data)
+            isAppReady = data.isReadyToPay;
+        }
+
+
+        let order_token = "";
+
+        $("#pay-nb-btn").click(function() {
+            // if (!isProviderReady) {
+            //     // alert("Netbanking not ready to pay!")
+            //     return
+            // }
+            var payment_mode = $("#payment_mode").val();
+            var bank_select = $("#bank_select").val();
+            if (bank_select == null) {
+                $('#nb_err').html("Please select your bank");
+                return
+            }
+            if (order_token == "") {
+                var t = {
+                    sys_lang_id: 1,
+                    payment_mode: payment_mode,
+                    bank_select: bank_select,
+
+                };
+                t[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    type: "POST",
+                    // url: base_url + "cart_controller/cashfree_api",
+                    url: base_url + "cart_controller/cashfree_api",
+                    data: t,
+                    success: function(result) {
+                        order_token = result.order_token;
+                        order_id = result.order_id;
+
+                        var t1 = {
+                            sys_lang_id: 1,
+                            payment_mode: payment_mode,
+                            bank_select: bank_select,
+                            order_token: order_token,
+                            order_id: order_id
+                        };
+                        console.log(base_url);
+                        t1[csfr_token_name] = $.cookie(csfr_cookie_name);
+                        $.ajax({
+                            type: "POST",
+                            // url: base_url + "cart_controller/cashfree_api",
+                            url: base_url + "cart_controller/card_api",
+                            data: t1,
+                            success: function(result) {
+                                var i = JSON.parse(result);
+                                // console.log(i);
+                                window.location.href = i;
+                            },
+                        });
+                    },
+                });
+            } else {
+                var t1 = {
+                    sys_lang_id: 1,
+                    payment_mode: payment_mode,
+                    bank_select: bank_select,
+                    order_token: order_token,
+                    order_id: order_id
+                };
+                console.log(base_url);
+                t1[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    type: "POST",
+                    // url: base_url + "cart_controller/cashfree_api",
+                    url: base_url + "cart_controller/card_api",
+                    data: t1,
+                    success: function(result) {
+                        var i = JSON.parse(result);
+                        // console.log(i);
+                        window.location.href = i;
+                    },
+                });
+            }
+            // getTokenAndPay(cfCheckout, 'emi')
+        });
+
+        $("#pay-btn").click(function() {
+            var holder_name = $("#holder_name").val();
+            var card_number = $("#card_number").val();
+            var expiry_month = $("#expiry_month").val();
+            var expiry_year = $("#expiry_year").val();
+            var cvv = $("#cvv").val();
+            const dateObj = new Date();
+            const monthNumber = dateObj.getMonth();
+            const year = dateObj.getFullYear();
+            // alert(year);
+            month = monthNumber + 1;
+            // alert(month);
+            monye = '' + month + year;
+            cmonye = '' + expiry_month + expiry_year;
+            // alert(monye);
+            var isCardValid = $.payform.validateCardNumber(card_number);
+            var isCvvValid = $.payform.validateCardCVC(cvv);
+            if (!isCardValid) {
+                $('#cdt_error').html("Please enter correct card number");
+                return;
+            } else if (!isCvvValid) {
+                $('#cdt_error').html("Please enter correct cvv number");
+                return
+            } else if (monye < cmonye) {
+                $('#cdt_error').html("Please enter correct expiry month and year");
+                return
+            } else if (expiry_month == "" || expiry_year == "") {
+                $('#cdt_error').html("Please enter correct expiry month and year");
+                return
+            } else {
+                if (isCardReadyToPay)
+                    var payment_mode = $("#payment_mode").val();
+                if (order_token == "") {
+                    var t = {
+                        sys_lang_id: 1,
+                        payment_mode: payment_mode,
+                    };
+                    t[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: "POST",
+                        // url: base_url + "cart_controller/cashfree_api",
+                        url: base_url + "cart_controller/cashfree_api",
+                        data: t,
+                        success: function(result) {
+                            // console.log(result.order_token);
+                            order_token = result.order_token;
+                            order_id = result.order_id;
+
+                            var t1 = {
+                                sys_lang_id: 1,
+                                payment_mode: payment_mode,
+                                // bank_select: bank_select,
+                                order_token: order_token,
+                                order_id: order_id,
+                                holder_name: holder_name,
+                                card_number: card_number,
+                                expiry_month: expiry_month,
+                                expiry_year: expiry_year,
+                                cvv: cvv,
+                            };
+                            t1[csfr_token_name] = $.cookie(csfr_cookie_name);
+                            console.log(base_url);
+                            $.ajax({
+                                type: "POST",
+                                // url: base_url + "cart_controller/cashfree_api",
+                                url: base_url + "cart_controller/card_api",
+                                data: t1,
+                                success: function(result) {
+                                    var i = JSON.parse(result);
+                                    console.log(i);
+                                    window.location.href = i;
+                                },
+                            });
+                        },
+
+                    });
+                } else {
+                    var t1 = {
+                        sys_lang_id: 1,
+                        payment_mode: payment_mode,
+                        // bank_select: bank_select,
+                        order_token: order_token,
+                        order_id: order_id,
+                        holder_name: holder_name,
+                        card_number: card_number,
+                        expiry_month: expiry_month,
+                        expiry_year: expiry_year,
+                        cvv: cvv,
+                    };
+                    console.log(base_url);
+                    t1[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: "POST",
+                        // url: base_url + "cart_controller/cashfree_api",
+                        url: base_url + "cart_controller/card_api",
+                        data: t1,
+                        success: function(result) {
+                            var i = JSON.parse(result);
+                            console.log(i);
+                            window.location.href = i;
+                        },
+                    });
+                }
+            }
+
+        });
+        $("#dbt-pay-btn").click(function() {
+            var holder_name = $("#d_holder_name").val();
+            var card_number = $("#d_card_number").val();
+            var expiry_month = $("#d_expiry_month").val();
+            var expiry_year = $("#d_expiry_year").val();
+            var cvv = $("#d_cvv").val();
+            var isCardValid = $.payform.validateCardNumber(card_number);
+            var isCvvValid = $.payform.validateCardCVC(cvv);
+
+            const dateObj = new Date();
+            const monthNumber = dateObj.getMonth();
+            const year = dateObj.getFullYear();
+            // alert(year);
+            month = monthNumber + 1;
+            // alert(month);
+            monye = '' + month + year;
+            cmonye = '' + expiry_month + expiry_year;
+            // alert(monye);
+            var isCardValid = $.payform.validateCardNumber(card_number);
+            var isCvvValid = $.payform.validateCardCVC(cvv);
+            if (!isCardValid) {
+                $('#dbt_error').html("Please enter correct card number");
+                return;
+            } else if (!isCvvValid) {
+                $('#dbt_error').html("Please enter correct cvv number");
+                return
+            } else if (monye < cmonye) {
+                $('#dbt_error').html("Please enter correct expiry month and year");
+                return
+            } else if (expiry_month == "" || expiry_year == "") {
+                $('#dbt_error').html("Please enter correct expiry month and year");
+                return
+            } else {
+                if (isCardReadyToPay)
+                    var payment_mode = $("#payment_mode").val();
+                if (order_token == "") {
+                    var t = {
+                        sys_lang_id: 1,
+                        payment_mode: payment_mode,
+                    };
+                    t[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: "POST",
+                        // url: base_url + "cart_controller/cashfree_api",
+                        url: base_url + "cart_controller/cashfree_api",
+                        data: t,
+                        success: function(result) {
+                            // console.log(result.order_token);
+                            order_token = result.order_token;
+                            order_id = result.order_id;
+
+                            var t1 = {
+                                sys_lang_id: 1,
+                                payment_mode: payment_mode,
+                                // bank_select: bank_select,
+                                order_token: order_token,
+                                order_id: order_id,
+                                holder_name: holder_name,
+                                card_number: card_number,
+                                expiry_month: expiry_month,
+                                expiry_year: expiry_year,
+                                cvv: cvv,
+                            };
+                            t1[csfr_token_name] = $.cookie(csfr_cookie_name);
+                            console.log(base_url);
+                            $.ajax({
+                                type: "POST",
+                                // url: base_url + "cart_controller/cashfree_api",
+                                url: base_url + "cart_controller/card_api",
+                                data: t1,
+                                success: function(result) {
+                                    var i = JSON.parse(result);
+                                    console.log(i);
+                                    window.location.href = i;
+                                },
+                            });
+                        },
+
+                    });
+                } else {
+                    var t1 = {
+                        sys_lang_id: 1,
+                        payment_mode: payment_mode,
+                        // bank_select: bank_select,
+                        order_token: order_token,
+                        order_id: order_id,
+                        holder_name: holder_name,
+                        card_number: card_number,
+                        expiry_month: expiry_month,
+                        expiry_year: expiry_year,
+                        cvv: cvv,
+                    };
+                    console.log(base_url);
+                    t1[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: "POST",
+                        // url: base_url + "cart_controller/cashfree_api",
+                        url: base_url + "cart_controller/card_api",
+                        data: t1,
+                        success: function(result) {
+                            var i = JSON.parse(result);
+                            console.log(i);
+                            window.location.href = i;
+                        },
+                    });
+                }
+            }
+        });
+
+        $("#pay-app-btn").click(function() {
+            // if (!isAppReady) {
+            //     // alert("App not ready to pay!")
+            //     return
+            // }
+            var payment_mode = $("#payment_mode").val();
+            var wallet_select = $("#wallet_select").val();
+            var phone_number = $("#phone_number").val();
+            if (wallet_select == null) {
+                $('#wallet_err').html("Please sellect wallet");
+                return
+            }
+            if (phone_number == "") {
+                $('#wallet_err').html("Please Enter Your Phone Number");
+                return
+            }
+            if (order_token == "") {
+                var t = {
+                    sys_lang_id: 1,
+                    payment_mode: payment_mode,
+                    wallet_select: wallet_select,
+                    phone_number: phone_number,
+                };
+                t[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    type: "POST",
+                    // url: base_url + "cart_controller/cashfree_api",
+                    url: base_url + "cart_controller/cashfree_api",
+                    data: t,
+                    success: function(result) {
+                        order_token = result.order_token;
+                        order_id = result.order_id;
+
+                        var t1 = {
+                            sys_lang_id: 1,
+                            payment_mode: payment_mode,
+                            // bank_select: bank_select,
+                            order_token: order_token,
+                            order_id: order_id,
+                            wallet_select: wallet_select,
+                            phone_number: phone_number,
+                        };
+                        console.log(base_url);
+                        t1[csfr_token_name] = $.cookie(csfr_cookie_name);
+                        $.ajax({
+                            type: "POST",
+                            // url: base_url + "cart_controller/cashfree_api",
+                            url: base_url + "cart_controller/card_api",
+                            data: t1,
+                            success: function(result) {
+                                var i = JSON.parse(result);
+                                console.log(i);
+                                // window.location.href = i;
+                            },
+                        });
+                    },
+                });
+            } else {
+                var t1 = {
+                    sys_lang_id: 1,
+                    payment_mode: payment_mode,
+                    // bank_select: bank_select,
+                    order_token: order_token,
+                    order_id: order_id,
+                    waller_select: wallet_select,
+                    phone_number: phone_number,
+                };
+                console.log(base_url);
+                t1[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    type: "POST",
+                    // url: base_url + "cart_controller/cashfree_api",
+                    url: base_url + "cart_controller/card_api",
+                    data: t1,
+                    success: function(result) {
+                        var i = JSON.parse(result);
+                        console.log(i);
+                        // window.location.href = i;
+                    },
+                });
+            }
+        });
+
+
+        $("#pay-intent-btn").click(function() {
+            if (!isUPIIntentReady) {
+                // alert("UPI Intent not ready to pay!")
+                return
+            }
+            // The getTokenAndPay method is same as for cards above.
+            var payment_mode = $("#payment_mode").val();
+            if (order_token == "") {
+                var t = {
+                    sys_lang_id: 1,
+                    payment_mode: payment_mode,
+                };
+                t[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    type: "POST",
+                    // url: base_url + "cart_controller/cashfree_api",
+                    url: base_url + "cart_controller/cashfree_api",
+                    data: t,
+                    success: function(result) {
+                        order_token = result.order_token;
+
+                        order_id = result.order_id;
+                        // cfCheckout.pay(order_token, "upi-intent");
+                    },
+                });
+            } else {
+                cfCheckout.pay(order_token, "upi-intent");
+            }
+            // orderToken = getTokenAndPay(cfCheckout, 'upi-intent')
+        });
+        // let isUPICollectReady = false;
+        // cfCheckout.elements([]);
+
+
+        $("#pay-collect-btn").click(function() {
+            // if (!isUPICollectReady) {
+            //     alert("UPI collect not ready to pay!")
+            //     return
+            // }
+            var payment_mode = $("#payment_mode").val();
+            var upi_id = $("#upi_id").val();
+            if (upi_id == "") {
+                $('#upi_err').html("Please enter UPI ID");
+                return
+            }
+            if (order_token == "") {
+                var t = {
+                    sys_lang_id: 1,
+                    payment_mode: payment_mode,
+                    upi_id: upi_id
+                };
+                t[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    type: "POST",
+                    // url: base_url + "cart_controller/cashfree_api",
+                    url: base_url + "cart_controller/upi_validate",
+                    data: t,
+                    success: function(result) {
+                        var i = JSON.parse(result);
+                        console.log(i.status);
+                        if (i.status == "OK") {
+                            var t4 = {
+                                sys_lang_id: 1,
+                                payment_mode: payment_mode,
+                                upi_id: upi_id
+                            };
+                            t4[csfr_token_name] = $.cookie(csfr_cookie_name);
+                            $.ajax({
+                                type: "POST",
+                                // url: base_url + "cart_controller/cashfree_api",
+                                url: base_url + "cart_controller/cashfree_api",
+                                data: t4,
+                                success: function(result) {
+                                    order_token = result.order_token;
+                                    order_id = result.order_id;
+                                    var t1 = {
+                                        sys_lang_id: 1,
+                                        payment_mode: payment_mode,
+                                        // bank_select: bank_select,
+                                        order_token: order_token,
+                                        order_id: order_id,
+                                        upi_id: upi_id
+                                    };
+                                    console.log(base_url);
+                                    t1[csfr_token_name] = $.cookie(csfr_cookie_name);
+                                    $.ajax({
+                                        type: "POST",
+
+                                        // url: base_url + "cart_controller/cashfree_api",
+                                        url: base_url + "cart_controller/card_api",
+                                        data: t1,
+                                        success: function(result) {
+                                            // order_id = order_id.slice(1, -1);
+                                            var i = JSON.parse(result);
+                                            console.log(i);
+                                            window.location.href = base_url +
+                                                "payment_loader?orderId={" + order_id + "}&token={" + order_token + "}";
+                                            // window.location.href = "cart_controller/payment_loader";
+                                            // window.location.href = base_url +
+                                            //     "cashfree-return?orderId={" + order_id + "}&token={" + order_token + "}";
+                                        },
+                                    });
+                                },
+                            });
+                        } else {
+                            $('#upi_err').html("UPI ID is not valid");
+                        }
+                    },
+                });
+            } else {
+                var t6 = {
+                    sys_lang_id: 1,
+                    payment_mode: payment_mode,
+                    upi_id: upi_id
+                };
+                t6[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    type: "POST",
+                    // url: base_url + "cart_controller/cashfree_api",
+                    url: base_url + "cart_controller/upi_validate",
+                    data: t6,
+                    success: function(result) {
+                        var i = JSON.parse(result);
+                        console.log(i.status);
+                        if (i.status == "OK") {
+                            var t1 = {
+                                sys_lang_id: 1,
+                                payment_mode: payment_mode,
+                                // bank_select: bank_select,
+                                order_token: order_token,
+                                order_id: order_id,
+                                upi_id: upi_id
+                            };
+                            console.log(base_url);
+                            t1[csfr_token_name] = $.cookie(csfr_cookie_name);
+                            $.ajax({
+                                type: "POST",
+                                // url: base_url + "cart_controller/cashfree_api",
+                                url: base_url + "cart_controller/card_api",
+                                data: t1,
+                                success: function(result) {
+                                    var i = JSON.parse(result);
+                                    console.log(i);
+                                    window.location.href = base_url +
+                                        "payment_loader?orderId={" + order_id + "}&token={" + order_token + "}";
+                                },
+                            });
+                        } else {
+                            $('#upi_err').html("UPI ID is not valid");
+                        }
+                    },
+                });
+            }
+        });
+    });
+</script>
+<script>
+    $('#online_mode a').on('click', function(event) {
+        console.log($(this).attr("datavalue"));
+        $('#payment_mode').val($(this).attr("datavalue"));
+    });
 </script>

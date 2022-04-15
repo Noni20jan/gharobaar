@@ -120,13 +120,24 @@ foreach ($cart_items as $item) {
 <input type="hidden" name="orderid" id="orderId" value="<?php echo (uniqid()) ?>">
 <input type="hidden" name="orderamount" id="orderamount" value="<?php echo ($total_amount) / 100 ?>">
 
-<div id="payment-button-container">
-    <div class="row">
-        <div class="col-12">
-            <?php $this->load->view('product/_messages'); ?>
-        </div>
+<!-- <div id="payment-button-container"> -->
+<div class="row">
+    <div class="col-12">
+        <?php $this->load->view('product/_messages'); ?>
     </div>
-    <div class="row">
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="row">
 
         <div class="col-md-6">
             <h5 class="block-title" id="shipping"><?php echo trans("shipping_address") ?></h5>
@@ -169,10 +180,10 @@ foreach ($cart_items as $item) {
                 </div>
             </div>
         </div>
-    </div>
-    <br />
-    <br />
-    <div class="row">
+    </div> -->
+<br />
+<br />
+<!-- <div class="row">
         <div class="col-sm-12">
             <div class="cash_method">
                 <div class="row">
@@ -188,84 +199,88 @@ foreach ($cart_items as $item) {
         </div>
 
 
-    </div>
-    <div class="row">
+    </div> -->
+<!-- <div class="row">
         <div class="col-sm-12">
             <?php $modes = get_payment_modes(); ?>
-            <!-- <div class="cash_method"> -->
-            <div class="row">
-                <div class="col-md-6">
-                    <h6 class="block-title" id="payment"><?php echo trans("payment_mode") ?></h6>
-                </div>
-                <div class="col-md-6 method_name">
-                    <select name="payment_mode" id="payment_mode" class="form-control custom-select2" onchange='check_mode(this.value);' required>
-                        <option value="" disabled selected>Select Mode</option>
-                        <?php foreach ($modes as $mode) : ?>
-                            <option value="<?php echo html_escape($mode->gateway_code); ?>" myTag="<?php $mode->meaning ?>"><?php echo $mode->meaning ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            </div>
-            <!-- </div> -->
-
+            <div class="cash_method"> 
+    <div class="row">
+        <div class="col-md-6">
+            <h6 class="block-title" id="payment"><?php echo trans("payment_mode") ?></h6>
+        </div>
+        <div class="col-md-6 method_name">
+            <select name="payment_mode" id="payment_mode" class="form-control custom-select2" onchange='check_mode(this.value);' required>
+                <option value="" disabled selected>Select Mode</option>
+                <?php foreach ($modes as $mode) : ?>
+                    <option value="<?php echo html_escape($mode->gateway_code); ?>" myTag="<?php $mode->meaning ?>"><?php echo $mode->meaning ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
     </div>
-    <div class="row" id="nb_banks" style="display: none;">
-        <div class="col-sm-12">
-            <?php $nb_banks = get_nb_banks(); ?>
+    </div>
+
+</div>
+</div>
+<div class="row" id="nb_banks" style="display: none;">
+    <div class="col-sm-12">
+        <?php $nb_banks = get_nb_banks(); ?>
             <div class="row">
                 <div class="col-md-6">
                     <h6 class="block-title" id="payment"><?php echo trans("select_bank") ?></h6>
                 </div>
                 <div class="col-md-6 method_name">
-                    <select name="bank_select" id="bank_select" class="form-control custom-select2">
+                    <select name="bank_select" id="bank_select" onchange="bank_select(this.value);" class="form-control custom-select2">
                         <option value="" disabled selected>Select Bank</option>
                         <?php foreach ($nb_banks as $bank) : ?>
                             <option value="<?php echo html_escape($bank->option_code); ?>" myTag="<?php $bank->meaning ?>"><?php echo $bank->meaning ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-            </div>
-        </div>
-    </div>
+            </div> 
+</div>
+</div>
 
-    <div class="row" id="wallets" style="display: none;">
-        <div class="col-sm-12">
-            <?php $wallets = get_wallets(); ?>
-            <div class="row">
-                <div class="col-md-6">
-                    <h6 class="block-title" id="payment"><?php echo trans("select_wallet") ?></h6>
-                </div>
-                <div class="col-md-6 method_name">
-                    <select name="wallet_select" id="wallet_select" class="form-control custom-select2">
-                        <option value="" disabled selected>Select Wallet</option>
-                        <?php foreach ($wallets as $wallet) : ?>
-                            <option value="<?php echo html_escape($wallet->option_code); ?>" myTag="<?php $wallet->meaning ?>"><?php echo $wallet->meaning ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+<div class="row" id="wallets" style="display: none;">
+    <div class="col-sm-12">
+        <?php $wallets = get_wallets(); ?>
+        <div class="row">
+            <div class="col-md-6">
+                <h6 class="block-title" id="payment"><?php echo trans("select_wallet") ?></h6>
             </div>
-        </div>
-    </div>
-    <div class="row" style="margin-top: 3%;" id="paynow-for-web">
-        <div class="col-sm-6">
-            <!-- <a class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;" href='<//?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>'></?php echo trans("change_pay_method") ?></a> -->
-            <a href="<?php echo generate_url("cart", "shipping"); ?>" class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 10px !important;"> <?php echo trans("change_address"); ?></a>
-        </div>
-        <div class="col-sm-6">
-            <button onclick="Payment();" <?= $is_all_deliverable ? "" : "disabled"; ?> class="cash_free_btn btn btn-lg float-right" style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
-        </div>
-    </div>
-    <div class="row" style="margin-top: 3%;" id="paynow-for-mobile">
-        <div class="col-sm-6">
-            <button onclick="Payment();" class="cash_free_btn btn btn-lg float-right" <?= $is_all_deliverable ? "" : "disabled"; ?> style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
-        </div>
-        <div class="col-sm-6">
-            <!-- <a class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>'><?php echo trans("change_pay_method") ?></a> -->
-            <a href="<?php echo generate_url("cart", "shipping"); ?>" class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;"> <?php echo trans("change_address"); ?></a>
+            <div class="col-md-6 method_name">
+                <select name="wallet_select" id="wallet_select" class="form-control custom-select2">
+                    <option value="" disabled selected>Select Wallet</option>
+                    <?php foreach ($wallets as $wallet) : ?>
+                        <option value="<?php echo html_escape($wallet->option_code); ?>" myTag="<?php $wallet->meaning ?>"><?php echo $wallet->meaning ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
         </div>
     </div>
 </div>
+<div class="row" style="margin-top: 3%;" id="paynow-for-web">
+    <div class="col-sm-6">
+       <a class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;" href='<//?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>'></?php echo trans("change_pay_method") ?></a> 
+    <a href="<?php echo generate_url("cart", "shipping"); ?>" class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 10px !important;"> <?php echo trans("change_address"); ?></a>
+</div>
+<div class="col-sm-6">
+    <button onclick="Payment();" <?= $is_all_deliverable ? "" : "disabled"; ?> class="cash_free_btn btn btn-lg float-right" style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
+</div>
+</div>
+<div class="row" style="margin-top: 3%;" id="paynow-for-mobile">
+    <div class="col-sm-6">
+        <button onclick="Payment();" class="cash_free_btn btn btn-lg float-right" <?= $is_all_deliverable ? "" : "disabled"; ?> style="margin-bottom: 30px;"><?php echo trans("pay_now") ?></button>
+    </div>
+    <div class="col-sm-6">
+        <a class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>'><?php echo trans("change_pay_method") ?></a>
+    <a href="<?php echo generate_url("cart", "shipping"); ?>" class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;"> <?php echo trans("change_address"); ?></a>
+</div>
+</div> -->
+<!-- <div class=""> -->
+<!-- For demo purpose -->
+
+
+<!-- </div> -->
 <?php //echo form_close(); 
 ?>
 

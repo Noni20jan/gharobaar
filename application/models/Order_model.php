@@ -125,7 +125,6 @@ class Order_model extends CI_Model
 
                 //clear cart
                 $this->cart_model->clear_cart();
-
                 //update order id in casfree prepaid payouts
                 if ($data_transaction['match_status'] == "yes") {
                     $this->update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id, 1);
@@ -135,7 +134,6 @@ class Order_model extends CI_Model
                 if ((float)$data_transaction['payment_amount'] != $total_price1 || $data_transaction['match_status'] == "no") {
                     $this->load->model("email_model");
                     $this->email_model->wrong_order($data_transaction, $data, $order_id);
-                    // die();
                 }
                 return $order_id;
             }
@@ -274,8 +272,7 @@ class Order_model extends CI_Model
         $cart_total = $this->cart_model->get_sess_cart_total();
         $shipping_detail = json_decode($this->order_model->get_shipping_cost($cart_total));
         $total_amount = $cart_total->total_price;
-        // var_dump($shipping_detail->cod_charges);
-        // die();
+
         $seller_array = array();
         $amount_array = array();
         $product_seller_details = array();
@@ -430,7 +427,7 @@ class Order_model extends CI_Model
 
                 $object->seller_earned = ($object->total_price / 100) - $object->total_commission_amount;
                 // var_dump($object->total_price_without_gst);
-                // die();
+                // ;
                 $object->seller_gst_rate = $object_product->gst_rate;
                 array_push($object->products, $object_product);
                 array_push($product_seller_details, $object);
@@ -438,7 +435,7 @@ class Order_model extends CI_Model
             // var_dump($cart_item);
         }
 
-        // var_dump($product_seller_details);die();
+        // var_dump($product_seller_details);;
 
 
         $seller_settlement = array();
@@ -519,7 +516,7 @@ class Order_model extends CI_Model
             // }
             // condition end
 
-            // die();
+            // ;
             if (!empty($pan_number)) {
                 if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                     $object->tds_amount_shipping = 0;
@@ -559,14 +556,7 @@ class Order_model extends CI_Model
             // var_dump($object->tds_amount);
             // echo "</br>";
 
-            // die();
             $object->total_deduction = round($object->cod_charge + $object->shipping_charge_to_gharobaar + $object->tcs_amount + $object->commission_amount_with_gst + $object->tds_amount);
-
-            // var_dump($object->total_amount_with_gst);
-            // echo "</br>";
-            // var_dump($cod_charges_with_gst);
-            // echo "</br>";
-            // var_dump($object->shipping_charge_with_gst);die();
 
             $object->net_seller_payable = round($object->total_amount_with_gst + $cod_inc_gst_in_invoice + $object->shipping_charge_with_gst - $object->total_deduction);
 
@@ -578,11 +568,6 @@ class Order_model extends CI_Model
 
             array_push($seller_settlement, $object);
         }
-        // var_dump($seller_settlement);
-        // die();
-
-        // var_dump(json_encode($seller_settlement));die();
-
         $new_seller_settlement = array();
 
         foreach ($seller_settlement as $ss) {
@@ -806,7 +791,7 @@ class Order_model extends CI_Model
         $cart_items = $this->cart_model->get_sess_cart_items();
         $cart_total = $this->cart_model->get_sess_cart_total();
         // var_dump($cart_items);
-        // die();
+        // ;
         if (!empty($cart_items)) {
             foreach ($cart_items as $cart_item) {
                 $product = get_active_product($cart_item->product_id);
@@ -1070,7 +1055,7 @@ class Order_model extends CI_Model
             'paymentMode' => $data_transaction["payment_mode"],
             'txMsg' => $data_transaction["txMsg"],
             'txTime' => $data_transaction["txTime"],
-            'signature' => $data_transaction["cashfree_signature"],
+            'signature' => "",
             'cashfree_order_id' => $data_transaction["cashfree_order_id"],
             'paymentOption' => $data_transaction["paymentOption"],
             'paymentCode' => $data_transaction["paymentCode"],
@@ -1400,8 +1385,6 @@ class Order_model extends CI_Model
 
     public function update_shiprocket_status($order_id, $product_id)
     {
-        // var_dump("hello");
-        // die();
         $order_status = array(
             'order_status' => 'awaiting_pickup'
         );
@@ -5179,8 +5162,6 @@ class Order_model extends CI_Model
         // $phone = $this->auth_user->phone_number;
         $sql = "SELECT * from notifications where notifications.id='$id' ";
         $count = $this->db->query($sql);
-        // var_dump("9873658");
-        // die();
         return $count->row();
     }
 
@@ -5196,7 +5177,6 @@ class Order_model extends CI_Model
         $this->db->where('seller_id', $this->auth_user->id);
         return $this->db->get('order_supplier')->row();
         // var_dump($query->result());
-        // die();
     }
 
 
