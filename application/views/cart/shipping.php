@@ -2095,13 +2095,10 @@
                     data: data,
                     dataType: 'json',
                     async: false,
-                    success: function(data) {
-                        // console.log(data);
-                    }
+                    success: function(data) {}
                 });
                 if (result['status'] == 404) {
                     message = result['message'];
-                    // console.log(message)
                 }
             });
         });
@@ -2168,10 +2165,6 @@
             success: function(e) {
                 res = JSON.parse(e);
                 $("#load_payment_page")[0].innerHTML = res.pay_view_page;
-                // $("#pay-card").hide();
-                // $("#pay-collect").hide();
-                // $("#pay-app").hide();
-                // $("#pay-nb").hide();
                 $("#order_summary")[0].innerHTML = res.order_summary;
                 $("#paymentMethodButtonDiv").hide();
                 $('#online_methods').show();
@@ -2183,8 +2176,6 @@
                     $("#pay-app-btn").attr('disabled', true);
                     $("#pay-collect-btn").attr('disabled', true);
                 }
-                // console.log(e);
-                // alert($response.pay_view);
             },
         });
 
@@ -2287,14 +2278,8 @@
             url: base_url + "cart_controller/payment_cashfree",
             data: t,
             success: function(result) {
-                // res = JSON.parse(e);
-                // window.location.href = base_url + "cashfree_form";
 
                 orderToken = result["order_token"];
-                // console.log(result);
-                // comment this out for now, we will use this later!
-                //cfCheckout.pay(orderToken, payType);
-                // alert($response.pay_view);
             },
         });
 
