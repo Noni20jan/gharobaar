@@ -231,7 +231,7 @@ class Order_controller extends Home_Core_Controller
         $data['main_settings'] = get_main_settings();
         $data["reject_reason"] = $this->order_model->get_reject_reason_buyer();
         $data["order_products"] = $this->order_model->get_order_products($data["order"]->id);
-        $data["order_products_history"] = $this->order_model->get_user_order_history($this->user_id);
+        $data["order_products_history"] = $this->order_model->get_user_order_history($this->user_id, $data["order"]->id);
         $data["last_bank_transfer"] = $this->order_admin_model->get_bank_transfer_by_order_number($data["order"]->order_number);
 
         $this->load->view('dashboard/includes/_header_buyer', $data);

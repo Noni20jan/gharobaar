@@ -2646,12 +2646,13 @@ class Order_model extends CI_Model
         return $q->result();
     }
 
-    public function get_user_order_history($buyer_id)
+    public function get_user_order_history($buyer_id, $order_id)
     {
         $buyer_id = clean_number($buyer_id);
         $this->db->where('buyer_id', $buyer_id);
         // $this->db->where("(order_products.order_status = 'completed' OR order_products.order_status = 'cancelled')");
         $this->db->where("(order_products.order_status = 'completed')");
+        $this->db->where_not_in('order_products.order_id', $order_id);
         $this->db->order_by('order_products.created_at', 'DESC');
         $query = $this->db->get('order_products');
         return $query->result();
