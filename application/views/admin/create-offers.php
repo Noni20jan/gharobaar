@@ -116,7 +116,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Discount Percentage:</label></div>
             <div class="col-sm-6">
-                <input type='number' name="discount_per" class="form-control auth-form-input" id="discount_per">
+                <input type='number' name="discount_per" onkeypress="return(event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control auth-form-input" id="discount_per">
             </div>
         </div>
     </div>
