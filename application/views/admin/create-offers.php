@@ -108,7 +108,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Discount Amount:</label></div>
             <div class="col-sm-6">
-                <input type='number' name="discount_amt" class="form-control auth-form-input" id="discount_on_percent">
+                <input type='number' name="discount_amt" onkeypress="return(event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control auth-form-input" id="discount_on_percent">
             </div>
         </div>
     </div>
@@ -124,7 +124,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Allowed Maximum Discount:</label></div>
             <div class="col-sm-6">
-                <input type='number' name="allowed_max_discount" class="form-control auth-form-input" id="allowed_max_discount">
+                <input type='number' name="allowed_max_discount" onkeypress="return(event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control auth-form-input" id="allowed_max_discount">
             </div>
         </div>
     </div>
@@ -132,7 +132,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Minimum amount in the cart:</label></div>
             <div class="col-sm-6">
-                <input type='number' name="min_discount" class="form-control auth-form-input" required>
+                <input type='number' onkeypress="return(event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="min_discount" class="form-control auth-form-input" required>
             </div>
         </div>
     </div>
@@ -141,7 +141,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Maximum total usage:</label></div>
             <div class="col-sm-6">
-                <input type='number' name="max_usage" class="form-control auth-form-input" required>
+                <input type='number' name="max_usage"  onkeypress="return(event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control auth-form-input" required>
             </div>
         </div>
     </div>
@@ -154,7 +154,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Offer Code:</label></div>
             <div class="col-sm-6">
-                <input type='text' name="coupon_code" class="form-control auth-form-input" id="code_on_coupon">
+                <input type='text' name="coupon_code" class="form-control auth-form-input" id="code_on_coupon" required>
             </div>
         </div>
     </div>
@@ -170,7 +170,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Max usage per user:</label></div>
             <div class="col-sm-6">
-                <input type='number' name="max_usage_per_user" class="form-control auth-form-input" id="usage_per_user_coupon">
+                <input type='number' name="max_usage_per_user" onkeypress="return(event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control auth-form-input" id="usage_per_user_coupon">
             </div>
         </div>
     </div>
@@ -201,7 +201,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Numbers of Vouchers required:</label></div>
             <div class="col-sm-6">
-                <input type='number' name="vouchers_required" id="vouchers_required_ese" class="form-control auth-form-input">
+                <input type='number' name="vouchers_required" onkeypress="return(event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" id="vouchers_required_ese" class="form-control auth-form-input">
             </div>
         </div>
     </div>
