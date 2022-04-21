@@ -11,8 +11,8 @@ class Home_controller extends Home_Core_Controller
         $this->promoted_products_limit = $this->general_settings->index_promoted_products_count;
         // shipment api call for secret key
         if($this->general_settings->shiprocket_check==1){
-        $this->shiprocket();
-        }
+            $this->shiprocket();
+            }
     }
 
     public function seller_all_products()
@@ -848,7 +848,6 @@ class Home_controller extends Home_Core_Controller
     }
 
 
-
     public function infinite_scroll_products()
     {
         // var_dump("fhdfdg");
@@ -1469,12 +1468,16 @@ class Home_controller extends Home_Core_Controller
         get_method();
         $slug = clean_slug($slug);
         $this->comment_limit = 5;
-
+        if(empty($_SESSION['modesy_sess_user_shiprocket_token'])){
+            $data["shiprocket"] = $this->shiprocket();
+        }
         $data["product"] = $this->product_model->get_product_by_slug($slug);
 
         if (empty($data['product'])) {
             $this->error_404();
-        } else {
+        } 
+      
+        else {
 
             $data["similar_products"] = $this->product_model->get_product_category($data["product"]->id);
             $data['diff_prod'] = $this->product_model->get_different_product($data["product"]->id);
@@ -2548,6 +2551,7 @@ if($this->general_settings->update_bank == 1){
         $this->load->view('aboutus', $data);
         $this->load->view('partials/_footer');
     }
+   
     //shipping_policy///
 
     public function shipping_policy()
