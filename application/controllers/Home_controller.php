@@ -853,7 +853,6 @@ class Home_controller extends Home_Core_Controller
     }
 
 
-
     public function infinite_scroll_products()
     {
         // var_dump("fhdfdg");
@@ -1520,7 +1519,9 @@ class Home_controller extends Home_Core_Controller
         get_method();
         $slug = clean_slug($slug);
         $this->comment_limit = 5;
-
+        if (empty($_SESSION['modesy_sess_user_shiprocket_token'])) {
+            $data["shiprocket"] = $this->shiprocket();
+        }
         $data["product"] = $this->product_model->get_product_by_slug($slug);
 
         if (empty($data['product'])) {
@@ -2590,6 +2591,7 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('aboutus', $data);
         $this->load->view('partials/_footer');
     }
+
     //shipping_policy///
 
     public function shipping_policy()
