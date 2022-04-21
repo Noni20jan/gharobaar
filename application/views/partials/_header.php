@@ -2605,7 +2605,7 @@
 
                                     </div> -->
                                     <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="email" name="email" id="email_new" class="form-control auth-form-input" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old("email"); ?>" required>
+                                        <input type="email" name="email" id="email_new" class="form-control auth-form-input" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old("email"); ?>" required>
                                         <span id="email_span_error" style="color:red;"></span>
                                     </div>
                                 </div>
