@@ -416,12 +416,12 @@
                         if (this.checked) {
                             product_selected.push($(this).val());
 
-
                         } else {
-                            product_selected.splice($.inArray($(this).val(), tmp), 1);
+                            product_selected.splice($.inArray($(this).val()), 1);
 
 
                         }
+                        
                     });
                 });
 
