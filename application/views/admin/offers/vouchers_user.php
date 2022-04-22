@@ -177,7 +177,7 @@
 
 
                             } else {
-                                user_selected.splice($.inArray($(this).val(), tmp), 1);
+                                user_selected.splice($.inArray($(this).val()), 1);
 
 
                             }
