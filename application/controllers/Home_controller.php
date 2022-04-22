@@ -1701,7 +1701,15 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('members', $data);
         $this->load->view('partials/_footer');
     }
+public function msg_start_selling(){
+    $data['title'] = "Thanks For registering with us";
+    $data['description'] = "Thanks For registering with us";
+    $data['keywords'] ="Thanks For registering with us" ;
+    $this->load->view('partials/_header',$data);
+    $this->load->view('product/msg_start_selling', $data);
+    $this->load->view('partials/_footer',$data);
 
+}
     /**
      * Select Membership Plan
      */
@@ -1773,6 +1781,10 @@ class Home_controller extends Home_Core_Controller
                 }
             }
         }
+        if($this->auth_user->is_active_shop_request == 1){
+            redirect(generate_url("thanks_for_registering"));
+        }
+
 
         // $data["states"] = $this->location_model->get_states_by_country($this->auth_user->country_id);
         // $data["cities"] = $this->location_model->get_cities_by_state($this->auth_user->state_id);

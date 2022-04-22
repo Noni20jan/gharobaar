@@ -134,6 +134,8 @@ foreach ($languages as $language) {
         /*product*/
         $route[$key . getr('select_membership_plan', $rts)]['GET'] = 'home_controller/renew_membership_plan';
         $route[$key . getr('start_selling', $rts) . '/' . getr('select_membership_plan', $rts)]['GET'] = 'home_controller/select_membership_plan';
+        $route[$key .getr('thanks_for_registering', $rts)]['GET'] = 'home_controller/msg_start_selling';
+
         $route[$key . getr('start_selling', $rts)]['GET'] = 'home_controller/start_selling';
         $route[$key . getr('search', $rts)]['GET'] = 'home_controller/search';
         $route[$key . getr('search_member', $rts)]['GET'] = 'dashboard_controller/search_member';
@@ -151,6 +153,8 @@ foreach ($languages as $language) {
         //for shop by seller
         $route[getr('shop-by-seller', $rts)] = 'home_controller/shop_by_seller';
 
+        $route[$key . getr('home_cooks1', $rts)]['GET'] = 'home_controller/home_cooks1';
+        $route[$key . getr('home_cooks1/about_us', $rts)]['GET'] = 'home_controller/home_cooks_aboutus';
 
         /*blogs*/
         //$route[$key . getr('user_blog', $rts)]['GET'] = 'home_controller/user_blog';
@@ -298,6 +302,8 @@ foreach ($languages as $language) {
         $route[$key . getr('dashboard', $rts) . '/' . getr('update_seller_info', $rts)]['GET'] = 'profile_controller/update_seller_info';
         $route[$key . getr('dashboard', $rts) . '/' . getr('update_seller_info_services', $rts)]['GET'] = 'profile_controller/update_seller_info_services';
         $route[$key . getr('dashboard', $rts) . '/' . getr('add_product', $rts)]['GET'] = 'dashboard_controller/add_product';
+        $route[$key . getr('dashboard', $rts) . '/' . getr('add_product_csv', $rts)]['GET'] = 'dashboard_controller/add_product_csv';
+
         $route[$key . getr('dashboard', $rts) . '/' . getr('product_inventory', $rts)]['GET'] = 'dashboard_controller/product_inventory';
         $route[$key . getr('dashboard', $rts) . '/' . getr('update_business_information', $rts)]['GET'] = 'dashboard_controller/update_story';
         $route[$key . getr('dashboard', $rts) . '/' . getr('profile', $rts)]['GET'] = 'dashboard_controller/update_profile';
@@ -396,6 +402,8 @@ $route[getr('admin', $rts)] = 'admin_controller/index';
 $route[getr('admin', $rts) . '/settings'] = 'admin_controller/settings';
 $route[getr('admin', $rts) . '/email-settings'] = 'admin_controller/email_settings';
 $route[getr('admin', $rts) . '/social-login'] = 'admin_controller/social_login_settings';
+$route[getr('admin', $rts) . '/disperancy'] = 'admin_controller/disperancy';
+$route[getr('admin', $rts) . '/whatsapp_message'] = 'admin_controller/whatsapp_message';
 
 $route[getr('admin', $rts) . '/add-page'] = 'page_controller/add_page';
 $route[getr('admin', $rts) . '/update-page'] = 'page_controller/update_page';
@@ -535,6 +543,9 @@ $route[getr('admin', $rts) . '/cache-system'] = 'admin_controller/cache_system';
 $route[getr('admin', $rts) . '/storage'] = 'admin_controller/storage';
 
 // reports
+$route[getr('admin', $rts) . '/disperancy-data'] = 'admin_controller/disperancy';
+
+
 $route[getr('admin', $rts) . '/sale-data'] = 'admin_controller/sales';
 $route[getr('admin', $rts) . '/seller-profile-data'] = 'admin_controller/seller_profile_data';
 $route[getr('admin', $rts) . '/shipping-cod-charges'] = 'admin_controller/shipping_cod_charges';
