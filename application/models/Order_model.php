@@ -1440,6 +1440,14 @@ class Order_model extends CI_Model
         $query = $this->db->get('order_products');
         return $query->row();
     }
+    public function get_qunatity_of_order($order_product_id)
+    {
+        $sql = "SELECT sum(product_quantity) as quantity FROM order_products where order_id=$order_product_id";
+        $query = $this->db->query($sql);
+        return $query->result();
+        // return $this->db->last_query();
+    }
+
 
     public function get_order_product_by_orderid($order_product_id)
     {

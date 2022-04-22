@@ -436,8 +436,8 @@
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Account Number<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" minlength="9" value="054805001076" required readonly>
-                <span style="color: red;" id="acc_number"></span>
+                <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" minlength="9" value="054805001076" required readonly onkeyup="checkLength()">
+                <span style=" color: red;" id="acc_number"></span>
 
               </div>
             </div>
@@ -487,7 +487,8 @@
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">IFSC Code<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='text' name="ifsc_code" id="ifsc_code" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->ifsc_code); ?>" required onchange="validate_ifsc($( '#ifsc_code').val())">
+                <input type='text' name="ifsc_code" id="ifsc_code" maxlength="11" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->ifsc_code); ?>" required onchange="validate_ifsc($( '#ifsc_code').val())">
+                <span style="color: red;" id="pincode_error"></span>
               </div>
             </div>
           </div>
@@ -507,7 +508,7 @@
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Bank Branch<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='text' name="bank_branch" id="bank_branch" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->bank_branch); ?>" required>
+                <input type='text' name="bank_branch" id="bank_branch" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->bank_branch); ?>" required readonly>
               </div>
             </div>
           </div>
@@ -1201,12 +1202,11 @@
           document.getElementById("profile_validation").style.display = "block";
         } else if (allowedExtensions.exec(profilePath) && !allowedExtensions.exec(filePath)) {
           document.getElementById("profile_validation").style.display = "none";
-          document.getElementById("demo").style.display="block";
+          document.getElementById("demo").style.display = "block";
 
-        }
-        else if(allowedExtensions.exec(filePath) && !allowedExtensions.exec(profilePath)){
+        } else if (allowedExtensions.exec(filePath) && !allowedExtensions.exec(profilePath)) {
           document.getElementById("demo").style.display = "none";
-          document.getElementById("profile_validation").style.display="block";
+          document.getElementById("profile_validation").style.display = "block";
         }
 
       } else {
@@ -1216,8 +1216,7 @@
 
 
 
-    } 
-     else if (!allowedExtensions.exec(profilePath) && profilePath.length != 0) {
+    } else if (!allowedExtensions.exec(profilePath) && profilePath.length != 0) {
       if (filePath.length != 0) {
         if (!allowedExtensions.exec(filePath)) {
           document.getElementById('demo').style.display = "block";
@@ -1225,14 +1224,12 @@
           document.getElementById("profile_validation").style.display = "block";
         } else if (allowedExtensions.exec(profilePath) && !allowedExtensions.exec(filePath)) {
           document.getElementById("profile_validation").style.display = "none";
-          document.getElementById("demo").style.display="block";
+          document.getElementById("demo").style.display = "block";
 
-        }
-        else if(allowedExtensions.exec(filePath) && !allowedExtensions.exec(profilePath)){
+        } else if (allowedExtensions.exec(filePath) && !allowedExtensions.exec(profilePath)) {
           document.getElementById("demo").style.display = "none";
-          document.getElementById("profile_validation").style.display="block";
-        }
-        else{
+          document.getElementById("profile_validation").style.display = "block";
+        } else {
           document.getElementById("profile_validation").style.display = "block";
 
         }
@@ -1278,11 +1275,30 @@
       success: function(html) {
         console.log(html)
         if (!html) {
-          // $('#pincode_span')[0].innerHTML = "Please enter a valid pincode.";
-          console.log("invalid")
+          $('#pincode_error').html("Please enter a valid IFSC code.");
+          console.log("invalid");
+          return false;
         } else {
           $('input[name="bank_branch"]').val(html.BANK + ", " + html.BRANCH);
           console.log(html.BANK + " " + html.BRANCH);
+          $("#pincode_error").html("");
+          var account_no = $("#verity_account").html();;
+          var ifsc_error = $("#pincode_error").html();;
+          if (account_no == "" && ifsc_error == "") {
+            $('#account_button').prop('disabled', false);
+          } else if (ifsc_error != "" && account_no == "") {
+            $('#account_button').prop('disabled', true);
+          } else {
+            $('#account_button').prop('disabled', true);
+          }
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(errorThrown);
+        if (errorThrown) {
+          $('#pincode_error').html("Please enter a valid IFSC code.");
+          console.log("invalid");
+          $('#account_button').prop('disabled', true);
         }
       }
     })
@@ -1294,13 +1310,51 @@
     var confirm_account = $("#confirm_account_number").val();
     if (account == confirm_account) {
       $("#verity_account").html("");
+      var ifsc_error = $("#pincode_error").html();;
+      var account_no = $("#verity_account").html();;
+      if (ifsc_error == "" && account_no == "") {
+        $('#account_button').prop('disabled', false);
+      } else if (ifsc_error != "" && account_no == "") {
+        $('#account_button').prop('disabled', true);
+      } else {
+        $('#account_button').prop('disabled', true);
+      }
     } else {
       console.log("not match");
       $("#verity_account").html("Account number does not match!");
+      $('#account_button').prop('disabled', true);
     }
   }
+  $("#confirm_account_number").keyup(checkaccountMatch);
   $(document).ready(function() {
-    $("#confirm_account_number").keyup(checkaccountMatch);
+    $('#account_button').prop('disabled', true);
+  });
+
+
+  $("#confirm_account_number").keyup(function() {
+    var ifsc_error = $("#pincode_error").html();;
+    var account_no = $("#verity_account").html();;
+    console.log(ifsc_error)
+    console.log(account_no)
+    if (ifsc_error == "" && account_no == "") {
+      $('#account_button').prop('disabled', false);
+    } else if (ifsc_error != "" && account_no == "") {
+      $('#account_button').prop('disabled', true);
+    } else {
+      $('#account_button').prop('disabled', true);
+    }
+  });
+
+  $("#ifsc_code").keyup(function() {
+    var ifsc_error = $("#pincode_error").html();
+    var account_no = $("#verity_account").html();
+    if (ifsc_error == "" && account_no == "") {
+      $('#account_button').prop('disabled', false);
+    } else if (ifsc_error != "" && account_no == "") {
+      $('#account_button').prop('disabled', true);
+    } else {
+      $('#account_button').prop('disabled', true);
+    }
   });
 </script>
 
