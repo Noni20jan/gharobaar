@@ -165,6 +165,8 @@
 
                     for (var i = 0; i < len; i++) {
 
+
+
                         $('#insert_data').append("<tr><td>" + Json_data[i].id + "</td><td>" + '<a href="<?php echo base_url() . "profile"; ?>/' + Json_data[i].slug + '"target="_blank" class="table-link">' + Json_data[i].username + "</td><td>" + Json_data[i].email + "</td><td>" + '<label class="label label-success">' + '<?php echo trans("active"); ?>' + '</label>' + "</td><td>" + Json_data[i].last_seen + "</td><td>" + Json_data[i].created_at + "</td><td>" + '<input type="checkbox" name="selected_id" id="product_checkbox" value="' + Json_data[i].id + '">' + "</td></tr>")
                     }
                     var user_selected = []
