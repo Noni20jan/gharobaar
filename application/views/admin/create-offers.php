@@ -154,7 +154,7 @@
         <div class="row">
             <div class="col-sm-6"><label>Offer Code:</label></div>
             <div class="col-sm-6">
-                <input type='text' name="coupon_code" class="form-control auth-form-input" id="code_on_coupon" required>
+                <input type='text' name="coupon_code" class="form-control auth-form-input" id="code_on_coupon">
             </div>
         </div>
     </div>
