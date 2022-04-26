@@ -464,7 +464,8 @@ class Order_model extends CI_Model
 
 
             // $cod_charges = 0;
-            $cod_charges_without_gst = ($this->get_charges_seller_wise($object->vendorId, $order_id))->Sup_cod_cost;
+            // $cod_charges_without_gst = ($this->get_charges_seller_wise($object->vendorId, $order_id))->Sup_cod_cost;
+            $cod_charges_without_gst = 0;
             $cod_charges_with_gst = $cod_charges_without_gst + (0.18 * $cod_charges_without_gst);
             $cod_charges_with_product_gst = ($this->get_charges_seller_wise($object->vendorId, $order_id))->total_cod_cost;
             $shipping_cod_gst_rate = ($this->get_charges_seller_wise($object->vendorId, $order_id))->shipping_cod_gst_rate;
@@ -2779,9 +2780,13 @@ class Order_model extends CI_Model
         $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
         $Supp_ship_data = json_decode($this->get_seller_wise_data_bifurcation($cart_total));
 
+
         if ($Supp_ship_data) {
             foreach ($Supp_ship_data as $sup) {
                 $seller_address = get_user($sup->SupplierId);
+                $current_invoice_no = $this->get_invoice_number_by_seller_id($sup->SupplierId);
+                // var_dump($current_invoice_no[0]->invoice_seq);
+                //$this->db->query('LOCK TABLES users(invoice_seq) WRITE, users(invoice_seq) as user1 READ');
                 $data = array(
                     'order_id' => $order_id,
                     'seller_id' => $sup->SupplierId,
@@ -2794,7 +2799,8 @@ class Order_model extends CI_Model
                     'Sup_Shipping_gst' => $sup->shipping_tax_charges,
                     'Sup_cod_gst' => $sup->cod_tax_charges,
                     'created_by' => 1,
-                    'updated_by' => 1
+                    'updated_by' => 1,
+                    'invoice_no' => $current_invoice_no[0]->invoice_seq
                 );
                 if ($seller_address->supplier_state == $shipping_address->shipping_state) {
                     $data['shipping_igst'] = 0;
@@ -2821,8 +2827,28 @@ class Order_model extends CI_Model
                 $data["total_cod_cost"] = $data["Sup_cod_cost"] + $data['Sup_cod_gst'];
                 $data['grand_total_amount'] = $data["Sup_total_prd"] + $data["total_shipping_cost"] + $data["total_cod_cost"];
                 $this->db->insert('order_supplier', $data);
+                $this->update_invoice_number_by_seller_id($sup->SupplierId, $current_invoice_no[0]->invoice_seq);
+                //$this->db->query('UNLOCK TABLES');
             }
         }
+    }
+
+    // function to get the invoice  number
+    public function get_invoice_number_by_seller_id($seller_id)
+    {
+        $this->db->select('invoice_seq');
+        $this->db->where('id', $seller_id);
+        $query = $this->db->get('users');
+        return $query->result();
+    }
+    // function to update the invoice seq number
+    public function update_invoice_number_by_seller_id($seller_id, $seq_number)
+    {
+        $data = array(
+            'invoice_seq' => $seq_number + 1
+        );
+        $this->db->where('id', $seller_id);
+        $this->db->update('users', $data);
     }
 
     public function get_shipping_cost($cart_total = null)
