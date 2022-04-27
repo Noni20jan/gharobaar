@@ -94,69 +94,69 @@
         </div>
     </div>
 </div>
-< <script>
+<script>
     $(function() {
 
-    var
-    max_file_number = 4,
+        var
+            max_file_number = 4,
 
-    $form = $('form'),
+            $form = $('form'),
 
-    $file_upload = $('#fileuploadbasic', $form),
+            $file_upload = $('#fileuploadbasic', $form),
 
-    $button = $('.submit', $form);
+            $button = $('.submit', $form);
 
-    // $button.prop('disabled', 'disabled');
+        // $button.prop('disabled', 'disabled');
 
-    $file_upload.on('change', function() {
-    var number_of_images = $(this)[0].files.length;
-    if (number_of_images > max_file_number) {
-    $(this).val('');
-    $button.prop('disabled', 'disabled');
-    } else {
-    $button.prop('disabled', false);
-    }
+        $file_upload.on('change', function() {
+            var number_of_images = $(this)[0].files.length;
+            if (number_of_images > max_file_number) {
+                $(this).val('');
+                $button.prop('disabled', 'disabled');
+            } else {
+                $button.prop('disabled', false);
+            }
+        });
     });
-    });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $("#submit").click(function() {
-                // alert("wqrw");
-                event.preventDefault();
-                var reset_data = document.getElementById("form")
-                var form = this.form;
+</script>
+<script>
+    $(document).ready(function() {
+        $("#submit").click(function() {
+            // alert("wqrw");
+            event.preventDefault();
+            var reset_data = document.getElementById("form")
+            var form = this.form;
 
-                var data = new FormData(form);
+            var data = new FormData(form);
 
-                data.append(csfr_token_name, $.cookie(csfr_cookie_name));
+            data.append(csfr_token_name, $.cookie(csfr_cookie_name));
 
-                $.ajax({
-                    type: "POST",
-                    url: base_url + 'home_controller/add_review_post',
-                    data: data,
-                    dataType: 'json',
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        var i = JSON.parse(response);
+            $.ajax({
+                type: "POST",
+                url: base_url + 'home_controller/add_review_post',
+                data: data,
+                dataType: 'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    var i = JSON.parse(response);
 
-                        if (i == true) {
-                            //console.log(i);
-                            reset_data.reset();
-                            $('#rateProductModal').modal('hide');
-                            $('#feedback_msg').modal('show');
+                    if (i == true) {
+                        //console.log(i);
+                        reset_data.reset();
+                        $('#rateProductModal').modal('hide');
+                        $('#feedback_msg').modal('show');
 
-                            setTimeout(function() {
-                                $('#feedback_msg').modal('hide');
-                            }, 6000);
-                        } else {
-                            reset_data.reset();
-                            $('#rateProductModal').modal('hide');
-                        }
+                        setTimeout(function() {
+                            $('#feedback_msg').modal('hide');
+                        }, 6000);
+                    } else {
+                        reset_data.reset();
+                        $('#rateProductModal').modal('hide');
                     }
-                });
+                }
             });
         });
-    </script>
+    });
+</script>

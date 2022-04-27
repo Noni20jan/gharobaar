@@ -75,12 +75,32 @@
 									</td>
 									<td><strong><?php echo price_formatted($item->price_total, $item->price_currency); ?></strong></td>
 									<td>
-										<?php if ($item->status == 1) : ?>
-											<label class="label label-success"><?php echo trans("completed"); ?></label>
-										<?php elseif ($item->status == 0) : ?>
+										<?php $order_products = $this->order_admin_model->get_order_products($item->id)
+										?>
+										<?php foreach ($order_products as $product_status) :
+											if (
+												$product_status->order_status ==
+												'cancelled_by_user' || $product_status->order_status == 'cancelled_by_user'
+											) {
+												$cancellation = 0;
+											} elseif ($product_status->order_status == 'processing') {
+												$cancellation = 1;
+												break;
+											} else {
+												$cancellation = 2;
+											}											// $cancellation = 2; 
+
+										?>
+										<?php endforeach ?>
+
+
+
+										<?php if ($cancellation == 1) : ?>
 											<label class="label label-default"><?php echo trans("order_processing"); ?></label>
-										<?php elseif ($item->status == 2) : ?>
+										<?php elseif ($cancellation == 0) : ?>
 											<label class="label label-default"><?php echo trans("order_cancelled"); ?></label>
+										<?php elseif ($cancellation == 2) : ?>
+											<label class="label label-default"><?php echo trans("completed"); ?></label>
 										<?php endif; ?>
 									</td>
 									<!-- <td><?php echo time_ago($item->updated_at); ?></td> -->
