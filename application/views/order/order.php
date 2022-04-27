@@ -738,8 +738,7 @@
             <?php if (!empty($order_products_history)) : ?>
 
                 <div class="table-responsive">
-                    <h3 class="page-title t" style="margin-left:12px; margin-top:30px;
-                    ">Other Orders</h3>
+                    <h3 class="page-title t" style="margin-left:12px; margin-top:30px;">Other Orders</h3>
                     <table class="table table-orders summary-section" style="padding: 0 15px;">
                         <!-- 
                             <thead>
@@ -823,8 +822,7 @@
                     </table>
                 </div>
             <?php else : ?>
-                <h3 class="page-title t" style="margin-left:12px; margin-top:30px;
-                    ">NO Other Orders </h3>
+                <h3 class="page-title t" style="margin-left:12px; margin-top:30px;">NO Other Orders </h3>
             <?php endif; ?>
 
 
@@ -1218,7 +1216,7 @@
                                 <?php endforeach; ?>
                                 <div>
                                     <div class="row order-row-item">
-                                        <div class="col-9">
+                                        <div class="col-9" style="margin-left:3%">
                                             <h3>Delivery Address</h3>
                                         </div>
 
@@ -1226,14 +1224,14 @@
                                     <div class="row order-row-item ">
                                         <div class="col-3">
                                         </div>
-                                        <div class="col-9">
+                                        <div class="col-9" style="margin-left:3%">
                                             <?php $shipping = get_order_shipping($order->id);
                                             if (!empty($shipping)) : ?>
                                                 <!-- <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?> -->
                                         </div>
                                     </div>
                                     <div class="row order-row-item">
-                                        <div class="col-9" style="margin-right:1%;">
+                                        <div class="col-9" style="margin-left:3%;">
                                             <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?>
 
                                             <div class="address-view"><?php echo $shipping->shipping_address_1 . ", " . $shipping->shipping_landmark . ", " . $shipping->shipping_area; ?></div>
