@@ -2683,7 +2683,7 @@
                             </div>
                             <div class="form-group m-t-5 m-b-20">
                                 <div class="custom-control custom-checkbox custom-control-validate-input">
-                                    <input type="checkbox" class="custom-control-input" name="terms" id="checkbox_terms" readonly="readonly">
+                                    <input type="checkbox" class="custom-control-input" name="terms" id="checkbox_terms">
                                     <label for="checkbox_terms" class="custom-control-label"><?php echo trans("terms_conditions_exp"); ?>&nbsp;
                                         <?php $page_terms = get_page_by_default_name("terms_conditions", $this->selected_lang->id); ?>
                                     </label>
@@ -3026,8 +3026,8 @@
 
             if (isReadOnly) {
                 console.log("test");
-                $(this).prop('checked', false);
-                $("#small-text-header").show();
+                $(this).prop('checked', true);
+                // $("#small-text-header").show();
             }
         });
     </script>
