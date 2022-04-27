@@ -75,12 +75,14 @@
 									</td>
 									<td><strong><?php echo price_formatted($item->price_total, $item->price_currency); ?></strong></td>
 									<td>
-									<?php if ($item->status == 1): ?>
-										<label class="label label-success"><?php echo trans("completed"); ?></label>
-									<?php else: ?>
-										<label class="label label-default"><?php echo trans("order_processing"); ?></label>
-									<?php endif; ?>
-								</td>
+										<?php if ($item->status == 1) : ?>
+											<label class="label label-success"><?php echo trans("completed"); ?></label>
+										<?php elseif ($item->status == 0) : ?>
+											<label class="label label-default"><?php echo trans("order_processing"); ?></label>
+										<?php elseif ($item->status == 2) : ?>
+											<label class="label label-default"><?php echo trans("order_cancelled"); ?></label>
+										<?php endif; ?>
+									</td>
 									<!-- <td><?php echo time_ago($item->updated_at); ?></td> -->
 
 									<td>
@@ -227,7 +229,7 @@
 								}
 								var time_format = Json_data[i].updated_at;
 								time_ago_format = time_ago(time_format);
-								$('#table_'+order_number).append("<tr><td>" + Json_data[i].product_id + "</td><td>" + Json_data[i].product_title + "</td><td>" + Json_data[i].shop_name + "</td><td>" +"₹"+ Json_data[i].product_unit_price/100 + "</td><td>" + Json_data[i].product_quantity + "</td><td>" +"₹"+ Json_data[i].product_gst/100 + "</td><td>" +"₹"+ Json_data[i].product_shipping_cost/100 + "</td><td>" +"₹"+ Json_data[i].product_total_price/100 + "</td><td>" + new_order_status + "</td><td>"+ time_ago_format + "</td><td>")
+								$('#table_' + order_number).append("<tr><td>" + Json_data[i].product_id + "</td><td>" + Json_data[i].product_title + "</td><td>" + Json_data[i].shop_name + "</td><td>" + "₹" + Json_data[i].product_unit_price / 100 + "</td><td>" + Json_data[i].product_quantity + "</td><td>" + "₹" + Json_data[i].product_gst / 100 + "</td><td>" + "₹" + Json_data[i].product_shipping_cost / 100 + "</td><td>" + "₹" + Json_data[i].product_total_price / 100 + "</td><td>" + new_order_status + "</td><td>" + time_ago_format + "</td><td>")
 							}
 						}
 					}

@@ -260,10 +260,11 @@
             <div class="order-body">
                 <div class="col-12 order-details-new-ui">
                     <div class="row order-row-item">
-                        <div class="col-9">
-                            <h3 style="margin-top:0px;">Delivery Address</h3>
+                        <div class="col-3">
+                            <h3 style="margin-top:0px;">Order Details</h3>
                         </div>
-                        <div class="col-3 invoice_margin">
+
+                        <div class="col-9 invoice_margin">
                             <div class="line-detail" style="min-height:0px;">
                                 <?php $order_status = 0;
                                 foreach ($order_products as $item) :
@@ -283,38 +284,66 @@
                     </div>
                     <div class="row order-row-item">
                         <div class="col-3">
+
+                            <p> <span class="product-details">Order Number:-&nbsp;</span><?php echo html_escape($order->order_number); ?></p>
+
                         </div>
-                        <div class="col-9" style="margin-right:1%;">
-                            <?php $shipping = get_order_shipping($order->id);
-                            if (!empty($shipping)) : ?>
-                                <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?> &nbsp;
-                        </div>
-                    </div>
-                    <div class="row order-row-item">
-                        <div class="col-3">
-                        </div>
-                        <div class="col-9" style="margin-right:1%;">
-                            <div class="address-view"><?php echo $shipping->shipping_address_1 . ", " . $shipping->shipping_landmark . ", " . $shipping->shipping_area; ?></div>
-                            <div class="address-view"><?php echo $shipping->shipping_city . ", " . $shipping->shipping_state . ", " . $shipping->shipping_zip_code . ", " . $shipping->shipping_country; ?> </div>
+                        <div class="col-9">
                         </div>
                     </div>
                     <div class="row order-row-item">
                         <div class="col-3">
+
                         </div>
-                        <div class="col-9" style="margin-right:1%;">
-                            <b> <?php echo $shipping->shipping_phone_number; ?></b>
-                        </div>
-                    </div>
-                    <div class="row order-row-item">
-                        <div class="col-3">
-                        </div>
-                        <div class="col-9" style="margin-right:1%;">
-                            <b> <?php echo $shipping->shipping_email; ?></b>
+                        <div class="col-9">
                         </div>
                     </div>
 
-                <?php endif; ?>
+                    <div class="row order-row-item">
+                        <div class="col-3">
+                            <?php $order_details = $this->order_model->get_order_details_by_id($order->id); ?>
+                            <p> <span class="product-details">Order Date-&nbsp;</span><?php echo helper_date_format($order_details->created_at); ?></p>
+
+                        </div>
+                        <div class="col-9">
+                        </div>
+                    </div>
+                    <div class="row order-row-item">
+                        <div class="col-3">
+                            <?php if (!empty($order_details->discount)) : ?>
+                                <p> <span class="product-details">Discount:-&nbsp;</span><?php echo price_formatted($order_details->discount, $order_details->price_currency); ?></p>
+                            <?php endif ?>
+                        </div>
+                        <div class="col-9">
+
+                        </div>
+                    </div>
+                    <div class="row order-row-item">
+                        <div class="col-3">
+                            <p> <span class="product-details">Price:-&nbsp;</span><?php echo price_formatted($order_details->price_total, $order_details->price_currency); ?></p>
+
+                        </div>
+                        <div class="col-9">
+
+                        </div>
+                    </div>
+                    <div class="row order-row-item">
+                        <div class="col-3">
+                            <?php $quantity = $this->order_model->get_qunatity_of_order($order->id) ?>
+                            <?php foreach ($quantity as $quantities) : ?>
+                                <p> <span class="product-details">quantity-&nbsp;</span><?php echo ($quantities->quantity) ?></p>
+
+                            <?php endforeach ?>
+                        </div>
+                        <div class="col-9">
+                        </div>
+                    </div>
+
+
+
                 </div>
+
+
                 <!-- <div class="row">
                         <div class="col-sm-12">
                             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" style="margin-top: .6%;transform: scale(1.5); margin-left:1%" onclick="show()">
@@ -641,6 +670,71 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12 order-details-new-ui" style="top: 22px;">
+                <div class="row order-row-item">
+                    <div class="col-3">
+                        <h3 style="margin-top:0px;">Delivery Address</h3>
+                    </div>
+                    <div class="col-9 invoice_margin">
+                        <div class="line-detail" style="min-height:0px;">
+                            <?php $order_status = 0;
+                            foreach ($order_products as $item) :
+                                if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected') {
+                                    $order_status = 1;
+                                }
+                            endforeach;
+                            if ($order_status == 1) : ?>
+
+                                <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#007C05;"><?php echo trans('view_invoice'); ?></a>
+                            <?php else : ?>
+
+                                <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#007C05;"><?php echo trans('porforma_invoice'); ?></a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row order-row-item">
+                    <div class="col-3">
+
+
+                    </div>
+                    <div class="col-9" style="margin-left:1%">
+                        <?php $shipping = get_order_shipping($order->id);
+                        if (!empty($shipping)) : ?>
+                            <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?> &nbsp;
+                    </div>
+                </div>
+
+
+                <div class="row order-row-item">
+                    <div class="col-3">
+                    </div>
+                    <div class="col-9" style="margin-left:1%">
+                        <div class="address-view"><?php echo $shipping->shipping_address_1 . ", " . $shipping->shipping_landmark . ", " . $shipping->shipping_area; ?></div>
+                        <div class="address-view"><?php echo $shipping->shipping_city . ", " . $shipping->shipping_state . ", " . $shipping->shipping_zip_code . ", " . $shipping->shipping_country; ?> </div>
+                    </div>
+                </div>
+                <div class="row order-row-item">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-9" style="margin-left:1%">
+                        <b> <?php echo $shipping->shipping_phone_number; ?></b>
+                    </div>
+                </div>
+                <div class="row order-row-item">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-9" style="margin-left:1%">
+                        <b> <?php echo $shipping->shipping_email; ?></b>
+                    </div>
+                </div>
+
+
+
+            <?php endif; ?>
+            </div>
             <?php if (!empty($order_products_history)) : ?>
 
                 <div class="table-responsive">
@@ -730,7 +824,7 @@
                 </div>
             <?php else : ?>
                 <h3 class="page-title t" style="margin-left:12px; margin-top:30px;
-                    ">NO Other Orders</h3>
+                    ">NO Other Orders </h3>
             <?php endif; ?>
 
 
@@ -757,34 +851,30 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="row new-order-ui-for-mobile">
-                                <div class="row order-row-item">
-                                    <div class="col-9">
-                                        <h3>Delivery Address</h3>
-                                    </div>
 
-                                </div>
-                                <div class="row order-row-item ">
+                                <div class="row order-row-item">
                                     <div class="col-3">
+                                        <h3 class="details">Order Details</h3>
                                     </div>
-                                    <div class="col-9">
-                                        <?php $shipping = get_order_shipping($order->id);
-                                        if (!empty($shipping)) : ?>
-                                            <!-- <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?> -->
-                                    </div>
-                                </div>
-                                <div class="row order-row-item">
+
                                     <div class="col-9" style="margin-right:1%;">
-                                        <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?>
+                                        <b> <span class="product-details">Order Number:-&nbsp;</span><?php echo html_escape($order->order_number); ?></b>
 
-                                        <div class="address-view"><?php echo $shipping->shipping_address_1 . ", " . $shipping->shipping_landmark . ", " . $shipping->shipping_area; ?></div>
-                                        <div class="address-view"><?php echo $shipping->shipping_city . ", " . $shipping->shipping_state . ", " . $shipping->shipping_zip_code . ", " . $shipping->shipping_country; ?> </div>
-                                        <b> <?php echo $shipping->shipping_phone_number; ?></b>
-                                        <b> <?php echo $shipping->shipping_email; ?></b>
+                                        <?php $order_details = $this->order_model->get_order_details_by_id($order->id); ?>
+                                        </br><b> <span class="product-details">Order Date-&nbsp;</span><?php echo helper_date_format($order_details->created_at); ?></b>
+                                        </br><b> <span class="product-details">Discount:-&nbsp;</span><?php echo price_formatted($order_details->discount, $order_details->price_currency); ?></b>
+                                        <?php $quantity = $this->order_model->get_qunatity_of_order($order->id) ?>
+                                        <?php foreach ($quantity as $quantities) : ?>
+                                            </br> <b> <span class="product-details">quantity-&nbsp;</span><?php echo ($quantities->quantity) ?></b>
+
+                                        <?php endforeach ?>
+
+                                        </br> <b> <span class="product-details">Price:-&nbsp;</span><?php echo price_formatted($order_details->price_total, $order_details->price_currency); ?></b>
+
 
                                     </div>
 
                                 </div>
-                            <?php endif; ?>
                             </div>
                             <div class="invoice_margin">
                                 <div class="line-detail" style="min-height:0px;">
@@ -1058,6 +1148,7 @@
                                                         </div>
                                                 <?php endif;
                                                 endif; ?>
+
                                                 <?php if ($this->general_settings->reviews == 1 && $item->seller_id != $item->buyer_id) : ?>
                                                     <div class="row-custom">
                                                         <div class="rate-product">
@@ -1075,6 +1166,7 @@
                                                 <?php endif; ?>
                                             <?php endif; ?>
                                         </div>
+
                                         <div class="fullwidth">
                                             <div class="container separator">
                                                 <h6 id="track_status">Tracking Status</h6>
@@ -1124,7 +1216,36 @@
 
                                     </div>
                                 <?php endforeach; ?>
+                                <div>
+                                    <div class="row order-row-item">
+                                        <div class="col-9">
+                                            <h3>Delivery Address</h3>
+                                        </div>
 
+                                    </div>
+                                    <div class="row order-row-item ">
+                                        <div class="col-3">
+                                        </div>
+                                        <div class="col-9">
+                                            <?php $shipping = get_order_shipping($order->id);
+                                            if (!empty($shipping)) : ?>
+                                                <!-- <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?> -->
+                                        </div>
+                                    </div>
+                                    <div class="row order-row-item">
+                                        <div class="col-9" style="margin-right:1%;">
+                                            <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?>
+
+                                            <div class="address-view"><?php echo $shipping->shipping_address_1 . ", " . $shipping->shipping_landmark . ", " . $shipping->shipping_area; ?></div>
+                                            <div class="address-view"><?php echo $shipping->shipping_city . ", " . $shipping->shipping_state . ", " . $shipping->shipping_zip_code . ", " . $shipping->shipping_country; ?> </div>
+                                            <b> <?php echo $shipping->shipping_phone_number; ?></b>
+                                            <b> <?php echo $shipping->shipping_email; ?></b>
+
+                                        </div>
+
+                                    </div>
+                                <?php endif ?>
+                                </div>
                                 </div>
                             </div>
 

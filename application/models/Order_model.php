@@ -1427,6 +1427,14 @@ class Order_model extends CI_Model
         $query = $this->db->get('order_products');
         return $query->row();
     }
+    public function get_qunatity_of_order($order_product_id)
+    {
+        $sql = "SELECT sum(product_quantity) as quantity FROM order_products where order_id=$order_product_id";
+        $query = $this->db->query($sql);
+        return $query->result();
+        // return $this->db->last_query();
+    }
+
 
     public function get_order_product_by_orderid($order_product_id)
     {
@@ -4178,23 +4186,49 @@ class Order_model extends CI_Model
 
     public function update_whole_order_status($order_id)
     {
-        $this->db->where('order_id', $order_id);
-        $query = $this->db->get('order_products');
-        $total_order_products = $query->num_rows();
-
-
-        $this->db->where('order_id', $order_id);
-        $this->db->where('order_status', "completed");
-        $query = $this->db->get('order_products');
-        $total_order_products_delivered = $query->num_rows();
-
-        if ($total_order_products === $total_order_products_delivered) :
+        $query1 = "SELECT count(*) FROM order_products WHERE order_id =$order_id";
+        $query2 = "SELECT count(*) 
+        FROM order_products 
+        WHERE order_id = $order_id AND (order_status = 'cancelled_by_user'
+                OR order_status = 'cancelled_by_seller')";
+        $query3 = "SELECT count(*)
+          FROM order_products
+          WHERE order_id = $order_id
+        AND order_status = 'Processing'";
+        if ($query1 - $query2 == 0) :
+            $data = array(
+                "status" => 2
+            );
+        elseif ($query3  > 0) :
+            $data = array(
+                "status" => 0
+            );
+        else :
             $data = array(
                 "status" => 1
             );
             $this->db->where('id', $order_id);
             $this->db->update('orders', $data);
         endif;
+
+
+        // $this->db->where('order_id', $order_id);
+        // $query = $this->db->get('order_products');
+        // $total_order_products = $query->num_rows();
+
+
+        // $this->db->where('order_id', $order_id);
+        // $this->db->where('order_status', "completed");
+        // $query = $this->db->get('order_products');
+        // $total_order_products_delivered = $query->num_rows();
+
+        // if ($total_order_products === $total_order_products_delivered) :
+        //     $data = array(
+        //         "status" => 1
+        //     );
+        //     $this->db->where('id', $order_id);
+        //     $this->db->update('orders', $data);
+        // endif;
     }
     public function get_commission_rate_nb_wallet($payment_mode, $code)
     {

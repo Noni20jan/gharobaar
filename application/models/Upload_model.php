@@ -246,14 +246,14 @@ class Upload_model extends CI_Model
                 return null;
             }
         }
-        $config['upload_path'] = './uploads/cheque_images/';
+        $config['upload_path'] = './uploads/pdf/';
         $config['allowed_types'] = 'gif|jpg|jpeg|png|pdf';
         $config['file_name'] = 'cheque_images' . generate_unique_id();
         $this->load->library('upload', $config);
         if ($this->upload->do_upload($file_name)) {
             $data = array('upload_data' => $this->upload->data());
             if (isset($data['upload_data']['full_path'])) {
-                return "uploads/cheque_images/" . $data['upload_data']['file_name'];
+                return "uploads/pdf/" . $data['upload_data']['file_name'];
             }
             return null;
         } else {
