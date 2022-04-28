@@ -779,6 +779,8 @@ class Product_model extends Core_Model
         $category_id = clean_number($category_id);
         $p_min = clean_number($this->input->get("p_min", true));
         $p_max = clean_number($this->input->get("p_max", true));
+        $p_min_weight = clean_number($this->input->get("p_min_weight", true));
+        $p_max_weight = clean_number($this->input->get("p_max_weight", true));
         $sort = str_slug($this->input->get("sort", true));
         $origin_of_product = $this->input->get("origin_of_product", true);
         $jewellery_type = $this->input->get("jewellery_type", true);
@@ -851,7 +853,7 @@ class Product_model extends Core_Model
 
 
             foreach ($query_string_array as $key => $array_values) {
-                $keyExistArr = array("product_type", "meal_type", "cash_on_delivery", "blouse_details", "pet_age", "available", "gender", "discount", "food_type", "jewellery_type", "rating", "p_min", "p_max", "sort", "search", "seller_type", "origin_of_product", "food_preference", "available_for_return_or_exchange", "availability", "suitable_for", "is_personalised", "category","shipping_time");
+                $keyExistArr = array("product_type", "meal_type", "cash_on_delivery", "blouse_details", "pet_age", "available", "gender", "discount", "food_type", "jewellery_type", "rating", "p_min", "p_max","p_min_weight","p_max_weight", "sort", "search", "seller_type", "origin_of_product", "food_preference", "available_for_return_or_exchange", "availability", "suitable_for", "is_personalised", "category","shipping_time");
                 if (!in_array($key, $keyExistArr)) {
                     $item = new stdClass();
                     $item->key = $key;
@@ -959,6 +961,9 @@ class Product_model extends Core_Model
             $this->db->group_end();
 
         }
+
+     
+
         //Kids Corner
         $array_kids_corner = @explode(',', $suitable_for);
         if (!empty($array_kids_corner) && !empty($array_kids_corner[0])) {
@@ -1148,6 +1153,16 @@ class Product_model extends Core_Model
         if ($p_max != "") {
             $this->db->where('products.listing_price <=', intval($p_max * 100));
         }
+        if ($p_min_weight != "") {
+            $this->db->where('products.product_weight >=', $p_min_weight);
+            $this->db->where('products.product_weight!=',0);
+
+        }
+        if ($p_max_weight != "") {
+            $this->db->where('products.product_weight <=', $p_max_weight);
+            $this->db->where('products.product_weight!=',0);
+
+        }
 
         //search words
         //search words
@@ -1263,6 +1278,8 @@ class Product_model extends Core_Model
         $category_id = clean_number($category_id);
         $p_min = clean_number($this->input->get("p_min", true));
         $p_max = clean_number($this->input->get("p_max", true));
+        $p_min_weight = clean_number($this->input->get("p_min_weight", true));
+        $p_max_weight = clean_number($this->input->get("p_max_weight", true));
         $sort = str_slug($this->input->get("sort", true));
         $origin_of_product = $this->input->get("origin_of_product", true);
         $jewellery_type = $this->input->get("jewellery_type", true);
@@ -1283,6 +1300,7 @@ class Product_model extends Core_Model
         $add_meet = str_replace('_', ' ', $this->input->get("product_type", true));
         $rating = remove_special_characters($this->input->get("rating", true));
         $shipping_time=$this->input->get("shipping_time",true);
+
         $seller_type = remove_special_characters($this->input->get("seller_type", true));
         $search = remove_special_characters(trim($this->input->get('search', true)));
 
@@ -1322,7 +1340,7 @@ class Product_model extends Core_Model
 
 
             foreach ($query_string_array as $key => $array_values) {
-                if ($key != "product_type" && $key != "meal_type" && $key != "cash_on_delivery" && $key != "blouse_details" && $key != "pet_age" && $key != "available"  && $key != "gender" && $key != "discount"  && $key != "food_type" && $key != "jewellery_type"  && $key != "rating"  && $key != "p_min" && $key != "p_max" && $key != "sort" && $key != "search" && $key != "seller_type" && $key != "origin_of_product" && $key != "food_preference" && $key != "available_for_return_or_exchange" && $key != "availability" && $key != "suitable_for" && $key != "is_personalised" && $key != "shipping_time") {
+                if ($key != "product_type" && $key != "meal_type" && $key != "cash_on_delivery" && $key != "blouse_details" && $key != "pet_age" && $key != "available"  && $key != "gender" && $key != "discount"  && $key != "food_type" && $key != "jewellery_type"  && $key != "rating"  && $key != "p_min" && $key != "p_max" && $key != "p_min_weight" && $key != "p_max_weight" && $key != "sort" && $key != "search" && $key != "seller_type" && $key != "origin_of_product" && $key != "food_preference" && $key != "available_for_return_or_exchange" && $key != "availability" && $key != "suitable_for" && $key != "is_personalised"  && $key != "shipping_time") {
                     $item = new stdClass();
                     $item->key = $key;
                     $updated_array_values = array();
@@ -1372,7 +1390,17 @@ class Product_model extends Core_Model
             endif;
         }
 
+        if ($p_min_weight != "") {
+            $this->db->where('products.product_weight >=', $p_min_weight);
+            $this->db->where('products.product_weight!=',0);
 
+        }
+        if ($p_max_weight != "") {
+            $this->db->where('products.product_weight <=', ($p_max_weight));
+                        $this->db->where('products.product_weight!=',0);
+
+
+        }
         //add product filter options
         if (!empty($category_ids)) {
             $this->db->where_in("products.category_id", $category_ids, FALSE);
@@ -1385,7 +1413,12 @@ class Product_model extends Core_Model
             $this->db->where_in("products.add_meet", $array_product_type);
             $this->db->group_end();
         }
-
+        if ($p_min != "") {
+            $this->db->where('products.listing_price >=', intval($p_min * 100));
+        }
+        if ($p_max != "") {
+            $this->db->where('products.listing_price <=', intval($p_max * 100));
+        }
         //availability of products
 
         if (!empty($available)) {
@@ -1423,7 +1456,8 @@ class Product_model extends Core_Model
             $this->db->where('products.stock >',0);
             $this->db->group_end();            
         }
-        
+  
+
         //Kids Corner
         $array_kids_corner = @explode(',', $suitable_for);
         if (!empty($array_kids_corner) && !empty($array_kids_corner[0])) {
@@ -1546,7 +1580,6 @@ class Product_model extends Core_Model
                 $this->db->group_start();
                 $this->db->where_in("products.user_id", $speciality_array);
                 $this->db->group_end();
-                var_dump($this->db->last_query());
             } else {
                 $this->db->where_in("products.user_id", 0);
             }
@@ -3356,6 +3389,7 @@ order by id desc LIMIT 1";
         $product_waiting = get_product_id_by_seller_id($user_id, "waiting");
 
         $product_processing = get_product_id_by_seller_id($user_id, "processing");
+
 
         $total_lead_time_in_sec = 0;
         foreach ($product_waiting as $order_product) {
