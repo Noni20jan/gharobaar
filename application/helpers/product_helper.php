@@ -763,6 +763,7 @@ if (!function_exists('get_variation_option_name')) {
     }
 }
 
+
 //get variation default option
 if (!function_exists('get_variation_default_option')) {
     function get_variation_default_option($variation_id)
@@ -825,6 +826,8 @@ if (!function_exists('get_query_string_array')) {
         }
         array_push($array_filter_keys, "p_min");
         array_push($array_filter_keys, "p_max");
+        array_push($array_filter_keys, "p_min_weight");
+        array_push($array_filter_keys, "p_max_weight");
         array_push($array_filter_keys, "product_type");
         array_push($array_filter_keys, "sort");
         array_push($array_filter_keys, "search");
@@ -1011,7 +1014,18 @@ if (!function_exists('generate_price_filter_url')) {
         return implode('&', $query_array);
     }
 }
-
+if (!function_exists('generate_weight_filter_url')) {
+    function generate_weight_filter_url($query_string_object_array)
+    {
+        $query_array = array();
+        foreach ($query_string_object_array as $item) {
+            if ($item->key != 'p_min_weight' && $item->key != 'p_max_weight') {
+                $query_array[] = urlencode($item->key) . '=' . urlencode($item->value);
+            }
+        }
+        return implode('&', $query_array);
+    }
+}
 //get lookup_type values from lookup_type
 if (!function_exists('get_lookup_values_by_type')) {
     function get_lookup_values_by_type($lookup_type)
