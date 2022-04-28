@@ -2851,7 +2851,7 @@ class Cart_controller extends Home_Core_Controller
         $secret_key = $this->general_settings->cashfree_secret_key;
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->general_settingd->cashfree_base_url . 'api/v2/upi/validate/' . $upi_id,
+            CURLOPT_URL => $this->general_settings->cashfree_base_url . 'api/v2/upi/validate/' . $upi_id,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
