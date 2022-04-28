@@ -80,7 +80,7 @@
 										<?php foreach ($order_products as $product_status) :
 											if (
 												$product_status->order_status ==
-												'cancelled_by_user' || $product_status->order_status == 'cancelled_by_user'
+												'cancelled_by_user' || $product_status->order_status == 'cancelled_by_user' || $product_status->order_status == 'cancelled'
 											) {
 												$cancellation = 0;
 											} elseif ($product_status->order_status == 'processing') {
