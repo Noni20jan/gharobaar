@@ -22,10 +22,32 @@
                                 <strong> <?php echo trans("status"); ?></strong>
                             </div>
                             <div class="col-sm-8">
-                                <?php if ($order->status == 1) : ?>
-                                    <label class="label label-success"><?php echo trans("completed"); ?></label>
-                                <?php else : ?>
+                                <?php $order_products = $this->order_admin_model->get_order_products($order->id)
+                                ?>
+                                <?php foreach ($order_products as $product_status) :
+                                    if (
+                                        $product_status->order_status ==
+                                        'cancelled_by_user' || $product_status->order_status == 'cancelled_by_user' || $product_status->order_status == 'cancelled'
+                                    ) {
+                                        $cancellation = 0;
+                                    } elseif ($product_status->order_status == 'processing') {
+                                        $cancellation = 1;
+                                        break;
+                                    } else {
+                                        $cancellation = 2;
+                                    }                                            // $cancellation = 2; 
+
+                                ?>
+                                <?php endforeach ?>
+
+
+
+                                <?php if ($cancellation == 1) : ?>
                                     <label class="label label-default"><?php echo trans("order_processing"); ?></label>
+                                <?php elseif ($cancellation == 0) : ?>
+                                    <label class="label label-default"><?php echo trans("order_cancelled"); ?></label>
+                                <?php elseif ($cancellation == 2) : ?>
+                                    <label class="label label-default"><?php echo trans("completed"); ?></label>
                                 <?php endif; ?>
                             </div>
                         </div>
