@@ -1267,32 +1267,8 @@ foreach ($sellers as $seller) {
                                     </div>
                                 </div>
                             <?php endif; ?>
-                            <?php if(empty($parent_categories)):?>
-                            <div>
-                                <input type="checkbox" class="check-box-size" id="product_weight" value="product_weight" name="filter_checkbox[]" onclick="show_weight(this)">
-                                <label for="product_weight" style="margin: 10px;"><b>Weight(in grams)</b></label>
-                            </div>
-                            <?php 
-                                $filter_p_min_weight = clean_number($this->input->get('p_min_weight', true));
-                                $filter_p_max_weight = clean_number($this->input->get('p_max_weight', true)); ?>
-                                <div class="filter-item" id="weight_filter" style="display: none">
-                                    <div class="price-filter-inputs">
-                                        <div class="row align-items-baseline row-price-inputs">
-                                            <div class="col-4 col-md-4 col-lg-5 col-price-inputs">
-                                                <span><?php echo trans("min"); ?></span>
-                                                <input type="input" id="weight_min" value="<?= !empty($filter_p_min_weight) ? $filter_p_min_weight : ''; ?>" class="form-control price-filter-input" placeholder="<?php echo trans("min"); ?>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-                                            </div>
-                                            <div class="col-4 col-md-4 col-lg-5 col-price-inputs">
-                                                <span><?php echo trans("max"); ?></span>
-                                                <input type="input" id="weight_max" value="<?= !empty($filter_p_max_weight) ? $filter_p_max_weight : ''; ?>" class="form-control price-filter-input" placeholder="<?php echo trans("max"); ?>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-                                            </div>
-                                            <div class="col-4 col-md-4 col-lg-2 col-price-inputs text-left">
-                                                <button type="button"  id="btn_filter_weight" data-current-url="<?= current_url(); ?>" data-query-string="<?= generate_weight_filter_url($query_string_object_array); ?>" class="btn btn-sm btn-default btn-filter-price float-left"><i class="icon-arrow-right"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php elseif(!empty($parent_categories)):?>
+
+                                <?php if(!empty($parent_categories) && $parent_categories[0]->id==3):?>
                                     <div>
                                 <input type="checkbox" class="check-box-size" id="product_weight" value="product_weight" name="filter_checkbox[]" onclick="show_weight(this)">
                                 <label for="product_weight" style="margin: 10px;"><b>Weight(in grams)</b></label>

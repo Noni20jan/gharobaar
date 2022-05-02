@@ -506,7 +506,7 @@ class Product_admin_model extends CI_Model
         // $this->build_query();
         // $this->filter_products($list, $category_ids);
         $featured_id = intval($feature_id);
-        $sql = "SELECT products.id,products.slug,images.image_default,product_details.title,categories_lang.name,users.shop_name,users.brand_name,products.stock FROM products JOIN images ON images.product_id=products.id JOIN product_details ON product_details.product_id=products.id JOIN categories_lang ON categories_lang.category_id=products.category_id  JOIN users ON products.user_id=users.id WHERE products.visibility = 1 AND products.is_draft = 0 AND products.is_deleted = 0  AND products.id NOT IN(SELECT product_banner_tagging.product_id from product_banner_tagging where feature_id=$feature_id) AND products.status = 1 AND products.is_service = 0 AND products.stock > 0 AND is_deleted = 0 GROUP BY products.id ORDER BY products.created_at DESC";
+        $sql = "SELECT products.id,products.slug,images.image_small,product_details.title,categories_lang.name,users.shop_name,users.brand_name,products.stock FROM products JOIN images ON images.product_id=products.id JOIN product_details ON product_details.product_id=products.id JOIN categories_lang ON categories_lang.category_id=products.category_id  JOIN users ON products.user_id=users.id WHERE products.visibility = 1 AND products.is_draft = 0 AND products.is_deleted = 0 AND images.is_main=1  AND products.id NOT IN(SELECT product_banner_tagging.product_id from product_banner_tagging where feature_id=$feature_id) AND products.status = 1 AND products.is_service = 0 AND products.stock > 0 AND is_deleted = 0  ORDER BY products.created_at DESC";
         $query = $this->db->query($sql);
         return $query->result();
     }
