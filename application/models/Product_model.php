@@ -1101,9 +1101,11 @@ class Product_model extends Core_Model
                 // $this->db->where("products.rating <", $ar + 1);
                 // $this->db->where("products.rating >=", $ar);
                 $this->db->or_group_start();
-                $this->db->where("products.rating <", $ar + 1);
+                // $this->db->where("products.rating <", $ar + 1);
                 $this->db->where("products.rating >=", $ar);
                 $this->db->group_end();
+                // var_dump($this->db->last_query());
+                // die();
             }
             // $this->db->where_in("products.rating", $array_rating);
             $this->db->group_end();
@@ -1595,7 +1597,7 @@ class Product_model extends Core_Model
                 // $this->db->where("products.rating <", $ar + 1);
                 // $this->db->where("products.rating >=", $ar);
                 $this->db->or_group_start();
-                $this->db->where("products.rating <", $ar + 1);
+                // $this->db->where("products.rating <", $ar + 1);
                 $this->db->where("products.rating >=", $ar);
                 $this->db->group_end();
             }
@@ -2161,7 +2163,24 @@ class Product_model extends Core_Model
         $data['stock'] = $stock;
         $this->db->where('id', $id);
         $this->db->update('variation_options', $data);
+        // $variation_option = $this->db->get('variation_options');
+        // if ($variation_option->is_default == 1) {
+        //     $this->product_variation_stock($id, $stock);
+        // }
     }
+    // public function product_variation_stock($id, $stock)
+    // {
+    //     $this->db->where('id', $id);
+    //     $variations = $this->db->get('variations');
+    //     if (!empty($variations)) {
+    //         $data = array(
+    //             'stock' => $stock
+    //         );
+    //         $this->db->where('id', $variations->product_id);
+    //         $this->db->update('products', $data);
+    //         return $this->db->last_query();
+    //     }
+    // }
 
     //get promoted products
     public function get_promoted_products_limited($per_page, $offset)
@@ -2169,8 +2188,8 @@ class Product_model extends Core_Model
         $this->build_query('promoted');
         $this->db->order_by('products.promote_start_date', 'DESC')->limit(clean_number($per_page), clean_number($offset));
         $query = $this->db->get('products');
-        var_dump($this->db->last_query());
-        die();
+        // var_dump($this->db->last_query());
+        // die();
         return $query->result();
     }
     //get promoted products
@@ -2237,8 +2256,9 @@ class Product_model extends Core_Model
         $this->filter_products($query_string_array, $category_id, $only_category);
         if (!$only_category) :
             $this->db->limit(clean_number($per_page), clean_number($offset));
-
             $result = $this->db->get('products')->result_array();
+
+
         // $subQuery1 = $this->db->_compile_select();
 
         // $this->db->_reset_select();
@@ -2251,7 +2271,6 @@ class Product_model extends Core_Model
         $this->filter_products_nlp($query_string_array, $category_id, $only_category);
         if (!$only_category) :
             $this->db->limit(clean_number($per_page), clean_number($offset));
-
 
             $result1 = $this->db->get('products')->result_array();
             // $obj_merged = (object) array_merge((array) $result, (array) $result1);
