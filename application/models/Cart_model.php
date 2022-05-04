@@ -1629,26 +1629,32 @@ class Cart_model extends CI_Model
             $product_pickup_address = $cart_item->product_pickup_address;
             // $cart_item->delivery_address = $shipping_address->shipping_area . " " . $shipping_address->shipping_city . " " . $shipping_address->shipping_state . " " . $shipping_address->shipping_zip_code;
 
+            $product_pickup_address1 = $cart_item->product_pickup_address;
+            // var_dump($cart_item);
+            // die();
             $cart_item->delivery_address = $shipping_address->shipping_zip_code;
             $cart_item->delivery_city = $shipping_address->shipping_city;
-
-            $distance_matrix = $this->profile_model->product_deliverale_or_not($product_pickup_address, $cart_item->delivery_address);
+            $cart_item->delivery_address1 = $shipping_address->shipping_city . $shipping_address->shipping_zip_code;
+            $distance_matrix = $this->profile_model->product_deliverale_or_not($product_pickup_address1, $cart_item->delivery_address1);
             // var_dump($distance_matrix->rows[0]->elements[0]->distance);
-            $cart_item->delivery_distance = $distance_matrix->rows[0]->elements[0]->distance;
+            if (isset($distance_matrix->rows[0]->elements[0]->distance)) {
+                $cart_item->delivery_distance = $distance_matrix->rows[0]->elements[0]->distance;
 
-            $dist_value = $cart_item->delivery_distance->value;
-            $product_area = $cart_item->product_delivery_area;
+                $dist_value = $cart_item->delivery_distance->value;
+                $product_area = $cart_item->product_delivery_area;
 
-            $distance_array = ["5 km", "10 km", "20 km", "30 km", "40 km", "50 km"];
+                $distance_array = ["5 km", "10 km", "20 km", "30 km", "40 km", "50 km"];
 
-            if (in_array($product_area, $distance_array)) {
-                $product_area_arr = explode(" ", $product_area);
-                $product_area_val = $product_area_arr[0] * 1000;
-                if ($product_area_val < $dist_value) {
-                    $cart_item->product_deliverable = 0;
+                if (in_array($product_area, $distance_array)) {
+                    $product_area_arr = explode(" ", $product_area);
+                    $product_area_val = $product_area_arr[0] * 1000;
+                    if ($product_area_val < $dist_value) {
+                        $cart_item->product_deliverable = 0;
+                    }
                 }
+            } else {
+                $cart_item->product_deliverable = 1;
             }
-
             //exhibition Check for deliverable
             // if ($this->general_settings->enable_exhibition) :
             //     if ($this->product_model->check_exhibition_enabled($cart_item->product_id)) :
