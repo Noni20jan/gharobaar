@@ -3,7 +3,7 @@
     .zoom {
         transition: transform .2s;
     }
-    
+
     #cvl {
         position: absolute;
 
@@ -13,6 +13,7 @@
         color: #fff;
         background-color: red;
     }
+
     @media(max-width:700px) {
         #cvl {
             position: absolute;
@@ -35,6 +36,17 @@
 
     .icon-check {
         color: #90EE90;
+    }
+
+    @media(max-width:700px) {
+
+        .product-item .item-meta .price,
+        .product-item-horizontal .item-meta .price {
+            display: inline-block;
+            width: auto;
+            position: relative;
+            font-weight: 700
+        }
     }
 </style>
 <?php //var_dump($product);
@@ -77,10 +89,10 @@ if (!empty($variation)) { ?>
                     <?php endif; ?>
                 </a>
             <?php endif; ?>
-            <?php if ($product->add_meet=="Made to order") : ?>
+            <?php if ($product->add_meet == "Made to order") : ?>
                 <span class="made_to_order">MADE TO ORDER</span>
             <?php endif; ?>
-            <?php if ($product->add_meet=="Made to stock" &&  $product->stock > 0 && intval($product->shipping_time==1)) : ?>
+            <?php if ($product->add_meet == "Made to stock" &&  $product->stock > 0 && intval($product->shipping_time == 1)) : ?>
                 <span class="made_to_order">NEXT DAY DISPATCH</span>
             <?php endif; ?>
             <?php if (!empty($this->auth_check) && $this->auth_user->role == "vendor" && $product->user_id == $this->auth_user->id) : ?>
@@ -167,13 +179,13 @@ if (!empty($variation)) { ?>
                         <?php endif; ?>
             </div>
 
-           
+
         </div>
         <!-- <?php if ($product->is_promoted && $this->general_settings->promoted_products == 1 && isset($promoted_badge) && $promoted_badge == true) : ?>
             <span class="badge badge-dark badge-promoted"><?php echo trans("featured"); ?></span>
         <?php endif; ?> -->
     </div>
-    
+
     <div class="row-custom item-details">
         <h3 class="product-title">
             <a href="<?php echo generate_product_url($product); ?>"><?= get_product_title($product); ?></a>
