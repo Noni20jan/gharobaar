@@ -1,21 +1,22 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <style>
-    .discount_rate{
-float:right;
-color:#fff;
-padding-left: 8px;
-    padding-right: 4px;
-    background-color: #6c7f5d;
-}
-@media(max-width:700px){
-    .discount_rate{
-    float:right;
-color:#fff;
-padding-left: 0px;
-    padding-right: 0px;
-    background-color: #6c7f5d;
+    .discount_rate {
+        float: right;
+        color: #fff;
+        padding-left: 8px;
+        padding-right: 4px;
+        background-color: #6c7f5d;
     }
-}
+
+    @media(max-width:700px) {
+        .discount_rate {
+            float: right;
+            color: #fff;
+            padding-left: 0px;
+            padding-right: 0px;
+            background-color: #6c7f5d;
+        }
+    }
 </style>
 <?php if ($product->is_free_product == 1) : ?>
     <span class="price-free"><?php echo trans("free"); ?></span>
@@ -31,8 +32,8 @@ padding-left: 0px;
                     <?php echo price_formatted($product->price, $product->currency); ?>
                 </del>
                 <?php if ($product->discount_rate > 10) : ?>
-                <span class="discount_rate" style="float:right;">-<?= $product->discount_rate; ?>%</span>
-                <?php endif;?>
+                    <span class="discount_rate">-<?= $product->discount_rate; ?>%</span>
+                <?php endif; ?>
             <?php endif; ?>
 <?php endif;
     endif;
