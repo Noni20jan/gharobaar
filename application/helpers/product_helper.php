@@ -659,7 +659,8 @@ if (!function_exists('price_currency_format')) {
             $space = " ";
         }
         if ($ci->payment_settings->currency_symbol_format == "left") {
-            $price = "<span>" . $currency . "</span>" . $space . $price;
+            // $price = "<span>" . $currency . "</span>" . $space . $price;
+            $price =  $currency . $price;
         } else {
             $price = $price . $space . "<span>" . $currency . "</span>";
         }
