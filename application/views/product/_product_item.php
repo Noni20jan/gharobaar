@@ -63,17 +63,6 @@
     .icon-check {
         color: #90EE90;
     }
-
-    @media(max-width:700px) {
-
-        .product-item .item-meta .price,
-        .product-item-horizontal .item-meta .price {
-            display: inline-block;
-            width: auto;
-            position: relative;
-            font-weight: 700
-        }
-    }
 </style>
 <?php //var_dump($product);
 //die();
