@@ -2943,7 +2943,16 @@ public function msg_start_selling(){
             if ($product->user_id != $this->auth_user->id) {
                 $review = $this->review_model->get_review($product_id, $this->auth_user->id);
                 if (!empty($review)) {
-                    $reviews = $this->review_model->update_review($review->id, $rating, $product_id, $review_text);
+                    $this->review_model->update_review($review->id, $rating, $product_id, $review_text);
+                    $images = $this->review_model->check_review_images($product_id, $this->auth_user->id);
+                    if (empty($images)) {
+                        $this->load->model('upload_model');
+                        $this->upload_model->upload_buyer_image('file_', $review->id, $product_id);
+                        $reviews = TRUE;
+                    } else {
+                        $reviews = false;
+                    }
+                    $reviews = TRUE;
                     echo json_encode($reviews);
                 } else {
                     $last_id = $this->review_model->add_review($rating, $product_id, $review_text);

@@ -108,6 +108,7 @@ class Review_model extends CI_Model
             $this->db->where('product_id', $product_id);
             $this->db->where('user_id', $this->auth_user->id);
             $this->db->update('reviews', $data);
+
             $feedback = $this->db->last_query();
             if (!empty($feedback)) {
                 return TRUE;
@@ -168,6 +169,14 @@ class Review_model extends CI_Model
         $this->db->select('reviews.*,review_images.image_url');
         $this->db->where('reviews.is_approved', '1');
         $this->db->where('reviews.product_id', clean_number($product_id));
+        return $this->db->get('reviews')->result();
+    }
+    public function check_review_images($product_id, $user_id)
+    {
+        $this->db->join('review_images', 'review_images.review_id= reviews.id');
+        $this->db->select('review_images.image_url');
+        $this->db->where('reviews.product_id', clean_number($product_id));
+        $this->db->where('reviews.user_id', clean_number($user_id));
         return $this->db->get('reviews')->result();
     }
     //get seller review
