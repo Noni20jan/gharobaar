@@ -432,7 +432,7 @@ $user = get_user($this->auth_user->id);
                         </li>
                     <?php endif ?>
 
-                    <?php if ($this->general_settings->enable_seller_payout_report == 1 && $this->auth_user->id == 317) : ?>
+                    <?php if ($this->general_settings->enable_seller_payout_report == 1) : ?>
 
                         <li class="treeview<?php is_admin_nav_active(['payment-history']); ?>">
                             <a href="#">
@@ -657,7 +657,7 @@ $user = get_user($this->auth_user->id);
                         </a>
                     </li>
                     <!-- Reports section started -->
-                    <?php if ($this->general_settings->seller_reports == 1 && $this->auth_user->id == 317) : ?>
+                    <?php if ($this->general_settings->seller_reports == 1) : ?>
                         <li class="header_color header"><?php echo trans("reports"); ?></li>
                         <li class="treeview">
                             <a href="#">
@@ -667,7 +667,7 @@ $user = get_user($this->auth_user->id);
                                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li class="nav-payouts"><a href="<?= generate_dash_url("sales_data"); ?>"><?= trans("sales_data"); ?></a></li>
+                                <li class="nav-payouts"><a href="<?= generate_dash_url("sales_data"); ?>"><?= trans("sale_data"); ?></a></li>
                                 <li class="nav-payouts"><a href="<?= generate_dash_url("payment_reports"); ?>"><?= trans("payment_reports"); ?></a></li>
                                 <li class="nav-payouts"><a href="<?= generate_dash_url("commission_bill"); ?>"><?= trans("commission_bill"); ?></a></li>
                                 <li class="nav-payouts"><a href="<?= generate_dash_url("seller_ledgers"); ?>"><?= trans("sellers_ledgers"); ?></a></li>
