@@ -2170,7 +2170,6 @@ class Product_model extends Core_Model
                         add_meet = 'Made to Stock')
                         AND variation_options.id=$id AND variation_options.is_default=0)";
         $query = $this->db->query($sql);
-        return $query->result();
     }
 
     //get promoted products
