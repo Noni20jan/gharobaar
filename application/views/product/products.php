@@ -2455,6 +2455,8 @@ foreach ($sellers as $seller) {
 
                 page++;
                 loadMoreData(page);
+                sessionStorage.scrollTop = $(this).scrollTop();
+
             }
         }
     });
@@ -2500,6 +2502,11 @@ foreach ($sellers as $seller) {
             });
 
     }
+    $(document).ready(function() {
+        if (sessionStorage.scrollTop != "undefined") {
+            $(window).scrollTop(sessionStorage.scrollTop);
+        }
+    });
 </script>
 
 <script type="text/javascript">
