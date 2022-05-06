@@ -853,7 +853,7 @@ class Product_model extends Core_Model
 
 
             foreach ($query_string_array as $key => $array_values) {
-                $keyExistArr = array("product_type", "meal_type", "cash_on_delivery", "blouse_details", "pet_age", "available", "gender", "discount", "food_type", "jewellery_type", "rating", "p_min", "p_max","p_min_weight","p_max_weight", "sort", "search", "seller_type", "origin_of_product", "food_preference", "available_for_return_or_exchange", "availability", "suitable_for", "is_personalised", "category","shipping_time");
+                $keyExistArr = array("product_type", "meal_type", "cash_on_delivery", "blouse_details", "pet_age", "available", "gender", "discount", "food_type", "jewellery_type", "rating", "p_min", "p_max", "p_min_weight", "p_max_weight", "sort", "search", "seller_type", "origin_of_product", "food_preference", "available_for_return_or_exchange", "availability", "suitable_for", "is_personalised", "category", "shipping_time");
                 if (!in_array($key, $keyExistArr)) {
                     $item = new stdClass();
                     $item->key = $key;
@@ -956,13 +956,12 @@ class Product_model extends Core_Model
         if (!empty($array_shipping_time) && !empty($array_shipping_time[0])) {
             $this->db->group_start();
             $this->db->where_in("products.shipping_time", $array_shipping_time);
-            $this->db->where('products.add_meet',"Made to stock");
-            $this->db->where('products.stock >',0);
+            $this->db->where('products.add_meet', "Made to stock");
+            $this->db->where('products.stock >', 0);
             $this->db->group_end();
-
         }
 
-     
+
 
         //Kids Corner
         $array_kids_corner = @explode(',', $suitable_for);
@@ -1157,13 +1156,11 @@ class Product_model extends Core_Model
         }
         if ($p_min_weight != "") {
             $this->db->where('products.product_weight >=', $p_min_weight);
-            $this->db->where('products.product_weight!=',0);
-
+            $this->db->where('products.product_weight!=', 0);
         }
         if ($p_max_weight != "") {
             $this->db->where('products.product_weight <=', $p_max_weight);
-            $this->db->where('products.product_weight!=',0);
-
+            $this->db->where('products.product_weight!=', 0);
         }
 
         //search words
@@ -1301,7 +1298,7 @@ class Product_model extends Core_Model
         $suitable_for = $this->input->get("suitable_for", true);
         $add_meet = str_replace('_', ' ', $this->input->get("product_type", true));
         $rating = remove_special_characters($this->input->get("rating", true));
-        $shipping_time=$this->input->get("shipping_time",true);
+        $shipping_time = $this->input->get("shipping_time", true);
 
         $seller_type = remove_special_characters($this->input->get("seller_type", true));
         $search = remove_special_characters(trim($this->input->get('search', true)));
@@ -1394,14 +1391,11 @@ class Product_model extends Core_Model
 
         if ($p_min_weight != "") {
             $this->db->where('products.product_weight >=', $p_min_weight);
-            $this->db->where('products.product_weight!=',0);
-
+            $this->db->where('products.product_weight!=', 0);
         }
         if ($p_max_weight != "") {
             $this->db->where('products.product_weight <=', ($p_max_weight));
-                        $this->db->where('products.product_weight!=',0);
-
-
+            $this->db->where('products.product_weight!=', 0);
         }
         //add product filter options
         if (!empty($category_ids)) {
@@ -1454,11 +1448,11 @@ class Product_model extends Core_Model
         if (!empty($array_shipping_time) && !empty($array_shipping_time[0])) {
             $this->db->group_start();
             $this->db->where_in("products.shipping_time", $array_shipping_time);
-            $this->db->where('products.add_meet',"Made to stock");
-            $this->db->where('products.stock >',0);
-            $this->db->group_end();            
+            $this->db->where('products.add_meet', "Made to stock");
+            $this->db->where('products.stock >', 0);
+            $this->db->group_end();
         }
-  
+
 
         //Kids Corner
         $array_kids_corner = @explode(',', $suitable_for);
@@ -1916,7 +1910,6 @@ class Product_model extends Core_Model
             $date = date('Y-m-d h-i-s', strtotime('-30 days'));
             $this->db->where('products.created_at>', $date);
             $this->db->order_by('products.created_at', 'DESC');
-
         } else {
             // $this->db->order_by('rand()');
             $this->db->order_by('rand_val');
@@ -2156,31 +2149,29 @@ class Product_model extends Core_Model
     {
         $data['stock'] = $stock;
         $this->db->where('id', $id);
+        $this->db->where('add_meet', 'Made to Stock');
         $this->db->update('products', $data);
     }
     public function update_variation_stock($id, $stock)
     {
-        $data['stock'] = $stock;
-        $this->db->where('id', $id);
-        $this->db->update('variation_options', $data);
-        // $variation_option = $this->db->get('variation_options');
-        // if ($variation_option->is_default == 1) {
-        //     $this->product_variation_stock($id, $stock);
-        // }
+        $sql = "UPDATE 
+        variation_options SET variation_options.stock=$stock
+    WHERE
+        variation_id IN (SELECT 
+                id
+            FROM
+                variations
+            WHERE
+                product_id IN (SELECT 
+                        id
+                    FROM
+                        products
+                    WHERE
+                        add_meet = 'Made to Stock')
+                        AND variation_options.id=$id AND variation_options.is_default=0)";
+        $query = $this->db->query($sql);
+        return $query->result();
     }
-    // public function product_variation_stock($id, $stock)
-    // {
-    //     $this->db->where('id', $id);
-    //     $variations = $this->db->get('variations');
-    //     if (!empty($variations)) {
-    //         $data = array(
-    //             'stock' => $stock
-    //         );
-    //         $this->db->where('id', $variations->product_id);
-    //         $this->db->update('products', $data);
-    //         return $this->db->last_query();
-    //     }
-    // }
 
     //get promoted products
     public function get_promoted_products_limited($per_page, $offset)
@@ -4034,8 +4025,8 @@ order by id desc LIMIT 1";
         $sselect = " UNION (SELECT title,brand_name,products.slug FROM product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where (";
         $union = " (select title,brand_name,products.slug from product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where title like ('%$word%') OR brand_name = ('$word')  ";
         $sql5 = $union . $wherecon .  $sselect . $where . $where1 . $wherecon;
-       $query8 = $this->db->query($sql5);
-        
+        $query8 = $this->db->query($sql5);
+
         return $query8->result();
     }
 
@@ -4125,9 +4116,10 @@ order by id desc LIMIT 1";
         $this->db->where('products.id', clean_number($id));
         return $this->db->get('products')->row();
     }
-    public function get_sku(){
+    public function get_sku()
+    {
 
-        $sql="SELECT DISTINCT temp.sku_id  FROM (
+        $sql = "SELECT DISTINCT temp.sku_id  FROM (
             SELECT p2.sku as sku_id
             from products as p2
             where p2.sku!='' AND is_draft=0 AND is_deleted=0
@@ -4138,9 +4130,8 @@ order by id desc LIMIT 1";
                 variation_options AS vo
             WHERE
                 vo.sku_code != '' ) as temp";
-        $query=$this->db->query($sql);
-        
+        $query = $this->db->query($sql);
+
         return  $query->result();
     }
-  
 }
