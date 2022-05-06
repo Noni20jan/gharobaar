@@ -35,7 +35,7 @@
 <!-- <div class="ajax-load-1 text-center" style="display:none">
     <p><img class="more-products-loading" src="assets/img/dark-loader.gif"></p>
 </div> -->
-<script>
+<!-- <script>
     $(window).scroll(function() {
         sessionStorage.scrollTop = $(this).scrollTop();
     });
@@ -45,4 +45,4 @@
             $(window).scrollTop(sessionStorage.scrollTop);
         }
     });
-</script>
+</script> -->
