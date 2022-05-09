@@ -2619,8 +2619,8 @@
                                     </div> -->
                                     <div class="col-12 col-sm-12 m-b-15">
                                         <input type="text" name="phone_number" id="phone_number" class="form-control auth-form-input" placeholder="Mobile Number" value="<?php echo old("phone_number"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption" minlength="10" maxlength="10" required>
-                                        <!-- <strong id="verify_otp" class="btn btn-md btn-custom btn-block-new-ui">Verify Mobile</strong> -->
-                                        <!-- <br><span id="verify_mobile_span" style="color:red;">*You cannot register without Mobile Verification!</span> -->
+                                        <strong id="verify_otp" class="btn btn-md btn-custom btn-block-new-ui">Verify Mobile</strong>
+                                        <br><span id="verify_mobile_span" style="color:red;">*You cannot register without Mobile Verification!</span>
                                     </div>
                                 </div>
                             </div>
@@ -3025,13 +3025,11 @@
             var isReadOnly = $(this).attr("readonly") === undefined ? false : true;
 
             if (isReadOnly) {
-                console.log(test);
+                console.log("test");
                 $(this).prop('checked', true);
                 // $("#small-text-header").show();
-
-                }
-
-            });
+            }
+        });
     </script>
     <script>
         function register_popup_t_c() {
@@ -6492,17 +6490,17 @@
         });
 
         $("#phone_number").change(function() {
-            // document.getElementById("verify_mobile_span").innerHTML = "*You cannot register without Mobile Verification!";
+            document.getElementById("verify_mobile_span").innerHTML = "*You cannot register without Mobile Verification!";
         })
 
         $("#verify_btn").click(function() {
             var input_otp = document.getElementById("otp_field").value;
             if (input_otp == '') {
-                // document.getElementById("otp_field_span").innerHTML = "*Please Enter OTP";
+                document.getElementById("otp_field_span").innerHTML = "*Please Enter OTP";
             } else {
-                // document.getElementById("otp_field_span").innerHTML = "";
+                document.getElementById("otp_field_span").innerHTML = "";
                 // console.log(input_otp);
-                // otp_verification(input_otp);
+                otp_verification(input_otp);
             }
         })
 
@@ -6513,16 +6511,16 @@
                 document.getElementById("login_otp_check").innerHTML = "*Please enter registered mobile number !";
             } else if (phn_number != '' && phn_number.length <= 10) {
                 if (phn_number.length == 10) {
-                    // var register_phn = check_for_guest_mobile_register_js(phn_number);
+                    var register_phn = check_for_guest_mobile_register_js(phn_number);
                     if (register_phn == false) {
                         send_verification_otp(phn_number, "mobile_otp_login");
-                        // document.getElementById("OtpSendMsg").innerHTML = "OTP Send Successfully !";
-                        // $("#loginOtp").show();
-                        // $("#verify_login_otp").show();
+                        document.getElementById("OtpSendMsg").innerHTML = "OTP Send Successfully !";
+                        $("#loginOtp").show();
+                        $("#verify_login_otp").show();
                         $("input[name=registeredNumber]").attr('disabled', true);
-                        // $("#submit_otp").show();
-                        // $("#sendLoginOtp").hide();
-                        // $("#resend_login_otp").show();
+                        $("#submit_otp").show();
+                        $("#sendLoginOtp").hide();
+                        $("#resend_login_otp").show();
                     } else if (register_phn == true) {
                         document.getElementById("login_otp_check").innerHTML = "*Mobile number is not registered!";
                     }
@@ -6632,7 +6630,7 @@
         })
 
         $("#phone_number").change(function() {
-            document.getElementById("btnsubmit_register").disabled = false;
+            document.getElementById("btnsubmit_register").disabled = true;
         })
     </script>
     <script>
