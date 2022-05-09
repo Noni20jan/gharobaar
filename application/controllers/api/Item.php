@@ -84,6 +84,18 @@ class Item extends REST_Controller
                 case "SHIPPED":
                     $data["order_status"] = "shipped";
                     break;
+                case "Cancellation Requested":
+                    $data["order_status"]="cancelled_by_seller";
+                    break;
+                case "Canceled":
+                    $data["order_status"]="cancelled_by_seller";
+                    break;
+                case "CANCELLATION REQUESTED":
+                    $data["order_status"]="cancelled_by_seller";
+                    break;
+                case "CANCELED":
+                    $data["order_status"]="cancelled_by_seller";
+                    break;
                 case "Shipped":
                     $data["order_status"] = "shipped";
                     break;
