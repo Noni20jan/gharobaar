@@ -12,10 +12,10 @@ class Profile_controller extends Home_Core_Controller
     /**
      * Profile
      */
-    public function profile($slug)
+    public function profile($id)
     {
-        $slug = clean_slug($slug);
-        $data["user"] = $this->auth_model->get_user_by_slug($slug);
+        // $slug = clean_slug($slug);
+        $data["user"] = $this->auth_model->get_user($id);
         if (empty($data["user"])) {
             redirect(lang_base_url());
         }
@@ -398,7 +398,7 @@ class Profile_controller extends Home_Core_Controller
             'brand_desc' => $this->input->post('brand_desc', true),
             'assistance' => implode(',', $ass),
             'brand_name' => $this->input->post('brand_name', true),
-            'min_order_value'=> $this->input->post('min_o_value', true),
+            'min_order_value' => $this->input->post('min_o_value', true),
             'supplier_speciality' => $this->input->post('supplier_speciality', true),
             'customer_name' => $this->input->post('customer_name', true),
             'source' => $this->input->post('source', true),
