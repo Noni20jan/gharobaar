@@ -540,8 +540,40 @@ class Auth_controller extends Home_Core_Controller
     {
 
         $data['is_shop_open'] = $this->input->post('is_shop_open', true);
-        //var_dump($data);exit;
+
+        if ($data['is_shop_open']  == 0) {
+            // $data1 = array(
+            //     'source' => 'coustomiation',
+            //     // 'source_id' => $product_id,
+            //     'remark' => $this->auth_user->username . "  " . "closed the shop",
+            //     'event_type' => 'Shop Notifications',
+            //     'subject' => "shop closed",
+            //     'to' => 'admin@gmail.com',
+            //     'source' => $this->auth_user->id,
+            // );
+            // var_dump($data1);
+
+            // die();
+            $subject = "Shop Closed!";
+            $email_body = "Closed The Shop";
+            $message =  "<b>Gharobaar Seller</b>" . " " . $this->auth_user->email  . "<b></br> $email_body</b>";
+            $bcc = array("akshatsharma487@gmail.com", "aaajatinaaa@gmail.com");
+            $data1 = array(
+                'source' => '',
+                'source_id' => "",
+                'event_type' => 'Shop Close',
+                'subject' => $subject,
+                'message' => $message,
+                'to' =>  $this->general_settings->mail_username,
+                'template_path' => "email/email_newsletter",
+                'subscriber' => "",
+            );
+
+            $this->load->model('email_model');
+            $this->email_model->send_email_members($data1, $bcc);
+        }
         $response = $this->auth_model->shop_open_close($data);
+
         echo $response;
     }
 
