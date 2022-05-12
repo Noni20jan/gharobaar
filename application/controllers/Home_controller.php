@@ -1869,6 +1869,7 @@ class Home_controller extends Home_Core_Controller
             'supplier_state' => $this->input->post('supplier_state', true),
             'supplier_city' => $this->input->post('supplier_city', true),
             'about_me' => $this->input->post('about_me', true),
+            'brand_name' => $this->input->post('brand_name', true),
             // 'geography_locations' => $this->input->post('ajax_cities', true),
             'fssai_number' => $this->input->post('fssai_number', true),
             'gst_application_number' => $this->input->post('gst_application_number', true),
