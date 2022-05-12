@@ -788,6 +788,25 @@ if (!function_exists('generate_profile_url')) {
         }
     }
 }
+if (!function_exists('generate_profile_url_by_id')) {
+    function generate_profile_url_by_id($id)
+    {
+        $ci = &get_instance();
+        $active = true;
+        if ($ci->auth_check) {
+            if ($ci->auth_user->role != "admin")
+                $active = false;
+        }
+        if (!empty($id)) {
+            $user = get_user($id);
+            if ($user->update_profile == "1" && $user->is_profile_approved == "0" && $active) {
+                return 'javascript:void(0)';
+            } else {
+                return lang_base_url() . get_route("profile", true) . $id;
+            }
+        }
+    }
+}
 
 //generate profile url
 if (!function_exists('generate_barter_product_url')) {

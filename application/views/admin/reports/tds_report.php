@@ -85,6 +85,8 @@
     </div>
 </div>
 
+
+
 <script>
     $("#tds_reports").submit(function(e) {
 
@@ -118,7 +120,7 @@
                 var len = Json_data.length;
                 if (len != 0) {
                     for (var i = 0; i < len; i++) {
-                        $('#tds').append("<tr><td>" + Json_data[i].Pan + "</td><td>" + Json_data[i].Order_ID + "</td><td>" + Json_data[i].Pay_Out_Date + "</td><td>" + Json_data[i].Date_of_Deduction + "</td><td>" + Json_data[i].Amount_Paid + "</td><td>" + Json_data[i].TDS_Amount + "</td></tr>")
+                        $('#tds').append("<tr><td>" + Json_data[i].seller + "</td><td>" + Json_data[i].Pan + "</td><td>" + Json_data[i].Order_ID + "</td><td>" + Json_data[i].Pay_Out_Date + "</td><td>" + Json_data[i].Date_of_Deduction + "</td><td>" + Json_data[i].Amount_Paid + "</td><td>" + Json_data[i].TDS_Amount + "</td></tr>")
                     }
                 }
                 $('#extend_datatable').dataTable({

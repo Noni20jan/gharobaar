@@ -1233,7 +1233,8 @@
                                                 <div class="col-12 col-sm-4 m-b-15">
                                                     <label class="control-label">House no./Building no./Area<span class="Validation_error"> *</span>
                                                     </label>
-                                                    <input type="text" name="house_no" id="product_address" minlength="10" class="form-control auth-form-input" placeholder="House no./Building no./Area" value="<?php echo empty($product->product_address) ? html_escape($user->house_no) : html_escape($product->product_address); ?>" required>
+                                                    <input type="text" name="house_no" maxlength="74" id="product_address" onkeyup="checklength(this)" minlength="10" class="form-control auth-form-input" placeholder="House no./Building no./Area" value="<?php echo empty($product->product_address) ? html_escape($user->house_no) : html_escape($product->product_address); ?>" required>
+                                                    <span class="word_limit" id="word_limit" style="display:none ; color:red">*maxmimum 74 only*</span>
                                                     <p class="Validation_error" id="house_no_p1"></p>
                                                 </div>
                                                 <div class="col-12 col-sm-4 m-b-15">
@@ -1968,10 +1969,29 @@
                     allRequired = false;
                 }
             });
+
+
             if (!allRequired) {
                 $("#button_with_submit").trigger("click");
             } else {
                 $("#button_to_open_modal").trigger("click");
             }
         });
+    </script>
+    <script>
+        function checklength(el) {
+            var limit = $('#product_address').val();
+            $button = $('#button_to_submit')
+            if (el.value.length >= 74) {
+                $("#word_limit").attr("style", "display:block")
+                $button.prop('disabled', 'disabled');
+
+            } else {
+                $("#word_limit").attr("style", "display:none")
+
+                $button.prop('disabled', false);
+
+            }
+
+        }
     </script>

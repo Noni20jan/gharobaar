@@ -180,7 +180,7 @@ if (!empty($variation)) { ?>
             <a href="<?php echo generate_product_url($product); ?>"><?= get_product_title($product); ?></a>
         </h3>
         <p class="product-user text-truncate">
-            <a href="<?php echo generate_profile_url($product->user_slug); ?>">
+            <a href="<?php echo generate_profile_url_by_id($product->user_id); ?>">
                 <?php echo ucfirst(get_brand_name_product($product)); ?>
 
             </a>
