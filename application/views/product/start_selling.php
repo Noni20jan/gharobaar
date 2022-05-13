@@ -3135,9 +3135,9 @@ $pincode = get_pincode(281204);
                 //alert(favorite);
             }
         </script>
-        <script>
+        <!-- <script>
             $('.demo').fSelect();
-        </script>
+        </script> -->
         <script>
             $(document).ready(function() {
                 $("input[name='gst']").click(function() {
