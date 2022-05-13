@@ -1267,12 +1267,12 @@ foreach ($sellers as $seller) {
                                     </div>
                                 </div>
                             <?php endif; ?>
-                            <?php if(empty($parent_categories)):?>
-                            <div>
-                                <input type="checkbox" class="check-box-size" id="product_weight" value="product_weight" name="filter_checkbox[]" onclick="show_weight(this)">
-                                <label for="product_weight" style="margin: 10px;"><b>Weight(in grams)</b></label>
-                            </div>
-                            <?php 
+                            <?php if (empty($parent_categories)) : ?>
+                                <div>
+                                    <input type="checkbox" class="check-box-size" id="product_weight" value="product_weight" name="filter_checkbox[]" onclick="show_weight(this)">
+                                    <label for="product_weight" style="margin: 10px;"><b>Weight(in grams)</b></label>
+                                </div>
+                                <?php
                                 $filter_p_min_weight = clean_number($this->input->get('p_min_weight', true));
                                 $filter_p_max_weight = clean_number($this->input->get('p_max_weight', true)); ?>
                                 <div class="filter-item" id="weight_filter" style="display: none">
@@ -1287,17 +1287,17 @@ foreach ($sellers as $seller) {
                                                 <input type="input" id="weight_max" value="<?= !empty($filter_p_max_weight) ? $filter_p_max_weight : ''; ?>" class="form-control price-filter-input" placeholder="<?php echo trans("max"); ?>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                             </div>
                                             <div class="col-4 col-md-4 col-lg-2 col-price-inputs text-left">
-                                                <button type="button"  id="btn_filter_weight" data-current-url="<?= current_url(); ?>" data-query-string="<?= generate_weight_filter_url($query_string_object_array); ?>" class="btn btn-sm btn-default btn-filter-price float-left"><i class="icon-arrow-right"></i></button>
+                                                <button type="button" id="btn_filter_weight" data-current-url="<?= current_url(); ?>" data-query-string="<?= generate_weight_filter_url($query_string_object_array); ?>" class="btn btn-sm btn-default btn-filter-price float-left"><i class="icon-arrow-right"></i></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <?php elseif(!empty($parent_categories)):?>
-                                    <div>
-                                <input type="checkbox" class="check-box-size" id="product_weight" value="product_weight" name="filter_checkbox[]" onclick="show_weight(this)">
-                                <label for="product_weight" style="margin: 10px;"><b>Weight(in grams)</b></label>
-                            </div>
-                            <?php 
+                            <?php elseif (!empty($parent_categories)) : ?>
+                                <div>
+                                    <input type="checkbox" class="check-box-size" id="product_weight" value="product_weight" name="filter_checkbox[]" onclick="show_weight(this)">
+                                    <label for="product_weight" style="margin: 10px;"><b>Weight(in grams)</b></label>
+                                </div>
+                                <?php
                                 $filter_p_min_weight = clean_number($this->input->get('p_min_weight', true));
                                 $filter_p_max_weight = clean_number($this->input->get('p_max_weight', true)); ?>
                                 <div class="filter-item" id="weight_filter" style="display: none">
@@ -1312,12 +1312,12 @@ foreach ($sellers as $seller) {
                                                 <input type="input" id="weight_max" value="<?= !empty($filter_p_max_weight) ? $filter_p_max_weight : ''; ?>" class="form-control price-filter-input" placeholder="<?php echo trans("max"); ?>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                             </div>
                                             <div class="col-4 col-md-4 col-lg-2 col-price-inputs text-left">
-                                                <button type="button"  id="btn_filter_weight" data-current-url="<?= current_url(); ?>" data-query-string="<?= generate_weight_filter_url($query_string_object_array); ?>" class="btn btn-sm btn-default btn-filter-price float-left"><i class="icon-arrow-right"></i></button>
+                                                <button type="button" id="btn_filter_weight" data-current-url="<?= current_url(); ?>" data-query-string="<?= generate_weight_filter_url($query_string_object_array); ?>" class="btn btn-sm btn-default btn-filter-price float-left"><i class="icon-arrow-right"></i></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <?php endif;?>
+                            <?php endif; ?>
                             <?php if (empty($parent_categories)) : ?>
                                 <div>
                                     <input type="checkbox" class="check-box-size" id="dispatch_date" value="dispatch_date" name="filter_checkbox[]" onclick="show_dispatch_date(this)">
@@ -2221,7 +2221,7 @@ foreach ($sellers as $seller) {
                                             <span><?= trans("min") . ": " . html_escape($filter->value); ?></span>
                                         </div>
                                     </div>
-                                
+
                                 <?php elseif ($filter->key == "p_max") : ?>
                                     <div class="filter-reset-tag">
                                         <div class="left">
@@ -2232,24 +2232,24 @@ foreach ($sellers as $seller) {
                                             <span><?= trans("max") . ": " . html_escape($filter->value); ?></span>
                                         </div>
                                     </div>
-                                    <?php elseif ($filter->key == "p_min_weight") : ?>
+                                <?php elseif ($filter->key == "p_min_weight") : ?>
                                     <div class="filter-reset-tag">
                                         <div class="left">
                                             <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
                                         </div>
                                         <div class="right">
                                             <span class="reset-tag-title"><?= "Product Weight" ?></span>
-                                            <span><?= trans("min") . ": " . html_escape($filter->value)."g"; ?></span>
+                                            <span><?= trans("min") . ": " . html_escape($filter->value) . "g"; ?></span>
                                         </div>
                                     </div>
-                                    <?php elseif ($filter->key == "p_max_weight") : ?>
+                                <?php elseif ($filter->key == "p_max_weight") : ?>
                                     <div class="filter-reset-tag">
                                         <div class="left">
                                             <a href="<?= current_url() . generate_filter_url($query_string_array, $filter->key, $filter->value); ?>"><i class="icon-close"></i></a>
                                         </div>
                                         <div class="right">
                                             <span class="reset-tag-title"><?= "Product Weight" ?></span>
-                                            <span><?= trans("max") . ": " . html_escape($filter->value)."g"; ?></span>
+                                            <span><?= trans("max") . ": " . html_escape($filter->value) . "g"; ?></span>
                                         </div>
                                     </div>
                                 <?php elseif ($filter->key == "product_type") : ?>
@@ -2608,7 +2608,7 @@ foreach ($sellers as $seller) {
                                 </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
-                 
+
                         <?php if (empty($products)) : ?>
                             <div class="col-12">
                                 <p class="no-records-found"><?php echo trans("no_more_products_to_show"); ?></p>
@@ -2647,10 +2647,11 @@ foreach ($sellers as $seller) {
 
                 page++;
                 loadMoreData(page);
-                sessionStorage.scrollTop = $(this).scrollTop();
 
             }
         }
+        sessionStorage.scrollTop = $(this).scrollTop();
+
     });
 
     function loadMoreData(page) {
@@ -2694,20 +2695,17 @@ foreach ($sellers as $seller) {
             });
 
     }
-    $(document).ready(function() {
-        if (sessionStorage.scrollTop != "undefined") {
-            $(window).scrollTop(sessionStorage.scrollTop);
-        }
-    });
 </script>
 
 <script type="text/javascript">
     $(document).ready(function() {
-
+        if (sessionStorage.scrollTop != "undefined") {
+            $(window).scrollTop(sessionStorage.scrollTop);
+        }
         $('#product_type').prop('checked', true);
         $('#category').prop('checked', true);
         $('#price').prop('checked', true);
-        $("#product_weight").prop('checked',true);
+        $("#product_weight").prop('checked', true);
         $('#availability').prop('checked', true);
         $('#discounts').prop('checked', true);
         $('#rating').prop('checked', true);
@@ -2870,6 +2868,7 @@ foreach ($sellers as $seller) {
         var dvPassport = document.getElementById("price_filter");
         dvPassport.style.display = check.checked ? "block" : "none";
     }
+
     function show_is_personalised(check) {
         var dvPassport = document.getElementById("is_personalised_filter");
         dvPassport.style.display = check.checked ? "block" : "none";
@@ -2909,10 +2908,12 @@ foreach ($sellers as $seller) {
         var dvPassport = document.getElementById("kids_filter");
         dvPassport.style.display = check.checked ? "block" : "none";
     }
+
     function show_weight(check) {
         var dvPassport = document.getElementById("weight_filter");
         dvPassport.style.display = check.checked ? "block" : "none";
     }
+
     function show_pet_age(check) {
         var dvPassport = document.getElementById("pet_age_filter");
         dvPassport.style.display = check.checked ? "block" : "none";
