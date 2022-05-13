@@ -554,6 +554,8 @@
         </div>
       </div>
 
+
+
       <div class="row">
         <div class="background col-sm-6 m-b-30 groove">
           <label class="control-label"><?php echo trans("story_images"); ?> (Maximum upload file size : 30 Mb)</label>
