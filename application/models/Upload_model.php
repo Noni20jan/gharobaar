@@ -246,6 +246,8 @@ class Upload_model extends CI_Model
                 return null;
             }
         }
+
+
         $config['upload_path'] = './uploads/pdf/';
         $config['allowed_types'] = 'gif|jpg|jpeg|png|pdf';
         $config['file_name'] = 'cheque_images' . generate_unique_id();
