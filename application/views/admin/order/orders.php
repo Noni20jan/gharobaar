@@ -83,11 +83,11 @@
 												'cancelled_by_user' || $product_status->order_status == 'cancelled_by_user' || $product_status->order_status == 'cancelled'
 											) {
 												$cancellation = 0;
-											} elseif ($product_status->order_status == 'processing' || $product_status->order_status == 'waiting' || $product_status->order_status == 'awaiting_pickup' || $product_status->order_status == 'shipped') {
-												$cancellation = 1;
+											} elseif ($product_status->order_status == 'completed') {
+												$cancellation = 2;
 												break;
 											} else {
-												$cancellation = 2;
+												$cancellation = 1;
 											}											// $cancellation = 2; 
 
 										?>
