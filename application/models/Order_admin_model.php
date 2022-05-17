@@ -503,7 +503,26 @@ class Order_admin_model extends CI_Model
         $this->db->distinct();
         return $this->db->count_all_results('orders');
     }
-
+    // get sales of current financial year
+    public function get_sales_financial_year($seller_id)
+    {
+        // function get_finacial_year_range() {
+        $year = date('Y');
+        $month = date('m');
+        if ($month < 4) {
+            $year = $year - 1;
+        }
+        $start_date = date('Y-m-d H:i:s', strtotime(($year) . '-04-01 00:00:00'));
+        $end_date = date('Y-m-d H:i:s', strtotime(($year + 1) . '-03-31 00:00:00'));
+        // var_dump($start_date);
+        // var_dump($end_date);
+        // $response = array('start_date' => $start_date, 'end_date' => $end_date);
+        $sql = "SELECT SUM(product_total_price) AS total_amount FROM order_products WHERE seller_id = ? AND (created_at<='$end_date' and created_at>= '$start_date')";
+        $query = $this->db->query($sql, array(clean_number($seller_id)));
+        // var_dump($this->db->last_query());
+        return $query->result();
+        // }
+    }
     //get sales sum by month
     public function get_sales_sum_by_month($seller_id)
     {

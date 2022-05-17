@@ -296,7 +296,7 @@ foreach ($cart_items as $item) {
     <?php echo form_close(); ?>
 </div>
 
-<div class="">
+<div class="tab-checkout tab-checkout-closed-bordered">
     <h2 class="title">
         <?php if (!empty($cart_has_physical_product) && $this->form_settings->shipping == 1 && $mds_payment_type == "sale") {
             echo '3.';
@@ -305,7 +305,7 @@ foreach ($cart_items as $item) {
         } ?>
         &nbsp;<?php echo trans("payment"); ?>
     </h2>
-    <div id='pay_view_load'>
+    <div id='pay_view_load' style="margin-top: 30px;">
         <?php if (!empty($cart_has_physical_product) && $this->form_settings->shipping == 1 && $mds_payment_type == "sale") {
             $data = array('total_amount' => $total_amount, 'currency' => $currency, 'mds_payment_type' => $mds_payment_type, 'cart_total' => $cart_total, 'cart_items' => $cart_items);
             $this->load->view("cart/payment_methods/cashfree", $data);

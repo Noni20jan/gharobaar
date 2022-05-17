@@ -2966,6 +2966,22 @@ public function msg_start_selling(){
                             $data = FALSE;
                         }
                         $data = TRUE;
+                        $title = $this->product_model->get_title($product_id);
+                        $buyer_name = $this->auth_user->first_name;
+                        $user = get_user($product->user_id);
+                        $data = array(
+                            'source' => 'review',
+                            'source_id' => $product_id,
+                            'remark' => $buyer_name . " has rated your product " . $title->title . " .",
+                            'event_type' => 'Rating, Reviews & Followers',
+                            'subject' => "New Review on you product",
+                            'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
+                            'to' => $user->email,
+                            'template_path' => "email/email_newsletter",
+                            'subscriber' => "",
+                        );
+                        $this->load->model("email_model");
+                        $this->email_model->notification($data);
                     } else {
                         $data = False;
                     }
