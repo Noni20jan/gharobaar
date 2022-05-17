@@ -836,10 +836,11 @@ class Order_controller extends Home_Core_Controller
 
     public function cancel_shipment()
     {
+        $cod = $this->input->post('cod', true);
         $shipment_order_id = $this->input->post('shipment_order_id', true);
         // $order_product_id = $this->input->post('item_id', true);
 
-        $cancel_response = $this->order_model->cancel_order($shipment_order_id);
+        $cancel_response = $this->order_model->cancel_order($shipment_order_id, $cod);
         $data = array(
             "cancel_response" => $cancel_response
         );
@@ -853,12 +854,155 @@ class Order_controller extends Home_Core_Controller
         );
         echo json_encode($result_data);
     }
+    public function check_shipment_charges($pickup, $delivery, $cod, $weight, $order_id, $cost_type, $db_weight)
+    {
+        // $pickup = $this->input->post('pickup', true);
+        // $delivery = $this->input->post('delivery', true);
+        // $cod = $this->input->post('cod', true);
+        // $weight = $this->input->post('weight', true);
+        $seller_id = $this->auth_user->id;
+        // var_dump($pickup, $delivery, $cod, $weight, $order_id, $seller_id);
+        if ($cost_type == "free_shipping") {
+            if ($cod == "COD") {
+                $cod = (string)1;
+            } else {
+                $cod = 0;
+            }
+            // var_dump($cod);
+            $actual_shipping_charges = $this->order_model->get_actual_shipping_chargesonschedule($pickup, $delivery, $cod, $weight);
+            // var_dump($actual_shipping_charges);
+            if ($cod == 1) {
+                $data["shipping_charge_with_gst"] = $actual_shipping_charges['actual_shipping_charges_with_gst'];
+                $data["cod_charges_without_gst"] = $actual_shipping_charges['actual_shipping_charges'];
+                $data["cod_charge"] = $actual_shipping_charges['cod_charges'];
+                $freight_charges = $actual_shipping_charges['freight_charges'];
+                $cod_seller_payable = $this->order_model->get_cod_seller_payable($order_id, $seller_id);
+                // var_dump($cod_seller_payable);
+                $data['net_seller_payable'] = $cod_seller_payable[0]->net_seller_payable - $data["shipping_charge_with_gst"];
 
+                // $success = $this->order_model->update_cod_seller_payable($data, $order_id, $seller_id);
+                // var_dump($data['net_seller_payable']);
+                // die();
+                // var_dump("a");
+            } else {
+                $data["shipping_charge_with_gst"] = $actual_shipping_charges['actual_shipping_charges_with_gst'];
+                $data["shipping"] = $actual_shipping_charges['actual_shipping_charges'];
+                $data["shipping_tax_charge"] =  $data["shipping_charge_with_gst"] - $data["shipping"];
+                $freight_charges = $actual_shipping_charges['freight_charges'];
+                $cashfree_seller_payout = $this->order_model->get_cashfree_seller_payout($order_id, $seller_id);
+                // var_dump($cashfree_seller_payout);
+                $data['net_seller_payable'] = $cashfree_seller_payout[0]->net_seller_payable - $data["shipping_charge_with_gst"];
+
+                // $success = $this->order_model->update_cashfree_seller_payout($data, $order_id, $seller_id);
+                // var_dump($data['net_seller_payable']);
+                // die();
+                // var_dump("b");
+            }
+        } else {
+
+            if ($cod == "COD") {
+                $cod = (string)1;
+            } else {
+                $cod = 0;
+            }
+            // var_dump($cod);
+            if ($cod == 1) {
+                if ($db_weight < $weight) {
+                    $actual_shipping_charges = $this->order_model->get_actual_shipping_chargesonschedule($pickup, $delivery, $cod, $weight);
+                    $db_shipping_charges = $this->order_model->get_actual_shipping_chargesonschedule($pickup, $delivery, $cod, $db_weight);
+                    // var_dump($actual_shipping_charges);
+                    // var_dump($db_shipping_charges);
+                    $data1["shipping_charge_with_gst1"] = $actual_shipping_charges['actual_shipping_charges_with_gst'];
+                    $data1["cod_charges_without_gst1"] = $actual_shipping_charges['actual_shipping_charges'];
+                    $data1["cod_charge1"] = $actual_shipping_charges['cod_charges'];
+                    $freight_charges1 = $actual_shipping_charges['freight_charges'];
+                    $data1["shipping_charge_with_gst2"] = $db_shipping_charges['actual_shipping_charges_with_gst'];
+                    $data1["cod_charges_without_gst2"] = $db_shipping_charges['actual_shipping_charges'];
+                    $data1["cod_charge2"] = $db_shipping_charges['cod_charges'];
+                    $freight_charges2 = $db_shipping_charges['freight_charges'];
+                    $data["shipping_charge_with_gst"] = $data1["shipping_charge_with_gst1"] - $data1["shipping_charge_with_gst2"];
+                    $data["cod_charges_without_gst"] = $data1["cod_charges_without_gst1"] - $data1["cod_charges_without_gst2"];
+                    $data["cod_charge"] = $data1["cod_charge1"] - $data1["cod_charge2"];
+                    $freight_charges0 = $freight_charges1 - $freight_charges2;
+                    $cod_seller_payable = $this->order_model->get_cod_seller_payable($order_id, $seller_id);
+                    // var_dump($cod_seller_payable);
+                    $data['net_seller_payable'] = $cod_seller_payable[0]->net_seller_payable - $data["shipping_charge_with_gst"];
+                    // var_dump("c");
+                    // $success = $this->order_model->update_cod_seller_payable($data, $order_id, $seller_id);
+                    // var_dump($data['net_seller_payable']);
+                } else {
+                    $data["shipping_charge_with_gst"] = 0;
+                    $data["cod_charges_without_gst"] = 0;
+                    $data["cod_charge"] = 0;
+                    //     // $actual_shipping_charges = $this->order_model->get_actual_shipping_chargesonschedule($pickup, $delivery, $cod, $weight);
+                    //     $db_shipping_charges = $this->order_model->get_actual_shipping_chargesonschedule($pickup, $delivery, $cod, $db_weight);
+                    //     // var_dump($actual_shipping_charges);
+                    //     var_dump($db_shipping_charges);
+                }
+            } else {
+                if ($db_weight < $weight) {
+                    $actual_shipping_charges = $this->order_model->get_actual_shipping_chargesonschedule($pickup, $delivery, $cod, $weight);
+                    $db_shipping_charges = $this->order_model->get_actual_shipping_chargesonschedule($pickup, $delivery, $cod, $db_weight);
+                    $data1["shipping_charge_with_gst1"] = $actual_shipping_charges['actual_shipping_charges_with_gst'];
+                    $data1["shipping1"] = $actual_shipping_charges['actual_shipping_charges'];
+                    $data1["shipping_tax_charge1"] =  $data1["shipping_charge_with_gst1"] - $data1["shipping1"];
+                    $freight_charges1 = $actual_shipping_charges['freight_charges'];
+
+                    $data1["shipping_charge_with_gst2"] = $db_shipping_charges['actual_shipping_charges_with_gst'];
+                    $data1["shipping2"] = $db_shipping_charges['actual_shipping_charges'];
+                    $data1["shipping_tax_charge2"] =  $data1["shipping_charge_with_gst2"] - $data1["shipping2"];
+                    $freight_charges2 = $db_shipping_charges['freight_charges'];
+                    // var_dump($actual_shipping_charges);
+                    // var_dump($db_shipping_charges);
+                    $data["shipping_charge_with_gst"] = $data1["shipping_charge_with_gst1"] - $data1["shipping_charge_with_gst2"];
+                    $data["shipping"] = $data1["shipping1"] - $data1["shipping2"];
+                    $data["shipping_tax_charge"] =   $data1["shipping_tax_charge1"] - $data1["shipping_tax_charge2"];
+                    $freight_charges = $freight_charges1 - $freight_charges2;
+                    $cashfree_seller_payout = $this->order_model->get_cashfree_seller_payout($order_id, $seller_id);
+                    // var_dump($cashfree_seller_payout);
+                    $data['net_seller_payable'] = $cashfree_seller_payout[0]->net_seller_payable - $data["shipping_charge_with_gst"];
+                    // var_dump("d");
+                    // $success = $this->order_model->update_cashfree_seller_payout($data, $order_id, $seller_id);
+                    // var_dump($data['net_seller_payable']);
+                } else {
+                    $data["shipping_charge_with_gst"] = 0;
+                    $data["shipping"] = 0;
+                    $data["shipping_tax_charge"] =  0;
+                    //     // $actual_shipping_charges = $this->order_model->get_actual_shipping_chargesonschedule($pickup, $delivery, $cod, $weight);
+                    //     $db_shipping_charges = $this->order_model->get_actual_shipping_chargesonschedule($pickup, $delivery, $cod, $db_weight);
+                    //     // var_dump($actual_shipping_charges);
+                    //     var_dump($db_shipping_charges);
+                }
+            }
+        }
+        return $data;
+    }
     // schedule shiprocket orders
 
     public function schedule_shiprocket_orders()
     {
         $req_data = $this->input->post('order');
+        // var_dump($req_data);
+        // die();
+        $pickup = $req_data['shipping_pincode'];
+        $delivery = $req_data["vendor_details"]["pin_code"];
+        $cod = $req_data['payment_method'];
+        // $weight = $req_data['weight'];
+        $order_id = $this->input->post('gb_order_id', true);
+        $cost_type = $this->input->post('cost_type', true);
+        $length = $req_data['length'];
+        $breadth = $req_data['breadth'];
+        $height = $req_data['height'];
+        $weight = $length * $breadth * $height / 5000;
+        $actual_weight = $this->input->post('actual_weight', true);
+        $data2 =   $this->check_shipment_charges($pickup, $delivery, $cod, $weight, $order_id, $cost_type, $actual_weight);
+        var_dump($data2);
+        die();
+        if ($cod == "COD") {
+            $cod = (string)1;
+        } else {
+            $cod = 0;
+        }
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://apiv2.shiprocket.in/v1/external/shipments/create/forward-shipment',
@@ -877,6 +1021,15 @@ class Order_controller extends Home_Core_Controller
         ));
         $response = curl_exec($curl);
         curl_close($curl);
+        $seller_id = $this->auth_user->id;
+        $data9 = json_decode($response);
+        if ($data9->status == 1) {
+            if ($cod == 1) {
+                $this->order_model->update_cod_seller_payable($data2, $order_id, $seller_id);
+            } else {
+                $this->order_model->update_cashfree_seller_payout($data2, $order_id, $seller_id);
+            }
+        }
         echo $response;
     }
 

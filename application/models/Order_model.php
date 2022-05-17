@@ -496,27 +496,34 @@ class Order_model extends CI_Model
                     $object->shipping_charge_to_gharobaar = $object->supplier_shipping_cost_with_gst;
                 }
             }
+            // var_dump($object->shipping_charge_to_gharobaar);
+            // die();
 
 
             // condition for shipping slabs
             $slab = true;
-            if ($slab == true) {
-                if ($object->total_amount_with_gst >= 50000) {
-                    $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
-                } else if ($object->total_amount_with_gst >= 200000) {
-                    $object->shipping_charge_to_gharobaar = 0;
-                }
-            }
             // if ($slab == true) {
-            //     if ($object->total_amount_with_gst > 0 && $object->total_amount_with_gst < 100000) {
+            //     if ($object->total_amount_with_gst >= 50000) {
             //         $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
-            //     } else if ($object->total_amount_with_gst >= 100000) {
+            //         var_dump($object->shipping_charge_to_gharobaar);
+            //         die();
+            //     } else if ($object->total_amount_with_gst >= 200000) {
             //         $object->shipping_charge_to_gharobaar = 0;
             //     }
             // }
+            if ($slab == true) {
+                if ($object->total_amount_with_gst > 0 && $object->total_amount_with_gst < 100000) {
+                    $object->shipping_charge_to_gharobaar = ($object->shipping) + (0.18 * $object->shipping);
+                } else if ($object->total_amount_with_gst >= 100000) {
+                    $object->shipping_charge_to_gharobaar = 0;
+                }
+            }
             // condition end
 
             // ;
+            // var_dump("asgha");
+            // var_dump($object->shipping_charge_to_gharobaar);
+            // die();
             if (!empty($pan_number)) {
                 if ($pan_forth_char[3] == 'P' || $pan_forth_char[3] == 'H') {
                     $object->tds_amount_shipping = 0;
@@ -2918,7 +2925,7 @@ class Order_model extends CI_Model
             $response = curl_exec($curl);
             curl_close($curl);
             // var_dump($response);
-
+            // die();
             // $shipping_data = array(
             //     'actual_shipping_charges' => json_decode($response)->data->available_courier_companies[0]->rate * 100,
             //     'cod_charges' => json_decode($response)->data->available_courier_companies[0]->cod_charges * 100,
@@ -2932,11 +2939,70 @@ class Order_model extends CI_Model
                 'freight_charges' => intval((json_decode($response)->data->available_courier_companies[0]->freight_charge  / (1 + (18 / 100))) * 100),
             );
             // var_dump($shipping_data);
+            // die();
             $this->session->set_userdata($shipping_data);
             // $shipping_cost = $shipping_data['actual_shipping_charges'] * 100;
 
             return $shipping_data;
         }
+    }
+
+
+    public function get_actual_shipping_chargesonschedule($pickuppostcode, $deliverypostcode, $cashond, $weightobject)
+    {
+
+        // if ($this->general_settings->shiprocket_check == 1) {
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://apiv2.shiprocket.in/v1/external/courier/serviceability',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            $body = '{
+                "pickup_postcode": ' . $pickuppostcode . ',
+                 "delivery_postcode": ' . $deliverypostcode . ',
+                 "cod":' . $cashond . ',
+                "weight": ' . $weightobject . '
+           
+        }',
+
+            CURLOPT_POSTFIELDS => $body,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Authorization: Bearer' . $_SESSION['modesy_sess_user_shiprocket_token'],
+            ),
+
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        // var_dump($response);
+        // die();
+        // $shipping_data = array(
+        //     'actual_shipping_charges' => json_decode($response)->data->available_courier_companies[0]->rate * 100,
+        //     'cod_charges' => json_decode($response)->data->available_courier_companies[0]->cod_charges * 100,
+        //     'freight_charges' => json_decode($response)->data->available_courier_companies[0]->freight_charge * 100,
+        // );
+        // var_dump(json_decode($response)->data);
+        $shipping_data = array(
+            'actual_shipping_charges_with_gst' => intval((json_decode($response)->data->available_courier_companies[0]->rate) * 100),
+            'actual_shipping_charges' => intval((json_decode($response)->data->available_courier_companies[0]->rate / (1 + (18 / 100))) * 100),
+            'cod_charges' => intval((json_decode($response)->data->available_courier_companies[0]->cod_charges  / (1 + (18 / 100))) * 100),
+            'freight_charges' => intval((json_decode($response)->data->available_courier_companies[0]->freight_charge  / (1 + (18 / 100))) * 100),
+        );
+        // var_dump($shipping_data);
+        // die();
+        $this->session->set_userdata($shipping_data);
+        // $shipping_cost = $shipping_data['actual_shipping_charges'] * 100;
+
+        return $shipping_data;
+        // }
     }
 
     public function get_supplier()
@@ -3285,6 +3351,7 @@ class Order_model extends CI_Model
 
         $ship_data_copy = json_encode($supp_data_array_copy);
         // echo ($ship_data_copy);
+        // die();
         // echo $ship_data_copy;
         return $ship_data_copy;
     }
@@ -3926,7 +3993,7 @@ class Order_model extends CI_Model
         curl_close($curl);
         return $trackingurl;
     }
-    public function cancel_order($shipment_order_id)
+    public function cancel_order($shipment_order_id,$cod)
     {
         //$product_id = $this->get_order_product($order_product_id);
         $curl = curl_init();
@@ -3976,15 +4043,39 @@ class Order_model extends CI_Model
         $this->db->where('shipment_order_id', $shipment_order_id);
 
         $this->db->update('shiprocket_order_details', $cancel_shiprocket_details_status);
-
+    //  var_dump($cod);
+        if ($cod == "Cashfree") {
+            $cod = 0;
+        } else {
+            $cod = 1;
+        }
         $update_order_products = $this->get_shiprocket_detail_by_shipment_orderid($shipment_order_id);
         foreach ($update_order_products as $update_product) {
+            $order_id = $update_product->order_id;
+            // $cod = $update_product->COD;
             $order_status = array(
                 'order_status' => 'processing'
             );
             $this->db->where('order_id', $update_product->order_id);
             $this->db->where('product_id', $update_product->product_id);
             $this->db->update('order_products', $order_status);
+        }
+        $seller_id = $this->auth_user->id;
+        if ($cod == 0) {
+            $data["shipping_charge_with_gst"] = 0;
+            $data["shipping"] = 0;
+            $data["shipping_tax_charge"] = 0;
+            $cashfree_seller_payout = $this->order_model->get_cashfree_seller_payout($order_id, $seller_id);
+
+            $data2['net_seller_payable'] = $cashfree_seller_payout[0]->net_seller_payable + $cashfree_seller_payout[0]->shipping_charge_with_gst;
+            $success = $this->order_model->update_cashfree_seller_payout($data2, $order_id, $seller_id);
+        } else {
+            $data["shipping_charge_with_gst"] = 0;
+            $data["cod_charges_without_gst"] = 0;
+            $data["cod_charge"] = 0;
+            $cod_seller_payable = $this->order_model->get_cod_seller_payable($order_id, $seller_id);
+            $data2['net_seller_payable'] = $cod_seller_payable->net_seller_payable - $cod_seller_payable[0]->shipping_charge_with_gst;
+            $success = $this->order_model->update_cod_seller_payable($data2, $order_id, $seller_id);
         }
         return $x->message;
     }
@@ -5242,6 +5333,20 @@ class Order_model extends CI_Model
                     );
 
                     $this->db->insert('penalty', $data);
+                    $order_id = $order_p->order_id;
+                    $seller_id = $this->auth_user->id;
+                    if ($order_p->payment_status == "awaiting_payment") {
+                        $cod_seller_payable = $this->order_model->get_cod_seller_payable($order_id, $seller_id);
+                        // var_dump($cod_seller_payable);
+                        $data1['net_seller_payable'] = $cod_seller_payable[0]->net_seller_payable - ($this->general_settings->penalty_amount * 100);
+
+                        $success = $this->order_model->update_cod_seller_payable($data1, $order_id, $seller_id);
+                    } else {
+                        $cashfree_seller_payout = $this->order_model->get_cashfree_seller_payout($order_id, $seller_id);
+                        // var_dump($cashfree_seller_payout);
+                        $data1['net_seller_payable'] = $cashfree_seller_payout[0]->net_seller_payable - ($this->general_settings->penalty_amount * 100);
+                        $success = $this->order_model->update_cashfree_seller_payout($data1, $order_id, $seller_id);
+                    }
                 }
             }
         }
@@ -5336,5 +5441,33 @@ class Order_model extends CI_Model
         $sql = "SELECT count(referenceId) AS 'count' FROM cod_seller_payable where referenceId= $refrence_id";
         $query = $this->db->query($sql);
         return $query->row()->count;
+    }
+    public function get_cod_seller_payable($order_id, $seller_id)
+    {
+        // $order_id = clean_number($order_id);
+        $this->db->where('order_id', $order_id);
+        $this->db->where('vendorId', $seller_id);
+        $query = $this->db->get('cod_seller_payable');
+        return $query->result();
+    }
+    public function update_cod_seller_payable($data, $order_id, $seller_id)
+    {
+        $this->db->where('order_id', $order_id);
+        $this->db->where('vendorId', $seller_id);
+        $this->db->update('cod_seller_payable', $data);
+    }
+    public function get_cashfree_seller_payout($order_id, $seller_id)
+    {
+        // $order_id = clean_number($order_id);
+        $this->db->where('order_id', $order_id);
+        $this->db->where('vendorId', $seller_id);
+        $query = $this->db->get('cashfree_seller_payout');
+        return $query->result();
+    }
+    public function update_cashfree_seller_payout($data, $order_id, $seller_id)
+    {
+        $this->db->where('order_id', $order_id);
+        $this->db->where('vendorId', $seller_id);
+        $this->db->update('cashfree_seller_payout', $data);
     }
 }

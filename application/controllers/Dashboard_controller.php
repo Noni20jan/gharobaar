@@ -486,7 +486,7 @@ class Dashboard_controller extends Home_Core_Controller
         $data['title'] = trans("add_product");
         $data['description'] = trans("add_product") . " - " . $this->app_name;
         $data['keywords'] = trans("add_product") . "," . $this->app_name;
-        $data["sku"]=$this->product_model->get_sku();
+        $data["sku"] = $this->product_model->get_sku();
 
         $data['modesy_images'] = $this->file_model->get_sess_product_images_array();
         $data["file_manager_images"] = $this->file_model->get_user_file_manager_images();
@@ -812,7 +812,7 @@ class Dashboard_controller extends Home_Core_Controller
         if (empty($data["product"])) {
             redirect($this->agent->referrer());
         }
-        $data["sku"]=$this->product_model->get_sku();
+        $data["sku"] = $this->product_model->get_sku();
 
         if ($data["product"]->is_deleted == 1) {
             if ($this->auth_user->role != "admin") {
@@ -979,7 +979,7 @@ class Dashboard_controller extends Home_Core_Controller
     {
         $data['product'] = $this->product_admin_model->get_product($id);
         $data["user"] = $this->product_admin_model->get_user($data['product']->user_id);
-        $data["sku"]=$this->product_model->get_sku();
+        $data["sku"] = $this->product_model->get_sku();
 
         if (empty($data['product'])) {
             redirect($this->agent->referrer());
@@ -3262,6 +3262,19 @@ class Dashboard_controller extends Home_Core_Controller
             "add_meet" => $product_type
         );
         $this->order_model->save_penalty_details($data, $seller_id, $penalty_amount_for_db);
+        $order_id = $order_id;
+        $seller_id = $user_id;
+        if ($order_product->product_quantity->payment_status == "awaiting_payment") {
+            $cod_seller_payable = $this->order_model->get_cod_seller_payable($order_id, $seller_id);
+            // var_dump($cod_seller_payable);
+            $data1['net_seller_payable'] = $cod_seller_payable[0]->net_seller_payable - $penalty_amount_for_db;
+            $success = $this->order_model->update_cod_seller_payable($data1, $order_id, $seller_id);
+        } else {
+            $cashfree_seller_payout = $this->order_model->get_cashfree_seller_payout($order_id, $seller_id);
+            // var_dump($cashfree_seller_payout);
+            $data1['net_seller_payable'] = $cashfree_seller_payout[0]->net_seller_payable - $penalty_amount_for_db;
+            $success = $this->order_model->update_cashfree_seller_payout($data1, $order_id, $seller_id);
+        }
     }
 
     //seller reports

@@ -144,7 +144,7 @@
 			</p> -->
 			<!-- <a class="btn btn-lg btn-custom btn-place-order float-left m-t-30" href='<?php echo generate_url("cart", "payment_method") . "?payment_type=sale" ?>' ><?php echo trans("change_pay_method") ?></a> -->
 			<!-- <a href="<?php echo generate_url("cart", "shipping"); ?>" class="cash_free_btn btn btn-sm float-left" style="margin-bottom: 30px;"> <?php echo trans("change_address"); ?></a> -->
-			<button onclick="place_cod_orders();" <?= $is_all_deliverable ? "" : "disabled"; ?> class="cash_free_btn btn btn-lg float-right" id="place_order"><?php echo trans("place_order") ?></button>
+			<button onclick="place_cod_orders();" <?php $is_all_deliverable ? "0" : "disabled"; ?> class="cash_free_btn btn btn-lg float-right" id="place_order"><?php echo trans("place_order") ?></button>
 		</div>
 		<?php //echo //form_close(); 
 		?>
