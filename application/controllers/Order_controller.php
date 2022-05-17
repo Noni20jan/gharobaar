@@ -996,8 +996,8 @@ class Order_controller extends Home_Core_Controller
         $weight = $length * $breadth * $height / 5000;
         $actual_weight = $this->input->post('actual_weight', true);
         $data2 =   $this->check_shipment_charges($pickup, $delivery, $cod, $weight, $order_id, $cost_type, $actual_weight);
-        var_dump($data2);
-        die();
+        // var_dump($data2);
+        // die();
         if ($cod == "COD") {
             $cod = (string)1;
         } else {
