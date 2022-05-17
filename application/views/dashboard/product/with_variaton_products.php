@@ -294,9 +294,7 @@
                             <span><?= trans("number_of_entries"); ?>:</span>&nbsp;&nbsp;<strong><?= $i; ?></strong>
                         </div>
                     <?php endif; ?>
-                    <div class="table-pagination">
-                        <?php echo $this->pagination->create_links(); ?>
-                    </div>
+
                 </div>
             </div>
         </div><!-- /.box-body -->
