@@ -510,17 +510,17 @@
                                 <h3 class="product_description">Description</h3>
                                 <pre style="margin-top: 3px; white-space:pre-line; font-weight:500; text-align:justify; font-size: 107%; font-family:'poppins',sans-serif;" class="more"><?php echo $product_details->description; ?></pre>
                                 <?php if ($product->add_meet == "Made to order") : ?>
-                                    <?php if($this->general_settings->made_to_order_check==0):?>
+                                    <?php if ($this->general_settings->made_to_order_check == 0) : ?>
 
-                                    <div class="summary-section-disclaimer" style="max-width:100%; display:none;">
-                                        <h5 style="padding:2%; font-size: 15px;"><?php echo get_content("made_to_order"); ?></h5>
+                                        <div class="summary-section-disclaimer" style="max-width:100%; display:none;">
+                                            <h5 style="padding:2%; font-size: 15px;"><?php echo get_content("made_to_order"); ?></h5>
                                         </div>
-                                        <?php else:?>
-                                            <div class="summary-section-disclaimer" style="max-width:100%;">
-                                        <h5 style="padding:2%; font-size: 15px;display:none;"><?php echo get_content("made_to_order"); ?></h5>
-                                        </div>       
-                                        <?php endif;?>                                
-                                   
+                                    <?php else : ?>
+                                        <div class="summary-section-disclaimer" style="max-width:100%;">
+                                            <h5 style="padding:2%; font-size: 15px;display:none;"><?php echo get_content("made_to_order"); ?></h5>
+                                        </div>
+                                    <?php endif; ?>
+
 
                                 <?php endif; ?>
                             </div>
@@ -593,7 +593,7 @@
                                                     <!-- Modal footer -->
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-md btn-red" data-dismiss="modal"><i class="icon-times"></i>&nbsp;<?php echo trans("close"); ?></button>
-                                                        <button type="submit" class="btn btn-md btn-custom"><i class="icon-send"></i>&nbsp;<?php echo trans("send"); ?></button>
+                                                        <button type="submit" class="btn btn-md btn-custom" id="send_button"><i class="icon-send"></i>&nbsp;<?php echo trans("send"); ?></button>
                                                     </div>
                                                 </form>
                                                 <!-- form end -->
