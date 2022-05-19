@@ -710,6 +710,7 @@
                                                 $label =  get_variation_label($variation->label_names, $this->selected_lang->id);
                                                 // var_dump($label);
                                                 // die();
+                                                $label = strtolower($label);
                                                 if ($label == 'weight') : ?>
                                                     <p id="grams_btn">Net Weight&nbsp;:&nbsp;<span id="grams_btn1"><?php echo $product->product_weight
                                                                                                                     ?>g</span>&nbsp;</p>
