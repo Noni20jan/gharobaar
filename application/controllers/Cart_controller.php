@@ -2196,34 +2196,20 @@ class Cart_controller extends Home_Core_Controller
             }
             $i = 0;
             foreach ($product_id as $product_id1) {
-                $product = $this->product_model->get_product_by_id($product_id1);
-                $title = $this->product_model->get_title($product_id1);
+                // $product = $this->product_model->get_product_by_id($product_id1);
+                // $title = $this->product_model->get_title($product_id1);
                 $review = $this->review_model->get_review($product_id1, $this->auth_user->id);
                 if (!empty($review)) {
                     $this->review_model->update_review1($review->id, $rating2[$i], $product_id1, $review_text2[$i]);
                 } else {
-                    $last_id = $this->review_model->add_review1($rating2[$i], $product_id1, $review_text2[$i]);
+                    $last_id = $this->review_model->add_review1($rating2[$i], $product_id1, $review_text2[$i], 'file_'[$i]);
                     if (!empty($last_id)) {
 
                         $this->load->model('upload_model');
                         $img_path = $this->upload_model->upload_review_image('file_' . $product_id1, $last_id, $product_id1);
                     }
                 }
-                $buyer_name = $this->auth_user->first_name;
-                $user = get_user($product->user_id);
-                $data = array(
-                    'source' => 'review',
-                    // 'source_id' => $product_id,
-                    'remark' => $buyer_name . " has rated your product " . $title->title . " .",
-                    'event_type' => 'Rating, Reviews & Followers',
-                    'subject' => "New Review on you product",
-                    // 'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
-                    'to' => $user->email,
-                    'template_path' => "email/email_newsletter",
-                    'subscriber' => "",
-                );
-                $this->load->model("email_model");
-                $this->email_model->notification($data);
+
                 $i++;
             }
         }

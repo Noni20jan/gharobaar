@@ -2926,6 +2926,9 @@ class Home_controller extends Home_Core_Controller
             $rating = $this->input->post('rating', true);
             $product_id = $this->input->post('product_id', true);
             $review_text = $this->input->post('review', true);
+            // var_dump($img);
+            // die();
+
             $product = $this->product_model->get_product_by_id($product_id);
             if ($product->user_id != $this->auth_user->id) {
                 $review = $this->review_model->get_review($product_id, $this->auth_user->id);
@@ -2942,7 +2945,7 @@ class Home_controller extends Home_Core_Controller
                     $reviews = TRUE;
                     echo json_encode($reviews);
                 } else {
-                    $last_id = $this->review_model->add_review($rating, $product_id, $review_text);
+                    $last_id = $this->review_model->add_review($rating, $product_id, $review_text, 'file_');
                     if (!empty($last_id)) {
                         $this->load->model('upload_model');
                         $img_path = $this->upload_model->upload_buyer_image('file_', $last_id, $product_id);
