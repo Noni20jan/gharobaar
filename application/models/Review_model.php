@@ -4,21 +4,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Review_model extends CI_Model
 {
     //add review
-    public function add_review($rating, $product_id, $review_text)
+    public function add_review($rating, $product_id, $review_text, $img)
     {
-        $data = array(
-            'product_id' => $product_id,
-            'user_id' => $this->auth_user->id,
-            'rating' => $rating,
-            'review' => $review_text,
-            'ip_address' => 0,
-            'created_at' => date("Y-m-d H:i:s")
-        );
+        // var_dump($_FILES['file_']['size'][0]);
+        $product = $this->product_model->get_product_by_id($product_id);
+        $title = $this->product_model->get_title($product_id);
+        $buyer_name = $this->auth_user->first_name;
+        $user = get_user($product->user_id);
+
         $ip = $this->input->ip_address();
         if (!empty($ip)) {
             $data['ip_address'] = $ip;
         }
-        if (!empty($rating) && !empty($product_id)   && empty($review_text)) {
+        if (!empty($rating) && !empty($product_id)   && empty($review_text) && $_FILES['file_']['size'][0] == 0) {
             $data = array(
                 'product_id' => $product_id,
                 'user_id' => $this->auth_user->id,
@@ -27,11 +25,33 @@ class Review_model extends CI_Model
                 'created_at' => date("Y-m-d H:i:s"),
                 'is_approved' => 1
             );
+            $data1 = array(
+                'source' => 'review',
+                // 'source_id' => $product_id,
+                'remark' => $buyer_name . " has rated your product " . $title->title . " .",
+                'event_type' => 'Rating, Reviews & Followers',
+                'subject' => "New Review on you product",
+                // 'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
+                'to' => $user->email,
+                'template_path' => "email/email_newsletter",
+                'subscriber' => "",
+            );
+        } else {
+            $data = array(
+                'product_id' => $product_id,
+                'user_id' => $this->auth_user->id,
+                'rating' => $rating,
+                'review' => $review_text,
+                'ip_address' => 0,
+                'created_at' => date("Y-m-d H:i:s")
+            );
         }
 
         if (!empty($data['product_id']) && !empty($data['user_id']) && !empty($data['rating'])) {
             $this->db->insert('reviews', $data);
             $last_id = $this->db->insert_id();
+            $this->load->model("email_model");
+            $this->email_model->notification($data1);
         }
         unset($data);
         return $last_id;
@@ -40,16 +60,14 @@ class Review_model extends CI_Model
     public function add_review1($rating, $product_id, $review_text)
     {
         $seller_id = get_seller_id_by_product_id($product_id);
-        $data = array(
-            'product_id' => $product_id,
-            'user_id' => $this->auth_user->id,
-            'supplier_id' => $seller_id,
-            'rating' => $rating,
-            'review' => $review_text,
-            'ip_address' => 0,
-            'created_at' => date("Y-m-d H:i:s")
-        );
-        if (!empty($rating) && !empty($product_id)   && empty($review_text)) {
+        $product = $this->product_model->get_product_by_id($product_id);
+        $title = $this->product_model->get_title($product_id);
+        $buyer_name = $this->auth_user->first_name;
+        $user = get_user($product->user_id);
+        // var_dump($_FILES['file_' . $product_id]['size']);
+        // die();
+
+        if (!empty($rating) && !empty($product_id)   && empty($review_text) && $_FILES['file_' . $product_id]['size'][0] == 0) {
             $data = array(
                 'product_id' => $product_id,
                 'user_id' => $this->auth_user->id,
@@ -58,6 +76,33 @@ class Review_model extends CI_Model
                 'created_at' => date("Y-m-d H:i:s"),
                 'is_approved' => 1
             );
+            $data1 = array(
+                'source' => 'review',
+                // 'source_id' => $product_id,
+                'remark' => $buyer_name . " has rated your product " . $title->title . " .",
+                'event_type' => 'Rating, Reviews & Followers',
+                'subject' => "New Review on you product",
+                // 'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
+                'to' => $user->email,
+                'template_path' => "email/email_newsletter",
+                'subscriber' => "",
+            );
+        } else {
+            $data = array(
+                'product_id' => $product_id,
+                'user_id' => $this->auth_user->id,
+                'supplier_id' => $seller_id,
+                'rating' => $rating,
+                'review' => $review_text,
+                'ip_address' => 0,
+                'created_at' => date("Y-m-d H:i:s")
+            );
+            // $buyer_name = $this->auth_user->first_name;
+            // $user = get_user($product->user_id);
+
+            // $approved_review = $this->review_model->get_reviews_for_notification($product_id1, $product->user_id);
+            // var_dump($approved_review);
+            // die();
         }
 
         $ip = $this->input->ip_address();
@@ -67,6 +112,8 @@ class Review_model extends CI_Model
         if (!empty($data['product_id']) && !empty($data['user_id']) && !empty($data['rating'])) {
             if ($this->db->insert('reviews', $data)) {
                 $last_id = $this->db->insert_id();
+                $this->load->model("email_model");
+                $this->email_model->notification($data1);
             }
             //update product rating
             // $this->update_product_rating($product_id);
@@ -343,12 +390,28 @@ class Review_model extends CI_Model
             return false;
         }
         $product = get_product($row->product_id);
+        $buyer_name = get_user($row->user_id);
+        $title = $this->product_model->get_title($row->product_id);
+        $user = get_user($product->user_id);
         if (empty($product)) {
             return false;
         }
         $data = array(
             'is_approved' => 1
         );
+        $data1 = array(
+            'source' => 'review',
+            // 'source_id' => $product_id,
+            'remark' => $buyer_name . " has rated your product " . $title->title . " .",
+            'event_type' => 'Rating, Reviews & Followers',
+            'subject' => "New Review on you product",
+            // 'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
+            'to' => $user->email,
+            'template_path' => "email/email_newsletter",
+            'subscriber' => "",
+        );
+        $this->load->model("email_model");
+        $this->email_model->notification($data1);
         $this->db->where('id', $id);
         if ($this->db->update('reviews', $data)) {
 
@@ -387,4 +450,13 @@ class Review_model extends CI_Model
             }
         }
     }
+    // public function get_reviews_for_notification($product_id, $user_id)
+    // {
+    //     $product_ids = clean_number($product_id);
+
+    //     $this->db->where('product_id', $product_ids);
+    //     $this->db->where('user_id', $user_id);
+    //     $query = $this->db->get('reviews');
+    //     return  $query->row();
+    // }
 }
