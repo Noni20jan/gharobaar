@@ -1653,6 +1653,7 @@ class Cart_model extends CI_Model
                     }
                 }
             } else {
+                $cart_item->delivery_distance->value = 0;
                 $cart_item->product_deliverable = 1;
             }
             //exhibition Check for deliverable
