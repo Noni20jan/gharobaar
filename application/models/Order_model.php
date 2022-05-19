@@ -359,7 +359,7 @@ class Order_model extends CI_Model
                             }
                         }
                     }
-
+                    $psd->total_tds_amount_product_huf_ind = 0;
                     $psd->total_tcs_amount_product += $object_product->tcs_amount_product;
                     $psd->total_tds_amount_product += $object_product->tds_amount_product;
                     $psd->total_tds_amount_product_huf_ind += $object_product->tds_amount_product_huf_ind;
