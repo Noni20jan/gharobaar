@@ -1750,15 +1750,15 @@ class Home_controller extends Home_Core_Controller
         $this->load->view('members', $data);
         $this->load->view('partials/_footer');
     }
-public function msg_start_selling(){
-    $data['title'] = "Thanks For registering with us";
-    $data['description'] = "Thanks For registering with us";
-    $data['keywords'] ="Thanks For registering with us" ;
-    $this->load->view('partials/_header',$data);
-    $this->load->view('product/msg_start_selling', $data);
-    $this->load->view('partials/_footer',$data);
-
-}
+    public function msg_start_selling()
+    {
+        $data['title'] = "Thanks For registering with us";
+        $data['description'] = "Thanks For registering with us";
+        $data['keywords'] = "Thanks For registering with us";
+        $this->load->view('partials/_header', $data);
+        $this->load->view('product/msg_start_selling', $data);
+        $this->load->view('partials/_footer', $data);
+    }
     /**
      * Select Membership Plan
      */
@@ -1830,7 +1830,7 @@ public function msg_start_selling(){
                 }
             }
         }
-        if($this->auth_user->is_active_shop_request == 1){
+        if ($this->auth_user->is_active_shop_request == 1) {
             redirect(generate_url("thanks_for_registering"));
         }
 
@@ -2943,6 +2943,8 @@ public function msg_start_selling(){
             // var_dump($img);
             // die();
 
+
+
             $product = $this->product_model->get_product_by_id($product_id);
             if ($product->user_id != $this->auth_user->id) {
                 $review = $this->review_model->get_review($product_id, $this->auth_user->id);
@@ -2969,22 +2971,6 @@ public function msg_start_selling(){
                             $data = FALSE;
                         }
                         $data = TRUE;
-                        $title = $this->product_model->get_title($product_id);
-                        $buyer_name = $this->auth_user->first_name;
-                        $user = get_user($product->user_id);
-                        $data = array(
-                            'source' => 'review',
-                            'source_id' => $product_id,
-                            'remark' => $buyer_name . " has rated your product " . $title->title . " .",
-                            'event_type' => 'Rating, Reviews & Followers',
-                            'subject' => "New Review on you product",
-                            'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
-                            'to' => $user->email,
-                            'template_path' => "email/email_newsletter",
-                            'subscriber' => "",
-                        );
-                        $this->load->model("email_model");
-                        $this->email_model->notification($data);
                     } else {
                         $data = False;
                     }
