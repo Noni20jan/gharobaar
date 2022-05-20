@@ -148,7 +148,7 @@ class Review_model extends CI_Model
     public function update_review($review_id, $rating, $product_id, $review_text)
     {
 
-        if (!empty($rating) && !empty($product_id)   && empty($review_text) && $_FILES['file_' . $product_id]['size'][0] == 0) {
+        if (!empty($rating) && !empty($product_id)   && empty($review_text) && $_FILES['file_']['size'][0] == 0) {
             $data = array(
                 'rating' => $rating,
                 'review' => $review_text,
@@ -185,6 +185,26 @@ class Review_model extends CI_Model
     }
     public function update_review1($review_id, $rating, $product_id, $review_text)
     {
+
+
+        if (!empty($rating) && !empty($product_id)   && empty($review_text) && $_FILES['file_' . $product_id]['size'][0] == 0) {
+            $data = array(
+                'product_id' => $product_id,
+                'user_id' => $this->auth_user->id,
+                'rating' => $rating,
+                'ip_address' => 0,
+                'created_at' => date("Y-m-d H:i:s"),
+                'is_approved' => 1
+            );
+        } else {
+            $data = array(
+                'rating' => $rating,
+                'review' => $review_text,
+                'ip_address' => 0,
+                'created_at' => date("Y-m-d H:i:s")
+            );
+        }
+
         $data = array(
             'rating' => $rating,
             'review' => $review_text,
