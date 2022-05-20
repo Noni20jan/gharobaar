@@ -31,11 +31,15 @@ class Review_model extends CI_Model
                 'remark' => $buyer_name . " has rated your product " . $title->title . " .",
                 'event_type' => 'Rating, Reviews & Followers',
                 'subject' => "New Review on you product",
-                // 'message' => "Your Favourite Seller" . ucfirst($user->first_name) . " has launched a new product <a href='" . base_url() . $product->slug . "'>" .  $title->title . "</a>.",
+                'message' => "",
+                'source_id' => "",
                 'to' => $user->email,
                 'template_path' => "email/email_newsletter",
                 'subscriber' => "",
             );
+
+            $this->load->model("email_model");
+            $this->email_model->notification($data1);
         } else {
             $data = array(
                 'product_id' => $product_id,
@@ -47,11 +51,12 @@ class Review_model extends CI_Model
             );
         }
 
+        // var_dump($data1);
+        // die();
         if (!empty($data['product_id']) && !empty($data['user_id']) && !empty($data['rating'])) {
+
             $this->db->insert('reviews', $data);
             $last_id = $this->db->insert_id();
-            $this->load->model("email_model");
-            $this->email_model->notification($data1);
         }
         unset($data);
         return $last_id;
@@ -141,12 +146,23 @@ class Review_model extends CI_Model
     //update review
     public function update_review($review_id, $rating, $product_id, $review_text)
     {
-        $data = array(
-            'rating' => $rating,
-            'review' => $review_text,
-            'ip_address' => 0,
-            'created_at' => date("Y-m-d H:i:s")
-        );
+
+        if (!empty($rating) && !empty($product_id)   && empty($review_text) && $_FILES['file_' . $product_id]['size'][0] == 0) {
+            $data = array(
+                'rating' => $rating,
+                'review' => $review_text,
+                'ip_address' => 0,
+                'is_approved' => 1,
+                'created_at' => date("Y-m-d H:i:s")
+            );
+        } else {
+            $data = array(
+                'rating' => $rating,
+                'review' => $review_text,
+                'ip_address' => 0,
+                'created_at' => date("Y-m-d H:i:s")
+            );
+        }
         $ip = $this->input->ip_address();
         if (!empty($ip)) {
             $data['ip_address'] = $ip;
