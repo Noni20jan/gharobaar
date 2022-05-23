@@ -877,4 +877,32 @@ class Product_controller extends Admin_Core_Controller
         $this->load->view('admin/review/reviews_not_approved', $data);
         $this->load->view('admin/includes/_footer');
     }
+
+
+    public function hide_products()
+    {
+        $id = $this->input->post('id', true);
+        if ($this->product_admin_model->hide_products($id)) {
+
+            $this->session->set_flashdata('success', trans("msg_product_hide"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+
+        //reset cache
+        reset_cache_data_on_change();
+    }
+    public function unhide_products()
+    {
+        $id = $this->input->post('id', true);
+        if ($this->product_admin_model->unhide_products($id)) {
+
+            $this->session->set_flashdata('success', trans("msg_product_hide"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+
+        //reset cache
+        reset_cache_data_on_change();
+    }
 }

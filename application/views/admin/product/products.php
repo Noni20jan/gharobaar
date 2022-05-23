@@ -119,6 +119,17 @@
                                                     <li>
                                                         <a href="javascript:void(0)" onclick="delete_item('product_controller/delete_product_permanently','<?php echo $item->id; ?>','<?php echo trans("confirm_product_permanent"); ?>');"><i class="fa fa-trash option-icon"></i><?php echo trans('delete_permanently'); ?></a>
                                                     </li>
+                                                    <?php if ($item->visibility == 1) : ?>
+
+                                                        <li>
+                                                            <a href="javascript:void(0)" style="margin-left: 9px;" onclick="hide_product('product_controller/hide_products','<?php echo $item->id; ?>','<?php echo trans("confirm_hide_products"); ?>');"><i class="fa fa-eye-slash"></i><?php echo trans('hide_product'); ?></a>
+                                                        </li>
+                                                    <?php else : ?>
+                                                        <li>
+                                                            <a href="javascript:void(0)" style="margin-left: 9px;" onclick="unhide_product('product_controller/unhide_products','<?php echo $item->id; ?>','<?php echo trans("confirm_unhide_products"); ?>');"><i class="fa fa-eye-slash"></i><?php echo trans('unhide_product'); ?></a>
+                                                        </li>
+                                                    <?php endif; ?>
+
                                                 </ul>
                                             </div>
                                         </td>
@@ -185,3 +196,56 @@
 
     </div>
 </div>
+<script>
+    function hide_product(url, id, message) {
+        swal({
+            text: message,
+            icon: "warning",
+            buttons: true,
+            buttons: [sweetalert_cancel, sweetalert_ok],
+            dangerMode: true,
+        }).then(function(willDelete) {
+            if (willDelete) {
+                var data = {
+                    'id': id,
+                };
+                data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    type: "POST",
+                    url: base_url + url,
+                    data: data,
+                    success: function(response) {
+                        location.reload();
+                        console.log(response)
+                    }
+                });
+            }
+        });
+    };
+
+    function unhide_product(url, id, message) {
+        swal({
+            text: message,
+            icon: "warning",
+            buttons: true,
+            buttons: [sweetalert_cancel, sweetalert_ok],
+            dangerMode: true,
+        }).then(function(willDelete) {
+            if (willDelete) {
+                var data = {
+                    'id': id,
+                };
+                data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    type: "POST",
+                    url: base_url + url,
+                    data: data,
+                    success: function(response) {
+                        location.reload();
+                        console.log(response)
+                    }
+                });
+            }
+        });
+    };
+</script>

@@ -1187,4 +1187,29 @@ class Product_admin_model extends CI_Model
         // return $query;
 
     }
+
+    public function hide_products($product_id)
+    {
+        $product = $this->get_product($product_id);
+        if (!empty($product)) {
+            $data = array(
+                'visibility' => 0
+            );
+            $this->db->where('id', $product->id);
+            return $this->db->update('products', $data);
+        }
+        return false;
+    }
+    public function unhide_products($product_id)
+    {
+        $product = $this->get_product($product_id);
+        if (!empty($product)) {
+            $data = array(
+                'visibility' => 1
+            );
+            $this->db->where('id', $product->id);
+            return $this->db->update('products', $data);
+        }
+        return false;
+    }
 }
