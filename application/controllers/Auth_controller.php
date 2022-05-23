@@ -557,7 +557,7 @@ class Auth_controller extends Home_Core_Controller
             $subject = "Shop Closed!";
             $email_body = "Closed The Shop";
             $message =  "<b>Gharobaar Seller</b>" . " " . $this->auth_user->email  . "<b></br> $email_body</b>";
-            $bcc = array("akshatsharma487@gmail.com", "aaajatinaaa@gmail.com");
+            $bcc = array("sakshi@gharobaar.com", "aditya@gharobaar.com");
             $data1 = array(
                 'source' => '',
                 'source_id' => "",
@@ -1094,9 +1094,11 @@ class Auth_controller extends Home_Core_Controller
 
             $message = strtr($msg_content, $varMap);
 
-            $data = "username=" . ($username) . "&hash=" . ($hash) . "&message=" . $message . "&sender=" . $sender . "&numbers=" . $numbers . "&test=" . $test;
+            $apikey = "8hnKwcSmxnU-wlltbtQanStuagBcFtJoZBcHG6sQfB";
+            $data = array('apikey' => $apikey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
 
-            $ch = curl_init('http://api.textlocal.in/send/?');
+
+            $ch = curl_init('https://api.textlocal.in/send/?');
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

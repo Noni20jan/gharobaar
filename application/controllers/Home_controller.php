@@ -208,8 +208,10 @@ class Home_controller extends Home_Core_Controller
         $message = strtr($msg_content, $varMap);
         $this->notification($message, $numbers);
 
-        $data = "username=" . ($username) . "&hash=" . ($hash) . "&message=" . $message . "&sender=" . $sender . "&numbers=" . $numbers . "&test=" . $test;
-        $ch = curl_init('http://api.textlocal.in/send/?');
+        $apikey = "8hnKwcSmxnU-wlltbtQanStuagBcFtJoZBcHG6sQfB";
+        $data = array('apikey' => $apikey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+
+        $ch = curl_init('https://api.textlocal.in/send/?');
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
