@@ -16,9 +16,12 @@
             height: 84px;
         }
 
-        .scroll-for-mobile {
+        /* .scroll-for-mobile {
             overflow-y: scroll !important;
             height: 70vh;
+        } */
+        .model-z-index {
+            z-index: 11000 !important;
         }
 
     }
@@ -43,7 +46,7 @@
         overflow-y: auto;
     }
 </style>
-<div class="modal fade" id="rateProductModalorder" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade model-z-index" id="rateProductModalorder" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom scroll-for-mobile">
             <!-- form start -->
