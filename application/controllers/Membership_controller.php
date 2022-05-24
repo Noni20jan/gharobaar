@@ -390,7 +390,7 @@ class Membership_controller extends Admin_Core_Controller
         if ($this->profile_model->edit_vendor_bank_details($user->id)) {
             $this->load->model("email_model");
             $this->email_model->seller_bank_account_detail_verify($user->id);
-            // $this->session->set_flashdata('success', trans("msg_updated"));
+            $this->session->set_flashdata('success', trans("msg_updated"));
             $this->easysplit_settle_cycle_api($user->id);
             if ($this->general_settings->enable_payout_create_vendor_api == 1) {
                 $this->init_pay_auth($user->id);
