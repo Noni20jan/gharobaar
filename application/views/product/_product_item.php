@@ -78,10 +78,10 @@ if (!empty($variation)) { ?>
                     <?php endif; ?>
                 </a>
             <?php endif; ?>
-            <?php if ($product->add_meet == "Made to order" && get_vendor_shop_status($product->user_id) == 0) : ?>
+            <?php if ($product->add_meet == "Made to order" && get_vendor_shop_status($product->user_id) != 0) : ?>
                 <span class="made_to_order">MADE TO ORDER</span>
             <?php endif; ?>
-            <?php if ($product->add_meet == "Made to stock" &&  $product->stock > 0 && intval($product->shipping_time == 1) && get_vendor_shop_status($product->user_id) == 0) : ?>
+            <?php if ($product->add_meet == "Made to stock" &&  $product->stock > 0 && intval($product->shipping_time == 1) && get_vendor_shop_status($product->user_id) != 0) : ?>
                 <span class="made_to_order">NEXT DAY DISPATCH</span>
             <?php endif; ?>
             <?php if (!empty($this->auth_check) && $this->auth_user->role == "vendor" && $product->user_id == $this->auth_user->id) : ?>
