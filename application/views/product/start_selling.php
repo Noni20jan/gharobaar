@@ -742,6 +742,11 @@ $pincode = get_pincode(281204);
                                                                             <p class="Validation_error" id="company_name_p"></p>
                                                                         </div>
                                                                         <div class="col-12 col-sm-6 m-b-15">
+                                                                            <label class="control-label">Brand Name<span class="Validation_error"> *</span></label>
+                                                                            <input type="text" name="brand_name" class="form-control form-input" maxlength="<?php echo $this->username_maxlength; ?>" required>
+                                                                            <p class="Validation_error" id="brand_name_p1"></p>
+                                                                        </div>
+                                                                        <div class="col-12 col-sm-6 m-b-15">
                                                                             <label class="control-label">Company Type<span class="Validation_error"> *</span></label>
                                                                             <select name="company_type" id="company_type" onchange='CheckCompany(this.value);' class="form-control auth-form-input" placeholder="" required>
                                                                                 <option value="" selected disabled>Select</option>
@@ -1476,11 +1481,6 @@ $pincode = get_pincode(281204);
                                                                             <label class="control-label">Company name<span class="Validation_error"> *</span></label>
                                                                             <input type="text" name="company_name" class="form-control form-input" maxlength="<?php echo $this->username_maxlength; ?>" required>
                                                                             <p class="Validation_error" id="company_name_p1"></p>
-                                                                        </div>
-                                                                        <div class="col-12 col-sm-6 m-b-15">
-                                                                            <label class="control-label">Brand Name<span class="Validation_error"> *</span></label>
-                                                                            <input type="text" name="brand_name" class="form-control form-input" maxlength="<?php echo $this->username_maxlength; ?>" required>
-                                                                            <p class="Validation_error" id="brand_name_p1"></p>
                                                                         </div>
                                                                     </div>
                                                                 </div>
