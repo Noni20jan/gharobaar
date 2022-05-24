@@ -346,11 +346,19 @@ foreach ($cart_items as $item) {
                                                                         <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" required <?php echo ($check_option == true) ? 'checked' : ''; ?>>
                                                                         <label class="custom-control-label label-payment-option" for="option_cash_on_delivery"><?php echo trans("cash_on_delivery_fee"); ?><br><small><?php echo trans("cash_on_delivery_exp"); ?></small></label>
                                                                     <?php elseif (($check_cashond) == "true" && ($check_made_to_order) == false) : ?>
-                                                                        <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" required <?php echo ($check_option == true) ? 'checked' : ''; ?>>
-                                                                        <label class="custom-control-label label-payment-option" for="option_cash_on_delivery"><?php echo trans("cash_on_delivery_fee"); ?><br><small><?php echo trans("cash_on_delivery_exp"); ?></small></label>
+
+
+                                                                        <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
+
+                                                                            <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" onclick="changeViewPayment()" required <?php echo ($check_option == true) ? 'checked' : ''; ?>>
+                                                                            <label class="custom-control-label label-payment-option" for="option_cash_on_delivery"><?php echo trans("cash_on_delivery"); ?><br><small><?php echo trans("cash_on_delivery_exp"); ?></small></label>
+                                                                        <?php endif; ?>
                                                                     <?php else : ?>
-                                                                        <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" disabled value="cash_on_delivery" disabled ?>
-                                                                        <label class="custom-control-label label-payment-option" id="cash_on_delivery_OFF" for="option_cash_on_delivery" title="COD is not available on selected few cart items"><?php echo trans("cash_on_delivery_fee"); ?><br><small><?php echo trans("cash_on_delivery_exp"); ?></small></label>
+                                                                        <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
+
+                                                                            <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" onclick="changeViewPayment()" required <?php echo ($check_option == true) ? 'checked' : ''; ?>>
+                                                                            <label class="custom-control-label label-payment-option" for="option_cash_on_delivery"><?php echo trans("cash_on_delivery"); ?><br><small><?php echo trans("cash_on_delivery_exp"); ?></small></label>
+                                                                        <?php endif; ?>
                                                                     <?php endif; ?>
                                                                 </div>
                                                             </div>
