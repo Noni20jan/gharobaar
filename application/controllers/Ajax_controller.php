@@ -240,6 +240,7 @@ class Ajax_controller extends Home_Core_Controller
         $variation = $this->variation_model->get_variation($variation_id);
         $option = $this->variation_model->get_variation_option($selected_option_id);
         $option_name = get_variation_option_name($option->option_names, $this->selected_lang->id);
+        $opt = get_variation_label($variation->label_names, $this->selected_lang->id);
 
         $data = array(
             'status' => 0,
@@ -249,6 +250,7 @@ class Ajax_controller extends Home_Core_Controller
             'html_net_weight' => $option_name,
             'stock_status' => 1,
             'stock' => $option->stock,
+            'html_net_x' => "(" . $opt . ":" . $option_name . ")"
         );
         if (!empty($variation) && !empty($option)) {
             $product = $this->product_model->get_product_by_id($variation->product_id);

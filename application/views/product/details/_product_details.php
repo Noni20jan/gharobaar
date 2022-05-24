@@ -206,7 +206,7 @@
         <?php elseif ($product->visibility == 0) : ?>
             <label class="badge badge-danger badge-product-status"><?php echo trans("hidden"); ?></label>
         <?php endif; ?>
-        <h1 class="product-title"><?= html_escape($product_details->title); ?></h1>
+        <h1 class="product-title"><?= html_escape($product_details->title); ?><span id="selected_variation"></span></h1>
         <div class="row-custom meta">
             <div class="row">
                 <div class="col-sm-4">
