@@ -249,6 +249,7 @@ class Reports_model extends CI_Model
         concat(u.first_name,' ', u.last_name) as Seller,
         u.email as 'Seller_Email',
         u.phone_number as 'Selle_Phone',
+        u.supplier_state as 'Seller_State',
         op.order_id as 'Order_No',
         u.shop_name as 'Shop_Name',
         u.pan_number as 'Pan_no',
@@ -259,6 +260,7 @@ class Reports_model extends CI_Model
         u.ifsc_code as 'IFSC_Code',
         u.bank_branch as 'Bank_Branch',
         op.order_status as 'Order_Status',
+        sod.awb_code as 'AWB_Code',
         o.payment_method as 'Payment_Method',
         op.commission_rate as 'Commision_Rate', 
         op.product_title as 'Product_Title',
@@ -268,6 +270,7 @@ class Reports_model extends CI_Model
         format(op.price_after_discount/100,2) as 'Price_After_Discount',
         format(op.price_excluded_gst/100,2) as 'Price_Excluded_GST',
         format(p.commission_amount/100,2) as 'Commission_Amount',
+        format(csp.tcs_amount/100,2) as 'Total_TCS_Amt',
         p.gst_rate as 'Product_GST_Rate',
         op.product_gst_rate as 'Ordered_Product_GST_Rate',
         format(op.product_igst/100,2) as 'Product_IGST',
@@ -289,9 +292,15 @@ class Reports_model extends CI_Model
         op.product_weight as 'Product_Weight',
         op.product_delivery_partner as 'Product_Delivery_Partner',
         o.total_tax_charges as 'Taxable_Value_Total',
-        format((op.product_igst + op.shipping_igst + op.cod_igst)/100,2) as 'IGST_Total',    
-        format((op.product_cgst + op.shipping_cgst + op.cod_cgst)/100,2) as 'CGST_Total',	
-        format((op.product_sgst + op.shipping_sgst + op.cod_sgst)/100,2) as 'SGST_Total',	
+        format((op.product_igst + op.shipping_igst + op.cod_igst)/100,2) as IGST_Total,    
+        format((op.product_cgst + op.shipping_cgst + op.cod_cgst)/100,2) as CGST_Total,	
+        format((op.product_sgst + op.shipping_sgst + op.cod_sgst)/100,2) as SGST_Total,
+        IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((csp.tcs_amount / 100)/2,2), 0 ) as 'TCS_CGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((csp.tcs_amount / 100)/2,2), 0 ) as 'TCS_SGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
+			FORMAT(csp.tcs_amount / 100, 2)) as 'TCS_IGST',
         concat(buyer.first_name,' ', buyer.last_name) as 'Buyer_Name',
         buyer.email as 'Buyer_Email',
         buyer.phone_number as 'Buyer_Phone',
@@ -304,17 +313,112 @@ class Reports_model extends CI_Model
         order_shipping as oship,
         products as p,
         users as u,
-        users as buyer
+        users as buyer,
+        cashfree_seller_payout as csp,
+        shiprocket_order_details as sod
+        
     WHERE 
         o.id = op.order_id
     and op.order_id = os.order_id
+    AND op.order_id = csp.order_id
+    AND op.seller_id = csp.vendorId
+    AND os.seller_id = op.seller_id
+    AND o.id = oship.order_id
+    AND op.product_id = p.id
+    AND op.seller_id = u.id
+    AND op.buyer_id = buyer.id
+    AND op.created_at >=  STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
+	AND op.created_at <=STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+	and (op.order_status NOT IN( 'cancelled_by_user', 'rejected') or (sod.awb_code is not null))
+    and  o.id = sod.order_id 
+    and p.id = sod.product_id
+    union 
+    SELECT distinct
+        concat(u.first_name,' ', u.last_name) as Seller,
+        u.email as 'Seller_Email',
+        u.phone_number as 'Selle_Phone',
+        u.supplier_state as 'Seller_State',
+        op.order_id as 'Order_No',
+        u.shop_name as 'Shop_Name',
+        u.pan_number as 'Pan_no',
+        u.gst_number as 'Gst_no',
+        concat(u.house_no,',',u.supplier_area,',', u.supplier_city,',', u.supplier_state,'-', u.pincode) as Address,
+        u.account_number as 'Account_No',
+        u.acc_holder_name as 'Account_Holder',
+        u.ifsc_code as 'IFSC_Code',
+        u.bank_branch as 'Bank_Branch',
+        op.order_status as 'Order_Status',
+		sod.awb_code as 'AWB Code',
+        o.payment_method as 'Payment_Method',
+        op.commission_rate as 'Commision_Rate', 
+        op.product_title as 'Product_Title',
+        p.hsn_code as 'HSN_Code',
+        op.product_quantity as 'Product_Qty',
+        format(op.product_unit_price/100,2) as 'Product_Unit_Price',
+        format(op.price_after_discount/100,2) as 'Price_After_Discount',
+        format(op.price_excluded_gst/100,2) as 'Price_Excluded_GST',
+        format(p.commission_amount/100,2) as 'Commission_Amount',
+        format(cosp.tcs_amount/100,2) as 'Total_TCS_Amt',
+        p.gst_rate as 'Product_GST_Rate',
+        op.product_gst_rate as 'Ordered_Product_GST_Rate',
+        format(op.product_igst/100,2) as 'Product_IGST',
+        format(op.product_cgst/100,2) as 'Product_CGST',
+        format(op.product_sgst/100,2) as 'Product_SGST',
+        format((op.product_igst + op.product_cgst + op.product_sgst)/100,2) as 'Product_Total_GST',
+        format(op.product_total_price/100,2) as 'Product_Total_Price',
+        format(op.product_shipping_cost/100,2) as 'Product_Shipping_Cost',
+        format(op.shipping_igst/100,2) as 'Shipping_IGST', 
+        format(op.shipping_cgst/100,2) as 'Shipping_CGST',
+        format(op.shipping_sgst/100,2) as 'Shipping_SGST',
+        format(op.total_shipping_cost/100,2) as 'Total_Shipping_Cost',
+        format(op.product_cod_charges/100,2) as 'Product_COD_Charge',
+        format(op.cod_igst/100,2) as 'COD_IGST',
+        format(op.cod_cgst/100,2) as 'COD_CGST', 
+        format(op.cod_sgst/100,2) as 'COD_SGST',
+        format(op.total_cod_charges/100,2) as 'Total_COD_Charges',
+        format(o.price_total/100,2) as 'Total_Ordered_Value',
+        op.product_weight as 'Product_Weight',
+        op.product_delivery_partner as 'Product_Delivery_Partner',
+        o.total_tax_charges as 'Taxable_Value_Total',
+        format((op.product_igst + op.shipping_igst + op.cod_igst)/100,2) as IGST_Total,    
+        format((op.product_cgst + op.shipping_cgst + op.cod_cgst)/100,2) as CGST_Total,	
+        format((op.product_sgst + op.shipping_sgst + op.cod_sgst)/100,2) as SGST_Total,
+        IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((cosp.tcs_amount / 100)/2,2), 0 ) as 'TCS_CGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((cosp.tcs_amount / 100)/2,2), 0 ) as 'TCS_SGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
+			FORMAT(cosp.tcs_amount / 100, 2)) as 'TCS_IGST',
+        concat(buyer.first_name,' ', buyer.last_name) as 'Buyer_Name',
+        buyer.email as 'Buyer_Email',
+        buyer.phone_number as 'Buyer_Phone',
+        o.created_at as 'Order_date',
+        oship.shipping_state as 'Buyer_State'
+    FROM 
+        orders as o,
+        order_products AS op,
+        order_supplier as os,
+        order_shipping as oship,
+        products as p,
+        users as u,
+        users as buyer,
+        cod_seller_payable as cosp,
+        shiprocket_order_details as sod
+    WHERE 
+        o.id = op.order_id
+    and op.order_id = os.order_id
+    AND op.order_id = cosp.order_id
+    AND op.seller_id = cosp.vendorId
     AND os.seller_id = op.seller_id
     AND o.id = oship.order_id
     AND op.product_id = p.id
     AND op.seller_id = u.id
     AND op.buyer_id = buyer.id
     AND op.created_at >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
-     AND op.created_at <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')";
+	AND op.created_at <=STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+    and (op.order_status NOT IN( 'cancelled_by_user', 'rejected') or (sod.awb_code is not null))
+    and  o.id = sod.order_id 
+    and p.id = sod.product_id";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -453,7 +557,7 @@ class Reports_model extends CI_Model
         LEFT JOIN penalty as p
         ON sdr.seller_id = p.user_id
         where sdr.order_no = csp.order_id
-        / and sdr.order_no = p.order_number /
+         and sdr.order_no = p.order_number 
         and sdr.seller_id = csp.vendorId
         and sdr.order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
         and sdr.order_date <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
@@ -1177,6 +1281,7 @@ class Reports_model extends CI_Model
         concat(u.first_name,' ', u.last_name) as Seller,
         u.email as 'Seller_Email',
         u.phone_number as 'Selle_Phone',
+        u.supplier_state as 'Seller_State',
         op.order_id as 'Order_No',
         u.shop_name as 'Shop_Name',
         u.pan_number as 'Pan_no',
@@ -1187,6 +1292,7 @@ class Reports_model extends CI_Model
         u.ifsc_code as 'IFSC_Code',
         u.bank_branch as 'Bank_Branch',
         op.order_status as 'Order_Status',
+        sod.awb_code as 'AWB Code',
         o.payment_method as 'Payment_Method',
         op.commission_rate as 'Commision_Rate', 
         op.product_title as 'Product_Title',
@@ -1196,6 +1302,7 @@ class Reports_model extends CI_Model
         format(op.price_after_discount/100,2) as 'Price_After_Discount',
         format(op.price_excluded_gst/100,2) as 'Price_Excluded_GST',
         format(p.commission_amount/100,2) as 'Commission_Amount',
+        format(csp.tcs_amount/100,2) as 'Total_TCS_Amt',
         p.gst_rate as 'Product_GST_Rate',
         op.product_gst_rate as 'Ordered_Product_GST_Rate',
         format(op.product_igst/100,2) as 'Product_IGST',
@@ -1217,9 +1324,15 @@ class Reports_model extends CI_Model
         op.product_weight as 'Product_Weight',
         op.product_delivery_partner as 'Product_Delivery_Partner',
         o.total_tax_charges as 'Taxable_Value_Total',
-        format((op.product_igst + op.shipping_igst + op.cod_igst)/100,2) as 'IGST_Total',    
-        format((op.product_cgst + op.shipping_cgst + op.cod_cgst)/100,2) as 'CGST_Total',	
-        format((op.product_sgst + op.shipping_sgst + op.cod_sgst)/100,2) as 'SGST_Total',	
+        format((op.product_igst + op.shipping_igst + op.cod_igst)/100,2) as IGST_Total,    
+        format((op.product_cgst + op.shipping_cgst + op.cod_cgst)/100,2) as CGST_Total,	
+        format((op.product_sgst + op.shipping_sgst + op.cod_sgst)/100,2) as SGST_Total,
+        IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((csp.tcs_amount / 100)/2,2), 0 ) as 'TCS_CGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((csp.tcs_amount / 100)/2,2), 0 ) as 'TCS_SGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
+			FORMAT(csp.tcs_amount / 100, 2)) as 'TCS_IGST',
         concat(buyer.first_name,' ', buyer.last_name) as 'Buyer_Name',
         buyer.email as 'Buyer_Email',
         buyer.phone_number as 'Buyer_Phone',
@@ -1232,17 +1345,112 @@ class Reports_model extends CI_Model
         order_shipping as oship,
         products as p,
         users as u,
-        users as buyer
+        users as buyer,
+        cashfree_seller_payout as csp,
+        shiprocket_order_details as sod
+        
     WHERE 
         o.id = op.order_id
     and op.order_id = os.order_id
+    AND op.order_id = csp.order_id
+    AND op.seller_id = csp.vendorId
     AND os.seller_id = op.seller_id
     AND o.id = oship.order_id
     AND op.product_id = p.id
     AND op.seller_id = u.id
     AND op.buyer_id = buyer.id
-     AND YEAR(op.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
-     AND MONTH(op.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)";
+   AND YEAR(op.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+     AND MONTH(op.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+	and (op.order_status NOT IN( 'cancelled_by_user', 'rejected') or (sod.awb_code is not null))
+    and  o.id = sod.order_id 
+    and p.id = sod.product_id
+    union 
+    SELECT distinct
+        concat(u.first_name,' ', u.last_name) as Seller,
+        u.email as 'Seller_Email',
+        u.phone_number as 'Selle_Phone',
+        u.supplier_state as 'Seller_State',
+        op.order_id as 'Order_No',
+        u.shop_name as 'Shop_Name',
+        u.pan_number as 'Pan_no',
+        u.gst_number as 'Gst_no',
+        concat(u.house_no,',',u.supplier_area,',', u.supplier_city,',', u.supplier_state,'-', u.pincode) as Address,
+        u.account_number as 'Account_No',
+        u.acc_holder_name as 'Account_Holder',
+        u.ifsc_code as 'IFSC_Code',
+        u.bank_branch as 'Bank_Branch',
+        op.order_status as 'Order_Status',
+		sod.awb_code as 'AWB_Code',
+        o.payment_method as 'Payment_Method',
+        op.commission_rate as 'Commision_Rate', 
+        op.product_title as 'Product_Title',
+        p.hsn_code as 'HSN_Code',
+        op.product_quantity as 'Product_Qty',
+        format(op.product_unit_price/100,2) as 'Product_Unit_Price',
+        format(op.price_after_discount/100,2) as 'Price_After_Discount',
+        format(op.price_excluded_gst/100,2) as 'Price_Excluded_GST',
+        format(p.commission_amount/100,2) as 'Commission_Amount',
+        format(cosp.tcs_amount/100,2) as 'Total_TCS_Amt',
+        p.gst_rate as 'Product_GST_Rate',
+        op.product_gst_rate as 'Ordered_Product_GST_Rate',
+        format(op.product_igst/100,2) as 'Product_IGST',
+        format(op.product_cgst/100,2) as 'Product_CGST',
+        format(op.product_sgst/100,2) as 'Product_SGST',
+        format((op.product_igst + op.product_cgst + op.product_sgst)/100,2) as 'Product_Total_GST',
+        format(op.product_total_price/100,2) as 'Product_Total_Price',
+        format(op.product_shipping_cost/100,2) as 'Product_Shipping_Cost',
+        format(op.shipping_igst/100,2) as 'Shipping_IGST', 
+        format(op.shipping_cgst/100,2) as 'Shipping_CGST',
+        format(op.shipping_sgst/100,2) as 'Shipping_SGST',
+        format(op.total_shipping_cost/100,2) as 'Total_Shipping_Cost',
+        format(op.product_cod_charges/100,2) as 'Product_COD_Charge',
+        format(op.cod_igst/100,2) as 'COD_IGST',
+        format(op.cod_cgst/100,2) as 'COD_CGST', 
+        format(op.cod_sgst/100,2) as 'COD_SGST',
+        format(op.total_cod_charges/100,2) as 'Total_COD_Charges',
+        format(o.price_total/100,2) as 'Total_Ordered_Value',
+        op.product_weight as 'Product_Weight',
+        op.product_delivery_partner as 'Product_Delivery_Partner',
+        o.total_tax_charges as 'Taxable_Value_Total',
+        format((op.product_igst + op.shipping_igst + op.cod_igst)/100,2) as IGST_Total,    
+        format((op.product_cgst + op.shipping_cgst + op.cod_cgst)/100,2) as CGST_Total,	
+        format((op.product_sgst + op.shipping_sgst + op.cod_sgst)/100,2) as SGST_Total,
+        IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((cosp.tcs_amount / 100)/2,2), 0 ) as 'TCS_CGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((cosp.tcs_amount / 100)/2,2), 0 ) as 'TCS_SGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
+			FORMAT(cosp.tcs_amount / 100, 2)) as 'TCS_IGST',
+        concat(buyer.first_name,' ', buyer.last_name) as 'Buyer_Name',
+        buyer.email as 'Buyer_Email',
+        buyer.phone_number as 'Buyer_Phone',
+        o.created_at as 'Order_date',
+        oship.shipping_state as 'Buyer_State'
+    FROM 
+        orders as o,
+        order_products AS op,
+        order_supplier as os,
+        order_shipping as oship,
+        products as p,
+        users as u,
+        users as buyer,
+        cod_seller_payable as cosp,
+        shiprocket_order_details as sod
+    WHERE 
+        o.id = op.order_id
+    and op.order_id = os.order_id
+    AND op.order_id = cosp.order_id
+    AND op.seller_id = cosp.vendorId
+    AND os.seller_id = op.seller_id
+    AND o.id = oship.order_id
+    AND op.product_id = p.id
+    AND op.seller_id = u.id
+    AND op.buyer_id = buyer.id
+    AND YEAR(op.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+     AND MONTH(op.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+    and (op.order_status NOT IN( 'cancelled_by_user', 'rejected') or (sod.awb_code is not null))
+    and  o.id = sod.order_id 
+    and p.id = sod.product_id";
         $query = $this->db->query($sql);
         return $query->result();
     }

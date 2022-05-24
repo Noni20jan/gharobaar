@@ -94,8 +94,8 @@ if (!empty($product_images)) {
         /*set the size of the lens:*/
         z-index: 500;
         zoom: 2%;
-        width: 250px;
-        height: 250px;
+        width: 200px;
+        height: 200px;
     }
 
     .img-zoom-result {
