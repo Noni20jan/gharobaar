@@ -83,6 +83,33 @@ if (!empty($product_images)) {
     .plyr--video {
         max-height: 355px;
     }
+
+    .img-zoom-container {
+        position: relative;
+
+    }
+
+    .img-zoom-lens {
+        border: 1px solid #800000;
+        /*set the size of the lens:*/
+        z-index: 500;
+        zoom: 2%;
+        width: 250px;
+        height: 250px;
+    }
+
+    .img-zoom-result {
+        top: auto;
+        border: 1px solid #d4d4d4;
+        position: absolute;
+        left: 730px;
+        /*set the size of the result div:*/
+        width: 450px;
+        height: 350px;
+        display: none;
+        z-index: 10;
+
+    }
 </style>
 <?php if ($image_count <= 1 && (!empty($video) || !empty($audio))) :
     if (!empty($video)) : ?>
@@ -106,6 +133,7 @@ if (!empty($product_images)) {
                                 <div class="item-inner" style="border-radius:15px;">
                                     <img src="<?php echo IMG_BASE64_1x1; ?>" class="img-bg" alt="slider-bg">
                                     <img src="<?php echo IMG_BASE64_1x1; ?>" data-lazy="<?php echo get_product_image_url($image, 'image_small'); ?>" class="img-thumbnail" alt="<?php echo get_product_title($product); ?>">
+
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -124,18 +152,22 @@ if (!empty($product_images)) {
                 <div id="product_slider" class="product-slider gallery">
                     <?php if (!empty($product_images)) :
                         foreach ($product_images as $image) : ?>
-                            <div class="item">
+                            <div class="item img-zoom-container">
                                 <a href="<?php echo get_product_image_url($image, 'image_big'); ?>" title="">
-                                    <img src="<?php echo base_url() . IMG_BG_PRODUCT_SLIDER; ?>" class="img-bg" alt="slider-bg" style="border-radius:20px;">
-                                    <img src="<?php echo IMG_BASE64_1x1; ?>" style="border-radius:20px;" data-lazy="<?php echo get_product_image_url($image, 'image_default'); ?>" alt="<?php echo $product->slug; ?>" class="img-product-slider">
+                                    <img src="<?php echo base_url() . IMG_BG_PRODUCT_SLIDER; ?>" class="img-bg" alt="slider-bg" style="border-radius:20px; ">
+                                    <img src="<?php echo get_product_image_url($image, 'image_default'); ?>" style="border-radius:20px; cursor: zoom-in;" id="image_<?php echo ($image->id) ?>" value="<?php echo get_product_image_url($image, 'image_default'); ?>" alt="<?php echo $product->slug; ?>" onmouseover="imageZoom('<?php echo ($image->id) ?>', 'myresult')" onmouseout="zoom('<?php echo ($image->id) ?>', 'myresult')" class="img-product-slider">
+
                                 </a>
                             </div>
-                        <?php endforeach;
-                    else : ?>
+
+
+                        <?php endforeach; ?>
+                    <?php else : ?>
                         <div class="item">
                             <a href="javascript:void(0)" title="">
                                 <img src="<?php echo base_url() . IMG_BG_PRODUCT_SLIDER; ?>" class="img-bg" alt="slider-bg" style="border-radius:20px;">
                                 <img src="<?php echo IMG_BASE64_1x1; ?>" data-lazy="<?php echo base_url() . 'assets/img/no-image.jpg'; ?>" style="border-radius:20px;" alt="<?php echo get_product_title($product); ?>" class="img-product-slider">
+
                             </a>
                         </div>
                     <?php endif; ?>
@@ -223,6 +255,7 @@ if (!empty($product_images)) {
     </div>
 <?php endif; ?>
 
+<div id="myresult" class="img-zoom-result"></div>
 
 <script>
     $(document).ready(function() {
@@ -259,4 +292,95 @@ if (!empty($product_images)) {
         $('#loginModal').modal('show');
         // alert("ok");
     })
+</script>
+<script>
+    function imageZoom(imgID, resultID) {
+        var resultID = "myresult";
+        var img, lens, result, cx, cy;
+        img = document.getElementById("image_" + imgID);
+        result = document.getElementById("myresult");
+        result.style.display = "block";
+        /*create lens:*/
+        lens = document.createElement("DIV");
+        lens.setAttribute("class", "img-zoom-lens");
+        /*insert lens:*/
+        img.parentElement.insertBefore(lens, img);
+        /*calculate the ratio between result DIV and lens:*/
+        console.log(result.offsetWidth);
+        console.log(lens.offsetWidth);
+        console.log(result.offsetHeight);
+        console.log(lens.offsetHeight);
+        cx = result.offsetWidth / lens.offsetWidth;
+        cy = result.offsetHeight / lens.offsetHeight;
+        console.log(cx);
+        console.log(cy);
+        console.log(img.width);
+        console.log(img.height)
+        /*set background properties for the result DIV:*/
+        result.style.backgroundImage = "url('" + img.src + "')";
+        console.log(result.style.backgroundImage);
+        result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
+        /*execute a function when someone moves the cursor over the image, or the lens:*/
+        console.log(result.style.backgroundSize);
+        lens.addEventListener("mousemove", moveLens);
+        img.addEventListener("mousemove", moveLens);
+        /*and also for touch screens:*/
+        lens.addEventListener("touchmove", moveLens);
+        img.addEventListener("touchmove", moveLens);
+
+        function moveLens(e) {
+            var pos, x, y;
+            /*prevent any other actions that may occur when moving over the image:*/
+            e.preventDefault();
+            /*get the cursor's x and y positions:*/
+            pos = getCursorPos(e);
+            /*calculate the position of the lens:*/
+            x = pos.x - (lens.offsetWidth / 2);
+            // console.log(x); 
+            y = pos.y - (lens.offsetHeight / 2);
+            /*prevent the lens from being positioned outside the image:*/
+            if (x > img.width - lens.offsetWidth) {
+                x = img.width + lens.offsetWidth;
+            }
+            // console.log(x);
+            console.log(lens.offsetWidth);
+            if (x < 0) {
+                x = 0;
+            }
+            if (y > img.height - lens.offsetHeight) {
+                y = img.height + lens.offsetHeight;
+            }
+            if (y < 0) {
+                y = 0;
+            }
+            /*set the position of the lens:*/
+            lens.style.left = x + "px";
+            lens.style.top = y + "px";
+            /*display what the lens "sees":*/
+            result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
+        }
+
+        function getCursorPos(e) {
+            var a, x = 0,
+                y = 0;
+            e = e || window.event;
+            /*get the x and y positions of the image:*/
+            a = img.getBoundingClientRect();
+            /*calculate the cursor's x and y coordinates, relative to the image:*/
+            x = e.pageX - a.left;
+            y = e.pageY - a.top;
+            /*consider any page scrolling:*/
+            x = x - window.pageXOffset;
+            y = y - window.pageYOffset;
+            return {
+                x: x,
+                y: y
+            };
+        }
+    }
+
+    function zoom(imgID, resultID) {
+        result = document.getElementById("myresult");
+        result.style.display = "none";
+    }
 </script>
