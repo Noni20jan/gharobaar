@@ -26,6 +26,44 @@
   }
 </style>
 
+
+<?php
+
+$order = $this->order_model->get_order_by_order_number($order_number);
+$order_products = $this->order_model->get_order_products($order->id);
+//die();
+// new json array for all product items
+if (!empty($order_products)) :
+  foreach ($order_products as $products) :
+
+    $myObj = new stdClass();
+    $myObj->item_id = $products->product_id;
+    $myObj->item_name = $products->product_title;
+    $myObj->affiliation = "";
+    $myObj->coupon = "";
+    $myObj->currency = $products->product_currency;
+    $myObj->discount = $products->product_discount_amount;
+    $myObj->index = "";
+    $myObj->item_brand = "";
+    $myObj->item_category = "";
+    $myObj->item_category2 = "";
+    $myObj->item_category3 = "";
+    $myObj->item_category4 = "";
+    $myObj->item_category5 = "";
+    $myObj->item_list_id = "";
+    $myObj->item_list_name = "";
+    $myObj->item_variant = "";
+    $myObj->location_id = "";
+    $myObj->price = $products->product_unit_price;
+    $myObj->quantity = $products->product_quantity;
+
+    $myJSON = json_encode($myObj);
+
+  // var_dump($myJSON);
+  endforeach;
+endif; ?>
+
+
 <input type="hidden" id="role" value="<?php echo $this->auth_user->user_type; ?>">
 <!-- header( "refresh:5;url=wherever.php" ); -->
 <div class="container">
@@ -81,4 +119,17 @@ if (empty($this->session->userdata('thankyou_order_id'))) {
       }, 10000); // 10 seconds
     }
   })
+</script>
+
+<script>
+  gtag("event", "purchase", {
+    transaction_id: <?php echo ($order->order_number) ?>,
+    affiliation: "Google Merchandise Store",
+    value: <?php echo ($order->price_total) ?>,
+    tax: <?php echo ($order->price_gst) ?>,
+    shipping: <?php echo ($order->price_shipping) ?>,
+    currency: "INR",
+    coupon: "SUMMER_SALE",
+    items: [<?php echo ($myJSON) ?>]
+  });
 </script>
