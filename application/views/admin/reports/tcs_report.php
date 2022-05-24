@@ -65,6 +65,7 @@
                             <th>IFSC Code</th>
                             <th>Bank Branch</th>
                             <th>Order Status</th>
+                            <th>AWB Code</th>
                             <th>Payment Method</th>
                             <th>Commision Rate</th>
                             <th>Product Title</th>
@@ -98,6 +99,9 @@
                             <th>IGST Total</th>
                             <th>CGST Total</th>
                             <th>SGST Total</th>
+                            <th>TCS CGST</th>
+                            <th>TCS SGST</th>
+                            <th>TCS IGST</th>
                             <th>Buyer Name</th>
                             <th>Buyer Email</th>
                             <th>Buyer Phone</th>
@@ -121,6 +125,7 @@
                                 <td><?php echo $item->IFSC_Code; ?></td>
                                 <td><?php echo $item->Bank_Branch; ?></td>
                                 <td><?php echo $item->Order_Status; ?></td>
+                                <td><?php echo $item->AWB_Code; ?></td>
                                 <td><?php echo $item->Payment_Method; ?></td>
                                 <td><?php echo $item->Commision_Rate; ?></td>
                                 <td><?php echo $item->Product_Title; ?></td>
@@ -154,6 +159,9 @@
                                 <td><?php echo $item->IGST_Total; ?></td>
                                 <td><?php echo $item->CGST_Total; ?></td>
                                 <td><?php echo $item->SGST_Total; ?></td>
+                                <td><?php echo $item->TCS_CGST; ?></td>
+                                <td><?php echo $item->TCS_SGST; ?></td>
+                                <td><?php echo $item->TCS_IGST; ?></td>
                                 <td><?php echo $item->Buyer_Name; ?></td>
                                 <td><?php echo $item->Buyer_Email; ?></td>
                                 <td><?php echo $item->Buyer_Phone; ?></td>
@@ -203,7 +211,7 @@
                 var len = Json_data.length;
                 if (len != 0) {
                     for (var i = 0; i < len; i++) {
-                        $('#tcs_data').append("<tr><td>" + Json_data[i].Seller + "</td><td>" + Json_data[i].Seller_Email + "</td><td>" + Json_data[i].Selle_Phone + "</td><td>" + Json_data[i].Order_No + "</td><td>" + Json_data[i].Shop_Name + "</td><td>" + Json_data[i].Pan_no + "</td><td>" + Json_data[i].Gst_no + "</td><td>" + Json_data[i].Address + "</td><td>" + Json_data[i].Account_No + "</td><td>" + Json_data[i].Account_Holder + "</td><td>" + Json_data[i].IFSC_Code + "</td><td>" + Json_data[i].Bank_Branch + "</td><td>" + Json_data[i].Order_Status + "</td><td>" + Json_data[i].Payment_Method + "</td><td>" + Json_data[i].Commision_Rate + "</td><td>" + Json_data[i].Product_Title + "</td><td>" + Json_data[i].HSN_Code + "</td><td>" + Json_data[i].Product_Qty + "</td><td>" + Json_data[i].Product_Unit_Price + "</td><td>" + Json_data[i].Price_After_Discount + "</td><td>" + Json_data[i].Price_Excluded_GST + "</td><td>" + Json_data[i].Commission_Amount + "</td><td>" + Json_data[i].Product_GST_Rate + "</td><td>" + Json_data[i].Ordered_Product_GST_Rate + "</td><td>" + Json_data[i].Product_IGST + "</td><td>" + Json_data[i].Product_CGST + "</td><td>" + Json_data[i].Product_SGST + "</td><td>" + Json_data[i].Product_Total_GST + "</td><td>" + Json_data[i].Product_Total_Price + "</td><td>" + Json_data[i].Product_Shipping_Cost + "</td><td>" + Json_data[i].Shipping_IGST + "</td><td>" + Json_data[i].Shipping_CGST + "</td><td>" + Json_data[i].Shipping_SGST + "</td><td>" + Json_data[i].Total_Shipping_Cost + "</td><td>" + Json_data[i].Product_COD_Charge + "</td><td>" + Json_data[i].COD_IGST + "</td><td>" + Json_data[i].COD_CGST + "</td><td>" + Json_data[i].COD_SGST + "</td><td>" + Json_data[i].Total_COD_Charges + "</td><td>" + Json_data[i].Total_Ordered_Value + "</td><td>" + Json_data[i].Product_Weight + "</td><td>" + Json_data[i].Product_Delivery_Partner + "</td><td>" + Json_data[i].Taxable_Value_Total + "</td><td>" + Json_data[i].IGST_Total + "</td><td>" + Json_data[i].CGST_Total + "</td><td>" + Json_data[i].SGST_Total + "</td><td>" + Json_data[i].Buyer_Name + "</td><td>" + Json_data[i].Buyer_Email + "</td><td>" + Json_data[i].Buyer_Phone + "</td><td>" + Json_data[i].Order_date + "</td><td>" + Json_data[i].Buyer_State + "</td></tr>")
+                        $('#tcs_data').append("<tr><td>" + Json_data[i].Seller + "</td><td>" + Json_data[i].Seller_Email + "</td><td>" + Json_data[i].Selle_Phone + "</td><td>" + Json_data[i].Order_No + "</td><td>" + Json_data[i].Shop_Name + "</td><td>" + Json_data[i].Pan_no + "</td><td>" + Json_data[i].Gst_no + "</td><td>" + Json_data[i].Address + "</td><td>" + Json_data[i].Account_No + "</td><td>" + Json_data[i].Account_Holder + "</td><td>" + Json_data[i].IFSC_Code + "</td><td>" + Json_data[i].Bank_Branch + "</td><td>" + Json_data[i].Order_Status + "</td><td>" + Json_data[i].AWB_Code + "</td><td>" + Json_data[i].Payment_Method + "</td><td>" + Json_data[i].Commision_Rate + "</td><td>" + Json_data[i].Product_Title + "</td><td>" + Json_data[i].HSN_Code + "</td><td>" + Json_data[i].Product_Qty + "</td><td>" + Json_data[i].Product_Unit_Price + "</td><td>" + Json_data[i].Price_After_Discount + "</td><td>" + Json_data[i].Price_Excluded_GST + "</td><td>" + Json_data[i].Commission_Amount + "</td><td>" + Json_data[i].Product_GST_Rate + "</td><td>" + Json_data[i].Ordered_Product_GST_Rate + "</td><td>" + Json_data[i].Product_IGST + "</td><td>" + Json_data[i].Product_CGST + "</td><td>" + Json_data[i].Product_SGST + "</td><td>" + Json_data[i].Product_Total_GST + "</td><td>" + Json_data[i].Product_Total_Price + "</td><td>" + Json_data[i].Product_Shipping_Cost + "</td><td>" + Json_data[i].Shipping_IGST + "</td><td>" + Json_data[i].Shipping_CGST + "</td><td>" + Json_data[i].Shipping_SGST + "</td><td>" + Json_data[i].Total_Shipping_Cost + "</td><td>" + Json_data[i].Product_COD_Charge + "</td><td>" + Json_data[i].COD_IGST + "</td><td>" + Json_data[i].COD_CGST + "</td><td>" + Json_data[i].COD_SGST + "</td><td>" + Json_data[i].Total_COD_Charges + "</td><td>" + Json_data[i].Total_Ordered_Value + "</td><td>" + Json_data[i].Product_Weight + "</td><td>" + Json_data[i].Product_Delivery_Partner + "</td><td>" + Json_data[i].Taxable_Value_Total + "</td><td>" + Json_data[i].IGST_Total + "</td><td>" + Json_data[i].CGST_Total + "</td><td>" + Json_data[i].SGST_Total + "</td><td>" + Json_data[i].TCS_CGST + "</td><td>" + Json_data[i].TCS_SGST + "</td><td>" + Json_data[i].TCS_IGST + "</td><td>" + Json_data[i].Buyer_Name + "</td><td>" + Json_data[i].Buyer_Email + "</td><td>" + Json_data[i].Buyer_Phone + "</td><td>" + Json_data[i].Order_date + "</td><td>" + Json_data[i].Buyer_State + "</td></tr>")
                     }
                 }
                 $('#extend_datatable').dataTable({

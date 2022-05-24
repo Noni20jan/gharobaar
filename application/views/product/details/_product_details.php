@@ -211,7 +211,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="product-details-user">
-                        By&nbsp;<a href="<?php echo generate_profile_url($product->user_slug); ?>"><?php echo character_limiter(ucfirst(get_brand_name_product($product)), 30, '..'); ?></a><br>
+                        By&nbsp;<a href="<?php echo generate_profile_url_by_id($product->user_id); ?>"><?php echo character_limiter(ucfirst(get_brand_name_product($product)), 30, '..'); ?></a><br>
                     </div>
                 </div>
                 <div class="product-details-review">
