@@ -1649,7 +1649,7 @@ class Product_model extends Core_Model
         if (!empty($array_search_words)) {
             $this->db->join('product_details', 'product_details.product_id = products.id');
             $this->db->where('product_details.lang_id', clean_number($this->selected_lang->id));
-            // $this->db->group_start();
+            $this->db->group_start();
             foreach ($array_search_words as $word) {
                 // $user_id=get_user_by_shop_name($word);
                 if (!empty($word)) {
@@ -1837,7 +1837,7 @@ class Product_model extends Core_Model
                     }
                 }
             }
-            // $this->db->group_end();
+            $this->db->group_end();
             // $this->db->order_by('products.is_promoted', 'DESC');
         }
 
@@ -2246,62 +2246,65 @@ class Product_model extends Core_Model
         $this->filter_products($query_string_array, $category_id, $only_category);
         if (!$only_category) :
             $this->db->limit(clean_number($per_page), clean_number($offset));
-            $result = $this->db->get('products')->result_array();
+            $result = $this->db->get('products')->result();
 
 
         // $subQuery1 = $this->db->_compile_select();
 
         // $this->db->_reset_select();
+
         else :
             $result = $this->db->get('products')->result_array();
         // $subQuery1 = $this->db->_compile_select();
 
         // $this->db->_reset_select();
         endif;
-        $this->filter_products_nlp($query_string_array, $category_id, $only_category);
-        if (!$only_category) :
-            $this->db->limit(clean_number($per_page), clean_number($offset));
+        return $result;
+        // $this->filter_products_nlp($query_string_array, $category_id, $only_category);
+        // if (!$only_category) :
+        // $this->db->limit(clean_number($per_page), clean_number($offset));
 
-            $result1 = $this->db->get('products')->result_array();
-            // $obj_merged = (object) array_merge((array) $result, (array) $result1);
-            foreach ($result1 as $liste) {
+        // $result1 = $this->db->get('products')->result();
+        // var_dump($this->db->last_query());
+        // $obj_merged = (object) array_merge((array) $result, (array) $result1);
+        // foreach ($result1 as $liste) {
 
-                // foreach ($result1 as $value) {
-                if (!in_array($liste, $result, true)) {
-                    array_push($result, $liste);
-                    // }
-                }
-            }
-            $search = remove_special_characters(trim($this->input->get('search', true)));
-            // $result3 = array();
-            // $result3 = array_unique($result1);
-            // $result2 = (object)$result1;
-            $result2 = json_decode(json_encode($result));
-            foreach ($result2 as $result55) {
-                $sim = similar_text($result55->title, $search, $perc);
-                $result55->perc = $perc;
-            }
-            // var_dump($result2);
-            // die();
-            return $result2;
+        //     // foreach ($result1 as $value) {
+        //     if (!in_array($liste, $result, true)) {
+        //         array_push($result, $liste);
+        //         // }
+        //     }
+        // }
+        // $search = remove_special_characters(trim($this->input->get('search', true)));
+        // // $result3 = array();
+        // // $result3 = array_unique($result1);
+        // // $result2 = (object)$result1;
+        // $result2 = json_decode(json_encode($result));
+        // foreach ($result2 as $result55) {
+        //     $sim = similar_text($result55->title, $search, $perc);
+        //     $result55->perc = $perc;
+        // }
+        // var_dump($result2);
+        // die();
+        // return $result1;
         // $subQuery2 = $this->db->_compile_select();
         // return $result1;
         // $this->db->_reset_select();
-        else :
-            $result1 = $this->db->get('products')->result_array();
-            // $subQuery2 = $this->db->_compile_select();
+        // else :
+        //     $result1 = $this->db->get('products')->result_array();
+        //     // $subQuery2 = $this->db->_compile_select();
 
-            // $this->db->_reset_select();
-            foreach ($result as $liste) {
+        //     // $this->db->_reset_select();
+        //     // foreach ($result as $liste) {
 
-                foreach ($result1 as $value) {
-                    if (!in_array($value, $liste, true)) {
-                        array_push($liste, $value);
-                    }
-                }
-            }
-            return $result1;
-        endif;
+        //     //     foreach ($result1 as $value) {
+        //     //         if (!in_array($value, $liste, true)) {
+        //     //             array_push($liste, $value);
+        //     //         }
+        //     //     }
+        //     // }
+        //     return $result1;
+        // endif;
         // $this->db->from("($subQuery1 UNION $subQuery2)");
         // return $this->db->get();
 
@@ -2430,19 +2433,19 @@ class Product_model extends Core_Model
         // $count1 = $this->db->count_all_results('products');
         $p1 = $this->db->get('products')->result_array();
 
-        $this->filter_products_nlp($query_string_array, $category_id);
-        $this->db->where('is_shop_open', 1);
-        // $count2 = $this->db->count_all_results('products');
-        // var_dump($this->db->count_all_results('products'));
-        $p2 = $this->db->get('products')->result_array();
-        foreach ($p2 as $liste) {
+        // $this->filter_products_nlp($query_string_array, $category_id);
+        // $this->db->where('is_shop_open', 1);
+        // // $count2 = $this->db->count_all_results('products');
+        // // var_dump($this->db->count_all_results('products'));
+        // $p2 = $this->db->get('products')->result_array();
+        // foreach ($p2 as $liste) {
 
-            // foreach ($result1 as $value) {
-            if (!in_array($liste, $p1, true)) {
-                array_push($p1, $liste);
-                // }
-            }
-        }
+        //     // foreach ($result1 as $value) {
+        //     if (!in_array($liste, $p1, true)) {
+        //         array_push($p1, $liste);
+        //         // }
+        //     }
+        // }
         return count($p1);
         // return $this->db->count_all_results('products');
     }
@@ -4022,7 +4025,7 @@ order by id desc LIMIT 1";
         $where1 = "title = '$word' ) ";
         $wherecon = " and users.is_shop_open=1 and users.banned =0 and products.is_draft=0 and products.is_deleted=0 and products.visibility=1 and status=1 order by products.is_promoted desc limit 5) ";
         $sselect = " UNION (SELECT title,brand_name,products.slug FROM product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where (";
-        $union = " (select title,brand_name,products.slug from product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where title like ('%$word%') OR brand_name = ('$word')  ";
+        $union = " (select title,brand_name,products.slug from product_details join products on products.id=product_details.product_id join users on users.id=products.user_id where (title like ('%$word%') OR brand_name = ('$word') ) ";
         $sql5 = $union . $wherecon .  $sselect . $where . $where1 . $wherecon;
         $query8 = $this->db->query($sql5);
 
