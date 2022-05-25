@@ -1131,15 +1131,15 @@
 <div class="modal fade" id="registerMobileModal" role="dialog" data-backdrop="static">
     <div class="modal-dialog-centered" role="document">
         <div class="modal-dialog modal-lg verifyModalWidth" id="mobile_otp">
-            <div class="modal-body-new" style="background-image: url('assets/img/background3.png'); border-radius:20px;">
+            <div class="modal-body-new" style="">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-image: url('assets/img/background3.png'); border:none; text-align:center; border-radius:20px;">
+                    <div class="modal-header" style="border-bottom:none;background-color: #E5E4E2;">
                         <button type="button" class="close" id="cross-btn-cart" data-dismiss="modal" aria-label="Close" onclick="">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h5 class="modal-title">Verify Mobile Number</h5>
                     </div>
-                    <div class="modal-body text-center" style="background-image: url('assets/img/background3.png'); border-radius:20px;">
+                    <div class="modal-body text-center" style="background-color: #E5E4E2;">
                         <div class="text-center" id="send-otp-result-cart"></div>
                         <center>
                             <label>Enter Mobile Number </label>
