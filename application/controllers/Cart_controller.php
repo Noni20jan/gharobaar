@@ -1171,7 +1171,7 @@ class Cart_controller extends Home_Core_Controller
                 $this->session->set_userdata('thankyou_order_id', $order->order_number);
                 $required_data = array(
                     "from" => "918287606650",
-                    "to" => $phone_number,
+                    "to" => "91$phone_number",
                     "type" => "mediatemplate",
                     "channel" => "whatsapp",
                     "template_name" => "new_ordertext",
@@ -1233,7 +1233,7 @@ class Cart_controller extends Home_Core_Controller
                     $parsed_data = '"' . implode('","', $arr) . '"';
                     $require_data = array(
                         "from" => "918287606650",
-                        "to" => $phone_number,
+                        "to" => "91$phone_number",
                         "type" => "mediatemplate",
                         "channel" => "whatsapp",
                         "template_name" => "new_ordertext",
