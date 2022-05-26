@@ -25,22 +25,6 @@
         }
     }
 
-    @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
-        .product-item .img-product {
-            width: 100%;
-            height: 150px;
-
-        }
-    }
-
-    @media all and (device-width: 1024px) and (device-height: 768px) and (orientation:landscape) {
-        .product-item .img-product {
-            width: 100%;
-            height: 150px;
-        }
-    }
-
-
     .zoom:hover {
         -ms-transform: scale(1.25);
         /* IE 9 */
