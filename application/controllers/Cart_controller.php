@@ -145,7 +145,32 @@ class Cart_controller extends Home_Core_Controller
             }
         }
     }
+    public function whatsapp($required_data)
+    {
 
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.kaleyra.io/v1/HXIN1725621258IN/messages',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS =>  json_encode($required_data),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type:application/json',
+                'api-key: Ac7a8d63fb0f6572a5bb4132c9750b37c'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        return $response;
+
+        curl_close($curl);
+    }
     /**
      * Add to Cart ajax
      */
@@ -1137,11 +1162,26 @@ class Cart_controller extends Home_Core_Controller
             } else {
                 $this->session->set_flashdata('success', trans("msg_order_completed"));
                 // redirect(generate_url("order_details") . "/" . $order->order_number);
+                $x = (get_user($order->buyer_id)->first_name);
+                $phone_number = (get_user($order->buyer_id)->phone_number);
+                $arr = [$x, $order->order_number, $order->price_total / 100, $order->payment_method];
+                $passed_data = '"' . implode('","', $arr) . '"';
 
                 // redirect(generate_url("thankyou"). "/" . $order->order_number);
                 $this->session->set_userdata('thankyou_order_id', $order->order_number);
+                $required_data = array(
+                    "from" => "918287606650",
+                    "to" => $phone_number,
+                    "type" => "mediatemplate",
+                    "channel" => "whatsapp",
+                    "template_name" => "new_ordertext",
+                    "params" => $passed_data,
+                    "param_url" => "view-order-details" . "/" . $order->order_number
+                );
                 $data['order_number'] = $order->order_number;
                 $data['order_completed'] = "yes";
+
+                $this->whatsapp($required_data);
                 // redirect(generate_url("order-completed"));
             }
         } else {
@@ -1187,10 +1227,26 @@ class Cart_controller extends Home_Core_Controller
                     }
                     //set response and redirect URLs
                     $response->result = 1;
+                    $x = (get_user($order->buyer_id)->first_name);
+                    $phone_number = (get_user($order->buyer_id)->phone_number);
+                    $arr = [$x, $order->order_number, $order->price_total / 100, $order->payment_method];
+                    $parsed_data = '"' . implode('","', $arr) . '"';
+                    $require_data = array(
+                        "from" => "918287606650",
+                        "to" => $phone_number,
+                        "type" => "mediatemplate",
+                        "channel" => "whatsapp",
+                        "template_name" => "new_ordertext",
+                        "params" => $parsed_data,
+                        "param_url" => "view-order-details" . "/" . $order->order_number
+                    );
                     //  $response->redirect_url = $base_url . get_route("order_details", true) . $order->order_number;
                     //  $response->redirect_url = $base_url . get_route("thankyou", true) ."/". $order->order_number;
                     $this->session->set_userdata('thankyou_order_id', $order->order_number);
+                    $this->whatsapp($require_data);
+
                     $response->redirect_url = $base_url . get_route("order-completed", true);
+
 
                     if ($order->buyer_id == 0) {
                         $this->session->set_userdata('mds_show_order_completed_page', 1);
