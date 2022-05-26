@@ -1172,7 +1172,7 @@ $arr=[$x,$order->order_number,$order->price_total/100,$order->payment_method];
                 $this->session->set_userdata('thankyou_order_id', $order->order_number);
                 $required_data = array(
                     "from"=> "918287606650",
-                    "to"=> $phone_number,
+                    "to"=> "91$phone_number",
                     "type"=> "mediatemplate",
                     "channel"=> "whatsapp",
                     "template_name"=> "new_ordertext",
@@ -1234,7 +1234,7 @@ $arr=[$x,$order->order_number,$order->price_total/100,$order->payment_method];
      $parsed_data= '"'.implode( '","',$arr).'"';
      $require_data = array(
         "from"=> "918287606650",
-        "to"=> $phone_number,
+        "to"=> "91$phone_number",
         "type"=> "mediatemplate",
         "channel"=> "whatsapp",
         "template_name"=> "new_ordertext",
