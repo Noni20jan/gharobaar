@@ -1145,6 +1145,7 @@ class Cart_controller extends Home_Core_Controller
         //add order
         $order_id = $this->order_model->add_order_offline_payment("Cash On Delivery");
         $order = $this->order_model->get_order($order_id);
+        $order_shipping=$this->order_model->get_shipping($order_id);
         if (!empty($order)) {
             //decrease product quantity after sale
             $this->order_model->decrease_product_stock_after_sale($order->id);
@@ -1163,21 +1164,20 @@ class Cart_controller extends Home_Core_Controller
             } else {
                 $this->session->set_flashdata('success', trans("msg_order_completed"));
                 // redirect(generate_url("order_details") . "/" . $order->order_number);
-                $x=(get_user($order->buyer_id)->first_name);
-                $phone_number=(get_user($order->buyer_id)->phone_number);
-$arr=[$x,$order->order_number,$order->price_total/100,$order->payment_method];
+
+$arr=[$order_shipping->shipping_first_name,$order->order_number,$order->price_total/100,$order->payment_method];
  $passed_data= '"'.implode( '","',$arr).'"';
 
                 // redirect(generate_url("thankyou"). "/" . $order->order_number);
                 $this->session->set_userdata('thankyou_order_id', $order->order_number);
                 $required_data = array(
                     "from"=> "918287606650",
-                    "to"=> "91$phone_number",
+                    "to"=> "91$order_shipping->shipping_phone_number",
                     "type"=> "mediatemplate",
                     "channel"=> "whatsapp",
                     "template_name"=> "new_ordertext",
                     "params"=> $passed_data,
-                    "param_url"=> "view-order-details"."/".$order->order_number
+                    "param_url"=> "order-details"."/".$order->order_number
                 );
                 $data['order_number'] = $order->order_number;
                 $data['order_completed'] = "yes";
@@ -1210,6 +1210,7 @@ $arr=[$x,$order->order_number,$order->price_total/100,$order->payment_method];
                 //add order
                 $order_id = $this->order_model->add_order($data_transaction);
                 $order = $this->order_model->get_order($order_id);
+                $order_shipping=$this->order_model->get_order_shipping($order_id);
                 if (!empty($order)) {
                     //decrease product quantity after sale
                     $this->order_model->decrease_product_stock_after_sale($order->id);
@@ -1228,18 +1229,17 @@ $arr=[$x,$order->order_number,$order->price_total/100,$order->payment_method];
                     }
                     //set response and redirect URLs
                     $response->result = 1;
-                    $x=(get_user($order->buyer_id)->first_name);
-                    $phone_number=(get_user($order->buyer_id)->phone_number);
-    $arr=[$x,$order->order_number,$order->price_total/100,$order->payment_method];
+
+    $arr=[$order_shipping->shipping_first_name,$order->order_number,$order->price_total/100,$order->payment_method];
      $parsed_data= '"'.implode( '","',$arr).'"';
      $require_data = array(
         "from"=> "918287606650",
-        "to"=> "91$phone_number",
+        "to"=> "91$order_shipping->shipping_phone_number",
         "type"=> "mediatemplate",
         "channel"=> "whatsapp",
         "template_name"=> "new_ordertext",
         "params"=> $parsed_data,
-        "param_url"=> "view-order-details"."/".$order->order_number
+        "param_url"=> "order-details"."/".$order->order_number
     );
                     //  $response->redirect_url = $base_url . get_route("order_details", true) . $order->order_number;
                     //  $response->redirect_url = $base_url . get_route("thankyou", true) ."/". $order->order_number;
