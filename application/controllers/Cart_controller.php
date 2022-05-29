@@ -1145,7 +1145,7 @@ class Cart_controller extends Home_Core_Controller
         //add order
         $order_id = $this->order_model->add_order_offline_payment("Cash On Delivery");
         $order = $this->order_model->get_order($order_id);
-        $order_shipping=$this->order_model->get_shipping($order_id);
+        $order_shipping=$this->order_model->get_order_shipping($order_id);
         if (!empty($order)) {
             //decrease product quantity after sale
             $this->order_model->decrease_product_stock_after_sale($order->id);
