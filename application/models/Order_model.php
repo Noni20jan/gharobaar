@@ -5359,4 +5359,11 @@ class Order_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->row()->count;
     }
+    public function count_offer_applied($user_id, $offer_id)
+    {
+
+        $sql = " SELECT count(offer_id) as 'count' from orders where buyer_id=$user_id and offer_id=$offer_id";
+        $query = $this->db->query($sql);
+        return $query->row()->count;
+    }
 }
