@@ -4028,7 +4028,7 @@ class Order_model extends CI_Model
         curl_close($curl);
         return $trackingurl;
     }
-    public function cancel_order($shipment_order_id,$cod)
+    public function cancel_order($shipment_order_id, $cod)
     {
         //$product_id = $this->get_order_product($order_product_id);
         $curl = curl_init();
@@ -4078,7 +4078,7 @@ class Order_model extends CI_Model
         $this->db->where('shipment_order_id', $shipment_order_id);
 
         $this->db->update('shiprocket_order_details', $cancel_shiprocket_details_status);
-    //  var_dump($cod);
+        //  var_dump($cod);
         if ($cod == "Cashfree") {
             $cod = 0;
         } else {
@@ -5506,5 +5506,12 @@ class Order_model extends CI_Model
         $this->db->where('order_id', $order_id);
         $this->db->where('vendorId', $seller_id);
         $this->db->update('cashfree_seller_payout', $data);
+    }
+    public function count_offer_applied($user_id, $offer_id)
+    {
+
+        $sql = " SELECT count(offer_id) as 'count' from orders where buyer_id=$user_id and offer_id=$offer_id";
+        $query = $this->db->query($sql);
+        return $query->row()->count;
     }
 }
