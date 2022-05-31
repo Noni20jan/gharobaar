@@ -2618,7 +2618,7 @@
 
                                     </div> -->
                                     <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="text" name="phone_number" id="phone_number" class="form-control auth-form-input" placeholder="Mobile Number" value="<?php echo old("phone_number"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption" minlength="10" maxlength="10" required>
+                                        <input type="text" name="phone_number" id="phone_number" class="form-control auth-form-input" placeholder="Mobile Number" onpaste="return false" value="<?php echo old("phone_number"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption" minlength="10" maxlength="10" required>
                                         <strong id="verify_otp" class="btn btn-md btn-custom btn-block-new-ui">Verify Mobile</strong>
                                         <br><span id="verify_mobile_span" style="color:red;">*You cannot register without Mobile Verification!</span>
                                     </div>
