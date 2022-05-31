@@ -263,12 +263,13 @@ foreach ($cart_items as $item) {
 
                                             <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" onclick="changeViewPayment()" required <?php echo ($check_option == true) ? 'checked' : ''; ?>>
                                             <label class="custom-control-label label-payment-option" for="option_cash_on_delivery"><?php echo trans("cash_on_delivery"); ?><br><small><?php echo trans("cash_on_delivery_exp"); ?></small></label>
-                                        <?php endif; ?>
-                                    <?php else : ?>
-                                        <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
 
-                                            <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" onclick="changeViewPayment()" required <?php echo ($check_option == true) ? 'checked' : ''; ?>>
-                                            <label class="custom-control-label label-payment-option" for="option_cash_on_delivery"><?php echo trans("cash_on_delivery"); ?><br><small><?php echo trans("cash_on_delivery_exp"); ?></small></label>
+                                        <?php else : ?>
+                                            <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
+
+                                                <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" onclick="changeViewPayment()" required <?php echo ($check_option == true) ? 'checked' : ''; ?>>
+                                                <label class="custom-control-label label-payment-option" for="option_cash_on_delivery"><?php echo trans("cash_on_delivery"); ?><br><small><?php echo trans("cash_on_delivery_exp"); ?></small></label>
+                                            <?php endif; ?>
                                         <?php endif; ?>
                                     <?php endif; ?>
                                 </div>
