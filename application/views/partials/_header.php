@@ -6689,17 +6689,17 @@
     <!-- End Google Tag Manager -->
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <!-- <script src="https://www.googletagmanager.com/gtag/js?id=UA-199516838-1"></script> -->
-    <!-- <script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-351353333"></script>
+    <script>
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {
             dataLayer.push(arguments);
         }
         gtag('js', new Date());
-
         gtag('config', 'UA-199516838-1');
-    </script> -->
+        gtag('config', 'AW-351353333');
+    </script>
 
     <!-- Google Tag Manager (noscript) -->
     <!-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGZRFDN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> -->
