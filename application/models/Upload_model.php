@@ -114,6 +114,7 @@ class Upload_model extends CI_Model
 
     public function upload_buyer_image($file_name, $last_id, $product_id)
     {
+
         if (isset($_FILES[$file_name])) {
             if (empty($_FILES[$file_name]['name'])) {
                 return null;
@@ -275,12 +276,12 @@ class Upload_model extends CI_Model
             $new_path = 'uploads/images/' . $new_name;
         }
         $file_extension = pathinfo($new_path, PATHINFO_EXTENSION);
-        $file_extension = strtolower($file_extension);
-        if (in_array($file_extension, $valid_ext)) {
+        // $file_extension = strtolower($file_extension);
+        // if (in_array($file_extension, $valid_ext)) {
 
-            // Compress Image
-            $this->compressImage($new_path, $new_path, 60);
-        }
+        //     // Compress Image
+        //     $this->compressImage($new_path, $new_path, 60);
+        // }
 
         $img = Image::make($path)->orientate();
         $img->resize(null, 500, function ($constraint) {
@@ -309,11 +310,11 @@ class Upload_model extends CI_Model
         }
         $file_extension = pathinfo($new_path, PATHINFO_EXTENSION);
         $file_extension = strtolower($file_extension);
-        if (in_array($file_extension, $valid_ext)) {
+        // if (in_array($file_extension, $valid_ext)) {
 
-            // Compress Image
-            $this->compressImage($new_path, $new_path, 60);
-        }
+        //     // Compress Image
+        //     $this->compressImage($new_path, $new_path, 60);
+        // }
 
         $img = Image::make($path)->orientate();
         $img->resize(1920, null, function ($constraint) {
@@ -343,11 +344,11 @@ class Upload_model extends CI_Model
         }
         $file_extension = pathinfo($new_path, PATHINFO_EXTENSION);
         $file_extension = strtolower($file_extension);
-        if (in_array($file_extension, $valid_ext)) {
+        // if (in_array($file_extension, $valid_ext)) {
 
-            // Compress Image
-            $this->compressImage($new_path, $new_path, 60);
-        }
+        //     // Compress Image
+        //     $this->compressImage($new_path, $new_path, 60);
+        // }
         $img = Image::make($path)->orientate();
         $img->resize(null, 300, function ($constraint) {
             $constraint->aspectRatio();
@@ -832,22 +833,24 @@ class Upload_model extends CI_Model
 
         return $directory . "/";
     }
-    function compressImage($source, $destination, $quality)
-    {
+    // function compressImage($source, $destination, $quality)
+    // {
+    //     // var_dump($source);
 
-        $info = getimagesize($source);
+    //     $info = getimagesize($source);
+    //     var_dump($info);
 
-        if ($info['mime'] == 'image/jpeg')
-            $image = imagecreatefromjpeg($source);
+    //     if ($info['mime'] == 'image/jpeg')
+    //         $image = imagecreatefromjpeg($source);
 
-        elseif ($info['mime'] == 'image/gif')
-            $image = imagecreatefromgif($source);
+    //     elseif ($info['mime'] == 'image/gif')
+    //         $image = imagecreatefromgif($source);
 
-        elseif ($info['mime'] == 'image/png')
-            $image = imagecreatefrompng($source);
+    //     elseif ($info['mime'] == 'image/png')
+    //         $image = imagecreatefrompng($source);
 
 
-        imagejpeg($image, $destination, $quality);
-        return $destination;
-    }
+    //     imagejpeg($image, $destination, $quality);
+    //     return $destination;
+    // }
 }
