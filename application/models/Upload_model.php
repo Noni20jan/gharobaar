@@ -30,6 +30,21 @@ class Upload_model extends CI_Model
         $this->load->library('upload', $config);
         if ($this->upload->do_upload($file_name)) {
             $data = array('upload_data' => $this->upload->data());
+            $configer =  array(
+                'image_library' => 'gd2',
+                'source_image'  => (base_url() . $data['upload_data']['full_path']),
+                'maintain_ratio' =>  TRUE,
+                'width'         =>  400,
+                'height'        =>  500,
+                'master_dim'    => 'width',
+                'quality'       =>  "50%",
+            );
+            $this->load->library('image_lib');
+            $this->image_lib->clear();
+            $this->image_lib->initialize($configer);
+            $this->image_lib->resize();
+
+
             if (isset($data['upload_data']['full_path'])) {
                 return $data['upload_data']['full_path'];
             }
