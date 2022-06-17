@@ -194,7 +194,7 @@
                             <div class="panel-body">
                                 <div class="form-group">
                                     <label class="control-label"><?php echo trans("title"); ?><span class="Validation_error"> *</span></label>
-                                    <input type="text" name="title_<?= $language->id; ?>" value="<?= !empty($product_details) ? $product_details->title : ''; ?>" class="form-control form-input" placeholder="<?php echo trans("title"); ?>" <?= $this->selected_lang->id == $language->id ? 'required' : ''; ?>>
+                                    <input type="text" pattern=".*\S+.*" name="title_<?= $language->id; ?>" value="<?= !empty($product_details) ? $product_details->title : ''; ?>" class="form-control form-input" placeholder="<?php echo trans("title"); ?>" <?= $this->selected_lang->id == $language->id ? 'required' : ''; ?>>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><?php echo trans("description"); ?>(<small><?php echo trans("detail_description"); ?></small>)<span class="Validation_error"> *</span></label>
@@ -221,7 +221,7 @@
             <button type="submit" class="btn btn-lg btn-success pull-right"><?php echo trans("save_and_continue"); ?></button>
         <?php else : ?>
             <a href="<?php echo generate_dash_url("product", "product_details") . "/" . $product->id; ?>" class="btn btn-lg btn-custom pull-right"><?php echo trans("edit_details"); ?></a>
-            <button type="submit"  id="disable_sku" class="btn btn-lg btn-success pull-right m-r-10"><?php echo trans("save_changes"); ?></button>
+            <button type="submit" id="disable_sku" class="btn btn-lg btn-success pull-right m-r-10"><?php echo trans("save_changes"); ?></button>
         <?php endif; ?>
     </div>
 </div>
@@ -291,24 +291,24 @@
     </div>
 </div>
 <script>
-     $("#input_sku").keyup(function(){
-let z = $(this).val().replace(/^\s+|\s+$/gm,'');
-let m="<?php echo $product->sku;?>";
- var x=<?php echo json_encode($sku);?>;
+    $("#input_sku").keyup(function() {
+        let z = $(this).val().replace(/^\s+|\s+$/gm, '');
+        let m = "<?php echo $product->sku; ?>";
+        var x = <?php echo json_encode($sku); ?>;
 
-  if(x.some(e => e.sku_id== z) && z!=m){
+        if (x.some(e => e.sku_id == z) && z != m) {
 
-    document.getElementById("input_sku_check").style.display="block";
-    document.getElementById("disable_sku").disabled=true;
+            document.getElementById("input_sku_check").style.display = "block";
+            document.getElementById("disable_sku").disabled = true;
 
-       }
-       else{
-        document.getElementById("input_sku_check").style.display="none";
-        document.getElementById("disable_sku").disabled=false;
+        } else {
+            document.getElementById("input_sku_check").style.display = "none";
+            document.getElementById("disable_sku").disabled = false;
 
 
-       }
+        }
     });
+
     function get_automated_SKU(element, button) {
         var valid = true;
 
@@ -323,7 +323,7 @@ let m="<?php echo $product->sku;?>";
         } else {
             $("#input_sku_p").hide();
             document.getElementById("input_sku_check").style.display = "none";
-            document.getElementById("disable_sku").disabled=false;
+            document.getElementById("disable_sku").disabled = false;
 
             button.disabled = true;
             generateUniqueProductCode(element, button);

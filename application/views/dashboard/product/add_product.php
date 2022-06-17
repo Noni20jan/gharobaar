@@ -133,7 +133,7 @@
                             <div class="panel-body">
                                 <div class="form-group">
                                     <label class="control-label"><?php echo trans("title"); ?><span class="Validation_error"> *</span></label>
-                                    <input type="text" autocomplete="off" name="title_<?= $language->id; ?>" class="form-control form-input" placeholder="<?php echo trans("title"); ?>" <?= $this->selected_lang->id == $language->id ? 'required' : ''; ?>>
+                                    <input type="text" autocomplete="off" pattern=".*\S+.*" name="title_<?= $language->id; ?>" class="form-control form-input" placeholder="<?php echo trans("title"); ?>" <?= $this->selected_lang->id == $language->id ? 'required' : ''; ?>>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label"><?php echo trans("description"); ?>(<small style="font-size: 14px;color: dimgray;"><?php echo trans("detail_description"); ?></small>)<span class="Validation_error"> *</span></label>
@@ -230,7 +230,7 @@
 </div>
 <script>
     $("#input_sku").keyup(function() {
-    let z = $(this).val().replace(/^\s+|\s+$/gm,'');
+        let z = $(this).val().replace(/^\s+|\s+$/gm, '');
         var x = <?php echo json_encode($sku); ?>;
 
 
