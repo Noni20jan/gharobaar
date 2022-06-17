@@ -38,7 +38,11 @@ class Cart_controller extends Home_Core_Controller
         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
         $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
         $data['main_settings'] = get_main_settings();
-
+        if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
+            if ($this->session->userdata('mds_shopping_cart_coupon') == 0) {
+                $this->session->unset_userdata('mds_shopping_cart_coupon');
+            }
+        }
         $data["open_rating_modal"] = false;
         if (!empty($this->auth_user)) :
             $order_id['product_id'] =  $this->product_model->get_order_id($this->auth_user->id);
