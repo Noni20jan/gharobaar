@@ -512,7 +512,7 @@ class Coupon_controller extends Admin_Core_Controller
                                         endif;
                                     endforeach;
                                 endforeach;
-                                if ($valid) :
+                                if ($valid) {
                                     //calculation for exhibition coupon
                                     $coupon = new stdClass();
                                     $coupon->id = $coupon_details->id;
@@ -534,16 +534,13 @@ class Coupon_controller extends Admin_Core_Controller
                                     $data["msg"] = trans("success_coupon");
                                     $data["coupon_data"] = $coupon_details;
 
-                                elseif ($max_usage_per_user > $number_of_coupon_applied) :
+
+                                    // elseif():
+                                } else {
                                     $data["error"] = "This coupon is not applicable on this cart.";
                                     $data["status"] = false;
                                     $data["msg"] = trans("coupon_not_valid");
-                                // elseif():
-                                else :
-                                    $data["error"] = "This coupon is not applicable on this cart.";
-                                    $data["status"] = false;
-                                    $data["msg"] = trans("coupon_not_valid");
-                                endif;
+                                };
                                 break;
                             case "CATEGORY":
 
