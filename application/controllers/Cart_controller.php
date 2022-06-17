@@ -39,7 +39,7 @@ class Cart_controller extends Home_Core_Controller
         $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
         $data['main_settings'] = get_main_settings();
         if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
-            if ($this->session->userdata('mds_shopping_cart_coupon') == 0) {
+            if ($this->session->userdata('mds_shopping_cart_coupon') == '0') {
                 $this->session->unset_userdata('mds_shopping_cart_coupon');
             }
         }
