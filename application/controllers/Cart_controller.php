@@ -631,15 +631,15 @@ class Cart_controller extends Home_Core_Controller
 
         $mds_payment_type = $this->input->post('mds_payment_type', true);
         if ($mds_payment_type == "sale") {
-            redirect(generate_url("cart", "payment"));
+            redirect(generate_url("cart", "shipping"));
         } elseif ($mds_payment_type == 'membership') {
             $transaction_number = 'bank-' . generate_transaction_number();
             $this->session->set_userdata('mds_membership_bank_transaction_number', $transaction_number);
-            redirect(generate_url("cart", "payment") . "?payment_type=membership");
+            redirect(generate_url("cart", "shipping") . "?payment_type=membership");
         } elseif ($mds_payment_type == 'promote') {
             $transaction_number = 'bank-' . generate_transaction_number();
             $this->session->set_userdata('mds_promote_bank_transaction_number', $transaction_number);
-            redirect(generate_url("cart", "payment") . "?payment_type=promote");
+            redirect(generate_url("cart", "shipping") . "?payment_type=promote");
         }
         redirect(lang_base_url());
     }
@@ -997,7 +997,7 @@ class Cart_controller extends Home_Core_Controller
             }
         } else {
             $this->session->set_flashdata('error', trans("msg_error"));
-            redirect($lang_base_url . get_route("cart", true) . get_route("payment"));
+            redirect($lang_base_url . get_route("cart", true) . get_route("shipping"));
         }
     }
 
@@ -1088,7 +1088,7 @@ class Cart_controller extends Home_Core_Controller
                 redirect(generate_url("membership_payment_completed") . "?method=bank_transfer&transaction_number=" . $data_transaction['payment_id']);
             }
             $this->session->set_flashdata('error', trans("msg_error"));
-            redirect(generate_url("cart", "payment") . "?payment_type=membership");
+            redirect(generate_url("cart", "shipping") . "?payment_type=membership");
         } elseif ($mds_payment_type == 'promote') {
             $promoted_plan = $this->session->userdata('modesy_selected_promoted_plan');
             if (!empty($promoted_plan)) {
@@ -1104,7 +1104,7 @@ class Cart_controller extends Home_Core_Controller
                 redirect(generate_url("promote_payment_completed") . "?method=bank_transfer&transaction_number=" . $transaction_number . "&product_id=" . $promoted_plan->product_id);
             }
             $this->session->set_flashdata('error', trans("msg_error"));
-            redirect(generate_url("cart", "payment") . "?payment_type=promote");
+            redirect(generate_url("cart", "shipping") . "?payment_type=promote");
         } else {
             //add order
             $order_id = $this->order_model->add_order_offline_payment("Bank Transfer");
@@ -1258,7 +1258,7 @@ class Cart_controller extends Home_Core_Controller
                     //could not added to the database
                     $response->message = trans("msg_payment_database_error");
                     $response->result = 0;
-                    $response->redirect_url = $base_url . get_route("cart", true) . get_route("payment");
+                    $response->redirect_url = $base_url . get_route("cart", true) . get_route("shipping");
                 }
             } elseif ($payment_type == 'membership') {
                 $plan_id = $this->session->userdata('modesy_selected_membership_plan_id');
@@ -1278,7 +1278,7 @@ class Cart_controller extends Home_Core_Controller
                     //could not added to the database
                     $response->message = trans("msg_payment_database_error");
                     $response->result = 0;
-                    $response->redirect_url = $base_url . get_route("cart", true) . get_route("payment") . "?payment_type=membership";
+                    $response->redirect_url = $base_url . get_route("cart", true) . get_route("shipping") . "?payment_type=membership";
                 }
             } elseif ($payment_type == 'promote') {
                 $promoted_plan = $this->session->userdata('modesy_selected_promoted_plan');
@@ -1297,7 +1297,7 @@ class Cart_controller extends Home_Core_Controller
                     //could not added to the database
                     $response->message = trans("msg_payment_database_error");
                     $response->result = 0;
-                    $response->redirect_url = $base_url . get_route("cart", true) . get_route("payment") . "?payment_type=promote";
+                    $response->redirect_url = $base_url . get_route("cart", true) . get_route("shipping") . "?payment_type=promote";
                 }
             }
         } else {
@@ -1305,7 +1305,7 @@ class Cart_controller extends Home_Core_Controller
             // $response->message = trans("msg_payment_database_error");
             $response->message = trans("payment_failed");
             $response->result = 0;
-            $response->redirect_url = $base_url . get_route("cart", true) . get_route("payment");
+            $response->redirect_url = $base_url . get_route("cart", true) . get_route("shipping");
         }
 
         return $response;
