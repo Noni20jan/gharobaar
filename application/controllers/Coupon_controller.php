@@ -425,9 +425,6 @@ class Coupon_controller extends Admin_Core_Controller
                     if ($total_cart_value >= $coupon_min_cart_val) :
                         //check for the source type of the coupon
                         $coupon_assignment_details = $this->offer_model->get_coupon_details_by_code($coupon_details->offer_code);
-                        $max_usage_per_user = intval($coupon_details->max_usage_per_user);
-                        $number_of_coupon_applied = $this->order_model->count_offer_applied($this->auth_user->id, $coupon_details->id);
-                        var_dump($number_of_coupon_applied);
                         foreach ($coupon_assignment_details as $cad) :
                             $coupon_source_type = $cad->source_type;
                             break;
@@ -500,7 +497,6 @@ class Coupon_controller extends Admin_Core_Controller
                                 break;
                             case "PRODUCT":
                                 $valid = false;
-
                                 $prod_ids = array();
                                 foreach ($data["cart_items"] as $item) :
                                     $prod_id = $item->product_id;
@@ -512,7 +508,7 @@ class Coupon_controller extends Admin_Core_Controller
                                         endif;
                                     endforeach;
                                 endforeach;
-                                if ($valid) {
+                                if ($valid) :
                                     //calculation for exhibition coupon
                                     $coupon = new stdClass();
                                     $coupon->id = $coupon_details->id;
@@ -533,14 +529,11 @@ class Coupon_controller extends Admin_Core_Controller
                                     $data["status"] = true;
                                     $data["msg"] = trans("success_coupon");
                                     $data["coupon_data"] = $coupon_details;
-
-
-                                    // elseif():
-                                } else {
+                                else :
                                     $data["error"] = "This coupon is not applicable on this cart.";
                                     $data["status"] = false;
                                     $data["msg"] = trans("coupon_not_valid");
-                                };
+                                endif;
                                 break;
                             case "CATEGORY":
 
