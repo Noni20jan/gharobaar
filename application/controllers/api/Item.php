@@ -32,6 +32,7 @@ class Item extends REST_Controller
         $this->response($data['order_status'], REST_Controller::HTTP_OK);
     }
 
+
     /**
      * Get All Data from this method.
      *
@@ -67,7 +68,6 @@ class Item extends REST_Controller
                 array_push($seller_id_array, $sell_id);
             }
         }
-
         if ($order_id) {
             $data = array();
 
@@ -85,16 +85,16 @@ class Item extends REST_Controller
                     $data["order_status"] = "shipped";
                     break;
                 case "Cancellation Requested":
-                    $data["order_status"]="cancelled_by_seller";
+                    $data["order_status"] = "cancelled_by_seller";
                     break;
                 case "Canceled":
-                    $data["order_status"]="cancelled_by_seller";
+                    $data["order_status"] = "cancelled_by_seller";
                     break;
                 case "CANCELLATION REQUESTED":
-                    $data["order_status"]="cancelled_by_seller";
+                    $data["order_status"] = "cancelled_by_seller";
                     break;
                 case "CANCELED":
-                    $data["order_status"]="cancelled_by_seller";
+                    $data["order_status"] = "cancelled_by_seller";
                     break;
                 case "Shipped":
                     $data["order_status"] = "shipped";
@@ -171,7 +171,27 @@ class Item extends REST_Controller
                 default:
                     $data["order_status"] = $new_input['order_status'];
             }
-            if ($data['order_status'] == 'completed') {
+            $whatsapp_flag = $this->notification_model->send_whatsapp_flag();
+            foreach ($whatsapp_flag as $row) :
+            endforeach;
+            if ($data['order_status'] == 'completed' && $row->send_whatsapp == 1) {
+                $order_shipping = $this->order_model->get_order_shipping($order_id);
+                $order = $this->order_model->get_order($order_id);
+
+                $arr = [$order_shipping->shipping_first_name, $order->order_number];
+                $passed_data = '"' . implode('","', $arr) . '"';
+                $delivered_data = array(
+                    "from" => "918287606650",
+                    "to" => "91$order_shipping->shipping_phone_number",
+                    "type" => "mediatemplate",
+                    "channel" => "whatsapp",
+                    "template_name" => "order_delivered_new",
+                    "params" => $passed_data,
+                    "param_url" => "order-details" . '/' . $order->order_number
+                );
+                $this->notification_model->whatsapp($delivered_data);
+
+
                 foreach ($product_array as $paid) {
                     $title = $this->product_model->get_title($paid);
                     $order_no = $this->order_model->get_order_details_by_id($order_id);
@@ -239,7 +259,32 @@ class Item extends REST_Controller
                     $this->email_model->notification($data3);
                 }
             }
+            $awb_code = $new_input['awb_code'];
+            $flag = $this->order_model->update_flag_shipped($awb_code);
+            if ($data['order_status'] == 'shipped' && $flag == true && $row->send_whatsapp == 1) {
+                $awb_code = $new_input['awb_code'];
 
+                $title = $this->product_model->get_title($product_array);
+                $order_no = $this->order_model->get_order_detail_by_id($order_id);
+                $order_shipping = $this->order_model->get_order_shipping($order_id);
+                $order = $this->order_model->get_order($order_id);
+                $arr = [$order_shipping->shipping_first_name, $order->order_number];
+                $passed_data = '"' . implode('","', $arr) . '"';
+                $required_data = array(
+                    "from" => "918287606650",
+                    "to" => "91$order_shipping->shipping_phone_number",
+                    "type" => "mediatemplate",
+                    "channel" => "whatsapp",
+                    "template_name" => "order_shipped_new",
+                    "params" => $passed_data,
+                    "param_url" => "orders" . "/" . "trackstatus" . "/" . $awb_code
+                );
+                $this->notification_model->whatsapp($required_data);
+            }
+
+
+            // $data["order_status"] = $new_input['order_status'];
+            // $data = $this->db->get_where("shiprocket_order_details", ['awb_code' => $id])->row_array();
             // $data["order_status"] = $new_input['order_status'];
             // $data = $this->db->get_where("shiprocket_order_details", ['awb_code' => $id])->row_array();
             $this->db->where("order_id", $order_id);
@@ -301,21 +346,4 @@ class Item extends REST_Controller
 
         $this->response(['Item deleted successfully.'], REST_Controller::HTTP_OK);
     }
-
-
-    // API for cashfree update
-
-    // public function cashfree_api()
-    // {
-    //     $input = $this->input->post();
-
-    //     // $new_input = array();
-
-    //     $body_raw = file_get_contents('php://input');
-    //     $body_raw = json_decode($body_raw);
-
-    //     $this->db->where("id", $input['id']);
-    //     $this->db->update('users', $input['first_name']);
-    //     $this->response(['Item updated successfully.'], REST_Controller::HTTP_OK);
-    // }
 }

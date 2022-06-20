@@ -3862,6 +3862,17 @@ class Order_model extends CI_Model
         return $query->result();
     }
 
+    public function update_flag_shipped($awb)
+    {
+        $sql = "UPDATE shiprocket_order_details SET is_shipped_active = 1
+WHERE awb_code IN (
+  SELECT awb_code FROM (
+    SELECT awb_code FROM shiprocket_order_details where awb_code =$awb group by created_by,awb_code
+  ) sod
+)";
+        $query = $this->db->query($sql);
+        return true;
+    }
 
     public function shiprocket_tracking_status($awb_code)
     {
@@ -4078,7 +4089,6 @@ class Order_model extends CI_Model
         $this->db->where('shipment_order_id', $shipment_order_id);
 
         $this->db->update('shiprocket_order_details', $cancel_shiprocket_details_status);
-        //  var_dump($cod);
         if ($cod == "Cashfree") {
             $cod = 0;
         } else {

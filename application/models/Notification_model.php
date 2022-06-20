@@ -358,4 +358,11 @@ class Notification_model extends CI_Model
         $datetime2 = strtotime($element2['created_at']);
         return $datetime1 - $datetime2;
     }
+
+    public function send_whatsapp_flag()
+    {
+        $sql = "SELECT send_whatsapp from general_settings";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
 }
