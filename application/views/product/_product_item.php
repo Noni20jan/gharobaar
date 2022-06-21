@@ -58,6 +58,15 @@ if (!empty($variation)) { ?>
 <?php } ?>
 <?php //endif; 
 ?>
+<span itemscope itemtype="http://schema.org/Product" class="microdata">
+    <meta itemprop="image" content="test.png">
+    <meta itemprop="name" content="Example Test">
+    <meta itemprop="description" content="This is just a boring example">
+    <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        <meta itemprop="price" content="119.99">
+        <meta itemprop="priceCurrency" content="USD">
+    </span>
+</span>
 <div class="product-item">
     <div class="row-custom<?php echo (!empty($product->image_second)) ? ' product-multiple-image' : ''; ?>">
         <a class="item-wishlist-button item-wishlist-enable <?php echo (is_product_in_wishlist($product) == 1) ? 'item-wishlist' : ''; ?>" data-product-id="<?php echo $product->id; ?>"></a>
