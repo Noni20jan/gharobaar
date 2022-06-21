@@ -4,14 +4,14 @@
 <link rel="preload" href="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.min.js" as="script">
 <link rel="preload" href="<?php echo base_url(); ?>assets/js/plugins-1.7.js" as="script">
 <link rel="preload" href="<?php echo base_url(); ?>assets/js/speech-input.js" as="script">
-<link rel="preload" href="<?php echo base_url(); ?>assets/js/script-1.7.min.js" as="script">
+<link rel="preload" href="<?php echo base_url(); ?>assets/js/script-1.7.min.js?v=1234qwer" as="script">
 <link rel="preload" href="<?php echo base_url(); ?>assets/admin/js/dashboard-1.7.js" as="script">
 
 <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/popper.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/plugins-1.7.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/speech-input.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/script-1.7.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/script-1.7.min.js?v=1234qwer"></script>
 <script src="<?php echo base_url(); ?>assets/admin/js/dashboard-1.7.js"></script>
 
 <style>
