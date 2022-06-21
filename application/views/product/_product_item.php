@@ -58,7 +58,7 @@ if (!empty($variation)) { ?>
 <?php } ?>
 <?php //endif; 
 ?>
-<span itemscope itemtype="http://schema.org/Product" class="microdata">
+<!-- <span itemscope itemtype="http://schema.org/Product" class="microdata">
     <meta itemprop="image" content="test.png">
     <meta itemprop="name" content="Example Test">
     <meta itemprop="description" content="This is just a boring example">
@@ -66,21 +66,21 @@ if (!empty($variation)) { ?>
         <meta itemprop="price" content="119.99">
         <meta itemprop="priceCurrency" content="USD">
     </span>
-</span>
+</span> -->
 <div class="product-item" itemscope itemtype="http://schema.org/Product>
     <div class=" row-custom<?php echo (!empty($product->image_second)) ? ' product-multiple-image' : ''; ?>">
     <a class="item-wishlist-button item-wishlist-enable <?php echo (is_product_in_wishlist($product) == 1) ? 'item-wishlist' : ''; ?>" data-product-id="<?php echo $product->id; ?>"></a>
     <div class="img-product-container">
         <?php if (!empty($is_slider)) : ?>
             <a href="<?php echo generate_product_url($product); ?>">
-                <img itemprop="image" src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-lazy="<?php echo get_product_item_image($product); ?>" alt="<?php echo get_product_title($product); ?>" class="img-fluid img-product">
+                <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-lazy="<?php echo get_product_item_image($product); ?>" alt="<?php echo get_product_title($product); ?>" class="img-fluid img-product">
                 <?php if (!empty($product->image_second)) : ?>
                     <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-lazy="<?php echo get_product_item_image($product, true); ?>" alt="<?php echo get_product_title($product); ?>" class="img-fluid img-product img-second">
                 <?php endif; ?>
             </a>
         <?php else : ?>
             <a href="<?php echo generate_product_url($product); ?>">
-                <img itemprop="image" src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_item_image($product); ?>" alt="<?php echo get_product_title($product); ?>" class="lazyload img-fluid img-product">
+                <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_item_image($product); ?>" alt="<?php echo get_product_title($product); ?>" class="lazyload img-fluid img-product">
                 <?php if (!empty($product->image_second)) : ?>
                     <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_product_item_image($product, true); ?>" alt="<?php echo get_product_title($product); ?>" class="lazyload img-fluid img-product img-second">
                 <?php endif; ?>
@@ -185,7 +185,7 @@ if (!empty($variation)) { ?>
 
 <div class="row-custom item-details">
     <h3 class="product-title">
-        <a href="<?php echo generate_product_url($product); ?>" itemprop="name"><?= get_product_title($product); ?></a>
+        <a href="<?php echo generate_product_url($product); ?>"><?= get_product_title($product); ?></a>
     </h3>
     <p class="product-user text-truncate">
         <a href="<?php echo generate_profile_url_by_id($product->user_id); ?>">
@@ -193,7 +193,7 @@ if (!empty($variation)) { ?>
 
         </a>
     </p>
-    <div class="item-meta" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    <div class="item-meta">
         <?php $this->load->view('product/_price_product_item', ['product' => $product]); ?>
     </div>
 </div>

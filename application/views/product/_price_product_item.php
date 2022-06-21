@@ -24,7 +24,7 @@
     <?php if ($product->listing_type == 'bidding') : ?>
         <a href="<?php echo generate_product_url($product); ?>" class="a-meta-request-quote"><?php echo trans("request_a_quote") ?></a>
     <?php else : ?>
-        <span class="price" itemprop="price"><?php echo price_formatted(calculate_product_price($product->price, $product->discount_rate, $product->gst_rate), $product->currency); ?></span>
+        <span class="price"><?php echo price_formatted(calculate_product_price($product->price, $product->discount_rate, $product->gst_rate), $product->currency); ?></span>
 
         <?php if (!empty($product->price)) :
             if (!empty($product->discount_rate)) : ?>

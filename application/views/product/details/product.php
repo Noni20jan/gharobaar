@@ -508,7 +508,7 @@
                         <div class="col-12 col-sm-12 col-md-7">
                             <div class="product-description">
                                 <h3 class="product_description">Description</h3>
-                                <pre style="margin-top: 3px; white-space:pre-line; font-weight:500; text-align:justify; font-size: 107%; font-family:'poppins',sans-serif;" class="more" itemprop="description"><?php echo $product_details->description; ?></pre>
+                                <pre style="margin-top: 3px; white-space:pre-line; font-weight:500; text-align:justify; font-size: 107%; font-family:'poppins',sans-serif;" class="more"><?php echo $product_details->description; ?></pre>
                                 <?php if ($product->add_meet == "Made to order") : ?>
                                     <?php if ($this->general_settings->made_to_order_check == 0) : ?>
 
