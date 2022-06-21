@@ -6315,18 +6315,7 @@
         </script>
     <?php endif; ?>
     <!-- chat system end -->
-    <!-- code for video add functionality -->
-    <?php if ($this->general_settings->is_chat_video_enable == 1) : ?>
-        <script>
-            window.tolstoyAppKey = "ada7e199-9023-48dd-8a98-e3f1f70c6886";
-            var s = document.createElement("script");
-            s.type = "text/javascript";
-            s.async = true;
-            s.src = "https://widget.gotolstoy.com/widget/widget.js";
-            document.head.appendChild(s);
-        </script>
-    <?php endif; ?>
-    <!-- end code for video add functionality -->
+
     <!-- whatsaap chat -->
     <?php if ($this->general_settings->is_whatsapp_enable == 1) : ?>
         <script src="https://apps.elfsight.com/p/platform.js" defer></script>
@@ -6689,7 +6678,7 @@
     <!-- End Google Tag Manager -->
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-351353333"></script>
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-351353333"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -6699,7 +6688,7 @@
         gtag('js', new Date());
         gtag('config', 'UA-199516838-1');
         gtag('config', 'AW-351353333');
-    </script>
+    </script> -->
 
     <!-- Google Tag Manager (noscript) -->
     <!-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGZRFDN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> -->
