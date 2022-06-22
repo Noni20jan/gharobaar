@@ -37,7 +37,7 @@
         <div class="table-responsive">
 
 
-            <form name="saller_profile_data" id="saller_profile_data" action="admin_controller/format_seller_profile_data">
+            <!-- <form name="saller_profile_data" id="saller_profile_data" action="admin_controller/format_seller_profile_data">
                 <div class="item-table-filter">
                     <label><?php echo trans("from_date"); ?></label>
                     <input name="from_date" class="form-control" type="date" id="my_date_picker1" autocomplete="off">
@@ -50,7 +50,7 @@
                     <label style="display: block">&nbsp;</label>
                     <button type="submit" class="btn bg-purple"><?php echo trans("submit"); ?></button>
                 </div>
-            </form>
+            </form> -->
             <table class="table table-bordered table-striped " id="extend_datatable" role="grid">
                 <thead>
                     <tr role="row">
@@ -97,111 +97,112 @@
 </div>
 </div>
 <script>
-    $("#saller_profile_data").submit(function(e) {
+    //     $("#saller_profile_data").submit(function(e) {
 
-        e.preventDefault(); // avoid to execute the actual submit of the form.
+    //         e.preventDefault(); // avoid to execute the actual submit of the form.
 
-        var form = $(this);
+    //         var form = $(this);
 
-        var d = form.serializeArray();
-        d.push({
-            name: csfr_token_name,
-            value: $.cookie(csfr_cookie_name)
-        });
-        d.push({
-            name: "sys_lang_id",
-            value: sys_lang_id
-        });
+    //         var d = form.serializeArray();
+    //         d.push({
+    //             name: csfr_token_name,
+    //             value: $.cookie(csfr_cookie_name)
+    //         });
+    //         d.push({
+    //             name: "sys_lang_id",
+    //             value: sys_lang_id
+    //         });
 
-        var url = form.attr('action');
+    //         var url = form.attr('action');
 
-        table = $('#extend_datatable').DataTable();
-        table.clear().destroy();
+    //         table = $('#extend_datatable').DataTable();
+    //         table.clear().destroy();
 
-        $.ajax({
-            type: "POST",
-            url: base_url + url,
-            data: d, // serializes the form's elements.
-            success: function(data) {
-                // console.log("test",data);
-                var Json_data = JSON.parse(data);
-                console.log(Json_data.length);
-                var len = Json_data.length;
-                if (len != 0) {
-                    for (var i = 0; i < len; i++) {
-                        $('#seller_profile').append("<tr><td>" + Json_data[i].Seller + "</td><td>" + Json_data[i].Seller_Email + "</td><td>" + Json_data[i].Seller_Phone + "</td><td>" + Json_data[i].Shop_Name + "</td><td>" + Json_data[i].Pan + "</td><td>" + Json_data[i].GST + "</td><td>" + Json_data[i].Address + "</td><td>" + Json_data[i].Account_No + "</td><td>" + Json_data[i].Account_Holder + "</td><td>" + Json_data[i].IFSC_Code + "</td><td>" + Json_data[i].Bank_Branch + "</td><td>" + Json_data[i].Profile_Status + "</td><td>" + Json_data[i].Profile_Created_Date + "</td></tr>")
-                    }
-                }
-                $('#extend_datatable').dataTable({
+    //         $.ajax({
+    //             type: "POST",
+    //             url: base_url + url,
+    //             data: d, // serializes the form's elements.
+    //             success: function(data) {
+    //                 // console.log("test",data);
+    //                 var Json_data = JSON.parse(data);
+    //                 console.log(Json_data.length);
+    //                 var len = Json_data.length;
+    //                 if (len != 0) {
+    //                     for (var i = 0; i < len; i++) {
+    //                         $('#seller_profile').append("<tr><td>" + Json_data[i].Seller + "</td><td>" + Json_data[i].Seller_Email + "</td><td>" + Json_data[i].Seller_Phone + "</td><td>" + Json_data[i].Shop_Name + "</td><td>" + Json_data[i].Pan + "</td><td>" + Json_data[i].GST + "</td><td>" + Json_data[i].Address + "</td><td>" + Json_data[i].Account_No + "</td><td>" + Json_data[i].Account_Holder + "</td><td>" + Json_data[i].IFSC_Code + "</td><td>" + Json_data[i].Bank_Branch + "</td><td>" + Json_data[i].Profile_Status + "</td><td>" + Json_data[i].Profile_Created_Date + "</td></tr>")
+    //                     }
+    //                 }
+    //                 $('#extend_datatable').dataTable({
 
-                    orderCellsTop: true,
-                    fixedHeader: true,
-                    initComplete: function() {
-                        var api = this.api();
+    //                     orderCellsTop: true,
+    //                     fixedHeader: true,
+    //                     initComplete: function() {
+    //                         var api = this.api();
 
-                        // For each column
-                        api
-                            .columns()
-                            .eq(0)
-                            .each(function(colIdx) {
-                                // Set the header cell to contain the input element
-                                var cell = $('.filters th').eq(
-                                    $(api.column(colIdx + 1).header()).index()
-                                );
-                                var title = $(cell).text();
-                                $(cell).html('<input type="text" style="width:100%" placeholder="' + title + '" />');
+    //                         // For each column
+    //                         api
+    //                             .columns()
+    //                             .eq(0)
+    //                             .each(function(colIdx) {
+    //                                 // Set the header cell to contain the input element
+    //                                 var cell = $('.filters th').eq(
+    //                                     $(api.column(colIdx + 1).header()).index()
+    //                                 );
+    //                                 var title = $(cell).text();
+    //                                 $(cell).html('<input type="text" style="width:100%" placeholder="' + title + '" />');
 
-                                // On every keypress in this input
-                                $(
-                                        'input',
-                                        $('.filters th').eq($(api.column(colIdx).header()).index())
-                                    )
-                                    .off('keyup change')
-                                    .on('keyup change', function(e) {
-                                        e.stopPropagation();
+    //                                 // On every keypress in this input
+    //                                 $(
+    //                                         'input',
+    //                                         $('.filters th').eq($(api.column(colIdx).header()).index())
+    //                                     )
+    //                                     .off('keyup change')
+    //                                     .on('keyup change', function(e) {
+    //                                         e.stopPropagation();
 
-                                        // Get the search value
-                                        $(this).attr('title', $(this).val());
-                                        var regexr = '({search})'; //$(this).parents('th').find('select').val();
+    //                                         // Get the search value
+    //                                         $(this).attr('title', $(this).val());
+    //                                         var regexr = '({search})'; //$(this).parents('th').find('select').val();
 
-                                        var cursorPosition = this.selectionStart;
-                                        // Search the column for that value
-                                        api
-                                            .column(colIdx)
-                                            .search(
-                                                this.value != '' ?
-                                                regexr.replace('{search}', '(((' + this.value + ')))') :
-                                                '',
-                                                this.value != '',
-                                                this.value == ''
-                                            )
-                                            .draw();
+    //                                         var cursorPosition = this.selectionStart;
+    //                                         // Search the column for that value
+    //                                         api
+    //                                             .column(colIdx)
+    //                                             .search(
+    //                                                 this.value != '' ?
+    //                                                 regexr.replace('{search}', '(((' + this.value + ')))') :
+    //                                                 '',
+    //                                                 this.value != '',
+    //                                                 this.value == ''
+    //                                             )
+    //                                             .draw();
 
-                                        $(this)
-                                            .focus()[0]
-                                            .setSelectionRange(cursorPosition, cursorPosition);
-                                    });
-                            });
-                    },
-                    dom: 'lBfrtip',
-                    buttons: [{
-                        extend: 'excel',
-                        text: 'Export To Excel'
-                    }],
-                    "aLengthMenu": [
-                        [15, 30, 60, 100],
-                        [15, 30, 60, 100, "All"]
-                    ],
-                    "order": [
-                        [0, "desc"]
-                    ],
-                });
-            }
+    //                                         $(this)
+    //                                             .focus()[0]
+    //                                             .setSelectionRange(cursorPosition, cursorPosition);
+    //                                     });
+    //                             });
+    //                     },
+    //                     dom: 'lBfrtip',
+    //                     buttons: [{
+    //                         extend: 'excel',
+    //                         text: 'Export To Excel'
+    //                     }],
+    //                     "aLengthMenu": [
+    //                         [15, 30, 60, 100],
+    //                         [15, 30, 60, 100, "All"]
+    //                     ],
+    //                     "order": [
+    //                         [0, "desc"]
+    //                     ],
+    //                 });
+    //             }
 
-        });
+    //         });
 
 
-    });
+    //     });
+    // 
 </script>
 <script>
     $(document).ready(function() {
