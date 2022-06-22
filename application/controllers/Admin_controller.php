@@ -2062,8 +2062,8 @@ class Admin_controller extends Admin_Core_Controller
         $from_date = $this->input->post('from_date', true);
         $to_date = $this->input->post('to_date', true);
 
-        $format_sale_data = $this->reports_model->seller_profile_data($from_date, $to_date);
-        echo json_encode($format_sale_data);
+        $format_selle_profile_data = $this->reports_model->seller_profile_data($from_date, $to_date);
+        echo json_encode($format_selle_profile_data);
     }
     public function format_shipping_cod_charges()
     {

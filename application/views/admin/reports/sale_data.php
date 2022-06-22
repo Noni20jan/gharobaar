@@ -41,9 +41,12 @@
                 <form name="sale_data" id="sale_data" action="admin_controller/format_sale_data">
                     <div class="item-table-filter">
                         <label><?php echo trans("from_date"); ?></label>
-                        <input name="from_date" class="form-control" type="month" id="my_date_picker1" autocomplete="off">
+                        <input name="from_date" class="form-control" type="date" id="my_date_picker1" autocomplete="off">
                     </div>
-
+                    <div class="item-table-filter">
+                        <label><?php echo trans("to_date"); ?></label>
+                        <input name="to_date" class="form-control" type="date" id="my_date_picker2" autocomplete="off">
+                    </div>
                     <div class="item-table-filter md-top-10" style="width: 65px; min-width: 65px;">
                         <label style="display: block">&nbsp;</label>
                         <button type="submit" class="btn bg-purple"><?php echo trans("submit"); ?></button>
@@ -68,6 +71,8 @@
                             <th><?php echo ('ifsc_code'); ?></th>
                             <th><?php echo ('bank_branch'); ?></th>
                             <th><?php echo ('product_title'); ?></th>
+                            <th><?php echo ('hsn_code'); ?></th>
+
                             <th><?php echo ('product_quantity'); ?></th>
                             <th><?php echo ('order_status'); ?></th>
                             <th><?php echo ('commission_rate'); ?></th>
@@ -118,6 +123,7 @@
                                 <td><?php echo $item->ifsc_code; ?></td>
                                 <td><?php echo $item->bank_branch; ?></td>
                                 <td><?php echo $item->product_title; ?></td>
+                                <td><?php echo $item->hsn_code; ?></td>
                                 <td><?php echo $item->product_quantity; ?></td>
                                 <td><?php echo $item->order_status; ?></td>
                                 <td><?php echo $item->commission_rate; ?></td>
@@ -189,11 +195,11 @@
             success: function(data) {
                 console.log(data);
                 var Json_data = JSON.parse(data);
-                console.log(Json_data.length);
                 var len = Json_data.length;
+
                 if (len != 0) {
                     for (var i = 0; i < len; i++) {
-                        $('#sale_data_seller').append("<tr><td>" + Json_data[i].order_no + "</td><td>" + Json_data[i].order_date + "</td><td>" + Json_data[i].seller_id + "</td><td>" + Json_data[i].seller + "</td><td>" + Json_data[i].seller_email + "</td><td>" + Json_data[i].seller_phone + "</td><td>" + Json_data[i].shop_name + "</td><td>" + Json_data[i].pan_no + "</td><td>" + Json_data[i].gst_no + "</td><td>" + Json_data[i].seller_address + "</td><td>" + Json_data[i].account_no + "</td><td>" + Json_data[i].acc_holder_name + "</td><td>" + Json_data[i].ifsc_code + "</td><td>" + Json_data[i].bank_branch + "</td><td>" + Json_data[i].product_title + "</td><td>" + Json_data[i].product_quantity + "</td><td>" + Json_data[i].order_status + "</td><td>" + Json_data[i].commission_rate + "</td><td>" + Json_data[i].commission_amount + "</td><td>" + Json_data[i].actual_product_gst_rate + "</td><td>" + Json_data[i].seller_gst_rate + "</td><td>" + Json_data[i].subtotal_excluding_gst + "</td><td>" + Json_data[i].seller_tprd_gst + "</td><td>" + Json_data[i].seller_tprd_cgst + "</td><td>" + Json_data[i].seller_tprd_sgst + "</td><td>" + Json_data[i].seller_tprd_igst + "</td><td>" + Json_data[i].seller_ship_cost + "</td><td>" + Json_data[i].seller_ship_gst + "</td><td>" + Json_data[i].seller_ship_cgst + "</td><td>" + Json_data[i].seller_ship_sgst + "</td><td>" + Json_data[i].seller_ship_igst + "</td><td>" + Json_data[i].seller_tship_cost + "</td><td>" + Json_data[i].seller_cod_cost + "</td><td>" + Json_data[i].seller_cod_gst + "</td><td>" + Json_data[i].seller_cod_cgst + "</td><td>" + Json_data[i].seller_cod_sgst + "</td><td>" + Json_data[i].seller_cod_igst + "</td><td>" + Json_data[i].seller_tcod + "</td><td>" + Json_data[i].grand_total_amount + "</td><td>" + Json_data[i].buyer + "</td><td>" + Json_data[i].buyer_email + "</td><td>" + Json_data[i].buyer_phone + "</td><td>" + Json_data[i].buyer_state + "</td><td>" + Json_data[i].payment_method + "</td><td>" + Json_data[i].payment_mode + "</td></tr>")
+                        $('#sale_data_seller').append("<tr><td>" + Json_data[i].order_no + "</td><td>" + Json_data[i].order_date + "</td><td>" + Json_data[i].seller_id + "</td><td>" + Json_data[i].seller + "</td><td>" + Json_data[i].seller_email + "</td><td>" + Json_data[i].seller_phone + "</td><td>" + Json_data[i].shop_name + "</td><td>" + Json_data[i].pan_no + "</td><td>" + Json_data[i].gst_no + "</td><td>" + Json_data[i].seller_address + "</td><td>" + Json_data[i].account_no + "</td><td>" + Json_data[i].acc_holder_name + "</td><td>" + Json_data[i].ifsc_code + "</td><td>" + Json_data[i].bank_branch + "</td><td>" + Json_data[i].product_title + "</td><td>" + Json_data[i].hsn_code + "</td><td>" + Json_data[i].product_quantity + "</td><td>" + Json_data[i].order_status + "</td><td>" + Json_data[i].commission_rate + "</td><td>" + Json_data[i].commission_amount + "</td><td>" + Json_data[i].actual_product_gst_rate + "</td><td>" + Json_data[i].seller_gst_rate + "</td><td>" + Json_data[i].subtotal_excluding_gst + "</td><td>" + Json_data[i].seller_tprd_gst + "</td><td>" + Json_data[i].seller_tprd_cgst + "</td><td>" + Json_data[i].seller_tprd_sgst + "</td><td>" + Json_data[i].seller_tprd_igst + "</td><td>" + Json_data[i].seller_ship_cost + "</td><td>" + Json_data[i].seller_ship_gst + "</td><td>" + Json_data[i].seller_ship_cgst + "</td><td>" + Json_data[i].seller_ship_sgst + "</td><td>" + Json_data[i].seller_ship_igst + "</td><td>" + Json_data[i].seller_tship_cost + "</td><td>" + Json_data[i].seller_cod_cost + "</td><td>" + Json_data[i].seller_cod_gst + "</td><td>" + Json_data[i].seller_cod_cgst + "</td><td>" + Json_data[i].seller_cod_sgst + "</td><td>" + Json_data[i].seller_cod_igst + "</td><td>" + Json_data[i].seller_tcod + "</td><td>" + Json_data[i].grand_total_amount + "</td><td>" + Json_data[i].buyer + "</td><td>" + Json_data[i].buyer_email + "</td><td>" + Json_data[i].buyer_phone + "</td><td>" + Json_data[i].buyer_state + "</td><td>" + Json_data[i].payment_method + "</td><td>" + Json_data[i].payment_mode + "</td></tr>")
                     }
                 }
                 $('#extend_datatable').dataTable({

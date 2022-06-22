@@ -7,8 +7,8 @@ class Reports_model extends CI_Model
         $sql = "SELECT concat(u.first_name,' ', u.last_name) as Seller, u.email as 'Seller_Email',u.phone_number as 'Seller_Phone',u.shop_name as 'Shop_Name',u.pan_number as 'Pan',u.gst_number as 'GST',concat(u.house_no,',',u.supplier_area,',', u.supplier_city,',', u.supplier_state,'-', u.pincode) as Address,  u.account_number as 'Account_No',u.acc_holder_name as 'Account_Holder',u.ifsc_code as 'IFSC_Code',u.bank_branch as 'Bank_Branch',IF(is_profile_approved = 1, 'APPROVED', 'PENDING') as 'Profile_Status',created_at as 'Profile_Created_Date'
         FROM users as u
         WHERE username != 'admin'
-        AND role = 'vendor'
-        AND created_at >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s') AND created_at <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')";
+        AND role = 'vendor'";
+        // AND created_at >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s') AND created_at <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -993,9 +993,8 @@ class Reports_model extends CI_Model
         $sql = "SELECT concat(u.first_name,' ', u.last_name) as Seller, u.email as 'Seller_Email',u.phone_number as 'Seller_Phone',u.shop_name as 'Shop_Name',u.pan_number as 'Pan',u.gst_number as 'GST',concat(u.house_no,',',u.supplier_area,',', u.supplier_city,',', u.supplier_state,'-', u.pincode) as Address,  u.account_number as 'Account_No',u.acc_holder_name as 'Account_Holder',u.ifsc_code as 'IFSC_Code',u.bank_branch as 'Bank_Branch',IF(is_profile_approved = 1, 'APPROVED', 'PENDING') as 'Profile_Status',created_at as 'Profile_Created_Date'
         FROM users as u
         WHERE username != 'admin'
-        AND role = 'vendor'
-        AND YEAR(created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
-        AND MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)";
+        AND role = 'vendor'";
+
         $query = $this->db->query($sql);
         return $query->result();
     }
