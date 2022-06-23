@@ -317,7 +317,7 @@ endif;
                 <?php $ordered_date = date("dS M Y", $order_date); ?>
                 <?php $shipping_time = $product->shipping_time; ?>
 
-                <?php if (substr_count($shipping_time, "_") > 2) : ?>
+                <?php if (substr_count($shipping_time, "_") > 2 && $product->add_meet == "Made to stock") : ?>
                     <?php $ship_time = intval($product->shipping_time[2]); ?>
                     <?php $created_at = strtotime($order->created_at); ?>
 
@@ -346,7 +346,7 @@ endif;
                             </p>
                         <?php endif; ?>
                     <?php endif; ?>
-                <?php elseif (substr_count($shipping_time, "_") == 2) : ?>
+                <?php elseif (substr_count($shipping_time, "_") == 2 && $product->add_meet == "Made to stock") : ?>
                     <?php $shipped_time = intval($product->shipping_time); ?>
                     <?php $created_at = strtotime($order->created_at); ?>
                     <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
@@ -394,6 +394,7 @@ endif;
                 <p></p>
             <?php endif; ?>
         <?php endif; ?>
+
 
         <div class="row">
             <div class="col-sm-12">
