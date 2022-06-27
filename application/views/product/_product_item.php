@@ -185,7 +185,7 @@ if (!empty($variation)) { ?>
 
     <div class="row-custom item-details">
         <h3 class="product-title">
-            <a href="<?php echo generate_product_url($product); ?>" itemprop="name"><?= get_product_title($product); ?></a>
+            <a href="<?php echo generate_product_url($product); ?>"><?= get_product_title($product); ?></a>
         </h3>
         <p class="product-user text-truncate">
             <a href="<?php echo generate_profile_url_by_id($product->user_id); ?>">
