@@ -1405,7 +1405,7 @@ endforeach; ?>
             "order_items": order_items,
             "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
             "sub_total": <?php if (!empty($seller_wise_data) && $this->general_settings->enable_freeship_message == 1) {
-                                echo ($seller_wise_data->Sup_total_prod) / 100;
+                                echo ($seller_wise_data->Sup_total_prd) / 100;
                             } elseif (!empty($seller_wise_data) && $this->general_settings->enable_freeship_message == 0) {
                                 echo ($seller_wise_data->grand_total_amount) / 100;
                             } else {
