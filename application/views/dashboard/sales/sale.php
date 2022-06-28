@@ -1404,7 +1404,13 @@ endforeach; ?>
             "shipping_phone": <?php echo ($shipping->billing_phone_number) ?>,
             "order_items": order_items,
             "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-            "sub_total": <?php echo !empty($seller_wise_data) ? ($seller_wise_data->grand_total_amount) / 100 : $sale_subtotal ?>,
+            "sub_total": "sub_total": <?php if (!empty($seller_wise_data) && $this->general_settings->enable_freeship_message == 1) {
+                                            echo ($seller_wise_data->Sup_total_prod) / 100;
+                                        } elseif (!empty($seller_wise_data) && $this->general_settings->enable_freeship_message == 0) {
+                                            echo ($seller_wise_data->grand_total_amount) / 100;
+                                        } else {
+                                            echo $total_quantity_price;
+                                        } ?>,
             "length": document.getElementById("total_length").value,
             "breadth": document.getElementById("total_width").value,
             "height": document.getElementById("total_height").value,
