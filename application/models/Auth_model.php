@@ -1131,6 +1131,29 @@ class Auth_model extends CI_Model
         $query = $this->db->get('users');
         return $query->num_rows();
     }
+    //get users count
+    public function get_all_users_count()
+    {
+        $sql = "SELECT DISTINCT
+        temp.email, temp.p_number
+    FROM
+        (SELECT 
+            email, phone_number AS p_number
+        FROM
+            users UNION SELECT 
+            email, ph_number AS p_number
+        FROM
+            shipping_info UNION SELECT 
+            shipping_email AS email, shipping_phone_number AS p_number
+        FROM
+            order_shipping) AS temp
+    WHERE
+        temp.email IS NOT NULL
+            OR temp.p_number IS NOT NULL
+    ORDER BY temp.email";
+        $query = $this->db->query($sql);
+        return $query->num_rows();
+    }
 
     //get paginated users
     public function get_paginated_filtered_products($role, $per_page, $offset)
