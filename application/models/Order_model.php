@@ -3867,7 +3867,7 @@ class Order_model extends CI_Model
         $sql = "UPDATE shiprocket_order_details SET is_shipped_active = 1
 WHERE awb_code IN (
   SELECT awb_code FROM (
-    SELECT awb_code FROM shiprocket_order_details where awb_code =$awb group by created_by,awb_code
+    SELECT awb_code FROM shiprocket_order_details where awb_code ='$awb' group by created_by,awb_code
   ) sod
 )";
         $query = $this->db->query($sql);
