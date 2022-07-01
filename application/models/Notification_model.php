@@ -25,6 +25,33 @@ class Notification_model extends CI_Model
         $query = array_merge($query1, $query2);
         return $query;
     }
+    /*Whatsapp functionality */
+    public function whatsapp($required_data)
+    {
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.kaleyra.io/v1/HXIN1725621258IN/messages',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS =>  json_encode($required_data),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type:application/json',
+                'api-key: Ac7a8d63fb0f6572a5bb4132c9750b37c'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        return $response;
+
+        curl_close($curl);
+    }
     public function get_order_placement($email)
     {
         $date = date("Y-m-d H:i:s", strtotime("-1 week"));

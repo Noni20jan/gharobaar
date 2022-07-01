@@ -2486,6 +2486,7 @@ class Order_model extends CI_Model
                     $city = get_city($client->city_id);
 
                     foreach ($new_invoice_items as $new_item) {
+                        $current_invoice_no = $this->get_invoice_number_by_seller_id($new_item["seller_id"]);
                         $data = array(
                             'order_id' => $order->id,
                             'seller_id' => $new_item["seller_id"],
@@ -2497,13 +2498,6 @@ class Order_model extends CI_Model
                             'client_email' => $client->email,
                             'client_phone_number' => $client->phone_number,
                             'client_address' => $client->address,
-
-                            // 'client_area' => $client->area,
-                            // 'client_zipcode' => $client->zipcode,
-                            // 'client_country' => !empty($country) ? $country->name : '',
-                            // 'client_state' => !empty($state) ? $state->name : '',
-                            // 'client_city' => !empty($city) ? $city->name : '',
-
                             'invoice_items' => @serialize($invoice_items),
                             'shipping_charges' => $new_item["shipping_charges"],
                             'cod_charges' => $new_item["cod_charges"],
@@ -2511,6 +2505,8 @@ class Order_model extends CI_Model
                             'total_discount' => $new_item["total_discount"],
                             'sub_total' => $new_item["sub_total"],
                             'total_amount' => $new_item["total_amount"],
+                            'invoice_no' => 'GB/22-23/' . $new_item["seller_id"] . '/' . $current_invoice_no[0]->invoice_seq,
+                            'invoice_seq' => $current_invoice_no[0]->invoice_seq,
                             'created_at' => date('Y-m-d H:i:s')
                         );
                         $order_shipping = $this->get_order_shipping($order->id);
@@ -2794,8 +2790,7 @@ class Order_model extends CI_Model
     {
         $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
         $Supp_ship_data = json_decode($this->get_seller_wise_data_bifurcation($cart_total));
-
-
+        $invoice_no = $this->general_settings->gb_invoice_seq;
         if ($Supp_ship_data) {
             foreach ($Supp_ship_data as $sup) {
                 $seller_address = get_user($sup->SupplierId);
@@ -2815,7 +2810,9 @@ class Order_model extends CI_Model
                     'Sup_cod_gst' => $sup->cod_tax_charges,
                     'created_by' => 1,
                     'updated_by' => 1,
-                    'invoice_no' => $current_invoice_no[0]->invoice_seq
+                    'invoice_no' => 'GB/22-23/' . $sup->SupplierId . '/' . $current_invoice_no[0]->invoice_seq,
+                    'invoice_seq' => $current_invoice_no[0]->invoice_seq,
+                    'gb_invoice_no' => 'GB/22-23/' . $sup->SupplierId . '/' . $invoice_no
                 );
                 if ($seller_address->supplier_state == $shipping_address->shipping_state) {
                     $data['shipping_igst'] = 0;
@@ -2838,12 +2835,15 @@ class Order_model extends CI_Model
                     $data['sup_cod_cgst'] = 0;
                     $data['sup_cod_sgst'] = 0;
                 }
+                $invoice_no = $invoice_no + 1;
                 $data["total_shipping_cost"] = $data["sup_shipping_cost"] + $data['Sup_Shipping_gst'];
                 $data["total_cod_cost"] = $data["Sup_cod_cost"] + $data['Sup_cod_gst'];
                 $data['grand_total_amount'] = $data["Sup_total_prd"] + $data["total_shipping_cost"] + $data["total_cod_cost"];
+                $this->update_gb_invoice_seq($invoice_no);
                 $this->db->insert('order_supplier', $data);
                 $this->update_invoice_number_by_seller_id($sup->SupplierId, $current_invoice_no[0]->invoice_seq);
                 //$this->db->query('UNLOCK TABLES');
+
             }
         }
     }
@@ -2864,6 +2864,13 @@ class Order_model extends CI_Model
         );
         $this->db->where('id', $seller_id);
         $this->db->update('users', $data);
+    }
+    public function update_gb_invoice_seq($current_gb_invoice_seq)
+    {
+        $data = array(
+            'gb_invoice_seq' => $current_gb_invoice_seq
+        );
+        $this->db->update('general_settings', $data);
     }
 
     public function get_shipping_cost($cart_total = null)
@@ -3872,6 +3879,13 @@ WHERE awb_code IN (
 )";
         $query = $this->db->query($sql);
         return true;
+    }
+
+    public function get_msg_send_status($awb)
+    {
+        $sql = "SELECT is_shipped_active FROM shiprocket_order_details  where awb_code = '$awb'";
+        $query = $this->db->query($sql);
+        return  $query->row();
     }
 
     public function shiprocket_tracking_status($awb_code)
@@ -4969,6 +4983,15 @@ WHERE awb_code IN (
     public function get_shipping($order_id)
     {
         $order_id = clean_number($order_id);
+        $this->db->where('order_id', $order_id);
+        $query = $this->db->get('order_supplier');
+        return $query->result();
+    }
+
+    public function get_seller_invoice_no($order_id)
+    {
+        $order_id = clean_number($order_id);
+        $this->db->select('invoice_no', 'invoice_seq', 'gb_invoice_no');
         $this->db->where('order_id', $order_id);
         $query = $this->db->get('order_supplier');
         return $query->result();

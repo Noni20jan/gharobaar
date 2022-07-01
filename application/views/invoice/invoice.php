@@ -1,5 +1,8 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
-//var_dump($order_products[0]->seller_id);
+
+$inv = $this->order_model->get_seller_invoice_no($order->id);
+//var_dump($inv);
+//var_dump($invoice);
 // var_dump($order_products->seller_id);
 $sellers = array();
 if ($this->auth_user->role != "admin" && $order->buyer_id != $this->auth_user->id) :
@@ -223,7 +226,7 @@ function convert_number_to_words($number)
         float: right;
         /* padding: 20px; */
         padding-left: 15px;
-        padding-right: 30px;
+        padding-right: 30px !important;
     }
 
 
@@ -286,10 +289,11 @@ function convert_number_to_words($number)
                                         <h1 style="text-align: center; font-size: 36px;font-weight: 400;margin-top: 20px;"><?= trans("invoice"); ?></h1>
                                     </div>
                                 </div>
-                                <div class="row" style="padding: 25px 30px;">
+                                <div class="row" style="padding: 0px 30px;">
                                     <div class="col-6">
                                         <div class="logo">
-                                            <img src="<?php echo get_logo($this->general_settings); ?>" alt="logo">
+                                            <img src="<?php echo get_logo($this->general_settings); ?>" alt="logo"><br>
+                                            <img src="<?php echo base_url(); ?>assets/img/hc_logo.jpg" alt="logo">
                                         </div>
                                         <small><?php echo trans("date"); ?>: <?php echo $order->created_at ?></small>
                                         <!-- <div>
@@ -298,15 +302,15 @@ function convert_number_to_words($number)
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="float-right">
+                                        <div class="float-right" style="padding-right:40px;">
 
-                                            <p class="font-weight-bold mb-1"><span style="display: inline-block;width: 100px;"><?php echo trans("invoice"); ?>:</span>#<?php echo $prefix . $order->order_number; ?></p>
-                                            <p class="font-weight-bold"><span style="display: inline-block;width: 100px;"><?php echo trans("date"); ?>:</span><?php echo helper_date_format($order->created_at); ?></p>
+                                            <p class="font-weight-bold mb-1"><span style="display: inline-block;width: 100px;"><?php echo trans("seller_invoice"); ?>: </span><?php echo $inv[0]->invoice_no; ?></p>
+                                            <p class="font-weight-bold"><span style="display: inline-block;width: 100px;"><?php echo trans("order_date"); ?>:</span><?php echo helper_date_format($order->created_at); ?></p>
                                         </div>
                                     </div>
 
                                 </div>
-                                <div class="row" style="padding: 15px 30px;">
+                                <div class="row" style="padding: 5px 30px;">
                                     <div class="col-6">
                                         <p class="font-weight-bold mb-3">Seller Information</p>
 
@@ -345,7 +349,7 @@ function convert_number_to_words($number)
                                     </div>
                                 </div>
 
-                                <div class="row" style="padding: 15px 30px;">
+                                <div class="row" style="padding: 5px 30px;">
                                     <div class="col-6">
                                         <p class="mb-1"><b>PAN Number -</b> <?= html_escape($seller->pan_number); ?></p>
                                         <p class="mb-1"><b>GST Number -</b><?= html_escape($seller->gst_number); ?></p>
@@ -366,166 +370,139 @@ function convert_number_to_words($number)
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="row p-4">
-                                    <div class="col-md-12">
-                                        <div class="table-responsive" style="border: solid 1px;">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <!-- <th class="border-0 font-weight-bold"><?php echo trans("seller"); ?></th> -->
-                                                        <th class="border-0 font-weight-bold">S.No</th>
-                                                        <th class="border-0 font-weight-bold"><?php echo trans("description"); ?></th>
-                                                        <th class="border-0 font-weight-bold"><?php echo trans("hsn_invoice"); ?></th>
-                                                        <th class="border-0 font-weight-bold"><?php echo trans("quantity"); ?></th>
-                                                        <th class="border-0 font-weight-bold"><?php echo trans("unit_price"); ?></th>
-                                                        <!-- <?php if ($this->general_settings->gst_status) : ?>
+                                <div class="col-md-12" style="padding:20px">
+                                    <div class="table-responsive" style="border: solid 1px;">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <!-- <th class="border-0 font-weight-bold"><?php echo trans("seller"); ?></th> -->
+                                                    <th class="border-0 font-weight-bold">S.No</th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("description"); ?></th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("hsn_invoice"); ?></th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("quantity"); ?></th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("unit_price"); ?></th>
+                                                    <!-- <?php if ($this->general_settings->gst_status) : ?>
                                                         <th class="border-0 font-weight-bold"><?php echo trans("vat"); ?></th>
                                                     <?php endif; ?> -->
-                                                        <th class="border-0 font-weight-bold">Net Amount</th>
-                                                        <th class="border-0 font-weight-bold"><?php echo trans("discount"); ?></th>
-                                                        <th class="border-0 font-weight-bold"><?php echo trans("gst_excluded_price"); ?></th>
-                                                        <th class="border-0 font-weight-bold"><?php echo trans("igst"); ?></th>
-                                                        <th class="border-0 font-weight-bold"><?php echo trans("cgst"); ?></th>
-                                                        <th class="border-0 font-weight-bold"><?php echo trans("sgst"); ?></th>
-                                                        <!-- <th class="border-0 font-weight-bold"><?php echo trans("shipping"); ?></th> -->
-                                                        <th class="border-0 font-weight-bold"><?php echo trans("total"); ?></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    if ($show_all_products) {
-                                                        $sale_subtotal = $order->price_subtotal;
-                                                        $sale_gst = $order->price_gst;
-                                                        $sale_shipping = $order->price_shipping;
-                                                        $sale_total = $order->price_total;
-                                                    } else {
-                                                        $sale_subtotal = 0;
-                                                        $sale_gst = 0;
-                                                        $sale_shipping = 0;
-                                                        $sale_total = 0;
-                                                    }
+                                                    <th class="border-0 font-weight-bold">Net Amount</th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("discount"); ?></th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("gst_excluded_price"); ?></th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("igst"); ?></th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("cgst"); ?></th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("sgst"); ?></th>
+                                                    <!-- <th class="border-0 font-weight-bold"><?php echo trans("shipping"); ?></th> -->
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("total"); ?></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                if ($show_all_products) {
+                                                    $sale_subtotal = $order->price_subtotal;
+                                                    $sale_gst = $order->price_gst;
+                                                    $sale_shipping = $order->price_shipping;
+                                                    $sale_total = $order->price_total;
+                                                } else {
+                                                    $sale_subtotal = 0;
+                                                    $sale_gst = 0;
+                                                    $sale_shipping = 0;
+                                                    $sale_total = 0;
+                                                }
 
-                                                    $is_order_has_physical_product = false;
+                                                $is_order_has_physical_product = false;
 
-                                                    if (!empty($invoice_items) && is_array($invoice_items)) :
-                                                        foreach ($invoice_items as $item) :
-                                                            $order_product_id = @$item['id'];
-                                                            $seller = @$item['seller'];
-                                                            $order_product_total_by_seller = 0;
-                                                            if (!empty($order_product_id)) :
-                                                                $order_product = $this->order_model->get_order_product($order_product_id);
+                                                if (!empty($invoice_items) && is_array($invoice_items)) :
+                                                    foreach ($invoice_items as $item) :
+                                                        $order_product_id = @$item['id'];
+                                                        $seller = @$item['seller'];
+                                                        $order_product_total_by_seller = 0;
+                                                        if (!empty($order_product_id)) :
+                                                            $order_product = $this->order_model->get_order_product($order_product_id);
 
-                                                                if (!empty($order_product)) :
-                                                                    if ($order_product->product_type == 'physical') {
-                                                                        $is_order_has_physical_product = true;
-                                                                    }
-                                                                    if ($order_product->seller_id == $sel_array->id) :
-                                                                        if ($order_product->buyer_id == $this->auth_user->id || $order_product->seller_id == $this->auth_user->id || $this->auth_user->role == "admin") :
-                                                                            if ($show_all_products == false) :
-                                                                                $sale_subtotal += $order_product->product_unit_price * $order_product->product_quantity;
-                                                                                $sale_gst += $order_product->product_gst;
-                                                                                $sale_shipping += $order_product->product_shipping_cost;
-                                                                                $cod_charges = $order_product->product_cod_charges;
-                                                                                $taxes = $order_product->product_tax_charges;
-                                                                                $sale_total += $order_product->product_total_price;
-                                                                                $sale_seller_total = $sale_total + $order_product->total_shipping_cost + $order_product->total_cod_charges;
+                                                            if (!empty($order_product)) :
+                                                                if ($order_product->product_type == 'physical') {
+                                                                    $is_order_has_physical_product = true;
+                                                                }
+                                                                if ($order_product->seller_id == $sel_array->id) :
+                                                                    if ($order_product->buyer_id == $this->auth_user->id || $order_product->seller_id == $this->auth_user->id || $this->auth_user->role == "admin") :
+                                                                        if ($show_all_products == false) :
+                                                                            $sale_subtotal += $order_product->product_unit_price * $order_product->product_quantity;
+                                                                            $sale_gst += $order_product->product_gst;
+                                                                            $sale_shipping += $order_product->product_shipping_cost;
+                                                                            $cod_charges = $order_product->product_cod_charges;
+                                                                            $taxes = $order_product->product_tax_charges;
+                                                                            $sale_total += $order_product->product_total_price;
+                                                                            $sale_seller_total = $sale_total;
+                                                                            $gb_total = $order_product->total_shipping_cost + $order_product->total_cod_charges;
 
-                                                                                $sale_shipping = $order_product->product_shipping_cost;
-                                                                                $sale_shipping_igst = $order_product->shipping_igst;
-                                                                                $sale_shipping_cgst = $order_product->shipping_cgst;
-                                                                                $sale_shipping_sgst = $order_product->shipping_sgst;
-                                                                                $sale_total_shipping_cost = $order_product->total_shipping_cost;
+                                                                            $sale_shipping = $order_product->product_shipping_cost;
+                                                                            $sale_shipping_igst = $order_product->shipping_igst;
+                                                                            $sale_shipping_cgst = $order_product->shipping_cgst;
+                                                                            $sale_shipping_sgst = $order_product->shipping_sgst;
+                                                                            $sale_total_shipping_cost = $order_product->total_shipping_cost;
 
-                                                                                $sale_cod = $order_product->product_cod_charges;
-                                                                                $sale_cod_igst = $order_product->cod_igst;
-                                                                                $sale_cod_cgst = $order_product->cod_cgst;
-                                                                                $sale_cod_sgst = $order_product->cod_sgst;
-                                                                                $sale_total_cod_cost = $order_product->total_cod_charges;
+                                                                            $sale_cod = $order_product->product_cod_charges;
+                                                                            $sale_cod_igst = $order_product->cod_igst;
+                                                                            $sale_cod_cgst = $order_product->cod_cgst;
+                                                                            $sale_cod_sgst = $order_product->cod_sgst;
+                                                                            $sale_total_cod_cost = $order_product->total_cod_charges;
 
-                                                                            endif; ?>
-                                                                            <tr style="font-size: 15px;">
-                                                                                <!-- <td><?php echo html_escape($seller); ?></td> -->
-                                                                                <td>1</td>
-                                                                                <td><?php echo $order_product->product_title; ?></td>
-                                                                                <td><?php echo $order_product->hsn_code; ?></td>
-                                                                                <td><?php echo $order_product->product_quantity; ?></td>
-                                                                                <td><?php echo price_formatted($order_product->product_unit_price, $order_product->product_currency); ?></td>
+                                                                        endif; ?>
+                                                                        <tr style="font-size: 15px;">
+                                                                            <!-- <td><?php echo html_escape($seller); ?></td> -->
+                                                                            <td>1</td>
+                                                                            <td><?php echo $order_product->product_title; ?>
+                                                                                <span style="font-style:italic"><?php echo trans("bhogan_by_gharobaar"); ?></span>
+                                                                            </td>
+                                                                            <td><?php echo $order_product->hsn_code; ?></td>
+                                                                            <td><?php echo $order_product->product_quantity; ?></td>
+                                                                            <td><?php echo price_formatted($order_product->product_unit_price, $order_product->product_currency); ?></td>
 
-                                                                                <!-- <td><?php echo $order_product->product_igst; ?></td> -->
-                                                                                <td><?php
-                                                                                    $net_price = $order_product->product_unit_price * $order_product->product_quantity;
-                                                                                    echo price_formatted($net_price, $order_product->product_currency); ?></td>
-                                                                                <td>-<?php echo price_formatted_without_round($order_product->product_discount_amount * 100 * $order_product->product_quantity, $order_product->product_currency); ?></td>
-                                                                                <td><?php echo price_formatted_without_round($order_product->price_excluded_gst, $order_product->product_currency); ?></td>
-                                                                                <td><?php echo price_formatted_without_round($order_product->product_igst, $order_product->product_currency); ?></td>
-                                                                                <td><?php echo price_formatted_without_round($order_product->product_cgst, $order_product->product_currency); ?></td>
-                                                                                <td><?php echo price_formatted_without_round($order_product->product_sgst, $order_product->product_currency); ?></td>
+                                                                            <!-- <td><?php echo $order_product->product_igst; ?></td> -->
+                                                                            <td><?php
+                                                                                $net_price = $order_product->product_unit_price * $order_product->product_quantity;
+                                                                                echo price_formatted($net_price, $order_product->product_currency); ?></td>
+                                                                            <td>-<?php echo price_formatted_without_round($order_product->product_discount_amount * 100 * $order_product->product_quantity, $order_product->product_currency); ?></td>
+                                                                            <td><?php echo price_formatted_without_round($order_product->price_excluded_gst, $order_product->product_currency); ?></td>
+                                                                            <td><?php echo price_formatted_without_round($order_product->product_igst, $order_product->product_currency); ?></td>
+                                                                            <td><?php echo price_formatted_without_round($order_product->product_cgst, $order_product->product_currency); ?></td>
+                                                                            <td><?php echo price_formatted_without_round($order_product->product_sgst, $order_product->product_currency); ?></td>
 
-                                                                                <!-- <td><?php echo price_formatted($order_product->product_shipping_cost, $order_product->product_currency); ?></td> -->
-                                                                                <td><?php echo price_formatted($order_product->product_total_price, $order_product->product_currency); ?></td>
+                                                                            <!-- <td><?php echo price_formatted($order_product->product_shipping_cost, $order_product->product_currency); ?></td> -->
+                                                                            <td><?php echo price_formatted($order_product->product_total_price, $order_product->product_currency); ?></td>
 
 
-                                                        <?php endif;
-                                                                    endif;
+                                                    <?php endif;
                                                                 endif;
                                                             endif;
-                                                        endforeach;
-                                                    endif; ?>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td></td>
-                                                                                <td><?php echo trans("shipping") ?></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td><?php echo price_formatted($sale_shipping, $order_product->product_currency); ?></td>
-                                                                                <td><?php echo price_formatted_without_round($sale_shipping_igst, $order_product->product_currency); ?></td>
-                                                                                <td><?php echo price_formatted_without_round($sale_shipping_cgst, $order_product->product_currency); ?></td>
-                                                                                <td><?php echo price_formatted_without_round($sale_shipping_sgst, $order_product->product_currency); ?></td>
-                                                                                <td><?php echo price_formatted_without_round($sale_total_shipping_cost, $order_product->product_currency); ?></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td></td>
-                                                                                <td><?php echo trans("cod_charges") ?></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td><?php echo price_formatted($sale_cod, $order_product->product_currency); ?></td>
-                                                                                <td><?php echo price_formatted_without_round($sale_cod_igst, $order_product->product_currency); ?></td>
-                                                                                <td><?php echo price_formatted_without_round($sale_cod_cgst, $order_product->product_currency); ?></td>
-                                                                                <td><?php echo price_formatted_without_round($sale_cod_sgst, $order_product->product_currency); ?></td>
-                                                                                <td><?php echo price_formatted_without_round($sale_total_cod_cost, $order_product->product_currency); ?></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td></td>
-                                                                                <td><b><?php echo trans("total") ?></b></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td><b><?php echo price_formatted_without_round($sale_seller_total, $order_product->product_currency); ?></b></td>
-                                                                            </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                        endif;
+                                                    endforeach;
+                                                endif; ?>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td><b><?php echo trans("total") ?></b></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td><b><?php echo price_formatted_without_round($sale_seller_total, $order_product->product_currency); ?></b></td>
+                                                                        </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="order-total float-left">
+                                        <div class="col-md-8 order-total float-left">
                                             <div class="row" style="padding-left:  30px;">
-                                                <b>Amount in words: </b>
+                                                <b>Amount in words: &nbsp;</b>
                                                 <?php if ($show_all_products == false) : ?>
                                                     <?php
                                                     $test = (($sale_seller_total) / 100);
@@ -548,7 +525,7 @@ function convert_number_to_words($number)
                                         <!-- <div class="col-6"> -->
 
                                         <!-- </div> -->
-                                        <div class="sign_box float-right">
+                                        <div class="col-md-4 sign_box ">
 
                                             <!-- <div class="row mb-2">
                                                 <div class="col-6 col-left">
@@ -632,6 +609,130 @@ function convert_number_to_words($number)
                                                 <div class="seller_sign">
                                                     <?php //if (count($sellers) == 1) :
                                                     echo html_escape($sel_array->first_name) . "&nbsp" . html_escape($sel_array->last_name);
+                                                    // else :
+                                                    //     echo ("gharobaar sign");
+                                                    // endif; 
+                                                    ?>
+                                                </div>
+                                                <div>
+                                                    <?php echo trans("seller_sign"); ?>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- Gharobaar invoice format start  -->
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6" style="padding-left: 30px;">
+                                            <div class="float-left">
+                                                <p class="font-weight-bold mb-3">Shipping Address</p>
+                                                <p class="mb-1"><?= html_escape($ordership->shipping_first_name); ?>&nbsp;<?= html_escape($ordership->shipping_last_name); ?></p>
+                                                <p class="mb-1"><?= html_escape($ordership->shipping_area); ?> , <?= html_escape($ordership->shipping_address_1); ?></p>
+                                                <p class="mb-1"><?= $ordership->shipping_city ?> , <?= html_escape($ordership->shipping_state); ?> ,<?= $ordership->shipping_country  ?> , <?= html_escape($ordership->shipping_zip_code); ?></p>
+
+                                                <p class="mb-1"><?= html_escape($ordership->shipping_phone_number); ?></p>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="float-left">
+                                                <p class="font-weight-bold mb-3">Billing Address</p>
+                                                <p class="mb-1"><?= html_escape($ordership->billing_first_name); ?>&nbsp;<?= html_escape($ordership->billing_last_name); ?></p>
+                                                <p class="mb-1"><?= html_escape($ordership->billing_area); ?> , <?= html_escape($ordership->billing_address_1); ?></p>
+                                                <p class="mb-1"><?= html_escape($ordership->billing_city); ?> , <?= $ordership->billing_state ?>, <?= $ordership->billing_country ?> , <?= html_escape($ordership->billing_zip_code); ?></p>
+                                                <p class="mb-1"><?= html_escape($ordership->billing_phone_number); ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12" style="padding: 20px;">
+                                    <p class="font-weight-bold mb-1" style="padding: 5px;"><span><?php echo trans("gb_invoice"); ?>: </span>GB/22-23/395/10005</p>
+                                    <div class="table-responsive" style="border: solid 1px;">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-0 font-weight-bold">S.No</th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("description"); ?></th>
+                                                    <th class="border-0 font-weight-bold">Net Amount(excluding GST)</th>
+                                                    <th class="border-0 font-weight-bold">GST %</th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("igst"); ?></th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("cgst"); ?></th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("sgst"); ?></th>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("total"); ?></th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td><?php echo trans("shipping") ?></td>
+                                                    <td><?php echo price_formatted($sale_shipping, $order_product->product_currency); ?></td>
+                                                    <td>18%</td>
+                                                    <td><?php echo price_formatted_without_round($sale_shipping_igst, $order_product->product_currency); ?></td>
+                                                    <td><?php echo price_formatted_without_round($sale_shipping_cgst, $order_product->product_currency); ?></td>
+                                                    <td><?php echo price_formatted_without_round($sale_shipping_sgst, $order_product->product_currency); ?></td>
+                                                    <td><?php echo price_formatted_without_round($sale_total_shipping_cost, $order_product->product_currency); ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td><?php echo trans("cod_charges") ?></td>
+                                                    <td><?php echo price_formatted($sale_cod, $order_product->product_currency); ?></td>
+                                                    <td>18%</td>
+                                                    <td><?php echo price_formatted_without_round($sale_cod_igst, $order_product->product_currency); ?></td>
+                                                    <td><?php echo price_formatted_without_round($sale_cod_cgst, $order_product->product_currency); ?></td>
+                                                    <td><?php echo price_formatted_without_round($sale_cod_sgst, $order_product->product_currency); ?></td>
+                                                    <td><?php echo price_formatted_without_round($sale_total_cod_cost, $order_product->product_currency); ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td><b><?php echo trans("total") ?></b></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td><b><?php echo price_formatted_without_round($gb_total, $order_product->product_currency); ?></b></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- Gharobaar invoice format end  -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="col-md-8 order-total float-left">
+                                            <div class="row" style="padding-left:  30px;">
+                                                <b>Amount in words: &nbsp;</b>
+                                                <?php if ($show_all_products == false) : ?>
+                                                    <?php
+                                                    $test = (($gb_total) / 100);
+
+                                                    echo convert_number_to_words($test); ?>
+                                                <?php else : ?>
+                                                    <?php
+                                                    $test = (($order->price_total) / 100);
+
+                                                    echo convert_number_to_words($test); ?>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div style="padding: 0px 15px; font-size:12px;">
+                                                <p class="font-weight-bold" style="margin-bottom: 0px;"><?php echo trans("payment_details"); ?></p>
+                                                <p class="mb-1"><span style="display: inline-block;min-width: 158px;"><?php echo trans("payment_status"); ?>:</span><?= get_payment_status($order->payment_status); ?></p>
+                                                <p class="mb-1"><span style="display: inline-block;min-width: 158px;"><?php echo trans("payment_method"); ?>:</span><?= get_payment_method($order->payment_method); ?></p>
+                                                <p class="mb-1"><span style="display: inline-block;min-width: 158px;"><?php echo trans("currency"); ?>:</span><?php echo $order->price_currency; ?></p>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-6"> -->
+
+                                        <!-- </div> -->
+                                        <div class="col-md-4 sign_box float-right">
+                                            <div class="row mb-2 sign">
+                                                <div class="seller_sign">
+                                                    <?php //if (count($sellers) == 1) :
+                                                    echo html_escape("gharobaar");
                                                     // else :
                                                     //     echo ("gharobaar sign");
                                                     // endif; 

@@ -2011,11 +2011,8 @@
 <script>
     function place_cod_orders() {
         $(".cash_free_btn").prop('disabled', true);
-        // e.preventDefault();
-        // var form = $('#form_submit_disable');
+        var pay_method = document.querySelector('input[name="payment_option"]:checked').value;
         var t = {
-            // pay_method: pay_method,
-            // sys_lang_id: 1,
             value: "update"
         };
         t[csfr_token_name] = $.cookie(csfr_cookie_name);
@@ -2025,19 +2022,41 @@
             data: t,
             success: function(e) {
                 res = JSON.parse(e);
+                var x = ["<?php echo $this->auth_user->first_name ?>", res.order_number, "<?php echo ($cart_total->total_price) / 100 ?>", pay_method]
+                var z = '"'.concat(x.join('","')).concat('"');
+
+                function send_buyer() {
+                    var required_data = {
+                        "from": "918287606650",
+                        "to": "91<?php echo $this->auth_user->phone_number; ?>",
+                        "type": "mediatemplate",
+                        "channel": "whatsapp",
+                        "template_name": "new_ordertext",
+                        "params": z,
+                        "param_url": "view-order-details".concat("/").concat(res.order_number),
+                    }
+                    var data = {
+                        "order": required_data,
+                        sys_lang_id: sys_lang_id
+                    };
+                    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                    $.ajax({
+                        type: "POST",
+                        url: base_url + "cart_controller/whatsapp",
+                        data: data,
+                        success: function(response) {
+                            result = response;
+                        }
+                    })
+                }
                 if (res.order_completed == "yes") {
                     window.location.href = base_url + "order-completed";
+                    send_buyer();
                 } else {
                     window.location.href = base_url + "cart/payment";
                 }
-                // $("#load_payment_page")[0].innerHTML = res.pay_view_page;
-                // $("#paymentMethodButtonDiv").hide();
-                // console.log(e);
-                // alert($response.pay_view);
-            },
+            }
         });
-
-
     }
 </script>
 

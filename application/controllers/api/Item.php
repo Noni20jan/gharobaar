@@ -260,10 +260,10 @@ class Item extends REST_Controller
                 }
             }
             $awb_code = $new_input['awb_code'];
+            $is_msg_send = $this->order_model->get_msg_send_status($awb_code);
             $flag = $this->order_model->update_flag_shipped($awb_code);
             if ($data['order_status'] == 'shipped' && $flag == true && $row->send_whatsapp == 1) {
                 $awb_code = $new_input['awb_code'];
-
                 $title = $this->product_model->get_title($product_array);
                 $order_no = $this->order_model->get_order_detail_by_id($order_id);
                 $order_shipping = $this->order_model->get_order_shipping($order_id);
@@ -279,7 +279,9 @@ class Item extends REST_Controller
                     "params" => $passed_data,
                     "param_url" => "orders" . "/" . "trackstatus" . "/" . $awb_code
                 );
-                $this->notification_model->whatsapp($required_data);
+                if ($is_msg_send->is_shipped_active == '0') {
+                    $this->notification_model->whatsapp($required_data);
+                }
             }
 
 

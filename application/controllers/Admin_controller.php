@@ -28,7 +28,7 @@ class Admin_controller extends Admin_Core_Controller
         $data['barter_count'] = $this->product_admin_model->barter_count();
         $data['pending_barter_count'] = $this->product_admin_model->get_pending_barter_count();
         $data['blog_posts_count'] = $this->blog_model->get_all_posts_count();
-        $data['members_count'] = $this->auth_model->get_users_count_by_role('member');
+        $data['members_count'] = $this->auth_model->get_all_users_count();
 
         $data['latest_orders'] = $this->order_admin_model->get_orders_limited(15);
 
