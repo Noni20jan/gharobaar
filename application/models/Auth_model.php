@@ -954,6 +954,14 @@ class Auth_model extends CI_Model
         return false;
     }
 
+    public function get_orders()
+    {
+        $id = clean_number($this->auth_user->id);
+        // var_dump($id);
+        $this->db->where('buyer_id', $id);
+        return $this->db->get('orders')->result();
+    }
+
     //function get user
     public function get_logged_user()
     {
