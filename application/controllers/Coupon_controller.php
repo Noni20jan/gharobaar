@@ -422,48 +422,30 @@ class Coupon_controller extends Admin_Core_Controller
                     //check for minimum amount of cart
                     $total_cart_value = $data['cart_total']->total / 100;
                     $coupon_min_cart_val = $coupon_details->min_amt_in_cart;
+                    $order_historys = $this->auth_model->get_orders();
+                    $coupon_usage = 0;
 
-                    if ($total_cart_value >= $coupon_min_cart_val) :
-                        //check for the source type of the coupon
-                        $coupon_assignment_details = $this->offer_model->get_coupon_details_by_code($coupon_details->offer_code);
-                        foreach ($coupon_assignment_details as $cad) :
-                            $coupon_source_type = $cad->source_type;
-                            break;
-                        endforeach;
-                        switch (strtoupper($coupon_source_type)):
-                            case "ALL":
-                                //calculation for exhibition coupon
-                                $coupon = new stdClass();
-                                $coupon->id = $coupon_details->id;
-                                $coupon->source_type = strtoupper($coupon_source_type);
-                                $coupon->offer_code = strtoupper($coupon_details->offer_code);
-                                // setting coupon data in session
-                                if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
-                                    $this->session->unset_userdata('mds_shopping_cart_coupon');
-                                }
-                                $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
-                                $this->cart_model->calculate_cart_total();
-                                //end of calculation
+                    foreach ($order_historys as $history) {
+                        if ($history->offer_id == $coupon_details->id) {
+                            $coupon_usage = $coupon_usage + 1;
+                        }
+                    }
 
-                                $data['cart_total'] = $this->cart_model->get_sess_cart_total();
-                                $data["coupon_assignment_data"] = $coupon_assignment_details;
-                                $data["coupon_max_usage"] = $max_total_usage;
-                                $data["coupon_total_usage"] = $total_usage;
-                                $data["status"] = true;
-                                $data["msg"] = trans("success_coupon");
-                                $data["coupon_data"] = $coupon_details;
-                                break;
-                            case "USER":
-                                if (auth_check()) :
-                                    $user_id = $this->auth_user->id;
-                                    $valid = false;
-                                    foreach ($coupon_assignment_details as $cad) :
-                                        if ($user_id == $cad->source_id) :
-                                            $valid = true;
-                                            break;
-                                        endif;
-                                    endforeach;
-                                    if ($valid) :
+                    if ($coupon_usage >=  $coupon_details->max_usage_per_user) {
+                        if ($coupon_details->max_usage_per_user != 0) {
+                            $data["error"] = "Coupon Limit Reached";
+                            $data["status"] = false;
+                            $data["msg"] = trans("coupon_limit_reached");
+                        } else {
+                            if ($total_cart_value >= $coupon_min_cart_val) :
+                                //check for the source type of the coupon
+                                $coupon_assignment_details = $this->offer_model->get_coupon_details_by_code($coupon_details->offer_code);
+                                foreach ($coupon_assignment_details as $cad) :
+                                    $coupon_source_type = $cad->source_type;
+                                    break;
+                                endforeach;
+                                switch (strtoupper($coupon_source_type)):
+                                    case "ALL":
                                         //calculation for exhibition coupon
                                         $coupon = new stdClass();
                                         $coupon->id = $coupon_details->id;
@@ -484,38 +466,188 @@ class Coupon_controller extends Admin_Core_Controller
                                         $data["status"] = true;
                                         $data["msg"] = trans("success_coupon");
                                         $data["coupon_data"] = $coupon_details;
-                                    else :
-                                        $data["error"] = "This coupon is not valid for you.";
-                                        $data["status"] = false;
-                                        $data["msg"] = trans("coupon_not_valid");
+                                        break;
+                                    case "USER":
+                                        if (auth_check()) :
+                                            $user_id = $this->auth_user->id;
+                                            $valid = false;
+                                            foreach ($coupon_assignment_details as $cad) :
+                                                if ($user_id == $cad->source_id) :
+                                                    $valid = true;
+                                                    break;
+                                                endif;
+                                            endforeach;
+                                            if ($valid) :
+                                                //calculation for exhibition coupon
+                                                $coupon = new stdClass();
+                                                $coupon->id = $coupon_details->id;
+                                                $coupon->source_type = strtoupper($coupon_source_type);
+                                                $coupon->offer_code = strtoupper($coupon_details->offer_code);
+                                                // setting coupon data in session
+                                                if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
+                                                    $this->session->unset_userdata('mds_shopping_cart_coupon');
+                                                }
+                                                $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
+                                                $this->cart_model->calculate_cart_total();
+                                                //end of calculation
 
-                                    endif;
-                                else :
-                                    $data["error"] = "This coupon is not valid for you.";
-                                    $data["status"] = false;
-                                    $data["msg"] = trans("failure_coupon");
-                                endif;
-                                break;
-                            case "PRODUCT":
-                                $valid = false;
-                                $prod_ids = array();
-                                foreach ($data["cart_items"] as $item) :
-                                    $prod_id = $item->product_id;
-                                    foreach ($coupon_assignment_details as $cad) :
-                                        if ($prod_id == $cad->source_id) :
-                                            $valid = true;
-                                            array_push($prod_ids, $prod_id);
-                                            break;
+                                                $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                                $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                                $data["coupon_max_usage"] = $max_total_usage;
+                                                $data["coupon_total_usage"] = $total_usage;
+                                                $data["status"] = true;
+                                                $data["msg"] = trans("success_coupon");
+                                                $data["coupon_data"] = $coupon_details;
+                                            else :
+                                                $data["error"] = "This coupon is not valid for you.";
+                                                $data["status"] = false;
+                                                $data["msg"] = trans("coupon_not_valid");
+
+                                            endif;
+                                        else :
+                                            $data["error"] = "This coupon is not valid for you.";
+                                            $data["status"] = false;
+                                            $data["msg"] = trans("failure_coupon");
                                         endif;
-                                    endforeach;
-                                endforeach;
-                                if ($valid) :
+                                        break;
+                                    case "PRODUCT":
+                                        $valid = false;
+                                        $prod_ids = array();
+                                        foreach ($data["cart_items"] as $item) :
+                                            $prod_id = $item->product_id;
+                                            foreach ($coupon_assignment_details as $cad) :
+                                                if ($prod_id == $cad->source_id) :
+                                                    $valid = true;
+                                                    array_push($prod_ids, $prod_id);
+                                                    break;
+                                                endif;
+                                            endforeach;
+                                        endforeach;
+                                        if ($valid) :
+                                            //calculation for exhibition coupon
+                                            $coupon = new stdClass();
+                                            $coupon->id = $coupon_details->id;
+                                            $coupon->source_type = strtoupper($coupon_source_type);
+                                            $coupon->offer_code = strtoupper($coupon_details->offer_code);
+                                            $coupon->prod_ids = $prod_ids;
+                                            // setting coupon data in session
+                                            if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
+                                                $this->session->unset_userdata('mds_shopping_cart_coupon');
+                                            }
+                                            $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
+                                            $this->cart_model->calculate_cart_total();
+                                            //end of calculation
+                                            $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                            $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                            $data["coupon_max_usage"] = $max_total_usage;
+                                            $data["coupon_total_usage"] = $total_usage;
+                                            $data["status"] = true;
+                                            $data["msg"] = trans("success_coupon");
+                                            $data["coupon_data"] = $coupon_details;
+                                        else :
+                                            $data["error"] = "This coupon is not applicable on this cart.";
+                                            $data["status"] = false;
+                                            $data["msg"] = trans("coupon_not_valid");
+                                        endif;
+                                        break;
+                                    case "CATEGORY":
+
+                                        $data["error"] = "Default case error";
+                                        $data["status"] = false;
+                                        $data["msg"] = trans("failure_coupon");
+                                        // $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                        // $data["coupon_max_usage"] = $max_total_usage;
+                                        // $data["coupon_total_usage"] = $total_usage;
+                                        // $data["status"] = true;
+                                        // $data["msg"] = trans("success_coupon");
+                                        // $data["coupon_data"] = $coupon_details;
+                                        break;
+                                    case "FREESHIP":
+                                        //calculation for exhibition coupon
+                                        $coupon = new stdClass();
+                                        $coupon->id = $coupon_details->id;
+                                        $coupon->source_type = strtoupper($coupon_source_type);
+                                        $coupon->offer_code = strtoupper($coupon_details->offer_code);
+                                        // setting coupon data in session
+                                        if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
+                                            $this->session->unset_userdata('mds_shopping_cart_coupon');
+                                        }
+                                        $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
+                                        $this->cart_model->calculate_cart_total();
+                                        //end of calculation
+
+                                        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                        $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                        $data["coupon_max_usage"] = $max_total_usage;
+                                        $data["coupon_total_usage"] = $total_usage;
+                                        $data["status"] = true;
+                                        $data["msg"] = trans("success_coupon");
+                                        $data["coupon_data"] = $coupon_details;
+                                        break;
+                                    case "EXHIBITION":
+
+                                        //calculation for exhibition coupon
+                                        $coupon = new stdClass();
+                                        $coupon->id = $coupon_details->id;
+                                        $coupon->source_type = strtoupper($coupon_source_type);
+                                        $coupon->offer_code = strtoupper($coupon_details->offer_code);
+                                        // setting coupon data in session
+                                        if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
+                                            $this->session->unset_userdata('mds_shopping_cart_coupon');
+                                        }
+                                        $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
+                                        $this->cart_model->calculate_cart_total();
+                                        //end of calculation
+
+                                        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                        $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                        $data["coupon_max_usage"] = $max_total_usage;
+                                        $data["coupon_total_usage"] = $total_usage;
+                                        $data["status"] = true;
+                                        $data["msg"] = trans("success_coupon");
+                                        $data["coupon_data"] = $coupon_details;
+
+                                        break;
+                                    default:
+                                        $data["error"] = "Default case error";
+                                        $data["status"] = false;
+                                        $data["msg"] = trans("failure_coupon");
+                                        break;
+                                endswitch;
+
+                            else :
+
+                                $token = array(
+                                    'amt'  => $coupon_min_cart_val
+                                );
+                                $pattern = '[%s]';
+                                foreach ($token as $key => $val) {
+                                    $varMap[sprintf($pattern, $key)] = $val;
+                                }
+                                $message = strtr(trans("limit_fail_coupon"), $varMap);
+
+                                $data["coupon_max_usage"] = $max_total_usage;
+                                $data["coupon_total_usage"] = $total_usage;
+                                $data["error"] = "Minimum value reqiured";
+                                $data["status"] = false;
+                                $data["msg"] = $message;
+                            endif;
+                        }
+                    } else {
+                        if ($total_cart_value >= $coupon_min_cart_val) :
+                            //check for the source type of the coupon
+                            $coupon_assignment_details = $this->offer_model->get_coupon_details_by_code($coupon_details->offer_code);
+                            foreach ($coupon_assignment_details as $cad) :
+                                $coupon_source_type = $cad->source_type;
+                                break;
+                            endforeach;
+                            switch (strtoupper($coupon_source_type)):
+                                case "ALL":
                                     //calculation for exhibition coupon
                                     $coupon = new stdClass();
                                     $coupon->id = $coupon_details->id;
                                     $coupon->source_type = strtoupper($coupon_source_type);
                                     $coupon->offer_code = strtoupper($coupon_details->offer_code);
-                                    $coupon->prod_ids = $prod_ids;
                                     // setting coupon data in session
                                     if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
                                         $this->session->unset_userdata('mds_shopping_cart_coupon');
@@ -523,6 +655,7 @@ class Coupon_controller extends Admin_Core_Controller
                                     $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
                                     $this->cart_model->calculate_cart_total();
                                     //end of calculation
+
                                     $data['cart_total'] = $this->cart_model->get_sess_cart_total();
                                     $data["coupon_assignment_data"] = $coupon_assignment_details;
                                     $data["coupon_max_usage"] = $max_total_usage;
@@ -530,96 +663,173 @@ class Coupon_controller extends Admin_Core_Controller
                                     $data["status"] = true;
                                     $data["msg"] = trans("success_coupon");
                                     $data["coupon_data"] = $coupon_details;
-                                else :
-                                    $data["error"] = "This coupon is not applicable on this cart.";
+                                    break;
+                                case "USER":
+                                    if (auth_check()) :
+                                        $user_id = $this->auth_user->id;
+                                        $valid = false;
+                                        foreach ($coupon_assignment_details as $cad) :
+                                            if ($user_id == $cad->source_id) :
+                                                $valid = true;
+                                                break;
+                                            endif;
+                                        endforeach;
+                                        if ($valid) :
+                                            //calculation for exhibition coupon
+                                            $coupon = new stdClass();
+                                            $coupon->id = $coupon_details->id;
+                                            $coupon->source_type = strtoupper($coupon_source_type);
+                                            $coupon->offer_code = strtoupper($coupon_details->offer_code);
+                                            // setting coupon data in session
+                                            if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
+                                                $this->session->unset_userdata('mds_shopping_cart_coupon');
+                                            }
+                                            $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
+                                            $this->cart_model->calculate_cart_total();
+                                            //end of calculation
+
+                                            $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                            $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                            $data["coupon_max_usage"] = $max_total_usage;
+                                            $data["coupon_total_usage"] = $total_usage;
+                                            $data["status"] = true;
+                                            $data["msg"] = trans("success_coupon");
+                                            $data["coupon_data"] = $coupon_details;
+                                        else :
+                                            $data["error"] = "This coupon is not valid for you.";
+                                            $data["status"] = false;
+                                            $data["msg"] = trans("coupon_not_valid");
+
+                                        endif;
+                                    else :
+                                        $data["error"] = "This coupon is not valid for you.";
+                                        $data["status"] = false;
+                                        $data["msg"] = trans("failure_coupon");
+                                    endif;
+                                    break;
+                                case "PRODUCT":
+                                    $valid = false;
+                                    $prod_ids = array();
+                                    foreach ($data["cart_items"] as $item) :
+                                        $prod_id = $item->product_id;
+                                        foreach ($coupon_assignment_details as $cad) :
+                                            if ($prod_id == $cad->source_id) :
+                                                $valid = true;
+                                                array_push($prod_ids, $prod_id);
+                                                break;
+                                            endif;
+                                        endforeach;
+                                    endforeach;
+                                    if ($valid) :
+                                        //calculation for exhibition coupon
+                                        $coupon = new stdClass();
+                                        $coupon->id = $coupon_details->id;
+                                        $coupon->source_type = strtoupper($coupon_source_type);
+                                        $coupon->offer_code = strtoupper($coupon_details->offer_code);
+                                        $coupon->prod_ids = $prod_ids;
+                                        // setting coupon data in session
+                                        if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
+                                            $this->session->unset_userdata('mds_shopping_cart_coupon');
+                                        }
+                                        $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
+                                        $this->cart_model->calculate_cart_total();
+                                        //end of calculation
+                                        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                        $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                        $data["coupon_max_usage"] = $max_total_usage;
+                                        $data["coupon_total_usage"] = $total_usage;
+                                        $data["status"] = true;
+                                        $data["msg"] = trans("success_coupon");
+                                        $data["coupon_data"] = $coupon_details;
+                                    else :
+                                        $data["error"] = "This coupon is not applicable on this cart.";
+                                        $data["status"] = false;
+                                        $data["msg"] = trans("coupon_not_valid");
+                                    endif;
+                                    break;
+                                case "CATEGORY":
+
+                                    $data["error"] = "Default case error";
                                     $data["status"] = false;
-                                    $data["msg"] = trans("coupon_not_valid");
-                                endif;
-                                break;
-                            case "CATEGORY":
+                                    $data["msg"] = trans("failure_coupon");
+                                    // $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                    // $data["coupon_max_usage"] = $max_total_usage;
+                                    // $data["coupon_total_usage"] = $total_usage;
+                                    // $data["status"] = true;
+                                    // $data["msg"] = trans("success_coupon");
+                                    // $data["coupon_data"] = $coupon_details;
+                                    break;
+                                case "FREESHIP":
+                                    //calculation for exhibition coupon
+                                    $coupon = new stdClass();
+                                    $coupon->id = $coupon_details->id;
+                                    $coupon->source_type = strtoupper($coupon_source_type);
+                                    $coupon->offer_code = strtoupper($coupon_details->offer_code);
+                                    // setting coupon data in session
+                                    if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
+                                        $this->session->unset_userdata('mds_shopping_cart_coupon');
+                                    }
+                                    $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
+                                    $this->cart_model->calculate_cart_total();
+                                    //end of calculation
 
-                                $data["error"] = "Default case error";
-                                $data["status"] = false;
-                                $data["msg"] = trans("failure_coupon");
-                                // $data["coupon_assignment_data"] = $coupon_assignment_details;
-                                // $data["coupon_max_usage"] = $max_total_usage;
-                                // $data["coupon_total_usage"] = $total_usage;
-                                // $data["status"] = true;
-                                // $data["msg"] = trans("success_coupon");
-                                // $data["coupon_data"] = $coupon_details;
-                                break;
-                            case "FREESHIP":
-                                //calculation for exhibition coupon
-                                $coupon = new stdClass();
-                                $coupon->id = $coupon_details->id;
-                                $coupon->source_type = strtoupper($coupon_source_type);
-                                $coupon->offer_code = strtoupper($coupon_details->offer_code);
-                                // setting coupon data in session
-                                if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
-                                    $this->session->unset_userdata('mds_shopping_cart_coupon');
-                                }
-                                $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
-                                $this->cart_model->calculate_cart_total();
-                                //end of calculation
+                                    $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                    $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                    $data["coupon_max_usage"] = $max_total_usage;
+                                    $data["coupon_total_usage"] = $total_usage;
+                                    $data["status"] = true;
+                                    $data["msg"] = trans("success_coupon");
+                                    $data["coupon_data"] = $coupon_details;
+                                    break;
+                                case "EXHIBITION":
 
-                                $data['cart_total'] = $this->cart_model->get_sess_cart_total();
-                                $data["coupon_assignment_data"] = $coupon_assignment_details;
-                                $data["coupon_max_usage"] = $max_total_usage;
-                                $data["coupon_total_usage"] = $total_usage;
-                                $data["status"] = true;
-                                $data["msg"] = trans("success_coupon");
-                                $data["coupon_data"] = $coupon_details;
-                                break;
-                            case "EXHIBITION":
+                                    //calculation for exhibition coupon
+                                    $coupon = new stdClass();
+                                    $coupon->id = $coupon_details->id;
+                                    $coupon->source_type = strtoupper($coupon_source_type);
+                                    $coupon->offer_code = strtoupper($coupon_details->offer_code);
+                                    // setting coupon data in session
+                                    if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
+                                        $this->session->unset_userdata('mds_shopping_cart_coupon');
+                                    }
+                                    $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
+                                    $this->cart_model->calculate_cart_total();
+                                    //end of calculation
 
-                                //calculation for exhibition coupon
-                                $coupon = new stdClass();
-                                $coupon->id = $coupon_details->id;
-                                $coupon->source_type = strtoupper($coupon_source_type);
-                                $coupon->offer_code = strtoupper($coupon_details->offer_code);
-                                // setting coupon data in session
-                                if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) {
-                                    $this->session->unset_userdata('mds_shopping_cart_coupon');
-                                }
-                                $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
-                                $this->cart_model->calculate_cart_total();
-                                //end of calculation
+                                    $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                    $data["coupon_assignment_data"] = $coupon_assignment_details;
+                                    $data["coupon_max_usage"] = $max_total_usage;
+                                    $data["coupon_total_usage"] = $total_usage;
+                                    $data["status"] = true;
+                                    $data["msg"] = trans("success_coupon");
+                                    $data["coupon_data"] = $coupon_details;
 
-                                $data['cart_total'] = $this->cart_model->get_sess_cart_total();
-                                $data["coupon_assignment_data"] = $coupon_assignment_details;
-                                $data["coupon_max_usage"] = $max_total_usage;
-                                $data["coupon_total_usage"] = $total_usage;
-                                $data["status"] = true;
-                                $data["msg"] = trans("success_coupon");
-                                $data["coupon_data"] = $coupon_details;
+                                    break;
+                                default:
+                                    $data["error"] = "Default case error";
+                                    $data["status"] = false;
+                                    $data["msg"] = trans("failure_coupon");
+                                    break;
+                            endswitch;
 
-                                break;
-                            default:
-                                $data["error"] = "Default case error";
-                                $data["status"] = false;
-                                $data["msg"] = trans("failure_coupon");
-                                break;
-                        endswitch;
+                        else :
 
-                    else :
+                            $token = array(
+                                'amt'  => $coupon_min_cart_val
+                            );
+                            $pattern = '[%s]';
+                            foreach ($token as $key => $val) {
+                                $varMap[sprintf($pattern, $key)] = $val;
+                            }
+                            $message = strtr(trans("limit_fail_coupon"), $varMap);
 
-                        $token = array(
-                            'amt'  => $coupon_min_cart_val
-                        );
-                        $pattern = '[%s]';
-                        foreach ($token as $key => $val) {
-                            $varMap[sprintf($pattern, $key)] = $val;
-                        }
-                        $message = strtr(trans("limit_fail_coupon"), $varMap);
-
-                        $data["coupon_max_usage"] = $max_total_usage;
-                        $data["coupon_total_usage"] = $total_usage;
-                        $data["error"] = "Minimum value reqiured";
-                        $data["status"] = false;
-                        $data["msg"] = $message;
-                    endif;
-
-
+                            $data["coupon_max_usage"] = $max_total_usage;
+                            $data["coupon_total_usage"] = $total_usage;
+                            $data["error"] = "Minimum value reqiured";
+                            $data["status"] = false;
+                            $data["msg"] = $message;
+                        endif;
+                    }
                 else :
                     $data["coupon_max_usage"] = $max_total_usage;
                     $data["coupon_total_usage"] = $total_usage;
@@ -638,21 +848,7 @@ class Coupon_controller extends Admin_Core_Controller
             $data["status"] = false;
             $data["msg"] = trans("invalid_coupon");
         endif;
-        $order_historys = $this->auth_model->get_orders();
-        $coupon_usage = 0;
 
-        foreach ($order_historys as $history) {
-            if ($history->offer_id == $coupon_details->id) {
-                $coupon_usage = $coupon_usage + 1;
-            }
-        }
-        if ($coupon_details->max_usage_per_user != 0) {
-            if ($coupon_usage >=  $coupon_details->max_usage_per_user) {
-                $data["error"] = "Coupon Limit Reached";
-                $data["status"] = false;
-                $data["msg"] = trans("coupon_limit_reached");
-            }
-        }
 
         echo json_encode($data);
     }
