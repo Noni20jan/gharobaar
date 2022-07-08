@@ -978,9 +978,50 @@ class Order_controller extends Home_Core_Controller
         return $data;
     }
     // schedule shiprocket orders
+    public function shiprocket()
+    {
+        $curl = curl_init();
+        $shiprocket_login = "sellerhelp@gharobaar.com";
+        $shiprocket_password = "Gharobaar@admin1";
 
+        $cred_array = array(
+            "email" => $shiprocket_login,
+            "password" => $shiprocket_password
+        );
+
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://apiv2.shiprocket.in/v1/external/auth/login',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($cred_array),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        $status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+        // var_dump($status);
+
+        curl_close($curl);
+        if ($status == 200) {
+            $user_data = array(
+                'modesy_sess_user_shiprocket_token' => json_decode($response)->token
+            );
+            $this->session->set_userdata($user_data);
+        }
+    }
     public function schedule_shiprocket_orders()
     {
+
+        $shiprocket['shiprocket'] = $this->shiprocket();
         $req_data = $this->input->post('order');
         // var_dump($req_data);
         // die();
