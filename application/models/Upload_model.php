@@ -299,7 +299,7 @@ class Upload_model extends CI_Model
         // }
 
         $img = Image::make($path)->orientate();
-        $img->resize(null, 500, function ($constraint) {
+        $img->resize(1920, null, function ($constraint) {
             $constraint->aspectRatio();
         });
         $img->save(FCPATH . $new_path, $this->quality);

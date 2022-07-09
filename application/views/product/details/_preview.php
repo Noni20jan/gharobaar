@@ -93,9 +93,9 @@ if (!empty($product_images)) {
         border: 1px solid #800000;
         /*set the size of the lens:*/
         z-index: 500;
-        zoom: 2%;
-        width: 200px;
-        height: 200px;
+        zoom: 10%;
+        width: 100px;
+        height: 100px;
     }
 
     .img-zoom-result {
@@ -104,7 +104,7 @@ if (!empty($product_images)) {
         position: absolute;
         left: 730px;
         /*set the size of the result div:*/
-        width: 450px;
+        width: 350px;
         height: 350px;
         display: none;
         z-index: 10;
