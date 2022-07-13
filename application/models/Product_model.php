@@ -194,6 +194,7 @@ class Product_model extends Core_Model
     //edit product details
     public function edit_product_details($id)
     {
+        $availability = "";
         if (!empty($this->input->post('availability', true))) {
             $availability = implode(",", $this->input->post('availability', true));
         }
