@@ -194,6 +194,9 @@ class Product_model extends Core_Model
     //edit product details
     public function edit_product_details($id)
     {
+        if (!empty($this->input->post('availability', true))) {
+            $availability = implode(",", $this->input->post('availability', true));
+        }
         $product = $this->get_product_by_id($id);
         $data = array(
             'available_for_return_or_exchange' => $this->input->post('return_or_exchange', true),
@@ -261,7 +264,7 @@ class Product_model extends Core_Model
             'lead_time' => trim($this->input->post('lead_time', true)),
             'weight_units' => 'grams',
             'lead_days' => trim($this->input->post('lead_days', true)),
-            'availability' => implode(",", $this->input->post('availability', true)),
+            'availability' =>  $availability,
             'product_pincode' => trim($this->input->post('pincode1', true)),
             'product_area' => trim($this->input->post('area', true)),
             'product_state' => trim($this->input->post('supplier_state1', true)),
