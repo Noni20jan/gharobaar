@@ -2790,13 +2790,12 @@ class Order_model extends CI_Model
     {
         $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
         $Supp_ship_data = json_decode($this->get_seller_wise_data_bifurcation($cart_total));
-        $invoice_no = $this->general_settings->gb_invoice_seq;
+
+
         if ($Supp_ship_data) {
             foreach ($Supp_ship_data as $sup) {
                 $seller_address = get_user($sup->SupplierId);
-                $current_invoice_no = $this->get_invoice_number_by_seller_id($sup->SupplierId);
-                // var_dump($current_invoice_no[0]->invoice_seq);
-                //$this->db->query('LOCK TABLES users(invoice_seq) WRITE, users(invoice_seq) as user1 READ');
+
                 $data = array(
                     'order_id' => $order_id,
                     'seller_id' => $sup->SupplierId,
@@ -2809,10 +2808,7 @@ class Order_model extends CI_Model
                     'Sup_Shipping_gst' => $sup->shipping_tax_charges,
                     'Sup_cod_gst' => $sup->cod_tax_charges,
                     'created_by' => 1,
-                    'updated_by' => 1,
-                    'invoice_no' => 'GB/22-23/' . $sup->SupplierId . '/' . $current_invoice_no[0]->invoice_seq,
-                    'invoice_seq' => $current_invoice_no[0]->invoice_seq,
-                    'gb_invoice_no' => 'GB/22-23/' . $sup->SupplierId . '/' . $invoice_no
+                    'updated_by' => 1
                 );
                 if ($seller_address->supplier_state == $shipping_address->shipping_state) {
                     $data['shipping_igst'] = 0;
@@ -2835,15 +2831,10 @@ class Order_model extends CI_Model
                     $data['sup_cod_cgst'] = 0;
                     $data['sup_cod_sgst'] = 0;
                 }
-                $invoice_no = $invoice_no + 1;
                 $data["total_shipping_cost"] = $data["sup_shipping_cost"] + $data['Sup_Shipping_gst'];
                 $data["total_cod_cost"] = $data["Sup_cod_cost"] + $data['Sup_cod_gst'];
                 $data['grand_total_amount'] = $data["Sup_total_prd"] + $data["total_shipping_cost"] + $data["total_cod_cost"];
-                $this->update_gb_invoice_seq($invoice_no);
                 $this->db->insert('order_supplier', $data);
-                $this->update_invoice_number_by_seller_id($sup->SupplierId, $current_invoice_no[0]->invoice_seq);
-                //$this->db->query('UNLOCK TABLES');
-
             }
         }
     }
@@ -4053,7 +4044,7 @@ WHERE awb_code IN (
         curl_close($curl);
         return $trackingurl;
     }
-    public function cancel_order($shipment_order_id, $cod)
+    public function cancel_order($shipment_order_id)
     {
         //$product_id = $this->get_order_product($order_product_id);
         $curl = curl_init();
@@ -4103,39 +4094,7 @@ WHERE awb_code IN (
         $this->db->where('shipment_order_id', $shipment_order_id);
 
         $this->db->update('shiprocket_order_details', $cancel_shiprocket_details_status);
-        if ($cod == "Cashfree") {
-            $cod = 0;
-        } else {
-            $cod = 1;
-        }
-        $update_order_products = $this->get_shiprocket_detail_by_shipment_orderid($shipment_order_id);
-        foreach ($update_order_products as $update_product) {
-            $order_id = $update_product->order_id;
-            // $cod = $update_product->COD;
-            $order_status = array(
-                'order_status' => 'processing'
-            );
-            $this->db->where('order_id', $update_product->order_id);
-            $this->db->where('product_id', $update_product->product_id);
-            $this->db->update('order_products', $order_status);
-        }
-        $seller_id = $this->auth_user->id;
-        if ($cod == 0) {
-            $data["shipping_charge_with_gst"] = 0;
-            $data["shipping"] = 0;
-            $data["shipping_tax_charge"] = 0;
-            $cashfree_seller_payout = $this->order_model->get_cashfree_seller_payout($order_id, $seller_id);
 
-            $data2['net_seller_payable'] = $cashfree_seller_payout[0]->net_seller_payable + $cashfree_seller_payout[0]->shipping_charge_with_gst;
-            $success = $this->order_model->update_cashfree_seller_payout($data2, $order_id, $seller_id);
-        } else {
-            $data["shipping_charge_with_gst"] = 0;
-            $data["cod_charges_without_gst"] = 0;
-            $data["cod_charge"] = 0;
-            $cod_seller_payable = $this->order_model->get_cod_seller_payable($order_id, $seller_id);
-            $data2['net_seller_payable'] = $cod_seller_payable->net_seller_payable - $cod_seller_payable[0]->shipping_charge_with_gst;
-            $success = $this->order_model->update_cod_seller_payable($data2, $order_id, $seller_id);
-        }
         return $x->message;
     }
     public function get_stats($order_id, $product_id)

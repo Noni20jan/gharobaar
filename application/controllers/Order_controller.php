@@ -836,11 +836,10 @@ class Order_controller extends Home_Core_Controller
 
     public function cancel_shipment()
     {
-        $cod = $this->input->post('cod', true);
         $shipment_order_id = $this->input->post('shipment_order_id', true);
         // $order_product_id = $this->input->post('item_id', true);
 
-        $cancel_response = $this->order_model->cancel_order($shipment_order_id, $cod);
+        $cancel_response = $this->order_model->cancel_order($shipment_order_id);
         $data = array(
             "cancel_response" => $cancel_response
         );
@@ -1020,30 +1019,8 @@ class Order_controller extends Home_Core_Controller
     }
     public function schedule_shiprocket_orders()
     {
-
-        $shiprocket['shiprocket'] = $this->shiprocket();
+        $data['shiprocket'] = $this->shiprocket();
         $req_data = $this->input->post('order');
-        // var_dump($req_data);
-        // die();
-        $pickup = $req_data['shipping_pincode'];
-        $delivery = $req_data["vendor_details"]["pin_code"];
-        $cod = $req_data['payment_method'];
-        // $weight = $req_data['weight'];
-        $order_id = $this->input->post('gb_order_id', true);
-        $cost_type = $this->input->post('cost_type', true);
-        $length = $req_data['length'];
-        $breadth = $req_data['breadth'];
-        $height = $req_data['height'];
-        $weight = $length * $breadth * $height / 5000;
-        $actual_weight = $this->input->post('actual_weight', true);
-        $data2 =   $this->check_shipment_charges($pickup, $delivery, $cod, $weight, $order_id, $cost_type, $actual_weight);
-        // var_dump($data2);
-        // die();
-        if ($cod == "COD") {
-            $cod = (string)1;
-        } else {
-            $cod = 0;
-        }
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://apiv2.shiprocket.in/v1/external/shipments/create/forward-shipment',
@@ -1062,15 +1039,6 @@ class Order_controller extends Home_Core_Controller
         ));
         $response = curl_exec($curl);
         curl_close($curl);
-        $seller_id = $this->auth_user->id;
-        $data9 = json_decode($response);
-        if ($data9->status == 1) {
-            if ($cod == 1) {
-                $this->order_model->update_cod_seller_payable($data2, $order_id, $seller_id);
-            } else {
-                $this->order_model->update_cashfree_seller_payout($data2, $order_id, $seller_id);
-            }
-        }
         echo $response;
     }
 

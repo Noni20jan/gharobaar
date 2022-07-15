@@ -1264,44 +1264,7 @@ endforeach; ?>
 <?php
 ?>
 
-
-
 <script>
-    function check_weight_change(products_array, order_items_array) {
-        // $("#schedule_multiple_products").modal('hide');
-        var total_weight = document.getElementById("actual_weight").value / 1000;
-        var total_length = document.getElementById("actual_length").value;
-        var total_height = document.getElementById("actual_height").value;
-        var total_breadth = document.getElementById("actual_breadth").value;
-        var length = document.getElementById("total_length").value;
-        var breadth = document.getElementById("total_width").value;
-        var height = document.getElementById("total_height").value;
-        var weight = document.getElementById("total_weight").value / 1000;
-        var weightsss = (weight / total_weight) * 100;
-        // console.log(weightsss);
-        if ((weight / total_weight) * 100 <= <?php echo $this->general_settings->extra_weight; ?> || (length / total_length) * 100 <= <?php echo $this->general_settings->extra_length; ?> || (breadth / total_breadth) * 100 <= <?php echo $this->general_settings->extra_breadth; ?> || (height / total_height) * 100 <= <?php echo $this->general_settings->extra_height; ?>) {
-            wrapper_multiple_product(products_array, order_items_array)
-        } else {
-
-            $("#weight_modal_warning").modal('show');
-            var total_length = document.getElementById("actual_length").value;
-            var total_height = document.getElementById("actual_height").value;
-            var total_breadth = document.getElementById("actual_breadth").value;
-            var total_weight = total_length * total_height * total_breadth / 5000;
-            var length = document.getElementById("total_length").value;
-            var breadth = document.getElementById("total_width").value;
-            var height = document.getElementById("total_height").value;
-            var actual_weight = length * height * breadth / 5000;
-            document.getElementById('volumetric_weight').innerHTML = actual_weight;
-            console.log(length);
-            console.log(breadth);
-            console.log(height);
-            console.log(actual_weight);
-            // $("#schedule_multiple_products").modal('hide');
-
-        }
-    }
-
     function wrapper_multiple_product(products_array, order_items_array) {
         $("#schedule_multiple_products").modal('hide');
 
@@ -1320,16 +1283,10 @@ endforeach; ?>
         var base_url = '<?php echo base_url() ?>';
         var order_items = [];
         var quantity_price_array = [];
-        var cost_type = "shipping_buyer_pays";
+
         for (var i = 0; i < products_array.length; i++) {
-            console.log(products_array);
             var r = <?php echo $half_width_product_variations; ?>;
             var n = <?php echo $full_width_product_variations; ?>;
-            var cost_type1 = products_array[i].shipping_cost_type;
-            if (cost_type1 == "free_shipping") {
-                cost_type = "free_shipping";
-            }
-
             if (r.length == 0 && n.length == 0) {
                 order_items.push({
 
@@ -1370,14 +1327,8 @@ endforeach; ?>
         for (var j = 0; j < quantity_price_array.length; j++) {
             total_quantity_price += quantity_price_array[j];
         }
-        // var total_weight = document.getElementById("actual_weight").value;
-        var total_length = document.getElementById("actual_length").value;
-        var total_height = document.getElementById("actual_height").value;
-        var total_breadth = document.getElementById("actual_breadth").value;
-        var total_weight = total_length * total_height * total_breadth / 5000;
-        console.log(total_weight);
+        console.log(products_array);
         var ref_order_id = Date.now().toString() + "-" + '<?php echo $order->id; ?>';
-        var gb_order_id = '<?php echo $order->id; ?>';
         var required_data = {
             "order_id": ref_order_id,
             "order_date": "<?php echo date('Y-m-d H:i', strtotime($order->created_at)) ?>",
@@ -1404,13 +1355,7 @@ endforeach; ?>
             "shipping_phone": <?php echo ($shipping->billing_phone_number) ?>,
             "order_items": order_items,
             "payment_method": "<?php echo ($order->payment_method == "Cash On Delivery") ? "COD" : "Prepaid"; ?>",
-            "sub_total": <?php if (!empty($seller_wise_data) && $this->general_settings->enable_freeship_message == 1) {
-                                echo ($seller_wise_data->Sup_total_prd) / 100;
-                            } elseif (!empty($seller_wise_data) && $this->general_settings->enable_freeship_message == 0) {
-                                echo ($seller_wise_data->grand_total_amount) / 100;
-                            } else {
-                                echo $total_quantity_price;
-                            } ?>,
+            "sub_total": <?php echo !empty($seller_wise_data) ? ($seller_wise_data->grand_total_amount) / 100 : $total_quantity_price ?>,
             "length": document.getElementById("total_length").value,
             "breadth": document.getElementById("total_width").value,
             "height": document.getElementById("total_height").value,
@@ -1430,9 +1375,6 @@ endforeach; ?>
             }
         };
         var data = {
-            "cost_type": cost_type,
-            "actual_weight": total_weight / 1000,
-            "gb_order_id": gb_order_id,
             "order": required_data,
             sys_lang_id: sys_lang_id
         };
@@ -1488,7 +1430,7 @@ endforeach; ?>
             },
             error: function(response) {
                 $('#cover-spin').hide();
-                alert(response)
+                alert(response.responseJSON.message)
             }
 
         });
@@ -1508,7 +1450,6 @@ endforeach; ?>
             "product_ids": product_ids,
             "sys_lang_id": sys_lang_id
         };
-
         data[csfr_token_name] = $.cookie(csfr_cookie_name);
         $('#cover-spin').show();
         $.ajax({
@@ -1531,19 +1472,11 @@ endforeach; ?>
 
                 if (obj.result == 1) {
                     document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
-
                 }
-
-
-
-                // document.getElementById('weight').innerHTML = total_weight;
-
-                // console.log(actual_weight);
                 setTimeout(
                     function() {
                         $("#schedule_multiple_products").modal('show');
                     }, 200);
-
                 // }
             }
         });
@@ -1904,9 +1837,6 @@ $this->session->unset_userdata('mds_send_email_data_seller'); ?>
 
 
     function shiprocket_cancel_order(shipment_order_id, message) {
-
-        var cod = '<?php echo $payment_method; ?>';
-        console.log(cod);
         swal({
             text: message,
             icon: "warning",
@@ -1917,8 +1847,7 @@ $this->session->unset_userdata('mds_send_email_data_seller'); ?>
             if (willDelete) {
                 var data = {
                     sys_lang_id: sys_lang_id,
-                    'shipment_order_id': shipment_order_id,
-                    'cod': cod
+                    'shipment_order_id': shipment_order_id
                 };
                 data[csfr_token_name] = $.cookie(csfr_cookie_name);
                 $('#cover-spin').show();
