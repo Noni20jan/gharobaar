@@ -1003,6 +1003,8 @@ class Auth_model extends CI_Model
     {
         $this->db->where('id', $id);
         $this->db->where('method', 'coupons');
+        $this->db->or_where('method', 'vouchers');
+
 
         $query = $this->db->get('cms_offers');
         return $query->row();
