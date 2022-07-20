@@ -1002,10 +1002,10 @@ class Auth_model extends CI_Model
     public function get_coupon_code_by_id($id)
     {
         $this->db->where('id', $id);
-        $this->db->where('method', 'coupons');
-        $this->db->or_where('method', 'vouchers');
+        $this->db->having('method', 'coupons');
+        $this->db->or_having('method', 'vouchers');
 
-
+        // $query = "SELECT * FROM cms_offers where id=$id having method='coupons' or method='vouchers'";
         $query = $this->db->get('cms_offers');
         return $query->row();
     }
