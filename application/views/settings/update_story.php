@@ -408,13 +408,13 @@
   <div class="profile-tab-content">
     <div class="row">
       <div class="col-sm-12 m-b-30 groove">
-        <label id="label1">Your Bank Details</label>
+        <label id="label1" >Your Bank Details</label>
         <?php if (($this->auth_user->gst_number == '07AAECF4068L1ZC' || $this->auth_user->gst_number == '29AAECF4068L1Z6' || $this->auth_user->gst_number == '27AAECF4068L1ZA') && ($this->auth_user->supplier_state == "Karnataka" || $this->auth_user->supplier_state == "Delhi" || $this->auth_user->supplier_state == "Maharashtra") && $this->auth_user->shop_name == "Friends with Dreams Pvt Ltd" && $this->auth_user->company_type == "Private Limited") : ?>
           <div class="form-group">
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Account Holder Name<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='text' name="holder_name" class="form-control auth-form-input" value="<?php echo "Gharobaar"; ?>" required readonly>
+                <input type='text' name="holder_name" onkeypress="about_brand()" class="form-control auth-form-input" value="<?php echo "Gharobaar"; ?>" required readonly>
               </div>
             </div>
           </div>
@@ -424,7 +424,7 @@
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Account Holder Name<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='text' name="holder_name" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->acc_holder_name); ?>" required>
+                <input type='text' name="holder_name" onkeypress="about_brand()" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->acc_holder_name); ?>" required>
               </div>
             </div>
           </div>
@@ -436,7 +436,7 @@
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Account Number<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" minlength="9" value="054805001076" required readonly onkeyup="checkLength()">
+                <input type='password' name="account_number" onkeypress="about_brand()" id="account_number" class="form-control auth-form-input" minlength="9" value="054805001076" required readonly onkeyup="checkLength()">
                 <span style=" color: red;" id="acc_number"></span>
 
               </div>
@@ -446,7 +446,7 @@
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Confirm Account Number<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='text' name="confirm_account_number" id="confirm_account_number" class="form-control auth-form-input" minlength="9" value="054805001076" required readonly>
+                <input type='text' name="confirm_account_number" onkeypress="about_brand()" id="confirm_account_number" class="form-control auth-form-input" minlength="9" value="054805001076" required readonly>
                 <span style="color: red;" id="verity_account"></span>
               </div>
             </div>
@@ -457,7 +457,7 @@
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Account Number<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='password' name="account_number" id="account_number" class="form-control auth-form-input" minlength="9" value="<?php echo html_escape($this->auth_user->account_number); ?>" required onkeyup="checkLength()">
+                <input type='password' name="account_number" onkeypress="about_brand()" id="account_number" class="form-control auth-form-input" minlength="9" value="<?php echo html_escape($this->auth_user->account_number); ?>" required onkeyup="checkLength()">
                 <span style="color: red;" id="acc_number"></span>
 
               </div>
@@ -466,7 +466,7 @@
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Confirm Account Number<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='text' name="confirm_account_number" id="confirm_account_number" class="form-control auth-form-input" minlength="9" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
+                <input type='text' name="confirm_account_number" onkeypress="about_brand()" id="confirm_account_number" class="form-control auth-form-input" minlength="9" value="<?php echo html_escape($this->auth_user->account_number); ?>" required>
                 <span style="color: red;" id="verity_account"></span>
               </div>
             </div>
@@ -478,7 +478,7 @@
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">IFSC Code<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='text' name="ifsc_code" id="ifsc_code" class="form-control auth-form-input" value="ICIC0000548" required readonly>
+                <input type='text' name="ifsc_code" onkeypress="about_brand()" id="ifsc_code" class="form-control auth-form-input" value="ICIC0000548" required readonly>
               </div>
             </div>
           </div>
@@ -487,7 +487,7 @@
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">IFSC Code<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='text' name="ifsc_code" id="ifsc_code" maxlength="11" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->ifsc_code); ?>" required onchange="validate_ifsc($( '#ifsc_code').val())">
+                <input type='text' name="ifsc_code" onkeypress="about_brand()" id="ifsc_code" maxlength="11" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->ifsc_code); ?>" required onchange="validate_ifsc($( '#ifsc_code').val())">
                 <span style="color: red;" id="pincode_error"></span>
               </div>
             </div>
@@ -499,7 +499,7 @@
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Bank Branch<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='text' name="bank_branch" id="bank_branch" class="form-control auth-form-input" value="ICICI Tower, NBCC place,Bisham Pitamah Marg, Pragati Vihar, New Delhi - 110003" required readonly>
+                <input type='text' name="bank_branch" onkeypress="about_brand()" id="bank_branch" class="form-control auth-form-input" value="ICICI Tower, NBCC place,Bisham Pitamah Marg, Pragati Vihar, New Delhi - 110003" required readonly>
               </div>
             </div>
           </div>
@@ -508,7 +508,7 @@
             <div class="row Brand-1">
               <div class="col-md-3"><label id="formlabel2">Bank Branch<span class="Validation_error"> *</span></label></div>
               <div class="col-md-9 Brand-name">
-                <input type='text' name="bank_branch" id="bank_branch" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->bank_branch); ?>" required readonly>
+                <input type='text' name="bank_branch" onkeypress="about_brand()" id="bank_branch" class="form-control auth-form-input" value="<?php echo html_escape($this->auth_user->bank_branch); ?>" required readonly>
               </div>
             </div>
           </div>
@@ -1357,8 +1357,19 @@
     } else {
       $('#account_button').prop('disabled', true);
     }
+  
   });
 </script>
+
+<script>
+  function about_brand (){
+   $('input[name="brand_name"]').val('')
+   $('input[name="brand_name"]').attr('required',true)
+   $('input[name="brand_desc"]').val('')
+   $('input[name="brand_desc"]').attr('required',true)
+
+    }
+  </script>
 
 <script>
   $(document).ready(function() {

@@ -69,7 +69,7 @@
                                 <div class="col-12 col-sm-4 m-b-15">
                                     <label class="control-label">Pincode
                                     </label>
-                                    <input type="number" name="shipping_zip_code" id="pincode" class="form-control auth-form-input" placeholder="Pincode" value="<?php echo $user->shipping_zip_code; ?>" maxlength="6" minlength="6" onKeyPress="if(this.value.length==6) return false;" required onchange="get_location($( '#pincode').val())">
+                                    <input type="number" name="shipping_zip_code" id="pincode" class="form-control auth-form-input" placeholder="Pincode" value="<?php echo $user->shipping_zip_code; ?>" maxlength="6" minlength="6" onKeyPress="if(this.value.length==6) return false;" required onkeyup="get_location($( '#pincode').val())">
                                     <!-- <p class="Validation_error" id="pincode_p"></p>
                                     <span class="Validation_error" id="pincode_span"></span> -->
                                 </div>

@@ -480,17 +480,17 @@
     function loadMoreData(page) {
         var urlSearchParams = new URLSearchParams(window.location.search);
         var params = Object.fromEntries(urlSearchParams.entries());
-        // params.page = page;
+        params.page = page;
         let url = document.URL;
         params.b = $('#user_id').val();
         page++;
-        // console.log(url);
-        // urlpage++;
-        // params.urlpage = urlpage;
+        console.log(url);
+        urlpage++;
+        params.urlpage = urlpage;
         params[csfr_token_name] = $.cookie(csfr_cookie_name);
-        // console.log(url + "?page=" + urlpage);
+        console.log(url + "?page=" + urlpage);
         var test = $.ajax({
-                url: base_url + "seller_all_products",
+                url: url + "?page=" + urlpage,
                 method: "get",
                 data: params,
 
@@ -503,7 +503,7 @@
                 }
             })
             .done(function(data) {
-                console.log(data);
+                // console.log(data);
                 if (data == " ") {
                     return;
                 } else {
@@ -512,6 +512,7 @@
                     $('#product_div_seller').empty();
                     $('#no-more-products').html("That's all for now !");
                     $("#product_div_seller").append(data);
+                    
 
 
 

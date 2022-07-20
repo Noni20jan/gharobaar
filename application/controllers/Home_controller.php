@@ -2942,16 +2942,17 @@ class Home_controller extends Home_Core_Controller
             $rating = $this->input->post('rating', true);
             $product_id = $this->input->post('product_id', true);
             $review_text = $this->input->post('review', true);
-            // var_dump($img);
+            // var_dump("sdhgs");
             // die();
 
 
 
             $product = $this->product_model->get_product_by_id($product_id);
-            if ($product->user_id != $this->auth_user->id) {
+            // var_dump($product->user_id);
+            if ($product->user_id != $this->auth_user->id) {            
                 $review = $this->review_model->get_review($product_id, $this->auth_user->id);
                 if (!empty($review)) {
-                    $this->review_model->update_review($review->id, $rating, $product_id, $review_text, 'file_');
+                    $this->review_model->update_review($review->id, $rating, $product_id, $review_text, 'file_');            
                     $images = $this->review_model->check_review_images($product_id, $this->auth_user->id);
                     if (empty($images)) {
                         $this->load->model('upload_model');
@@ -2965,6 +2966,8 @@ class Home_controller extends Home_Core_Controller
                 } else {
                     $last_id = $this->review_model->add_review($rating, $product_id, $review_text, 'file_');
                     if (!empty($last_id)) {
+                        var_dump($last_id);
+                        die();
                         $this->load->model('upload_model');
                         $img_path = $this->upload_model->upload_buyer_image('file_', $last_id, $product_id);
                         if (!empty($img_path)) {
@@ -2978,7 +2981,7 @@ class Home_controller extends Home_Core_Controller
                     }
                     echo json_encode($data);
                 }
-            }
+            }          
         }
 
         // redirect($this->agent->referrer());

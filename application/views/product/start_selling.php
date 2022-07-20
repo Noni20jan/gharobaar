@@ -1156,7 +1156,7 @@ $pincode = get_pincode(281204);
                                                                         <div class="col-12 col-sm-4 m-b-15">
                                                                             <label class="control-label">Pincode<span class="Validation_error"> *</span>
                                                                             </label>
-                                                                            <input type="number" name="pincode" id="pincode" class="form-control auth-form-input" placeholder="Pincode" required maxlength="6" minlength="6" required onchange="get_location($( '#pincode').val())">
+                                                                            <input type="number" name="pincode" id="pincode" class="form-control auth-form-input" placeholder="Pincode" required maxlength="6" minlength="6" required onkeyup="get_location($( '#pincode').val())">
                                                                             <!-- <p class="Validation_error" id="pincode_p"></p> -->
                                                                             <span class="Validation_error" id="pincode_span"></span>
                                                                         </div>
@@ -1659,7 +1659,7 @@ $pincode = get_pincode(281204);
 
                                                                         <div class="col-12 col-sm-4 m-b-15">
                                                                             <label class="control-label">Pincode<span class="Validation_error"> *</span></label>
-                                                                            <input type="number" name="pincode1" id="pincode1" class="form-control auth-form-input" placeholder="Pincode" required maxlength="6" minlength="6" required onchange="get_location($( '#pincode1').val())">
+                                                                            <input type="number" name="pincode1" id="pincode1" class="form-control auth-form-input" placeholder="Pincode" required maxlength="6" minlength="6" required onkeyup="get_location($( '#pincode1').val())">
                                                                             <p class="Validation_error" id="pincode_p1"></p>
                                                                             <span class="Validation_error error" id="pincode_span1"></span>
                                                                         </div>

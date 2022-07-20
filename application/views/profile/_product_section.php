@@ -381,17 +381,31 @@ endif; ?>
       </button>
     </div> -->
     <div class="col-md-3" id="sort">
-      <button class="dropbtn round_button" onclick="myFunction4()">Sort
+      <!-- <button class="dropbtn round_button" onclick="myFunction4()">Sort
         <a id="selected_tag" class="dropbtn">:<?php echo trans("whats_new"); ?></a>
         <i class="fa fa-caret-down dropbtn"></i>
-      </button>
-      <div class="dropdown-content" id="myDropdown">
+      </button> -->
+      <!-- <div class="dropdown-content" id="myDropdown">
         <a href="javascript:void(0);" id="whats_new"><?php echo trans("whats_new"); ?></a>
         <a href="javascript:void(0);" id="better_discount"><?php echo trans("better_discount"); ?></a>
         <a href="javascript:void(0);" id="low_to_high"><?php echo trans("price_low_high"); ?></a>
-        <a href="javascript:void(0);" id="high_to_low"><?php echo trans("price_high_low"); ?></a>
-      </div>
-    </div>
+        <a href="javascript:void(0);" id="high_to_low"><?php echo trans("price_high_low"); ?></a> -->
+      <span class="span-sort"><?php echo trans("sort"); ?></span>
+      <?php $filter_sort = str_slug($this->input->get('sort', true)); ?>
+            <div class="sort-select">
+                        <select class="custom-select" onchange="window.location.replace(this.value);" style="border-radius: 20px;">
+                            <option value="">Select an option</option>
+
+                            <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'most_recent'); ?>" <?= $filter_sort == 'most_recent' ? ' selected' : ''; ?>><?= trans("latest_first"); ?></option>
+                            <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'oldest_first'); ?>" <?= $filter_sort == 'oldest_first' ? ' selected' : ''; ?>><?= trans("oldest_first"); ?></option>
+                            <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'lowest_price'); ?>" <?= $filter_sort == 'lowest_price' ? ' selected' : ''; ?>><?= trans("lowest_price"); ?></option>
+                            <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'highest_price'); ?>" <?= $filter_sort == 'highest_price' ? ' selected' : ''; ?>><?= trans("highest_price"); ?></option>
+                            <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'top_discount'); ?>" <?= $filter_sort == 'top_discount' ? ' selected' : ''; ?>><?= trans("top_discount") ?></option>
+
+                        </select>
+                    </div>
+            </div>
+        </div>
 
   </div>
 </div>

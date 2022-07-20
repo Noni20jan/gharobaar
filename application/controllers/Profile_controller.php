@@ -14,6 +14,8 @@ class Profile_controller extends Home_Core_Controller
      */
     public function profile($id)
     {
+        // $page = $this->input->get('page', true);
+        // var_dump($page);
         // $slug = clean_slug($slug);
         $data["user"] = $this->auth_model->get_user($id);
         if (empty($data["user"])) {
@@ -39,9 +41,14 @@ class Profile_controller extends Home_Core_Controller
 
         $data['user_categories'] = $this->product_model->get_categories_array_with_products($data["user"]->id);
         $data['reviews_supplier'] = $this->review_model->get_seller_reviews($data["user"]->id);
-        $this->load->view('partials/_header', $data);
-        $this->load->view('profile/profile', $data);
-        $this->load->view('partials/_footer');
+        if (empty($page)) {
+            $this->load->view('partials/_header', $data);
+            $this->load->view('profile/profile', $data);
+            $this->load->view('partials/_footer');
+        } else {
+            $this->load->view('product/', $data);
+        }
+
     }
 
     public function get_review_seller()

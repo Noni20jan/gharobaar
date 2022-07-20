@@ -535,7 +535,7 @@ foreach ($sellers as $seller) {
                             <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'oldest_first'); ?>" <?= $filter_sort == 'oldest_first' ? ' selected' : ''; ?>><?= trans("oldest_first"); ?></option>
                             <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'lowest_price'); ?>" <?= $filter_sort == 'lowest_price' ? ' selected' : ''; ?>><?= trans("lowest_price"); ?></option>
                             <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'highest_price'); ?>" <?= $filter_sort == 'highest_price' ? ' selected' : ''; ?>><?= trans("highest_price"); ?></option>
-                            <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'top_discount'); ?>" <?= $filter_sort == 'top_discount' ? ' selected' : ''; ?>><?= "Top Discount" ?></option>
+                            <option value="<?= current_url() . generate_filter_url($query_string_array, 'sort', 'top_discount'); ?>" <?= $filter_sort == 'top_discount' ? ' selected' : ''; ?>><?= trans("top_discount"); ?></option>
 
                         </select>
                     </div>

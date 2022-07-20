@@ -80,17 +80,16 @@
         </div>
     </div>
 </div>
-<div class="modal" id="feedback_msg" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal" id="feedback_msg" tabindex="-1" role="dialog" aria-hidden="true"  >
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom">
-            <button type="button" class="close" data-dismiss="modal">
+        <div class="modal-body" style="padding:0px; color:black; margin-right:2px; font-size:15px; ">
+            <button type="button" class="close" data-dismiss="modal" >
+                <span aria-hidden="true">
+                    <i class="icon-close"></i></span>
             </button>
-
-            <div class="modal-body" style="padding:0px;">
-
                 <img src="<?php echo base_url(); ?>assets/img/NewFeedback.png" style="width: 100%;">
             </div>
-
         </div>
     </div>
 </div>
@@ -140,6 +139,7 @@
                 contentType: false,
                 processData: false,
                 success: function(response) {
+                    console.log(response)
                     var i = JSON.parse(response);
 
                     if (i == true) {
@@ -148,9 +148,9 @@
                         $('#rateProductModal').modal('hide');
                         $('#feedback_msg').modal('show');
 
-                        setTimeout(function() {
-                            $('#feedback_msg').modal('hide');
-                        }, 6000);
+                        // setTimeout(function() {
+                            // $('#feedback_msg').modal('hide');
+                        // }, 6000);
                     } else {
                         reset_data.reset();
                         $('#rateProductModal').modal('hide');
