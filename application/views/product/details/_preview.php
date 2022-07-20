@@ -93,9 +93,9 @@ if (!empty($product_images)) {
         border: 1px solid #800000;
         /*set the size of the lens:*/
         z-index: 500;
-        zoom: 10%;
-        width: 100px;
-        height: 100px;
+        zoom: 1%;
+        width: 175px;
+        height: 175px;
     }
 
     .img-zoom-result {
