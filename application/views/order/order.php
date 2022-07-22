@@ -782,13 +782,13 @@
                                     <td>
                                         <?php if ($this->general_settings->reviews == 1 && $item->seller_id != $item->buyer_id) : ?>
                                             <div class="rate-product">
-                                                <div class="rating" style="pointer-events: none;">
+                                                <div class="rating p-rate-product" >
                                                     <?php $review = get_review($item->product_id, $this->auth_user->id); ?>
-                                                    <label class="label-star" data-star="5" data-product-id="<?php echo $item->product_id; ?>"><i class="<?php echo (!empty($review) && $review->rating >= 5) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
-                                                    <label class="label-star" data-star="4" data-product-id="<?php echo $item->product_id; ?>"><i class="<?php echo (!empty($review) && $review->rating >= 4) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
-                                                    <label class="label-star" data-star="3" data-product-id="<?php echo $item->product_id; ?>"><i class="<?php echo (!empty($review) && $review->rating >= 3) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
-                                                    <label class="label-star" data-star="2" data-product-id="<?php echo $item->product_id; ?>"><i class="<?php echo (!empty($review) && $review->rating >= 2) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
-                                                    <label class="label-star" data-star="1" data-product-id="<?php echo $item->product_id; ?>"><i class="<?php echo (!empty($review) && $review->rating >= 1) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                    <label class="label-star label-star-open-modal" data-star="5" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 5) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                    <label class="label-star label-star-open-modal" data-star="4" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 4) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                    <label class="label-star label-star-open-modal" data-star="3" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 3) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                    <label class="label-star label-star-open-modal" data-star="2" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 2) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                    <label class="label-star label-star-open-modal" data-star="1" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 1) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
                                                 </div>
                                             </div>
                                         <?php endif; ?>
