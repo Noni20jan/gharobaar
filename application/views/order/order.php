@@ -268,7 +268,7 @@
                             <div class="line-detail" style="min-height:0px;">
                                 <?php $order_status = 0;
                                 foreach ($order_products as $item) :
-                                    if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected') {
+                                    if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected' || $item->order_status == 'cancelled') {
                                         $order_status = 1;
                                     }
                                 endforeach;
@@ -396,17 +396,19 @@
                 </div>
             </div>
 
-            <div class="order-head" style="margin-left:12px;">
+            <div class="order-head" style="margin-left:12px;" >
                 <h3 class="block-title"><?php echo trans("products"); ?></h3>
             </div>
             <div class="row" style="padding:0px 14px;">
                 <div class="order-details-new-ui">
                     <div class="table-responsive">
                         <table class="table table-orders">
-                            <button class="btn btn-md btn-block btn-info btn-table-delete" id="opened" style="float:right;display:none;" onclick="open_modal()">Cancel Order</button>
+                            <button class="btn btn-md btn-block btn-info btn-table-delete" id="opened" style="float:right;display:none;"  onclick="open_modal()">Cancel Order</button>
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox" id="selectall"></th>
+                                    <th><?php if ($item->order_status == "processing"): ?>                                           
+                                    <input type="checkbox" id="selectall" value="<?php echo $item->id; ?>"></th>
+                                    <?php endif; ?>
                                     <th scope="col"><?php echo trans("product"); ?></th>
                                     <th scope="col"><?php echo trans("options"); ?></th>
                                     <th scope="col" style="text-align: center;"><?php echo trans("tracking_status"); ?></th>
@@ -419,11 +421,11 @@
                                         $is_order_has_physical_product = true;
                                     } ?>
                                     <tr>
-                                        <td><?php if (get_product($item->product_id)->add_meet == "Made to order" && $item->order_status == "processing") : ?>
+                                        <td>
+                                            <?php if (get_product($item->product_id)->add_meet == "Made to order" && $item->order_status == "processing") : ?>
                                                 <input type="checkbox" name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>" value="false" style="display:none;">
                                             <?php elseif (get_product($item->product_id)->add_meet == "Made to stock" && $item->order_status == "processing") : ?>
                                                 <input type="checkbox" name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>">
-
                                             <?php endif; ?>
                                         </td>
                                         <td style="width: 40%">
@@ -588,7 +590,7 @@
 
                                                             </div>
                                                         </li>
-                                                        <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller") : ?>
+                                                        <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller" || $item->order_status =="cancelled") : ?>
                                                             <li class="progress-step is-active" id="cancelled_<?php echo $item->id; ?>">
                                                                 <div class="progress-marker">
 
@@ -644,7 +646,7 @@
                                                     <?php if ($item->order_status == "shipped") : ?>
                                                         <h6 style="padding-bottom:4%;"><?php echo trans("order_shipped") ?></h6>
                                                     <?php endif; ?>
-                                                    <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller") : ?>
+                                                    <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller"|| $item->order_status == "cancelled") : ?>
                                                         <h6 style="padding-bottom:4%;">Your order is cancelled</h6>
                                                     <?php endif; ?>
                                                     <?php if ($item->order_status == "out_for_delivery") : ?>
@@ -679,7 +681,7 @@
                         <div class="line-detail" style="min-height:0px;">
                             <?php $order_status = 0;
                             foreach ($order_products as $item) :
-                                if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected') {
+                                if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected'|| $item->order_status == 'cancelled') {
                                     $order_status = 1;
                                 }
                             endforeach;
@@ -878,7 +880,7 @@
                                 <div class="line-detail" style="min-height:0px;">
                                     <?php $order_status = 0;
                                     foreach ($order_products as $item) :
-                                        if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected') {
+                                        if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected' || $item->order_status == 'cancelled') {
                                             $order_status = 1;
                                         }
                                     endforeach;
@@ -1177,7 +1179,7 @@
 
                                                         </div>
                                                     </li>
-                                                    <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller") : ?>
+                                                    <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller"|| $item->order_status == "cancelled") : ?>
                                                         <li class="progress-step is-active" id="cancelled_<?php echo $item->id; ?>">
                                                             <div class="progress-marker"></div>
                                                             <div class="progress-text">
@@ -1499,7 +1501,7 @@
 
 
             console.log(item_status[0].order_status);
-            if (item_status[i].order_status == "cancelled_by_user" || item_status[i].order_status == "cancelled_by_seller") {
+            if (item_status[i].order_status == "cancelled_by_user" || item_status[i].order_status == "cancelled_by_seller"|| item_status[i].order_status == "cancelled") {
 
                 $('#ordered_' + item_status[i].id).addClass("is-complete");
             }
@@ -1547,7 +1549,6 @@
             }, 200);
     }
     $("#selectall").click(function() {
-
         if ($(this).is(":checked")) {
 
             $("input[name='checkbox-table']").prop("checked", this.checked);
@@ -1558,10 +1559,26 @@
             document.getElementById("opened").style.display = "none";
             $("input[name='checkbox-table']").prop("checked", this.checked);
 
-
         }
+        
     });
 
+    // function open_modal1() {
+    //     setTimeout(
+    //         function() {
+    //             $("#rejectModal<?php echo $order->id; ?>").modal('show');
+    //         }, 200);
+    // }
+    // $("#selectall").click(function() {
+    // if ($(this).is(":checked")){
+    //         $("input[name='checkbox-table']").prop("cancelled", this.order_status);
+    //         document.getElementById("opened").style.display = "none";
+    //     }
+    // else ($(this).is(":checked")){
+    //         $("input[name='checkbox-table']").prop("processing", this.order_status);
+    //         document.getElementById("opened").style.display = "inline-block";
+    //     }
+    // });
 
     function cancel_order_buyer() {
         var product_ids = [];

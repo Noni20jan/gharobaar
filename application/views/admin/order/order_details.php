@@ -521,7 +521,7 @@
                                                 endif; ?>
                                             </td>
                                             <td>
-                                                <?php if (($item->product_type == 'digital' && $item->order_status != 'completed') || $item->product_type == 'physical') : ?>
+                                                <?php if (($item->product_type == 'digital' && $item->order_status != 'completed' && $item->order_status != 'cancelled') || $item->product_type == 'physical') : ?>
                                                     <div class="dropdown">
                                                         <button class="btn bg-purple dropdown-toggle btn-select-option" type="button" data-toggle="dropdown"><?php echo trans('select_option'); ?>
                                                             <span class="caret"></span>
