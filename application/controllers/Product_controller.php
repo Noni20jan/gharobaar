@@ -479,21 +479,25 @@ class Product_controller extends Admin_Core_Controller
     public function approve_product()
     {
         $id = $this->input->post('id', true);
+
         if ($this->product_admin_model->approve_product($id)) {
             $this->load->model('email_model');
             $this->email_model->approve_product($id);
-            $this->session->set_flashdata('success', trans("msg_product_approved"));
+            // $this->session->set_flashdata('success', trans("msg_product_approved"));
+            $data = true;
         } else {
-            $this->session->set_flashdata('error', trans("msg_error"));
+            // $this->session->set_flashdata('error', trans("msg_error"));
+            $data = false;
         }
 
         //reset cache
         reset_cache_data_on_change();
 
-        $redirect_url = $this->input->post('redirect_url', true);
-        if (!empty($redirect_url)) {
-            redirect($redirect_url);
-        }
+        // $redirect_url = $this->input->post('redirect_url', true);
+        // if (!empty($redirect_url)) {
+        //     redirect($redirect_url);
+        // }
+        echo json_encode($data);
     }
     public function revert_back()
     {

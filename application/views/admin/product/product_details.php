@@ -196,9 +196,8 @@
             </div><!-- /.box-header -->
 
             <div class="box-body">
-                <!-- include message block -->
-                <?php $this->load->view('admin/includes/_messages'); ?>
 
+                <?php $this->load->view('admin/includes/_messages'); ?>
                 <?php $images = get_product_images($product->id);
                 if (!empty($images)) : ?>
                     <div class="row row-product-details row-product-images">
@@ -1192,16 +1191,16 @@
             <div class="box-footer">
 
 
-                <?php echo form_open('product_controller/approve_product'); ?>
-                <input type="hidden" name="id" value="<?php echo $product->id; ?>">
-                <input type="hidden" name="redirect_url" value="<?php echo $this->agent->referrer(); ?>">
+                <!-- <?php echo form_open_multipart('product_controller/approve_product'); ?> -->
+                <input type="hidden" name="id" id='product_id' value="<?php echo $product->id; ?>">
+                <input type="hidden" name="redirect_url" id="redirect_url" value="<?php echo $this->agent->referrer(); ?>">
 
                 <?php if ($product->status != 1) : ?>
-                    <button type="submit" name="option" value="approve" class="btn btn-primary pull-right"><?php echo trans('approve'); ?></button>
+                    <button type="button" name="option" value="approve" class="btn btn-primary pull-right" onclick="send_data()"><?php echo trans('approve'); ?></button>
                 <?php endif; ?>
                 <a href="<?php echo generate_dash_url("edit_product"); ?>/<?php echo $product->id; ?>" target="_blank" class="btn btn-info pull-right m-r-5"><?php echo trans('edit'); ?></a>
                 <a href="<?php echo $this->agent->referrer(); ?>" class="btn btn-danger pull-right m-r-5"><?php echo trans('back'); ?></a>
-                <?php echo form_close(); ?>
+                <!-- <?php echo form_close(); ?> -->
                 <?php echo form_open('product_controller/revert_back'); ?>
                 <input type="hidden" name="id1" value="<?php echo $product->user_id; ?>">
 
@@ -1274,6 +1273,44 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="approval_product" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-custom" style="background-color: lavender;">
+            <div class="modal-header" style="border: none;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body" style="text-align: center;">
+
+                <img src="<?php echo base_url() . '/assets/img/check.png' ?>" alt="user" class="rounded-circle" width="7%"> <label class="submited_notifcation">Product Approved</label>
+
+            </div>
+            <div class="modal-footer" style="border: none;">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="reject_product" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-custom" style="background-color: lavender;">
+            <div class="modal-header" style="border: none;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body" style="text-align: center;">
+
+                <img src="<?php echo base_url() . '/assets/img/cancel.png' ?>" alt="user" class="rounded-circle" width="7%"> <label class="submited_notifcation">Product Not Approved</label>
+
+            </div>
+            <div class="modal-footer" style="border: none;">
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     // Get the modal
@@ -1295,5 +1332,39 @@
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
         modal.style.display = "none";
+    }
+
+    function send_data() {
+        event.preventDefault();
+        var id = $('#product_id').val();
+        var redirect_url = $('#product_id').val();
+        var data = {
+            'id': id,
+            'redirect_url': redirect_url
+        }
+
+        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+
+
+        $.ajax({
+            type: "POST",
+            url: base_url + 'product_controller/approve_product',
+            data: data,
+            success: function(response) {
+                console.log(response)
+                var i = JSON.parse(response);
+                if (i == true) {
+
+                    $('#approval_product').modal('show');
+                    setTimeout(window.location.href = base_url + "admin/pending-products", 40000);
+
+
+                } else if (i == false) {
+                    reject_product
+                    $('#reject_product').modal('show');
+                    setTimeout(window.location.href = base_url + "admin/pending-products", 40000);
+                }
+            }
+        });
     }
 </script>
