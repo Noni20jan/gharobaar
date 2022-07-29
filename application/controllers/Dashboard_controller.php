@@ -3064,7 +3064,11 @@ class Dashboard_controller extends Home_Core_Controller
     {
         post_method();
         $this->order_model->schedule_penalty();
-        $this->order_model->shiprocket_response();
+        $check_shipment = $this->order_model->shiprocket_response();
+        if ($check_shipment == false) {
+            $shipment = 'no';
+            echo json_encode($shipment);
+        }
     }
 
 
@@ -3294,19 +3298,6 @@ class Dashboard_controller extends Home_Core_Controller
             "add_meet" => $product_type
         );
         $this->order_model->save_penalty_details($data, $seller_id, $penalty_amount_for_db);
-        $order_id = $order_id;
-        $seller_id = $user_id;
-        if ($order_product->product_quantity->payment_status == "awaiting_payment") {
-            $cod_seller_payable = $this->order_model->get_cod_seller_payable($order_id, $seller_id);
-            // var_dump($cod_seller_payable);
-            $data1['net_seller_payable'] = $cod_seller_payable[0]->net_seller_payable - $penalty_amount_for_db;
-            $success = $this->order_model->update_cod_seller_payable($data1, $order_id, $seller_id);
-        } else {
-            $cashfree_seller_payout = $this->order_model->get_cashfree_seller_payout($order_id, $seller_id);
-            // var_dump($cashfree_seller_payout);
-            $data1['net_seller_payable'] = $cashfree_seller_payout[0]->net_seller_payable - $penalty_amount_for_db;
-            $success = $this->order_model->update_cashfree_seller_payout($data1, $order_id, $seller_id);
-        }
     }
 
     //seller reports

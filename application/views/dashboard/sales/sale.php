@@ -1141,6 +1141,32 @@ endif;
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="error_shipment" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-custom">
+                    <!-- form start -->
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true"><i class="icon-close"></i> </span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row tracking-number-container">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <p class="shop-closed-cart">SOmething Went wrong. Please try again after some time.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="justify-content: center;">
+                        <button type="button" class="btn btn-md btn-default" id="error_shipment_close" data-dismiss="modal" style="background-color: #007C05; color:white;"><?php echo trans("close"); ?></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
         <div class="modal fade" id="rejection_reason_model" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content modal-custom">
@@ -1417,7 +1443,14 @@ endforeach; ?>
                         "data": data,
 
                         success: function(data) {
-                            window.location.reload()
+                            var i = JSON.parse(data);
+                            if (i == 'no') {
+                                $('#cover-spin').hide();
+
+                                $('#error_shipment').modal('show');
+                            } else {
+                                window.location.reload();
+                            }
                         },
                         complete: function() {
                             $('#cover-spin').hide();
@@ -1439,6 +1472,10 @@ endforeach; ?>
 
 
 <script>
+    $('#error_shipment_close').click(function() {
+        $('#cover-spin').hide();
+    })
+
     function Schedule_Multiple_shipment() {
         var product_ids = [];
         $("input[name='checkbox-table']").each(function() {

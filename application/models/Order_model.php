@@ -1380,8 +1380,14 @@ class Order_model extends CI_Model
                     return false;
                 }
             }
+            if ($data['awb_code'] == '') {
+                $data['is_active'] == 0;
+            }
             $this->db->insert('shiprocket_order_details', $data);
             $this->update_shiprocket_status($data["order_id"], $product_ids[$j]);
+            if ($data['awb_code'] == '') {
+                return false;
+            }
         }
 
         // for ($i = 0; $i < count($product_ids); $i++) {
