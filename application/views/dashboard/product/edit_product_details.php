@@ -1205,7 +1205,7 @@
                                             <div class="row">
                                                 <div class="col-12 col-sm-4 m-b-15">
                                                     <label class="control-label">Pincode<span class="Validation_error"> *</span></label>
-                                                    <input type="number" name="pincode1" id="pincode1" class="form-control auth-form-input" placeholder="Pincode" value="<?php echo empty($product->product_pincode) ? html_escape($user->pincode) : html_escape($product->product_pincode); ?>" required maxlength="6" minlength="6" required onkeyup="get_location($( '#pincode1').val())">
+                                                    <input type="number" name="pincode1" id="pincode1" class="form-control auth-form-input" placeholder="Pincode" value="<?php echo empty($product->product_pincode) ? html_escape($user->pincode) : html_escape($product->product_pincode); ?>" required maxlength="6" minlength="6" onKeyPress="if(this.value.length==6) return false;" required onkeyup="get_location($( '#pincode1').val())">
                                                     <p class="Validation_error" id="pincode_p1"></p>
                                                     <span class="Validation_error error" id="pincode_span1"></span>
                                                 </div>

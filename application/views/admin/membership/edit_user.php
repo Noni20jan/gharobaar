@@ -107,7 +107,7 @@
                             <div class="col-12 col-sm-4 m-b-15">
                                 <label class="control-label">Pincode<span class="Validation_error"> *</span>
                                 </label>
-                                <input type="text" name="pincode" id="pincode" class="form-control auth-form-input" value="<?php echo $user->pincode ?>" minlength="6" maxlength="6" required onkeyup="get_location($( '#pincode').val())">
+                                <input type="text" name="pincode" id="pincode" class="form-control auth-form-input" value="<?php echo $user->pincode ?>" minlength="6" maxlength="6" onKeyPress="if(this.value.length==6) return false;" required onkeyup="get_location($( '#pincode').val())">
                                 <span class="Validation_error" id="pincode_span"></span>
                             </div>
                             <div class="col-12 col-sm-4 m-b-15">

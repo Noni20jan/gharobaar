@@ -529,7 +529,7 @@
                                                         <div class="row">
                                                             <div class="col-12 col-md-6">
                                                                 <label><?php echo trans("zip_code"); ?>*</label>
-                                                                <input type="text" name="shipping_zip_code" id="shipping_zip_code" class="form-control form-input" value="<?php echo $shipping_address->shipping_zip_code; ?>" minlength="6" maxlength="6" required onkeyup="get_location3($( '#shipping_zip_code').val())">
+                                                                <input type="text" name="shipping_zip_code" id="shipping_zip_code" class="form-control form-input" value="<?php echo $shipping_address->shipping_zip_code; ?>" minlength="6" maxlength="6" onKeyPress="if(this.value.length==6) return false;" required onkeyup="get_location3($( '#shipping_zip_code').val())">
                                                                 <!-- <p class="Validation_error" id="zipcode_p"></p> -->
                                                                 <span class="Validation_error" id="pincode_span" style="color: #d43f3a;"></span>
                                                             </div>
@@ -687,7 +687,7 @@
                                                     <div class="row">
                                                         <div class="col-12 col-md-6">
                                                             <label><?php echo trans("zip_code"); ?>*</label>
-                                                            <input type="text" name="shipping_zip_code" id="zipcode_val" class="form-control form-input" value="<?php echo $shipping_address->shipping_zip_code; ?>" minlength="6" maxlength="6" required onkeyup="get_location($( '#zipcode').val())">
+                                                            <input type="text" name="shipping_zip_code" id="zipcode_val" class="form-control form-input" value="<?php echo $shipping_address->shipping_zip_code; ?>" minlength="6" maxlength="6" onKeyPress="if(this.value.length==6) return false;" required onkeyup="get_location($( '#zipcode').val())">
                                                             <!-- <p class="Validation_error" id="zipcode_p"></p> -->
                                                             <span class="Validation_error" id="pincode_span" style="color: #d43f3a;"></span>
                                                         </div>
@@ -805,7 +805,7 @@
 
                                                                 <div class="col-12 col-md-6">
                                                                     <label><?php echo trans("zip_code"); ?>*</label>
-                                                                    <input type="number" name="billing_zip_code" id="billing_zip_code" class="form-control form-input" required minlength="6" maxlength="6" onkeyup="get_location1($( '#billing_zip_code').val())">
+                                                                    <input type="number" name="billing_zip_code" id="billing_zip_code" class="form-control form-input" required minlength="6" maxlength="6" onKeyPress="if(this.value.length==6) return false;" required onkeyup="get_location1($( '#billing_zip_code').val())">
                                                                     <span class="Validation_error" id="pincode_span1" style="color: #d43f3a;"></span>
                                                                 </div>
                                                                 <!-- <div class="col-12 col-md-6 m-b-sm-15">
