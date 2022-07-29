@@ -1196,7 +1196,7 @@
                 <input type="hidden" name="redirect_url" id="redirect_url" value="<?php echo $this->agent->referrer(); ?>">
 
                 <?php if ($product->status != 1) : ?>
-                    <button type="button" name="option" value="approve" class="btn btn-primary pull-right" onclick="send_data()"><?php echo trans('approve'); ?></button>
+                    <button type="button" name="option" value="approve" id="approve" class="btn btn-primary pull-right" onclick="send_data()"><?php echo trans('approve'); ?></button>
                 <?php endif; ?>
                 <a href="<?php echo generate_dash_url("edit_product"); ?>/<?php echo $product->id; ?>" target="_blank" class="btn btn-info pull-right m-r-5"><?php echo trans('edit'); ?></a>
                 <a href="<?php echo $this->agent->referrer(); ?>" class="btn btn-danger pull-right m-r-5"><?php echo trans('back'); ?></a>
@@ -1336,8 +1336,10 @@
 
     function send_data() {
         event.preventDefault();
+        $('#approve').prop('disabled', true);
         var id = $('#product_id').val();
         var redirect_url = $('#product_id').val();
+
         var data = {
             'id': id,
             'redirect_url': redirect_url
