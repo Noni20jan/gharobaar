@@ -3068,6 +3068,9 @@ class Dashboard_controller extends Home_Core_Controller
         if ($check_shipment == false) {
             $shipment = 'no';
             echo json_encode($shipment);
+        } else {
+            $shipment = 'yes';
+            echo json_encode($shipment);
         }
     }
 

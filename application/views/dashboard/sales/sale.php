@@ -1448,7 +1448,7 @@ endforeach; ?>
                                 $('#cover-spin').hide();
 
                                 $('#error_shipment').modal('show');
-                            } else {
+                            } else if (i == 'yes') {
                                 window.location.reload();
                             }
                         },

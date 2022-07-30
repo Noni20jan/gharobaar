@@ -1381,12 +1381,14 @@ class Order_model extends CI_Model
                 }
             }
             if ($data['awb_code'] == '') {
-                $data['is_active'] == 0;
+                $data['is_active'] = 0;
             }
             $this->db->insert('shiprocket_order_details', $data);
             $this->update_shiprocket_status($data["order_id"], $product_ids[$j]);
             if ($data['awb_code'] == '') {
                 return false;
+            } else {
+                return true;
             }
         }
 
@@ -4100,7 +4102,15 @@ WHERE awb_code IN (
         $this->db->where('shipment_order_id', $shipment_order_id);
 
         $this->db->update('shiprocket_order_details', $cancel_shiprocket_details_status);
-
+        $update_order_products = $this->get_shiprocket_detail_by_shipment_orderid($shipment_order_id);
+        foreach ($update_order_products as $update_product) {
+            $order_status = array(
+                'order_status' => 'processing'
+            );
+            $this->db->where('order_id', $update_product->order_id);
+            $this->db->where('product_id', $update_product->product_id);
+            $this->db->update('order_products', $order_status);
+        }
         return $x->message;
     }
     public function get_stats($order_id, $product_id)
