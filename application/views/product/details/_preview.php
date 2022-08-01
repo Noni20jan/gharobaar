@@ -90,24 +90,32 @@ if (!empty($product_images)) {
     }
 
     .img-zoom-lens {
-        border: 1px solid #800000;
+        /* border: 1px solid #800000; */
+
+        position: absolute;
+        /* background-color: #800000; */
         /*set the size of the lens:*/
+        padding: 10px;
+
         z-index: 500;
-        zoom: 1%;
+        zoom: 3%;
         width: 175px;
         height: 175px;
     }
 
     .img-zoom-result {
-        top: auto;
+        bottom: 5px;
         border: 1px solid #d4d4d4;
-        position: absolute;
-        left: 730px;
+        /* position: absolute; */
+        position: fixed;
+        left: 55%;
         /*set the size of the result div:*/
-        width: 350px;
-        height: 350px;
+        cursor: move;
+        /* z-index: 10; */
+        width: 600px;
+        height: 600px;
         display: none;
-        z-index: 10;
+        z-index: 500;
 
     }
 </style>
@@ -306,16 +314,16 @@ if (!empty($product_images)) {
         /*insert lens:*/
         img.parentElement.insertBefore(lens, img);
         /*calculate the ratio between result DIV and lens:*/
-        console.log(result.offsetWidth);
-        console.log(lens.offsetWidth);
-        console.log(result.offsetHeight);
-        console.log(lens.offsetHeight);
+        // console.log(result.offsetWidth);
+        // console.log(lens.offsetWidth);
+        // console.log(result.offsetHeight);
+        // console.log(lens.offsetHeight);
         cx = result.offsetWidth / lens.offsetWidth;
         cy = result.offsetHeight / lens.offsetHeight;
-        console.log(cx);
-        console.log(cy);
-        console.log(img.width);
-        console.log(img.height)
+        // console.log(cx);
+        // console.log(cy);
+        // console.log(img.width);
+        // console.log(img.height)
         /*set background properties for the result DIV:*/
         result.style.backgroundImage = "url('" + img.src + "')";
         console.log(result.style.backgroundImage);
@@ -330,33 +338,30 @@ if (!empty($product_images)) {
 
         function moveLens(e) {
             var pos, x, y;
-            /*prevent any other actions that may occur when moving over the image:*/
+            /* Prevent any other actions that may occur when moving over the image */
             e.preventDefault();
-            /*get the cursor's x and y positions:*/
+            /* Get the cursor's x and y positions: */
             pos = getCursorPos(e);
-            /*calculate the position of the lens:*/
+            /* Calculate the position of the lens: */
             x = pos.x - (lens.offsetWidth / 2);
-            // console.log(x); 
             y = pos.y - (lens.offsetHeight / 2);
-            /*prevent the lens from being positioned outside the image:*/
+            /* Prevent the lens from being positioned outside the image: */
             if (x > img.width - lens.offsetWidth) {
-                x = img.width + lens.offsetWidth;
+                x = img.width - lens.offsetWidth;
             }
-            // console.log(x);
-            console.log(lens.offsetWidth);
             if (x < 0) {
                 x = 0;
             }
             if (y > img.height - lens.offsetHeight) {
-                y = img.height + lens.offsetHeight;
+                y = img.height - lens.offsetHeight;
             }
             if (y < 0) {
                 y = 0;
             }
-            /*set the position of the lens:*/
+            /* Set the position of the lens: */
             lens.style.left = x + "px";
             lens.style.top = y + "px";
-            /*display what the lens "sees":*/
+            /* Display what the lens "sees": */
             result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
         }
 
