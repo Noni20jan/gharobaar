@@ -206,7 +206,14 @@
         <?php elseif ($product->visibility == 0) : ?>
             <label class="badge badge-danger badge-product-status"><?php echo trans("hidden"); ?></label>
         <?php endif; ?>
+        <?php $variation_id=$this->product_model->get_variation_by_id($product->id) ?>
+        <?php $variation_options=get_variation_options($variation_id);
+        $option= count($variation_id);?>
+        <?php if ($option != 1)  :?>
         <h1 class="product-title"><?= html_escape($product_details->title); ?><span id="selected_variation"></span></h1>
+        <?php else: ?>
+        <h1 class="product-title"><?= html_escape($product_details->title); ?>&nbsp;<?= html_escape($product->product_weight.'g');?></h1>
+        <?php endif;  ?>
         <div class="row-custom meta">
             <div class="row">
                 <div class="col-sm-4">
@@ -1099,6 +1106,22 @@ endif; ?>
         // alert("ok");
     })
 </script>
+
+<script>
+    function check_variation_options_is_active($variation_id)
+    {
+        var_dump($variation_id);
+        die();
+       
+        // if (!empty($variation_id)) {
+        //     if ($variation_id->is_active == 1) {
+        //         return true;
+        //     }
+        // }
+        // return false;
+    }
+
+    </script>
 
 
 <!-- abandant cart -->
