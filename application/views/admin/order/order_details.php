@@ -728,7 +728,10 @@
 
                     <div class="col-sm-6 col-xs-6 col-left">
 
-                        <strong>Coupon Discount</strong>
+                        <strong>Coupon Discount<?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);
+                        if (!empty($coupon->offer_code && $coupon->discount_percentage)) {
+                            echo ('('.$coupon->discount_percentage).'%)'; }?>
+                        </strong>
                     </div>
 
                     <div class="col-sm-6 col-xs-6 col-right">
