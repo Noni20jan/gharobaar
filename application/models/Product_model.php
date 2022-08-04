@@ -4142,11 +4142,11 @@ order by id desc LIMIT 1";
         return  $query->result();
     }
 
-    public function get_variation_by_id($product_id)
+    public function get_variation_by_id($variation_id)
     {
         $this->db->select('id');
-        $this->db->where('product_id', $product_id);
-        return $this->db->get('variations')->result();
+        $this->db->where('variation_id', $variation_id);
+        return $this->db->get('variation_options')->result();
         
     }
 }
