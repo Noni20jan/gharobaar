@@ -6,6 +6,8 @@ class Coupon_controller extends Admin_Core_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->session_cart_items = $this->cart_model->get_sess_cart_items();
+        $this->cart_model->calculate_cart_total();
         //check user
     }
 
@@ -460,6 +462,8 @@ class Coupon_controller extends Admin_Core_Controller
                                         //end of calculation
 
                                         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                        $data['cart_items'] = $this->session_cart_items;
+                                        $data['payment_button'] = $this->load->view('cart/payment_button', $data, true);
                                         $data["coupon_assignment_data"] = $coupon_assignment_details;
                                         $data["coupon_max_usage"] = $max_total_usage;
                                         $data["coupon_total_usage"] = $total_usage;
@@ -492,6 +496,8 @@ class Coupon_controller extends Admin_Core_Controller
                                                 //end of calculation
 
                                                 $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                                $data['cart_items'] = $this->session_cart_items;
+                                                $data['payment_button'] = $this->load->view('cart/payment_button', $data, true);
                                                 $data["coupon_assignment_data"] = $coupon_assignment_details;
                                                 $data["coupon_max_usage"] = $max_total_usage;
                                                 $data["coupon_total_usage"] = $total_usage;
@@ -536,8 +542,11 @@ class Coupon_controller extends Admin_Core_Controller
                                             }
                                             $this->session->set_userdata('mds_shopping_cart_coupon', $coupon);
                                             $this->cart_model->calculate_cart_total();
+
                                             //end of calculation
                                             $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                            $data['cart_items'] = $this->session_cart_items;
+                                            $data['payment_button'] = $this->load->view('cart/payment_button', $data, true);
                                             $data["coupon_assignment_data"] = $coupon_assignment_details;
                                             $data["coupon_max_usage"] = $max_total_usage;
                                             $data["coupon_total_usage"] = $total_usage;
@@ -577,6 +586,8 @@ class Coupon_controller extends Admin_Core_Controller
                                         //end of calculation
 
                                         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                        $data['cart_items'] = $this->session_cart_items;
+                                        $data['payment_button'] = $this->load->view('cart/payment_button', $data, true);
                                         $data["coupon_assignment_data"] = $coupon_assignment_details;
                                         $data["coupon_max_usage"] = $max_total_usage;
                                         $data["coupon_total_usage"] = $total_usage;
@@ -600,6 +611,8 @@ class Coupon_controller extends Admin_Core_Controller
                                         //end of calculation
 
                                         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                        $data['cart_items'] = $this->session_cart_items;
+                                        $data['payment_button'] = $this->load->view('cart/payment_button', $data, true);
                                         $data["coupon_assignment_data"] = $coupon_assignment_details;
                                         $data["coupon_max_usage"] = $max_total_usage;
                                         $data["coupon_total_usage"] = $total_usage;
@@ -657,6 +670,8 @@ class Coupon_controller extends Admin_Core_Controller
                                     //end of calculation
 
                                     $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                    $data['cart_items'] = $this->session_cart_items;
+                                    $data['payment_button'] = $this->load->view('cart/payment_button', $data, true);
                                     $data["coupon_assignment_data"] = $coupon_assignment_details;
                                     $data["coupon_max_usage"] = $max_total_usage;
                                     $data["coupon_total_usage"] = $total_usage;
@@ -689,6 +704,8 @@ class Coupon_controller extends Admin_Core_Controller
                                             //end of calculation
 
                                             $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                            $data['cart_items'] = $this->session_cart_items;
+                                            $data['payment_button'] = $this->load->view('cart/payment_button', $data, true);
                                             $data["coupon_assignment_data"] = $coupon_assignment_details;
                                             $data["coupon_max_usage"] = $max_total_usage;
                                             $data["coupon_total_usage"] = $total_usage;
@@ -735,6 +752,8 @@ class Coupon_controller extends Admin_Core_Controller
                                         $this->cart_model->calculate_cart_total();
                                         //end of calculation
                                         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                        $data['cart_items'] = $this->session_cart_items;
+                                        $data['payment_button'] = $this->load->view('cart/payment_button', $data, true);
                                         $data["coupon_assignment_data"] = $coupon_assignment_details;
                                         $data["coupon_max_usage"] = $max_total_usage;
                                         $data["coupon_total_usage"] = $total_usage;
@@ -774,6 +793,8 @@ class Coupon_controller extends Admin_Core_Controller
                                     //end of calculation
 
                                     $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                    $data['cart_items'] = $this->session_cart_items;
+                                    $data['payment_button'] = $this->load->view('cart/payment_button', $data, true);
                                     $data["coupon_assignment_data"] = $coupon_assignment_details;
                                     $data["coupon_max_usage"] = $max_total_usage;
                                     $data["coupon_total_usage"] = $total_usage;
@@ -797,6 +818,8 @@ class Coupon_controller extends Admin_Core_Controller
                                     //end of calculation
 
                                     $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+                                    $data['cart_items'] = $this->session_cart_items;
+                                    $data['payment_button'] = $this->load->view('cart/payment_button', $data, true);
                                     $data["coupon_assignment_data"] = $coupon_assignment_details;
                                     $data["coupon_max_usage"] = $max_total_usage;
                                     $data["coupon_total_usage"] = $total_usage;
@@ -867,6 +890,8 @@ class Coupon_controller extends Admin_Core_Controller
             $this->offer_model->remove_coupon();
 
             $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+            $data['cart_items'] = $this->session_cart_items;
+            $data['payment_button'] = $this->load->view('cart/payment_button', $data, true);
             $data["status"] = true;
             $data["removed"] = true;
             $data["msg"] = "Sucessfully Removed";

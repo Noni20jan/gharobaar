@@ -304,6 +304,13 @@ class Cart_controller extends Home_Core_Controller
         $this->cart_model->calculate_cart_total();
         $cart_items = $this->cart_model->get_sess_cart_items();
         $cart_total = $this->cart_model->get_sess_cart_total();
+        $data['cart_items'] = $this->session_cart_items;
+        $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+        $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
+        $payment_button = "";
+        if (count($cart_items) != 0) {
+            $payment_button = $this->load->view('cart/payment_button', $data, true);
+        }
         $cart_view_html = $this->load->view("cart/_cart_product_response", ['cart_items' => $cart_items, 'cart_total' => $this->cart_model->get_sess_cart_total(), 'cart_has_physical_product' => $this->cart_model->check_cart_has_physical_product()], true);
         $response = array(
             "cart_item_id" => $cart_item_id,
@@ -314,7 +321,8 @@ class Cart_controller extends Home_Core_Controller
             "subtotal" => ($cart_total->total) / 100,
             "shipping_cost" => ($cart_total->shipping_cost) / 100,
             "order_total" => ($cart_total->order_total) / 100,
-            "cart_view" => $cart_view_html
+            "cart_view" => $cart_view_html,
+            'payment_button' => $payment_button
         );
         echo json_encode($response);
     }
@@ -368,6 +376,9 @@ class Cart_controller extends Home_Core_Controller
 
         $data['cart_items'] = $this->session_cart_items;
         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+        $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
+
+        // $payment_button = $this->load->view("cart/payment_button", ["cart_items" =>  $data['cart_items'], "cart_total" => $data['cart_total']]);
         $data["open_rating_modal"] = false;
         if (!empty($this->auth_user)) :
             $order_id['product_id'] =  $this->product_model->get_order_id($this->auth_user->id);
@@ -383,17 +394,20 @@ class Cart_controller extends Home_Core_Controller
             endif;
         endif;
         $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
-
+        // var_dump($this->load->view('cart/payment_button', $data, true));
+        // die();
 
 
         $response = array(
             "status" => true,
-            "button_html" => $this->load->view('cart/payment_button', $data, true),
             "product_details" => ($product_details["total_price_product"]) / 100,
             "total_mrp" => ($_SESSION["mds_shopping_cart_total"]->subtotal) / 100,
             "discount" => $_SESSION["mds_shopping_cart_total"]->discount,
-            "total" => ($_SESSION["mds_shopping_cart_total"]->total_price) / 100
+            "total" => ($_SESSION["mds_shopping_cart_total"]->total_price) / 100,
+            "payment_button" => $this->load->view('cart/payment_button', $data, true),  // "payment_button" => $this->load->view("cart/payment_button", ["cart_items" =>  $data['cart_items'], "cart_total" => $data['cart_total']]),
         );
+        // var_dump($response);
+        // die();
         echo json_encode($response);
     }
     /**

@@ -1032,7 +1032,33 @@
     </div>
 </div>
 
+<div class="modal fade" id="min_cart_val_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-custom">
+            <!-- form start -->
 
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true"><i class="icon-close"></i> </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row tracking-number-container">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <p class="details">The minimum order value for cart is <strong><?php echo price_formatted($this->general_settings->min_cart_value, $cart_item->currency); ?></strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: green; color:white;"><?php echo trans("close"); ?></button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="out_of_stock" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -1372,5 +1398,55 @@
 <script>
     document.body.addEventListener('touchstart', function() {
         document.body.classList.add('touched');
+    });
+    $(document).on("click", ".couponsForm-enabled", function() {
+        var coupon_code = $("#coupon-input-field").val();
+        var data = {
+            "sys_lang_id": sys_lang_id,
+            "coupon_code": coupon_code
+        };
+        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+        $.ajax({
+            type: "POST",
+            url: base_url + "checked-availability-coupon",
+            data: data,
+            beforeSend: function() {
+                $('#loading-coupon').show();
+            },
+            success: function(response) {
+                var res = JSON.parse(response);
+                $('#loading-coupon').hide();
+                if (res.status) {
+                    $(".couponsForm-textInputContainer").removeClass("couponsForm-textInputError");
+                    $(".couponsForm-errorMessage").html("");
+                    $("#coupons-div-button-apply").addClass("hide-coupon-button");
+                    $("#coupons-div-button-remove").removeClass("hide-coupon-button");
+                    $("#coupons-div-label").html("1 Coupon Applied<div class='coupon-div-applied-label'>" + res.coupon_data.offer_code.toUpperCase() + "</div>");
+                    $('#couponModalCenter').modal('hide');
+                    $('#coupon-discount-tag').removeClass('hide-coupon-discount');
+                    $('#coupon-discount-text').html("- ₹" + res.cart_total.applied_coupon_discount / 100 + " /-");
+                    $("#total_final")[0].innerText = "₹" + res.cart_total.total_price / 100 + "/-";
+                    $('#pay_button')[0].innerHTML = res.payment_button;
+                    if (parseInt(res.cart_total.applied_coupon_discount) > 0) {
+                        $("#coupon-discount-text")[0].innerText =
+                            "- ₹" + res.cart_total.applied_coupon_discount / 100 + "/-";
+                    } else {
+                        switch (res.cart_total.applied_coupon_source_type) {
+                            case "FREESHIP":
+                                $("#coupon-discount-text")[0].innerText = "Less Shipping";
+                                break;
+                            case "EXHIBITION":
+                                $("#coupon-discount-text")[0].innerText = "Less Shipping and COD";
+                                break;
+                        }
+                    }
+
+                } else {
+                    $(".couponsForm-textInputContainer").addClass("couponsForm-textInputError");
+                    $(".couponsForm-errorMessage").html(res.msg);
+                }
+
+            }
+        });
     });
 </script>
