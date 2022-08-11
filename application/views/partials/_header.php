@@ -1276,6 +1276,14 @@
             width: 39px;
             height: 52px;
         }
+
+        .product-item .img-product {
+            display: block;
+            height: 260px;
+            /* width: 500px; */
+            margin: 0 auto;
+            object-fit: cover;
+        }
     </style>
 </head>
 
