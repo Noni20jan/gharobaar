@@ -206,15 +206,26 @@
         <?php elseif ($product->visibility == 0) : ?>
             <label class="badge badge-danger badge-product-status"><?php echo trans("hidden"); ?></label>
         <?php endif; ?>
-        <?php $product_id=$this->product_model->get_variation_by_id($product->id); ?>
-        <?php $variations=get_product_variations($product_id);
-        $option= count($product_id);?>
-        <?php if ($option != 1)  :?>
+        <?php $categories=get_parent_category_id($product->category_id) ; 
+        $sub_categories = get_parent_categories_tree($product->category_id);
+        $product_weight = false;
+        foreach($sub_categories as $sub) :
+            if($sub->id == 3) :
+            $product_weight = true;
+            endif;
+        endforeach;
+        ?>
+        
+        <?php $variations=get_product_variations($product->id);
+        $option= count($variations); ?>
+        <?php if (!empty($option != 0 )) : ?>
         <h1 class="product-title"><?= html_escape($product_details->title); ?><span id="selected_variation"></span></h1>
-        <?php elseif ($option == 1) : ?>
-        <h1 class="product-title"><?= html_escape($product_details->title); ?>&nbsp;<?= html_escape($product->product_weight.'g');?></h1>
-        <?php else : ?>
-        <h1 class="product-title"><?= html_escape($product_details->title); ?>&nbsp;<?= html_escape($product->product_weight.'g');?></h1>
+        <?php elseif($categories == 0) : 
+            if($product_weight == true) :?>
+        <h1 class="product-title"><?= html_escape($product_details->title); ?>&nbsp;<?= html_escape('('.$product->product_weight.'g)');?></h1>  
+        <?php else: ?>
+        <h1 class="product-title"><?= html_escape($product_details->title); ?></h1>  
+        <?php endif;?>
         <?php endif;  ?>
         <div class="row-custom meta">
             <div class="row">

@@ -115,6 +115,24 @@ if (!function_exists('get_subcategories')) {
     }
 }
 
+if (!function_exists('get_parent_category_id')) {
+    function get_parent_category_id($category_id)
+    {
+        $ci = &get_instance();
+        $category_id = 0;
+        $category_ids = $ci->input->post('category_id');
+        if (!empty($category_ids)) {
+            // $category_ids = array_reverse($category_ids);
+            foreach ($category_ids as $category_id) {
+                if (!empty($category_id)) {
+                    $data['category_id'] = $category_id;
+                    break;
+                }
+            }
+        }
+        return $category_id;
+    }
+}
 //get category
 if (!function_exists('get_category')) {
     function get_category($categories, $id)
