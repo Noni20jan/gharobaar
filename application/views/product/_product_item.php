@@ -105,13 +105,13 @@ if (!empty($variation)) { ?>
                         <?php if (check_product_stock($product)) {
                             $disabled = " disabled"; ?>
 
-                            <a href="javascript:void(0)" class="item-options btn-add-to-cart zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
+                            <a href="javascript:void(0)" class="item-options btn-add-to-cart zoom" data-toggle="modal" data-target="#guestLoginModal" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
                                 <i class="icon-cart cart-size"></i>
                             </a>
                         <?php } ?>
                     <?php } else { ?>
                         <?php if ($variations_stock != 0) { ?>
-                            <a href="javascript:void(0)" class="item-options btn-add-to-cart zoom" data-toggle="tooltip" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
+                            <a href="javascript:void(0)" class="item-options btn-add-to-cart zoom" data-toggle="modal" data-target="#guestLoginModal" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("add_to_cart"); ?>">
                                 <i class="icon-cart cart-size"></i>
                             </a>
                         <?php } ?>

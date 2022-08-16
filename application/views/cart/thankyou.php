@@ -72,7 +72,7 @@ endif; ?>
       <div><i style="color:#007C05;padding-top: 30px" class='fas fa-check-circle fa-7x'></i><br /></div>
       <h1 class="display-3"><?php echo trans("thankyou_messsage") ?></h1>
     </div>
-    <?php if ($this->auth_user->user_type != "guest") : ?>
+    <!-- <?php  if ($this->auth_user->user_type != "guest") : ?> -->
       <?php if (!empty($order_number)) : ?>
         <div class="row">
           <div class="col-md-12 text-center">
@@ -91,17 +91,17 @@ endif; ?>
           </p>
         </div>
       </div>
-    <?php endif; ?>
+    <!-- <?php endif; ?> -->
   </div>
 </div>
 
-<?php
+<!-- <?php
 if (empty($this->session->userdata('thankyou_order_id'))) {
 
   header("Refresh:2; url=" . lang_base_url());
 }
 
-?>
+?> -->
 <!-- <script>
   $(document).ready(function() {
     setTimeout(function() {
@@ -109,17 +109,17 @@ if (empty($this->session->userdata('thankyou_order_id'))) {
     }, 10000);
   });
 </script> -->
-<script>
+<!-- <script>
   $(document).ready(function() {
     var user_type = document.getElementById("role").value;
-    if (user_type == "guest") {
-      setTimeout(function() {
-        window.location.href = base_url + "logout"; // the redirect goes here
+     if (user_type == "guest") {
+       setTimeout(function() {
+         window.location.href = base_url + "logout"; // the redirect goes here
 
-      }, 10000); // 10 seconds
-    }
+       }, 10000); // 10 seconds
+     }
   })
-</script>
+</script> -->
 
 <script>
   gtag("event", "purchase", {

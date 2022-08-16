@@ -2691,7 +2691,7 @@
                             </div>
                             <div class="form-group m-t-5 m-b-20">
                                 <div class="custom-control custom-checkbox custom-control-validate-input">
-                                    <input type="checkbox" class="custom-control-input" name="terms" id="checkbox_terms">
+                                    <input type="checkbox" class="custom-control-input" name="terms" id="checkbox_terms" ;>
                                     <label for="checkbox_terms" class="custom-control-label"><?php echo trans("terms_conditions_exp"); ?>&nbsp;
                                         <?php $page_terms = get_page_by_default_name("terms_conditions", $this->selected_lang->id); ?>
                                     </label>
@@ -2868,7 +2868,7 @@
                     </div>
                     <div class="modal-body" id="terms-of-use">
                         <?php echo get_content("buyer_terms_conditions"); ?><?php echo get_content("buyer_terms_conditions1"); ?>
-                        <center><button type="button" class="btn btn-custom" data-dismiss="modal" onclick="register_popup_t_c()">Accept</button></center>
+                        <!-- <center><button type="button" class="btn btn-custom" data-dismiss="modal" onclick="register_popup_t_c()">Accept</button></center> -->
                     </div>
                 </div>
             </div>

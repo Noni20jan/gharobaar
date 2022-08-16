@@ -253,86 +253,97 @@
 <!-- Wrapper -->
 <div id="wrapper">
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="alert-message-lg feedback">
-                    <?php if ($this->session->flashdata('success')) : ?>
-                        <div class="m-b-15">
-                            <div class="alert alert-success alert-dismissable">
-                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                <h4 style="margin-left: 423px;">
-                                    <?php echo $this->session->flashdata('success'); ?>
-                                </h4>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
         <div class="row webOrderView">
-            <!-- <div class=""> -->
-            <!-- <div class=""> -->
             <div class="order-head" style="margin-left:12px;">
                 <h2 class="title"><?php echo trans("order"); ?>:&nbsp;#<?php echo $order->order_number; ?></h2>
             </div>
             <div class="order-body">
                 <div class="col-12 order-details-new-ui">
                     <div class="row order-row-item">
-                        <div class="col-9">
-                            <h3 style="margin-top:0px;">Delivery Address</h3>
+                        <div class="col-3">
+                            <h3 style="margin-top:0px;">Order Details</h3>
                         </div>
-                        <div class="col-3 invoice_margin">
+
+                        <div class="col-9 invoice_margin">
                             <div class="line-detail" style="min-height:0px;">
                                 <?php $order_status = 0;
                                 foreach ($order_products as $item) :
-                                    if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected') {
+                                    if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected' || $item->order_status == 'cancelled') {
                                         $order_status = 1;
                                     }
                                 endforeach;
                                 if ($order_status == 1) : ?>
 
-                                    <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#d21f3c;"><?php echo trans('view_invoice'); ?></a>
+                                    <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#007C05;"><?php echo trans('view_invoice'); ?></a>
                                 <?php else : ?>
 
-                                    <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#d21f3c;"><?php echo trans('porforma_invoice'); ?></a>
+                                    <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#007C05;"><?php echo trans('porforma_invoice'); ?></a>
                                 <?php endif; ?>
                             </div>
                         </div>
                     </div>
                     <div class="row order-row-item">
                         <div class="col-3">
+
+                            <p> <span class="product-details">Order Number:-&nbsp;</span><?php echo html_escape($order->order_number); ?></p>
+
                         </div>
-                        <div class="col-9" style="margin-right:1%;">
-                            <?php $shipping = get_order_shipping($order->id);
-                            if (!empty($shipping)) : ?>
-                                <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?> &nbsp;
-                        </div>
-                    </div>
-                    <div class="row order-row-item">
-                        <div class="col-3">
-                        </div>
-                        <div class="col-9" style="margin-right:1%;">
-                            <div class="address-view"><?php echo $shipping->shipping_address_1 . ", " . $shipping->shipping_landmark . ", " . $shipping->shipping_area; ?></div>
-                            <div class="address-view"><?php echo $shipping->shipping_city . ", " . $shipping->shipping_state . ", " . $shipping->shipping_zip_code . ", " . $shipping->shipping_country; ?> </div>
+                        <div class="col-9">
                         </div>
                     </div>
                     <div class="row order-row-item">
                         <div class="col-3">
+
                         </div>
-                        <div class="col-9" style="margin-right:1%;">
-                            <b> <?php echo $shipping->shipping_phone_number; ?></b>
-                        </div>
-                    </div>
-                    <div class="row order-row-item">
-                        <div class="col-3">
-                        </div>
-                        <div class="col-9" style="margin-right:1%;">
-                            <b> <?php echo $shipping->shipping_email; ?></b>
+                        <div class="col-9">
                         </div>
                     </div>
 
-                <?php endif; ?>
+                    <div class="row order-row-item">
+                        <div class="col-3">
+                            <?php $order_details = $this->order_model->get_order_details_by_id($order->id); ?>
+                            <p> <span class="product-details">Order Date-&nbsp;</span><?php echo helper_date_format($order_details->created_at); ?></p>
+
+                        </div>
+                        <div class="col-9">
+                        </div>
+                    </div>
+                    <div class="row order-row-item">
+                        <div class="col-3">
+                            <?php if (!empty($order_details->discount)) : ?>
+                                <p> <span class="product-details">Discount:-&nbsp;</span><?php echo price_formatted($order_details->discount, $order_details->price_currency); ?></p>
+                            <?php endif ?>
+                        </div>
+                        <div class="col-9">
+
+                        </div>
+                    </div>
+                    <div class="row order-row-item">
+                        <div class="col-3">
+                            <p> <span class="product-details">Price:-&nbsp;</span><?php echo price_formatted($order_details->price_total, $order_details->price_currency); ?></p>
+
+                        </div>
+                        <div class="col-9">
+
+                        </div>
+                    </div>
+                    <div class="row order-row-item">
+                        <div class="col-3">
+                            <?php $quantity = $this->order_model->get_qunatity_of_order($order->id) ?>
+                            <?php foreach ($quantity as $quantities) : ?>
+                                <p> <span class="product-details">quantity-&nbsp;</span><?php echo ($quantities->quantity) ?></p>
+
+                            <?php endforeach ?>
+                        </div>
+                        <div class="col-9">
+                        </div>
+                    </div>
+
+
+
                 </div>
+
+
                 <!-- <div class="row">
                         <div class="col-sm-12">
                             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" style="margin-top: .6%;transform: scale(1.5); margin-left:1%" onclick="show()">
@@ -384,16 +395,20 @@
                     </div>
                 </div>
             </div>
-            <?php $is_order_has_physical_product = false; ?>
-            <div class="order-head" style="margin-left:12px;">
+
+            <div class="order-head" style="margin-left:12px;" >
                 <h3 class="block-title"><?php echo trans("products"); ?></h3>
             </div>
             <div class="row" style="padding:0px 14px;">
                 <div class="order-details-new-ui">
                     <div class="table-responsive">
                         <table class="table table-orders">
+                            <button class="btn btn-md btn-block btn-info btn-table-delete" id="opened" style="float:right;display:none;"  onclick="open_modal()">Cancel Order</button>
                             <thead>
                                 <tr>
+                                    <th><?php if ($item->order_status == "processing"): ?>                                           
+                                    <input type="checkbox" id="selectall" value="<?php echo $item->id; ?>"></th>
+                                    <?php endif; ?>
                                     <th scope="col"><?php echo trans("product"); ?></th>
                                     <th scope="col"><?php echo trans("options"); ?></th>
                                     <th scope="col" style="text-align: center;"><?php echo trans("tracking_status"); ?></th>
@@ -406,6 +421,13 @@
                                         $is_order_has_physical_product = true;
                                     } ?>
                                     <tr>
+                                        <td>
+                                            <?php if (get_product($item->product_id)->add_meet == "Made to order" && $item->order_status == "processing") : ?>
+                                                <input type="checkbox" name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>" value="false" style="display:none;">
+                                            <?php elseif (get_product($item->product_id)->add_meet == "Made to stock" && $item->order_status == "processing") : ?>
+                                                <input type="checkbox" name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>">
+                                            <?php endif; ?>
+                                        </td>
                                         <td style="width: 40%">
 
                                             <div class="table-item-product">
@@ -437,6 +459,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="right">
+
                                                     <a href="<?php echo generate_product_url_by_slug($item->product_slug); ?>" target="_blank" class="table-product-title">
                                                         <?php echo html_escape($item->product_title); ?>
                                                     </a>
@@ -452,7 +475,43 @@
                                                     <!-- <p><span class="span-product-dtl-table"><?php echo trans("price"); ?>:</span><?php echo price_formatted($item->product_unit_price, $item->product_currency); ?></p> -->
                                                     <p><span class="span-product-dtl-table"><?php echo trans("quantity"); ?>:</span><?php echo $item->product_quantity; ?></p>
                                                     <p><span class="span-product-dtl-table"><?php echo trans("total"); ?>:</span><?php echo price_formatted($item->product_total_price, $item->product_currency); ?></p>
+                                                    <?php $is_order_has_physical_product = false; ?>
+                                                    <?php $product = get_product($item->product_id); ?>
+                                                    <?php $current_date = new DateTime(); ?>
+                                                    <?php $order_date = strtotime($order->created_at); ?>
+                                                    <?php $ordered_date = date("dS M Y", $order_date); ?>
+                                                    <?php if (!empty($product->shipping_time)) : ?>
+                                                        <?php $shipping_time = $product->shipping_time; ?>
+                                                    <?php endif; ?>
+                                                    <?php if ($product->add_meet == "Made to stock" && substr_count($shipping_time, '_') > 2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
 
+                                                        <?php $ship_time = intval($product->shipping_time[2]); ?>
+                                                        <?php $created_at = strtotime($order->created_at); ?>
+                                                        <?php $x = $ship_time + 3; ?>
+
+                                                        <?php $order_create = strtotime("$x day", strtotime($order->created_at)); ?>
+
+                                                        <?php $ship_date = (date("dS M Y", $order_create)); ?>
+                                                        <?php $shipping_date = new DateTime($ship_date); ?>
+                                                        <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $ship_date; ?></p>
+                                                    <?php elseif ($product->add_meet == "Made to order" && $item->order_status == "processing" || $item->order_status == "shipped" || $item->order_status == "waiting") : ?>
+                                                        <?php $lead_days = intval(get_product($item->product_id)->lead_days); ?>
+                                                        <?php $created_at = strtotime($order->created_at); ?>
+                                                        <?php $delivery_days = $lead_days + 3; ?>
+                                                        <?php $order_create = strtotime("$delivery_days day", $created_at); ?>
+                                                        <?php $shipping_date = (date("dS M Y", $order_create)); ?>
+                                                        <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipping_date; ?></p>
+                                                    <?php elseif ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") == 2 && $item->order_status == "processing" || $item->order_status == "shipped" || $item->order_status == "waiting") : ?>
+                                                        <?php $shipped_time = intval($product->shipping_time); ?>
+                                                        <?php $created_at = strtotime($order->created_at); ?>
+                                                        <?php $delivery_time = $shipped_time + 3; ?>
+                                                        <?php $order_create = strtotime("$delivery_time day", $created_at); ?>
+                                                        <?php $shipped_date = (date("dS M Y", $order_create)); ?>
+                                                        <?php $shipp_date = new DateTime($shipped_date); ?>
+                                                        <p><span class="span-product-dtl-table">Estimated Delivery Date:</span><?php echo $shipped_date; ?></p>
+
+
+                                                    <?php endif; ?>
                                                     <!-- <?php if ($item->product_type == 'physical') : ?>
                                                                     <p><span class="span-product-dtl-table"><?php echo trans("shipping"); ?>:</span><?php echo price_formatted($item->product_shipping_cost, $item->product_currency); ?></p>
                                                                 <?php endif; ?>
@@ -469,11 +528,11 @@
                                         <td style="width: 25%;">
                                             <?php if ($item->order_status == "payment_received" || $item->order_status == "awaiting_payment" || $item->order_status == "processing" || $item->order_status == "waiting") : ?>
                                                 <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
-                                                    <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
+                                                    <!-- <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button> -->
                                                 <?php elseif (get_product($item->product_id)->add_meet == "Made to order") : ?>
-                                                    <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>" style="visibility:hidden;"><?php echo trans("cancel_item"); ?></button>
+                                                    <!-- <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>" style="visibility:hidden;"><?php echo trans("cancel_item"); ?></button> -->
                                                 <?php else : ?>
-                                                    <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_made_to_order"><?php echo trans("cancel_item"); ?></button>
+                                                    <!-- <button class="btn btn-sm buttons-new" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_made_to_order"><?php echo trans("cancel_item"); ?></button> -->
                                                 <?php endif; ?>
 
                                                 <!-- <a data-toggle="modal" data-id="<?php echo $item->id; ?>" class="open-RejectReasonDialog btn btn-md btn-block btn-danger" data-target="#rejection_reason_model"><?php echo trans("cancel_item"); ?></a> -->
@@ -531,7 +590,7 @@
 
                                                             </div>
                                                         </li>
-                                                        <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller") : ?>
+                                                        <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller" || $item->order_status =="cancelled") : ?>
                                                             <li class="progress-step is-active" id="cancelled_<?php echo $item->id; ?>">
                                                                 <div class="progress-marker">
 
@@ -587,7 +646,7 @@
                                                     <?php if ($item->order_status == "shipped") : ?>
                                                         <h6 style="padding-bottom:4%;"><?php echo trans("order_shipped") ?></h6>
                                                     <?php endif; ?>
-                                                    <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller") : ?>
+                                                    <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller"|| $item->order_status == "cancelled") : ?>
                                                         <h6 style="padding-bottom:4%;">Your order is cancelled</h6>
                                                     <?php endif; ?>
                                                     <?php if ($item->order_status == "out_for_delivery") : ?>
@@ -612,13 +671,76 @@
                         </table>
                     </div>
                 </div>
-                <!-- </div> -->
-                <!-- </div> -->
+            </div>
+            <div class="col-12 order-details-new-ui" style="top: 22px;">
+                <div class="row order-row-item">
+                    <div class="col-3">
+                        <h3 style="margin-top:0px;">Delivery Address</h3>
+                    </div>
+                    <div class="col-9 invoice_margin">
+                        <div class="line-detail" style="min-height:0px;">
+                            <?php $order_status = 0;
+                            foreach ($order_products as $item) :
+                                if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected'|| $item->order_status == 'cancelled') {
+                                    $order_status = 1;
+                                }
+                            endforeach;
+                            if ($order_status == 1) : ?>
 
+                                <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#007C05;"><?php echo trans('view_invoice'); ?></a>
+                            <?php else : ?>
+
+                                <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn btn-sm btn-info-new btn-sale-options btn-view-invoice" style="background-color:#007C05;"><?php echo trans('porforma_invoice'); ?></a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row order-row-item">
+                    <div class="col-3">
+
+
+                    </div>
+                    <div class="col-9" style="margin-left:1%">
+                        <?php $shipping = get_order_shipping($order->id);
+                        if (!empty($shipping)) : ?>
+                            <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?> &nbsp;
+                    </div>
+                </div>
+
+
+                <div class="row order-row-item">
+                    <div class="col-3">
+                    </div>
+                    <div class="col-9" style="margin-left:1%">
+                        <div class="address-view"><?php echo $shipping->shipping_address_1 . ", " . $shipping->shipping_landmark . ", " . $shipping->shipping_area; ?></div>
+                        <div class="address-view"><?php echo $shipping->shipping_city . ", " . $shipping->shipping_state . ", " . $shipping->shipping_zip_code . ", " . $shipping->shipping_country; ?> </div>
+                    </div>
+                </div>
+                <div class="row order-row-item">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-9" style="margin-left:1%">
+                        <b> <?php echo $shipping->shipping_phone_number; ?></b>
+                    </div>
+                </div>
+                <div class="row order-row-item">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-9" style="margin-left:1%">
+                        <b> <?php echo $shipping->shipping_email; ?></b>
+                    </div>
+                </div>
+
+
+
+            <?php endif; ?>
+            </div>
+            <?php if (!empty($order_products_history)) : ?>
 
                 <div class="table-responsive">
-                    <h3 class="page-title t" style="margin-left:12px; margin-top:30px;
-                    ">Other Orders</h3>
+                    <h3 class="page-title t" style="margin-left:12px; margin-top:30px;">Other Orders</h3>
                     <table class="table table-orders summary-section" style="padding: 0 15px;">
                         <!-- 
                             <thead>
@@ -662,7 +784,7 @@
                                     <td>
                                         <?php if ($this->general_settings->reviews == 1 && $item->seller_id != $item->buyer_id) : ?>
                                             <div class="rate-product">
-                                            <div class="rating p-rate-product" >
+                                                <div class="rating p-rate-product" >
                                                     <?php $review = get_review($item->product_id, $this->auth_user->id); ?>
                                                     <label class="label-star label-star-open-modal" data-star="5" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 5) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
                                                     <label class="label-star label-star-open-modal" data-star="4" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 4) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
@@ -701,31 +823,402 @@
                         </tbody>
                     </table>
                 </div>
+            <?php else : ?>
+                <h3 class="page-title t" style="margin-left:12px; margin-top:30px;">NO Other Orders </h3>
+            <?php endif; ?>
 
 
 
-            </div>
+
+
         </div>
+    </div>
 
-        <!-- <?php if (!empty($shipping)) : ?>
+    <!-- <?php if (!empty($shipping)) : ?>
                 <p class="text-confirm-order">*<?php echo trans("confirm_order_received_warning"); ?></p>
             <?php endif; ?> -->
 
 
-    </div>
-    <div class="container mobileOrderView">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="order-details-container">
-                    <div class="order-head">
-                        <h2 class="title" style="text-align: center;"><?php echo trans("order"); ?>:&nbsp;#<?php echo $order->order_number; ?></h2>
+</div>
+<div class="container mobileOrderView">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="order-details-container">
+                <div class="order-head">
+                    <h2 class="title" style="text-align: center;"><?php echo trans("order"); ?>:&nbsp;#<?php echo $order->order_number; ?></h2>
+                </div>
+                <div class="order-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row new-order-ui-for-mobile">
+
+                                <div class="row order-row-item">
+                                    <div class="col-3">
+                                        <h3 class="details">Order Details</h3>
+                                    </div>
+
+                                    <div class="col-9" style="margin-right:1%;">
+                                        <b> <span class="product-details">Order Number:-&nbsp;</span><?php echo html_escape($order->order_number); ?></b>
+
+                                        <?php $order_details = $this->order_model->get_order_details_by_id($order->id); ?>
+                                        </br><b> <span class="product-details">Order Date-&nbsp;</span><?php echo helper_date_format($order_details->created_at); ?></b>
+                                        </br><b> <span class="product-details">Discount:-&nbsp;</span><?php echo price_formatted($order_details->discount, $order_details->price_currency); ?></b>
+                                        <?php $quantity = $this->order_model->get_qunatity_of_order($order->id) ?>
+                                        <?php foreach ($quantity as $quantities) : ?>
+                                            </br> <b> <span class="product-details">quantity-&nbsp;</span><?php echo ($quantities->quantity) ?></b>
+
+                                        <?php endforeach ?>
+
+                                        </br> <b> <span class="product-details">Price:-&nbsp;</span><?php echo price_formatted($order_details->price_total, $order_details->price_currency); ?></b>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="invoice_margin">
+                                <div class="line-detail" style="min-height:0px;">
+                                    <?php $order_status = 0;
+                                    foreach ($order_products as $item) :
+                                        if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected' || $item->order_status == 'cancelled') {
+                                            $order_status = 1;
+                                        }
+                                    endforeach;
+                                    if ($order_status == 1) : ?>
+
+                                        <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn-view-invoice-mobile" style="background-color:#007C05;"><?php echo trans('view_invoice'); ?></a>
+                                    <?php else : ?>
+
+                                        <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn-view-invoice-mobile" style="background-color:#007C05;"><?php echo trans('porforma_invoice'); ?></a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php $is_order_has_physical_product = true; ?>
+
+                        <div class="col-sm-6 quntity-total-mobile">
+                            <div class="order-total summary-section" style="width: 100%;background-color:#fff;">
+                                <div class="row">
+                                    <div class="col-6 col-left">
+                                        <?php echo trans("subtotal"); ?>
+                                    </div>
+                                    <div class="col-6 col-right">
+                                        <strong class="font-600"><?php echo price_formatted($order->price_subtotal, $order->price_currency); ?></strong>
+                                    </div>
+                                </div>
+                                <?php if ($is_order_has_physical_product) : ?>
+                                    <div class="row">
+                                        <div class="col-6 col-left">
+                                            <?php echo trans("shipping"); ?>
+                                        </div>
+                                        <div class="col-6 col-right">
+                                            <strong class="font-600"><?php echo price_formatted($order->price_shipping, $order->price_currency); ?></strong>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row-seperator"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 col-left">
+                                        <?php echo trans("total"); ?>
+                                    </div>
+                                    <div class="col-6 col-right">
+                                        <strong class="font-600"><?php echo price_formatted($order->price_subtotal + $order->price_shipping, $order->price_currency); ?></strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="order-body">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="row new-order-ui-for-mobile">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" style="margin-top: .6%;transform: scale(1.5); margin-left:1%" onclick="show1()">
+                            <label for="vehicle1" style="margin-left: 1%;font-size: 16px;">Show Billing Address</label><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row new-order-ui-for-mobile" id="show-billing1" style="display: none;">
+                                <div class="row order-row-item">
+                                    <div class="col-9">
+                                        <h3>Billing Address</h3>
+                                    </div>
+                                </div>
+                                <div class="row order-row-item">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-9" style="margin-right:1%;">
+                                        <?php $shipping = get_order_shipping($order->id);
+                                        if (!empty($shipping)) : ?>
+                                            <?php echo $shipping->billing_first_name . " " . $shipping->billing_last_name; ?> &nbsp;
+                                    </div>
+                                </div>
+                                <div class="row order-row-item">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-9" style="margin-right:1%;">
+                                        <div class="address-view"><?php echo $shipping->billing_address_1 . ", " . $shipping->billing_landmark . ", " . $shipping->billing_area; ?></div>
+                                        <div class="address-view"><?php echo $shipping->billing_city . ", " . $shipping->billing_state . ", " . $shipping->billing_zip_code . ", " . $shipping->billing_country; ?> </div>
+                                    </div>
+                                </div>
+                                <div class="row order-row-item">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-9" style="margin-right:1%;">
+                                        <b> <?php echo $shipping->billing_phone_number; ?></b>
+                                    </div>
+                                </div>
+                                <div class="row order-row-item">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-9" style="margin-right:1%;">
+                                        <b> <?php echo $shipping->billing_email; ?></b>
+                                    </div>
+                                </div>
+
+                            <?php endif; ?>
+                            </div>
+                            <?php $is_order_has_physical_product = false; ?>
+                            <div class="container">
+                                <div class="col-6 col-table-orders">
+                                    <h3 class="block-title" style="margin-left: 124px;"><?php echo trans("products"); ?></h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 summary-section" style="padding:0px;">
+                                    <?php foreach ($order_products as $item) :
+
+                                        if ($item->product_type == 'physical') {
+                                            $is_order_has_physical_product = true;
+                                        } ?>
+                                        <div class="new-order-ui-for-mobile table-item-product" style="width: 100%;">
+                                            <div class="left">
+                                                <div class="img-table">
+                                                    <?php $variation_option = generate_product_variation_image($item);
+                                                    if (!empty($variation_option)) :
+                                                        if ($variation_option->is_default != 0) : ?>
+                                                            <a href="<?php echo generate_product_url_by_slug($item->product_slug); ?>" target="_blank">
+                                                                <img src="<?php echo get_product_image($item->product_id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
+                                                            </a>
+                                                        <?php else : ?>
+                                                            <a href="<?php echo generate_product_url_by_slug($item->product_slug); ?>">
+                                                                <img src="<?php echo get_variation_main_option_image_url($variation_option, null); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
+                                                                <!-- <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_variation_main_option_image_url($variation_option, null); ?>" alt="<?php echo html_escape($item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>'"> -->
+                                                            </a>
+                                                        <?php endif;
+                                                    else : ?>
+                                                        <div class="img-table">
+                                                            <a href="<?php echo generate_product_url_by_slug($item->product_slug); ?>" target="_blank">
+                                                                <img src="<?php echo get_product_image($item->product_id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
+                                                            </a>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                            <div class="right">
+                                                <a href="<?php echo generate_product_url_by_slug($item->product_slug); ?>" target="_blank" class="table-product-title">
+                                                    <?php echo html_escape($item->product_title); ?>
+                                                </a>
+                                                <p class="m-b-15">
+                                                    <span>By:</span>
+                                                    <?php $seller = get_user($item->seller_id); ?>
+                                                    <?php if (!empty($seller)) : ?>
+                                                        <a href="<?php echo generate_profile_url($seller->slug); ?>" target="_blank" class="table-product-title">
+                                                            <strong class="font-600"><?php echo get_shop_name($seller); ?></strong>
+                                                        </a>
+                                                    <?php endif; ?>
+                                                </p>
+
+                                            </div>
+                                        </div><br />
+                                </div>
+                                <div class="col-sm-6 quntity-total-mobile">
+                                    <div class="order-total summary-section" style="width: 100%;background-color:#fff;float:right; margin-bottom:7%;">
+                                        <div class="row">
+                                            <div class="col-6 col-left">
+                                                <?php echo trans("quantity"); ?>
+                                            </div>
+                                            <div class="col-6 col-right">
+                                                <strong class="font-600"><?php echo $item->product_quantity; ?></strong>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 col-left">
+                                                <?php echo trans("total"); ?>
+                                            </div>
+                                            <div class="col-6 col-right">
+                                                <strong class="font-600"><?php echo price_formatted($order->price_subtotal + $order->price_shipping, $order->price_currency); ?></strong>
+                                            </div>
+                                        </div>
+
+                                        <?php if ($is_order_has_physical_product) : ?>
+                                            <div class="row">
+                                                <div class="col-6 col-left">
+                                                    <?php echo trans("status"); ?>
+                                                </div>
+                                                <div class="col-6 col-right">
+
+
+                                                    <strong class="font-600"><?php echo trans($item->order_status); ?></strong>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <div class="row">
+                                            <div class="col-6 col-left">
+                                                Updated At
+                                            </div>
+                                            <div class="col-6 col-right">
+                                                <strong class="font-600"><?php echo time_ago($item->updated_at); ?></strong>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <?php if ($item->order_status == "processing" || $item->order_status == "shipped" || $item->order_status == "waiting") : ?>
+                                                <div class="col-6 col-left">
+                                                    Estimated Delivery Date
+                                                <?php endif; ?>
+                                                </div>
+                                                <div class="col-6 col-right">
+                                                    <?php if ($product->add_meet == "Made to stock" && substr_count($shipping_time, '_') > 2 && $item->order_status == "processing" || $item->order_status == "shipped") : ?>
+
+                                                        <?php $ship_time = intval($product->shipping_time[2]); ?>
+                                                        <?php $created_at = strtotime($order->created_at); ?>
+                                                        <?php $x = $ship_time + 3; ?>
+
+                                                        <?php $order_create = strtotime("$x day", strtotime($order->created_at)); ?>
+
+                                                        <?php $ship_date = (date("dS M Y", $order_create)); ?>
+                                                        <?php $shipping_date = new DateTime($ship_date); ?>
+                                                        <strong class="font-600"><?php echo $ship_date; ?></strong>
+                                                    <?php elseif ($product->add_meet == "Made to order" && $item->order_status == "processing" || $item->order_status == "shipped" || $item->order_status == "waiting") : ?>
+                                                        <?php $lead_days = intval(get_product($item->product_id)->lead_days); ?>
+                                                        <?php $created_at = strtotime($order->created_at); ?>
+                                                        <?php $delivery_days = $lead_days + 3; ?>
+                                                        <?php $order_create = strtotime("$delivery_days day", $created_at); ?>
+                                                        <?php $shipping_date = (date("dS M Y", $order_create)); ?>
+                                                        <strong class="font-600"><?php echo $shipping_date; ?></strong>
+                                                    <?php elseif ($product->add_meet == "Made to stock" && substr_count($shipping_time, "_") == 2 && $item->order_status == "processing" || $item->order_status == "shipped" || $item->order_status == "waiting") : ?>
+                                                        <?php $shipped_time = intval($product->shipping_time); ?>
+                                                        <?php $created_at = strtotime($order->created_at); ?>
+                                                        <?php $delivery_time = $shipped_time + 3; ?>
+                                                        <?php $order_create = strtotime("$delivery_time day", $created_at); ?>
+                                                        <?php $shipped_date = (date("dS M Y", $order_create)); ?>
+                                                        <?php $shipp_date = new DateTime($shipped_date); ?>
+                                                        <strong class="font-600"><?php echo $shipped_date; ?></p>
+
+
+
+                                                        <?php endif; ?>
+                                                </div>
+                                        </div>
+                                        <div class="row cancel" style="text-align:center;">
+                                            <?php if ($item->order_status == "payment_received" || $item->order_status == "awaiting_payment" || $item->order_status == "processing" || $item->order_status == "waiting") : ?>
+                                                <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
+                                                    <button class="btn btn-sm btn-custom " id="cancel" style="width: 100px;" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
+                                                <?php elseif (get_product($item->product_id)->add_meet == "Made to order") : ?>
+                                                    <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>" style="visibility:hidden;"><?php echo trans("cancel_item"); ?></button>
+                                                <?php else : ?>
+                                                    <!-- <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_made_to_order"><?php echo trans("cancel_item"); ?></button> -->
+                                                <?php endif; ?>
+
+                                                <!-- <a data-toggle="modal" data-id="<?php echo $item->id; ?>" class="open-RejectReasonDialog btn btn-md btn-block btn-danger" data-target="#rejection_reason_model"><?php echo trans("cancel_item"); ?></a> -->
+                                            <?php elseif ($item->order_status == "shipped" || $item->order_status == "out_for_delivery") : ?>
+                                                <button type="submit" class="btn btn-sm btn-custom confirm-new-ui" onclick="approve_order_product('<?php echo $item->id; ?>','<?php echo trans("confirm_approve_order"); ?>');"><?php echo trans("confirm_order_received"); ?></button>
+                                            <?php elseif ($item->order_status == "completed") : ?>
+                                                <?php if ($item->product_type == 'digital') :
+                                                    $digital_sale = get_digital_sale_by_order_id($item->buyer_id, $item->product_id, $item->order_id);
+                                                    if (!empty($digital_sale)) : ?>
+                                                        <div class="row-custom">
+                                                            <?php echo form_open('download-purchased-digital-file-post'); ?>
+                                                            <input type="hidden" name="sale_id" value="<?php echo $digital_sale->id; ?>">
+                                                            <div class="btn-group btn-group-download m-b-15">
+                                                                <button type="button" class="btn btn-md btn-custom dropdown-toggle" data-toggle="dropdown">
+                                                                    <i class="icon-download-solid"></i><?php echo trans("download"); ?>&nbsp;&nbsp;<i class="icon-arrow-down m-0"></i>
+                                                                </button>
+                                                                <div class="dropdown-menu">
+                                                                    <button name="submit" value="main_files" class="dropdown-item"><?php echo trans("main_files"); ?></button>
+                                                                    <button name="submit" value="license_certificate" class="dropdown-item"><?php echo trans("license_certificate"); ?></button>
+                                                                </div>
+                                                            </div>
+                                                            <?php echo form_close(); ?>
+                                                        </div>
+                                                <?php endif;
+                                                endif; ?>
+
+                                                <?php if ($this->general_settings->reviews == 1 && $item->seller_id != $item->buyer_id) : ?>
+                                                    <div class="row-custom">
+                                                        <div class="rate-product">
+                                                            <p class="p-rate-product"><?php echo trans("rate_this_product"); ?></p>
+                                                            <div class="rating-stars" style="margin-left:129px;">
+                                                                <?php $review = get_review($item->product_id, $this->auth_user->id); ?>
+                                                                <label class="label-star label-star-open-modal" data-star="5" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 5) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                                <label class="label-star label-star-open-modal" data-star="4" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 4) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                                <label class="label-star label-star-open-modal" data-star="3" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 3) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                                <label class="label-star label-star-open-modal" data-star="2" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 2) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                                <label class="label-star label-star-open-modal" data-star="1" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 1) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <div class="fullwidth">
+                                            <div class="container separator">
+                                                <h6 id="track_status">Tracking Status</h6>
+                                                <!-- <ul class="progress-tracker progress-tracker--text progress-tracker--center" style="position: relative; right: 42px;"> -->
+                                                <ul class="progress-tracker progress-tracker--text progress-tracker--center">
+                                                    <li class="progress-step is-active" id="ordered_<?php echo $item->id; ?>">
+                                                        <div class="progress-marker"></div>
+                                                        <div class="progress-text">
+                                                            <h6 class="progress-title">Ordered</h6>
+
+                                                        </div>
+                                                    </li>
+                                                    <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller"|| $item->order_status == "cancelled") : ?>
+                                                        <li class="progress-step is-active" id="cancelled_<?php echo $item->id; ?>">
+                                                            <div class="progress-marker"></div>
+                                                            <div class="progress-text">
+                                                                <h6 class="progress-title">Cancelled</h6>
+                                                            </div>
+                                                        </li>
+                                                    <?php else : ?>
+                                                        <li class="progress-step <?php if (in_array($item->order_status, array("processing", "shipped", "completed",))) : echo "is-active";
+                                                                                    endif; ?>" id="processing_<?php echo $item->id; ?>">
+                                                            <div class="progress-marker"></div>
+                                                            <div class="progress-text">
+                                                                <h6 class="progress-title">Processing</h6>
+                                                            </div>
+                                                        </li>
+                                                        <li class="progress-step <?php if (in_array($item->order_status, array("shipped", "completed",))) : echo "is-active";
+                                                                                    endif; ?>" id="shipped_<?php echo $item->id; ?>">
+                                                            <div class="progress-marker"></div>
+                                                            <div class="progress-text">
+                                                                <h6 class="progress-title">Shipped</h6>
+                                                            </div>
+                                                        </li>
+                                                        <li class="progress-step <?php if (in_array($item->order_status, array("completed",))) : echo "is-active";
+                                                                                    endif; ?>" id="delivered_<?php echo $item->id; ?>">
+                                                            <div class="progress-marker"></div>
+                                                            <div class="progress-text">
+                                                                <h6 class="progress-title">Delivered</h6>
+                                                            </div>
+                                                        </li>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <br />
+
+                                    </div>
+                                <?php endforeach; ?>
+                                <div>
                                     <div class="row order-row-item">
-                                        <div class="col-9">
+                                        <div class="col-9" style="margin-left:3%">
                                             <h3>Delivery Address</h3>
                                         </div>
 
@@ -733,14 +1226,14 @@
                                     <div class="row order-row-item ">
                                         <div class="col-3">
                                         </div>
-                                        <div class="col-9">
+                                        <div class="col-9" style="margin-left:3%">
                                             <?php $shipping = get_order_shipping($order->id);
                                             if (!empty($shipping)) : ?>
                                                 <!-- <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?> -->
                                         </div>
                                     </div>
                                     <div class="row order-row-item">
-                                        <div class="col-9" style="margin-right:1%;">
+                                        <div class="col-9" style="margin-left:3%;">
                                             <?php echo $shipping->shipping_first_name . " " . $shipping->shipping_last_name; ?>
 
                                             <div class="address-view"><?php echo $shipping->shipping_address_1 . ", " . $shipping->shipping_landmark . ", " . $shipping->shipping_area; ?></div>
@@ -751,319 +1244,20 @@
                                         </div>
 
                                     </div>
-                                <?php endif; ?>
+                                <?php endif ?>
                                 </div>
-                                <div class="invoice_margin">
-                                    <div class="line-detail" style="min-height:0px;">
-                                        <?php $order_status = 0;
-                                        foreach ($order_products as $item) :
-                                            if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected') {
-                                                $order_status = 1;
-                                            }
-                                        endforeach;
-                                        if ($order_status == 1) : ?>
-
-                                            <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn-view-invoice-mobile" style="background-color:#d21f3c;"><?php echo trans('view_invoice'); ?></a>
-                                        <?php else : ?>
-
-                                            <a href="<?php echo base_url(); ?>invoice/<?php echo $order->order_number; ?>" target="_blank" class="btn-view-invoice-mobile" style="background-color:#d21f3c;"><?php echo trans('porforma_invoice'); ?></a>
-                                        <?php endif; ?>
-                                    </div>
                                 </div>
                             </div>
 
-                            <?php $is_order_has_physical_product = true; ?>
 
-                            <div class="col-sm-6 quntity-total-mobile">
-                                <div class="order-total summary-section" style="width: 100%;background-color:#fff;">
-                                    <div class="row">
-                                        <div class="col-6 col-left">
-                                            <?php echo trans("subtotal"); ?>
-                                        </div>
-                                        <div class="col-6 col-right">
-                                            <strong class="font-600"><?php echo price_formatted($order->price_subtotal, $order->price_currency); ?></strong>
-                                        </div>
-                                    </div>
-                                    <?php if ($is_order_has_physical_product) : ?>
-                                        <div class="row">
-                                            <div class="col-6 col-left">
-                                                <?php echo trans("shipping"); ?>
-                                            </div>
-                                            <div class="col-6 col-right">
-                                                <strong class="font-600"><?php echo price_formatted($order->price_shipping, $order->price_currency); ?></strong>
-                                            </div>
-                                        </div>
-                                    <?php endif; ?>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="row-seperator"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6 col-left">
-                                            <?php echo trans("total"); ?>
-                                        </div>
-                                        <div class="col-6 col-right">
-                                            <strong class="font-600"><?php echo price_formatted($order->price_subtotal + $order->price_shipping, $order->price_currency); ?></strong>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" style="margin-top: .6%;transform: scale(1.5); margin-left:1%" onclick="show1()">
-                                <label for="vehicle1" style="margin-left: 1%;font-size: 16px;">Show Billing Address</label><br>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="row new-order-ui-for-mobile" id="show-billing1" style="display: none;">
-                                    <div class="row order-row-item">
-                                        <div class="col-9">
-                                            <h3>Billing Address</h3>
-                                        </div>
-                                    </div>
-                                    <div class="row order-row-item">
-                                        <div class="col-3">
-                                        </div>
-                                        <div class="col-9" style="margin-right:1%;">
-                                            <?php $shipping = get_order_shipping($order->id);
-                                            if (!empty($shipping)) : ?>
-                                                <?php echo $shipping->billing_first_name . " " . $shipping->billing_last_name; ?> &nbsp;
-                                        </div>
-                                    </div>
-                                    <div class="row order-row-item">
-                                        <div class="col-3">
-                                        </div>
-                                        <div class="col-9" style="margin-right:1%;">
-                                            <div class="address-view"><?php echo $shipping->billing_address_1 . ", " . $shipping->billing_landmark . ", " . $shipping->billing_area; ?></div>
-                                            <div class="address-view"><?php echo $shipping->billing_city . ", " . $shipping->billing_state . ", " . $shipping->billing_zip_code . ", " . $shipping->billing_country; ?> </div>
-                                        </div>
-                                    </div>
-                                    <div class="row order-row-item">
-                                        <div class="col-3">
-                                        </div>
-                                        <div class="col-9" style="margin-right:1%;">
-                                            <b> <?php echo $shipping->billing_phone_number; ?></b>
-                                        </div>
-                                    </div>
-                                    <div class="row order-row-item">
-                                        <div class="col-3">
-                                        </div>
-                                        <div class="col-9" style="margin-right:1%;">
-                                            <b> <?php echo $shipping->billing_email; ?></b>
-                                        </div>
-                                    </div>
-
-                                <?php endif; ?>
-                                </div>
-                                <?php $is_order_has_physical_product = false; ?>
-                                <div class="container">
-                                    <div class="col-6 col-table-orders">
-                                        <h3 class="block-title" style="margin-left: 124px;"><?php echo trans("products"); ?></h3>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6 summary-section" style="padding:0px;">
-                                        <?php foreach ($order_products as $item) :
-
-                                            if ($item->product_type == 'physical') {
-                                                $is_order_has_physical_product = true;
-                                            } ?>
-                                            <div class="new-order-ui-for-mobile table-item-product" style="width: 100%;">
-                                                <div class="left">
-                                                    <div class="img-table">
-                                                        <?php $variation_option = generate_product_variation_image($item);
-                                                        if (!empty($variation_option)) :
-                                                            if ($variation_option->is_default != 0) : ?>
-                                                                <a href="<?php echo generate_product_url_by_slug($item->product_slug); ?>" target="_blank">
-                                                                    <img src="<?php echo get_product_image($item->product_id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
-                                                                </a>
-                                                            <?php else : ?>
-                                                                <a href="<?php echo generate_product_url_by_slug($item->product_slug); ?>">
-                                                                    <img src="<?php echo get_variation_main_option_image_url($variation_option, null); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
-                                                                    <!-- <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>" data-src="<?php echo get_variation_main_option_image_url($variation_option, null); ?>" alt="<?php echo html_escape($item->product_title); ?>" class="lazyload img-fluid img-product" onerror="this.src='<?php echo base_url() . IMG_BG_PRODUCT_SMALL; ?>'"> -->
-                                                                </a>
-                                                            <?php endif;
-                                                        else : ?>
-                                                            <div class="img-table">
-                                                                <a href="<?php echo generate_product_url_by_slug($item->product_slug); ?>" target="_blank">
-                                                                    <img src="<?php echo get_product_image($item->product_id, 'image_small'); ?>" data-src="" alt="" class="lazyload img-responsive post-image" />
-                                                                </a>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                </div>
-                                                <div class="right">
-                                                    <a href="<?php echo generate_product_url_by_slug($item->product_slug); ?>" target="_blank" class="table-product-title">
-                                                        <?php echo html_escape($item->product_title); ?>
-                                                    </a>
-                                                    <p class="m-b-15">
-                                                        <span>By:</span>
-                                                        <?php $seller = get_user($item->seller_id); ?>
-                                                        <?php if (!empty($seller)) : ?>
-                                                            <a href="<?php echo generate_profile_url($seller->slug); ?>" target="_blank" class="table-product-title">
-                                                                <strong class="font-600"><?php echo get_shop_name($seller); ?></strong>
-                                                            </a>
-                                                        <?php endif; ?>
-                                                    </p>
-
-                                                </div>
-                                            </div><br />
-                                    </div>
-                                    <div class="col-sm-6 quntity-total-mobile">
-                                        <div class="order-total summary-section" style="width: 100%;background-color:#fff;float:right; margin-bottom:7%;">
-                                            <div class="row">
-                                                <div class="col-6 col-left">
-                                                    <?php echo trans("quantity"); ?>
-                                                </div>
-                                                <div class="col-6 col-right">
-                                                    <strong class="font-600"><?php echo $item->product_quantity; ?></strong>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6 col-left">
-                                                    <?php echo trans("total"); ?>
-                                                </div>
-                                                <div class="col-6 col-right">
-                                                    <strong class="font-600"><?php echo price_formatted($order->price_subtotal + $order->price_shipping, $order->price_currency); ?></strong>
-                                                </div>
-                                            </div>
-                                            <?php if ($is_order_has_physical_product) : ?>
-                                                <div class="row">
-                                                    <div class="col-6 col-left">
-                                                        <?php echo trans("status"); ?>
-                                                    </div>
-                                                    <div class="col-6 col-right">
-
-
-                                                        <strong class="font-600"><?php echo trans($item->order_status); ?></strong>
-                                                    </div>
-                                                </div>
-                                            <?php endif; ?>
-
-                                            <div class="row">
-                                                <div class="col-6 col-left">
-                                                    Updated At
-                                                </div>
-                                                <div class="col-6 col-right">
-                                                    <strong class="font-600"><?php echo time_ago($item->updated_at); ?></strong>
-                                                </div>
-                                            </div>
-                                            <div class="row cancel" style="text-align:center;">
-                                                <?php if ($item->order_status == "payment_received" || $item->order_status == "awaiting_payment" || $item->order_status == "processing" || $item->order_status == "waiting") : ?>
-                                                    <?php if (get_product($item->product_id)->add_meet == "Made to stock") : ?>
-                                                        <button class="btn btn-sm btn-custom " id="cancel" style="width: 100px;" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>"><?php echo trans("cancel_item"); ?></button>
-                                                    <?php elseif (get_product($item->product_id)->add_meet == "Made to order") : ?>
-                                                        <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_<?php echo $item->id; ?>" style="visibility:hidden;"><?php echo trans("cancel_item"); ?></button>
-                                                    <?php else : ?>
-                                                        <button class="btn btn-sm btn-custom" data-id="<?php echo $item->id; ?>" data-toggle="modal" data-target="#rejection_reason_model_made_to_order"><?php echo trans("cancel_item"); ?></button>
-                                                    <?php endif; ?>
-
-                                                    <!-- <a data-toggle="modal" data-id="<?php echo $item->id; ?>" class="open-RejectReasonDialog btn btn-md btn-block btn-danger" data-target="#rejection_reason_model"><?php echo trans("cancel_item"); ?></a> -->
-                                                <?php elseif ($item->order_status == "shipped" || $item->order_status == "out_for_delivery") : ?>
-                                                    <button type="submit" class="btn btn-sm btn-custom confirm-new-ui" onclick="approve_order_product('<?php echo $item->id; ?>','<?php echo trans("confirm_approve_order"); ?>');"><?php echo trans("confirm_order_received"); ?></button>
-                                                <?php elseif ($item->order_status == "completed") : ?>
-                                                    <?php if ($item->product_type == 'digital') :
-                                                        $digital_sale = get_digital_sale_by_order_id($item->buyer_id, $item->product_id, $item->order_id);
-                                                        if (!empty($digital_sale)) : ?>
-                                                            <div class="row-custom">
-                                                                <?php echo form_open('download-purchased-digital-file-post'); ?>
-                                                                <input type="hidden" name="sale_id" value="<?php echo $digital_sale->id; ?>">
-                                                                <div class="btn-group btn-group-download m-b-15">
-                                                                    <button type="button" class="btn btn-md btn-custom dropdown-toggle" data-toggle="dropdown">
-                                                                        <i class="icon-download-solid"></i><?php echo trans("download"); ?>&nbsp;&nbsp;<i class="icon-arrow-down m-0"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu">
-                                                                        <button name="submit" value="main_files" class="dropdown-item"><?php echo trans("main_files"); ?></button>
-                                                                        <button name="submit" value="license_certificate" class="dropdown-item"><?php echo trans("license_certificate"); ?></button>
-                                                                    </div>
-                                                                </div>
-                                                                <?php echo form_close(); ?>
-                                                            </div>
-                                                    <?php endif;
-                                                    endif; ?>
-                                                    <?php if ($this->general_settings->reviews == 1 && $item->seller_id != $item->buyer_id) : ?>
-                                                        <div class="row-custom">
-                                                            <div class="rate-product">
-                                                                <p class="p-rate-product"><?php echo trans("rate_this_product"); ?></p>
-                                                                <div class="rating-stars" style="margin-left:129px;">
-                                                                    <?php $review = get_review($item->product_id, $this->auth_user->id); ?>
-                                                                    <label class="label-star label-star-open-modal" data-star="5" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 5) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
-                                                                    <label class="label-star label-star-open-modal" data-star="4" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 4) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
-                                                                    <label class="label-star label-star-open-modal" data-star="3" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 3) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
-                                                                    <label class="label-star label-star-open-modal" data-star="2" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 2) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
-                                                                    <label class="label-star label-star-open-modal" data-star="1" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 1) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    <?php endif; ?>
-                                                <?php endif; ?>
-                                            </div>
-                                            <div class="fullwidth">
-                                                <div class="container separator">
-                                                    <h6 id="track_status">Tracking Status</h6>
-                                                    <!-- <ul class="progress-tracker progress-tracker--text progress-tracker--center" style="position: relative; right: 42px;"> -->
-                                                    <ul class="progress-tracker progress-tracker--text progress-tracker--center">
-                                                        <li class="progress-step is-active" id="ordered_<?php echo $item->id; ?>">
-                                                            <div class="progress-marker"></div>
-                                                            <div class="progress-text">
-                                                                <h6 class="progress-title">Ordered</h6>
-
-                                                            </div>
-                                                        </li>
-                                                        <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller") : ?>
-                                                            <li class="progress-step is-active" id="cancelled_<?php echo $item->id; ?>">
-                                                                <div class="progress-marker"></div>
-                                                                <div class="progress-text">
-                                                                    <h6 class="progress-title">Cancelled</h6>
-                                                                </div>
-                                                            </li>
-                                                        <?php else : ?>
-                                                            <li class="progress-step <?php if (in_array($item->order_status, array("processing", "shipped", "completed",))) : echo "is-active";
-                                                                                        endif; ?>" id="processing_<?php echo $item->id; ?>">
-                                                                <div class="progress-marker"></div>
-                                                                <div class="progress-text">
-                                                                    <h6 class="progress-title">Processing</h6>
-                                                                </div>
-                                                            </li>
-                                                            <li class="progress-step <?php if (in_array($item->order_status, array("shipped", "completed",))) : echo "is-active";
-                                                                                        endif; ?>" id="shipped_<?php echo $item->id; ?>">
-                                                                <div class="progress-marker"></div>
-                                                                <div class="progress-text">
-                                                                    <h6 class="progress-title">Shipped</h6>
-                                                                </div>
-                                                            </li>
-                                                            <li class="progress-step <?php if (in_array($item->order_status, array("completed",))) : echo "is-active";
-                                                                                        endif; ?>" id="delivered_<?php echo $item->id; ?>">
-                                                                <div class="progress-marker"></div>
-                                                                <div class="progress-text">
-                                                                    <h6 class="progress-title">Delivered</h6>
-                                                                </div>
-                                                            </li>
-                                                        <?php endif; ?>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <br />
-
-                                        </div>
-                                    <?php endforeach; ?>
-
-                                    </div>
-                                </div>
-
-
-                            </div>
                         </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>
 <!-- Wrapper End-->
