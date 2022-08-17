@@ -16932,6 +16932,7 @@ form select.error {
 @media (max-width: 768px) {
   .product-slider .img-product-slider {
     max-width: 100% !important;
+    max-height: 100% !important;
   }
 }
 @media (min-width: 992px) {
