@@ -302,10 +302,13 @@ class Cart_controller extends Home_Core_Controller
         $cart_item_id = $this->input->post('cart_item_id', true);
         $this->cart_model->remove_from_cart($cart_item_id);
         $this->cart_model->calculate_cart_total();
+
         $cart_items = $this->cart_model->get_sess_cart_items();
         $cart_total = $this->cart_model->get_sess_cart_total();
         $data['cart_items'] = $this->session_cart_items;
         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
+        // var_dump($data['cart_total']);
+        // die();
         $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
         $payment_button = "";
         if (count($cart_items) != 0) {
@@ -2084,7 +2087,7 @@ class Cart_controller extends Home_Core_Controller
         $response = curl_exec($curl);
 
         curl_close($curl);
-
+        var_dump($response);
 
         $token = json_decode($response)->data->token;
         if (json_decode($response)->status == "SUCCESS") {
@@ -2152,6 +2155,22 @@ class Cart_controller extends Home_Core_Controller
                 'message' => '',
                 // 'to' => $seller_id,
             );
+            $arr = ["RS " . $data_pay_array[$i]->seller_pay / 100, '3 buiseness days'];
+            $passed_data = '"' . implode('","', $arr) . '"';
+            $amount = $data_pay_array[$i]->seller_pay / 100;
+            $aaa = "'$amount'" . "," . "'3 working days'";
+            $aab = trim($aaa, '"');
+            $required_data = array(
+                "from" => "918287606650",
+                "to" => "91$obj->phone",
+                "type" => "mediatemplate",
+                "channel" => "whatsapp",
+                "template_name" => "payout",
+                "params" => $passed_data
+            );
+            if ($this->general_settings->send_whatsapp == 1) {
+                $this->notification_model->whatsapp($required_data);
+            }
             $this->load->model("email_model");
             $this->email_model->notification($data1);
         }

@@ -798,8 +798,6 @@ class Order_model extends CI_Model
         $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
         $cart_items = $this->cart_model->get_sess_cart_items();
         $cart_total = $this->cart_model->get_sess_cart_total();
-        // var_dump($cart_items);
-        // ;
         if (!empty($cart_items)) {
             foreach ($cart_items as $cart_item) {
                 $product = get_active_product($cart_item->product_id);
@@ -2494,7 +2492,7 @@ class Order_model extends CI_Model
                     $city = get_city($client->city_id);
 
                     foreach ($new_invoice_items as $new_item) {
-                        $current_invoice_no = $this->get_invoice_number_by_seller_id($new_item["seller_id"]);
+                        // $current_invoice_no = $this->get_invoice_number_by_seller_id($new_item["seller_id"]);
                         $data = array(
                             'order_id' => $order->id,
                             'seller_id' => $new_item["seller_id"],
@@ -2513,8 +2511,8 @@ class Order_model extends CI_Model
                             'total_discount' => $new_item["total_discount"],
                             'sub_total' => $new_item["sub_total"],
                             'total_amount' => $new_item["total_amount"],
-                            'invoice_no' => 'GB/22-23/' . $new_item["seller_id"] . '/' . $current_invoice_no[0]->invoice_seq,
-                            'invoice_seq' => $current_invoice_no[0]->invoice_seq,
+                            // 'invoice_no' => 'GB/22-23/' . $new_item["seller_id"] . '/' . $current_invoice_no[0]->invoice_seq,
+                            // 'invoice_seq' => $current_invoice_no[0]->invoice_seq,
                             'created_at' => date('Y-m-d H:i:s')
                         );
                         $order_shipping = $this->get_order_shipping($order->id);
@@ -2798,12 +2796,31 @@ class Order_model extends CI_Model
     {
         $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
         $Supp_ship_data = json_decode($this->get_seller_wise_data_bifurcation($cart_total));
-
+        $cart_items = $this->cart_model->get_sess_cart_items();
 
         if ($Supp_ship_data) {
             foreach ($Supp_ship_data as $sup) {
                 $seller_address = get_user($sup->SupplierId);
+                $title = "";
 
+                if (!empty($cart_items)) {
+                    $i = 1;
+                    $count = count($cart_items);
+                    foreach ($cart_items as $cart_item) {
+                        $product = get_active_product($cart_item->product_id);
+                        if ($sup->SupplierId == $product->user_id) {
+                            $seller_address = get_seller($product->user_id);
+                            $num_days = (int)(($product->lead_days) * 24 * 60 * 60);
+                            $num_hours = (int)(($product->lead_time) * 60 * 60);
+                            $product_details = $this->product_model->get_product_details_by_id($cart_item->product_id);
+                            $title .= $product_details->title;
+                            if ($i != $count) {
+                                $title .= ",";
+                                $i++;
+                            }
+                        }
+                    }
+                }
                 $data = array(
                     'order_id' => $order_id,
                     'seller_id' => $sup->SupplierId,
@@ -2838,6 +2855,21 @@ class Order_model extends CI_Model
                     $data['sup_cod_igst'] = $sup->cod_tax_charges;
                     $data['sup_cod_cgst'] = 0;
                     $data['sup_cod_sgst'] = 0;
+                }
+                $order_number = get_order($order_id);
+                $arr = [$title, $order_number->order_number];
+                $passed_data = '"' . implode('","', $arr) . '"';
+                $required_data = array(
+                    "from" => "918287606650",
+                    "to" => "91$seller_address->phone_number",
+                    "type" => "mediatemplate",
+                    "channel" => "whatsapp",
+                    "template_name" => "order_receive",
+                    "params" => $passed_data,
+                    "param_url" => "dashboard/sale" . "/" . $order_number->order_number
+                );
+                if ($this->general_settings->send_whatsapp == 1) {
+                    $this->notification_model->whatsapp($required_data);
                 }
                 $data["total_shipping_cost"] = $data["sup_shipping_cost"] + $data['Sup_Shipping_gst'];
                 $data["total_cod_cost"] = $data["Sup_cod_cost"] + $data['Sup_cod_gst'];
