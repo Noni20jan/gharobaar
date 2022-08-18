@@ -534,7 +534,7 @@
                                                                                 <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?>
                                                                                 </div>
                                                                             <?php elseif ($product->stock < (int)$cart_item->quantity) : ?>
-                                                                                <div class="lbl-enough-quantity"><?php echo trans("out_of_stock"); ?>
+                                                                                <div class="lbl-enough-quantity">Only <?php echo $product->stock ?> units of this item is available with the seller right now</br>* Kindly change the number of units to <?php echo $product->stock ?> in cart to proceed *
                                                                                 </div>
                                                                             <?php endif; ?>
                                                                         <?php else : ?>
