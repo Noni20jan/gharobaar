@@ -1207,7 +1207,7 @@
                                                     <label class="control-label">Pincode<span class="Validation_error"> *</span></label>
                                                     <input type="number" name="pincode1" id="pincode1" class="form-control auth-form-input" placeholder="Pincode" value="<?php echo empty($product->product_pincode) ? html_escape($user->pincode) : html_escape($product->product_pincode); ?>" required maxlength="6" minlength="6" onKeyPress="if(this.value.length==6) return false;" required onkeyup="get_location($( '#pincode1').val())">
                                                     <p class="Validation_error" id="pincode_p1"></p>
-                                                    <span class="Validation_error error" id="pincode_span1"></span>
+                                                    <span class="Validation_error " id="pincode_span"></span>
                                                 </div>
 
                                                 <div class="col-12 col-sm-4 m-b-15">
@@ -1332,7 +1332,7 @@
                     <?php if ($user->id == $this->auth_user->id && $product->status == 1) : ?>
                         <a class="btn btn-lg btn-info btn-form-product-details pull-right" style="margin-left:10px;" href="<?= generate_dash_url("products"); ?>"><?php echo trans("close"); ?></a>
                     <?php endif; ?>
-                    <button type="submit" name="submit" value="save_changes" class="btn btn-lg btn-success btn-form-product-details pull-right"><?php echo ($user->id == $this->auth_user->id && $product->status == 1) ? trans("resave_changes") : trans("save_changes"); ?></button>
+                    <button type="submit" name="submit" value="save_changes"  class="btn btn-lg btn-success btn-form-product-details pull-right save_change"><?php echo ($user->id == $this->auth_user->id && $product->status == 1) ? trans("resave_changes") : trans("save_changes"); ?></button>
                 <?php endif; ?>
             </div>
         </div>
@@ -1525,6 +1525,24 @@
     <script>
         function sku_code_validation() {
             $("#input_sku_option").keyup(function() {
+                var limit = $('#input_sku_option').val();
+            $button = $('#btn_save_variation_option');
+            $button1 = $('#btn_save_variation_option');
+
+            if (limit.length >= 50) {
+                document.getElementById("word_length").style.display = "block";
+                $button.prop('disabled', 'disabled');
+                $button1.prop('disabled', 'disabled');
+
+
+            } else {
+                document.getElementById("word_length").style.display = "none";
+
+                $button.prop('disabled', false);
+                $button1.prop('disabled', false);
+
+
+            }
                 let z = $(this).val().replace(/^\s+|\s+$/gm,'');
                 var x = <?php echo json_encode($sku); ?>;
                 if (x.some(e => e.sku_id == z)) {
@@ -1697,9 +1715,11 @@
                 success: function(html) {
                     console.log(html)
                     if (html[0].PostOffice == null) {
-                        // $('#pincode_span')[0].innerHTML = "Please enter a valid pincode.";
+                        $('#pincode_span')[0].innerHTML = "Please enter a valid pincode.";
+                        $('.save_change').prop('disabled',true);
                     } else {
-                        // $('#pincode_span')[0].innerHTML = "";
+                        $('#pincode_span')[0].innerHTML = "";
+                        $('.save_change').prop('disabled',false);
                         if (number > 0) {
                             $('#product_state1').val(html[0].PostOffice[0].State)
                             $('#product_city1').val(html[0].PostOffice[0].District)

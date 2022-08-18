@@ -580,10 +580,9 @@ function generateUniqueProductVariationCode(button, product_id, sku) {
             var obj = JSON.parse(res);
             //console.log(obj);
             document.getElementById("input_sku_check").style.display = "none";
-            document.getElementById("sku_check").style.display = "none";
             document.getElementById("btn_add_variation_option").disabled = false;
             document.getElementById("btn_save_variation_option").disabled = false;
-            document.getElementById("btn_edit_variation_option").disabled = false;
+            // document.getElementById("btn_edit_variation_option").disabled = false;
 
             $("#input_sku_option").val(obj.sku_option);
             $("#form-variation-option-add-text").show();

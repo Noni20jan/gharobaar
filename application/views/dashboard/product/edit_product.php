@@ -139,7 +139,8 @@
                 <div class="form-group">
                     <label class="control-label"><?php echo trans("sku"); ?>&nbsp;(<?php echo trans("product_code"); ?>)<span class="Validation_error"> *</span></label>
                     <div class="position-relative">
-                        <input type="text" name="sku" id="input_sku" class="form-control form-input" value="<?= html_escape($product->sku); ?>" placeholder="<?php echo trans("sku_desc"); ?>" required>
+                        <input type="text" name="sku" id="input_sku" class="form-control form-input" onkeyup="checklength(this)" maxlength="50"  value="<?= html_escape($product->sku); ?>" placeholder="<?php echo trans("sku_desc"); ?>" required>
+                        <span class="Validation_error hideMe" id="word_length_limit">*maxmimum SKU Code  length is 50 only*</span>
                         <button type="button" class="btn btn-default btn-generate-sku" onclick="get_automated_SKU($('#categories'),this)">
                             <div id="sp-options-add" class="spinner spinner-btn-add-variation">
                                 <div class="bounce1"></div>
@@ -291,6 +292,9 @@
     </div>
 </div>
 <script>
+        
+    </script>
+<script>
     $("#input_sku").keyup(function() {
         let z = $(this).val().replace(/^\s+|\s+$/gm, '');
         let m = "<?php echo $product->sku; ?>";
@@ -431,3 +435,20 @@
         $(this).hide();
     });
 </script>
+<script>
+        function checklength(el) {
+            var limit = $('#input_sku').val();
+            $button = $('#disable_sku')
+            if (el.value.length >= 50) {
+                $("#word_length_limit").attr("style", "display:block")
+                $button.prop('disabled', 'disabled');
+
+            } else {
+                $("#word_length_limit").attr("style", "display:none")
+
+                $button.prop('disabled', false);
+
+            }
+
+        }
+    </script>

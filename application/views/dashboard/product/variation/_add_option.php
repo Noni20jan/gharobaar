@@ -1026,9 +1026,9 @@
                     <div class="row">
 
                         <div class="col-sm-6  hide-if-default">
-                            <label class="control-label"><?php echo trans("sku"); ?></label>
-                            <input type="text" name="sku-variation" id="input_sku_option" onkeyup="sku_code_validation()" class="form-control auth-form-input" placeholder="<?php echo trans("sku_desc"); ?>" required value="">
-               
+                            <label class="control-label"><?php echo trans("sku"); ?><span class="Validation_error"> *</span></label>
+                            <input type="text" name="sku-variation" id="input_sku_option" onkeyup="sku_code_validation()" maxlength="50"  class="form-control auth-form-input"  placeholder="<?php echo trans("sku_desc"); ?>" required value="">
+                            <span class="Validation_error hideMe" id="word_length" >*maxmimum SKU Code  length is 50 only*</span>
                             <button type="button" class="btn btn-default btn-generate-option-sku" onclick="generateUniqueProductVariationCode($(this),'<?php echo $product->id ?>','<?php echo $product->sku ?>')">
                                 <div id="sp-options-add" class="spinner spinner-btn-add-variation spinner-variation-options">
                                     <div class="bounce1"></div>
