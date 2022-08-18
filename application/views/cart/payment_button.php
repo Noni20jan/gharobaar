@@ -54,8 +54,13 @@ endif;
         <?php else : ?>
             <?php if ($is_shop_open == 0) : ?>
                 <strong class="btn btn-block " data-toggle="modal" data-target="#shop_is_closed"><?php echo trans("continue_to_checkout"); ?> </strong>
-            <?php else : ?>
-                <?php if ($this->cart_model->get_sess_cart_total()->total_price <= $this->general_settings->min_cart_value && empty($this->cart_model->get_sess_cart_total()->applied_coupon_discount)) : ?>
+            <?php else :
+                // var_dump($this->cart_model->get_sess_cart_total()->applied_coupon_id);
+                // var_dump($this->session->userdata('mds_shopping_cart_coupon'));
+                // var_dump($this->session->userdata('mds_shopping_cart_total'));
+                // die();
+            ?>
+                <?php if ($cart_total->total_price <= $this->general_settings->min_cart_value && (empty($this->session->userdata('mds_shopping_cart_coupon')) || $this->session->userdata('mds_shopping_cart_coupon') == null || $this->cart_model->get_sess_cart_total()->applied_coupon_id == 0)) : ?>
                     <strong class="btn btn-block " data-toggle="modal" data-target="#min_cart_val_modal"><?php echo trans("continue_to_checkout"); ?> </strong>
                 <?php else : ?>
                     <?php if ($matched_min_order_value == false) : ?>
