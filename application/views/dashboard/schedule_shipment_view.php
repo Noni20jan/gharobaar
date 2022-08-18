@@ -1,3 +1,10 @@
+<input type="hidden" id="actual_weight" value="<?php echo $total_weight; ?>">
+<input type="hidden" id="actual_length" value="<?php echo $total_length; ?>">
+
+<input type="hidden" id="actual_breadth" value="<?php echo $total_width; ?>">
+
+<input type="hidden" id="actual_height" value="<?php echo $total_height; ?>">
+
 <?php if ($pickup_location_matched != 0) : ?>
 
     <div class="modal-header">
@@ -89,7 +96,7 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><?php echo trans("close"); ?></button>
 
-            <button type="button" onclick="wrapper_multiple_product(<?php echo htmlspecialchars(json_encode($products), ENT_QUOTES); ?>,<?php echo htmlspecialchars(json_encode($order_items), ENT_QUOTES); ?>);" class="btn btn-md btn-primary">Update</button>
+            <button type="button" onclick="check_weight_change(<?php echo htmlspecialchars(json_encode($products), ENT_QUOTES); ?>,<?php echo htmlspecialchars(json_encode($order_items), ENT_QUOTES); ?>);" class="btn btn-md btn-primary">Update</button>
         </div>
     <?php elseif ($order_items[0]->product_delivery_partner == "NOW-BIKES") : ?>
         <div class="modal-header">
@@ -155,3 +162,40 @@
         <?php echo form_close(); ?>
     <?php endif; ?>
 <?php endif; ?>
+
+
+<div class="modal fade" id="weight_modal_warning" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-custom">
+            <!-- form start -->
+
+            <div class="modal-header">
+                <!-- <?php echo json_encode($products); ?> -->
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true"><i class="icon-close"></i> </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row tracking-number-container">
+                    <div class="col-sm-12">
+                        <?php $product_count = count($products);
+                        if ($product_count == 1) { ?>
+                            <div class="form-group" style="margin-bottom:0px;">
+                                <p class="details">Kindly take note that the Package weight entered by you while uploading the product was <span><?php echo $total_weight; ?></span> grams , however the current volumetric weight based on the dimensions entered by you is <span id="volumetric_weight"></span> grams. Any discrepancy here might lead to a loss of revenue, therefore we request you to check this before submitting because shipping charges are calculated on either gross weight of the package or the volumetric weight whicever is higher. </p>
+                            </div>
+                        <?php } else { ?>
+                            Kindly take note that the combined Package weight calculated based on the input provided by you while uploading the product was <span><?php echo $total_weight; ?></span> grams , however the current volumetric weight based on the dimensions entered by you is <span id="volumetric_weight"></span>. Any discrepancy here might lead to a loss of revenue, therefore we request you to check this before submitting because shipping charges are calculated on either gross weight of the package or the volumetric weight whicever is higher.
+
+
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="wrapper_multiple_product(<?php echo htmlspecialchars(json_encode($products), ENT_QUOTES); ?>,<?php echo htmlspecialchars(json_encode($order_items), ENT_QUOTES); ?>);" class=" btn btn-md btn-primary" data-dismiss="modal"><?php echo trans("continue"); ?></button>
+                <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><?php echo trans("close"); ?></button>
+
+            </div>
+        </div>
+    </div>
+</div>
