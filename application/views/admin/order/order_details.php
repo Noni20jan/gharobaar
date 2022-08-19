@@ -740,7 +740,18 @@
                     </div>
                 </div>
                 <p style="font-size: 12px;">(The coupon is applied to the total amount of order)</p>
-            <?php    } ?>
+                <strong><?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);?>
+                    <?php $order_detail = $this->order_model->get_order_details_by_id($order->id);?>
+                   
+                   <?php if (!empty($coupon->offer_code && $coupon->discount_percentage)) {
+                    if ($order_detail->coupon_discount == $coupon->allowed_max_discount*100 ) {
+                        
+                            echo ('(Please take note that the maximum deduction allowed for this Coupon is Rs.'.($coupon->allowed_max_discount).')'); 
+                  }
+                }
+                  ?>
+                </strong>
+            <?php    } ?>       
             <hr>
             <div class="row row-details">
                 <div class="col-xs-12 col-sm-6 col-right">

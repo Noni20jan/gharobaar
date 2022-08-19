@@ -331,11 +331,39 @@
                         <div class="col-3">
                             <?php $quantity = $this->order_model->get_qunatity_of_order($order->id) ?>
                             <?php foreach ($quantity as $quantities) : ?>
-                                <p> <span class="product-details">quantity-&nbsp;</span><?php echo ($quantities->quantity) ?></p>
+                                <p> <span class="product-details">Quantity:-&nbsp;</span><?php echo ($quantities->quantity) ?></p>
 
                             <?php endforeach ?>
                         </div>
                         <div class="col-9">
+                        </div>
+                        </div>
+                        <div class="row order-row-item">
+                        <div class="col-3">
+                        <p> <span class="product-details"></span>
+                        <?php if (!empty($order->offer_id) && $order->offer_id != 0) { ?>
+                        <?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);
+                         if (!empty($coupon->offer_code && $coupon->discount_percentage)) {
+                            echo ('Coupon Discount ('.$coupon->discount_percentage).'%)-'; }
+                        elseif(!empty($coupon->offer_code && $coupon->discount_amt)){
+                            echo ('Coupon Discount :-');
+                        }
+                            ?>&nbsp;
+                        <?php echo price_formatted($order_details->coupon_discount, $order->price_currency); ?>/-</p>
+
+                        </div>
+                        <div class="col-9">
+
+                        </div>
+                    </div>
+                        <div class="row order-row-item">
+                            <?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);?>
+                            <?php if (($order_details->coupon_discount == $coupon->allowed_max_discount*100)) : ?>
+                            <p><span class="product-details">&nbsp;&nbsp;&nbsp;&nbsp;(Please take note that the maximum deduction allowed for this Coupon is Rs.<?php echo($coupon->allowed_max_discount)?>)</span></p>
+                            <?php endif ?>
+                            <?php }?>
+                        <div class="col-9">
+
                         </div>
                     </div>
 
