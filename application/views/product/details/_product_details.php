@@ -218,13 +218,13 @@
         
         <?php $variations=get_product_variations($product->id);
         $option= count($variations); ?>
-        <?php if (!empty($option != 0 )) : ?>
-        <h1 class="product-title"><?= html_escape($product_details->title); ?><span id="selected_variation"></span></h1>
+        <?php if (!empty($option != 0 && $categories == 0 && $product_weight == true)) : ?>
+        <h1 class="product-title"><?= html_escape($product_details->title); ?><span id="selected_variation">&nbsp;<?= html_escape('('.$product->product_weight.'g)');?></span></h1>
         <?php elseif($categories == 0) : 
             if($product_weight == true) :?>
         <h1 class="product-title"><?= html_escape($product_details->title); ?>&nbsp;<?= html_escape('('.$product->product_weight.'g)');?></h1>  
         <?php else: ?>
-        <h1 class="product-title"><?= html_escape($product_details->title); ?></h1>  
+        <h1 class="product-title"><?= html_escape($product_details->title); ?><span id="selected_variation"></span></h1>  
         <?php endif;?>
         <?php endif;  ?>
         <div class="row-custom meta">

@@ -80,14 +80,14 @@
         </div>
     </div>
 </div>
-<div class="modal" id="feedback_msg" tabindex="-1" role="dialog" aria-hidden="true"  >
+<div class="modal" id="feedback_msg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom">
-        <div class="modal-body" style="padding:0px; color:black; margin-right:2px; font-size:15px; ">
-            <button type="button" class="close" data-dismiss="modal" >
-                <span aria-hidden="true">
-                    <i class="icon-close"></i></span>
-            </button>
+            <div class="modal-body" style="padding:2px; margin-right:1px; border-radius:5px; ">
+                <button type="button" class="close" data-dismiss="modal" style="font-size:25px; color:#000000;font-weight: bolder; text-shadow:0 1px 0 #000000 !important;">
+                    <span aria-hidden="true">
+                        <i class="icon-close"></i></span>
+                </button>
                 <img src="<?php echo base_url(); ?>assets/img/NewFeedback.png" style="width: 100%;">
             </div>
         </div>
@@ -149,7 +149,7 @@
                         $('#feedback_msg').modal('show');
 
                         // setTimeout(function() {
-                            // $('#feedback_msg').modal('hide');
+                        // $('#feedback_msg').modal('hide');
                         // }, 6000);
                     } else {
                         reset_data.reset();
