@@ -310,65 +310,56 @@
                     </div>
                     <div class="row order-row-item">
                         <div class="col-3">
-                            <?php if (!empty($order_details->discount)) : ?>
-                                <p> <span class="product-details">Discount:-&nbsp;</span><?php echo price_formatted($order_details->discount, $order_details->price_currency); ?></p>
-                            <?php endif ?>
-                        </div>
-                        <div class="col-9">
-
-                        </div>
-                    </div>
-                    <div class="row order-row-item">
-                        <div class="col-3">
-                            <p> <span class="product-details">Price:-&nbsp;</span><?php echo price_formatted($order_details->price_total, $order_details->price_currency); ?></p>
-
-                        </div>
-                        <div class="col-9">
-
-                        </div>
-                    </div>
-                    <div class="row order-row-item">
-                        <div class="col-3">
                             <?php $quantity = $this->order_model->get_qunatity_of_order($order->id) ?>
                             <?php foreach ($quantity as $quantities) : ?>
                                 <p> <span class="product-details">Quantity:-&nbsp;</span><?php echo ($quantities->quantity) ?></p>
 
                             <?php endforeach ?>
                         </div>
+
                         <div class="col-9">
                         </div>
-                        </div>
-                        <div class="row order-row-item">
+                    </div>
+                    <div class="row order-row-item">
                         <div class="col-3">
-                        <p> <span class="product-details"></span>
-                        <?php if (!empty($order->offer_id) && $order->offer_id != 0) { ?>
-                        <?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);
-                         if (!empty($coupon->offer_code && $coupon->discount_percentage)) {
-                            echo ('Coupon Discount ('.$coupon->discount_percentage).'%)-'; }
-                        elseif(!empty($coupon->offer_code && $coupon->discount_amt)){
-                            echo ('Coupon Discount :-');
-                        }
-                            ?>&nbsp;
-                        <?php echo price_formatted($order_details->coupon_discount, $order->price_currency); ?>/-</p>
-
+                            <p> <span class="product-details"><?php if (!empty($order->offer_id) && $order->offer_id != 0) { ?>
+                                        Subtotal:-&nbsp;</span><?php echo price_formatted($order_details->price_subtotal, $order_details->price_currency); ?></p>
+                        <?php } ?>
                         </div>
+
                         <div class="col-9">
 
                         </div>
                     </div>
-                        <div class="row order-row-item">
-                            <?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);?>
-                            <?php if (($order_details->coupon_discount == $coupon->allowed_max_discount*100)) : ?>
-                            <p><span class="product-details">&nbsp;&nbsp;&nbsp;&nbsp;(Please take note that the maximum deduction allowed for this Coupon is Rs.<?php echo($coupon->allowed_max_discount)?>)</span></p>
+                    <div class="row order-row-item">
+                        <div class="col-9">
+                            <p> <span class="product-details"></span>
+                                <?php if (!empty($order->offer_id) && $order->offer_id != 0) { ?>
+                                    <?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);
+                                    if (!empty($coupon->offer_code && $coupon->discount_percentage)) {
+                                        echo ('Coupon Discount (' . $coupon->discount_percentage) . '%)-';
+                                    } elseif (!empty($coupon->offer_code && $coupon->discount_amt)) {
+                                        echo ('Coupon Discount :-');
+                                    }
+                                    ?>&nbsp;
+                                    <?php echo price_formatted($order_details->coupon_discount, $order->price_currency); ?>/-</p>
+                        
+                            <?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id); ?>
+                            <?php if (($order_details->coupon_discount == $coupon->allowed_max_discount * 100)) : ?>
+                                <p><span class="product-details">(Please take note that the maximum deduction allowed for this Coupon is Rs.<?php echo ($coupon->allowed_max_discount) ?>)</span></p>
                             <?php endif ?>
-                            <?php }?>
+                        <?php } ?>
+                        </div>
+                    </div>
+                    <div class="row order-row-item">
+                        <div class="col-3">
+                            <p> <span class="product-details">Total:-&nbsp;</span><?php echo price_formatted($order_details->price_total, $order_details->price_currency); ?></p>
+
+                        </div>
                         <div class="col-9">
 
                         </div>
                     </div>
-
-
-
                 </div>
 
 
@@ -424,22 +415,23 @@
                 </div>
             </div>
 
-            <div class="order-head" style="margin-left:12px;" >
+            <div class="order-head" style="margin-left:12px;">
                 <h3 class="block-title"><?php echo trans("products"); ?></h3>
             </div>
             <div class="row" style="padding:0px 14px;">
                 <div class="order-details-new-ui">
                     <div class="table-responsive">
                         <table class="table table-orders">
-                            <button class="btn btn-md btn-block btn-info btn-table-delete" id="opened" style="float:right;display:none;"  onclick="open_modal()">Cancel Order</button>
+                            <button class="btn btn-md btn-block btn-info btn-table-delete" id="opened" style="float:right;display:none;" onclick="open_modal()">Cancel Order</button>
                             <thead>
                                 <tr>
-                                    <th><?php if ($item->order_status == "processing"): ?>                                           
-                                    <input type="checkbox" id="selectall" value="<?php echo $item->id; ?>"></th>
-                                    <?php endif; ?>
-                                    <th scope="col"><?php echo trans("product"); ?></th>
-                                    <th scope="col"><?php echo trans("options"); ?></th>
-                                    <th scope="col" style="text-align: center;"><?php echo trans("tracking_status"); ?></th>
+                                    <th><?php if ($item->order_status == "processing") : ?>
+                                            <input type="checkbox" id="selectall" value="<?php echo $item->id; ?>">
+                                    </th>
+                                <?php endif; ?>
+                                <th scope="col"><?php echo trans("product"); ?></th>
+                                <th scope="col"><?php echo trans("options"); ?></th>
+                                <th scope="col" style="text-align: center;"><?php echo trans("tracking_status"); ?></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -618,7 +610,7 @@
 
                                                             </div>
                                                         </li>
-                                                        <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller" || $item->order_status =="cancelled") : ?>
+                                                        <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller" || $item->order_status == "cancelled") : ?>
                                                             <li class="progress-step is-active" id="cancelled_<?php echo $item->id; ?>">
                                                                 <div class="progress-marker">
 
@@ -674,7 +666,7 @@
                                                     <?php if ($item->order_status == "shipped") : ?>
                                                         <h6 style="padding-bottom:4%;"><?php echo trans("order_shipped") ?></h6>
                                                     <?php endif; ?>
-                                                    <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller"|| $item->order_status == "cancelled") : ?>
+                                                    <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller" || $item->order_status == "cancelled") : ?>
                                                         <h6 style="padding-bottom:4%;">Your order is cancelled</h6>
                                                     <?php endif; ?>
                                                     <?php if ($item->order_status == "out_for_delivery") : ?>
@@ -709,7 +701,7 @@
                         <div class="line-detail" style="min-height:0px;">
                             <?php $order_status = 0;
                             foreach ($order_products as $item) :
-                                if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected'|| $item->order_status == 'cancelled') {
+                                if ($item->order_status == 'completed' || $item->order_status == 'cancelled_by_seller' || $item->order_status == 'cancelled_by_user' || $item->order_status == 'rejected' || $item->order_status == 'cancelled') {
                                     $order_status = 1;
                                 }
                             endforeach;
@@ -812,7 +804,7 @@
                                     <td>
                                         <?php if ($this->general_settings->reviews == 1 && $item->seller_id != $item->buyer_id) : ?>
                                             <div class="rate-product">
-                                                <div class="rating p-rate-product" >
+                                                <div class="rating p-rate-product">
                                                     <?php $review = get_review($item->product_id, $this->auth_user->id); ?>
                                                     <label class="label-star label-star-open-modal" data-star="5" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 5) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
                                                     <label class="label-star label-star-open-modal" data-star="4" data-product-id="<?php echo $item->product_id; ?>" data-toggle="modal" data-target="#rateProductModal"><i class="<?php echo (!empty($review) && $review->rating >= 4) ? 'icon-star' : 'icon-star-o'; ?>"></i></label>
@@ -1207,7 +1199,7 @@
 
                                                         </div>
                                                     </li>
-                                                    <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller"|| $item->order_status == "cancelled") : ?>
+                                                    <?php if ($item->order_status == "cancelled_by_user" || $item->order_status == "cancelled_by_seller" || $item->order_status == "cancelled") : ?>
                                                         <li class="progress-step is-active" id="cancelled_<?php echo $item->id; ?>">
                                                             <div class="progress-marker"></div>
                                                             <div class="progress-text">
@@ -1529,7 +1521,7 @@
 
 
             console.log(item_status[0].order_status);
-            if (item_status[i].order_status == "cancelled_by_user" || item_status[i].order_status == "cancelled_by_seller"|| item_status[i].order_status == "cancelled") {
+            if (item_status[i].order_status == "cancelled_by_user" || item_status[i].order_status == "cancelled_by_seller" || item_status[i].order_status == "cancelled") {
 
                 $('#ordered_' + item_status[i].id).addClass("is-complete");
             }
@@ -1588,7 +1580,7 @@
             $("input[name='checkbox-table']").prop("checked", this.checked);
 
         }
-        
+
     });
 
     // function open_modal1() {
