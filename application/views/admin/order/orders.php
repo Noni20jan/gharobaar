@@ -15,10 +15,11 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="table-responsive">
-					<table class="table table-bordered table-striped" role="grid">
+					<table id="order_status" class="table table-bordered table-striped" role="grid">
 						<?php $this->load->view('admin/order/_filter_orders'); ?>
 						<thead>
 							<tr role="row">
+								<th><input type="checkbox" id="selectall"></th>
 								<th>Order Date</th>
 								<th>Order No</th>
 								<th>Payment Method</th>
@@ -32,6 +33,7 @@
 						<tbody>
 							<?php foreach ($orders as $item) : ?>
 								<tr>
+									<th><input type="checkbox" name="checkbox-table" class="checkbox-table" value="<?php echo $item->id; ?>" value="false" ;></th>
 									<td>
 										<button type="button" class="btn btn-success exploder" id="onPlus_order_details_view" onclick="order_summary_on_orders(<?php echo $item->id; ?>);">
 											<i class="fa fa-plus" aria-hidden="true"></i>
@@ -159,7 +161,7 @@
 
 						</tbody>
 					</table>
-
+					<!-- <input type = "button" value = "Get" onclick = "GetSelected(id)" />	 -->
 					<?php if (empty($orders)) : ?>
 						<p class="text-center">
 							<?php echo trans("no_records_found"); ?>
@@ -176,6 +178,10 @@
 				</div>
 			</div>
 		</div>
+
+
+		<button class="btn bg-purple dropdown-toggle btn-select-option" type="button" onclick="GetSelected()" id="opened" style="float:left;display:none; height:40px; width:110px;" area-expanded="false" data-toggle="dropdown" <?php //echo trans('select_option'); 
+																																																									?>>Complete order</button>
 	</div>
 </div>
 <!-- script for collapsible order details -->
@@ -195,6 +201,7 @@
 		}
 	});
 </script>
+
 <!-- script for expandable orders -->
 <script>
 	var dataa = 1;
@@ -319,3 +326,63 @@
 	// console.log(time_ago(new Date(Date.now() - aDay * 2)));
 </script>
 <!-- script end for expandable orders -->
+<script>
+	$('input[name="checkbox-table"]').click(function() {
+		if ($("input[name='checkbox-table']:checked").length > 0) {
+			document.getElementById("opened").style.display = "inline-block";
+
+		} else {
+			document.getElementById("opened").style.display = "none";
+
+		}
+	});
+
+
+	$("#selectall").click(function() {
+		if ($(this).is(":checked")) {
+
+			$("input[name='checkbox-table']").prop("checked", this.checked);
+			document.getElementById("opened").style.display = "inline-block";
+
+		}
+		if (!$(this).is(":checked")) {
+			document.getElementById("opened").style.display = "none";
+			$("input[name='checkbox-table']").prop("checked", this.checked);
+
+		}
+
+	});
+</script>
+<script>
+	function GetSelected() {
+		var selected = new Array();
+		var os = document.getElementById("order_status");
+		var chks = order_status.getElementsByTagName("INPUT");
+
+		for (var i = 0; i < chks.length; i++) {
+			if (chks[i].checked) {
+				selected.push(chks[i].value);
+			}
+		}
+		if (selected.length > 0) {
+			for (var i = 0; i < selected.length; i++) {
+				var data = {
+					"id": selected[i],
+					'order_status': "completed",
+					"option": "payment_received"
+				};
+				//console.log(selected);
+				data[csfr_token_name] = $.cookie(csfr_cookie_name);
+				$.ajax({
+					method: "POST",
+					url: base_url + "Order_admin_controller/update_order_status_post",
+					data: data,
+					success: function(response) {
+						console.log(response);
+						location.reload();
+					}
+				})
+			}
+		}
+	}
+</script>

@@ -52,7 +52,7 @@ class Order_admin_controller extends Admin_Core_Controller
 	 */
 	public function order_details1()
 	{
-		$id=$this->input->post('order_id',true);
+		$id = $this->input->post('order_id', true);
 		$data['title'] = trans("order");
 
 		// $data['order'] = $this->order_admin_model->get_order($id);
@@ -69,7 +69,7 @@ class Order_admin_controller extends Admin_Core_Controller
 	}
 
 
-	
+
 	public function order_product_details($id)
 	{
 		$data['title'] = trans("order");
@@ -119,12 +119,73 @@ class Order_admin_controller extends Admin_Core_Controller
 		}
 	}
 
+
+
+	public function update_order_status_post()
+	{
+		$this->order_options_post();
+		$order_id = $this->input->post('id', true);
+		$order_products = $this->order_admin_model->get_order_products($order_id);
+		if (!empty($order_products)) {
+			foreach ($order_products as $order_product1) {
+				$id = $order_product1->id;
+				// var_dump($id);
+				$order_product = $this->order_admin_model->get_order_product($id);
+				if (!empty($order_product)) {
+					if ($this->order_admin_model->update_order_product_status($order_product->id)) {
+						$order_status = $this->input->post('order_status', true);
+						if ($order_product->product_type == "digital") {
+							if ($order_status == 'completed' || $order_status == 'payment_received') {
+								$this->order_model->add_digital_sale($order_product->product_id, $order_product->order_id);
+								//add seller earnings
+								$this->earnings_model->add_seller_earnings($order_product);
+							}
+						} else {
+							if ($order_status == 'completed') {
+								//add seller earnings
+								$this->earnings_model->add_seller_earnings($order_product);
+							} else {
+								//check if earning added before
+								$order = $this->order_admin_model->get_order($order_product->order_id);
+								if (!empty($order) && !empty($this->earnings_model->get_earning_by_user_id($order_product->seller_id, $order->order_number))) {
+									//remove seller earnings
+									$this->earnings_model->remove_seller_earnings($order_product);
+								}
+							}
+						}
+
+						if ($order_status == 'cancelled') {
+							$order = $this->order_admin_model->get_order($order_product->order_id);
+							$payment_method = $order->payment_method;
+							if ($payment_method == 'Cashfree') {
+								if ($this->general_settings->enable_easysplit == 0) {
+									$this->order_model->recal_prepaid_seller_payable($order->id);
+								}
+							} else {
+								$this->order_model->recal_cod_seller_payable($order->id);
+							}
+						}
+						$this->session->set_flashdata('success', trans("msg_updated"));
+					} else {
+						$this->session->set_flashdata('error', trans("msg_error"));
+					}
+
+					$this->order_admin_model->update_payment_status_if_all_received($order_product->order_id);
+					$this->order_admin_model->update_order_status_if_completed($order_product->order_id);
+				}
+			}
+		}
+		redirect($this->agent->referrer() . "#t_product");
+	}
+
+
 	/**
 	 * Update Order Product Status Post
 	 */
 	public function update_order_product_status_post()
 	{
 		$id = $this->input->post('id', true);
+		// var_dump($id);
 		$order_product = $this->order_admin_model->get_order_product($id);
 		if (!empty($order_product)) {
 			if ($this->order_admin_model->update_order_product_status($order_product->id)) {
