@@ -39,7 +39,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped" role="grid">
+                    <table id="product_details" class="table table-bordered table-striped" role="grid">
                         <?php $this->load->view('admin/product/_filter_products'); ?>
 
                         <thead>
@@ -192,8 +192,53 @@
                 </div>
             </div>
         </div>
+        <button class="btn bg-purple dropdown-toggle btn-select-option" type="button" onclick="selected()" id="opened" style="float:left;display:none; height:40px; width:110px;" area-expanded="false" data-toggle="dropdown">Approve Product</button>
     </div><!-- /.box-body -->
 </div>
+
+<script>
+    $('input[name="checkbox-table"]').click(function() {
+        if ($("input[name='checkbox-table']:checked").length > 0) {
+            document.getElementById("opened").style.display = "inline-block";
+
+        } else {
+            document.getElementById("opened").style.display = "none";
+
+        }
+    });
+</script>
+
+<script>
+    function selected() {
+        var selected = new Array();
+        var chks = product_details.getElementsByTagName("INPUT");
+
+        for (var i = 0; i < chks.length; i++) {
+            if (chks[i].checked) {
+                selected.push(chks[i].value);
+            }
+        }
+        if (selected.length > 0) {
+            for (var i = 0; i < selected.length; i++) {
+                var data = {
+                    "id": selected[i],
+
+                };
+                console.log(selected);
+                data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    method: "POST",
+                    url: base_url + "Product_controller/approve_product",
+                    data: data,
+                    success: function(response) {
+                        console.log(response);
+                        location.reload();
+                    }
+                })
+            }
+        }
+    }
+</script>
 <script>
     function data(e, t) {
         console.log($('#admin_review_' + t))
