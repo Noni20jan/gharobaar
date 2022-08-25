@@ -50,12 +50,13 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom scroll-for-mobile">
             <!-- form start -->
-            <?php echo form_open_multipart('cart_controller/save_rate_last_order'); ?>
+            <!-- <?php echo form_open_multipart('cart_controller/save_rate_last_order'); ?> -->
+            <form enctype="multipart/form-data" id="form" class="form" method="POST" role="form" name="form">
             <div class="modal-header">
                 <h5 class="modal-title"><?php echo trans("rate_last_order"); ?></h5>
-                <!-- <button type="button" class="close" data-dismiss="modal">
+                <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true"><i class="icon-close"></i> </span>
-                </button> -->
+                </button>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -98,7 +99,7 @@
                                 <input type="file" id="fileuploadbasic" name="file_<?php echo $get_last_order->product_id ?>[]" size="40" multiple="multiple" accept=".jpg, .jpeg,.png">
 
                             </div>
-                            <span class="upload_image_span">*Maximun 4 images allowed</span>
+                            <span class="upload_image_span" style="color: red;">*Maximun 4 images allowed</span>
 
                             <script>
                                 $(document).on("click", ".rating-stars-<?php echo $i ?> .label-star", function() {
@@ -132,16 +133,29 @@
 
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-md btn-red" data-dismiss="modal"><?php echo trans("close"); ?></button> -->
-                <button type="submit" class="btn btn-md btn-custom submit"><?php echo trans("submit"); ?></button>
+                <button type="submit" id="submit_review" class="btn btn-md btn-custom submit"><?php echo trans("submit"); ?></button>
             </div>
-            <?php echo form_close(); ?>
-
+            <!-- <?php echo form_close(); ?> -->
+            </form>
 
         </div>
 
 
     </div>
 </div>
+</div>
+<div class="modal" id="feedback_msg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-custom">
+            <div class="modal-body" style="padding:2px; margin-right:1px; border-radius:5px; ">
+                <button type="button" class="close" data-dismiss="modal" style="font-size:25px; color:#000000;font-weight: bolder; text-shadow:0 1px 0 #000000 !important;">
+                    <span aria-hidden="true">
+                        <i class="icon-close"></i></span>
+                </button>
+                <img src="<?php echo base_url(); ?>assets/img/NewFeedback.png" style="width: 100%;">
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     $(function() {
@@ -153,7 +167,7 @@
 
             $file_upload = $('#fileuploadbasic', $form),
 
-            $button = $('.submit', $form);
+            $button = $('.submit_review', $form);
 
         // $button.prop('disabled', 'disabled');
 
@@ -165,6 +179,48 @@
             } else {
                 $button.prop('disabled', false);
             }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $("#submit_review").click(function() {
+            // alert("wqrw");
+            event.preventDefault();
+            var reset_data = document.getElementById("form")
+            var form = this.form;
+
+            var data = new FormData(form);
+
+            data.append(csfr_token_name, $.cookie(csfr_cookie_name));
+
+            $.ajax({
+                type: "POST",
+                url: base_url + 'cart_controller/save_rate_last_order',
+                data: data,
+                dataType: 'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response)
+                    var i = JSON.parse(response);
+
+                    if (i == true) {
+                        //console.log(i);
+                        reset_data.reset();
+                        $('#rateProductModalorder').modal('hide');
+                        $('#feedback_msg').modal('show');
+
+                        // setTimeout(function() {
+                        // $('#feedback_msg').modal('hide');
+                        // }, 6000);
+                    } else {
+                        reset_data.reset();
+                        $('#rateProductModalorder').modal('hide');
+                    }
+                }
+            });
         });
     });
 </script>

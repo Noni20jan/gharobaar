@@ -2268,21 +2268,40 @@ class Cart_controller extends Home_Core_Controller
                 $review = $this->review_model->get_review($product_id1, $this->auth_user->id);
                 if (!empty($review)) {
                     $this->review_model->update_review1($review->id, $rating2[$i], $product_id1, $review_text2[$i]);
-                } else {
+                    $images = $this->review_model->check_review_images($product_id, $this->auth_user->id);
+                    if (empty($images)) {
+                        $this->load->model('upload_model');
+                        $this->upload_model->upload_buyer_image('file_', $review->id, $product_id);
+                        $reviews = TRUE;
+                    } else {
+                        $reviews = false;
+                    }
+                    $reviews = TRUE;
+                    echo json_encode($reviews);
+                } 
+                else {
                     $last_id = $this->review_model->add_review1($rating2[$i], $product_id1, $review_text2[$i], 'file_'[$i]);
                     if (!empty($last_id)) {
 
                         $this->load->model('upload_model');
                         $img_path = $this->upload_model->upload_review_image('file_' . $product_id1, $last_id, $product_id1);
+                        if (!empty($img_path)) {
+                            $data = TRUE;
+                        } else {
+                            $data = FALSE;
+                        }
+                        $data = TRUE;
+                    } else {
+                        $data = False;
                     }
+                    echo json_encode($data);
                 }
 
                 $i++;
             }
         }
 
-
-        redirect($this->agent->referrer());
+        // redirect($this->agent->referrer());
     }
 
     public function load_pay_view()
