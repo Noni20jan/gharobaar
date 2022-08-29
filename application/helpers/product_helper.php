@@ -282,7 +282,7 @@ if (!function_exists('get_product_form_data')) {
                 if ($user->is_shop_open == "1") {
                     if ($product->is_free_product != 1) {
                         $data->add_to_cart_url = base_url() . 'add-to-cart';
-                        $data->button = '<button type="submit" name="submit" value="add_to_cart" style=" float:left; width:100%; font-weight:bold;" data-toggle="modal" data-target="#guestLoginModal" class="btn btn-md btn-block btn-product-cart"' . $disabled . '><i class="icon-cart-solid" style="margin-right:5px;"></i>' . trans("add_to_cart") . '</button>';
+                        $data->button = '<button type="submit" name="submit" value="add_to_cart" style=" float:left; width:100%; font-weight:bold;"  class="btn btn-md btn-block btn-product-cart"' . $disabled . '><i class="icon-cart-solid" style="margin-right:5px;"></i>' . trans("add_to_cart") . '</button>';
                         $data->button2 = '<button type="submit" name="submit" value="buy_now" style="width:45%; margin-right:0%; font-weight:bold;" class="btn btn-md btn-block"' . $disabled . '>' . trans("buy_now") . '</button>';
                     }
                 } else {

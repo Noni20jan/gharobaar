@@ -7397,10 +7397,14 @@
                 success: function(response) {
                     var i = JSON.parse(response);
 
-                    console.log(i.empty);
+                    //console.log(i.empty);
                     if (i.empty == "false") {
+                       <?php if ($this->auth_check) :?>
                         window.location.href =
                             base_url + "cart"
+                        <?php else : ?>
+                            $('#guestLoginModal').modal('show');
+                        <?php endif; ?>
                     } else {
                         ($(".cart_a").append(),
                             $.notify({
