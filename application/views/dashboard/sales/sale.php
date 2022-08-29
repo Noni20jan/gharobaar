@@ -1291,19 +1291,26 @@ endforeach; ?>
 ?>
 
 <script>
+    function round(x) {
+        return Math.ceil(x / 500) * 500;
+    }
+
     function check_weight_change(products_array, order_items_array) {
         // $("#schedule_multiple_products").modal('hide');
-        var total_weight = document.getElementById("actual_weight").value / 1000;
+        var total_weight = document.getElementById("actual_weight").value;
         var total_length = document.getElementById("actual_length").value;
         var total_height = document.getElementById("actual_height").value;
         var total_breadth = document.getElementById("actual_breadth").value;
         var length = document.getElementById("total_length").value;
         var breadth = document.getElementById("total_width").value;
         var height = document.getElementById("total_height").value;
-        var weight = document.getElementById("total_weight").value / 1000;
+        var weight = document.getElementById("total_weight").value;
         var weightsss = (weight / total_weight) * 100;
         // console.log(weightsss);
-        if ((weight / total_weight) * 100 <= <?php echo $this->general_settings->extra_weight; ?> && (length / total_length) * 100 <= <?php echo $this->general_settings->extra_length; ?> && (breadth / total_breadth) * 100 <= <?php echo $this->general_settings->extra_breadth; ?> && (height / total_height) * 100 <= <?php echo $this->general_settings->extra_height; ?>) {
+        var actual_weight = (length * breadth * height) / 5;
+        var nearest_weight = round(total_weight);
+        var exceed_value = nearest_weight - actual_weight;
+        if (Math.sign(exceed_value) == 1) {
             wrapper_multiple_product(products_array, order_items_array)
         } else {
 
@@ -1311,12 +1318,12 @@ endforeach; ?>
             var total_length = document.getElementById("actual_length").value;
             var total_height = document.getElementById("actual_height").value;
             var total_breadth = document.getElementById("actual_breadth").value;
-            var total_weight = total_length * total_height * total_breadth / 5000;
+            var total_weight = total_length * total_height * total_breadth / 5;
             var length = document.getElementById("total_length").value;
             var breadth = document.getElementById("total_width").value;
             var height = document.getElementById("total_height").value;
             var actual_weight = length * height * breadth / 5000;
-            document.getElementById('volumetric_weight').innerHTML = actual_weight;
+            document.getElementById('volumetric_weight').innerHTML = actual_weight * 1000;
             console.log(length);
             console.log(breadth);
             console.log(height);
