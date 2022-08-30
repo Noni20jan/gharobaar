@@ -2435,8 +2435,31 @@ class Product_model extends Core_Model
 
         $this->filter_products($query_string_array, $category_id);
         $this->db->where('is_shop_open', 1);
-        // $count1 = $this->db->count_all_results('products');
-        $p1 = $this->db->get('products')->result_array();
+        // $this->db->group_start();
+        $this->db->where('products.category_id!=',15);
+        $this->db->where('products.category_id!=',319);
+        $this->db->where('products.category_id !=',16);
+        $this->db->where('products.category_id !=',104);
+        $this->db->where('products.category_id !=',105);
+        $this->db->where('products.category_id !=',106);
+        $this->db->where('products.category_id !=',107);
+        $this->db->where('products.category_id !=',108);
+        $this->db->where('products.category_id !=',109);
+        $this->db->where('products.category_id !=',110);
+        $this->db->where('products.category_id !=',111);
+        $this->db->where('products.category_id !=',112);
+        $this->db->where('products.category_id !=',113);
+        $this->db->where('products.category_id !=',114);
+        $this->db->where('products.category_id !=',115);
+        $this->db->where('products.category_id !=',116);
+        $this->db->where('products.category_id !=',117);
+        // $this->db->group_end();
+
+
+        $count1 = $this->db->count_all_results('products');
+        // var_dump($count1);
+        return $count1;
+        // $p1 = $this->db->get('products')->result_array();
 
         // $this->filter_products_nlp($query_string_array, $category_id);
         // $this->db->where('is_shop_open', 1);
@@ -2451,8 +2474,9 @@ class Product_model extends Core_Model
         //         // }
         //     }
         // }
-        return count($p1);
-        // return $this->db->count_all_results('products');
+        // var_dump(count($p1));
+        //  $this->db->count_all_results('products');
+        //   var_dump($this->db->last_query());
     }
 
     //get paginated filtered products count as per seller

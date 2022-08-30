@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- Wrapper -->
 <div id="wrapper">
     <div class="container">
@@ -36,10 +36,10 @@
             <div class="col-sm-12 col-md-9">
                 <div class="profile-tab-content">
                     <?php
-                    if (!empty($items)):
-                        foreach ($items as $item):
+                    if (!empty($items)) :
+                        foreach ($items as $item) :
                             $product = get_active_product($item->product_id);
-                            if (!empty($product)):?>
+                            if (!empty($product)) : ?>
                                 <div class="product-item product-item-horizontal">
                                     <div class="row">
                                         <div class="col-12 col-sm-4">
@@ -67,9 +67,12 @@
                                                 <?php if ($this->general_settings->reviews == 1) {
                                                     $this->load->view('partials/_review_stars', ['review' => $product->rating]);
                                                 } ?>
-                                                <div class="item-meta m-t-5">
-                                                    <?php $this->load->view('product/_price_product_item', ['product' => $product]); ?>
-                                                </div>
+                                                <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                                                <?php if (!empty($category[0]->id != 2)) : ?>
+                                                    <div class="item-meta m-t-5">
+                                                        <?php $this->load->view('product/_price_product_item', ['product' => $product]); ?>
+                                                    </div>
+                                                <?php endif; ?>
                                             </div>
                                             <div class="row-custom m-t-15 m-b-15">
                                                 <?php echo form_open('download-purchased-digital-file-post'); ?>
@@ -86,7 +89,7 @@
                                                 <?php echo form_close(); ?>
                                             </div>
 
-                                            <?php if ($this->general_settings->reviews == 1 && $item->seller_id != $item->buyer_id): ?>
+                                            <?php if ($this->general_settings->reviews == 1 && $item->seller_id != $item->buyer_id) : ?>
                                                 <div class="row-custom">
                                                     <div class="rate-product">
                                                         <p class="p-rate-product"><?php echo trans("rate_this_product"); ?></p>
@@ -104,7 +107,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            <?php endif;
+                    <?php endif;
                         endforeach;
                     endif; ?>
                 </div>
@@ -119,5 +122,3 @@
 <!-- Wrapper End-->
 
 <?php $this->load->view('partials/_modal_rate_product'); ?>
-
-

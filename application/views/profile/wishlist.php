@@ -132,13 +132,19 @@
         <div class="col-12">
             <div class="page-contact">
                 <div class="row">
+                    <!-- var_dump($parent_id);
+                    die(); ?> -->
                     <?php if (!empty($products)) :
+
                         foreach ($products as $product) : ?>
+                        <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                        <?php if (!empty($category[0]->id!=2)) :?> 
                             <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product" id='<?php echo $product->id; ?>'>
                                 <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false]); ?>
                             </div>
-                        <?php endforeach;
-                    else : ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                  <?php  else : ?>
                         <div class="col-12">
                             <p class="text-center"><?php echo trans("no_products_found"); ?></p>
                         </div>

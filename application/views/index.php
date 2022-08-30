@@ -915,20 +915,26 @@
                     <?php foreach ($top_picks as $product) : ?>
                         <?php if ($product->is_shop_open == "1") :
                         ?>
-                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">
-                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                        <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                        <?php if (!empty($category[0]->id!=2)) :?>    
+                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">                            
+                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>                               
                             </div>
                         <?php endif;
-                        ?>
+                        ?>       
+                         <?php endif; ?>                 
                     <?php endforeach; ?>
                 <?php else : ?>
                     <?php foreach ($most_ordered_products as $product) : ?>
                         <?php if ($product->is_shop_open == "1") :
                         ?>
-                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">
-                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                        <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                        <?php if (!empty($category[0]->id!=2)) :?>
+                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">
+                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>                               
                             </div>
-                        <?php endif;
+                        <?php endif;?>
+                         <?php endif; ?>
                         ?>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -1000,9 +1006,12 @@
                     <!--print products-->
                     <?php foreach ($product_clothing as $product) : ?>
                         <?php if ($product->is_shop_open == "1") : ?>
+                            <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>                            
+                               <?php if (!empty($category[0]->id!=2)) :?>
                             <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product for-two-rows">
                                 <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
-                            </div>
+                            </div>                        
+                        <?php endif; ?>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </div>

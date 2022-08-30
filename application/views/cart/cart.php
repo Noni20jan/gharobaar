@@ -866,9 +866,12 @@
                     <?php if (!empty($products)) :
                         foreach ($products as $product) : ?>
                             <?php if ($product->is_shop_open == "1") : ?>
-                                <div class="col-4 col-sm-2 col-md-4 col-lg-2 col-product product-margin">
-                                    <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
-                                </div>
+                                <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                                <?php if (!empty($category[0]->id != 2)) : ?>
+                                    <div class="col-4 col-sm-2 col-md-4 col-lg-2 col-product product-margin">
+                                        <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
+                                    </div>
+                                <?php endif; ?>
                             <?php endif; ?>
                     <?php endforeach;
                     endif; ?>
@@ -900,10 +903,13 @@
                             foreach ($user_products as $item) :
                                 if ($item->is_shop_open == "1") :
                                     if ($count < 5) : ?>
-                                        <div class="col-6 col-sm-2 col-md-4 col-lg-2 col-product product-margin">
-                                            <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
-                                        </div>
+                                        <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                                        <?php if (!empty($category[0]->id != 2)) : ?>
+                                            <div class="col-6 col-sm-2 col-md-4 col-lg-2 col-product product-margin">
+                                                <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
+                                            </div>
                     <?php endif;
+                                    endif;
                                     $count++;
                                 endif;
                             endforeach;

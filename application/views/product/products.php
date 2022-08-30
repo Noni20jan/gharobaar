@@ -887,12 +887,14 @@ foreach ($sellers as $seller) {
                                                                 </li> -->
 
                                                         <li>
+                                                        <?php if (!empty($item->id!=2)) : ?>
                                                             <a href="<?= current_url() . generate_filter_url($query_string_array, 'category', $item->id); ?>">
                                                                 <div class="custom-control custom-checkbox">
                                                                     <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'category', $item->id) ? 'checked' : ''; ?>>
                                                                     <label class="custom-control-label"><?= category_name($item); ?></label>
                                                                 </div>
                                                             </a>
+                                                            <?php endif; ?>
                                                         </li>
                                                         <?php
                                                         // else :
@@ -2584,7 +2586,7 @@ foreach ($sellers as $seller) {
                 </div>
                 <div class="product-list-content">
                     <div class="row row-product">
-                        <?php //$count = count($products); 
+                        <?php //$count = count($products);  
                         ?>
                         <h6><b><?php echo $product_count; ?></b>&nbsp;products found
                             <!-- <?php if (!empty($parent_categories)) :
@@ -2594,8 +2596,8 @@ foreach ($sellers as $seller) {
                                     <?php else : ?>
                                         <a href="<?php echo generate_category_url($item); ?>"><?php echo category_name($item); ?></a>
                                     <?php endif; ?>
-                                <?php endforeach;
-                                    else : ?>
+                                <?php endforeach; ?>
+                                   <?php else : ?>
                                 <?= trans("products"); ?>
                             <?php endif; ?><h6> -->
                     </div>
@@ -2603,9 +2605,12 @@ foreach ($sellers as $seller) {
                         <!--print products-->
                         <?php foreach ($products as $product) : ?>
                             <?php if ($product->is_shop_open == "1") : ?>
-                                <div class="col-6 col-sm-4 col-md-4 col-lg-3 col-product">
-                                    <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
-                                </div>
+                                <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                                <?php if (!empty($category[0]->id != 2)) : ?>
+                                    <div class="col-6 col-sm-4 col-md-4 col-lg-3 col-product">
+                                        <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => true]); ?>
+                                    </div>
+                                <?php endif; ?>
                             <?php endif; ?>
                         <?php endforeach; ?>
 

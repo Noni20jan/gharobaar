@@ -9,13 +9,13 @@ $image = get_image_product($product->id);
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div class="product-item">
     <div class="row-custom">
-     
+
         <div>
             <?php if (!empty($is_slider)) : ?>
                 <a href="#">
                     <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL_BARTER . $image->image_small; ?>" data-lazy="<?php echo base_url() . IMG_BG_PRODUCT_SMALL_BARTER . $image->image_small; ?>" alt="<?php echo $details->title; ?>" height="200" width="200">
                     <?php if (!empty($product->image_second)) : ?>
-                        <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL_BARTER . $image->image_small; ?>" data-lazy="<?php echo base_url() . IMG_BG_PRODUCT_SMALL_BARTER.$image->image_small; ?>" alt="<?php echo $details->title; ?>" height="200" width="200" class="img-fluid img-product img-second">
+                        <img src="<?php echo base_url() . IMG_BG_PRODUCT_SMALL_BARTER . $image->image_small; ?>" data-lazy="<?php echo base_url() . IMG_BG_PRODUCT_SMALL_BARTER . $image->image_small; ?>" alt="<?php echo $details->title; ?>" height="200" width="200" class="img-fluid img-product img-second">
                     <?php endif; ?>
                 </a>
             <?php else : ?>
@@ -50,9 +50,11 @@ $image = get_image_product($product->id);
         <p class="product-user text-truncate">
 
         </p>
-        
-        <div class="item-meta">
-            <?php $this->load->view('product/_price_product_item', ['product' => $product]); ?>
-        </div>
+        <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+        <?php if (!empty($category[0]->id != 2)) : ?>
+            <div class="item-meta">
+                <?php $this->load->view('product/_price_product_item', ['product' => $product]); ?>
+            </div>
+        <?php endif; ?>
     </div>
 </div>

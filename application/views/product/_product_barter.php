@@ -50,8 +50,11 @@
             } ?>
             <span class="item-wishlist"><i class="icon-heart-o"></i><?php echo $product->wishlist_count; ?></span>
         </div>
+        <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                        <?php if (!empty($category[0]->id!=2)) :?> 
         <div class="item-meta">
             <?php $this->load->view('product/_price_product_item', ['product' => $product]); ?>
         </div>
+        <? endif; ?>
     </div>
 </div>
