@@ -177,9 +177,12 @@
                                     <!--print tags-->
                                     <?php foreach ($latest_produts as $product) : ?>
                                         <?php if ($product->is_shop_open == "1") : ?>
-                                            <div class="col-sm-12">
-                                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
-                                            </div>
+                                            <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                                            <?php if (!empty($category[0]->id != 2)) : ?>
+                                                <div class="col-sm-12">
+                                                    <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                                                </div>
+                                            <?php endif; ?>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </ul>

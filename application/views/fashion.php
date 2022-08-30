@@ -338,15 +338,18 @@
             <!--print products-->
             <?php foreach ($latest_products as $product) : ?>
                 <?php if ($product->is_shop_open == "1") : ?>
+                    <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                        <?php if (!empty($category[0]->id!=2)) :?> 
                     <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
                         <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
                     </div>
+                    <?php endif; ?> 
                 <?php endif; ?>
             <?php endforeach; ?>
         </div>
         <div class="col-12 text-center">
             <div class="btn btn-md btn-view-more-new m-t-15 m-b-15 more" style="box-shadow: 2px 2px 5px #808080de !important;">
-                <a id="show_more_products" class="view-new-text" href="<?= generate_category_url($category) ?>">View All Products</a><i class="fa fa-caret-down" style="color:black; margin-left:6px;"></i>
+                <a id="show_more_products" class="view-new-text" href="<?= generate_url("products") ?>">View All Products</a><i class="fa fa-caret-down" style="color:black; margin-left:6px;"></i>
             </div>
         </div>
     </div>

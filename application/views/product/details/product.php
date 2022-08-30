@@ -852,10 +852,13 @@
                 foreach ($user_products as $item) :
                     if ($item->is_shop_open == "1") :
                         if ($count < 5) : ?>
-                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                                <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
-                            </div>
+                            <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                            <?php if (!empty($category[0]->id != 2)) : ?>
+                                <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                                    <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
+                                </div>
                 <?php endif;
+                        endif;
                         $count++;
                     endif;
                 endforeach; ?>
@@ -875,9 +878,12 @@
                 <!--print related posts-->
                 <?php foreach ($related_products as $item) : ?>
                     <?php if ($item->is_shop_open == "1") : ?>
-                        <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                            <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
-                        </div>
+                        <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                        <?php if (!empty($category[0]->id != 2)) : ?>
+                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                                <?php $this->load->view('product/_product_item', ['product' => $item]); ?>
+                            </div>
+                        <?php endif; ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
             </div>
@@ -900,11 +906,14 @@
                 <?php foreach ($latest_products as $product) : ?>
                     <?php if ($product->is_shop_open == "1") : ?>
                         <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                            <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
+                            <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                            <?php if (!empty($category[0]->id != 2)) : ?>
+                                <?php $this->load->view('product/_product_item', ['product' => $product, 'promoted_badge' => false, 'is_slider' => 0, 'discount_label' => 0]); ?>
                         </div>
                     <?php endif; ?>
-                <?php endforeach; ?>
-                <div class="btn btn-md btn-custom m-t-15" id="view-products">View More Products</div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <div class="btn btn-md btn-custom m-t-15" id="view-products">View More Products</div>
             </div>
         </div>
     <?php endif; ?>
@@ -919,10 +928,13 @@
                     if ($product->is_shop_open == "1") :
                         if ($count < 5) : ?>
                             <!-- <div class="col-6 col-sm-2 col-md-4 col-lg-2 col-product product-margin"> -->
-                            <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
-                                <?php $this->load->view('product/_product_item', ['product' =>  $product]); ?>
-                            </div>
+                            <?php $category = $this->category_model->get_parent_categories_tree($product->category_id); ?>
+                            <?php if (!empty($category[0]->id != 2)) : ?>
+                                <div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">
+                                    <?php $this->load->view('product/_product_item', ['product' =>  $product]); ?>
+                                </div>
                 <?php endif;
+                        endif;
                         $count++;
                     endif;
                 endforeach;
