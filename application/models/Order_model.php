@@ -1348,7 +1348,7 @@ class Order_model extends CI_Model
         //var_dump(count($product_ids));
         $order_id = $order_id;
         $shipment_details = $this->get_stat_shipment($order_id, $product_id);
-        if (!empty($shipment_details)) {
+        if (empty($shipment_details)) {
             $orders = get_order($order_id);
             if ($orders->payment_method == 'Cashfree') {
                 $cod = 0;
