@@ -137,6 +137,7 @@ class Ajax_controller extends Home_Core_Controller
         );
 
         if (!empty($search_type) && !empty($input_value)) {
+            $categories_id_array = array();
             if ($search_type == 'member') {
                 $data['result'] = 1;
                 $response = '<ul>';
@@ -153,15 +154,25 @@ class Ajax_controller extends Home_Core_Controller
             } else {
                 $data['result'] = 1;
                 $response = '<ul>';
-                $nlp_search = $this->general_settings->nlpsearch;
-                if ($nlp_search == 1) {
-                    $products = $this->product_model->search_products_new($input_value);
-                } else {
-                    $products = $this->product_model->search_products($input_value);
-                }
+                // $nlp_search = $this->general_settings->nlpsearch;
+                // if ($nlp_search == 1) {
+                // $products = $this->product_model->search_products_new($input_value);
+                $products = $this->product_model->search_product($input_value);
+
+                // } else {
+                // $products = $this->product_model->search_products($input_value);
+                // $products = $this->product_model->search_product($input_value);
+                // }
+                $response .= '<li><a href="' . $lang_base_url . "products/?search=" . $input_value . '">' . $input_value . " in all categories" . '</a></li>';
                 if (!empty($products)) {
                     foreach ($products as $product) {
-                        $response .= '<li><a href="' . $lang_base_url . $product->slug . '">' . get_product_title($product) . '</a></li>';
+                        $category = $this->category_model->get_parent_categories_tree($product->category_id);
+                        if (!in_array($category[0]->id, $categories_id_array)) {
+                            array_push($categories_id_array, $category[0]->id);
+                            // var_dump($categories_id_array);
+
+                            $response .= '<li><a href="' . $lang_base_url . "products/?search=" . $input_value . "&category=" . $category[0]->id . '">' . $input_value . " in " . $category[0]->slug . '</a></li>';
+                        }
                     }
                 } else {
                     $response .= '<li><a href="' . $lang_base_url . get_route("products") . '?search=' . $input_value . '">' . $input_value . '</a></li>';

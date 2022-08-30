@@ -1922,35 +1922,64 @@ class Product_model extends Core_Model
     }
 
     //search products (AJAX search)
-    public function search_products($search)
+    // public function search_products($search)
+    // {
+    //     if (!empty($search)) {
+    //         $array = explode(' ', $search);
+    //         $str = "";
+    //         $array_like = array();
+    //         $this->build_query();
+
+    //         $this->db->join('product_details', 'product_details.product_id = products.id');
+    //         $this->db->where('product_details.lang_id', clean_number($this->selected_lang->id));
+    //         $this->db->group_start();
+    //         foreach ($array as $item) {
+    //             if (strlen($item) > 1) {
+    //                 $this->db->like('product_details.title', $item);
+    //                 // $this->db->or_like('shop_name', clean_str($item));
+    //                 $this->db->or_like('brand_name', $item);
+    //             }
+    //         }
+    //         $this->db->group_end();
+    //         $this->db->order_by('products.is_promoted', 'DESC')->limit(5);
+    //         $query = $this->db->get('products');
+    //         return $query->result();
+    //     }
+    //     return array();
+    // }
+
+
+
+    //search products (AJAX search)
+    public function search_product($item)
     {
-        if (!empty($search)) {
-            $array = explode(' ', $search);
+        if (!empty($item)) {
             $str = "";
             $array_like = array();
-            $this->build_query();
-
-            $this->db->join('product_details', 'product_details.product_id = products.id');
-            $this->db->where('product_details.lang_id', clean_number($this->selected_lang->id));
+            $this->db->distinct('category_id');
+            $this->db->select('categories.slug,category_id');
+            $this->db->join('product_details', 'product_details.product_id=products.id');
+            $this->db->join('categories', 'categories.id = products.category_id');
+            $this->db->join('users', 'users.id=products.user_id');
             $this->db->group_start();
-            foreach ($array as $item) {
-                if (strlen($item) > 1) {
-                    $this->db->like('product_details.title', $item);
-                    // $this->db->or_like('shop_name', clean_str($item));
-                    $this->db->or_like('brand_name', $item);
-                }
-            }
+            $this->db->like('product_details.title', $item);
+            // $this->db->or_like('product_details.description', $item);
             $this->db->group_end();
+            $this->db->where('users.banned' , 0 );
+            $this->db->where('products.status' , 1 );
+            $this->db->where('products.visibility' , 1 );
+            $this->db->where('products.is_draft ', 0 );
+            $this->db->where('products.is_deleted ', 0 );
+            $this->db->where('users.role !=','member' );
+            $this->db->where('is_shop_open' , 1);
             $this->db->order_by('products.is_promoted', 'DESC')->limit(5);
             $query = $this->db->get('products');
             return $query->result();
         }
-        return array();
     }
 
 
-
-
+    
     public function save_search_keyword($search)
     {
 
@@ -4141,5 +4170,4 @@ order by id desc LIMIT 1";
 
         return  $query->result();
     }
-    
 }
