@@ -3097,6 +3097,16 @@ class Dashboard_controller extends Home_Core_Controller
         echo json_encode($data);
     }
 
+    public function get_sku_code(){
+        $product_sku = $this->input->post('sku');
+        $data["sku"] = $this->product_model->get_sku();
+        $data = array(
+            'result' => 1,
+            'sku_code' => $data["sku"]
+        );
+        echo json_encode($data);
+    }
+
     public function add_review()
     {
         $data = array(
