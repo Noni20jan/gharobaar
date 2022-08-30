@@ -765,13 +765,16 @@ endif;
                                                         <?php if ($product->add_meet == "Made to order" || $product->add_meet == "Made to stock") :
                                                             $is_made_to_order = true;
                                                         endif; ?>
-                                                        <?php if ($is_made_to_order) : ?>
-                                                            <button type="button" style="width:100%;" class="btn btn-md btn-block btn-danger" data-toggle="modal" data-target="#made_to_order_cancel_warning_<?php echo $item->id; ?>"> Cancel Order </button>
-                                                            <!-- <a href="#" class="btn btn-block" data-toggle="modal" data-target="#made_to_order_checkout"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a> -->
-                                                        <?php else : ?>
+                                                        <?php $chk = get_shiprocket_order_details($order->id, $item->product_id); ?>
+                                                        <?php if (empty($chk) || $chk->is_active != 1) : ?>
+                                                            <?php if ($is_made_to_order) : ?>
+                                                                <button type="button" style="width:100%;" class="btn btn-md btn-block btn-danger" data-toggle="modal" data-target="#made_to_order_cancel_warning_<?php echo $item->id; ?>"> Cancel Order </button>
+                                                                <!-- <a href="#" class="btn btn-block" data-toggle="modal" data-target="#made_to_order_checkout"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a> -->
+                                                            <?php else : ?>
 
 
-                                                            <button type="button" style="width:100%;" class="btn btn-md btn-block btn-danger" data-toggle="modal" data-target="#cancelOrderModal_<?php echo $item->id; ?>"> Cancel Order </button>
+                                                                <button type="button" style="width:100%;" class="btn btn-md btn-block btn-danger" data-toggle="modal" data-target="#cancelOrderModal_<?php echo $item->id; ?>"> Cancel Order </button>
+                                                            <?php endif; ?>
                                                         <?php endif; ?>
                                                     </p>
 
