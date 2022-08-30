@@ -1347,52 +1347,55 @@ class Order_model extends CI_Model
         // $product_ids = $this->input->post('product_id', true);
         //var_dump(count($product_ids));
         $order_id = $order_id;
-        $orders = get_order($order_id);
-        if ($orders->payment_method == 'Cashfree') {
-            $cod = 0;
-        } else {
-            $cod = 1;
-        }
-        // for ($j = 0; $j < count($product_ids); $j++) {
-        $data = array(
-            'order_id' => $order_id,
-            'product_id' => $product_id,
-            'order_product_id' => $id,
-            'reference_order_id' => "-",
-            'shipment_order_id' => "-",
-            'shipment_id' => "-",
-            'awb_code' => "-",
-            'pickup_scheduled_date' => "-",
-            'manifest_url' => "-",
-            'label_url' => "-",
-            'courier_company_name' => "-",
-            'courier_company_id' => "-",
-            'applied_weight' => $product_weight,
-            'pickup_token_number' => "-",
-            'COD' => $cod,
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s"),
-            'shipping_company_status' => 'admin'
-
-        );
-        if ($this->auth_check) {
-
-            $data['created_by'] = $this->auth_user->id;
-            $data['updated_by'] = $this->auth_user->id;
-        } else {
-            if (empty($data['created_by'])) {
-                return false;
+        $shipment_details = $this->get_stat_shipment($order_id, $product_id);
+        if (!empty($shipment_details)) {
+            $orders = get_order($order_id);
+            if ($orders->payment_method == 'Cashfree') {
+                $cod = 0;
+            } else {
+                $cod = 1;
             }
-        }
-        if ($data['awb_code'] == '') {
-            $data['is_active'] = 0;
-        }
-        $this->db->insert('shiprocket_order_details', $data);
-        // $this->update_shiprocket_status($data["order_id"], $product_ids[$j]);
-        if ($data['awb_code'] == '') {
-            return false;
-        } else {
-            return true;
+            // for ($j = 0; $j < count($product_ids); $j++) {
+            $data = array(
+                'order_id' => $order_id,
+                'product_id' => $product_id,
+                'order_product_id' => $id,
+                'reference_order_id' => "-",
+                'shipment_order_id' => "-",
+                'shipment_id' => "-",
+                'awb_code' => "-",
+                'pickup_scheduled_date' => "-",
+                'manifest_url' => "-",
+                'label_url' => "-",
+                'courier_company_name' => "-",
+                'courier_company_id' => "-",
+                'applied_weight' => $product_weight,
+                'pickup_token_number' => "-",
+                'COD' => $cod,
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s"),
+                'shipping_company_status' => 'admin'
+
+            );
+            if ($this->auth_check) {
+
+                $data['created_by'] = $this->auth_user->id;
+                $data['updated_by'] = $this->auth_user->id;
+            } else {
+                if (empty($data['created_by'])) {
+                    return false;
+                }
+            }
+            if ($data['awb_code'] == '') {
+                $data['is_active'] = 0;
+            }
+            $this->db->insert('shiprocket_order_details', $data);
+            // $this->update_shiprocket_status($data["order_id"], $product_ids[$j]);
+            if ($data['awb_code'] == '') {
+                return false;
+            } else {
+                return true;
+            }
         }
         // }
 
@@ -3660,6 +3663,7 @@ class Order_model extends CI_Model
                         $object->prod_amount_af_disc = $object_product->product_total_price - ($object_product->product_total_price * $discountperc / 100);
                     }
                 }
+                $object->prod_amount_af_disc = round($object->prod_amount_af_disc);
                 array_push($product_seller_details, $object);
             endif;
             // var_dump($cart_item);
@@ -4280,6 +4284,17 @@ WHERE awb_code IN (
         $this->db->where('order_id', $order_id);
         $this->db->where('product_id', $product_id);
 
+        $query = $this->db->get('shiprocket_order_details');
+        // var_dump($query->result);
+        return $query->result();
+    }
+    public function get_stat_shipment($order_id, $product_id)
+    {
+
+        $order_id = clean_number($order_id);
+        $this->db->where('order_id', $order_id);
+        $this->db->where('product_id', $product_id);
+        $this->db->where('is_active', 1);
         $query = $this->db->get('shiprocket_order_details');
         // var_dump($query->result);
         return $query->result();
