@@ -1338,6 +1338,69 @@ class Order_model extends CI_Model
         );
         return $data;
     }
+
+
+    public function shiprocket_response_admin($id, $order_id, $product_id, $product_weight)
+    {
+
+        // $order_product_ids = $this->input->post('order_product_id', true);
+        // $product_ids = $this->input->post('product_id', true);
+        //var_dump(count($product_ids));
+        $order_id = $order_id;
+        $orders = get_order($order_id);
+        if ($orders->payment_method == 'Cashfree') {
+            $cod = 0;
+        } else {
+            $cod = 1;
+        }
+        // for ($j = 0; $j < count($product_ids); $j++) {
+        $data = array(
+            'order_id' => $order_id,
+            'product_id' => $product_id,
+            'order_product_id' => $id,
+            'reference_order_id' => "-",
+            'shipment_order_id' => "-",
+            'shipment_id' => "-",
+            'awb_code' => "-",
+            'pickup_scheduled_date' => "-",
+            'manifest_url' => "-",
+            'label_url' => "-",
+            'courier_company_name' => "-",
+            'courier_company_id' => "-",
+            'applied_weight' => $product_weight,
+            'pickup_token_number' => "-",
+            'COD' => $cod,
+            'created_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s"),
+            'shipping_company_status' => 'admin'
+
+        );
+        if ($this->auth_check) {
+
+            $data['created_by'] = $this->auth_user->id;
+            $data['updated_by'] = $this->auth_user->id;
+        } else {
+            if (empty($data['created_by'])) {
+                return false;
+            }
+        }
+        if ($data['awb_code'] == '') {
+            $data['is_active'] = 0;
+        }
+        $this->db->insert('shiprocket_order_details', $data);
+        // $this->update_shiprocket_status($data["order_id"], $product_ids[$j]);
+        if ($data['awb_code'] == '') {
+            return false;
+        } else {
+            return true;
+        }
+        // }
+
+        // for ($i = 0; $i < count($product_ids); $i++) {
+
+
+        // }
+    }
     //shiprocket-response
 
     public function shiprocket_response()
@@ -1365,8 +1428,8 @@ class Order_model extends CI_Model
                 'pickup_token_number' => trim($this->input->post('pickup_token_number', true)),
                 'COD' => trim($this->input->post('COD', true)),
                 'created_at' => date("Y-m-d H:i:s"),
-                'updated_at' => date("Y-m-d H:i:s")
-
+                'updated_at' => date("Y-m-d H:i:s"),
+                'shipping_company_status' => 'shiprocket'
 
             );
             if ($this->auth_check) {
@@ -2797,7 +2860,7 @@ class Order_model extends CI_Model
         $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
         $Supp_ship_data = json_decode($this->get_seller_wise_data_bifurcation($cart_total));
         $cart_items = $this->cart_model->get_sess_cart_items();
-
+        $cart_total = $this->cart_model->get_sess_cart_total();
         if ($Supp_ship_data) {
             foreach ($Supp_ship_data as $sup) {
                 $seller_address = get_user($sup->SupplierId);
@@ -2821,6 +2884,9 @@ class Order_model extends CI_Model
                         }
                     }
                 }
+
+                // var_dump($prod_amount_af_disc);
+                // die();
                 $data = array(
                     'order_id' => $order_id,
                     'seller_id' => $sup->SupplierId,
@@ -2833,7 +2899,8 @@ class Order_model extends CI_Model
                     'Sup_Shipping_gst' => $sup->shipping_tax_charges,
                     'Sup_cod_gst' => $sup->cod_tax_charges,
                     'created_by' => 1,
-                    'updated_by' => 1
+                    'updated_by' => 1,
+                    'prod_amount_after_disc' => $sup->prod_amount_af_disc
                 );
                 if ($seller_address->supplier_state == $shipping_address->shipping_state) {
                     $data['shipping_igst'] = 0;
@@ -3433,6 +3500,8 @@ class Order_model extends CI_Model
     public function calc_total_shipping_charges_by_seller($s_row, $s_col, $cp_count)
     {
         $cart_items = $this->cart_model->get_sess_cart_items();
+        $cart_total = $this->cart_model->get_sess_cart_total();
+
         if (empty($cart_items)) {
             return false;
         }
@@ -3492,6 +3561,30 @@ class Order_model extends CI_Model
                         $psd->total_weight += $object_product->product_total_packaged_weight;
 
                     $psd->total_price += $object_product->product_total_price;
+                    $coupon_assignment_details = $this->offer_model->get_coupon_details_by_code($cart_total->applied_coupon_id);
+                    foreach ($coupon_assignment_details as $cad) :
+                        $coupon_source_type = $cad->source_type;
+                        $coupon_source_id = $cad->source_id;
+                        break;
+                    endforeach;
+                    if ($coupon_source_type == 'Product') {
+                        if ($coupon_source_id == $cart_item->product_item) {
+                            $discountamount = $cart_total->applied_coupon_discount;
+                            $discountperc = $discountamount / $object_product->product_total_price * 100;
+                            // var_dump($sup->total_product_price);
+                            // var_dump($discountperc);
+                            // die();
+                            $psd->prod_amount_af_disc = $object_product->product_total_price - ($object_product->product_total_price * $discountperc / 100);
+                        }
+                    } else {
+                        $discountamount = $cart_total->applied_coupon_discount;
+                        $discountperc = $discountamount / ($cart_total->total_price + $discountamount) * 100;
+                        // var_dump($sup->total_product_price);
+                        // var_dump($discountperc);
+                        // die();
+                        $psd->prod_amount_af_disc = $psd->total_price - ($psd->total_price * $discountperc / 100);
+                    }
+                    $psd->prod_amound_af_disc = round($psd->prod_amount_af_disc);
                     $psd->product_total_price_without_gst += $object_product->product_total_price / (1 + ($object_product->product_gst_rate / 100));
                     $psd->total_product_gst += $object_product->product_total_price - $object_product->product_total_price / (1 + ($object_product->product_gst_rate / 100));
 
@@ -3537,6 +3630,36 @@ class Order_model extends CI_Model
                 $object->total_price = $object_product->product_total_price;
                 $object->product_total_price_without_gst = $object_product->product_total_price / (1 + ($object_product->product_gst_rate / 100));
                 $object->total_product_gst = $object_product->product_total_price - $object_product->product_total_price / (1 + ($object_product->product_gst_rate / 100));
+                $object->prod_amount_af_disc = $object->total_price;
+                // var_dump($cart_total->applied_coupon_id);
+                // die();
+                $coupon_assignment_details = $this->offer_model->get_coupon_details_by_code($cart_total->applied_coupon_code);
+                // var_dump($coupon_assignment_details);
+                // die();
+                if ($coupon_assignment_details) {
+                    foreach ($coupon_assignment_details as $cad) :
+                        $coupon_source_type = $cad->source_type;
+                        $coupon_source_id = $cad->source_id;
+                        break;
+                    endforeach;
+                    if ($coupon_source_type == 'Product') {
+                        if ($coupon_source_id == $cart_item->product_item) {
+                            $discountamount = $cart_total->applied_coupon_discount;
+                            $discountperc = $discountamount / $object_product->product_total_price * 100;
+                            // var_dump($sup->total_product_price);
+                            // var_dump($discountperc);
+                            // die();
+                            $object->prod_amount_af_disc = $object_product->product_total_price - ($object_product->product_total_price * $discountperc / 100);
+                        }
+                    } else {
+                        $discountamount = $cart_total->applied_coupon_discount;
+                        $discountperc = $discountamount / ($cart_total->total_price + $discountamount) * 100;
+                        // var_dump($sup->total_product_price);
+                        // var_dump($discountperc);
+                        // die();
+                        $object->prod_amount_af_disc = $object_product->product_total_price - ($object_product->product_total_price * $discountperc / 100);
+                    }
+                }
                 array_push($product_seller_details, $object);
             endif;
             // var_dump($cart_item);
@@ -3573,6 +3696,8 @@ class Order_model extends CI_Model
 
         $supp_data_array_copy = array();
         foreach ($product_seller_details as $psd) {
+            // var_dump($psd);
+            // die();
             $actual_shipping_charges = 0;
             foreach ($psd->products as $prod_details) {
 
@@ -3604,7 +3729,8 @@ class Order_model extends CI_Model
                         "shipping_cod_gst_rate" => $psd->seller_gst_rate,
                         "total_product_price" => 0,
                         "total_product_price_without_gst" => 0,
-                        "total_product_gst" => 0
+                        "total_product_gst" => 0,
+                        'prod_amount_af_disc' => $psd->prod_amount_af_disc
                     );
 
                     //product wise calculation price and gst
@@ -3706,7 +3832,8 @@ class Order_model extends CI_Model
                         "shipping_cod_gst_rate" => $psd->seller_gst_rate,
                         "total_product_price" => 0,
                         "total_product_price_without_gst" => 0,
-                        "total_product_gst" => 0
+                        "total_product_gst" => 0,
+                        'prod_amount_af_disc' => $psd->prod_amount_af_disc
                     );
 
                     //product wise calculation price and gst
@@ -3746,7 +3873,8 @@ class Order_model extends CI_Model
                         "shipping_cod_gst_rate" => $psd->seller_gst_rate,
                         "total_product_price" => 0,
                         "total_product_price_without_gst" => 0,
-                        "total_product_gst" => 0
+                        "total_product_gst" => 0,
+                        'prod_amount_af_disc' => $psd->prod_amount_af_disc
 
                     );
 

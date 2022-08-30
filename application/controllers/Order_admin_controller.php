@@ -103,7 +103,7 @@ class Order_admin_controller extends Admin_Core_Controller
 		}
 
 		$this->session->set_flashdata('success', trans("msg_updated"));
-		redirect($this->agent->referrer());
+		// redirect($this->agent->referrer());
 	}
 
 	/**
@@ -125,6 +125,9 @@ class Order_admin_controller extends Admin_Core_Controller
 	{
 		$this->order_options_post();
 		$order_id = $this->input->post('id', true);
+		// get_order($order_id);
+		// var_dump("sdhjasd");
+		// die();
 		$order_products = $this->order_admin_model->get_order_products($order_id);
 		if (!empty($order_products)) {
 			foreach ($order_products as $order_product1) {
@@ -139,11 +142,13 @@ class Order_admin_controller extends Admin_Core_Controller
 								$this->order_model->add_digital_sale($order_product->product_id, $order_product->order_id);
 								//add seller earnings
 								$this->earnings_model->add_seller_earnings($order_product);
+								$this->order_model->shiprocket_response_admin($id, $order_product->order_id, $order_product->product_id, $order_product->product_weight);
 							}
 						} else {
 							if ($order_status == 'completed') {
 								//add seller earnings
 								$this->earnings_model->add_seller_earnings($order_product);
+								$this->order_model->shiprocket_response_admin($id, $order_product->order_id, $order_product->product_id, $order_product->product_weight);
 							} else {
 								//check if earning added before
 								$order = $this->order_admin_model->get_order($order_product->order_id);
@@ -195,11 +200,13 @@ class Order_admin_controller extends Admin_Core_Controller
 						$this->order_model->add_digital_sale($order_product->product_id, $order_product->order_id);
 						//add seller earnings
 						$this->earnings_model->add_seller_earnings($order_product);
+						$this->order_model->shiprocket_response_admin($id, $order_product->order_id, $order_product->product_id, $order_product->product_weight);
 					}
 				} else {
 					if ($order_status == 'completed') {
 						//add seller earnings
 						$this->earnings_model->add_seller_earnings($order_product);
+						$this->order_model->shiprocket_response_admin($id, $order_product->order_id, $order_product->product_id, $order_product->product_weight);
 					} else {
 						//check if earning added before
 						$order = $this->order_admin_model->get_order($order_product->order_id);
