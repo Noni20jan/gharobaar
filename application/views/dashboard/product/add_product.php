@@ -101,7 +101,8 @@
                 <div class="form-group">
                     <label class="control-label"><?php echo trans("sku"); ?>&nbsp;(<?php echo trans("product_code"); ?>)<span class="Validation_error"> *</span></label>
                     <div class="position-relative">
-                        <input type="text" autocomplete="off" name="sku" id="input_sku" class="form-control auth-form-input" placeholder="<?php echo trans("sku_desc"); ?>" required value="">
+                        <input type="text" autocomplete="off" name="sku" id="input_sku" class="form-control auth-form-input" onchange="checklength(this)" maxlength="50" placeholder="<?php echo trans("sku_desc"); ?>" required value="">
+                        <span class="Validation_error hideMe" id="words_limit">*maxmimum SKU Code length is 50 only*</span>
                         <button type="button" class="btn btn-default btn-generate-sku" onclick="get_automated_SKU($('#categories'),$(this))">
                             <div id="sp-options-add" class="spinner spinner-btn-add-variation">
                                 <div class="bounce1"></div>
@@ -409,5 +410,22 @@
             $("#alert-box-product")[0].innerHTML = msg;
             return false;
         }
+    }
+</script>
+<script>
+    function checklength(el) {
+        var limit = $('#input_sku').val();
+        $button = $('#sub')
+        if (el.value.length >= 50) {
+            $("#words_limit").attr("style", "display:block")
+            $button.prop('disabled', 'disabled');
+
+        } else {
+            $("#words_limit").attr("style", "display:none")
+
+            $button.prop('disabled', false);
+
+        }
+
     }
 </script>

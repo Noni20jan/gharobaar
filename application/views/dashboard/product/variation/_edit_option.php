@@ -959,8 +959,9 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-sm-3 hide-if-default <?php echo ($variation_option->is_default == 1) ? "display-none" : ""; ?>">
-                            <label class="control-label"><?php echo trans("sku"); ?></label>
-                            <input type="text" name="sku-variation" id="input_sku" class="form-control auth-form-input"  onkeyup="sku_code_edit_validate()" placeholder="<?php echo trans("sku_desc"); ?>" value="<?php echo $variation_option->sku_code ?>" required>
+                            <label class="control-label"><?php echo trans("sku"); ?><span class="Validation_error"> *</span></label>
+                            <input type="text" name="sku-variation" id="input_sku_edit" class="form-control auth-form-input" onchange="sku_code_edit_validate()" maxlength="50" placeholder="<?php echo trans("sku_desc"); ?>" value="<?php echo $variation_option->sku_code ?>" required>
+                            <span class="Validation_error hideMe" id="length">*maxmimum SKU Code length is 50 only*</span>
                             <!-- <button type="button" class="btn btn-default btn-generate-option-sku" onclick="get_automated_SKU_option($(this))"><?= trans("generate"); ?></button> -->
                             <div class="Validation_error hideMe" id="sku_check">SKU already exists</div>
 

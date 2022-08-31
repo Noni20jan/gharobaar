@@ -1332,7 +1332,7 @@
                     <?php if ($user->id == $this->auth_user->id && $product->status == 1) : ?>
                         <a class="btn btn-lg btn-info btn-form-product-details pull-right" style="margin-left:10px;" href="<?= generate_dash_url("products"); ?>"><?php echo trans("close"); ?></a>
                     <?php endif; ?>
-                    <button type="submit" name="submit" value="save_changes"  class="btn btn-lg btn-success btn-form-product-details pull-right save_change"><?php echo ($user->id == $this->auth_user->id && $product->status == 1) ? trans("resave_changes") : trans("save_changes"); ?></button>
+                    <button type="submit" name="submit" value="save_changes" class="btn btn-lg btn-success btn-form-product-details pull-right save_change"><?php echo ($user->id == $this->auth_user->id && $product->status == 1) ? trans("resave_changes") : trans("save_changes"); ?></button>
                 <?php endif; ?>
             </div>
         </div>
@@ -1524,50 +1524,88 @@
     </script>
     <script>
         function sku_code_validation() {
-            $("#input_sku_option").keyup(function() {
-                var limit = $('#input_sku_option').val();
-            $button = $('#btn_save_variation_option');
-            $button1 = $('#btn_save_variation_option');
 
-            if (limit.length >= 50) {
-                document.getElementById("word_length").style.display = "block";
-                $button.prop('disabled', 'disabled');
-                $button1.prop('disabled', 'disabled');
+            var data = {
+                sys_lang_id: sys_lang_id
+            };
+            data[csfr_token_name] = $.cookie(csfr_cookie_name);
+            $.ajax({
+                url: base_url + "dashboard_controller/get_sku_code",
+                async: true,
+                type: "POST",
+                data: data,
+                success: function(res) {
+                    var obj = JSON.parse(res);
+                    var limit = $('#input_sku_option').val();
+                    $button = $('#btn_add_variation_option');
+                    $button1 = $('#btn_save_variation_option');
+
+                    if (limit.length >= 50) {
+                        document.getElementById("word_length").style.display = "block";
+                        $button.prop('disabled', 'disabled');
+                        $button1.prop('disabled', 'disabled');
 
 
-            } else {
-                document.getElementById("word_length").style.display = "none";
+                    } else {
+                        document.getElementById("word_length").style.display = "none";
+                        $button.prop('disabled', false);
+                        $button1.prop('disabled', false);
 
-                $button.prop('disabled', false);
-                $button1.prop('disabled', false);
-
-
-            }
-                let z = $(this).val().replace(/^\s+|\s+$/gm,'');
-                var x = <?php echo json_encode($sku); ?>;
-                if (x.some(e => e.sku_id == z)) {
-                    document.getElementById("input_sku_check").style.display = "block";
-                    document.getElementById("btn_add_variation_option").disabled = true;
-                    document.getElementById("btn_save_variation_option").disabled = true;
-                } else {
-                    document.getElementById("input_sku_check").style.display = "none";
-                    document.getElementById("btn_add_variation_option").disabled = false;
-                    document.getElementById("btn_save_variation_option").disabled = false;
+                    }
+                    var x = obj.sku_code;
+                    console.log(obj);
+                    if (x.some(e => e.sku_id == limit)) {
+                        console.log("error");
+                        document.getElementById("input_sku_check").style.display = "block";
+                        document.getElementById("btn_add_variation_option").disabled = true;
+                        document.getElementById("btn_save_variation_option").disabled = true;
+                    } else {
+                        console.log("succcess");
+                        document.getElementById("input_sku_check").style.display = "none";
+                        document.getElementById("btn_add_variation_option").disabled = false;
+                        document.getElementById("btn_save_variation_option").disabled = false;
+                    }
                 }
-            })
+            });
         }
+
         function sku_code_edit_validate() {
-            $("#input_sku").keyup(function() {
-                var z = $(this).val().replace(/^\s+|\s+$/gm,'');
-                var x = <?php echo json_encode($sku); ?>;
-                if (x.some(e => e.sku_id == z)) {
-                    document.getElementById("sku_check").style.display = "block";
-                    document.getElementById("btn_edit_variation_option").disabled = true;
-                } else {
-                    document.getElementById("sku_check").style.display = "none";
-                    document.getElementById("btn_edit_variation_option").disabled = false;
+            var data = {
+                sys_lang_id: sys_lang_id
+            };
+            data[csfr_token_name] = $.cookie(csfr_cookie_name);
+            $.ajax({
+                url: base_url + "dashboard_controller/get_sku_code",
+                async: true,
+                type: "POST",
+                data: data,
+                success: function(res) {
+                    var obj = JSON.parse(res);
+
+                    var limit = $('#input_sku_edit').val();
+                    $button = $('#btn_edit_variation_option');
+
+                    if (limit.length >= 50) {
+                        document.getElementById("length").style.display = "block";
+                        $button.prop('disabled', 'disabled');
+
+                    } else {
+                        document.getElementById("length").style.display = "none";
+                        $button.prop('disabled', false);
+
+                    }
+
+                    var x = obj.sku_code;
+                    console.log(obj);
+                    if (x.some(e => e.sku_id == limit)) {
+                        document.getElementById("sku_check").style.display = "block";
+                        document.getElementById("btn_edit_variation_option").disabled = true;
+                    } else {
+                        document.getElementById("sku_check").style.display = "none";
+                        document.getElementById("btn_edit_variation_option").disabled = false;
+                    }
                 }
-            })
+            });
         }
     </script>
     <script>
@@ -1716,10 +1754,10 @@
                     console.log(html)
                     if (html[0].PostOffice == null) {
                         $('#pincode_span')[0].innerHTML = "Please enter a valid pincode.";
-                        $('.save_change').prop('disabled',true);
+                        $('.save_change').prop('disabled', true);
                     } else {
                         $('#pincode_span')[0].innerHTML = "";
-                        $('.save_change').prop('disabled',false);
+                        $('.save_change').prop('disabled', false);
                         if (number > 0) {
                             $('#product_state1').val(html[0].PostOffice[0].State)
                             $('#product_city1').val(html[0].PostOffice[0].District)

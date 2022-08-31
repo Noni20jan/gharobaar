@@ -1965,13 +1965,13 @@ class Product_model extends Core_Model
             $this->db->like('product_details.title', $item);
             // $this->db->or_like('product_details.description', $item);
             $this->db->group_end();
-            $this->db->where('users.banned' , 0 );
-            $this->db->where('products.status' , 1 );
-            $this->db->where('products.visibility' , 1 );
-            $this->db->where('products.is_draft ', 0 );
-            $this->db->where('products.is_deleted ', 0 );
-            $this->db->where('users.role !=','member' );
-            $this->db->where('is_shop_open' , 1);
+            $this->db->where('users.banned', 0);
+            $this->db->where('products.status', 1);
+            $this->db->where('products.visibility', 1);
+            $this->db->where('products.is_draft ', 0);
+            $this->db->where('products.is_deleted ', 0);
+            $this->db->where('users.role !=', 'member');
+            $this->db->where('is_shop_open', 1);
             $this->db->order_by('products.is_promoted', 'DESC')->limit(5);
             $query = $this->db->get('products');
             return $query->result();
@@ -1979,7 +1979,7 @@ class Product_model extends Core_Model
     }
 
 
-    
+
     public function save_search_keyword($search)
     {
 
@@ -2465,23 +2465,23 @@ class Product_model extends Core_Model
         $this->filter_products($query_string_array, $category_id);
         $this->db->where('is_shop_open', 1);
         // $this->db->group_start();
-        $this->db->where('products.category_id!=',15);
-        $this->db->where('products.category_id!=',319);
-        $this->db->where('products.category_id !=',16);
-        $this->db->where('products.category_id !=',104);
-        $this->db->where('products.category_id !=',105);
-        $this->db->where('products.category_id !=',106);
-        $this->db->where('products.category_id !=',107);
-        $this->db->where('products.category_id !=',108);
-        $this->db->where('products.category_id !=',109);
-        $this->db->where('products.category_id !=',110);
-        $this->db->where('products.category_id !=',111);
-        $this->db->where('products.category_id !=',112);
-        $this->db->where('products.category_id !=',113);
-        $this->db->where('products.category_id !=',114);
-        $this->db->where('products.category_id !=',115);
-        $this->db->where('products.category_id !=',116);
-        $this->db->where('products.category_id !=',117);
+        $this->db->where('products.category_id!=', 15);
+        $this->db->where('products.category_id!=', 319);
+        $this->db->where('products.category_id !=', 16);
+        $this->db->where('products.category_id !=', 104);
+        $this->db->where('products.category_id !=', 105);
+        $this->db->where('products.category_id !=', 106);
+        $this->db->where('products.category_id !=', 107);
+        $this->db->where('products.category_id !=', 108);
+        $this->db->where('products.category_id !=', 109);
+        $this->db->where('products.category_id !=', 110);
+        $this->db->where('products.category_id !=', 111);
+        $this->db->where('products.category_id !=', 112);
+        $this->db->where('products.category_id !=', 113);
+        $this->db->where('products.category_id !=', 114);
+        $this->db->where('products.category_id !=', 115);
+        $this->db->where('products.category_id !=', 116);
+        $this->db->where('products.category_id !=', 117);
         // $this->db->group_end();
 
 
@@ -4182,7 +4182,7 @@ order by id desc LIMIT 1";
         $sql = "SELECT DISTINCT temp.sku_id  FROM (
             SELECT p2.sku as sku_id
             from products as p2
-            where p2.sku!='' AND is_draft=0 AND is_deleted=0
+            where p2.sku!='' 
             UNION
             SELECT 
                 vo.sku_code as sku_id
