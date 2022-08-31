@@ -2903,7 +2903,7 @@ class Order_model extends CI_Model
                     'Sup_cod_gst' => $sup->cod_tax_charges,
                     'created_by' => 1,
                     'updated_by' => 1,
-                    'prod_amount_after_disc' => $sup->prod_amount_af_disc
+                    'prod_amount_after_disc' => round($sup->prod_amount_af_disc)
                 );
                 if ($seller_address->supplier_state == $shipping_address->shipping_state) {
                     $data['shipping_igst'] = 0;
@@ -3587,7 +3587,7 @@ class Order_model extends CI_Model
                         // die();
                         $psd->prod_amount_af_disc = $psd->total_price - ($psd->total_price * $discountperc / 100);
                     }
-                    $psd->prod_amound_af_disc = round($psd->prod_amount_af_disc);
+                    $psd->prod_amound_af_disc = $psd->prod_amount_af_disc;
                     $psd->product_total_price_without_gst += $object_product->product_total_price / (1 + ($object_product->product_gst_rate / 100));
                     $psd->total_product_gst += $object_product->product_total_price - $object_product->product_total_price / (1 + ($object_product->product_gst_rate / 100));
 
@@ -3663,7 +3663,7 @@ class Order_model extends CI_Model
                         $object->prod_amount_af_disc = $object_product->product_total_price - ($object_product->product_total_price * $discountperc / 100);
                     }
                 }
-                $object->prod_amount_af_disc = round($object->prod_amount_af_disc);
+                $object->prod_amount_af_disc = $object->prod_amount_af_disc;
                 array_push($product_seller_details, $object);
             endif;
             // var_dump($cart_item);
