@@ -491,7 +491,7 @@ class Product_controller extends Admin_Core_Controller
         }
 
         //reset cache
-        reset_cache_data_on_change();
+        // reset_cache_data_on_change();
 
         // $redirect_url = $this->input->post('redirect_url', true);
         // if (!empty($redirect_url)) {
