@@ -69,7 +69,7 @@
                     <div class="upload_image">
                         <input type="file" id="fileuploadbasic" name="file_[]" size="40" multiple="multiple" accept=".jpg, .jpeg,.png">
                     </div>
-                    <span class="upload_image_span" style="color: red;">*Maximun 4 images allowed</span>
+                    <!-- <span class="upload_image_span" style="color: red;">*Maximun 4 images allowed</span> -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-md btn-red" data-dismiss="modal"><?php echo trans("close"); ?></button>
@@ -93,7 +93,7 @@
         </div>
     </div>
 </div>
-<script>
+<!-- <script>
     $(function() {
 
         var
@@ -117,7 +117,7 @@
             }
         });
     });
-</script>
+</script> -->
 <script>
     $(document).ready(function() {
         $("#submit").click(function() {

@@ -65,8 +65,6 @@ class Upload_model extends CI_Model
         $dataInfo = array();
         $files = $_FILES;
         $cpt = count($_FILES['file_' . $product_id1]['name']);
-        // var_dump($cpt);
-        // die();
         for ($i = 0; $i < $cpt; $i++) {
             $_FILES['file1']['name'] = $files['file_' . $product_id1]['name'][$i];
             $_FILES['file1']['type'] = $files['file_' . $product_id1]['type'][$i];
@@ -83,8 +81,8 @@ class Upload_model extends CI_Model
                     $temp_path = $data['upload_data']['full_path'];
                     $img_path = $this->upload_model->review_image_upload($temp_path);
                     $this->review_model->upload_review_images($last_id, $img_path, $product_id1);
+                    return true;
                 }
-                // return null;
             } else {
                 return null;
             }

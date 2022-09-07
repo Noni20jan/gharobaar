@@ -2285,44 +2285,39 @@ class Cart_controller extends Home_Core_Controller
             }
             $i = 0;
             foreach ($product_id as $product_id1) {
-                // $product = $this->product_model->get_product_by_id($product_id1);
-                // $title = $this->product_model->get_title($product_id1);
-                $review = $this->review_model->get_review($product_id1, $this->auth_user->id);
-                if (!empty($review)) {
-                    $this->review_model->update_review1($review->id, $rating2[$i], $product_id1, $review_text2[$i]);
-                    $images = $this->review_model->check_review_images($product_id, $this->auth_user->id);
-                    if (empty($images)) {
-                        $this->load->model('upload_model');
-                        $this->upload_model->upload_buyer_image('file_', $review->id, $product_id);
-                        $reviews = TRUE;
-                    } else {
-                        $reviews = false;
-                    }
-                    $reviews = TRUE;
-                    echo json_encode($reviews);
-                } else {
-                    $last_id = $this->review_model->add_review1($rating2[$i], $product_id1, $review_text2[$i], 'file_'[$i]);
-                    if (!empty($last_id)) {
-
-                        $this->load->model('upload_model');
-                        $img_path = $this->upload_model->upload_review_image('file_' . $product_id1, $last_id, $product_id1);
-                        if (!empty($img_path)) {
-                            $data = TRUE;
+                $product = $this->product_model->get_product_by_id($product_id1);
+                if ($product->user_id != $this->auth_user->id) {
+                    $review = $this->review_model->get_review($product_id1, $this->auth_user->id);
+                    if (!empty($review)) {
+                        $this->review_model->update_review1($review->id, $rating2[$i], $product_id1, $review_text2[$i]);
+                        $images = $this->review_model->check_review_images($product_id1, $this->auth_user->id);
+                        if (empty($images)) {
+                            $this->load->model('upload_model');
+                            $this->upload_model->upload_review_image('file_' . $product_id1, $review->id, $product_id1);
+                            $reviews = TRUE;
                         } else {
-                            $data = FALSE;
+                            $reviews = false;
                         }
-                        $data = TRUE;
                     } else {
-                        $data = False;
-                    }
-                    echo json_encode($data);
-                }
+                        $last_id = $this->review_model->add_review1($rating2[$i], $product_id1, $review_text2[$i], 'file_'[$i]);
+                        if (!empty($last_id)) {
 
+                            $this->load->model('upload_model');
+                            $img_path = $this->upload_model->upload_review_image('file_' . $product_id1, $last_id, $product_id1);
+                            if (!empty($img_path)) {
+                                $reviews = TRUE;
+                            } else {
+                                $reviews = FALSE;
+                            }
+                        } else {
+                            $reviews = False;
+                        }
+                    }
+                }
                 $i++;
             }
+            echo json_encode($reviews);
         }
-
-        // redirect($this->agent->referrer());
     }
 
     public function load_pay_view()
