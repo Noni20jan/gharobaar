@@ -130,13 +130,24 @@ class Cart_controller extends Home_Core_Controller
                         );
                         echo json_encode($response);
                     } else {
-                        $this->cart_model->add_to_cart($product);
-                        $response = array(
-                            "status" => 1,
-                            "msg" => "Successfully added to cart"
-                        );
+                        $variations = $this->variation_model->get_product_variations($product->id);
 
-                        echo json_encode($response);
+                        if (!empty($variations)) {
+                            $p = $this->product_model->get_product_by_id($product->id);
+                            $response = array(
+                                "status" => 0,
+                                "product_url" => generate_product_url($p)
+                            );
+                            echo json_encode($response);
+                        } else {
+                            $this->cart_model->add_to_cart($product);
+                            $response = array(
+                                "status" => 1,
+                                "msg" => "Successfully added to cart"
+                            );
+
+                            echo json_encode($response);
+                        }
                     }
                 } else if ($shop_status->is_shop_open == "0") {
                     $p = $this->product_model->get_product_by_id($product->id);
@@ -221,18 +232,29 @@ class Cart_controller extends Home_Core_Controller
                         );
                         echo json_encode($response);
                     } else {
-                        $this->cart_model->add_to_cart($product);
-                        if (!$this->auth_check) {
-                            $this->product_model->add_to_cart_without_auth($data);
-                        }
-                        $response = array(
-                            "status" => 1,
-                            "msg" => "Successfully added to cart",
-                            "action" => $action,
-                            "cart_count" => get_cart_product_count_ajax()
-                        );
+                        $variations = $this->variation_model->get_product_variations($product->id);
 
-                        echo json_encode($response);
+                        if (!empty($variations)) {
+                            $p = $this->product_model->get_product_by_id($product->id);
+                            $response = array(
+                                "status" => 0,
+                                "product_url" => generate_product_url($p)
+                            );
+                            echo json_encode($response);
+                        } else {
+                            $this->cart_model->add_to_cart($product);
+                            if (!$this->auth_check) {
+                                $this->product_model->add_to_cart_without_auth($data);
+                            }
+                            $response = array(
+                                "status" => 1,
+                                "msg" => "Successfully added to cart",
+                                "action" => $action,
+                                "cart_count" => get_cart_product_count_ajax()
+                            );
+
+                            echo json_encode($response);
+                        }
                     }
                 } else if ($shop_status->is_shop_open == "0") {
                     $p = $this->product_model->get_product_by_id($product->id);
@@ -2278,8 +2300,7 @@ class Cart_controller extends Home_Core_Controller
                     }
                     $reviews = TRUE;
                     echo json_encode($reviews);
-                } 
-                else {
+                } else {
                     $last_id = $this->review_model->add_review1($rating2[$i], $product_id1, $review_text2[$i], 'file_'[$i]);
                     if (!empty($last_id)) {
 

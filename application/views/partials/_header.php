@@ -9,7 +9,7 @@
 <link rel="preload" href="<?php echo base_url(); ?>assets/vendor/file-manager/file-manager.css" as="style">
 <link rel="preload" href="<?php echo base_url(); ?>assets/css/slick-theme.css" as="style">
 <link rel="preload" href="<?php echo base_url(); ?>assets/css/slick.css" as="style">
-<link rel="preload" href="<?php echo base_url(); ?>assets/css/main-1.7.min.css" as="style">
+<link rel="preload" href="<?php echo base_url(); ?>assets/css/main-1.7.min.css?v=1234qwer" as="style">
 <link rel="preload" href="<?php echo base_url(); ?>assets/css/custom.css" as="style">
 <link rel="preload" href="<?php echo base_url(); ?>assets/css/colors/default.min.css" as="style">
 <link rel="preload" href="<?php echo base_url(); ?>assets/css/fselect.css" as="style">
@@ -30,7 +30,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/font-icons/css/mds-icons.min.css" />
 <?php echo !empty($this->fonts->font_url) ? $this->fonts->font_url : ''; ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fselect.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main-1.7.min.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main-1.7.min.css?v=1234qwer" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom.css" />
 <?php if (!empty($this->general_settings->site_color)) : ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/<?php echo $this->general_settings->site_color; ?>.min.css?v=1234qwer" />
@@ -2945,6 +2945,32 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="login_error_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-custom">
+                <!-- form start -->
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true"><i class="icon-close"></i> </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row tracking-number-container">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <p class="details">We are facing some issue in login. Please try again after some time.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: #007C05; color:white;"><?php echo trans("close"); ?></button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -6463,6 +6489,14 @@
         }
         $(document).ready(function() {
             $("#confirm_password").keyup(checkPasswordMatch);
+            // var error = "";
+            // error = <?php //$this->session->user_data('login_error'); 
+                        ?>;
+            // if (error == "fail_to_login") {
+            //     $('#login_error_modal').show();
+            //     <?php //$this->session->unset_userdata('login_error'); 
+                    ?>
+            // }
         });
         $(document).ready(function() {
             $("#email_phn_exist_msg_login").hide();
@@ -6864,7 +6898,7 @@
                                         success: function(f) {
                                             var e = JSON.parse(f);
                                             if (e.result == 1) {
-                                                window.location.href = base_url + "cart/shipping";
+                                                window.location.href = base_url + "cart";
                                             } else {
                                                 document.getElementById("email_phn_exist_msg").innerHTML =
                                                     e.error_message;
@@ -6915,7 +6949,7 @@
                             success: function(f) {
                                 var e = JSON.parse(f);
                                 if (e.result == 1) {
-                                    window.location.href = base_url + "cart/shipping";
+                                    window.location.href = base_url + "cart";
                                 } else {
                                     document.getElementById("email_phn_exist_msg").innerHTML =
                                         e.error_message;
@@ -6957,7 +6991,7 @@
                         success: function(f) {
                             var e = JSON.parse(f);
                             if (e.result == 1) {
-                                window.location.href = base_url + "cart/shipping";
+                                window.location.href = base_url + "cart";
                             } else {
                                 document.getElementById("email_phn_exist_msg").innerHTML =
                                     e.error_message;
@@ -7399,9 +7433,9 @@
 
                     //console.log(i.empty);
                     if (i.empty == "false") {
-                       <?php if ($this->auth_check) :?>
-                        window.location.href =
-                            base_url + "cart"
+                        <?php if ($this->auth_check) : ?>
+                            window.location.href =
+                                base_url + "cart"
                         <?php else : ?>
                             $('#guestLoginModal').modal('show');
                         <?php endif; ?>
