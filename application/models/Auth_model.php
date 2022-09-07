@@ -1548,6 +1548,23 @@ class Auth_model extends CI_Model
         return $result[0]->state_code;
     }
 
+    //get state name from db
+    public function get_state_name()
+    {
+        // $this->db->where("state_code", $state_code);
+        $query = $this->db->get('state_code');
+        $result = $query->result();
+        return $result;
+    }
+
+    //get email of user from db
+    public function get_email()
+    {
+        $query = $this->db->get('users');
+        $result = $query->result();
+        return $result;
+    }
+    
     //pattern for seller id
     public function unique_pattern_seller($id)
     {

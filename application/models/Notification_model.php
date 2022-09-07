@@ -255,6 +255,27 @@ class Notification_model extends CI_Model
         $query = array_merge($query1, $query2);
         return $query;
     }
+
+    public function get_promotion_notification($email)
+    {
+        $date = date("Y-m-d H:i:s", strtotime("-1 week"));
+        // $this->db->where('read_date >=', $date);
+        $this->db->where('event_type', 'Promotion Notifications');
+        $this->db->where('read', 0);
+        $this->db->where('for_user', $email);
+        $this->db->join('notifications', "notifications.id=notify_user.notification_id");
+        $this->db->order_by("time", "DESC");
+        $query1 = $this->db->get('notify_user')->result();
+        $this->db->where('read_date >=', $date);
+        $this->db->where('event_type', 'Promotion Notifications');
+        $this->db->where('read', 1);
+        $this->db->where('for_user', $email);
+        $this->db->join('notifications', "notifications.id=notify_user.notification_id");
+        $this->db->order_by("time", "DESC");
+        $query2 = $this->db->get('notify_user')->result();
+        $query = array_merge($query1, $query2);
+        return $query;
+    }
     public function get_notification_count()
     {
         $id = $this->auth_user->id;

@@ -41,7 +41,7 @@
                 <div class="table-responsive">
                     <table id="product_details" class="table table-bordered table-striped" role="grid">
                         <?php $this->load->view('admin/product/_filter_products'); ?>
-
+                        <button class="btn bg-purple dropdown-toggle btn-select-option" type="button" onclick="selected()" id="opened" style="float:right;display:none; height:40px; width:110px;" area-expanded="false" data-toggle="dropdown">Approve Product</button>
                         <thead>
                             <tr role="row">
                                 <th width="20"><input type="checkbox" class="checkbox-table" id="checkAll"></th>
@@ -192,7 +192,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn bg-purple dropdown-toggle btn-select-option" type="button" onclick="selected()" id="opened" style="float:left;display:none; height:40px; width:110px;" area-expanded="false" data-toggle="dropdown">Approve Product</button>
+        
     </div><!-- /.box-body -->
 </div>
 

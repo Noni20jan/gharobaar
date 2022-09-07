@@ -730,6 +730,18 @@
 
                 </li>
 
+                <li class="header text-uppercase"><?php echo trans("notification"); ?></li>
+                <li class="treeview<?php is_admin_nav_active(['promotions']); ?>">
+                    <a href="#">
+                        <img src="<?php echo base_url(); ?>assets/img/dashboard-icons/blog.png" alt="" style="width: 20px; height: 20px;" />
+                        <span><?php echo trans("notification"); ?></span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="nav-promo">
+                            <a href="<?php echo admin_url(); ?>promotions"><?php echo trans("promotion_notification"); ?></a>
+                        </li>
+                    </ul>
+                </li>
 
 
 

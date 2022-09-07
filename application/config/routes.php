@@ -412,6 +412,7 @@ $route[getr('admin', $rts) . '/email-settings'] = 'admin_controller/email_settin
 $route[getr('admin', $rts) . '/social-login'] = 'admin_controller/social_login_settings';
 $route[getr('admin', $rts) . '/disperancy'] = 'admin_controller/disperancy';
 $route[getr('admin', $rts) . '/whatsapp_message'] = 'admin_controller/whatsapp_message';
+$route[getr('admin', $rts) . '/promotions'] = 'admin_controller/promotion';
 
 $route[getr('admin', $rts) . '/add-page'] = 'page_controller/add_page';
 $route[getr('admin', $rts) . '/update-page'] = 'page_controller/update_page';

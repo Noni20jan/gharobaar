@@ -682,6 +682,22 @@ class Profile_model extends CI_Model
         $query = $this->db->get('users');
         return $query->result();
     }
+
+    //get vendor details 
+    public function get_vendor_details()
+    {
+        $role = "vendor";
+        $this->db->where('users.role', $role);
+        $query = $this->db->get('users');
+        return $query->result();
+    }
+
+    public function get_state_user_details($state)
+    {
+        $this->db->where('users.user_state', $state);
+        $query = $this->db->get('users');
+        return $query->result();
+    }
     public function get_vendor($id)
     {
 

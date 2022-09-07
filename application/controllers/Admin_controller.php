@@ -2144,4 +2144,139 @@ class Admin_controller extends Admin_Core_Controller
         $format_sale_data = $this->reports_model->format_sale_data_cancellation($from_date, $to_date);
         echo json_encode($format_sale_data);
     }
+
+    public function promotion()
+    {
+        $data['title'] = trans("promotion_notification");
+        $data['state'] = $this->auth_model->get_state_name();
+
+        $data['vendors'] = $this->profile_model->get_vendor_details();
+        $this->load->view('admin/includes/_header', $data);
+        $this->load->view('admin/page/promotions', $data);
+        $this->load->view('admin/includes/_footer');
+    }
+
+    public function send_promotion_notification()
+    {
+
+        $this->load->model("email_model");
+        $emailall = $this->input->post('emailall', true);
+        $title = $this->input->post('subject', true);
+        $message = $this->input->post('message', true);
+        $states = $this->input->post('state', true);
+        // var_dump($states);
+        // var_dump($emailall);
+        // var_dump($states);
+        // die();
+        $vendors = $this->profile_model->get_vendor_details();
+        if ($emailall == "all") {
+            $data['email'] = $this->newsletter_model->get_members();
+            $result = false;
+            if (!empty($data['email'])) :
+                $result = true;
+                foreach ($data['email'] as $email) :
+                    echo $email->email;
+
+                    $var = array(
+
+
+                        'title' =>  $title,
+                        'subject' => $title,
+                        'source_id' => "",
+                        'source' => "",
+                        'source' => "",
+                        'remark' => "",
+                        'to' => $email->email,
+                        'message' => $message,
+                        'for_user' => $email->email,
+                        'event_type' => 'Promotions',
+
+
+                    );
+                    // var_dump($var);
+                    // die();
+
+                    if (!$func = $this->email_model->notification($var)) {
+                        $result = false;
+                    } else {
+                        $result = true;
+                    }
+
+                endforeach;
+            endif;
+        } elseif ($emailall == "seller") {
+            foreach ($vendors as $vendor) :
+                echo $vendor->email;
+
+                $var = array(
+
+
+                    'title' =>  $title,
+                    'message' => $message,
+                    'source_id' => "",
+                    'subject' => $title,
+                    'source' => "",
+                    'source' => "",
+                    'remark' => "",
+                    'to' => $vendor->email,
+                    'for_user' => $vendor->email,
+                    'event_type' => 'Promotions',
+                );
+                // var_dump($var);
+                // die();
+
+                if (!$func = $this->email_model->notification($var)) {
+                    $result = false;
+                } else {
+                    $result = true;
+                }
+            endforeach;
+        } elseif ($emailall == "individual") {
+
+            foreach ($states as $state1) :
+                // var_dump($state1);
+                // die();
+                $state_email = $this->profile_model->get_state_user_details($state1);
+                foreach ($state_email as $state2) :
+                echo $state2->email;
+                // var_dump($state2->email);
+                // die();
+
+                $var = array(
+
+
+                    'title' =>  $title,
+                    'message' => $message,
+                    'source_id' => "",
+                    'source' => "",
+                    'source' => "",
+                    'remark' => "",
+                    'to' => $state2->email,
+                    'remark' => $message,
+                    'for_user' => $state2->email,
+                    'event_type' => 'Promotions',
+
+                );
+                // var_dump($var);
+                // die();
+                if (!$func = $this->email_model->notification($var)) {
+                    $result = false;
+                } else {
+                    $result = true;
+                }
+            endforeach;
+            endforeach;
+        }
+
+
+
+
+
+        if ($result == true) {
+            $this->session->set_flashdata('success', trans("msg_email_sent"));
+        } else {
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+        redirect($this->agent->referrer());
+    }
 }

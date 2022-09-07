@@ -10,6 +10,7 @@
 			<!-- include message block -->
 			<div class="col-sm-12">
 				<?php $this->load->view('admin/includes/_messages'); ?>
+				
 			</div>
 		</div>
 		<div class="row">
@@ -17,6 +18,7 @@
 				<div class="table-responsive">
 					<table id="order_status" class="table table-bordered table-striped" role="grid">
 						<?php $this->load->view('admin/order/_filter_orders'); ?>
+						<button class="btn bg-purple dropdown-toggle btn-select-option" type="button" onclick="GetSelected()" id="opened" style="float:right;display:none; height:40px; width:110px;" area-expanded="false" data-toggle="dropdown" >Complete order</button>
 						<thead>
 							<tr role="row">
 								<th><input type="checkbox" id="selectall"></th>
@@ -180,8 +182,7 @@
 		</div>
 
 
-		<button class="btn bg-purple dropdown-toggle btn-select-option" type="button" onclick="GetSelected()" id="opened" style="float:left;display:none; height:40px; width:110px;" area-expanded="false" data-toggle="dropdown" <?php //echo trans('select_option'); 
-																																																									?>>Complete order</button>
+		
 	</div>
 </div>
 <!-- script for collapsible order details -->
