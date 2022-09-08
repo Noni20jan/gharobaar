@@ -2175,7 +2175,7 @@ class Admin_controller extends Admin_Core_Controller
             if (!empty($data['email'])) :
                 $result = true;
                 foreach ($data['email'] as $email) :
-                    echo $email->email;
+                    //  $email->email;
 
                     $var = array(
 
@@ -2206,7 +2206,7 @@ class Admin_controller extends Admin_Core_Controller
             endif;
         } elseif ($emailall == "seller") {
             foreach ($vendors as $vendor) :
-                echo $vendor->email;
+                // echo $vendor->email;
 
                 $var = array(
 
@@ -2238,7 +2238,7 @@ class Admin_controller extends Admin_Core_Controller
                 // die();
                 $state_email = $this->profile_model->get_state_user_details($state1);
                 foreach ($state_email as $state2) :
-                echo $state2->email;
+                // echo $state2->email;
                 // var_dump($state2->email);
                 // die();
 
