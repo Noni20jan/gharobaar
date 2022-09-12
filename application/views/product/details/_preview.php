@@ -163,7 +163,7 @@ if (!empty($product_images)) {
                             <div class="item img-zoom-container">
                                 <a href="<?php echo get_product_image_url($image, 'image_big'); ?>" title="">
                                     <img src="<?php echo base_url() . IMG_BG_PRODUCT_SLIDER; ?>" class="img-bg" alt="slider-bg" style="border-radius:20px; ">
-                                    <img src="<?php echo get_product_image_url($image, 'image_big'); ?>" style="border-radius:20px; cursor: zoom-in;" id="image_<?php echo ($image->id) ?>" value="<?php echo get_product_image_url($image, 'image_big'); ?>" alt="<?php echo $product->slug; ?>" onmouseover="imageZoom('<?php echo ($image->id) ?>', 'myresult')" onmouseout="zoom('<?php echo ($image->id) ?>', 'myresult')" class="img-product-slider">
+                                    <img src="<?php echo get_product_image_url($image, 'image_default'); ?>" style="border-radius:20px; cursor: zoom-in;" id="image_<?php echo ($image->id) ?>" value="<?php echo get_product_image_url($image, 'image_default'); ?>" alt="<?php echo $product->slug; ?>" onmouseover="imageZoom('<?php echo ($image->id) ?>', 'myresult')" onmouseout="zoom('<?php echo ($image->id) ?>', 'myresult')" class="img-product-slider">
 
                                 </a>
                             </div>

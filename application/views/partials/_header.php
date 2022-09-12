@@ -960,6 +960,8 @@
             .promo-bar {
                 opacity: 1;
             }
+
+
         }
 
         .notification-count-mobile {
@@ -1277,12 +1279,14 @@
             height: 52px;
         }
 
-        .product-item .img-product {
-            display: block;
-            height: 260px;
-            /* width: 500px; */
-            margin: 0 auto;
-            object-fit: cover;
+        @media screen and (max-width: 1260px) {
+            .product-item .img-product {
+                display: block;
+                height: 260px;
+                width: auto;
+                margin: 0 auto;
+                object-fit: cover;
+            }
         }
     </style>
 </head>
