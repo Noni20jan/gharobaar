@@ -183,7 +183,7 @@
 
                                                             <div>
                                                                 <div style="float:left;">
-                                                                    <input type="number" name="stock" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="<?php echo $options->stock; ?>">
+                                                                    <input type="number" name="stock_<?php echo $options->id; ?>" id="stock_<?php echo $options->id; ?>" class="form-control form-input max-perc-50" min="0" max="999999999" value="<?php echo $options->stock; ?>" >
 
                                                                 </div>
 
@@ -191,7 +191,7 @@
                                                                     <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('save'); ?></button>
                                                                 </div>
                                                             </div>
-
+                                                            
 
 
 
@@ -256,7 +256,7 @@
                                                             <div>
                                                                 <div style="float:left;">
 
-                                                                    <input type="number" name="stock" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="<?php echo $options->stock; ?>">
+                                                                    <input type="number" name="stock_<?php echo $options->id; ?>" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="<?php echo $options->stock; ?>">
 
                                                                 </div>
 
@@ -493,15 +493,18 @@
         $("input[name='stock']").each(function() {
             stock.push(this.value);
         });
+        console.log(stock);
 
         var Ids = [];
         $("input[name='product-checkbox']:checked").each(function() {
 
             Ids.push(this.value);
         });
+        console.log(Ids);
+        for(var i =0; i<Ids.length;i++){
         var data = {
-            'id': Ids,
-            'stock': stock,
+            'id': Ids[i],
+            'stock': $('#stock_'+Ids[i]).val(),
             "sys_lang_id": sys_lang_id
         };
         console.log(data)
@@ -523,8 +526,9 @@
                 //     $('#notify-stock').show();
                 // }
             }
+        
         });
-    }
+    }}
     // $("input[name=product-checkbox]").click(function() {
     //     var stock = $('#stock').val();
     //     if (($("#product").is(":checked")) && stock > 0) {

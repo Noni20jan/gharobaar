@@ -2202,7 +2202,7 @@ class Product_model extends Core_Model
                         products
                     WHERE
                         add_meet = 'Made to Stock')
-                        AND variation_options.id=$id AND variation_options.is_default=0)";
+                        AND variation_options.id=$id)";
         $query = $this->db->query($sql);
     }
 

@@ -740,4 +740,12 @@ class Variation_model extends CI_Model
         $query = $this->db->get();
         return $query->num_rows();
     }
+    public function get_product_by_variation_id($variation_id)
+    {
+        $this->db->join('variations', 'variations.id = variation_options.variation_id');
+        $this->db->where('variation_options.id', $variation_id);
+        $query =   $this->db->get('variation_options');
+
+        return $query->result();
+    }
 }

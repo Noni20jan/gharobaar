@@ -171,7 +171,7 @@
 
                                                     <div>
                                                         <div style="float:left;">
-                                                            <input type="number" name="stock" id="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="<?php echo $item->stock; ?>" placeholder="<?php echo trans("stock"); ?>" required>
+                                                            <input type="number" name="stock_<?php echo $item->id; ?>" id="stock_<?php echo $item->id; ?>" class="form-control form-input max-perc-50" min="0" max="999999999" value="<?php echo $item->stock; ?>" placeholder="<?php echo trans("stock"); ?>" required>
                                                         </div>
                                                         <div style="float:left;">
                                                             <button type="submit" class="btn btn-md btn-success"><i class="fa fa-edit option-icon"></i><?php echo trans('save'); ?></button>
@@ -230,7 +230,7 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label class="control-label"><?php echo trans('stock'); ?></label>
-                            <input type="number" name="stock" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>" required>
+                            <input type="number" name="stock_<?php echo $item->id; ?>" class="form-control form-input max-perc-50" min="0" max="999999999" value="" placeholder="<?php echo trans("stock"); ?>" required>
 
                         </div>
                     </div>
@@ -409,9 +409,11 @@
         $("input[name='product-checkbox']:checked").each(function() {
             Ids.push(this.value);
         });
+        console.log(Ids)
+        for(var i =0; i<Ids.length;i++){
         var data = {
-            'id': Ids,
-            'stock': stock,
+            'id': Ids[i],
+            'stock': $('#stock_'+Ids[i]).val(),
             "sys_lang_id": sys_lang_id
         };
         console.log(data)
@@ -427,6 +429,39 @@
 
 
 
-    }
+    }}
     // }
 </script>
+<!-- <script>
+    function savedata() {
+        var selected = new Array();
+        var chks = myTable.getElementsByTagName("INPUT");
+
+        for (var i = 0; i < chks.length; i++) {
+            if (chks[i].checked) {
+                selected.push(chks[i].value);
+            }
+        }
+        if (selected.length > 0) {
+            for (var i = 0; i < selected.length; i++) {
+                var data = {
+                    "id": selected[i],
+                    "stock":stock,
+                    "sys_lang_id": sys_lang_id
+
+                };
+                console.log(selected);
+                data[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    method: "POST",
+                    url: base_url + "dashboard_controller/update_stock_without_variation_products",
+                    data: data,
+                    success: function(response) {
+                        console.log(response);
+                        location.reload();
+                    }
+                })
+            }
+        }
+    }
+</script> -->

@@ -2403,15 +2403,22 @@ class Dashboard_controller extends Home_Core_Controller
     public function update_stock_post_variation()
     {
         $id = $this->input->post('id', true);
-        $stock = $this->input->post('stock', true);
-
-
+        $stock = $this->input->post('stock_' . $id, true);
+        // var_dump($stock);
+        // die();
+        $product_id = $this->variation_model->get_product_by_variation_id($id);
+        // var_dump($product_id);
+        // die();
         $product = $this->variation_model->get_variation_option($id);
 
         if (!empty($product)) {
             if ($this->product_model->update_variation_stock($id, $stock)) {
             }
+            if ($product->is_default == 1) {
+                $this->product_model->update_stock($product_id[0]->product_id, $stock);
+            }
         }
+
         redirect($this->agent->referrer());
     }
 
@@ -2419,35 +2426,45 @@ class Dashboard_controller extends Home_Core_Controller
     {
         $id = $this->input->post('id', true);
         $stock = $this->input->post('stock', true);
+        $product_id = $this->variation_model->get_product_by_variation_id($id);
+        $product = $this->variation_model->get_variation_option($id);
         // $product = $this->product_model->get_product_by_id($id);
 
         if (!empty($id)) {
-            $i = 0;
-            foreach ($id as $ids) {
-                if ($this->product_model->update_stock($ids, $stock[$i])) {
+           // $i = 0;
+            //foreach ($id as $ids) {
+                if ($this->product_model->update_stock($id, $stock)) {
+                    if ($product->is_default == 1) {
+                        $this->product_model->update_stock($product_id[0]->product_id, $stock);
+                    }
                 }
-                $i++;
+               // $i++;
             }
-        }
+       // }
         // redirect($this->agent->referrer());
     }
     public function update_stock_variation_product()
     {
         $id = $this->input->post('id', true);
         $stock = $this->input->post('stock', true);
-
-        // $product = $this->variation_model->get_product_variation_option($id);
-        // var_dump($product);
-        // die();var
+        $product_id = $this->variation_model->get_product_by_variation_id($id);
+        $product = $this->variation_model->get_variation_option($id);
+        //  var_dump($id);
+        // die();
         if (!empty($id)) {
-            $i = 0;
-            foreach ($id as $ids) {
-                if ($this->product_model->update_variation_stock($ids, $stock[$i])) {
+            // $i = 0;
+            // foreach ($id as $ids) {
+                if ($this->product_model->update_variation_stock($id, $stock)) {
+                    if ($product->is_default == 1) {
+                        $this->product_model->update_stock($product_id[0]->product_id, $stock);
+                    }
+                    // $i++;
                 }
-                $i++;
-            }
+            // }
         }
+        //redirect($this->agent->referrer());
     }
+
 
 
 
