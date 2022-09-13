@@ -206,6 +206,21 @@
 
         }
     });
+
+    $("#checkAll").click(function() {
+		if ($(this).is(":checked")) {
+
+			$("input[name='checkbox-table']").prop("checked", this.checked);
+			document.getElementById("opened").style.display = "inline-block";
+
+		}
+		if (!$(this).is(":checked")) {
+			document.getElementById("opened").style.display = "none";
+			$("input[name='checkbox-table']").prop("checked", this.checked);
+
+		}
+
+	});
 </script>
 
 <script>
