@@ -310,7 +310,7 @@
             font-size: 0.8125rem;
             line-height: 21px;
             /* min-height: 37px;  */
-            width: 420px;
+            width: 100%;
         }
     }
 
@@ -794,7 +794,7 @@
     .mobile-notify-icon {
         border-radius: 50%;
         color: white;
-        font-size: 15px;
+        font-size: 22px !important;
         line-height: 0px;
         list-style: none;
     }
@@ -5451,7 +5451,7 @@
                                         <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="product">
                                     <?php endif; ?>
                                 </div> -->
-                                <div class="search_bar" style="width: 95%;">
+                                <div class="search_bar" style="width: 93%;">
                                     <input type="hidden" id="search_type_input_mobile" class="search_type_input" name="search_type" value="product">
                                     <input type="text" id="input_search_mobile" name="search" maxlength="300" pattern=".*\S+.*" class="form-control input-search speech-input" value="<?php echo (!empty($filter_search)) ? $filter_search : ''; ?>" placeholder="<?php echo trans("search"); ?>" onchange="search_input();" required>
                                     <button class="btn btn-default btn-search"><i class="icon-search"></i></button>
@@ -6962,10 +6962,10 @@
 
                     console.log(i.empty);
                     if (i.empty == "false") {
-                        <?php if ($this->auth_check) :?>
-                        window.location.href =
-                            base_url + "cart"
-                        <?php else:?>
+                        <?php if ($this->auth_check) : ?>
+                            window.location.href =
+                                base_url + "cart"
+                        <?php else : ?>
                             $('#guestLoginModal').modal('show');
                         <?php endif; ?>
                     } else {
