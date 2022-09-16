@@ -158,6 +158,7 @@ $route['agree-fssai-undertaking']['POST'] = 'profile_controller/agree_fssai_unde
 
 //order
 $route['update-order-product-status-post']['POST'] = 'dashboard_controller/update_order_product_status_post';
+$route['update-stock']['POST']='dashboard_controller/update_stock_without_variation';
 $route['update-stock-post']['POST'] = 'dashboard_controller/update_stock_post';
 $route['update-stock-post-variation']['POST'] = 'dashboard_controller/update_stock_post_variation';
 $route['add-shipping-tracking-number-post']['POST'] = 'dashboard_controller/add_shipping_tracking_number_post';

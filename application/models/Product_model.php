@@ -2179,6 +2179,15 @@ class Product_model extends Core_Model
         return $result;
     }
 
+    public function without_variation_stock_update($id, $stock)
+    {
+        $stock = $this->input->post('stock', true);
+
+        $sql = "UPDATE products SET stock=$stock WHERE add_meet='Made to Stock' AND id=$id";
+        $query = $this->db->query($sql);
+    }
+
+    
     public function update_stock($id, $stock)
     {
         $data['stock'] = $stock;

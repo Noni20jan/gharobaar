@@ -2385,6 +2385,21 @@ class Dashboard_controller extends Home_Core_Controller
         redirect($this->agent->referrer());
     }
 
+    public function update_stock_without_variation()
+    {
+        $id = $this->input->post('id', true);
+        $stock = $this->input->post('stock', true);
+        // $product = $this->product_model->get_product_by_id($id);
+
+        $product = $this->product_model->get_product_by_id($id);
+
+        if (!empty($product)) {
+            if ($this->product_model->without_variation_stock_update($id, $stock)) {
+            }
+        }
+        redirect($this->agent->referrer());
+    }
+
     public function update_stock_post()
     {
         $id = $this->input->post('id', true);
@@ -2431,16 +2446,16 @@ class Dashboard_controller extends Home_Core_Controller
         // $product = $this->product_model->get_product_by_id($id);
 
         if (!empty($id)) {
-           // $i = 0;
+            // $i = 0;
             //foreach ($id as $ids) {
-                if ($this->product_model->update_stock($id, $stock)) {
-                    if ($product->is_default == 1) {
-                        $this->product_model->update_stock($product_id[0]->product_id, $stock);
-                    }
+            if ($this->product_model->update_stock($id, $stock)) {
+                if ($product->is_default == 1) {
+                    $this->product_model->update_stock($product_id[0]->product_id, $stock);
                 }
-               // $i++;
             }
-       // }
+            // $i++;
+        }
+        // }
         // redirect($this->agent->referrer());
     }
     public function update_stock_variation_product()
@@ -2454,12 +2469,12 @@ class Dashboard_controller extends Home_Core_Controller
         if (!empty($id)) {
             // $i = 0;
             // foreach ($id as $ids) {
-                if ($this->product_model->update_variation_stock($id, $stock)) {
-                    if ($product->is_default == 1) {
-                        $this->product_model->update_stock($product_id[0]->product_id, $stock);
-                    }
-                    // $i++;
+            if ($this->product_model->update_variation_stock($id, $stock)) {
+                if ($product->is_default == 1) {
+                    $this->product_model->update_stock($product_id[0]->product_id, $stock);
                 }
+                // $i++;
+            }
             // }
         }
         //redirect($this->agent->referrer());
@@ -3114,7 +3129,8 @@ class Dashboard_controller extends Home_Core_Controller
         echo json_encode($data);
     }
 
-    public function get_sku_code(){
+    public function get_sku_code()
+    {
         $product_sku = $this->input->post('sku');
         $data["sku"] = $this->product_model->get_sku();
         $data = array(
