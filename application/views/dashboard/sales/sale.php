@@ -734,7 +734,9 @@ endif;
                                                             </p>
                                                             <?php if (!empty($shiprocket_order_details->awb_code)) : ?>
                                                                 <p class="m-b-5">
-                                                                    <button type="button" class="btn btn-md btn-block btn-danger" onclick="shiprocket_cancel_order('<?php echo $shiprocket_order_details->shipment_order_id; ?>','Are you sure you want to cancel the shipment?')"> Cancel Shipment </button>
+                                                                    <?php if ($this->general_settings->cancel_shipment == 1) { ?>
+                                                                        <button type="button" class="btn btn-md btn-block btn-danger" onclick="shiprocket_cancel_order('<?php echo $shiprocket_order_details->shipment_order_id; ?>','Are you sure you want to cancel the shipment?')"> Cancel Shipment </button>
+                                                                    <?php } ?>
                                                                 </p>
                                                             <?php endif; ?>
                                                         <?php endif; ?>
@@ -767,12 +769,10 @@ endif;
                                                         endif; ?>
                                                         <?php $chk = get_shiprocket_order_details($order->id, $item->product_id); ?>
                                                         <?php if (empty($chk) || $chk->is_active != 1) : ?>
-                                                            <?php if ($is_made_to_order) : ?>
-                                                                <button type="button" style="width:100%;" class="btn btn-md btn-block btn-danger" data-toggle="modal" data-target="#made_to_order_cancel_warning_<?php echo $item->id; ?>"> Cancel Order </button>
+                                                            <?php if ($is_made_to_order) : ?>                                                                
+                                                                    <button type="button" style="width:100%;" class="btn btn-md btn-block btn-danger" data-toggle="modal" data-target="#made_to_order_cancel_warning_<?php echo $item->id; ?>"> Cancel Order </button>                                                                
                                                                 <!-- <a href="#" class="btn btn-block" data-toggle="modal" data-target="#made_to_order_checkout"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a> -->
                                                             <?php else : ?>
-
-
                                                                 <button type="button" style="width:100%;" class="btn btn-md btn-block btn-danger" data-toggle="modal" data-target="#cancelOrderModal_<?php echo $item->id; ?>"> Cancel Order </button>
                                                             <?php endif; ?>
                                                         <?php endif; ?>

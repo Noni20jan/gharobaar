@@ -695,6 +695,7 @@ class Profile_model extends CI_Model
     public function get_state_user_details($state)
     {
         $this->db->where('users.user_state', $state);
+        $this->db->orwhere('users.supplier_state', $state);
         $query = $this->db->get('users');
         return $query->result();
     }
