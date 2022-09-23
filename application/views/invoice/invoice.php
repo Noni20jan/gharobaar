@@ -390,12 +390,15 @@ function convert_number_to_words($number)
                                                     <th class="border-0 font-weight-bold"><?php echo trans("igst"); ?></th>
                                                     <th class="border-0 font-weight-bold"><?php echo trans("cgst"); ?></th>
                                                     <th class="border-0 font-weight-bold"><?php echo trans("sgst"); ?></th>
-                                                    <!-- <th class="border-0 font-weight-bold"><?php echo trans("shipping"); ?></th> -->
+                                                    <?php if($order_product->product_total_price<50000){?>
+                                                    <th class="border-0 font-weight-bold"><?php echo trans("shipping"); ?></th>
+                                                    <?php }?>
                                                     <th class="border-0 font-weight-bold"><?php echo trans("total"); ?></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
+                                                $shipping_value=0;
                                                 if ($show_all_products) {
                                                     $sale_subtotal = $order->price_subtotal;
                                                     $sale_gst = $order->price_gst;
@@ -466,8 +469,12 @@ function convert_number_to_words($number)
                                                                             <td><?php echo price_formatted_without_round($order_product->product_igst, $order_product->product_currency); ?></td>
                                                                             <td><?php echo price_formatted_without_round($order_product->product_cgst, $order_product->product_currency); ?></td>
                                                                             <td><?php echo price_formatted_without_round($order_product->product_sgst, $order_product->product_currency); ?></td>
-
-                                                                            <!-- <td><?php echo price_formatted($order_product->product_shipping_cost, $order_product->product_currency); ?></td> -->
+                                                                            <?php if($order_product->product_total_price<50000){?>
+                                                                            <td><?php echo price_formatted(10000, $order_product->product_currency); ?></td>
+                                                                            <?php }?>
+                                                                            <?php if($order_product->product_total_price<50000):
+                                                                            $order_product->product_total_price += 10000;
+                                                                            endif;?>
                                                                             <td><?php echo price_formatted($order_product->product_total_price, $order_product->product_currency); ?></td>
 
 
@@ -491,7 +498,10 @@ function convert_number_to_words($number)
                                                                             <td></td>
                                                                             <td></td>
                                                                             <td></td>
-                                                                            <td><b><?php echo price_formatted_without_round($sale_seller_total, $order_product->product_currency); ?></b></td>
+                                                                            <?php if($order_product->product_total_price<50000){?>
+                                                                            <td></td>
+                                                                            <?php }?>
+                                                                            <td><b><?php echo price_formatted_without_round($order_product->product_total_price, $order_product->product_currency); ?></b></td>
                                                                         </tr>
                                             </tbody>
                                         </table>
@@ -505,7 +515,7 @@ function convert_number_to_words($number)
                                                 <b>Amount in words: &nbsp;</b>
                                                 <?php if ($show_all_products == false) : ?>
                                                     <?php
-                                                    $test = (($sale_seller_total) / 100);
+                                                    $test = (($order_product->product_total_price) / 100);
 
                                                     echo convert_number_to_words($test); ?>
                                                 <?php else : ?>

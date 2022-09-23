@@ -165,12 +165,16 @@
                     <!-- <?php echo trans("shipping"); ?> -->
                     <!-- <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span> -->
                     <?php if ($this->general_settings->flat_ship_enable == 1) : ?>
-                        <?php echo trans("shipping"); ?><span class="float-right"><?php echo (price_formatted(($this->general_settings->flat_ship_amount), $cart_total->currency) . '/-'); ?></span>
+                        <?php if ($cart_total->total < 50000) : ?>
+                            <?php echo trans("shipping"); ?><span class="float-right"><?php echo (price_formatted(10000, $cart_total->currency)); ?></span>
+                        <?php else : ?>
+                            <?php echo trans("shipping"); ?><span class="float-right"><?php echo (price_formatted(0, $cart_total->currency)); ?></span>
+                        <?php endif; ?>
                     <?php else : ?>
                         <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span>
                     <?php endif; ?>
 
-                    <!-- <span class="float-right"><?php echo price_formatted($cart_total->shipping_cost, $this->payment_settings->default_currency); ?>/-</span> -->
+                    <!-- <span class="float-right"><?php echo price_formatted(100, $this->payment_settings->default_currency); ?>/-</span> -->
 
 
                 </p>

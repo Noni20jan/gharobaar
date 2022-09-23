@@ -603,7 +603,8 @@ class Cart_model extends CI_Model
         $cart_total = new stdClass();
         $cart_total->subtotal = 0;
         $cart_total->gst = 0;
-        $cart_total->shipping_cost = 0;
+        //$cart_total->shipping_cost = 0;
+        //$cart_total->shipping_value = 10000;
 
         $cart_total->total = 0;
 
@@ -665,7 +666,17 @@ class Cart_model extends CI_Model
                 if ($item->product_deliverable != 1) {
                     $cart_total->is_all_product_available = 0;
                 }
+
+
                 $cart_total->total = $cart_total->subtotal - $cart_total->discount * 100;
+
+                if ($this->general_settings->min_ship_cart_total > $cart_total->total) {
+                    $cart_total->shipping_cost = 10000;
+                    $cart_total->total = $cart_total->total + $cart_total->shipping_cost;
+                } else {
+                    $cart_total->shipping_cost = 0;
+                    $cart_total->total = $cart_total->subtotal - $cart_total->discount * 100;
+                }
             }
 
 
