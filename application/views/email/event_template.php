@@ -279,9 +279,18 @@
                 margin-bottom: 10px !important;
             }
 
-            table[class=body4] td {
-                padding: 0% 30%;
+            table[class=body] td {
+                padding: 0%;
 
+            }
+
+            .pic1 {
+                float: right;
+            }
+
+            img {
+                border: none;
+                max-width: none;
             }
 
             table[class=body] p,
@@ -389,7 +398,7 @@
                                 <a href="https://gharobaar.com/chanderi-silk-suit-6123"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_02.png"></a>
 
 
-                                <a href="https://gharobaar.com/mint-hand-block-kurta-10764"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_03.png"></a>
+                                <a class="pic1" href="https://gharobaar.com/mint-hand-block-kurta-10764"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_03.png"></a>
 
 
                                 <!-- <a href="https://www.gharobaar.com/miko-lolo-reversible-throw-jacket-in-organic-cotton-882">
@@ -403,28 +412,28 @@
                                 <a href="https://gharobaar.com/saffron-half-half-saree-4719"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_04.png"></a>
 
 
-                                <a href="https://gharobaar.com/maroon-cotton-kurta-10765"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_05.png"></a>
+                                <a class="pic1" href="https://gharobaar.com/maroon-cotton-kurta-10765"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_05.png"></a>
 
 
                                 <a href="https://gharobaar.com/ekaa-hk-banarasi-handloom-semi-georgette-soft-silk-saree-yellow-10071"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_06.png"></a>
 
 
-                                <a href="https://gharobaar.com/advaita-handicrafts-german-silver-full-stone-necklace-set-laxmi-maroon-thread-2872"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_07.png"></a>
+                                <a class="pic1" href="https://gharobaar.com/advaita-handicrafts-german-silver-full-stone-necklace-set-laxmi-maroon-thread-2872"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_07.png"></a>
 
 
                                 <a href="https://gharobaar.com/advaita-handicrafts-black-beads-kundan-necklace-set-2888"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_09.png"></a>
 
 
-                                <a href="https://gharobaar.com/advaita-handicrafts-german-silver-heavy-choker-durga-2883"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_08.png"></a>
+                                <a class="pic1" href="https://gharobaar.com/advaita-handicrafts-german-silver-heavy-choker-durga-2883"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_08.png"></a>
 
 
                                 <a href="https://gharobaar.com/holy-mud-indian-rose-natural-hand-rolled-bambooless-incense-sticks-with-holder-8425"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_11.png"></a>
 
 
-                                <a href="https://gharobaar.com/esscent-rose-incense-sticks-1000"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_10.png"></a>
+                                <a class="pic1" href="https://gharobaar.com/esscent-rose-incense-sticks-1000"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_10.png"></a>
 
 
-                                <a href="https://gharobaar.com/multicolour-incense-stick-holder-upcycled-cd-6108"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_12.png"></a>
+                                <a style="float: left;" href="https://gharobaar.com/multicolour-incense-stick-holder-upcycled-cd-6108"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_12.png"></a>
 
 
                                 <a href="https://gharobaar.com/kundan-embellished-marble-incense-holder-5468"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_13.png"></a>
