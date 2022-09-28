@@ -51,7 +51,7 @@ class Newsletter_model extends CI_Model
             'send_email' => 1
         );
         $this->db->where('id', $id);
-        $this->db->update('user', $data);
+        $this->db->update('users', $data);
     }
     //delete from subscribers
     public function delete_from_subscribers($id)
