@@ -760,6 +760,7 @@ class Admin_controller extends Admin_Core_Controller
                             // $result = true;
                             echo "Success";
                             $email_check = $this->newsletter_model->update_member_email_status($id);
+                            
                         }
                     }
                 }
