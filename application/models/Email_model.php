@@ -599,11 +599,11 @@ class Email_model extends CI_Model
                 $bcc = array();
                 foreach ($emailtoall as $emailtoall) {
                     array_push($bcc, $emailtoall);
-                    $data = array(
+                    $data_1 = array(
                         'send_email' => 1
                     );
                     $this->db->where('email', $emailtoall);
-                    $this->db->update('users', $data);
+                    $this->db->update('users', $data_1);
                 }
                 return $this->send_email_members($data, $bcc);
             }
