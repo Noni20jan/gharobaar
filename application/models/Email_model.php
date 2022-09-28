@@ -599,14 +599,7 @@ class Email_model extends CI_Model
                 $bcc = array();
                 foreach ($emailtoall as $emailtoall) {
                     array_push($bcc, $emailtoall);
-                    $data = array(
-                        'send_email' => 1
-                    );
-                    $this->db->where('email', $emailtoall);
-                    $this->db->update('users', $data);
                 }
-                // $this->update_member_email_status($emailtoall);
-
                 return $this->send_email_members($data, $bcc);
             }
         }
@@ -629,19 +622,6 @@ class Email_model extends CI_Model
             }
         }
     }
-
-    // public function update_member_email_status($id)
-    // {
-    //     foreach ($id as $emailwe){
-    //         // var_dump($emailwe);
-    //         // die();
-    //     $data = array(
-    //         'send_email' => 1
-    //     );
-    //     $this->db->where('id', $$emailwe);
-    //     $this->db->update('users', $data);
-    //     }
-    // }
     public function notification($data)
     {
         $id = '0';
