@@ -753,8 +753,10 @@ class Admin_controller extends Admin_Core_Controller
 
                         if (!$this->email_model->send_email_members_newsletter($emailall, $emailtoall1, $subject, $message)) {
                             // $result = false;
+                            echo "fail";
                         } else {
                             // $result = true;
+                            echo "Success";
                             $email_check = $this->newsletter_model->update_member_email_status($id);
                         }
                     }
