@@ -46,12 +46,13 @@ class Newsletter_model extends CI_Model
 
     public function update_member_email_status($id)
     {
-
+        foreach ($id as $emailwe){
         $data = array(
             'send_email' => 1
         );
-        $this->db->where('id', $id);
+        $this->db->where('id', $$emailwe);
         $this->db->update('users', $data);
+        }
     }
     //delete from subscribers
     public function delete_from_subscribers($id)

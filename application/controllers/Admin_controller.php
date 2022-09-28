@@ -784,14 +784,19 @@ class Admin_controller extends Admin_Core_Controller
             }
         }
         if (isset($emailto)) {
+            // var_dump("lksdh");
+            // die();
             $emailtoall1 = array();
             foreach ($emailto as $emailtoall) {
                 array_push($emailtoall1, $emailtoall);
             }
             $emailtoc = "members";
+
             if (!$this->email_model->send_email_members_newsletter($emailtoc, $emailtoall1, $subject, $message)) {
                 $result = false;
             } else {
+                $email_check = $this->newsletter_model->update_member_email_status($emailtoall1);
+
                 $result = true;
             }
         }
