@@ -759,8 +759,7 @@ class Admin_controller extends Admin_Core_Controller
                         } else {
                             // $result = true;
                             echo "Success";
-                            $email_check = $this->newsletter_model->update_member_email_status($id);
-                            
+                            // $email_check = $this->newsletter_model->update_member_email_status($id);
                         }
                     }
                 }
@@ -796,7 +795,7 @@ class Admin_controller extends Admin_Core_Controller
             if (!$this->email_model->send_email_members_newsletter($emailtoc, $emailtoall1, $subject, $message)) {
                 $result = false;
             } else {
-                $email_check = $this->newsletter_model->update_member_email_status($emailtoall1);
+                // $email_check = $this->newsletter_model->update_member_email_status($emailtoall1);
 
                 $result = true;
             }
