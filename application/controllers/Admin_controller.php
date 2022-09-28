@@ -744,6 +744,8 @@ class Admin_controller extends Admin_Core_Controller
             if (!empty($data['email'])) {
                 $result = true;
                 foreach ($data['email'] as $emailwe) {
+                    print_r($data['email']);
+                    die();
                     $id = '';
                     $emailtoall1 = '';
                     $id = $emailwe->email;
