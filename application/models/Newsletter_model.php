@@ -29,6 +29,30 @@ class Newsletter_model extends CI_Model
         }
     }
 
+    // //update for seller email status 
+    // public function update_member_email_status($email)
+    // {
+    //     $member = $this->get_members_email($email);
+    //     if (!empty($member)) {
+    //         if (empty($member->send_email)) {
+    //             $data = array(
+    //                 'send_email' => 1
+    //             );
+    //             $this->db->where('email', $email);
+    //             $this->db->update('member', $data);
+    //         }
+    //     }
+    // }
+
+    public function update_member_email_status($id)
+    {
+
+        $data = array(
+            'send_email' => 1
+        );
+        $this->db->where('id', $id);
+        $this->db->update('user', $data);
+    }
     //delete from subscribers
     public function delete_from_subscribers($id)
     {
@@ -57,6 +81,13 @@ class Newsletter_model extends CI_Model
         return $query->result();
     }
 
+    //get member email status
+    public function get_members_email()
+    {
+        $this->db->where('email_status', '0');
+        $query = $this->db->get('users');
+        return $query->result();
+    }
     //get subscriber
     public function get_subscriber($email)
     {

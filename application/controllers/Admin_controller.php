@@ -737,22 +737,46 @@ class Admin_controller extends Admin_Core_Controller
         $subject = $this->input->post('subject', true);
         $message = $this->input->post('message', true);
         if ($emailall == "all") {
-            $data['email'] = $this->newsletter_model->get_members();
+            $data['email'] = $this->newsletter_model->get_members_email();
+            print_r($data['email']);
+            die();
             $result = false;
             if (!empty($data['email'])) {
                 $result = true;
-                $emailtoall1 = array();
                 foreach ($data['email'] as $emailwe) {
+                    $id = '';
+                    $emailtoall1 = '';
+                    $id = $emailwe->email;
+                    $emailtoall1 = $emailwe->email;
                     if ($emailwe->email_status == 1) {
-                        array_push($emailtoall1, $emailwe->email);
+                        // array_push($emailtoall1, $emailwe->email);
+
+                        if (!$this->email_model->send_email_members_newsletter($emailall, $emailtoall1, $subject, $message)) {
+                            // $result = false;
+                        } else {
+                            // $result = true;
+                            $email_check = $this->newsletter_model->update_member_email_status($id);
+                        }
                     }
                 }
-                //send email
-                if (!$this->email_model->send_email_members_newsletter($emailall, $emailtoall1, $subject, $message)) {
-                    $result = false;
-                } else {
-                    $result = true;
-                }
+                $result = true;
+                // foreach ($data['email'] as $emailwe) {
+                //     $id='';
+                //     $emailtoall1 = '';
+                //     $emailtoall1 = $emailwe->email;
+                //     if ($emailwe->email_status == 1) {
+                //         // array_push($emailtoall1, $emailwe->email);
+
+                //         if (!$this->email_model->send_email_members_newsletter($emailall, $emailtoall1, $subject, $message)) {
+                //             // $result = false;
+                //         } else {
+                //             // $result = true;
+                //         }
+                //     }
+                // }
+                // //send email
+
+
             }
         }
         if (isset($emailto)) {
@@ -2238,33 +2262,33 @@ class Admin_controller extends Admin_Core_Controller
                 // die();
                 $state_email = $this->profile_model->get_state_user_details($state1);
                 foreach ($state_email as $state2) :
-                // echo $state2->email;
-                // var_dump($state2->email);
-                // die();
+                    // echo $state2->email;
+                    // var_dump($state2->email);
+                    // die();
 
-                $var = array(
+                    $var = array(
 
 
-                    'title' =>  $title,
-                    'message' => $message,
-                    'source_id' => "",
-                    'source' => "",
-                    'source' => "",
-                    'remark' => "",
-                    'to' => $state2->email,
-                    'remark' => $message,
-                    'for_user' => $state2->email,
-                    'event_type' => 'Promotions',
+                        'title' =>  $title,
+                        'message' => $message,
+                        'source_id' => "",
+                        'source' => "",
+                        'source' => "",
+                        'remark' => "",
+                        'to' => $state2->email,
+                        'remark' => $message,
+                        'for_user' => $state2->email,
+                        'event_type' => 'Promotions',
 
-                );
-                // var_dump($var);
-                // die();
-                if (!$func = $this->email_model->notification($var)) {
-                    $result = false;
-                } else {
-                    $result = true;
-                }
-            endforeach;
+                    );
+                    // var_dump($var);
+                    // die();
+                    if (!$func = $this->email_model->notification($var)) {
+                        $result = false;
+                    } else {
+                        $result = true;
+                    }
+                endforeach;
             endforeach;
         }
 
