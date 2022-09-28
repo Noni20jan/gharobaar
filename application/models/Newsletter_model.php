@@ -81,6 +81,13 @@ class Newsletter_model extends CI_Model
         return $query->result();
     }
 
+    public function get_members2()
+    {
+        $this->db->where('send_email', '0');
+        $query = $this->db->get('users');
+        return $query->result();
+    }
+
     //get member email status
     public function get_members_email()
     {

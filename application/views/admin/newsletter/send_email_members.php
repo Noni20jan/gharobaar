@@ -27,7 +27,7 @@
                 </div>
                 <div class="form-group" id="indvidual_selection">
                     <select name="emailto[]" id="user_selection" class="selectpicker" data-live-search=" true" multiple>
-                        <?php $data['email'] = $this->newsletter_model->get_members1(); ?>
+                        <?php $data['email'] = $this->newsletter_model->get_members2(); ?>
                         <?php foreach ($data['email'] as $email) { ?>
                             <option value="<?php echo $email->email; ?>"><?php echo $email->email; ?></option>
                         <?php } ?>
