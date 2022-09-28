@@ -47,6 +47,8 @@ class Newsletter_model extends CI_Model
     public function update_member_email_status($id)
     {
         foreach ($id as $emailwe){
+            var_dump($emailwe);
+            die();
         $data = array(
             'send_email' => 1
         );
