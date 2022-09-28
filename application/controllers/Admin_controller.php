@@ -738,8 +738,8 @@ class Admin_controller extends Admin_Core_Controller
         $message = $this->input->post('message', true);
         if ($emailall == "all") {
             $data['email'] = $this->newsletter_model->get_members_email();
-            print_r($data['email']);
-            die();
+            // print_r($data['email']);
+            // die();
             $result = false;
             if (!empty($data['email'])) {
                 $result = true;
