@@ -10,7 +10,7 @@
 			<!-- include message block -->
 			<div class="col-sm-12">
 				<?php $this->load->view('admin/includes/_messages'); ?>
-				
+
 			</div>
 		</div>
 		<div class="row">
@@ -18,7 +18,7 @@
 				<div class="table-responsive">
 					<table id="order_status" class="table table-bordered table-striped" role="grid">
 						<?php $this->load->view('admin/order/_filter_orders'); ?>
-						<button class="btn bg-purple dropdown-toggle btn-select-option" type="button" onclick="GetSelected()" id="opened" style="float:right;display:none; height:40px; width:110px;" area-expanded="false" data-toggle="dropdown" >Complete order</button>
+						<button class="btn bg-purple dropdown-toggle btn-select-option" type="button" onclick="GetSelected()" id="opened" style="float:right;display:none; height:40px; width:110px;" area-expanded="false" data-toggle="dropdown">Complete order</button>
 						<thead>
 							<tr role="row">
 								<th><input type="checkbox" id="selectall"></th>
@@ -28,6 +28,7 @@
 								<th><?php echo trans('buyer'); ?></th>
 								<th>Total Order Value</th>
 								<th><?php echo trans('status'); ?></th>
+								<th><?php echo "AWB No."; ?></th>
 								<!-- <th><?php echo trans('updated'); ?></th> -->
 								<th class="max-width-120"><?php echo trans('options'); ?></th>
 							</tr>
@@ -49,7 +50,6 @@
 										</a>
 									</td>
 									<td><?php echo $item->payment_method; ?></td>
-
 
 									<td>
 										<?php if ($item->buyer_id == 0) : ?>
@@ -77,7 +77,12 @@
 										endif;
 										?>
 									</td>
-									<td><strong><?php echo price_formatted($item->price_total, $item->price_currency); ?></strong></td>
+									<?php if ($item->price_total < 50000) : ?>
+										<td><strong><?php echo price_formatted($item->price_total + 10000, $item->price_currency); ?></strong></td>
+									<?php else : ?>
+										<td><strong><?php echo price_formatted($item->price_total, $item->price_currency); ?></strong></td>
+									<?php endif; ?>
+
 									<td>
 										<?php $order_products = $this->order_admin_model->get_order_products($item->id)
 										?>
@@ -108,6 +113,10 @@
 										<?php endif; ?>
 									</td>
 									<!-- <td><?php echo time_ago($item->updated_at); ?></td> -->
+									<td><?php $awb_code = $this->order_model->get_awb_code_by_order($item->order_number); ?>
+										<?php echo $awb_code[0]->awb_code; 
+										?>
+									</td>
 
 									<td>
 										<?php echo form_open_multipart('order_admin_controller/order_options_post'); ?>
@@ -182,7 +191,7 @@
 		</div>
 
 
-		
+
 	</div>
 </div>
 <!-- script for collapsible order details -->

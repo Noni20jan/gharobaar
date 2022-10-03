@@ -436,6 +436,7 @@
                                         <th><?php echo trans('shipping_cost'); ?></th>
                                         <th><?php echo trans('total'); ?></th>
                                         <th><?php echo trans('status'); ?></th>
+                                        <th><?php echo "AWB No."; ?></th>
                                         <th><?php echo trans('updated'); ?></th>
                                         <th class="max-width-120"><?php echo trans('options'); ?></th>
                                     </tr>
@@ -514,6 +515,10 @@
                                                         <strong>(<?php echo $message->message ?>)</strong>
                                                     <?php endif; ?>
                                                 </div>
+                                            </td>
+                                            <td><?php $awb_code = $this->order_model->get_awb_code($item->order_id); ?>
+                                                <?php echo $awb_code[0]->awb_code; 
+                                                ?>
                                             </td>
                                             <td>
                                                 <?php if ($item->product_type == 'physical') :
@@ -675,10 +680,15 @@
             <?php if ($is_order_has_physical_product) : ?>
                 <div class="row row-details">
                     <div class="col-xs-12 col-sm-6 col-right">
+
                         <strong> <?php echo trans("shipping"); ?></strong>
                     </div>
                     <div class="col-sm-6">
-                        <strong class="font-right"><?php echo price_formatted($order->price_shipping, $order->price_currency); ?></strong>
+                        <?php if ($order->price_total < 50000) : ?>
+                            <strong class="font-right"><?php echo price_formatted(10000, $order->price_currency); ?></strong>
+                        <?php else : ?>
+                            <strong class="font-right"><?php echo price_formatted(0, $order->price_currency); ?></strong>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endif; ?>
@@ -721,16 +731,17 @@
                     <div class="col-sm-6 col-xs-6 col-right">
 
                         <strong><?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);
-                        if (!empty($coupon->offer_code)) {
-                            echo $coupon->offer_code;
-                        } ?></strong>
+                                if (!empty($coupon->offer_code)) {
+                                    echo $coupon->offer_code;
+                                } ?></strong>
                     </div>
 
                     <div class="col-sm-6 col-xs-6 col-left">
 
                         <strong>Coupon Discount<?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);
-                        if (!empty($coupon->offer_code && $coupon->discount_percentage)) {
-                            echo ('('.$coupon->discount_percentage).'%)'; }?>
+                                                if (!empty($coupon->offer_code && $coupon->discount_percentage)) {
+                                                    echo ('(' . $coupon->discount_percentage) . '%)';
+                                                } ?>
                         </strong>
                     </div>
 
@@ -740,25 +751,29 @@
                     </div>
                 </div>
                 <p style="font-size: 12px;">(The coupon is applied to the total amount of order)</p>
-                <strong><?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id);?>
-                    <?php $order_detail = $this->order_model->get_order_details_by_id($order->id);?>
-                   
-                   <?php if (!empty($coupon->offer_code && $coupon->discount_percentage)) {
-                    if ($order_detail->coupon_discount == $coupon->allowed_max_discount*100 ) {
-                        
-                            echo ('(Please take note that the maximum deduction allowed for this Coupon is Rs.'.($coupon->allowed_max_discount).')'); 
-                  }
-                }
-                  ?>
+                <strong><?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id); ?>
+                    <?php $order_detail = $this->order_model->get_order_details_by_id($order->id); ?>
+
+                    <?php if (!empty($coupon->offer_code && $coupon->discount_percentage)) {
+                        if ($order_detail->coupon_discount == $coupon->allowed_max_discount * 100) {
+
+                            echo ('(Please take note that the maximum deduction allowed for this Coupon is Rs.' . ($coupon->allowed_max_discount) . ')');
+                        }
+                    }
+                    ?>
                 </strong>
-            <?php    } ?>       
+            <?php    } ?>
             <hr>
             <div class="row row-details">
                 <div class="col-xs-12 col-sm-6 col-right">
                     <strong> <?php echo trans("total"); ?></strong>
                 </div>
                 <div class="col-sm-6">
-                    <strong class="font-right"><?php echo price_formatted($order->price_total, $order->price_currency); ?></strong>
+                    <?php if ($order->price_total < 50000) : ?>
+                        <strong class="font-right"><?php echo price_formatted($order->price_total + 10000, $order->price_currency); ?></strong>
+                    <?php else : ?>
+                        <strong class="font-right"><?php echo price_formatted($order->price_total, $order->price_currency); ?></strong>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

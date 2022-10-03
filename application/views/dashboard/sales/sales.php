@@ -92,7 +92,7 @@
     }
 </style>
 
-
+<?php $shipping_value=10000;?>
 <div class="box">
     <div class="box-header with-border">
         <div class="left">
@@ -152,7 +152,12 @@
                                         if (!empty($sale)) : ?>
                                             <tr>
                                                 <td>#<?php echo $sale->order_number; ?></td>
+                                                <?php if($total<50000):?>
+                                                <td><?php echo price_formatted($total+$shipping_value, $sale->price_currency); ?>/-</td>
+                                                <?php else:?>
                                                 <td><?php echo price_formatted($total, $sale->price_currency); ?>/-</td>
+                                                <?php endif; ?>
+
                                                 <!-- <td>
                                                     <?php if ($sale->payment_status == 'payment_received') :
                                                         echo trans("payment_received");

@@ -417,6 +417,7 @@ endif;
                         <tbody>
                             <?php
                             $sale_subtotal = 0;
+                            $shipping_charge = 10000;
                             $sale_gst = 0;
                             $sale_shipping = 0;
                             $sale_total = 0;
@@ -734,9 +735,9 @@ endif;
                                                             </p>
                                                             <?php if (!empty($shiprocket_order_details->awb_code)) : ?>
                                                                 <p class="m-b-5">
-                                                                    <?php if ($this->general_settings->cancel_shipment == 1) { ?>
+                                                                    <?php //if ($this->general_settings->cancel_shipment == 1) { ?>
                                                                         <button type="button" class="btn btn-md btn-block btn-danger" onclick="shiprocket_cancel_order('<?php echo $shiprocket_order_details->shipment_order_id; ?>','Are you sure you want to cancel the shipment?')"> Cancel Shipment </button>
-                                                                    <?php } ?>
+                                                                    <?php //} ?>
                                                                 </p>
                                                             <?php endif; ?>
                                                         <?php endif; ?>
@@ -769,8 +770,8 @@ endif;
                                                         endif; ?>
                                                         <?php $chk = get_shiprocket_order_details($order->id, $item->product_id); ?>
                                                         <?php if (empty($chk) || $chk->is_active != 1) : ?>
-                                                            <?php if ($is_made_to_order) : ?>                                                                
-                                                                    <button type="button" style="width:100%;" class="btn btn-md btn-block btn-danger" data-toggle="modal" data-target="#made_to_order_cancel_warning_<?php echo $item->id; ?>"> Cancel Order </button>                                                                
+                                                            <?php if ($is_made_to_order) : ?>
+                                                                <button type="button" style="width:100%;" class="btn btn-md btn-block btn-danger" data-toggle="modal" data-target="#made_to_order_cancel_warning_<?php echo $item->id; ?>"> Cancel Order </button>
                                                                 <!-- <a href="#" class="btn btn-block" data-toggle="modal" data-target="#made_to_order_checkout"> <strong><?php echo trans("continue_to_checkout"); ?> </strong></a> -->
                                                             <?php else : ?>
                                                                 <button type="button" style="width:100%;" class="btn btn-md btn-block btn-danger" data-toggle="modal" data-target="#cancelOrderModal_<?php echo $item->id; ?>"> Cancel Order </button>
@@ -880,6 +881,18 @@ endif;
                             <strong><?php echo price_formatted($sale_discount * 100, $order->price_currency); ?>/-</strong>
                         </div>
                     </div>
+                    <?php if ($sale_total < 50000) : ?>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-6 col-left">
+                                <?php echo trans("shipping"); ?>
+                            </div>
+
+                            <div class="col-sm-6 col-xs-6 col-right">
+                                <strong><?php echo price_formatted($shipping_charge, $order->price_currency); ?>/-</strong>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
 
                     <?php if ($order->payment_method == "Cash On Delivery") : ?>
 
@@ -915,10 +928,13 @@ endif;
                         </div>
                         <div class="col-sm-6 col-xs-6 col-right">
                             <?php if (!is_null($seller_wise_data)) : ?>
-                                <strong><?php echo price_formatted($order_supplier->Sup_total_prd, $order->price_currency); ?>/-</strong>
+                                <?php if ($sale_total < 50000) : ?>
+                                    <strong><?php echo price_formatted($sale_total + $shipping_charge, $order->price_currency); ?>/-</strong>
+                                <?php else : ?>
+                                    <strong><?php echo price_formatted($sale_total, $order->price_currency); ?>/-</strong>
+                                <?php endif; ?>
                             <?php else : ?>
                                 <strong><?php echo price_formatted($sale_subtotal, $order->price_currency); ?>/-</strong>
-
                             <?php endif; ?>
                         </div>
                     </div>
