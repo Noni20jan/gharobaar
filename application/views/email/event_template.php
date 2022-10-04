@@ -280,15 +280,14 @@
             }
 
             table[class=body] td {
-                padding: 0%;
+                padding: 0% ;
 
             }
-
-            .pic1 {
+            
+            .pic1{
                 float: right;
             }
-
-            img {
+            img{
                 border: none;
                 max-width: none;
             }
@@ -346,7 +345,7 @@
             .ExternalClass {
                 width: 100%;
             }
-
+            
 
 
             .ExternalClass,
@@ -393,12 +392,12 @@
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
                         <tr>
                             <td style="text-align: center;">
-                                <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_01.png">
+                                <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/images/dusshera.png">
 
-                                <a href="https://gharobaar.com/chanderi-silk-suit-6123"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_02.png"></a>
+                                <!-- <a href="https://gharobaar.com/chanderi-silk-suit-6123"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_02.png"></a> -->
 
 
-                                <a class="pic1" href="https://gharobaar.com/mint-hand-block-kurta-10764"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_03.png"></a>
+                                <!-- <a class="pic1" href="https://gharobaar.com/mint-hand-block-kurta-10764"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_03.png"></a> -->
 
 
                                 <!-- <a href="https://www.gharobaar.com/miko-lolo-reversible-throw-jacket-in-organic-cotton-882">
@@ -409,16 +408,16 @@
                                     <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Images1/im4.jpg"></a> -->
 
 
-                                <a href="https://gharobaar.com/saffron-half-half-saree-4719"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_04.png"></a>
+                                <!-- <a href="https://gharobaar.com/saffron-half-half-saree-4719"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_04.png"></a> -->
 
 
-                                <a class="pic1" href="https://gharobaar.com/maroon-cotton-kurta-10765"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_05.png"></a>
+                                <!-- <a class="pic1" href="https://gharobaar.com/maroon-cotton-kurta-10765"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_05.png"></a> -->
 
 
-                                <a href="https://gharobaar.com/ekaa-hk-banarasi-handloom-semi-georgette-soft-silk-saree-yellow-10071"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_06.png"></a>
+                                <!-- <a href="https://gharobaar.com/ekaa-hk-banarasi-handloom-semi-georgette-soft-silk-saree-yellow-10071"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_06.png"></a> -->
 
 
-                                <a class="pic1" href="https://gharobaar.com/advaita-handicrafts-german-silver-full-stone-necklace-set-laxmi-maroon-thread-2872"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_07.png"></a>
+                                <!-- <a class="pic1" href="https://gharobaar.com/advaita-handicrafts-german-silver-full-stone-necklace-set-laxmi-maroon-thread-2872"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_07.png"></a>
 
 
                                 <a href="https://gharobaar.com/advaita-handicrafts-black-beads-kundan-necklace-set-2888"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_09.png"></a>
@@ -436,10 +435,10 @@
                                 <a style="float: left;" href="https://gharobaar.com/multicolour-incense-stick-holder-upcycled-cd-6108"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_12.png"></a>
 
 
-                                <a href="https://gharobaar.com/kundan-embellished-marble-incense-holder-5468"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_13.png"></a>
+                                <a  href="https://gharobaar.com/kundan-embellished-marble-incense-holder-5468"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_13.png"></a>
 
 
-                                <a href="https://gharobaar.com/"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_14.jpg"></a>
+                                <a href="https://gharobaar.com/"><img  src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_14.jpg"></a> -->
 
                                 <!-- <a href="https://www.gharobaar.com/"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Images1/Group_343.png"></a> -->
 
