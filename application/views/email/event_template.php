@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+<!DOCTYPE html>
+<html>
 
 <head>
     <title>abundant cart</title>
@@ -15,9 +17,14 @@
 
 
         .footer-image {
-            background-image: url('https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Images1/Frame.jpg');
-            width: 100%;
+            width: webkit-fill-available;
+            /* width: 100%; */
+            background-color: #ffc21f;
             height: 100%;
+        }
+
+        .zxc {
+            width: -webkit-fill-available;
         }
 
         img {
@@ -25,6 +32,7 @@
             -ms-interpolation-mode: bicubic;
             max-width: 100%;
         }
+
 
         body {
             background-color: #F9F9F9;
@@ -280,14 +288,15 @@
             }
 
             table[class=body] td {
-                padding: 0% ;
+                padding: 0%;
 
             }
-            
-            .pic1{
+
+            .pic1 {
                 float: right;
             }
-            img{
+
+            img {
                 border: none;
                 max-width: none;
             }
@@ -345,7 +354,7 @@
             .ExternalClass {
                 width: 100%;
             }
-            
+
 
 
             .ExternalClass,
@@ -392,7 +401,6 @@
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
                         <tr>
                             <td style="text-align: center;">
-                                <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/images/dusshera.png">
 
                                 <!-- <a href="https://gharobaar.com/chanderi-silk-suit-6123"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_02.png"></a> -->
 
@@ -450,6 +458,7 @@
 
                                 <div class="footer-image">
 
+                                    <img class="zxc" src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/images/dusshera.png">
 
 
                                     <table border="0" cellpadding="0" cellspacing="0">
@@ -493,3 +502,4 @@
     </table>
 
 </html>
+
