@@ -659,9 +659,12 @@ class Email_model extends CI_Model
         require dirname(__FILE__) . "/../../sendgrid-php/sendgrid-php.php";
 
         $email = new \SendGrid\Mail\Mail();
-        $email->setFrom($this->general_settings->mail_username, "Gharobaar");
-        $email->setSubject($data['subject']);
-        $email->addTo($this->general_settings->mail_username);
+        //$email->setFrom($this->general_settings->mail_username, "Gharobaar");
+        $email->setFrom('admin@gharobaar.com', "Gharobaar");
+        //$email->setSubject($data['subject']);
+        $email->setSubject('test');
+        //$email->addTo($this->general_settings->mail_username);
+        $email->addTo('dipakpvardi21@gmial.com');
         foreach ($bcc as $bcc) {
             $email->AddBCC($bcc);
         }
@@ -671,8 +674,8 @@ class Email_model extends CI_Model
         // var_dump($email);
         // die();
 
-        $sendgrid = new \SendGrid("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");
-
+        //$sendgrid = new \SendGrid("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");
+        $sendgrid = new \SendGrid("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");
         try {
             $response = $sendgrid->send($email);
             $response->statusCode();
