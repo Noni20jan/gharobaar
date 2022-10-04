@@ -4001,7 +4001,7 @@ class Order_model extends CI_Model
     {
         $order_number = clean_number($order_number);
         $this->db->where('order_number',$order_number);
-        $this->db->get('orders');
+        //$this->db->get('orders');
         //$this->db->select('shiprocket_order_details.*');
         $this->db->join('orders', 'shiprocket_order_details.order_id = orders.id');
         return $this->db->get('shiprocket_order_details')->result();

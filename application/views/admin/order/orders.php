@@ -114,7 +114,7 @@
 									</td>
 									<!-- <td><?php echo time_ago($item->updated_at); ?></td> -->
 									<td><?php $awb_code = $this->order_model->get_awb_code_by_order($item->order_number); ?>
-										<?php echo $awb_code[0]->awb_code; 
+										<?php echo $awb_code[0]->awb_code;
 										?>
 									</td>
 

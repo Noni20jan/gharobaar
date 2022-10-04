@@ -517,7 +517,7 @@
                                                 </div>
                                             </td>
                                             <td><?php $awb_code = $this->order_model->get_awb_code($item->order_id); ?>
-                                                <?php echo $awb_code[0]->awb_code; 
+                                                <?php echo $awb_code[0]->awb_code;
                                                 ?>
                                             </td>
                                             <td>
