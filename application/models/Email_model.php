@@ -664,7 +664,7 @@ class Email_model extends CI_Model
         //$email->setSubject($data['subject']);
         $email->setSubject('test');
         //$email->addTo($this->general_settings->mail_username);
-        $email->addTo('dipakpvardi21@gmial.com');
+        $email->addTo('dipakpvardi21@gmail.com');
         foreach ($bcc as $bcc) {
             $email->AddBCC($bcc);
         }
