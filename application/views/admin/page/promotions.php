@@ -1,10 +1,11 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php echo form_open('admin_controller/send_promotion_notification'); ?>
+<?php echo form_open('admin_controller/send_promotion_notification', array('id' => 'promo')); ?>
 
 <div class="box-body">
 
     <!-- include message block -->
-    <?php //$this->load->view('admin/includes/_messages'); ?>
+    <?php //$this->load->view('admin/includes/_messages'); 
+    ?>
 
     <div class="form-group">
 
@@ -31,24 +32,13 @@
     </div>
     <div class="form-group">
         <label><?php echo trans('description_promo'); ?></label>
-        
-        </div>
-        <textarea class="form-control form-textarea" rows="10" id="textarea" name="message" style="border-radius: 10px;" placeholder="Description of your product..." ></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary pull-right"><?php echo trans('send_notification'); ?></button>
 
-    <!-- <div class="box-footer">
-        <button type="submit" class="btn btn-primary pull-right"><?php //echo trans('send_notification'); ?></button>
-
-    </div> -->
+    </div>
+    <textarea class="form-control form-textarea" rows="10" id="textarea" name="message" style="border-radius: 10px;" placeholder="Description of your product..."></textarea>
+</div>
+<button id="btnsubmit" type="submit" class="btn btn-primary pull-right"><?php echo trans('send_notification'); ?></button>
 </div>
 <?php echo form_close(); ?>
-
-
-
-
-
-
 <script>
     $(document).ready(
         function() {
@@ -74,10 +64,15 @@
     function promotion_state() {
         var chks = document.getElementById('source_state').value;
         $('#indvidual_selection').show();
-
-
-
     }
 </script>
-
-
+<script>
+    $(document).ready(function() {
+        $("#promo").submit(function(e) {
+            document.getElementById("btnsubmit").innerHTML='Sending...';
+            //e.preventDefault();
+            $("#btnsubmit").attr("disabled", true);            
+            return true;
+        });
+    });
+</script>
