@@ -2214,7 +2214,7 @@ class Admin_controller extends Admin_Core_Controller
 
 
                         'title' =>  $title,
-                        'subject' => $title,
+                        'subject' => $message,
                         'source_id' => "",
                         'source' => "",
                         'source' => "",
@@ -2247,7 +2247,7 @@ class Admin_controller extends Admin_Core_Controller
                     'title' =>  $title,
                     'message' => $message,
                     'source_id' => "",
-                    'subject' => $title,
+                    'subject' => $message,
                     'source' => "",
                     'source' => "",
                     'remark' => "",
