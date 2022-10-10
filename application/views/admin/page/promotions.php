@@ -15,14 +15,14 @@
 
                 <div class="form-group">
 
-                    <label style="font-size: 20px"><?php echo "To :"; ?></label><br><br>
+                    <label style="font-size: 15px"><?php echo "To :"; ?></label><br><br>
 
                     <input type="radio" class="selectBox" name="emailall" id="source_all" onclick="promotion_all();" required value="all" />
-                    <label for="all" style="font-size: 20px">All</label><br>
+                    <label for="all" style="font-size: 15px">All</label><br>
                     <input type="radio" class="selectBox" name="emailall" id="source_seller" onclick="promotion_seller();" required value="seller" />
-                    <label for="seller" style="font-size: 20px">Seller</label><br>
+                    <label for="seller" style="font-size: 15px">Seller</label><br>
                     <input type="radio" class="selectBox" id="source_state" name="emailall" onclick="promotion_state();" required value="individual" />
-                    <label for="individual" style="font-size: 20px">Select State/Union Territory</label><br>
+                    <label for="individual" style="font-size: 15px">Select State/Union Territory</label><br>
                 </div>
                 <div class="form-group" id="indvidual_selection">
                     <select name="state[]" id="user_selection" class="selectpicker" data-live-search=" true" multiple>
@@ -35,18 +35,18 @@
                 <br>
                 <br>
                 <div class="form-group">
-                    <label style="font-size: 20px"><?php echo "Promotion Title"; ?></label>
+                    <label style="font-size: 15px"><?php echo "Promotion Title"; ?></label>
 
                     <br>
-                    <input type="text" name="subject" style="font-size: 20px;" vertical-align="top;" class="form-control" required></textarea>
+                    <input type="text" name="subject" style="font-size: 15px;" vertical-align="top;" class="form-control" required></textarea>
 
                 </div>
                 <br>
                 <div class="form-group">
-                    <label style="font-size: 20px"><?php echo trans('description_promo');?></label>
+                    <label style="font-size: 15px"><?php echo trans('description_promo');?></label>
 
                     <br>
-                    <textarea class="form-control form-textarea" style="font-size: 20px" rows="9" id="textarea" name="message" style="border-radius: 10px;" placeholder="Description of your product..."></textarea>
+                    <textarea class="form-control form-textarea" style="font-size: 15px" rows="9" id="textarea" name="message" style="border-radius: 10px;" placeholder="Description of your product..."></textarea>
                 </div>
             </div>
             <button id="btnsubmit" type="submit" class="btn btn-primary pull-right"><?php echo trans('send_notification'); ?></button>
