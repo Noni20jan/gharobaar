@@ -129,7 +129,8 @@
 
         </div>
         <p class="m-t-30">
-            <strong><?php echo trans("subtotal"); ?><span class="float-right" id="sub_total"><?php echo price_formatted_without_round($cart_total->total, $this->payment_settings->default_currency); ?>/-</span></strong>
+
+            <strong><?php echo trans("subtotal"); ?><span class="float-right" id="sub_total"><?php echo price_formatted_without_round(floor($cart_item->listing_price - ($cart_item->discount_amount * 100))*$cart_item->quantity, $this->payment_settings->default_currency); ?>/-</span></strong>
         </p>
         <!-- <?php if (!empty($cart_total->gst)) : ?>
             <p>
