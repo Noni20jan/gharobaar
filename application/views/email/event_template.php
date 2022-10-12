@@ -284,14 +284,14 @@
 
             }
 
-            .pic1 {
+            /* .pic1 {
                 float: right;
             }
 
             img {
                 border: none;
                 max-width: none;
-            }
+            } */
 
             table[class=body] p,
             table[class=body] ul,
