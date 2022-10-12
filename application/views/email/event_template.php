@@ -402,7 +402,7 @@
                         <tr>
                             <td style="text-align: center;">
 
-                                <!-- <a href="https://gharobaar.com/chanderi-silk-suit-6123"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_02.png"></a> -->
+                                <a href="https://www.gharobaar.com/"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter/NEWSLETTER+-+August.png"></a>
 
 
                                 <!-- <a class="pic1" href="https://gharobaar.com/mint-hand-block-kurta-10764"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_03.png"></a> -->
@@ -502,4 +502,3 @@
     </table>
 
 </html>
-
