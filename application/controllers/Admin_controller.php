@@ -2213,7 +2213,7 @@ class Admin_controller extends Admin_Core_Controller
                     $var = array(
 
 
-                        'title' =>  $title,
+                        'title' =>  "",
                         'subject' => $message,
                         'source_id' => "",
                         'source' => "",
@@ -2226,8 +2226,8 @@ class Admin_controller extends Admin_Core_Controller
 
 
                     );
-                    // var_dump($var);
-                    // die();
+                    //  var_dump($var);
+                    //  die();
 
                     if (!$func = $this->email_model->notification($var)) {
                         $result = false;
@@ -2244,7 +2244,7 @@ class Admin_controller extends Admin_Core_Controller
                 $var = array(
 
 
-                    'title' =>  $title,
+                    'title' =>  "",
                     'message' => $message,
                     'source_id' => "",
                     'subject' => $message,
@@ -2278,7 +2278,7 @@ class Admin_controller extends Admin_Core_Controller
                     $var = array(
 
 
-                        'title' =>  $title,
+                        'title' =>  "",
                         'message' => $message,
                         'source_id' => "",
                         'source' => "",

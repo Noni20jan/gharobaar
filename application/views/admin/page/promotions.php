@@ -34,19 +34,21 @@
                 </div>
                 <br>
                 <br>
-                <div class="form-group">
-                    <label style="font-size: 15px"><?php echo "Promotion Title"; ?></label>
+                <!-- <div class="form-group">
+                    <label style="font-size: 15px"><?php //echo "Promotion Title"; 
+                                                    ?></label>
 
                     <br>
                     <input type="text" name="subject" style="font-size: 15px;" vertical-align="top;" class="form-control" required></textarea>
 
-                </div>
+                </div> -->
                 <br>
                 <div class="form-group">
-                    <label style="font-size: 15px"><?php echo trans('description_promo');?></label>
+                    <label style="font-size: 15px"><?php echo trans('description_promo'); ?></label>
 
                     <br>
-                    <textarea class="form-control form-textarea" style="font-size: 15px" rows="9" id="textarea" name="message" style="border-radius: 10px;" placeholder="Description of your product..."></textarea>
+                    <textarea class="form-control form-textarea" style="font-size: 15px" rows="9" id="textarea" name="message" style="border-radius: 10px;" placeholder="Description of your product..." onchange="checklength(this)" maxlength="125" required></textarea>
+                    <span class="Validation_error hideMe" id="words_limit">*Maximum characters allowed is 125*</span>
                 </div>
             </div>
             <button id="btnsubmit" type="submit" class="btn btn-primary pull-right"><?php echo trans('send_notification'); ?></button>
@@ -88,4 +90,22 @@
                     return true;
                 });
             });
+        </script>
+
+        <script>
+            function checklength(el) {
+                var limit = $('#textarea').val();
+                $button = $('#btnsubmit')
+                if (el.value.length > 125) {
+                    $("#words_limit").attr("style", "display:block")
+                    $button.prop('disabled', 'disabled');
+
+                } else {
+                    $("#words_limit").attr("style", "display:none")
+
+                    $button.prop('disabled', false);
+
+                }
+
+            }
         </script>
