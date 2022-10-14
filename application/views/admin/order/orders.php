@@ -28,7 +28,7 @@
 								<th><?php echo trans('buyer'); ?></th>
 								<th>Total Order Value</th>
 								<th><?php echo trans('status'); ?></th>
-								<th><?php echo "AWB No."; ?></th>
+								<!-- <th><?php //echo "AWB No."; ?></th> -->
 								<!-- <th><?php echo trans('updated'); ?></th> -->
 								<th class="max-width-120"><?php echo trans('options'); ?></th>
 							</tr>
@@ -113,10 +113,10 @@
 										<?php endif; ?>
 									</td>
 									<!-- <td><?php echo time_ago($item->updated_at); ?></td> -->
-									<td><?php $awb_code = $this->order_model->get_awb_code_by_order($item->order_number); ?>
-										<?php echo $awb_code[0]->awb_code;
+									<!-- <td><?php // $awb_code = $this->order_model->get_awb_code_by_order($item->order_number); ?>
+										<?php //echo $awb_code[0]->awb_code;
 										?>
-									</td>
+									</td> -->
 
 									<td>
 										<?php echo form_open_multipart('order_admin_controller/order_options_post'); ?>

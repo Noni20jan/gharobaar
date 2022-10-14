@@ -3989,10 +3989,12 @@ class Order_model extends CI_Model
         $query = $this->db->get('orders');
         return $query->result();
     }
-    public function get_awb_code($order_id)
+    public function get_awb_code($order_id, $product_id)
     {
         $order_id = clean_number($order_id);
+        $product_id = clean_number($product_id);
         $this->db->where('order_id', $order_id);
+        $this->db->where('product_id', $product_id);
         $query = $this->db->get('shiprocket_order_details');
         return $query->result();
     }
