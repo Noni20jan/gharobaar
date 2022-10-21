@@ -547,119 +547,119 @@ endif; ?>
 </script>
 
 <script>
-    $("#plus-btn").click(function() {
-        var qty = parseInt($("#product_quantity").val());
-        var res_qty = quantity(qty);
-        if (res_qty == true) {
-            $('#product_quantity').val(qty - 1);
-            $("#no_stock_id").html("No more stock to add");
-        }
-        if (("<?php $this->auth_check ?>") != '') {
-            document.getElementById("check_pincode_text").innerHTML = "";
-        }
-        var qty = parseInt($("#product_quantity").val());
-        var stock = parseInt("<?php echo $product->stock; ?>");
-        if (stock > qty && stock != 0) {
-            var transit = '<?php echo get_transit_time_for_made_to_order($product, "time"); ?>';
-            // console.log(parseInt(transit));
-            if ("<?php echo $product->add_meet ?>" == "Made to order") {
-                "<?php $home_cook = get_parent_categories_tree($product->category_id); ?>";
-                var homeCook = "<?php echo $home_cook[0]->id; ?>";
-                if (parseInt(homeCook) == 2) {
-                    qty += 1;
-                    transit = '<?php echo get_transit_time_for_home_cook($product, "time"); ?>';
-                    // console.log(parseInt(transit));
-                    var sale_count = "<?php echo get_sale_count_as_per_incomplete_status($product->id); ?>";
-                    var order_capacity = "<?php echo $product->order_capacity ?>";
-                    var current_order_capacity = (parseInt(sale_count) % parseInt(order_capacity));
-                    current_order_capacity += parseInt(qty);
-                    var current_order_capacity_rem = (parseInt(current_order_capacity) % parseInt(order_capacity));
-                    var current_order_capacity_ratio = parseInt(parseInt(current_order_capacity) / parseInt(order_capacity));
-                    console.log(current_order_capacity);
-                    // if (current_order_capacity_rem == 0) {
-                    // var total_lead_time = (parseInt(qty)) * (parseInt(lead_time));
-                    var total = parseInt(transit) + (86400 * current_order_capacity_ratio);
-                    var date_time = ConvertSectoDay(total);
-                    // console.log(total);
-                    console.log(date_time);
-                    $('.lead_time').html(":" + date_time);
-                    // current_order_capacity = 0;
-                    // }
+    // $("#plus-btn").click(function() {
+    //     var qty = parseInt($("#product_quantity").val());
+    //     var res_qty = quantity(qty);
+    //     if (res_qty == true) {
+    //         $('#product_quantity').val(qty - 1);
+    //         $("#no_stock_id").html("No more stock to add");
+    //     }
+    //     if (("<?php $this->auth_check ?>") != '') {
+    //         document.getElementById("check_pincode_text").innerHTML = "";
+    //     }
+    //     var qty = parseInt($("#product_quantity").val());
+    //     var stock = parseInt("<?php echo $product->stock; ?>");
+    //     if (stock > qty && stock != 0) {
+    //         var transit = '<?php echo get_transit_time_for_made_to_order($product, "time"); ?>';
+    //         // console.log(parseInt(transit));
+    //         if ("<?php echo $product->add_meet ?>" == "Made to order") {
+    //             "<?php $home_cook = get_parent_categories_tree($product->category_id); ?>";
+    //             var homeCook = "<?php echo $home_cook[0]->id; ?>";
+    //             if (parseInt(homeCook) == 2) {
+    //                 qty += 1;
+    //                 transit = '<?php echo get_transit_time_for_home_cook($product, "time"); ?>';
+    //                 // console.log(parseInt(transit));
+    //                 var sale_count = "<?php echo get_sale_count_as_per_incomplete_status($product->id); ?>";
+    //                 var order_capacity = "<?php echo $product->order_capacity ?>";
+    //                 var current_order_capacity = (parseInt(sale_count) % parseInt(order_capacity));
+    //                 current_order_capacity += parseInt(qty);
+    //                 var current_order_capacity_rem = (parseInt(current_order_capacity) % parseInt(order_capacity));
+    //                 var current_order_capacity_ratio = parseInt(parseInt(current_order_capacity) / parseInt(order_capacity));
+    //                 console.log(current_order_capacity);
+    //                 // if (current_order_capacity_rem == 0) {
+    //                 // var total_lead_time = (parseInt(qty)) * (parseInt(lead_time));
+    //                 var total = parseInt(transit) + (86400 * current_order_capacity_ratio);
+    //                 var date_time = ConvertSectoDay(total);
+    //                 // console.log(total);
+    //                 console.log(date_time);
+    //                 $('.lead_time').html(":" + date_time);
+    //                 // current_order_capacity = 0;
+    //                 // }
 
 
 
-                } else {
-                    var lead_time = "<?php echo get_lead_time_hours($product); ?>";
-                    var total_lead_time = (parseInt(qty)) * (parseInt(lead_time));
-                    var total = parseInt(transit) + total_lead_time;
-                    var date_time = ConvertSectoDay(total);
-                    console.log(total);
-                    console.log(date_time);
-                    $('.lead_time').html(":" + date_time);
-                }
-            }
-        }
-    });
+    //             } else {
+    //                 var lead_time = "<?php echo get_lead_time_hours($product); ?>";
+    //                 var total_lead_time = (parseInt(qty)) * (parseInt(lead_time));
+    //                 var total = parseInt(transit) + total_lead_time;
+    //                 var date_time = ConvertSectoDay(total);
+    //                 console.log(total);
+    //                 console.log(date_time);
+    //                 $('.lead_time').html(":" + date_time);
+    //             }
+    //         }
+    //     }
+    // });
 
-    $("#minus-btn").click(function() {
-        if (("<?php $this->auth_check ?>") != '') {
-            document.getElementById("check_pincode_text").innerHTML = "";
-        }
-        var qty = parseInt($("#product_quantity").val());
+    // $("#minus-btn").click(function() {
+    //     if (("<?php $this->auth_check ?>") != '') {
+    //         document.getElementById("check_pincode_text").innerHTML = "";
+    //     }
+    //     var qty = parseInt($("#product_quantity").val());
 
-        var stock = parseInt("<?php echo $product->stock; ?>");
-        if (qty <= stock) {
-            $("#no_stock_id").html("");
-        }
-        if (qty > 1 && stock > 0) {
-            var transit = '<?php echo get_transit_time_for_made_to_order($product, "time"); ?>';
-            // console.log(parseInt(transit));
-            if ("<?php echo $product->add_meet ?>" == "Made to order") {
-                "<?php $home_cook = get_parent_categories_tree($product->category_id); ?>";
-                var homeCook = "<?php echo $home_cook[0]->id; ?>";
-                if (parseInt(homeCook) == 2) {
-                    qty -= 1;
-                    console.log(qty);
-                    transit = '<?php echo get_transit_time_for_home_cook($product, "time"); ?>';
-                    // console.log(parseInt(transit));
-                    var sale_count = "<?php echo get_sale_count_as_per_incomplete_status($product->id); ?>";
-                    var order_capacity = "<?php echo $product->order_capacity ?>";
-                    var current_order_capacity = (parseInt(sale_count) % parseInt(order_capacity));
-                    current_order_capacity += parseInt(qty);
-                    current_order_capacity_rem = (parseInt(current_order_capacity) % parseInt(order_capacity));
-                    var current_order_capacity_ratio = parseInt(parseInt(current_order_capacity) / parseInt(order_capacity));
-                    console.log(current_order_capacity);
-                    // if (current_order_capacity_rem == 0) {
-                    // var total_lead_time = (parseInt(qty)) * (parseInt(lead_time));
-                    var total = parseInt(transit) + (86400 * current_order_capacity_ratio);
-                    var date_time = ConvertSectoDay(total);
-                    if (qty == 1) {
-                        date_time = ConvertSectoDay(parseInt(transit));
-                    }
-                    // console.log(total);
-                    console.log(date_time);
-                    $('.lead_time').html(":" + date_time);
-                    // current_order_capacity = 0;
-                    // }
-                } else {
-                    var transit = $('.lead_time').text();
-                    var y = transit.split(":")[1];
-                    var split = y.split(" ");
-                    var days = parseInt(split[0]) * 24 * 3600;
-                    var hours = parseInt(split[2]) * 3600;
-                    var tot_seconds = days + hours;
-                    if ("<?php echo $product->add_meet ?>" == "Made to order") {
-                        var lead_time = "<?php echo get_lead_time_hours($product); ?>";
-                    }
-                    var total = tot_seconds - parseInt(lead_time);
-                    var date_time = ConvertSectoDay(total);
-                    $('.lead_time').html(":" + date_time);
-                    console.log(total);
-                    console.log(date_time);
-                }
-            }
-        }
-    });
+    //     var stock = parseInt("<?php echo $product->stock; ?>");
+    //     if (qty <= stock) {
+    //         $("#no_stock_id").html("");
+    //     }
+    //     if (qty > 1 && stock > 0) {
+    //         var transit = '<?php echo get_transit_time_for_made_to_order($product, "time"); ?>';
+    //         // console.log(parseInt(transit));
+    //         if ("<?php echo $product->add_meet ?>" == "Made to order") {
+    //             "<?php $home_cook = get_parent_categories_tree($product->category_id); ?>";
+    //             var homeCook = "<?php echo $home_cook[0]->id; ?>";
+    //             if (parseInt(homeCook) == 2) {
+    //                 qty -= 1;
+    //                 console.log(qty);
+    //                 transit = '<?php echo get_transit_time_for_home_cook($product, "time"); ?>';
+    //                 // console.log(parseInt(transit));
+    //                 var sale_count = "<?php echo get_sale_count_as_per_incomplete_status($product->id); ?>";
+    //                 var order_capacity = "<?php echo $product->order_capacity ?>";
+    //                 var current_order_capacity = (parseInt(sale_count) % parseInt(order_capacity));
+    //                 current_order_capacity += parseInt(qty);
+    //                 current_order_capacity_rem = (parseInt(current_order_capacity) % parseInt(order_capacity));
+    //                 var current_order_capacity_ratio = parseInt(parseInt(current_order_capacity) / parseInt(order_capacity));
+    //                 console.log(current_order_capacity);
+    //                 // if (current_order_capacity_rem == 0) {
+    //                 // var total_lead_time = (parseInt(qty)) * (parseInt(lead_time));
+    //                 var total = parseInt(transit) + (86400 * current_order_capacity_ratio);
+    //                 var date_time = ConvertSectoDay(total);
+    //                 if (qty == 1) {
+    //                     date_time = ConvertSectoDay(parseInt(transit));
+    //                 }
+    //                 // console.log(total);
+    //                 console.log(date_time);
+    //                 $('.lead_time').html(":" + date_time);
+    //                 // current_order_capacity = 0;
+    //                 // }
+    //             } else {
+    //                 var transit = $('.lead_time').text();
+    //                 var y = transit.split(":")[1];
+    //                 var split = y.split(" ");
+    //                 var days = parseInt(split[0]) * 24 * 3600;
+    //                 var hours = parseInt(split[2]) * 3600;
+    //                 var tot_seconds = days + hours;
+    //                 if ("<?php echo $product->add_meet ?>" == "Made to order") {
+    //                     var lead_time = "<?php echo get_lead_time_hours($product); ?>";
+    //                 }
+    //                 var total = tot_seconds - parseInt(lead_time);
+    //                 var date_time = ConvertSectoDay(total);
+    //                 $('.lead_time').html(":" + date_time);
+    //                 console.log(total);
+    //                 console.log(date_time);
+    //             }
+    //         }
+    //     }
+    // });
 
     function ConvertSectoDay(n) {
         var day = parseInt(n / (24 * 3600));
