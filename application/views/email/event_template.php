@@ -15,8 +15,9 @@
 
 
         .footer-image {
-            background-image: url('https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Images1/Frame.jpg');
+            /* background-image: url('https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Images1/Frame.jpg'); */
             width: 100%;
+            background-color: #4f0020;
             height: 100%;
         }
 
@@ -393,7 +394,7 @@
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
                         <tr>
                             <td style="text-align: center;">
-                                <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter/NEWSLETTER+-+August.png">
+                                <!-- <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Diwali_blog_2022/happy_diwali.png"> -->
 
                                 <!-- <a href="https://gharobaar.com/chanderi-silk-suit-6123"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_02.png"></a>
 
@@ -451,6 +452,7 @@
 
                                 <div class="footer-image">
 
+                                <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Diwali_blog_2022/happy_diwali.png">
 
 
                                     <table border="0" cellpadding="0" cellspacing="0">
