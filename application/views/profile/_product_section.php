@@ -321,6 +321,21 @@
     color: black;
     font-weight: bold;
   }
+  .cart-top .item-options {
+  display: block;
+  bottom: 27px;
+  position: relative;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.18);
+  color: #fff;
+  border-radius: 100%;
+  opacity: 0;
+}
+
 </style>
 <?php
 if (!empty($user_categories)) :
