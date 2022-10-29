@@ -96,7 +96,7 @@
             function checklength(el) {
                 var limit = $('#textarea').val();
                 $button = $('#btnsubmit')
-                if (el.value.length > 125) {
+                if (el.value.length >= 125) {
                     $("#words_limit").attr("style", "display:block")
                     $button.prop('disabled', 'disabled');
 
