@@ -15,34 +15,34 @@
         background-color: red;
     }
 
-    .quick-view-options {
+    /* .quick-view-options {
         width: auto;
         height: auto;
         position: absolute;
         top: 217px;
         right: 6.2rem;
         text-align: left;
-    }
+    } */
 
-    .auth-box1 {
+    /* .auth-box1 {
         background-color: white;
         padding: 30px;
-        /* width: 1000px; */
-        /* width: 459px; */
-        /* max-width: 100%; */
+        width: 1000px;
+        width: 459px;
+        max-width: 100%;
         border-radius: 20px;
-        /* margin: 0 auto; */
-        /* margin-top: 30px; */
+        margin: 0 auto;
+        margin-top: 30px;
         border: 1px solid #f5f5f5;
         box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
         -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
         -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
         -o-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
         -ms-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1)
-    }
+    } */
 
 
-    .field-icon {
+    /* .field-icon {
         float: right;
         padding: 0px 5px;
         margin-right: 8px;
@@ -50,9 +50,9 @@
         position: relative;
         z-index: 2;
         cursor: pointer;
-    }
+    } */
 
-    .quick-view-options .item-option {
+    /* .quick-view-options .item-option {
         display: block;
         position: relative;
         right: 10px;
@@ -71,11 +71,11 @@
         -ms-transition: all 0.2s ease-out;
         -o-transition: all 0.2s ease-out;
         transition: all 0.2s ease-out;
-    }
+    } */
 
-    .product-item:hover .quick-view-options .item-option {
+    /* .product-item:hover .quick-view-options .item-option {
         opacity: 1;
-    }
+    } */
 
 
     @media(max-width:700px) {
@@ -182,29 +182,29 @@ if (!empty($variation)) { ?>
             <?php endif; ?>
 
 
-            <?php if (!empty($this->auth_check) && $this->auth_user->role == "vendor" && $product->user_id == $this->auth_user->id) : ?>
-            <?php else : ?>
+            <!-- <?php //if (!empty($this->auth_check) && $this->auth_user->role == "vendor" && $product->user_id == $this->auth_user->id) : ?>
+            <?php //else : ?>
                 <div class="quick-view-options">
-                    <?php $disabled = "";
-                    if (empty($variation)) { ?>
-                        <?php if (check_product_stock($product)) {
-                            $disabled = " disabled"; ?>
+                    <?php //$disabled = "";
+                    //if (empty($variation)) { ?>
+                        <?php //if (check_product_stock($product)) {
+                            //$disabled = " disabled"; ?>
 
                             <a href="javascript:void(0)" id="quickview" class="item-option zoom" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("view"); ?>">
                                 <i class="button field-icon openBtn" id="view" value="<?php echo $product->id; ?>" data-toggle="modal" data-target="#quick_<?php echo $product->id ?>">QUICK VIEW</i>
                             </a>
-                        <?php } ?>
-                    <?php } else { ?>
-                        <?php if ($variations_stock != 0) { ?>
+                        <?php //} ?>
+                    <?php //} else { ?>
+                        <?php //if ($variations_stock != 0) { ?>
                             <a href="javascript:void(0)" id="quickview" class="item-option zoom" data-placement="left" data-product-id="<?php echo $product->id; ?>" data-reload="0" title="<?php echo trans("view"); ?>">
                                 <i class="button field-icon openBtn" id="view" value="<?php echo $product->id; ?>" data-toggle="modal" data-target="#quick_<?php echo $product->id ?>">QUICK VIEW</i>
                             </a>
 
-                        <?php } ?>
-                    <?php } ?>
+                        <?php //} ?>
+                    <?php //} ?>
 
                 </div>
-            <?php endif; ?>
+            <?php //endif; ?> -->
 
 
             <!-- <div class="quick-view-options">
@@ -297,25 +297,25 @@ if (!empty($variation)) { ?>
     </div>
 </div>
 
-<div class="modal fade" id="quick_<?php echo $product->id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="quick_<?php //echo $product->id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" style="width:120%; height:80%;" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Quick View</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <i class="icon-close"></i>
+                <i class="icon-close"></i> -->
                     <!-- <span aria-hidden="true">&times;</span> -->
-                </button>
+                <!-- </button>
             </div>
             <div class="modal-body">
-                <?php $this->load->view('product/details/product_preview', ['product' => $product]); ?>
+                <?php //$this->load->view('product/details/product_preview', ['product' => $product]); ?>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer"> -->
                 <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-            </div>
+            <!-- </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- 
 <div class="gg" style="height: 700px;width: 700px;" id="pp" >

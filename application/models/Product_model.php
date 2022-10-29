@@ -1269,7 +1269,7 @@ class Product_model extends Core_Model
         } elseif (!empty($sort) && $sort == "top_discount") {
             $this->db->order_by('cast(products.discount_rate as decimal(16,2)) DESC');
         } elseif (!empty($sort) && $sort == "most_recent") {
-            $date = date('Y-m-d h-i-s', strtotime('-30 days'));
+            $date = date('Y-m-d h-i-s', strtotime('-365 days'));
             $this->db->where('products.created_at>', $date);
             $this->db->order_by('products.created_at', 'DESC');
         } else {
@@ -1912,7 +1912,7 @@ class Product_model extends Core_Model
         } elseif (!empty($sort) && $sort == "top_discount") {
             $this->db->order_by('cast(products.discount_rate as decimal(16,2)) DESC');
         } elseif (!empty($sort) && $sort == "most_recent") {
-            $date = date('Y-m-d h-i-s', strtotime('-30 days'));
+            $date = date('Y-m-d h-i-s', strtotime('-365 days'));
             $this->db->where('products.created_at>', $date);
             $this->db->order_by('products.created_at', 'DESC');
         } else {
@@ -2187,7 +2187,7 @@ class Product_model extends Core_Model
         $query = $this->db->query($sql);
     }
 
-    
+
     public function update_stock($id, $stock)
     {
         $data['stock'] = $stock;
@@ -3480,12 +3480,14 @@ order by id desc LIMIT 1";
                     $total_lead_time_in_sec += $total_lead_time_in_sec;
                     $i++;
                 }
+                 //var_dump($product_details);
+                 //var_dump($order_product);
+                 
                 // $total_lead_time_in_sec += $total_lead_time_in_sec * $order_product->product_quantity;
             }
         }
 
         $lead_time_selected_product =  strtotime($lead_days . ' day ' . $lead_time . ' hour', 0);
-
         $total_transit_time = $total_lead_time_in_sec + $lead_time_selected_product;
         if ($type == "time")
             return $total_transit_time;
