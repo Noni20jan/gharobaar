@@ -11,8 +11,8 @@
                             <th scope="col"><?php echo trans("variation_type"); ?></th>
                             <th scope="col"><?php echo trans("options"); ?></th>
                             <th scope="col"><?php echo trans("visible"); ?></th>
-                            <th scope="col" style="width: 250px;" class="<?php if ($this->auth_user->role == "admin") : echo 'hideMe';
-                                                                            endif; ?>">Action</th>
+                            <th scope="col" style="width: 250px;" class="<?php //if ($this->auth_user->role == "admin") : echo 'hideMe';
+                                                                            //endif; ?>">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -23,8 +23,8 @@
                                 <td><?php echo trans($variation->variation_type); ?></td>
                                 <td>
                                     <?php if ($variation->variation_type != 'text' && $variation->variation_type != 'number') : ?>
-                                        <a href="javascript:void(0)" class="btn btn-sm btn-info btn-variation-table <?php if ($this->auth_user->role == "admin") : echo 'hideMe';
-                                                                                                                    endif; ?>" onclick=" add_product_variation_option('<?php echo $variation->id; ?>');">
+                                        <a href="javascript:void(0)" class="btn btn-sm btn-info btn-variation-table <?php //if ($this->auth_user->role == "admin") : echo 'hideMe';
+                                                                                                                    //endif; ?>" onclick=" add_product_variation_option('<?php echo $variation->id; ?>');">
                                             <span id="btn-variation-text-add-<?php echo $variation->id; ?>"><i class="icon-plus"></i><?php echo trans('add_option'); ?></span>
                                             <div id="sp-options-add-<?php echo $variation->id; ?>" class="spinner spinner-btn-variation">
                                                 <div class="bounce1"></div>
@@ -49,8 +49,8 @@
                                         echo trans("no");
                                     endif; ?>
                                 </td>
-                                <td class="<?php if ($this->auth_user->role == "admin") : echo 'hideMe';
-                                            endif; ?>">
+                                <td class="<?php //if ($this->auth_user->role == "admin") : echo 'hideMe';
+                                            //endif; ?>">
                                     <a href="javascript:void(0)" class="btn btn-sm btn-default btn-variation-table" onclick="edit_product_variation('<?php echo $variation->id; ?>');">
                                         <span id="btn-variation-edit-<?php echo $variation->id; ?>"><i class="icon-edit"></i><?php echo trans('edit'); ?></span>
                                         <div id="sp-edit-<?php echo $variation->id; ?>" class="spinner spinner-btn-variation">
