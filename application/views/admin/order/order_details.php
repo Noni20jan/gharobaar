@@ -436,7 +436,7 @@
                                         <th><?php echo trans('shipping_cost'); ?></th>
                                         <th><?php echo trans('total'); ?></th>
                                         <th><?php echo trans('status'); ?></th>
-                                        <th><?php echo "AWB No."; ?></th>
+                                        <!-- <th><?php //echo "AWB No."; ?></th> -->
                                         <th><?php echo trans('updated'); ?></th>
                                         <th class="max-width-120"><?php echo trans('options'); ?></th>
                                     </tr>
@@ -491,6 +491,7 @@
                                                 <?php if ($item->product_type == 'physical') :
                                                     echo price_formatted($item->product_shipping_cost, $item->product_currency);
                                                 endif; ?>
+                                                
                                             </td>
                                             <td><?php echo price_formatted($item->product_total_price, $item->product_currency); ?></td>
                                             <td>
@@ -516,10 +517,10 @@
                                                     <?php endif; ?>
                                                 </div>
                                             </td>
-                                            <td><?php $awb_code = $this->order_model->get_awb_code($item->order_id, $item->product_id); ?>
-                                                <?php echo $awb_code[0]->awb_code;
+                                            <!-- <td><?php //$awb_code = $this->order_model->get_awb_code($item->order_id, $item->product_id); ?>
+                                                <?php //echo $awb_code[0]->awb_code;
                                                 ?>
-                                            </td>
+                                            </td> -->
                                             <td>
                                                 <?php if ($item->product_type == 'physical') :
                                                     echo time_ago($item->updated_at);
