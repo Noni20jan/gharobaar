@@ -607,6 +607,7 @@ class Cart_model extends CI_Model
         //$cart_total->shipping_value = 10000;
 
         $cart_total->total = 0;
+        $total=$cart_total->total;
 
         //coupon code
         $cart_total->applied_coupon_id = 0;
@@ -669,10 +670,10 @@ class Cart_model extends CI_Model
 
 
                 $cart_total->total = $cart_total->subtotal - $cart_total->discount * 100;
-
-                if ($this->general_settings->min_ship_cart_total > $cart_total->total) {
+                if ($cart_total->total < 50000) {
                     $cart_total->shipping_cost = 10000;
-                    $cart_total->total = $cart_total->total + $cart_total->shipping_cost;
+
+                    $total = $total + $cart_total->shipping_cost;
                 } else {
                     $cart_total->shipping_cost = 0;
                     $cart_total->total = $cart_total->subtotal - $cart_total->discount * 100;
@@ -817,11 +818,21 @@ class Cart_model extends CI_Model
                     $cart_total->applied_coupon_discount = $cart_total->total_price;
                 }
                 $cart_total->total_price = $cart_total->total_price - $cart_total->applied_coupon_discount;
+                
                 if ($cart_total->total_price < 0) {
                     $cart_total->total_price = 0;
                 }
             }
             $this->session->set_userdata('mds_shopping_cart_total', $cart_total);
+            if($cart_total->total_price<50000)
+            {
+                $total=$cart_total->total+10000;
+            }
+            else
+            {
+                $total=$cart_total->total;
+            }
+            $cart_total->total=$total;
             if ($this->auth_check) {
                 $user_id = $this->auth_user->id;
                 $this->save_cart_total_db($user_id, $cart_total);

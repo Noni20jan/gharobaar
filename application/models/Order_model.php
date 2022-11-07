@@ -23,6 +23,12 @@ class Order_model extends CI_Model
     public function add_order($data_transaction)
     {
         $cart_total = $this->cart_model->get_sess_cart_total();
+        $total = $cart_total->total_price;
+        if ($total < 50000) {
+            $total = $total + 10000;
+        } else {
+            $total = $cart_total->total_price;
+        }
         $total_price1 = $cart_total->total_price / 100;
         if ((float)$data_transaction['payment_amount'] == $total_price1 && $data_transaction['match_status'] == "yes") {
             $order_product_status = "processing";
@@ -41,7 +47,7 @@ class Order_model extends CI_Model
                 // 'discount' => $cart_total->discount,
                 // 'price_shipping' => $this->input->post('price_shipping', true),
                 'price_shipping' => $cart_total->shipping_cost,
-                'price_total' => $cart_total->total_price,
+                'price_total' => $total,
                 'price_currency' => $cart_total->currency,
 
                 'discount' => $cart_total->discount * 100,
@@ -169,7 +175,12 @@ class Order_model extends CI_Model
 
         // $this->add_seller_wise_details(1, $cart_total);
         // die();
-
+        $total = $cart_total->total_price;
+        if ($total < 50000) {
+            $total = $total + 10000;
+        } else {
+            $total = $cart_total->total_price;
+        }
 
         if (!empty($cart_total)) {
             $data = array(
@@ -180,7 +191,7 @@ class Order_model extends CI_Model
                 'price_gst' => $cart_total->gst,
                 // 'discount' => $cart_total->discount,
                 'price_shipping' => $cart_total->shipping_cost,
-                'price_total' => $cart_total->total_price,
+                'price_total' => $total,
                 'price_currency' => $cart_total->currency,
 
                 'discount' => $cart_total->discount * 100,
@@ -272,6 +283,13 @@ class Order_model extends CI_Model
         $cart_total = $this->cart_model->get_sess_cart_total();
         $shipping_detail = json_decode($this->order_model->get_shipping_cost($cart_total));
         $total_amount = $cart_total->total_price;
+
+        $total = $cart_total->total_price;
+        if ($total < 50000) {
+            $total = $total + 10000;
+        } else {
+            $total = $cart_total->total_price;
+        }
 
         $seller_array = array();
         $amount_array = array();
@@ -3570,6 +3588,12 @@ class Order_model extends CI_Model
                         $coupon_source_id = $cad->source_id;
                         break;
                     endforeach;
+                    $total = $cart_total->total_price;
+                    if ($total < 50000) {
+                        $total = $total + 10000;
+                    } else {
+                        $total = $cart_total->total_price;
+                    }
                     if ($coupon_source_type == 'Product') {
                         if ($coupon_source_id == $cart_item->product_item) {
                             $discountamount = $cart_total->applied_coupon_discount;
@@ -3581,7 +3605,7 @@ class Order_model extends CI_Model
                         }
                     } else {
                         $discountamount = $cart_total->applied_coupon_discount;
-                        $discountperc = $discountamount / ($cart_total->total_price + $discountamount) * 100;
+                        $discountperc = $discountamount / ($total + $discountamount) * 100;
                         // var_dump($sup->total_product_price);
                         // var_dump($discountperc);
                         // die();
@@ -4002,7 +4026,7 @@ class Order_model extends CI_Model
     public function get_awb_code_by_order($order_number)
     {
         $order_number = clean_number($order_number);
-        $this->db->where('order_number',$order_number);
+        $this->db->where('order_number', $order_number);
         //$this->db->get('orders');
         //$this->db->select('shiprocket_order_details.*');
         $this->db->join('orders', 'shiprocket_order_details.order_id = orders.id');

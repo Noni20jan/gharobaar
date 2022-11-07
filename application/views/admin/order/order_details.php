@@ -770,11 +770,9 @@
                     <strong> <?php echo trans("total"); ?></strong>
                 </div>
                 <div class="col-sm-6">
-                    <?php if ($order->price_total < 50000) : ?>
-                        <strong class="font-right"><?php echo price_formatted($order->price_total + 10000, $order->price_currency); ?></strong>
-                    <?php else : ?>
+                    
                         <strong class="font-right"><?php echo price_formatted($order->price_total, $order->price_currency); ?></strong>
-                    <?php endif; ?>
+                    
                 </div>
             </div>
         </div>

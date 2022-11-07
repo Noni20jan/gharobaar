@@ -327,6 +327,13 @@ class Cart_controller extends Home_Core_Controller
 
         $cart_items = $this->cart_model->get_sess_cart_items();
         $cart_total = $this->cart_model->get_sess_cart_total();
+        $total=$cart_total->total;
+        if($cart_total->total<50000){
+            $total=$total+10000;
+        }
+        else{
+            $total=$cart_total->total;
+        }
         $data['cart_items'] = $this->session_cart_items;
         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
         // var_dump($data['cart_total']);
@@ -343,7 +350,7 @@ class Cart_controller extends Home_Core_Controller
             "total_mrp" => ($_SESSION["mds_shopping_cart_total"]->subtotal) / 100,
             "discount" => $_SESSION["mds_shopping_cart_total"]->discount,
             "total" => ($_SESSION["mds_shopping_cart_total"]->total_price) / 100,
-            "subtotal" => ($cart_total->total) / 100,
+            "subtotal" => ($total) / 100,
             "shipping_cost" => ($cart_total->shipping_cost) / 100,
             "order_total" => ($cart_total->order_total) / 100,
             "cart_view" => $cart_view_html,
@@ -1233,9 +1240,24 @@ class Cart_controller extends Home_Core_Controller
                     $this->order_model->decrease_product_stock_after_sale($order->id);
                     //send email
                     $cart_total = $this->cart_model->get_sess_cart_total();
+                    $total=$cart_total;
+                    if($cart_total->total<50000){
+                        $total=$total+10000;
+                    }
+                    else{
+                        $total=$cart_total->total;
+                    }
                     $total_price1 = $cart_total->total_price / 100;
-                    if ((float)$data_transaction['payment_amount'] == $total_price1 && $data_transaction['match_status'] == "yes") {
-
+                    if ((float)$data_transaction['payment_amount']<50000)
+                    {
+                        (float)$data_transaction['payment_amount']=(float)$data_transaction['payment_amount']+10000;
+                    }
+                    else
+                    {
+                        (float)$data_transaction['payment_amount']=(float)$data_transaction['payment_amount']+0;
+                    }
+                    //if ((float)$data_transaction['payment_amount'] == $total_price1 && $data_transaction['match_status'] == "yes") {
+                        if ((float)$data_transaction['payment_amount'] == $total && $data_transaction['match_status'] == "yes") {
                         if ($this->general_settings->send_email_buyer_purchase == 1) {
                             $email_data = array(
                                 'email_type' => 'new_order',
@@ -1432,6 +1454,13 @@ class Cart_controller extends Home_Core_Controller
         $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
 
         $total_amount = $cart_total->total_price;
+        if($cart_total->total_price<50000){
+            $total_amount=$total_amount+10000;
+        }
+        else
+        {
+            $total_amount = $cart_total->total_price;
+        }
 
         $seller_array = array();
         $amount_array = array();

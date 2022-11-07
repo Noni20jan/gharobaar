@@ -28,7 +28,8 @@
 								<th><?php echo trans('buyer'); ?></th>
 								<th>Total Order Value</th>
 								<th><?php echo trans('status'); ?></th>
-								<!-- <th><?php //echo "AWB No."; ?></th> -->
+								<!-- <th><?php //echo "AWB No."; 
+											?></th> -->
 								<!-- <th><?php echo trans('updated'); ?></th> -->
 								<th class="max-width-120"><?php echo trans('options'); ?></th>
 							</tr>
@@ -77,11 +78,9 @@
 										endif;
 										?>
 									</td>
-									<?php if ($item->price_total < 50000) : ?>
-										<td><strong><?php echo price_formatted($item->price_total + 10000, $item->price_currency); ?></strong></td>
-									<?php else : ?>
-										<td><strong><?php echo price_formatted($item->price_total, $item->price_currency); ?></strong></td>
-									<?php endif; ?>
+
+									<td><strong><?php echo price_formatted($item->price_total, $item->price_currency); ?></strong></td>
+
 
 									<td>
 										<?php $order_products = $this->order_admin_model->get_order_products($item->id)
@@ -113,7 +112,8 @@
 										<?php endif; ?>
 									</td>
 									<!-- <td><?php echo time_ago($item->updated_at); ?></td> -->
-									<!-- <td><?php // $awb_code = $this->order_model->get_awb_code_by_order($item->order_number); ?>
+									<!-- <td><?php // $awb_code = $this->order_model->get_awb_code_by_order($item->order_number); 
+												?>
 										<?php //echo $awb_code[0]->awb_code;
 										?>
 									</td> -->
