@@ -167,27 +167,24 @@ class Ajax_controller extends Home_Core_Controller
                 if (!empty($products)) {
                     foreach ($products as $product) {
                         $category = $this->category_model->get_parent_categories_tree($product->category_id);
-                        if (!empty($category[0]->id!=2)) {
-                        if (!in_array($category[0]->id, $categories_id_array)) {
-                            array_push($categories_id_array, $category[0]->id);
-                            // var_dump($categories_id_array);
+                        if (!empty($category[0]->id != 2)) {
+                            if (!in_array($category[0]->id, $categories_id_array)) {
+                                array_push($categories_id_array, $category[0]->id);
+                                // var_dump($categories_id_array);
 
-                            $response .= '<li><a href="' . $lang_base_url . "products/?search=" . $input_value . "&category=" . $category[0]->id . '">' . $input_value . " in " . category_name($category[0]) . '</a></li>';
+                                $response .= '<li><a href="' . $lang_base_url . "products/?search=" . $input_value . "&category=" . $category[0]->id . '">' . $input_value . " in " . category_name($category[0]) . '</a></li>';
+                            }
+                        } else {
+                            $response .= '<li><a href="' . $lang_base_url . get_route("products") . '?search=' . $input_value . '">' . $input_value . '</a></li>';
                         }
-                    
-                
-                 else {
-                    $response .= '<li><a href="' . $lang_base_url . get_route("products") . '?search=' . $input_value . '">' . $input_value . '</a></li>';
+                    }
+                    $response .= '</ul>';
+                    $data['response'] = $response;
                 }
             }
-            }
-                $response .= '</ul>';
-                $data['response'] = $response;
-            }
+            echo json_encode($data);
         }
-        echo json_encode($data);
     }
-}
 
 
     //ajax search pincode
