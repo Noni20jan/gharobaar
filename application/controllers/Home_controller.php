@@ -1644,11 +1644,13 @@ class Home_controller extends Home_Core_Controller
         $html_content = "";
         if (!empty($promoted_products)) {
             foreach ($promoted_products as $product) {
+                if ($product->is_shop_open == "1") :
                 $category = $this->category_model->get_parent_categories_tree($product->category_id); 
                 if (!empty($category[0]->id!=2)) : 
                 $vars = array('product' => $product, 'promoted_badge' => false);
                 $html_content .= '<div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">' . $this->load->view("product/_product_item", $vars, true) . '</div>';
                 endif;
+            endif;
             }
             $data_json['result'] = 1;
             $data_json['html_content'] = $html_content;
