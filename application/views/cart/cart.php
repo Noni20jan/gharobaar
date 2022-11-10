@@ -754,7 +754,7 @@
                                     <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
                                         <p>
                                             <?php if ($this->general_settings->flat_ship_enable == 1) : ?>
-                                                <?php if($cart_total->total < 50000) :?>
+                                                <?php if($cart_total->total < 100000) :?>
                                                 <?php echo trans("shipping"); ?><span class="float-right"><?php echo (price_formatted(10000, $cart_total->currency)); ?></span>
                                                 <?php else : ?>
                                                     <?php echo trans("shipping"); ?><span class="float-right"><?php echo (price_formatted(0, $cart_total->currency)); ?></span>

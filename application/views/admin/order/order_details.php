@@ -685,7 +685,7 @@
                         <strong> <?php echo trans("shipping"); ?></strong>
                     </div>
                     <div class="col-sm-6">
-                        <?php if ($order->price_total < 50000) : ?>
+                        <?php if ($order->price_total < 100000) : ?>
                             <strong class="font-right"><?php echo price_formatted(10000, $order->price_currency); ?></strong>
                         <?php else : ?>
                             <strong class="font-right"><?php echo price_formatted(0, $order->price_currency); ?></strong>

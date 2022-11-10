@@ -881,7 +881,7 @@ endif;
                             <strong><?php echo price_formatted($sale_discount * 100, $order->price_currency); ?>/-</strong>
                         </div>
                     </div>
-                    <?php if ($sale_total < 50000) : ?>
+                    <?php if ($sale_total < 100000) : ?>
                         <div class="row">
                             <div class="col-sm-6 col-xs-6 col-left">
                                 <?php echo trans("shipping"); ?>
@@ -928,7 +928,7 @@ endif;
                         </div>
                         <div class="col-sm-6 col-xs-6 col-right">
                             <?php if (!is_null($seller_wise_data)) : ?>
-                                <?php if ($sale_total < 50000) : ?>
+                                <?php if ($sale_total < 100000) : ?>
                                     <strong><?php echo price_formatted($sale_total + $shipping_charge, $order->price_currency); ?>/-</strong>
                                 <?php else : ?>
                                     <strong><?php echo price_formatted($sale_total, $order->price_currency); ?>/-</strong>

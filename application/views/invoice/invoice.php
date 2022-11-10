@@ -390,7 +390,7 @@ function convert_number_to_words($number)
                                                     <th class="border-0 font-weight-bold"><?php echo trans("igst"); ?></th>
                                                     <th class="border-0 font-weight-bold"><?php echo trans("cgst"); ?></th>
                                                     <th class="border-0 font-weight-bold"><?php echo trans("sgst"); ?></th>
-                                                    <?php if ($order->price_total < 50000) { ?>
+                                                    <?php if ($order->price_total < 100000) { ?>
                                                         <th class="border-0 font-weight-bold"><?php echo trans("shipping"); ?></th>
                                                     <?php }?>
                                                     <th class="border-0 font-weight-bold"><?php echo trans("total"); ?></th>
@@ -497,7 +497,7 @@ function convert_number_to_words($number)
                                                                             <td></td>
                                                                             <td></td>
 
-                                                                            <?php if ($sale_seller_total < 50000) : ?>
+                                                                            <?php if ($sale_seller_total < 100000) : ?>
                                                                                 <td></td>
                                                                                 <td><b><?php echo price_formatted_without_round($sale_seller_total + 10000, $order_product->product_currency); ?></b></td>
                                                                             <?php else : ?>
