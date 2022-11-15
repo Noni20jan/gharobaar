@@ -670,10 +670,10 @@ class Cart_model extends CI_Model
 
 
                 $cart_total->total = $cart_total->subtotal - $cart_total->discount * 100;
-                if ($cart_total->total < 50000) {
+                if ($cart_total->total < 100000) {
                     $cart_total->shipping_cost = 10000;
-
-                    $total = $total + $cart_total->shipping_cost;
+                
+                    $cart_total->total = $cart_total->total + $cart_total->shipping_cost;
                 } else {
                     $cart_total->shipping_cost = 0;
                     $cart_total->total = $cart_total->subtotal - $cart_total->discount * 100;
@@ -824,15 +824,8 @@ class Cart_model extends CI_Model
                 }
             }
             $this->session->set_userdata('mds_shopping_cart_total', $cart_total);
-            if($cart_total->total_price<50000)
-            {
-                $total=$cart_total->total+10000;
-            }
-            else
-            {
-                $total=$cart_total->total;
-            }
-            $cart_total->total=$total;
+           
+            
             if ($this->auth_check) {
                 $user_id = $this->auth_user->id;
                 $this->save_cart_total_db($user_id, $cart_total);
@@ -1481,6 +1474,13 @@ class Cart_model extends CI_Model
         if (!empty($this->session->userdata('mds_shopping_cart_total'))) {
             $cart_total = $this->session->userdata('mds_shopping_cart_total');
         }
+        if($cart_total->total<100000):
+        $cart_total->total=$cart_total->total+10000;
+        else :
+        $cart_total->total=$cart_total->total+0;
+        endif;    
+        //var_dump($cart_total->total);
+        //die();
         return $cart_total;
     }
 

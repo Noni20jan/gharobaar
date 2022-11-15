@@ -158,24 +158,20 @@
 
         <?php if ($is_physical && $this->form_settings->shipping == 1) : ?>
             <?php if (!is_null($address)) : ?>
-                <?php if ($cart_total->total < 100000) : ?>
+                <p>
                 <p>
                     <!-- <strong><?php echo trans("shipping"); ?><span id="shipping_cost" class="float-right"><?php echo price_formatted_without_round($cart_total->shipping_cost, $this->payment_settings->default_currency); ?>/-</span></strong> -->
-                    <strong><?php echo trans("shipping"); ?><span id="shipping_cost" class="float-right"><?php echo price_formatted_without_round(10000, $this->payment_settings->default_currency); ?>/-</span></strong>
-                </p>
-                <?php else:?>
-                    <p>
-                    <!-- <strong><?php echo trans("shipping"); ?><span id="shipping_cost" class="float-right"><?php echo price_formatted_without_round($cart_total->shipping_cost, $this->payment_settings->default_currency); ?>/-</span></strong> -->
-                    <strong><?php echo trans("shipping"); ?><span id="shipping_cost" class="float-right"><?php echo price_formatted_without_round(10000, $this->payment_settings->default_currency); ?>/-</span></strong>
-                </p>
-                <?php endif;?>
-            <?php else : ?>
+                    <?php if($cart_total->total<100000):?>
+                        <strong><?php echo trans("shipping"); ?><span id="shipping_cost" class="float-right"><?php echo price_formatted_without_round(10000, $this->payment_settings->default_currency); ?>/-</span></strong>
+                        <?php else:?>
+                            <strong><?php echo trans("shipping"); ?><span id="shipping_cost" class="float-right"><?php echo price_formatted_without_round(0, $this->payment_settings->default_currency); ?>/-</span></strong>
+            <?php endif;?>
+                            <?php else : ?>
                 <p>
                     <!-- <?php echo trans("shipping"); ?> -->
                     <!-- <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span> -->
                     <?php if ($this->general_settings->flat_ship_enable == 1) : ?>
-                        <?php if ($cart_total->total < 50000) : ?>
-                            
+                        <?php if ($cart_total->total < 100000) : ?>                            
                             <?php echo trans("shipping"); ?><span class="float-right"><?php echo (price_formatted(10000, $cart_total->currency)); ?></span>
                         <?php else : ?>
                             <?php echo trans("shipping"); ?><span class="float-right"><?php echo (price_formatted(0, $cart_total->currency)); ?></span>
@@ -248,17 +244,15 @@
                     <strong><?php echo trans("total") . "<small><b>(after Round off)</b></small>"; ?><span class="float-right"><?php echo price_formatted($cart_total->total_price, $this->payment_settings->default_currency); ?>/-</span></strong>
                 </p>
             <?php else : ?>
-                <?php $total=$cart_total->total_price;?>
-                <?php if($cart_total->total_price<100000):?>
                 <p>
-                    <strong><?php echo trans("total"); ?><span id="order_total" class="float-right"><?php echo price_formatted_without_round($total+10000, $this->payment_settings->default_currency); ?>/-</span></strong>
-                </p>
-                <?php else :?>
-                    <p>
-                    <strong><?php echo trans("total"); ?><span id="order_total" class="float-right"><?php echo price_formatted_without_round($total, $this->payment_settings->default_currency); ?>/-</span></strong>
-                </p>
-                <?php endif;?>
+                <p>
+                    <!-- <strong><?php echo trans("total"); ?><span id="order_total" class="float-right"><?php echo price_formatted_without_round($cart_total->total_price, $this->payment_settings->default_currency); ?>/-</span></strong> -->
+                    <?php if($cart_total->total_price<100000):?>
+                    <strong><?php echo trans("total"); ?><span id="order_total" class="float-right"><?php echo price_formatted_without_round($cart_total->total_price, $this->payment_settings->default_currency); ?>/-</span></strong>
+                    <?php else:?>
+                        <strong><?php echo trans("total"); ?><span id="order_total" class="float-right"><?php echo price_formatted_without_round($cart_total->total_price, $this->payment_settings->default_currency); ?>/-</span></strong>
             <?php endif; ?>
+            <?php endif;?>
 
 
     </div>

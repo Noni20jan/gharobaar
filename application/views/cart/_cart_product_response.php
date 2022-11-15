@@ -279,18 +279,17 @@
                             </p>
                         <?php endif; ?>
                         <p class="line-seperator"></p>
-                        <?php $total=$cart_total->total?>
-                            <?php if($cart_total->total<50000):?>
+                        
+                        
                         <p>
                             <!-- <?php var_dump($_SESSION["mds_shopping_cart_total"]->subtotal);  ?> -->
-                            <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total + 10000, $cart_total->currency); ?>/-</span></strong>
-                        </p>
-                        <?php else:?>
-                        <p>
-                            <!-- <?php var_dump($_SESSION["mds_shopping_cart_total"]->subtotal);  ?> -->
+                            <?php if($cart_total->total<100000):?>
+                            <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($total+10000, $cart_total->currency); ?>/-</span></strong>
+                            <?php else:?>
                             <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total, $cart_total->currency); ?>/-</span></strong>
+                            <?php endif;?>
                         </p> 
-                        <?php endif;?>  
+                         
                         <p class="line-seperator"></p>
                         <?php if (intval(secondsToTime($cart_total->min_dispatch_time)) > 1 || intval(secondsToTime($cart_total->max_dispatch_time)) > 1) :
                             $day = " days";

@@ -70,7 +70,11 @@
 																</div>
 															</div>
 														</td>
-														<td><?php echo price_formatted($order->product_total_price, 'INR'); ?>/-</td>
+														<?php if($order->product_total_price<100000):?>
+														<td><?php echo price_formatted($order->product_total_price+10000, 'INR'); ?>/-</td>
+														<?php else:?>
+														<td><?php echo price_formatted($order->product_total_price+10000, 'INR'); ?>/-</td>
+														<?php endif;?>
 														<!-- <td>
 																<?php if ($order->payment_status == 'payment_received') :
 																				echo trans("payment_received");
