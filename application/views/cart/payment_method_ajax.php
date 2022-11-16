@@ -260,18 +260,18 @@ foreach ($cart_items as $item) {
                                         <label class="custom-control-label label-payment-option" for="option_cash_on_delivery"><?php echo trans("cash_on_delivery_fee"); ?><br><small><?php echo trans("cash_on_delivery_exp"); ?></small></label>
                                     <?php elseif (($check_cashond) == "true" && ($check_made_to_order) == false) : ?>
                                         <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
-                                            <?php if ($cart_total->total <= 300000) : ?>
+                                            <?php if ($cart_total->total <= 200000) : ?>
                                                 <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" onclick="changeViewPayment()" required <?php echo ($check_option == true) ? 'checked' : ''; ?>>
                                                 <label class="custom-control-label label-payment-option" for="option_cash_on_delivery"><?php echo trans("cash_on_delivery"); ?><br><small><?php echo trans("cash_on_delivery_exp"); ?></small></label>
-                                            <?php elseif ($cart_total->total > 300000) : ?>
+                                            <?php elseif ($cart_total->total > 200000) : ?>
                                                 <span class="cod_text"> <?php echo trans('cod_disabled'); ?></span>
                                             <?php endif; ?>
                                         <?php else : ?>
                                             <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
-                                                <?php if ($cart_total->total <= 300000) : ?>
+                                                <?php if ($cart_total->total <= 200000) : ?>
                                                     <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" onclick="changeViewPayment()" required <?php echo ($check_option == true) ? 'checked' : ''; ?>>
                                                     <label class="custom-control-label label-payment-option" for="option_cash_on_delivery"><?php echo trans("cash_on_delivery"); ?><br><small><?php echo trans("cash_on_delivery_exp"); ?></small></label>
-                                                <?php elseif ($cart_total->total > 300000) : ?>
+                                                <?php elseif ($cart_total->total > 200000) : ?>
                                                     <span class="cod_text"> <?php echo trans('cod_disabled'); ?></span>
                                                 <?php endif; ?>
                                             <?php endif; ?>
