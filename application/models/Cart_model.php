@@ -1474,13 +1474,22 @@ class Cart_model extends CI_Model
         if (!empty($this->session->userdata('mds_shopping_cart_total'))) {
             $cart_total = $this->session->userdata('mds_shopping_cart_total');
         }
-        if($cart_total->total<100000):
-        $cart_total->total=$cart_total->total+10000;
+         if($cart_total->total<100000):
+         $cart_total->total=$cart_total->total+10000;
         else :
-        $cart_total->total=$cart_total->total+0;
+         $cart_total->total=$cart_total->total+0;
         endif;    
-        //var_dump($cart_total->total);
-        //die();
+        // var_dump($cart_total);
+        // die();
+        return $cart_total;
+    }
+
+    public function cart_total()
+    {
+        $cart_total = new stdClass();
+        if (!empty($this->session->userdata('mds_shopping_cart_total'))) {
+            $cart_total = $this->session->userdata('mds_shopping_cart_total');
+        } 
         return $cart_total;
     }
 

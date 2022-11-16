@@ -6,7 +6,32 @@ if (!empty($seller_wise_data)) :
     $seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_data->total_cod_cost) / 100;
 
 endif;
+$ct=$this->order_model->supplier_count($seller_wise_data->order_id);
+$price=$this->order_model->get_order_price($seller_wise_data->order_id);
+$ctotal=$this->cart_model->cart_total();
 
+$seller_count=array();
+$j=0;
+$i=0;
+
+foreach($ct as $count){
+    $seller_count[$i]=$ct[0]->seller_id;
+    ++$i;
+}
+// for($j=0;$j<=$i;$j++){
+//     $amt[$j]=$ct[0]->price_after_discount;
+// }
+
+if($price[0]->price_total<100000):
+    $seller_wise_data->prod_amount_after_disc=$seller_wise_data->prod_amount_after_disc+(10000/$i);
+endif;
+// var_dump($i);
+// var_dump($price[0]->price_total);
+// var_dump($seller_wise_data->prod_amount_after_disc);
+//var_dump($total_quantity_price);
+// var_dump($price[0]->price_total);
+// var_dump($seller_wise_data->prod_amount_after_disc);
+// die();
 ?>
 
 <style>
@@ -881,14 +906,14 @@ endif;
                             <strong><?php echo price_formatted($sale_discount * 100, $order->price_currency); ?>/-</strong>
                         </div>
                     </div>
-                    <?php if ($sale_total < 100000) : ?>
+                    <?php if ($price[0]->price_total<100000) : ?>
                         <div class="row">
                             <div class="col-sm-6 col-xs-6 col-left">
                                 <?php echo trans("shipping"); ?>
                             </div>
 
                             <div class="col-sm-6 col-xs-6 col-right">
-                                <strong><?php echo price_formatted($shipping_charge, $order->price_currency); ?>/-</strong>
+                                <strong><?php echo price_formatted(10000/$i, $order->price_currency); ?>/-</strong>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -928,8 +953,8 @@ endif;
                         </div>
                         <div class="col-sm-6 col-xs-6 col-right">
                             <?php if (!is_null($seller_wise_data)) : ?>
-                                <?php if ($sale_total < 100000) : ?>
-                                    <strong><?php echo price_formatted($sale_total + $shipping_charge, $order->price_currency); ?>/-</strong>
+                                <?php if ($price[0]->price_total<100000) : ?>
+                                    <strong><?php echo price_formatted($sale_total + (10000/$i), $order->price_currency); ?>/-</strong>
                                 <?php else : ?>
                                     <strong><?php echo price_formatted($sale_total, $order->price_currency); ?>/-</strong>
                                 <?php endif; ?>

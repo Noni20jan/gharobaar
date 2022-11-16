@@ -3169,6 +3169,22 @@ class Order_model extends CI_Model
         }
         return  $Sup_row;
     }
+    public function get_order_price($id)
+    {
+        $id = clean_number($id);
+        $this->db->where('id', $id);
+        
+        return $this->db->get('orders')->result();
+    }
+
+    public function supplier_count($order_number)
+    {
+        
+        $order_number = clean_number($order_number);
+        $this->db->where('order_id', $order_number);
+        
+        return $this->db->get('order_products')->result();
+    }
 
     // FUNCTION: Calc_total_shipping_charges 
     public function calc_total_shipping_charges($s_row, $s_col, $cp_count)

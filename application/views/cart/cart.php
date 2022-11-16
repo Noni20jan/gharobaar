@@ -796,13 +796,13 @@
 
 
                                         <?php if ($this->general_settings->flat_ship_enable == 1) : ?>
-                                            <?php if($cart_total->total_price<100000):?>
+                                            
                                                 <?php $cart_total->total_price=$cart_total->total_price;?>
                                             <!-- <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong> -->
                                             <!-- <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo (price_formatted(($cart_total->total_price + (($this->general_settings->flat_ship_amount))), $cart_total->currency)); ?>/-</span></strong?> -->
                                              <?php //else:?>
                                                 <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong> 
-                                                <?php endif;?>
+                                            
                                         <?php else : ?>
                                             <?php //if($cart_total->total_price<100000):?>
                                             <!-- <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong> -->
