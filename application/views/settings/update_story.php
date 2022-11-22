@@ -408,7 +408,7 @@
   <div class="profile-tab-content">
     <div class="row">
       <div class="col-sm-12 m-b-30 groove">
-        <label id="label1" >Your Bank Details</label>
+        <label id="label1">Your Bank Details</label>
         <?php if (($this->auth_user->gst_number == '07AAECF4068L1ZC' || $this->auth_user->gst_number == '29AAECF4068L1Z6' || $this->auth_user->gst_number == '27AAECF4068L1ZA') && ($this->auth_user->supplier_state == "Karnataka" || $this->auth_user->supplier_state == "Delhi" || $this->auth_user->supplier_state == "Maharashtra") && $this->auth_user->shop_name == "Friends with Dreams Pvt Ltd" && $this->auth_user->company_type == "Private Limited") : ?>
           <div class="form-group">
             <div class="row Brand-1">
@@ -523,7 +523,7 @@
                 <?php else : ?>
                   <img id="cheque-image" class="upload-documents" src="<?php echo base_url() . 'assets/img/cheque_image.jpeg'; ?>" style="border-radius:10%" />
                 <?php endif; ?>
-                <input type="file" name="cheque-image" id="cheque-logo" required style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>" />
+                <input type="file" name="cheque-image" id="cheque-logo" style="display: none;" value="<?php echo (!empty($this->auth_user->cheque_image_url)) ? $this->auth_user->cheque_image_url : ''; ?>" />
 
                 <p id="file-upload-filename" style="margin-bottom:0;"></p>
                 <span style="color: red;" id="cheque_error"></span>
@@ -1357,19 +1357,19 @@
     } else {
       $('#account_button').prop('disabled', true);
     }
-  
+
   });
 </script>
 
 <script>
-  function about_brand (){
-   $('input[name="brand_name"]').val('')
-   $('input[name="brand_name"]').attr('required',true)
-   $('input[name="brand_desc"]').val('')
-   $('input[name="brand_desc"]').attr('required',true)
+  function about_brand() {
+    $('input[name="brand_name"]').val('')
+    $('input[name="brand_name"]').attr('required', true)
+    $('input[name="brand_desc"]').val('')
+    $('input[name="brand_desc"]').attr('required', true)
 
-    }
-  </script>
+  }
+</script>
 
 <script>
   $(document).ready(function() {
