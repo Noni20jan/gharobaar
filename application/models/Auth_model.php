@@ -1173,6 +1173,16 @@ class Auth_model extends CI_Model
         $this->db->order_by('created_at', 'DESC')->limit(clean_number($per_page), clean_number($offset));
         return $this->db->get('users')->result();
     }
+
+    //get paginated users by role
+    public function get_paginated_filtered_products_by_role($role1, $role2, $per_page, $offset)
+    {
+        $this->filter_users();
+        $this->db->where('role', clean_str($role1, $role2));
+        $this->db->order_by('created_at', 'DESC')->limit(clean_number($per_page), clean_number($offset));
+        return $this->db->get('users')->result();
+    }
+
     public function get_paginated_filtered_vendors($role, $per_page, $offset)
     {
         $this->filter_users();
@@ -1220,6 +1230,13 @@ class Auth_model extends CI_Model
     {
         $this->filter_users();
         return $this->db->where('role', clean_str($role))->count_all_results('users');
+    }
+
+    //get users count by two roles
+    public function get_users_count_by_roles($role1, $role2)
+    {
+        $this->filter_users();
+        return $this->db->where('role', clean_str($role1, $role2))->count_all_results('users');
     }
 
     //get featured users count by role
@@ -1564,7 +1581,7 @@ class Auth_model extends CI_Model
         $result = $query->result();
         return $result;
     }
-    
+
     //pattern for seller id
     public function unique_pattern_seller($id)
     {

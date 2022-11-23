@@ -21,8 +21,8 @@ class Membership_controller extends Admin_Core_Controller
         $data['title'] = trans("members");
         $data['page_url'] = admin_url() . "members";
 
-        $pagination = $this->paginate($data['page_url'], $this->auth_model->get_users_count_by_role('member'));
-        $data['users'] = $this->auth_model->get_paginated_filtered_products('member', $pagination['per_page'], $pagination['offset']);
+        $pagination = $this->paginate($data['page_url'], $this->auth_model->get_users_count_by_roles('member', 'guest'));
+        $data['users'] = $this->auth_model->get_paginated_filtered_products_by_role('member', 'guest', $pagination['per_page'], $pagination['offset']);
 
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/membership/members');
