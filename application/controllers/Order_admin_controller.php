@@ -135,7 +135,7 @@ class Order_admin_controller extends Admin_Core_Controller
 				// var_dump($id);
 				$order_product = $this->order_admin_model->get_order_product($id);
 				if (!empty($order_product)) {
-					if ($this->order_admin_model->update_order_product_status($order_product->id)) {
+					if ($this->order_admin_model->update_order_product_status($order_product->id) && $this->order_admin_model->update_order_supplier_status($order_product->order_id, $order_product->seller_id)) {
 						$order_status = $this->input->post('order_status', true);
 						if ($order_product->product_type == "digital") {
 							if ($order_status == 'completed' || $order_status == 'payment_received') {
