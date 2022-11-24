@@ -1790,4 +1790,13 @@ class Cart_model extends CI_Model
         $query = $this->db->get('users');
         return $query->row()->min_order_value;
     }
+
+    public function cart_total()
+    {
+        $cart_total = new stdClass();
+        if (!empty($this->session->userdata('mds_shopping_cart_total'))) {
+            $cart_total = $this->session->userdata('mds_shopping_cart_total');
+        } 
+        return $cart_total;
+    }
 }
