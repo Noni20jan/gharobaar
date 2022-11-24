@@ -12633,6 +12633,18 @@ img {
   margin: 20px !important;
   color: #605c5c8a !important;
 }
+@media (max-width:1030px) {
+  .top-search-bar .btn-search i {
+    margin: 35px !important;
+    color: #605c5c8a !important;
+  }
+}
+@media (max-width:560px) {
+  .top-search-bar .btn-search i {
+    margin: 0px !important;
+    color: #605c5c8a !important;
+  }
+}
 
 @media (max-width: 786px) {
   .top-search-bar .btn-search {
@@ -20418,6 +20430,7 @@ form select.error {
     display: block;
   }
 
+  }
   .webOrderView {
     display: none;
   }
@@ -20428,7 +20441,13 @@ form select.error {
 
   .nav-mobile-header {
     display: block;
+    position: absolute !important
   }
+  @media(max-width:992px) {
+    .mobile-nav-header {
+      display: block;
+      position: absolute !important;
+    }
 
   .section {
     margin-bottom: 20px;
