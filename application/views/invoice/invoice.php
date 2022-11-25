@@ -519,9 +519,9 @@ function convert_number_to_words($number)
                                                 <?php if ($show_all_products == false) : ?>
                                                     <?php
                                                     if($order_product->product_total_price<100000):
-                                                    $test = (($order_product->product_total_price+10000) / 100);
+                                                    $test = (($sale_seller_total+10000) / 100);
                                                     else:
-                                                        $test = (($order_product->product_total_price) / 100);
+                                                        $test = (($sale_seller_total) / 100);
                                                     endif;   
 
                                                     echo convert_number_to_words($test); ?>
