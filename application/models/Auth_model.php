@@ -1178,7 +1178,8 @@ class Auth_model extends CI_Model
     public function get_paginated_filtered_products_by_role($role1, $role2, $per_page, $offset)
     {
         $this->filter_users();
-        $this->db->where('role', clean_str($role1, $role2));
+        $where_in_arr = array(clean_str($role1), clean_str($role2));
+        $this->db->where_in('role', $where_in_arr);
         $this->db->order_by('created_at', 'DESC')->limit(clean_number($per_page), clean_number($offset));
         return $this->db->get('users')->result();
     }
@@ -1236,7 +1237,9 @@ class Auth_model extends CI_Model
     public function get_users_count_by_roles($role1, $role2)
     {
         $this->filter_users();
-        return $this->db->where('role', clean_str($role1, $role2))->count_all_results('users');
+        $where_in_arr = array(clean_str($role1), clean_str($role2));
+        $this->db->where_in('role', $where_in_arr);
+        return $this->db->count_all_results('users');
     }
 
     //get featured users count by role
