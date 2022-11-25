@@ -16,7 +16,7 @@
 
         .footer-image {
             /* background-image: url('https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Images1/Frame.jpg'); */
-            background-color: #e8e1d9;
+            background-color: #FFFFFF;
             width: 100%;
             height: 100%;
         }
@@ -393,55 +393,13 @@
                 <div class="content">
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
                         <tr>
-                            <td style="text-align: center;">
-                                <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILER_Nov_2022/11.png">
-                                <a href="https://gharobaar.com/chyawanprsh-in-5-variants-natural-diabetic-friendly-vegan-6376"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILER_Nov_2022/12.png"></a>
-                                <a href="https://gharobaar.com/chyawanprsh-anjeer-kesar-6381"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILER_Nov_2022/13.png"></a>
-                                <a href="https://gharobaar.com/chyawanprsh-diabetic-friendly-6378"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILER_Nov_2022/14.png"></a>
-                                <a href="https://gharobaar.com/chyawanprsh-vegan-6379"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILER_Nov_2022/15.png"></a>
-                                <a href="https://gharobaar.com/chyawanprsh-rose-6382"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILER_Nov_2022/16.png"></a>
-                                <!-- <a href="https://gharobaar.com/chanderi-silk-suit-6123"> <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_02.png"></a> -->
-
-
-                                <!-- `    <a href="https://www.gharobaar.com/miko-lolo-reversible-throw-jacket-in-organic-cotton-882">
-                                    <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Images1/im3.jpg"></a>
-
-
-                                <a href="https://www.gharobaar.com/rye-handblock-shirt-4751">
-                                    <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Images1/im4.jpg"></a> -->
-
-                                <!-- <a href="https://gharobaar.com/advaita-handicrafts-black-beads-kundan-necklace-set-2888"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_09.png"></a>
-
-
-                                <a class="pic1" href="https://gharobaar.com/advaita-handicrafts-german-silver-heavy-choker-durga-2883"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_08.png"></a>
-
-
-                                <a href="https://gharobaar.com/holy-mud-indian-rose-natural-hand-rolled-bambooless-incense-sticks-with-holder-8425"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_11.png"></a>
-
-
-                                <a class="pic1" href="https://gharobaar.com/esscent-rose-incense-sticks-1000"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_10.png"></a>
-
-
-                                <a style="float: left;" href="https://gharobaar.com/multicolour-incense-stick-holder-upcycled-cd-6108"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_12.png"></a>
-
-
-                                <a  href="https://gharobaar.com/kundan-embellished-marble-incense-holder-5468"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_13.png"></a> -->
-
-
-                                <!-- <a href="https://gharobaar.com/"><img  src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Navratri/NAVRATRI_14.jpg"></a> -->
-
-                                <!-- <a href="https://www.gharobaar.com/"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Images1/Group_343.png"></a> -->
-
-
-
-                                <!-- <a href="https://www.gharobaar.com/shop-by-seller"> <img
-                                        src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic10.png"></a> -->
-
-
+                            <td style="text-align: center; background:#FFFFFF;">
+                                <a href="https://gharobaar.com/masala-gud-8407"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/mommade/1.png"></a>
+                                <a href="https://gharobaar.com/bajra-mathis-8414"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/mommade/2.png"></a>
+                                <a href="https://gharobaar.com/namakpara-8415"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/mommade/3.png"></a>
+                                <a href="https://gharobaar.com/besan-spiral-mathis-8413"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/mommade/4.png"></a>
+                                <a href="https://gharobaar.com/punjabi-aam-ka-achaar-8393"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/mommade/5.png"></a>
                                 <div class="footer-image">
-
-
-
                                     <table border="0" cellpadding="0" cellspacing="0">
                                         <tr>
                                             <td>
