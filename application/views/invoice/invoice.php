@@ -469,10 +469,12 @@ function convert_number_to_words($number)
                                                                             <td><?php echo price_formatted_without_round($order_product->product_igst, $order_product->product_currency); ?></td>
                                                                             <td><?php echo price_formatted_without_round($order_product->product_cgst, $order_product->product_currency); ?></td>
                                                                             <td><?php echo price_formatted_without_round($order_product->product_sgst, $order_product->product_currency); ?></td>
-                                                                            <?php if($order->price_total < 50000) : ?>
+                                                                            <?php if($order->price_total < 100000) : ?>
+                                                                                <?php //var_dump($order_product->product_total_price);
+                                                                                //die();?>
                                                                                 <td><?php echo price_formatted_without_round(10000, $order_product->product_currency); ?></td>
                                                                             <?php endif;?>
-                                                                            <td><?php echo price_formatted($net_price, $order_product->product_currency); ?></td>
+                                                                            <td><?php echo price_formatted($order_product->product_total_price, $order_product->product_currency); ?></td>
 
 
 
@@ -516,7 +518,11 @@ function convert_number_to_words($number)
                                                 <b>Amount in words: &nbsp;</b>
                                                 <?php if ($show_all_products == false) : ?>
                                                     <?php
-                                                    $test = (($order_product->product_total_price) / 100);
+                                                    if($order_product->product_total_price<100000):
+                                                    $test = (($order_product->product_total_price+10000) / 100);
+                                                    else:
+                                                        $test = (($order_product->product_total_price) / 100);
+                                                    endif;   
 
                                                     echo convert_number_to_words($test); ?>
                                                 <?php else : ?>
