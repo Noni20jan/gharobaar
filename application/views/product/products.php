@@ -887,13 +887,13 @@ foreach ($sellers as $seller) {
                                                                 </li> -->
 
                                                         <li>
-                                                        <?php if (!empty($item->id!=2)) : ?>
-                                                            <a href="<?= current_url() . generate_filter_url($query_string_array, 'category', $item->id); ?>">
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'category', $item->id) ? 'checked' : ''; ?>>
-                                                                    <label class="custom-control-label"><?= category_name($item); ?></label>
-                                                                </div>
-                                                            </a>
+                                                            <?php if (!empty($item->id != 2)) : ?>
+                                                                <a href="<?= current_url() . generate_filter_url($query_string_array, 'category', $item->id); ?>">
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" <?= is_custom_field_option_selected($query_string_object_array, 'category', $item->id) ? 'checked' : ''; ?>>
+                                                                        <label class="custom-control-label"><?= category_name($item); ?></label>
+                                                                    </div>
+                                                                </a>
                                                             <?php endif; ?>
                                                         </li>
                                                         <?php
@@ -2656,7 +2656,15 @@ foreach ($sellers as $seller) {
             }
         }
         sessionStorage.scrollTop = $(this).scrollTop();
+        console.log($(this).scrollTop());
 
+    });
+
+    $(document).ready(function() {
+        console.log(sessionStorage.scrollTop);
+        if (sessionStorage.scrollTop != "undefined") {
+            $(window).scrollTop(sessionStorage.scrollTop);
+        }
     });
 
     function loadMoreData(page) {
