@@ -330,8 +330,6 @@ class Cart_controller extends Home_Core_Controller
         $total = $cart_total->total;
         $data['cart_items'] = $this->session_cart_items;
         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
-        // var_dump($data['cart_total']);
-        // die();
         $data['cart_has_physical_product'] = $this->cart_model->check_cart_has_physical_product();
         $payment_button = "";
         if (count($cart_items) != 0) {
@@ -1330,7 +1328,8 @@ class Cart_controller extends Home_Core_Controller
             }
 
             return $response;
-        }}
+        }
+    }
 
     /**
      * Order Completed

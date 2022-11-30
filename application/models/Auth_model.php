@@ -1507,6 +1507,32 @@ class Auth_model extends CI_Model
         return false;
     }
 
+    // disable cod for certain User 
+
+    public function disable_cod_user($id)
+    {
+        $id = clean_number($id);
+        $user = $this->get_user($id);
+
+        if (!empty($user)) {
+            $data = array();
+            if ($user->disable_cod == 0) {
+                $data['disable_cod'] = 1;
+            }
+            if ($user->disable_cod == 1) {
+                $data['disable_cod'] = 0;
+            }
+
+            $this->db->where('id', $id);
+            // var_dump($this->db->last_query());
+            // die();
+            return $this->db->update('users', $data);
+        }
+
+        return false;
+    }
+
+
     //ban or remove user ban
     public function ban_remove_ban_user($id)
     {

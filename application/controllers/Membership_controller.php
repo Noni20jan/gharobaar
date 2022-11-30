@@ -604,6 +604,21 @@ class Membership_controller extends Admin_Core_Controller
 
 
 
+    /**
+     * disable cod for certain User 
+     */
+
+    public function disable_cod_user()
+    {
+        $id = $this->input->post('id', true);
+        if ($this->auth_model->disable_cod_user($id)) {
+            $data = true;
+        } else {
+            $data = false;
+        }
+        echo json_encode($data);
+    }
+
 
     /**
      * Ban or Remove User Ban

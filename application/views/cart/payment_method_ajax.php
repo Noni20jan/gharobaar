@@ -251,7 +251,7 @@ foreach ($cart_items as $item) {
                         </li>
                     <?php $check_option = false;
                     endif; ?>
-                    <?php if ($this->auth_check == 1 && $this->payment_settings->cash_on_delivery_enabled && empty($cart_has_digital_product)  && $mds_payment_type == "sale") : ?>
+                    <?php if ($this->auth_check == 1 && $this->payment_settings->cash_on_delivery_enabled && empty($cart_has_digital_product)  && $mds_payment_type == "sale" && $this->auth_user->disable_cod == 1) : ?>
                         <li>
                             <div class="option-payment">
                                 <div class="custom-control custom-radio">
