@@ -327,7 +327,7 @@ class Cart_controller extends Home_Core_Controller
 
         $cart_items = $this->cart_model->get_sess_cart_items();
         $cart_total = $this->cart_model->get_sess_cart_total();
-        $total=$cart_total->total;
+        $total = $cart_total->total;
         $data['cart_items'] = $this->session_cart_items;
         $data['cart_total'] = $this->cart_model->get_sess_cart_total();
         // var_dump($data['cart_total']);
@@ -1234,103 +1234,103 @@ class Cart_controller extends Home_Core_Controller
                     $this->order_model->decrease_product_stock_after_sale($order->id);
                     //send email
                     $cart_total = $this->cart_model->get_sess_cart_total();
-                   
+
                     $total_price1 = $cart_total->total_price / 100;
                     if ((float)$data_transaction['payment_amount'] == $total_price1 && $data_transaction['match_status'] == "yes") {
                         if ((float)$data_transaction['payment_amount'] == $cart_total->total && $data_transaction['match_status'] == "yes") {
-                        if ($this->general_settings->send_email_buyer_purchase == 1) {
-                            $email_data = array(
-                                'email_type' => 'new_order',
-                                'order_id' => $order_id
-                            );
-                            $this->session->set_userdata('mds_send_email_data', json_encode($email_data));
+                            if ($this->general_settings->send_email_buyer_purchase == 1) {
+                                $email_data = array(
+                                    'email_type' => 'new_order',
+                                    'order_id' => $order_id
+                                );
+                                $this->session->set_userdata('mds_send_email_data', json_encode($email_data));
+                            }
                         }
-                    }
-                    //set response and redirect URLs
-                    $response->result = 1;
+                        //set response and redirect URLs
+                        $response->result = 1;
 
-                    $arr = [$order_shipping->shipping_first_name, $order->order_number, $order->price_total / 100, $order->payment_method];
-                    $parsed_data = '"' . implode('","', $arr) . '"';
-                    $require_data = array(
-                        "from" => "918287606650",
-                        "to" => "91$order_shipping->shipping_phone_number",
-                        "type" => "mediatemplate",
-                        "channel" => "whatsapp",
-                        "template_name" => "new_ordertext",
-                        "params" => $parsed_data,
-                        "param_url" => "order-details" . "/" . $order->order_number
-                    );
-                    //  $response->redirect_url = $base_url . get_route("order_details", true) . $order->order_number;
-                    //  $response->redirect_url = $base_url . get_route("thankyou", true) ."/". $order->order_number;
-                    $this->session->set_userdata('thankyou_order_id', $order->order_number);
-                    if ($this->general_settings->send_whatsapp == 1) {
-                        $this->notification_model->whatsapp($require_data);
-                    }
-                    $response->redirect_url = $base_url . get_route("order-completed", true);
+                        $arr = [$order_shipping->shipping_first_name, $order->order_number, $order->price_total / 100, $order->payment_method];
+                        $parsed_data = '"' . implode('","', $arr) . '"';
+                        $require_data = array(
+                            "from" => "918287606650",
+                            "to" => "91$order_shipping->shipping_phone_number",
+                            "type" => "mediatemplate",
+                            "channel" => "whatsapp",
+                            "template_name" => "new_ordertext",
+                            "params" => $parsed_data,
+                            "param_url" => "order-details" . "/" . $order->order_number
+                        );
+                        //  $response->redirect_url = $base_url . get_route("order_details", true) . $order->order_number;
+                        //  $response->redirect_url = $base_url . get_route("thankyou", true) ."/". $order->order_number;
+                        $this->session->set_userdata('thankyou_order_id', $order->order_number);
+                        if ($this->general_settings->send_whatsapp == 1) {
+                            $this->notification_model->whatsapp($require_data);
+                        }
+                        $response->redirect_url = $base_url . get_route("order-completed", true);
 
 
-                    if ($order->buyer_id == 0) {
-                        $this->session->set_userdata('mds_show_order_completed_page', 1);
-                        $response->redirect_url = $base_url . get_route("order_completed", true) . $order->order_number;
+                        if ($order->buyer_id == 0) {
+                            $this->session->set_userdata('mds_show_order_completed_page', 1);
+                            $response->redirect_url = $base_url . get_route("order_completed", true) . $order->order_number;
+                        } else {
+                            $response->message = trans("msg_order_completed");
+                        }
                     } else {
-                        $response->message = trans("msg_order_completed");
+                        //could not added to the database
+                        $response->message = trans("msg_payment_database_error");
+                        $response->result = 0;
+                        $response->redirect_url = $base_url . get_route("cart", true) . get_route("shipping");
                     }
-                } else {
-                    //could not added to the database
-                    $response->message = trans("msg_payment_database_error");
-                    $response->result = 0;
-                    $response->redirect_url = $base_url . get_route("cart", true) . get_route("shipping");
+                } elseif ($payment_type == 'membership') {
+                    $plan_id = $this->session->userdata('modesy_selected_membership_plan_id');
+                    $plan = null;
+                    if (!empty($plan_id)) {
+                        $plan = $this->membership_model->get_plan($plan_id);
+                    }
+                    if (!empty($plan)) {
+                        //add user membership plan
+                        $this->membership_model->add_user_plan($data_transaction, $plan, $this->auth_user->id);
+                        //add transaction
+                        $this->membership_model->add_membership_transaction($data_transaction, $plan);
+                        //set response and redirect URLs
+                        $response->result = 1;
+                        $response->redirect_url = $base_url . get_route("membership_payment_completed") . "?method=gtw";
+                    } else {
+                        //could not added to the database
+                        $response->message = trans("msg_payment_database_error");
+                        $response->result = 0;
+                        $response->redirect_url = $base_url . get_route("cart", true) . get_route("shipping") . "?payment_type=membership";
+                    }
+                } elseif ($payment_type == 'promote') {
+                    $promoted_plan = $this->session->userdata('modesy_selected_promoted_plan');
+                    if (!empty($promoted_plan)) {
+                        //add to promoted products
+                        $this->promote_model->add_to_promoted_products($promoted_plan);
+                        //add transaction
+                        $this->promote_model->add_promote_transaction($data_transaction);
+                        //reset cache
+                        reset_cache_data_on_change();
+                        reset_user_cache_data($this->auth_user->id);
+                        //set response and redirect URLs
+                        $response->result = 1;
+                        $response->redirect_url = $base_url . get_route("promote_payment_completed") . "?method=gtw&product_id=" . $promoted_plan->product_id;
+                    } else {
+                        //could not added to the database
+                        $response->message = trans("msg_payment_database_error");
+                        $response->result = 0;
+                        $response->redirect_url = $base_url . get_route("cart", true) . get_route("shipping") . "?payment_type=promote";
+                    }
                 }
-            } elseif ($payment_type == 'membership') {
-                $plan_id = $this->session->userdata('modesy_selected_membership_plan_id');
-                $plan = null;
-                if (!empty($plan_id)) {
-                    $plan = $this->membership_model->get_plan($plan_id);
-                }
-                if (!empty($plan)) {
-                    //add user membership plan
-                    $this->membership_model->add_user_plan($data_transaction, $plan, $this->auth_user->id);
-                    //add transaction
-                    $this->membership_model->add_membership_transaction($data_transaction, $plan);
-                    //set response and redirect URLs
-                    $response->result = 1;
-                    $response->redirect_url = $base_url . get_route("membership_payment_completed") . "?method=gtw";
-                } else {
-                    //could not added to the database
-                    $response->message = trans("msg_payment_database_error");
-                    $response->result = 0;
-                    $response->redirect_url = $base_url . get_route("cart", true) . get_route("shipping") . "?payment_type=membership";
-                }
-            } elseif ($payment_type == 'promote') {
-                $promoted_plan = $this->session->userdata('modesy_selected_promoted_plan');
-                if (!empty($promoted_plan)) {
-                    //add to promoted products
-                    $this->promote_model->add_to_promoted_products($promoted_plan);
-                    //add transaction
-                    $this->promote_model->add_promote_transaction($data_transaction);
-                    //reset cache
-                    reset_cache_data_on_change();
-                    reset_user_cache_data($this->auth_user->id);
-                    //set response and redirect URLs
-                    $response->result = 1;
-                    $response->redirect_url = $base_url . get_route("promote_payment_completed") . "?method=gtw&product_id=" . $promoted_plan->product_id;
-                } else {
-                    //could not added to the database
-                    $response->message = trans("msg_payment_database_error");
-                    $response->result = 0;
-                    $response->redirect_url = $base_url . get_route("cart", true) . get_route("shipping") . "?payment_type=promote";
-                }
+            } else {
+                $this->order_model->add_payment_transaction_fail($data_transaction);
+                // $response->message = trans("msg_payment_database_error");
+                $response->message = trans("payment_failed");
+                $response->result = 0;
+                $response->redirect_url = $base_url . get_route("cart", true) . get_route("shipping");
             }
-        } else {
-            $this->order_model->add_payment_transaction_fail($data_transaction);
-            // $response->message = trans("msg_payment_database_error");
-            $response->message = trans("payment_failed");
-            $response->result = 0;
-            $response->redirect_url = $base_url . get_route("cart", true) . get_route("shipping");
-        }
 
-        return $response;
-    }}
+            return $response;
+        }}
 
     /**
      * Order Completed
@@ -1433,7 +1433,7 @@ class Cart_controller extends Home_Core_Controller
         $shipping_detail = json_decode($this->order_model->get_shipping_cost($cart_total));
         $shipping_address = $this->cart_model->get_sess_cart_shipping_address();
 
-        
+
 
         $seller_array = array();
         $amount_array = array();
@@ -2274,6 +2274,8 @@ class Cart_controller extends Home_Core_Controller
             $rating = $this->input->post('rating', true);
             $product_id = $this->input->post('product_id', true);
             $review_text = $this->input->post('review', true);
+            // var_dump($rating,$product_id,$review_text);die();
+
 
             $rating2 = array();
             foreach ($rating as $rating1) {
@@ -2287,9 +2289,12 @@ class Cart_controller extends Home_Core_Controller
             }
             $i = 0;
             foreach ($product_id as $product_id1) {
+
                 $product = $this->product_model->get_product_by_id($product_id1);
-                if ($product->user_id != $this->auth_user->id) {
+
+                if ($product->user_id == $this->auth_user->id) {
                     $review = $this->review_model->get_review($product_id1, $this->auth_user->id);
+                    //  var_dump($review);die();
                     if (!empty($review)) {
                         $this->review_model->update_review1($review->id, $rating2[$i], $product_id1, $review_text2[$i]);
                         $images = $this->review_model->check_review_images($product_id1, $this->auth_user->id);
@@ -2301,18 +2306,13 @@ class Cart_controller extends Home_Core_Controller
                             $reviews = false;
                         }
                     } else {
+                        $this->load->model('upload_model');
                         $last_id = $this->review_model->add_review1($rating2[$i], $product_id1, $review_text2[$i], 'file_'[$i]);
-                        if (!empty($last_id)) {
-
-                            $this->load->model('upload_model');
-                            $img_path = $this->upload_model->upload_review_image('file_' . $product_id1, $last_id, $product_id1);
-                            if (!empty($img_path)) {
-                                $reviews = TRUE;
-                            } else {
-                                $reviews = FALSE;
-                            }
+                        $img_path = $this->upload_model->upload_review_image('file_' . $product_id1, $last_id, $product_id1);
+                        if (!empty($last_id) || !empty($img_path)) {
+                            $reviews = TRUE;
                         } else {
-                            $reviews = False;
+                            $reviews = false;
                         }
                     }
                 }

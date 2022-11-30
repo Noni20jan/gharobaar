@@ -212,6 +212,10 @@
                         $('#rateProductModalorder').modal('hide');
                         $('#feedback_msg').modal('show');
 
+                        setTimeout(function() {
+                    $('#feedback_msg').modal('hide');
+                    // window.location.reload();
+                }, 4000);
                     } else {
                         reset_data.reset();
                         $('#rateProductModalorder').modal('hide');
