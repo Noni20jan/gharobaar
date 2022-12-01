@@ -83,7 +83,7 @@
                                                 <li>
                                                     <?php if ($user->disable_cod == 0) : ?>
                                                         <a href="javascript:void(0)" onclick="disable_cod_user(<?php echo $user->id; ?>);"><i class="fa fa-stop-circle option-icon"></i><?php echo trans('disable_cod'); ?></a>
-                                                    <?php else : ?>
+                                                    <?php elseif ($user->disable_cod == 1) : ?>
                                                         <a href="javascript:void(0)" onclick="disable_cod_user(<?php echo $user->id; ?>);"><i class="fa fa-circle option-icon"></i><?php echo trans('enable_cod'); ?></a>
                                                     <?php endif; ?>
                                                 </li>
