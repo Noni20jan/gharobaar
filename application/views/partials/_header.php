@@ -2471,8 +2471,11 @@
                             </div>
 
                             <p class="p-social-media m-0 m-t-5 hide_after_response"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>
-
-
+                            <p class="p-social-media m-0 m-t-5 "> Already have an account?</p>
+                            <div class="form-group" style="text-align:center;">
+                                <button type="button" class="btn btn-md btn-custom hideguestmodal" data-toggle="modal" data-target="#loginModal" style="width: 100%;">login</button>
+                            </div>
+                            </br>
                             <!-- <div class="form-group show_after_response hideMe">
                                 <hr>
                                 <input type="text" name="guest_otp" id="guest_otp" class="form-control auth-form-input" placeholder="Enter OTP" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="6" maxlength="6">
@@ -2486,7 +2489,7 @@
                                 <a href="#" class="hideguestmodal btn btn-block" data-toggle="modal" data-target="#loginModal">Login</a>
                             </div>
                             <div class="form-group hide_after_response" id="continue_guest_hide" style="text-align:center;">
-                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("continue"); ?></button>
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("continue_as_guest"); ?></button>
                             </div>
                             <!-- <div class="form-group show_after_response hideMe" style="text-align:center;">
                                 <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("confirm_otp"); ?></button>

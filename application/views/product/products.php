@@ -2696,8 +2696,8 @@ foreach ($sellers as $seller) {
                 } else {
                     $('.ajax-load').hide();
                     // $('.ajax-load-1').hide();
-                    $('#no-more-products').html("That's all for now !");
                     $("#post-data").append(data);
+                    $('#no-more-products').html("That's all for now !");
 
 
 

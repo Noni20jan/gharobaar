@@ -5542,7 +5542,11 @@
 
 
                             <p class="p-social-media m-0 m-t-5 hide_after_response"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>
-
+                            <p class="p-social-media m-0 m-t-5 "> Already have an account?</p>
+                            <div class="form-group" style="text-align:center;">
+                                <button type="button" class="btn btn-md btn-custom hideguestmodal" data-toggle="modal" data-target="#loginModal" style="width: 100%;">login</button>
+                            </div>
+                            </br>
 
                             <div class="form-group show_after_response hideMe">
                                 <hr>
