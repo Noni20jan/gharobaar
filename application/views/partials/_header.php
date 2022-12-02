@@ -2471,9 +2471,9 @@
                             </div>
 
                             <p class="p-social-media m-0 m-t-5 hide_after_response"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>
-                            <p class="p-social-media m-0 m-t-5 "> Already have an account?</p>
+                            <p class="p-social-media m-0 m-t-5 hide_account "> Already have an account?</p>
                             <div class="form-group" style="text-align:center;">
-                                <button type="button" class="btn btn-md btn-custom hideguestmodal" data-toggle="modal" data-target="#loginModal" style="width: 100%;">login</button>
+                                <button type="button" class="btn btn-md btn-custom hideguestmodal" id="hide_login_button" data-toggle="modal" data-target="#loginModal" style="width: 100%;">login</button>
                             </div>
                             </br>
                             <!-- <div class="form-group show_after_response hideMe">
@@ -6910,8 +6910,10 @@
                                                 document.getElementById("email_phn_exist_msg").innerHTML =
                                                     e.error_message;
                                                 $('#email_phn_exist_msg_login').show();
-                                                $('#continue_guest_hide').hide();
+                                                $('#continue_guest_hide').css('display', 'none');
 
+                                                $('#hide_login_button').css('display', 'none');
+                                                $('.hide_account').css('display', 'none');
                                             }
                                         },
                                     });
@@ -6961,7 +6963,10 @@
                                     document.getElementById("email_phn_exist_msg").innerHTML =
                                         e.error_message;
                                     $('#email_phn_exist_msg_login').show();
-                                    $('#continue_guest_hide').hide();
+                                    $('#continue_guest_hide').css('display', 'none');
+
+                                    $('#hide_login_button').css('display', 'none');
+                                    $('.hide_account').css('display', 'none');
                                 }
                             },
                         });
@@ -7003,7 +7008,10 @@
                                 document.getElementById("email_phn_exist_msg").innerHTML =
                                     e.error_message;
                                 $('#email_phn_exist_msg_login').show();
-                                $('#continue_guest_hide').hide();
+                                $('#continue_guest_hide').css('display', 'none');
+
+                                $('#hide_login_button').css('display', 'none');
+                                $('.hide_account').css('display', 'none');
                             }
                         },
                     });
