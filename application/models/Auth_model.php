@@ -1519,6 +1519,24 @@ class Auth_model extends CI_Model
             if ($user->disable_cod == 0) {
                 $data['disable_cod'] = 1;
             }
+            $this->db->where('id', $id);
+            // var_dump($this->db->last_query());
+            // die();
+            return $this->db->update('users', $data);
+        }
+
+        return false;
+    }
+
+    // Enable cod for certain User 
+
+    public function enable_cod_user($id)
+    {
+        $id = clean_number($id);
+        $user = $this->get_user($id);
+
+        if (!empty($user)) {
+            $data = array();
             if ($user->disable_cod == 1) {
                 $data['disable_cod'] = 0;
             }
@@ -1531,6 +1549,7 @@ class Auth_model extends CI_Model
 
         return false;
     }
+
 
 
     //ban or remove user ban

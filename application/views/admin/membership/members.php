@@ -84,7 +84,7 @@
                                                     <?php if ($user->disable_cod == 0) : ?>
                                                         <a href="javascript:void(0)" onclick="disable_cod_user(<?php echo $user->id; ?>);"><i class="fa fa-stop-circle option-icon"></i><?php echo trans('disable_cod'); ?></a>
                                                     <?php elseif ($user->disable_cod == 1) : ?>
-                                                        <a href="javascript:void(0)" onclick="disable_cod_user(<?php echo $user->id; ?>);"><i class="fa fa-circle option-icon"></i><?php echo trans('enable_cod'); ?></a>
+                                                        <a href="javascript:void(0)" onclick="enable_cod_user(<?php echo $user->id; ?>);"><i class="fa fa-circle option-icon"></i><?php echo trans('enable_cod'); ?></a>
                                                     <?php endif; ?>
                                                 </li>
                                                 <li>
@@ -123,9 +123,27 @@
             url: base_url + "membership_controller/disable_cod_user",
             data: data,
             success: function(response) {
-                //location.reload();
+                location.reload();
                 console.log(response);
             }
         });
+    }
+
+    function enable_cod_user(id) {
+        // alert("Working");
+        var data = {
+            'id': id,
+        };
+        data[csfr_token_name] = $.cookie(csfr_cookie_name);
+        $.ajax({
+            type: "POST",
+            url: base_url + "membership_controller/enable_cod_user",
+            data: data,
+            success: function(response) {
+                location.reload();
+                console.log(response);
+            }
+        });
+
     }
 </script>
