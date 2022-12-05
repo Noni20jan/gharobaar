@@ -16,7 +16,7 @@
 
         .footer-image {
             /* background-image: url('https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Images1/Frame.jpg'); */
-            background-color: #FFFFFF;
+            background-color: #8dd6f5;
             width: 100%;
             height: 100%;
         }
@@ -394,11 +394,11 @@
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
                         <tr>
                             <td style="text-align: center; background:#FFFFFF;">
-                                <a href="https://gharobaar.com/masala-gud-8407"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/mommade/1.png"></a>
-                                <a href="https://gharobaar.com/bajra-mathis-8414"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/mommade/2.png"></a>
-                                <a href="https://gharobaar.com/namakpara-8415"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/mommade/3.png"></a>
-                                <a href="https://gharobaar.com/besan-spiral-mathis-8413"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/mommade/4.png"></a>
-                                <a href="https://gharobaar.com/punjabi-aam-ka-achaar-8393"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/mommade/5.png"></a>
+                                <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/1.jpg">
+                                <a href="https://gharobaar.com/strawberry-orange-jam-10880"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/2.jpg"></a>
+                                <a href="https://gharobaar.com/namakpara-8415"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/3.jpg"></a>
+                                <a href="https://gharobaar.com/stuffed-green-chilli-pickle-400gms-9464"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/4.jpg"></a>
+                                <a href="https://gharobaar.com/oosh-dried-whole-cranberry-1851"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/5.jpg"></a>
                                 <div class="footer-image">
                                     <table border="0" cellpadding="0" cellspacing="0">
                                         <tr>
