@@ -578,6 +578,8 @@ $route[getr('dashboard', $rts) . '/sales_data'] = 'dashboard_controller/sales_da
 $route[getr('dashboard', $rts) . '/payment_reports'] = 'dashboard_controller/payment_report';
 $route[getr('dashboard', $rts) . '/commission_bill'] = 'dashboard_controller/commission_bill_report';
 $route[getr('dashboard', $rts) . '/seller_ledgers'] = 'dashboard_controller/seller_ledgers_report';
+$route[getr('dashboard', $rts) . '/seller_tcs_report'] = 'dashboard_controller/seller_tcs_report';
+$route[getr('dashboard', $rts) . '/seller_tds_report'] = 'dashboard_controller/seller_tds_report';
 
 
 

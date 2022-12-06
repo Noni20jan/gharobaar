@@ -1,5 +1,5 @@
 <?php
-
+  
 use Stripe\Coupon;
 
 defined('BASEPATH') or exit('No direct script access allowed');
@@ -3353,7 +3353,8 @@ class Dashboard_controller extends Home_Core_Controller
         $data['title'] = trans("sales_data");
         $data['description'] = trans("sales_data") . " - " . $this->app_name;
         $data['keywords'] = trans("sales_data") . "," . $this->app_name;
-        // $data['sales_data'] = $this->earnings_model->get_sales_data_reports();
+        $seller_id = $this->auth_user->id;
+        $data['sales_data'] = $this->reports_model->get_sales_data_reports_dashboard();
         $this->load->view('dashboard/includes/_header', $data);
         $this->load->view('dashboard/reports/sales_data', $data);
         $this->load->view('dashboard/includes/_footer');
@@ -3393,18 +3394,54 @@ class Dashboard_controller extends Home_Core_Controller
         $data['title'] = trans("commission_bill");
         $data['description'] = trans("commission_bill") . " - " . $this->app_name;
         $data['keywords'] = trans("commission_bill") . "," . $this->app_name;
-        // $data['commission_bill'] = $this->earnings_model->get_commission_bill_report();
+        $data['commission_bill'] = $this->reports_model->get_commission_bill_report_dashboard();
         $this->load->view('dashboard/includes/_header', $data);
         $this->load->view('dashboard/reports/commission_bill', $data);
         $this->load->view('dashboard/includes/_footer');
     }
 
-    public function commission_bill_date()
+        public function commission_bill_date()
     {
         $from_date = $this->input->post('from_date', true);
         $to_date = $this->input->post('to_date', true);
         $commission_bill_date = $this->reports_model->get_commission_bill_report($from_date, $to_date);
         echo json_encode($commission_bill_date);
+    }
+
+    public function seller_tcs_report()
+    {
+       // echo "hi";die;
+        $data['title'] = trans("tcs-report-seller");
+        $data['sale'] = $this->reports_model->fetch_tcs_report_seller();
+        $this->load->view('dashboard/includes/_header', $data);
+        $this->load->view('dashboard/reports/tcs_report', $data);
+        $this->load->view('dashboard/includes/_footer');
+    }
+
+    public function format_tcs_report_seller()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $format_tcs = $this->reports_model->format_tcs_report_seller($from_date, $to_date);
+        echo json_encode($format_tcs);
+    }
+    public function seller_tds_report()
+    {
+        $data['title'] = trans("tds-report-seller");
+        $data['sale'] = $this->reports_model->fetch_tds_report_seller();
+        $this->load->view('dashboard/includes/_header', $data);
+        $this->load->view('dashboard/reports/tds_report', $data);
+        $this->load->view('dashboard/includes/_footer');
+    }
+
+    public function format_tds_seller()
+    {
+        $from_date = $this->input->post('from_date', true);
+        $to_date = $this->input->post('to_date', true);
+
+        $format_tds_report = $this->reports_model->tds_report_seller($from_date, $to_date);
+        echo json_encode($format_tds_report);
     }
 
     public function seller_ledgers_report()

@@ -671,6 +671,8 @@ $user = get_user($this->auth_user->id);
                                 <li class="nav-payouts"><a href="<?= generate_dash_url("payment_reports"); ?>"><?= trans("payment_reports"); ?></a></li>
                                 <li class="nav-payouts"><a href="<?= generate_dash_url("commission_bill"); ?>"><?= trans("commission_bill"); ?></a></li>
                                 <li class="nav-payouts"><a href="<?= generate_dash_url("seller_ledgers"); ?>"><?= trans("sellers_ledgers"); ?></a></li>
+                                <li class="nav-payouts"><a href="<?= generate_dash_url("seller_tcs_report"); ?>"><?= trans("tcs-report-seller"); ?></a></li>
+                                <li class="nav-payouts"><a href="<?= generate_dash_url("seller_tds_report"); ?>"><?= trans("tds-report-seller"); ?></a></li>
                             </ul>
                         </li>
                     <?php endif; ?>

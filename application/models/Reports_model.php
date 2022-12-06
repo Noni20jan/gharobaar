@@ -175,6 +175,7 @@ class Reports_model extends CI_Model
            and csp.created_at < STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
            and csp.is_completed = 1
            and csp.is_active = 1
+           and sdr.isActive=1
           and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected', 'processing')
          group by sdr.seller ,
         sdr.seller_email ,
@@ -231,6 +232,7 @@ class Reports_model extends CI_Model
            and cosp.created_at >=STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
            and cosp.created_at < STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
            and cosp.is_active = 1
+           and sdr.isActive = 1
           and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected', 'processing')
          group by sdr.seller ,
         sdr.seller_email ,
@@ -422,14 +424,21 @@ class Reports_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
-
+    public function get_sales_data_reports_dashboard()
+    {
+        $seller_id = $this->auth_user->id;
+        $sql = "SELECT * FROM sale_data_report where  YEAR(order_date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND seller_id=$seller_id and isActive=1
+        AND MONTH(order_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)   and order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing')";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
 
     public function get_sales_data_reports($start_date, $end_date)
     {
         $seller_id = $this->auth_user->id;
         $end_date = $end_date . " 23:59:59";
         $sql = "SELECT * FROM sale_data_report where order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s') AND order_date <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s') AND seller_id=$seller_id 
-         and order_status  NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing')";
+         and order_status  NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing') and isActive=1";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -474,6 +483,117 @@ class Reports_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result();
     }
+
+    public function get_commission_bill_report_dashboard()
+    {
+        $seller_id = $this->auth_user->id;
+        
+        $sql = "SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order_Month',
+        sdr.seller as Seller,
+        sdr.seller_email as Email,
+        sdr.seller_phone as 'Phone',
+        sdr.shop_name as Shop_name,
+        sdr.pan_no as 'Pan',
+        sdr.gst_no 'GST',
+        sdr.seller_address as Address,
+        format(sum(replace(sdr.commission_amount,',','')),2) as total_commission_amount,
+        format(sum(sdr.seller_ship_cost),2) as Total_shipping_cost,
+        format(sum(sdr.seller_cod_cost),2) as Total_Cod_cost,
+        ifnull(format(sum(csp.gateway_amount/100),2) , 0) as getway_amt,
+        '18%' as 'GST_Rate', 
+        FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + ifnull(format(sum(csp.gateway_amount/100),2) , 0) ) * 18) / 100, 2) AS GST_Amount,
+            IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+                FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + ifnull(format(sum(csp.gateway_amount/100),2) , 0)) * 18) / 100)/2,2), 0 ) as CGST,
+                IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+                FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + ifnull(format(sum(csp.gateway_amount/100),2) , 0)) * 18) / 100)/2, 2), 0 ) as SGST,
+                    IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
+                FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + ifnull(format(sum(csp.gateway_amount/100),2) , 0)) * 18) / 100, 2)) as IGST,
+                Format ((sum(sdr.commission_amount) + sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) + ifnull(sum(csp.gateway_amount/100), 0) +  
+                (((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + ifnull(sum(csp.gateway_amount/100), 0) ) * 18) / 100) ),2) as TOTAL
+        
+         FROM sale_data_report as sdr,
+          cashfree_seller_payout as csp,
+          Gharobar.users as u
+          where sdr.seller_email = u.email
+          and sdr.seller_id = u.id
+          and sdr.seller_id = csp.vendorId
+          and sdr.order_no = csp.order_id 
+           AND YEAR( sdr.order_date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+           AND MONTH( sdr.order_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+           AND YEAR( csp.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+           AND MONTH( csp.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+           and csp.is_completed = 1
+           and csp.is_active = 1
+           and sdr.isActive=1
+           and sdr.seller_id=$seller_id
+          and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected', 'processing')
+         group by sdr.seller ,
+        sdr.seller_email ,
+        sdr.seller_phone ,
+        sdr.shop_name,
+        sdr.pan_no,
+        sdr.gst_no,
+        sdr.seller_address
+Union
+SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order_Month',
+    sdr.seller as Seller,
+    sdr.seller_email as Email,
+    sdr.seller_phone as 'Phone',
+    sdr.shop_name as Shop_name,
+    sdr.pan_no as 'Pan',
+    sdr.gst_no 'GST',
+    sdr.seller_address as Address,
+    format(sum(replace(sdr.commission_amount,',','')),2) as total_commission_amount,
+    format(sum(sdr.seller_ship_cost),2) as Total_shipping_cost,
+    format(sum(sdr.seller_cod_cost),2) as Total_Cod_cost,
+    0 as getway_amt,
+    '18%' as 'GST_Rate', 
+    FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                 + sum(sdr.commission_amount) + 0 ) * 18) / 100, 2) AS GST_Amount,
+        IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+            FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                 + sum(sdr.commission_amount) + 0) * 18) / 100)/2,2), 0 ) as CGST,
+            IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+            FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                 + sum(sdr.commission_amount) + 0) * 18) / 100)/2, 2), 0 ) as SGST,
+                IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
+            FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                 + sum(sdr.commission_amount) + 0 ) * 18) / 100, 2)) as IGST,
+            Format ((sum(sdr.commission_amount) + sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) + 0 +  
+            (((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                 + sum(sdr.commission_amount) + 0 ) * 18) / 100) ),2) as TOTAL
+    
+     FROM sale_data_report as sdr,
+      cod_seller_payable as cosp,
+      Gharobar.users as u
+      where sdr.seller_email = u.email
+      and sdr.seller_id = u.id
+      and sdr.seller_id = cosp.vendorId
+      and sdr.order_no = cosp.order_id 
+      and sdr.isActive=1
+      and sdr.seller_id=$seller_id	
+      AND YEAR( sdr.order_date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+           AND MONTH( sdr.order_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+           AND YEAR( cosp.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+           AND MONTH( cosp.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+       and cosp.is_active = 1
+      and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected', 'processing')
+     group by sdr.seller ,
+    sdr.seller_email ,
+    sdr.seller_phone ,
+    sdr.shop_name,
+    sdr.pan_no,
+    sdr.gst_no,
+    sdr.seller_address;";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
     public function get_commission_bill_report($start_date, $end_date)
     {
         $seller_id = $this->auth_user->id;
@@ -482,50 +602,106 @@ class Reports_model extends CI_Model
         $sql = "SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order_Month',
         sdr.seller as Seller,
         sdr.seller_email as Email,
-        sdr.seller_id as 'Seller_Id',
         sdr.seller_phone as 'Phone',
         sdr.shop_name as Shop_name,
         sdr.pan_no as 'Pan',
-        sdr.gst_no as 'GST',
-        sdr.seller_address as 'Address',
-        format(sum(sdr.commission_amount),2) as 'total_commission_amount',
-        format(sum(sdr.seller_ship_cost),2) as 'Total_shipping_cost',
-        format(sum(sdr.seller_cod_cost),2) as 'Total_Cod_cost',
-        ifnull(format(sum(csp.gateway_amount/100),2) , 0) as 'getway_amt',
-        -- format(sum(csp.gateway_amount/100),2) as getway_amt,
+        sdr.gst_no 'GST',
+        sdr.seller_address as Address,
+        format(sum(sdr.commission_amount),2) as total_commission_amount,
+        format(sum(sdr.seller_ship_cost),2) as Total_shipping_cost,
+        format(sum(sdr.seller_cod_cost),2) as Total_Cod_cost,
+        ifnull(format(sum(csp.gateway_amount/100),2) , 0) as getway_amt,
         '18%' as 'GST_Rate', 
         FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
                      + sum(sdr.commission_amount) + ifnull(format(sum(csp.gateway_amount/100),2) , 0) ) * 18) / 100, 2) AS GST_Amount,
-            IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0,
-                FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost)
+            IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+                FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
                      + sum(sdr.commission_amount) + ifnull(format(sum(csp.gateway_amount/100),2) , 0)) * 18) / 100)/2,2), 0 ) as CGST,
-                IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0,
-                FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost)
+                IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+                FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
                      + sum(sdr.commission_amount) + ifnull(format(sum(csp.gateway_amount/100),2) , 0)) * 18) / 100)/2, 2), 0 ) as SGST,
                     IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
-                FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost)
+                FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
                      + sum(sdr.commission_amount) + ifnull(format(sum(csp.gateway_amount/100),2) , 0)) * 18) / 100, 2)) as IGST,
                 Format ((sum(sdr.commission_amount) + sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) + ifnull(sum(csp.gateway_amount/100), 0) +  
                 (((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
                      + sum(sdr.commission_amount) + ifnull(sum(csp.gateway_amount/100), 0) ) * 18) / 100) ),2) as TOTAL
         
-         -- FORMAT(sum(csp.gateway_amount)/100,2) as Gateway_charges
-         FROM sale_data_report as sdr
-         LEFT JOIN cashfree_seller_payout as csp 
-          ON sdr.order_no = csp.order_id,
-          users as u
+         FROM sale_data_report as sdr,
+          cashfree_seller_payout as csp,
+          Gharobar.users as u
           where sdr.seller_email = u.email
-          and sdr.seller_id=$seller_id
-         and sdr.order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
-         and sdr.order_date <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
-         and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing')
+          and sdr.seller_id = u.id
+          and sdr.seller_id = csp.vendorId
+          and sdr.order_no = csp.order_id 
+          and sdr.order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
+          and sdr.order_date < STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+           and csp.created_at >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
+           and csp.created_at < STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+           and csp.is_completed = 1
+           and csp.is_active = 1
+           and sdr.isActive=1
+	   and sdr.seller_id=$seller_id	
+          and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected', 'processing')
          group by sdr.seller ,
         sdr.seller_email ,
         sdr.seller_phone ,
         sdr.shop_name,
         sdr.pan_no,
         sdr.gst_no,
-        sdr.seller_address";
+        sdr.seller_address
+Union
+SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order_Month',
+        sdr.seller as Seller,
+        sdr.seller_email as Email,
+        sdr.seller_phone as 'Phone',
+        sdr.shop_name as Shop_name,
+        sdr.pan_no as 'Pan',
+        sdr.gst_no 'GST',
+        sdr.seller_address as Address,
+        format(sum(sdr.commission_amount),2) as total_commission_amount,
+        format(sum(sdr.seller_ship_cost),2) as Total_shipping_cost,
+        format(sum(sdr.seller_cod_cost),2) as Total_Cod_cost,
+        -- ifnull(format(sum(csp.gateway_amount/100),2) , 0) as getway_amt,
+        0 as getway_amt,
+        '18%' as 'GST_Rate', 
+        FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + 0 ) * 18) / 100, 2) AS GST_Amount,
+            IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+                FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + 0) * 18) / 100)/2,2), 0 ) as CGST,
+                IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+                FORMAT((((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + 0) * 18) / 100)/2, 2), 0 ) as SGST,
+                    IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
+                FORMAT(((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + 0 ) * 18) / 100, 2)) as IGST,
+                Format ((sum(sdr.commission_amount) + sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) + 0 +  
+                (((sum(sdr.seller_ship_cost) + sum(sdr.seller_cod_cost) 
+                     + sum(sdr.commission_amount) + 0 ) * 18) / 100) ),2) as TOTAL
+        
+         FROM sale_data_report as sdr,
+          cod_seller_payable as cosp,
+          Gharobar.users as u
+          where sdr.seller_email = u.email
+          and sdr.seller_id = u.id
+          and sdr.seller_id = cosp.vendorId
+          and sdr.order_no = cosp.order_id 
+          and sdr.order_date >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
+          and sdr.order_date < STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+           and cosp.created_at >=STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
+           and cosp.created_at < STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+           and cosp.is_active = 1
+           and sdr.isActive = 1
+           and sdr.seller_id=$seller_id		
+          and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected', 'processing')
+         group by sdr.seller ,
+        sdr.seller_email ,
+        sdr.seller_phone ,
+        sdr.shop_name,
+        sdr.pan_no,
+        sdr.gst_no,
+        sdr.seller_address;";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -851,7 +1027,7 @@ class Reports_model extends CI_Model
     }
     public function fetch_sale_data()
     {
-        $sql = "SELECT * FROM sale_data_report where  YEAR(order_date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+        $sql = "SELECT * FROM sale_data_report where  YEAR(order_date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) and isActive=1
         AND MONTH(order_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)   and order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected','processing')";
         $query = $this->db->query($sql);
         return $query->result();
@@ -873,6 +1049,7 @@ class Reports_model extends CI_Model
          and YEAR(op.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
          AND MONTH(op.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
          and sod.awb_code is not null
+         and sdr.isActive=1
          order by sdr.order_no";
         $query = $this->db->query($sql);
         return $query->result();
@@ -921,6 +1098,7 @@ class Reports_model extends CI_Model
            AND MONTH( csp.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
            and csp.is_completed = 1
            and csp.is_active = 1
+           and sdr.isActive=1
           and sdr.order_status NOT IN( 'cancelled', 'cancelled_by_user' , 'cancelled_by_seller' , 'rejected', 'processing')
          group by sdr.seller ,
         sdr.seller_email ,
@@ -971,6 +1149,7 @@ class Reports_model extends CI_Model
       and sdr.seller_id = u.id
       and sdr.seller_id = cosp.vendorId
       and sdr.order_no = cosp.order_id 
+      and sdr.isActive=1
       AND YEAR( sdr.order_date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
            AND MONTH( sdr.order_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
            AND YEAR( cosp.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
@@ -1472,8 +1651,484 @@ class Reports_model extends CI_Model
          and op.created_at >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
          and op.created_at < STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
          and sod.awb_code is not null
+         and sdr.isActive=1
          order by sdr.order_no";
         $query = $this->db->query($sql);
         return $query->result();
     }
+
+    public function fetch_tcs_report_seller()
+    {
+        $seller_id = $this->auth_user->id;
+
+        $sql = "SELECT distinct
+        concat(u.first_name,' ', u.last_name) as Seller,
+        u.email as 'Seller_Email',
+        u.phone_number as 'Selle_Phone',
+        u.supplier_state as 'Seller_State',
+        op.order_id as 'Order_No',
+        u.shop_name as 'Shop_Name',
+        u.pan_number as 'Pan_no',
+        u.gst_number as 'Gst_no',
+        concat(u.house_no,',',u.supplier_area,',', u.supplier_city,',', u.supplier_state,'-', u.pincode) as Address,
+        u.account_number as 'Account_No',
+        u.acc_holder_name as 'Account_Holder',
+        u.ifsc_code as 'IFSC_Code',
+        u.bank_branch as 'Bank_Branch',
+        op.order_status as 'Order_Status',
+        sod.awb_code as 'AWB Code',
+        o.payment_method as 'Payment_Method',
+        op.commission_rate as 'Commision_Rate', 
+        op.product_title as 'Product_Title',
+        p.hsn_code as 'HSN_Code',
+        op.product_quantity as 'Product_Qty',
+        format(op.product_unit_price/100,2) as 'Product_Unit_Price',
+        format(op.price_after_discount/100,2) as 'Price_After_Discount',
+        format(op.price_excluded_gst/100,2) as 'Price_Excluded_GST',
+        format(p.commission_amount/100,2) as 'Commission_Amount',
+        format(csp.tcs_amount/100,2) as 'Total_TCS_Amt',
+        p.gst_rate as 'Product_GST_Rate',
+        op.product_gst_rate as 'Ordered_Product_GST_Rate',
+        format(op.product_igst/100,2) as 'Product_IGST',
+        format(op.product_cgst/100,2) as 'Product_CGST',
+        format(op.product_sgst/100,2) as 'Product_SGST',
+        format((op.product_igst + op.product_cgst + op.product_sgst)/100,2) as 'Product_Total_GST',
+        format(op.product_total_price/100,2) as 'Product_Total_Price',
+        format(op.product_shipping_cost/100,2) as 'Product_Shipping_Cost',
+        format(op.shipping_igst/100,2) as 'Shipping_IGST', 
+        format(op.shipping_cgst/100,2) as 'Shipping_CGST',
+        format(op.shipping_sgst/100,2) as 'Shipping_SGST',
+        format(op.total_shipping_cost/100,2) as 'Total_Shipping_Cost',
+        format(op.product_cod_charges/100,2) as 'Product_COD_Charge',
+        format(op.cod_igst/100,2) as 'COD_IGST',
+        format(op.cod_cgst/100,2) as 'COD_CGST', 
+        format(op.cod_sgst/100,2) as 'COD_SGST',
+        format(op.total_cod_charges/100,2) as 'Total_COD_Charges',
+        format(o.price_total/100,2) as 'Total_Ordered_Value',
+        op.product_weight as 'Product_Weight',
+        op.product_delivery_partner as 'Product_Delivery_Partner',
+        o.total_tax_charges as 'Taxable_Value_Total',
+        format((op.product_igst + op.shipping_igst + op.cod_igst)/100,2) as IGST_Total,    
+        format((op.product_cgst + op.shipping_cgst + op.cod_cgst)/100,2) as CGST_Total,	
+        format((op.product_sgst + op.shipping_sgst + op.cod_sgst)/100,2) as SGST_Total,
+        IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((csp.tcs_amount / 100)/2,2), 0 ) as 'TCS_CGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((csp.tcs_amount / 100)/2,2), 0 ) as 'TCS_SGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
+			FORMAT(csp.tcs_amount / 100, 2)) as 'TCS_IGST',
+        concat(buyer.first_name,' ', buyer.last_name) as 'Buyer_Name',
+        buyer.email as 'Buyer_Email',
+        buyer.phone_number as 'Buyer_Phone',
+        o.created_at as 'Order_date',
+        oship.shipping_state as 'Buyer_State'
+    FROM 
+        orders as o,
+        order_products AS op,
+        order_supplier as os,
+        order_shipping as oship,
+        products as p,
+        users as u,
+        users as buyer,
+        cashfree_seller_payout as csp,
+        shiprocket_order_details as sod
+        
+    WHERE 
+        o.id = op.order_id
+    and op.order_id = os.order_id
+    AND op.order_id = csp.order_id
+    AND op.seller_id = csp.vendorId
+    AND os.seller_id = op.seller_id
+    AND o.id = oship.order_id
+    AND op.product_id = p.id
+    AND op.seller_id = u.id
+    AND op.buyer_id = buyer.id
+   AND YEAR(op.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+     AND MONTH(op.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+	and (op.order_status NOT IN( 'cancelled_by_user', 'rejected') or (sod.awb_code is not null))
+    and  o.id = sod.order_id 
+    and p.id = sod.product_id
+    and op.seller_id = $seller_id
+    union 
+    SELECT distinct
+        concat(u.first_name,' ', u.last_name) as Seller,
+        u.email as 'Seller_Email',
+        u.phone_number as 'Selle_Phone',
+        u.supplier_state as 'Seller_State',
+        op.order_id as 'Order_No',
+        u.shop_name as 'Shop_Name',
+        u.pan_number as 'Pan_no',
+        u.gst_number as 'Gst_no',
+        concat(u.house_no,',',u.supplier_area,',', u.supplier_city,',', u.supplier_state,'-', u.pincode) as Address,
+        u.account_number as 'Account_No',
+        u.acc_holder_name as 'Account_Holder',
+        u.ifsc_code as 'IFSC_Code',
+        u.bank_branch as 'Bank_Branch',
+        op.order_status as 'Order_Status',
+		sod.awb_code as 'AWB_Code',
+        o.payment_method as 'Payment_Method',
+        op.commission_rate as 'Commision_Rate', 
+        op.product_title as 'Product_Title',
+        p.hsn_code as 'HSN_Code',
+        op.product_quantity as 'Product_Qty',
+        format(op.product_unit_price/100,2) as 'Product_Unit_Price',
+        format(op.price_after_discount/100,2) as 'Price_After_Discount',
+        format(op.price_excluded_gst/100,2) as 'Price_Excluded_GST',
+        format(p.commission_amount/100,2) as 'Commission_Amount',
+        format(cosp.tcs_amount/100,2) as 'Total_TCS_Amt',
+        p.gst_rate as 'Product_GST_Rate',
+        op.product_gst_rate as 'Ordered_Product_GST_Rate',
+        format(op.product_igst/100,2) as 'Product_IGST',
+        format(op.product_cgst/100,2) as 'Product_CGST',
+        format(op.product_sgst/100,2) as 'Product_SGST',
+        format((op.product_igst + op.product_cgst + op.product_sgst)/100,2) as 'Product_Total_GST',
+        format(op.product_total_price/100,2) as 'Product_Total_Price',
+        format(op.product_shipping_cost/100,2) as 'Product_Shipping_Cost',
+        format(op.shipping_igst/100,2) as 'Shipping_IGST', 
+        format(op.shipping_cgst/100,2) as 'Shipping_CGST',
+        format(op.shipping_sgst/100,2) as 'Shipping_SGST',
+        format(op.total_shipping_cost/100,2) as 'Total_Shipping_Cost',
+        format(op.product_cod_charges/100,2) as 'Product_COD_Charge',
+        format(op.cod_igst/100,2) as 'COD_IGST',
+        format(op.cod_cgst/100,2) as 'COD_CGST', 
+        format(op.cod_sgst/100,2) as 'COD_SGST',
+        format(op.total_cod_charges/100,2) as 'Total_COD_Charges',
+        format(o.price_total/100,2) as 'Total_Ordered_Value',
+        op.product_weight as 'Product_Weight',
+        op.product_delivery_partner as 'Product_Delivery_Partner',
+        o.total_tax_charges as 'Taxable_Value_Total',
+        format((op.product_igst + op.shipping_igst + op.cod_igst)/100,2) as IGST_Total,    
+        format((op.product_cgst + op.shipping_cgst + op.cod_cgst)/100,2) as CGST_Total,	
+        format((op.product_sgst + op.shipping_sgst + op.cod_sgst)/100,2) as SGST_Total,
+        IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((cosp.tcs_amount / 100)/2,2), 0 ) as 'TCS_CGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((cosp.tcs_amount / 100)/2,2), 0 ) as 'TCS_SGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
+			FORMAT(cosp.tcs_amount / 100, 2)) as 'TCS_IGST',
+        concat(buyer.first_name,' ', buyer.last_name) as 'Buyer_Name',
+        buyer.email as 'Buyer_Email',
+        buyer.phone_number as 'Buyer_Phone',
+        o.created_at as 'Order_date',
+        oship.shipping_state as 'Buyer_State'
+    FROM 
+        orders as o,
+        order_products AS op,
+        order_supplier as os,
+        order_shipping as oship,
+        products as p,
+        users as u,
+        users as buyer,
+        cod_seller_payable as cosp,
+        shiprocket_order_details as sod
+    WHERE 
+        o.id = op.order_id
+    and op.order_id = os.order_id
+    AND op.order_id = cosp.order_id
+    AND op.seller_id = cosp.vendorId
+    AND os.seller_id = op.seller_id
+    AND o.id = oship.order_id
+    AND op.product_id = p.id
+    AND op.seller_id = u.id
+    AND op.buyer_id = buyer.id
+    AND YEAR(op.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+     AND MONTH(op.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+    and (op.order_status NOT IN( 'cancelled_by_user', 'rejected') or (sod.awb_code is not null))
+    and  o.id = sod.order_id 
+    and op.seller_id = $seller_id
+    and p.id = sod.product_id";
+    //echo $sql;die;
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    public function format_tcs_report_seller($start_date, $end_date)
+    {
+	$seller_id = $this->auth_user->id;
+
+        $end_date = $end_date . " 23:59:59";
+        $sql = "SELECT distinct
+        concat(u.first_name,' ', u.last_name) as Seller,
+        u.email as 'Seller_Email',
+        u.phone_number as 'Selle_Phone',
+        u.supplier_state as 'Seller_State',
+        op.order_id as 'Order_No',
+        u.shop_name as 'Shop_Name',
+        u.pan_number as 'Pan_no',
+        u.gst_number as 'Gst_no',
+        concat(u.house_no,',',u.supplier_area,',', u.supplier_city,',', u.supplier_state,'-', u.pincode) as Address,
+        u.account_number as 'Account_No',
+        u.acc_holder_name as 'Account_Holder',
+        u.ifsc_code as 'IFSC_Code',
+        u.bank_branch as 'Bank_Branch',
+        op.order_status as 'Order_Status',
+        sod.awb_code as 'AWB_Code',
+        o.payment_method as 'Payment_Method',
+        op.commission_rate as 'Commision_Rate', 
+        op.product_title as 'Product_Title',
+        p.hsn_code as 'HSN_Code',
+        op.product_quantity as 'Product_Qty',
+        format(op.product_unit_price/100,2) as 'Product_Unit_Price',
+        format(op.price_after_discount/100,2) as 'Price_After_Discount',
+        format(op.price_excluded_gst/100,2) as 'Price_Excluded_GST',
+        format(p.commission_amount/100,2) as 'Commission_Amount',
+        format(csp.tcs_amount/100,2) as 'Total_TCS_Amt',
+        p.gst_rate as 'Product_GST_Rate',
+        op.product_gst_rate as 'Ordered_Product_GST_Rate',
+        format(op.product_igst/100,2) as 'Product_IGST',
+        format(op.product_cgst/100,2) as 'Product_CGST',
+        format(op.product_sgst/100,2) as 'Product_SGST',
+        format((op.product_igst + op.product_cgst + op.product_sgst)/100,2) as 'Product_Total_GST',
+        format(op.product_total_price/100,2) as 'Product_Total_Price',
+        format(op.product_shipping_cost/100,2) as 'Product_Shipping_Cost',
+        format(op.shipping_igst/100,2) as 'Shipping_IGST', 
+        format(op.shipping_cgst/100,2) as 'Shipping_CGST',
+        format(op.shipping_sgst/100,2) as 'Shipping_SGST',
+        format(op.total_shipping_cost/100,2) as 'Total_Shipping_Cost',
+        format(op.product_cod_charges/100,2) as 'Product_COD_Charge',
+        format(op.cod_igst/100,2) as 'COD_IGST',
+        format(op.cod_cgst/100,2) as 'COD_CGST', 
+        format(op.cod_sgst/100,2) as 'COD_SGST',
+        format(op.total_cod_charges/100,2) as 'Total_COD_Charges',
+        format(o.price_total/100,2) as 'Total_Ordered_Value',
+        op.product_weight as 'Product_Weight',
+        op.product_delivery_partner as 'Product_Delivery_Partner',
+        o.total_tax_charges as 'Taxable_Value_Total',
+        format((op.product_igst + op.shipping_igst + op.cod_igst)/100,2) as IGST_Total,    
+        format((op.product_cgst + op.shipping_cgst + op.cod_cgst)/100,2) as CGST_Total,	
+        format((op.product_sgst + op.shipping_sgst + op.cod_sgst)/100,2) as SGST_Total,
+        IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((csp.tcs_amount / 100)/2,2), 0 ) as 'TCS_CGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((csp.tcs_amount / 100)/2,2), 0 ) as 'TCS_SGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
+			FORMAT(csp.tcs_amount / 100, 2)) as 'TCS_IGST',
+        concat(buyer.first_name,' ', buyer.last_name) as 'Buyer_Name',
+        buyer.email as 'Buyer_Email',
+        buyer.phone_number as 'Buyer_Phone',
+        o.created_at as 'Order_date',
+        oship.shipping_state as 'Buyer_State'
+    FROM 
+        orders as o,
+        order_products AS op,
+        order_supplier as os,
+        order_shipping as oship,
+        products as p,
+        users as u,
+        users as buyer,
+        cashfree_seller_payout as csp,
+        shiprocket_order_details as sod
+        
+    WHERE 
+        o.id = op.order_id
+    and op.order_id = os.order_id
+    AND op.order_id = csp.order_id
+    AND op.seller_id = csp.vendorId
+    AND os.seller_id = op.seller_id
+    AND o.id = oship.order_id
+    AND op.product_id = p.id
+    AND op.seller_id = u.id
+    and op.seller_id = $seller_id	
+    AND op.buyer_id = buyer.id
+    AND op.created_at >=  STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
+	AND op.created_at <=STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+	and (op.order_status NOT IN( 'cancelled_by_user', 'rejected') or (sod.awb_code is not null))
+    and  o.id = sod.order_id 
+    and p.id = sod.product_id
+    union 
+    SELECT distinct
+        concat(u.first_name,' ', u.last_name) as Seller,
+        u.email as 'Seller_Email',
+        u.phone_number as 'Selle_Phone',
+        u.supplier_state as 'Seller_State',
+        op.order_id as 'Order_No',
+        u.shop_name as 'Shop_Name',
+        u.pan_number as 'Pan_no',
+        u.gst_number as 'Gst_no',
+        concat(u.house_no,',',u.supplier_area,',', u.supplier_city,',', u.supplier_state,'-', u.pincode) as Address,
+        u.account_number as 'Account_No',
+        u.acc_holder_name as 'Account_Holder',
+        u.ifsc_code as 'IFSC_Code',
+        u.bank_branch as 'Bank_Branch',
+        op.order_status as 'Order_Status',
+		sod.awb_code as 'AWB Code',
+        o.payment_method as 'Payment_Method',
+        op.commission_rate as 'Commision_Rate', 
+        op.product_title as 'Product_Title',
+        p.hsn_code as 'HSN_Code',
+        op.product_quantity as 'Product_Qty',
+        format(op.product_unit_price/100,2) as 'Product_Unit_Price',
+        format(op.price_after_discount/100,2) as 'Price_After_Discount',
+        format(op.price_excluded_gst/100,2) as 'Price_Excluded_GST',
+        format(p.commission_amount/100,2) as 'Commission_Amount',
+        format(cosp.tcs_amount/100,2) as 'Total_TCS_Amt',
+        p.gst_rate as 'Product_GST_Rate',
+        op.product_gst_rate as 'Ordered_Product_GST_Rate',
+        format(op.product_igst/100,2) as 'Product_IGST',
+        format(op.product_cgst/100,2) as 'Product_CGST',
+        format(op.product_sgst/100,2) as 'Product_SGST',
+        format((op.product_igst + op.product_cgst + op.product_sgst)/100,2) as 'Product_Total_GST',
+        format(op.product_total_price/100,2) as 'Product_Total_Price',
+        format(op.product_shipping_cost/100,2) as 'Product_Shipping_Cost',
+        format(op.shipping_igst/100,2) as 'Shipping_IGST', 
+        format(op.shipping_cgst/100,2) as 'Shipping_CGST',
+        format(op.shipping_sgst/100,2) as 'Shipping_SGST',
+        format(op.total_shipping_cost/100,2) as 'Total_Shipping_Cost',
+        format(op.product_cod_charges/100,2) as 'Product_COD_Charge',
+        format(op.cod_igst/100,2) as 'COD_IGST',
+        format(op.cod_cgst/100,2) as 'COD_CGST', 
+        format(op.cod_sgst/100,2) as 'COD_SGST',
+        format(op.total_cod_charges/100,2) as 'Total_COD_Charges',
+        format(o.price_total/100,2) as 'Total_Ordered_Value',
+        op.product_weight as 'Product_Weight',
+        op.product_delivery_partner as 'Product_Delivery_Partner',
+        o.total_tax_charges as 'Taxable_Value_Total',
+        format((op.product_igst + op.shipping_igst + op.cod_igst)/100,2) as IGST_Total,    
+        format((op.product_cgst + op.shipping_cgst + op.cod_cgst)/100,2) as CGST_Total,	
+        format((op.product_sgst + op.shipping_sgst + op.cod_sgst)/100,2) as SGST_Total,
+        IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((cosp.tcs_amount / 100)/2,2), 0 ) as 'TCS_CGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 
+			FORMAT((cosp.tcs_amount / 100)/2,2), 0 ) as 'TCS_SGST',
+		IF(STRCMP(upper(u.supplier_state), 'DELHI') = 0, 0,
+			FORMAT(cosp.tcs_amount / 100, 2)) as 'TCS_IGST',
+        concat(buyer.first_name,' ', buyer.last_name) as 'Buyer_Name',
+        buyer.email as 'Buyer_Email',
+        buyer.phone_number as 'Buyer_Phone',
+        o.created_at as 'Order_date',
+        oship.shipping_state as 'Buyer_State'
+    FROM 
+        orders as o,
+        order_products AS op,
+        order_supplier as os,
+        order_shipping as oship,
+        products as p,
+        users as u,
+        users as buyer,
+        cod_seller_payable as cosp,
+        shiprocket_order_details as sod
+    WHERE 
+        o.id = op.order_id
+    and op.order_id = os.order_id
+    AND op.order_id = cosp.order_id
+    AND op.seller_id = cosp.vendorId
+    AND os.seller_id = op.seller_id
+    AND o.id = oship.order_id
+    AND op.product_id = p.id
+    and op.seller_id = $seller_id
+    AND op.seller_id = u.id
+    AND op.buyer_id = buyer.id
+    AND op.created_at >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s')
+	AND op.created_at <=STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
+    and (op.order_status NOT IN( 'cancelled_by_user', 'rejected') or (sod.awb_code is not null))
+    and  o.id = sod.order_id 
+    and p.id = sod.product_id";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    public function fetch_tds_report_seller()
+    {
+	$seller_id = $this->auth_user->id;
+
+        $sql =  "SELECT 
+        concat(u.first_name,' ', u.last_name) as Seller,
+        u.pan_number as 'Pan',
+        csp.order_id as 'Order_ID', 
+        csp.created_at as 'Pay_Out_Date',
+        csp.created_at as 'Date_of_Deduction',
+        format(sum(csp.amount),2) as 'Amount_Paid',
+        format(sum(csp.tds_amount)/100,2) as 'TDS_Amount'
+    FROM cashfree_seller_payout as csp,
+         users as u
+    WHERE csp.vendorId = u.id
+      AND csp.is_completed = 1
+      AND csp.is_active = 1
+      AND csp.payout_initiated = 1
+      and u.id=$seller_id
+      AND YEAR(csp.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+     AND MONTH(csp.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+    GROUP BY 	concat(u.first_name,' ', u.last_name),
+        u.pan_number ,
+        csp.order_id , 
+        csp.created_at ,
+        csp.created_at 
+    UNION
+    SELECT 
+        concat(u.first_name,' ', u.last_name) as Seller,
+        u.pan_number as 'Pan',
+        cdsp.order_id as 'Order_ID', 
+        cdsp.created_at as 'Pay_Out_Date',
+        cdsp.created_at as 'Date_of_Deduction',
+        format(sum(cdsp.amount),2) as 'Amount Paid',
+        format(sum(cdsp.tds_amount)/100,2) as 'TDS Amount'
+    FROM cod_seller_payable as cdsp,
+         users as u
+    WHERE cdsp.vendorId = u.id
+      AND cdsp.is_active = 1
+      AND cdsp.payout_initiated = 1
+      and u.id=$seller_id
+      AND YEAR(cdsp.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+     AND MONTH(cdsp.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+    GROUP BY 	concat(u.first_name,' ', u.last_name),
+        u.pan_number ,
+        cdsp.order_id ,
+        cdsp.created_at ,
+        cdsp.created_at ";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    public function tds_report_seller($from_date, $to_date)
+    {
+        $seller_id = $this->auth_user->id;
+
+        $to_date = $to_date . " 23:59:59";
+        $sql =  "SELECT 
+        concat(u.first_name,' ', u.last_name) as Seller,
+        u.pan_number as 'Pan',
+        csp.order_id as 'Order_ID', 
+        csp.created_at as 'Pay_Out_Date',
+        csp.created_at as 'Date_of_Deduction',
+        format(sum(csp.amount),2) as 'Amount_Paid',
+        format(sum(csp.tds_amount)/100,2) as 'TDS_Amount'
+    FROM cashfree_seller_payout as csp,
+         users as u
+    WHERE csp.vendorId = u.id
+      AND csp.is_completed = 1
+      AND csp.is_active = 1
+      AND csp.payout_initiated = 1
+      and u.id=$seller_id
+       AND csp.created_at >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
+       AND csp.created_at <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')  
+    GROUP BY 	concat(u.first_name,' ', u.last_name),
+        u.pan_number ,
+        csp.order_id , 
+        csp.created_at ,
+        csp.created_at 
+    UNION
+    SELECT 
+        concat(u.first_name,' ', u.last_name) as Seller,
+        u.pan_number as 'Pan',
+        cdsp.order_id as 'Order_ID', 
+        cdsp.created_at as 'Pay_Out_Date',
+        cdsp.created_at as 'Date_of_Deduction',
+        format(sum(cdsp.amount),2) as 'Amount Paid',
+        format(sum(cdsp.tds_amount)/100,2) as 'TDS Amount'
+    FROM cod_seller_payable as cdsp,
+         users as u
+    WHERE cdsp.vendorId = u.id
+      AND cdsp.is_active = 1
+      AND cdsp.payout_initiated = 1
+      and u.id=$seller_id
+      AND cdsp.created_at >= STR_TO_DATE('$from_date', '%Y-%m-%d %k:%i:%s')
+      AND cdsp.created_at <= STR_TO_DATE('$to_date', '%Y-%m-%d %k:%i:%s')
+    GROUP BY 	concat(u.first_name,' ', u.last_name),
+        u.pan_number ,
+        cdsp.order_id ,
+        cdsp.created_at ,
+        cdsp.created_at ";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
 }
