@@ -4,7 +4,9 @@
         margin-top: 70px !important;
     }
 </style>
-<?php $cto=$cart_total->order_total;?>
+<?php //$cto=$cart_total->order_total;?>
+<?php //var_dump($cart_total->subtotal-($cart_total->discount*100));
+//die();?>
                     
 <div id="cart" class="col-sm-12 col-lg-5 order-summary-container">
     <h2 class="cart-section-title" id="cart_quantity"><?php echo trans("order_summary"); ?> (<?php echo get_cart_product_count(); ?>)</h2>
@@ -132,7 +134,7 @@
         </div>
         <p class="m-t-30">
 
-            <strong><?php echo trans("subtotal"); ?><span class="float-right" id="sub_total"><?php echo price_formatted_without_round(floor($cart_total->total_price), $this->payment_settings->default_currency); ?>/-</span></strong>
+            <strong><?php echo trans("subtotal"); ?><span class="float-right" id="sub_total"><?php echo price_formatted_without_round(floor($cart_total->subtotal-($cart_total->discount*100)), $this->payment_settings->default_currency); ?>/-</span></strong>
        
         </p>
         <!-- <?php if (!empty($cart_total->gst)) : ?>
@@ -252,12 +254,12 @@
                     <!-- <strong><?php echo trans("total"); ?><span id="order_total" class="float-right"><?php echo price_formatted_without_round($cart_total->total_price, $this->payment_settings->default_currency); ?>/-</span></strong> -->
                     <?php //var_dump($cart_total->order_total);?>
                     <?php //var_dump($cart_total->order_total==$cto);?>
-                    <?php if($cart_total->total_price<100000):?>
+                    <?php //if($cart_total->total_price<100000):?>
                     
-                    <strong><?php echo trans("total"); ?><span id="order_total" class="float-right"><?php echo price_formatted_without_round($cart_total->total+10000, $this->payment_settings->default_currency); ?>/-</span></strong>
-                    <?php else:?>
+                    <!-- <strong><?php //echo trans("total"); ?><span id="order_total" class="float-right"><?php //echo price_formatted_without_round($cart_total->total+10000, $this->payment_settings->default_currency); ?>/-</span></strong> -->
+                    <?php //else:?>
                         <strong><?php echo trans("total"); ?><span id="order_total" class="float-right"><?php echo price_formatted_without_round($cart_total->total_price, $this->payment_settings->default_currency); ?>/-</span></strong>
-            <?php endif; ?>
+            <?php //endif; ?>
             <?php endif;?>
 
 
