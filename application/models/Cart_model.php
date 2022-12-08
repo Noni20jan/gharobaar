@@ -669,10 +669,9 @@ class Cart_model extends CI_Model
                 $cart_total->total = $cart_total->subtotal - $cart_total->discount * 100;
 
                 if ($this->general_settings->min_ship_cart_total > $cart_total->total) {
-                    $cart_total->shipping_cost = 10000;
-                    $cart_total->total = $cart_total->total + $cart_total->shipping_cost;
+                    $shipping_value = 10000;
+                    $cart_total->total = ($cart_total->subtotal - $cart_total->discount * 100) + $shipping_value;
                 } else {
-                    $cart_total->shipping_cost = 0;
                     $cart_total->total = $cart_total->subtotal - $cart_total->discount * 100;
                 }
             }

@@ -43,7 +43,14 @@
 											</thead>
 											<tbody>
 												<?php foreach ($orders as $order) : ?>
-
+													<?php $ct = $this->order_model->supplier_count($order->order_id);
+													$price = $this->order_model->get_order_price($order->order_id);
+													$i = 0;
+													foreach ($ct as $count) {
+														$seller_count[$i] = $ct[0]->seller_id;
+														++$i;
+													}
+													$op = $this->order_model->order_price($order->order_id) ?>
 													<tr>
 														<td>#<?php echo $order->order_id; ?></td>
 														<td style="padding-left:0px;">
@@ -70,11 +77,15 @@
 																</div>
 															</div>
 														</td>
-														<?php if($order->product_total_price<100000):?>
-														<td><?php echo price_formatted($order->product_total_price+10000, 'INR'); ?>/-</td>
-														<?php else:?>
-														<td><?php echo price_formatted($order->product_total_price+10000, 'INR'); ?>/-</td>
-														<?php endif;?>
+														<?php if ($op[0]->price_total<$this->general_settings->min_ship_cart_total) : 
+														?>
+														<td><?php echo price_formatted($order->product_total_price + (10000 / $i), 'INR'); 
+																	?>/-</td>
+														<?php else : 
+														?>
+														<td><?php echo price_formatted($order->product_total_price, 'INR'); ?>/-</td>
+														<?php endif; 
+														?>
 														<!-- <td>
 																<?php if ($order->payment_status == 'payment_received') :
 																				echo trans("payment_received");

@@ -343,7 +343,7 @@
                                     }
                                     ?>&nbsp;
                                     <?php echo price_formatted($order_details->coupon_discount, $order->price_currency); ?>/-</p>
-                        
+
                             <?php $coupon = $this->auth_model->get_coupon_code_by_id($order->offer_id); ?>
                             <?php if (($order_details->coupon_discount == $coupon->allowed_max_discount * 100)) : ?>
                                 <p><span class="product-details">(Please take note that the maximum deduction allowed for this Coupon is Rs.<?php echo ($coupon->allowed_max_discount) ?>)</span></p>
@@ -437,6 +437,15 @@
                             <tbody>
 
                                 <?php foreach ($order_products as $item) :
+                                    $ct = $this->order_model->supplier_count($item->order_id);
+                                    $price = $this->order_model->get_order_price($item->order_id);
+                                    $i = 0;
+                                    foreach ($ct as $count) {
+                                        $seller_count[$i] = $ct[0]->seller_id;
+                                        ++$i;
+                                    }
+                                    $op = $this->order_model->order_price($item->order_id);
+
                                     if ($item->product_type == 'physical') {
                                         $is_order_has_physical_product = true;
                                     } ?>
@@ -494,7 +503,11 @@
                                                     </p>
                                                     <!-- <p><span class="span-product-dtl-table"><?php echo trans("price"); ?>:</span><?php echo price_formatted($item->product_unit_price, $item->product_currency); ?></p> -->
                                                     <p><span class="span-product-dtl-table"><?php echo trans("quantity"); ?>:</span><?php echo $item->product_quantity; ?></p>
-                                                    <p><span class="span-product-dtl-table"><?php echo trans("total"); ?>:</span><?php echo price_formatted($item->product_total_price, $item->product_currency); ?></p>
+                                                    <?php if ($op[0]->price_total < $this->general_settings->min_ship_cart_total) : ?>
+                                                        <p><span class="span-product-dtl-table"><?php echo trans("total"); ?>:</span><?php echo price_formatted($item->product_total_price + (10000 / $i), $item->product_currency); ?></p>
+                                                    <?php else : ?>
+                                                        <p><span class="span-product-dtl-table"><?php echo trans("total"); ?>:</span><?php echo price_formatted($item->product_total_price, $item->product_currency); ?></p>
+                                                    <?php endif; ?>
                                                     <?php $is_order_has_physical_product = false; ?>
                                                     <?php $product = get_product($item->product_id); ?>
                                                     <?php $current_date = new DateTime(); ?>
@@ -816,7 +829,7 @@
                                         <?php endif; ?>
                                     </td>
                                     <td style="padding-bottom: -1%;">
-                                        <?php echo price_formatted($item->product_total_price, $item->product_currency); ?><span>/-</span>
+                                            <?php echo price_formatted($item->product_total_price, $item->product_currency); ?><span>/-</span>
                                     </td>
                                     <td>
                                         <span>

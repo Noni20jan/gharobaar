@@ -149,11 +149,22 @@
                                 <?php if (!empty($sales)) : ?>
                                     <?php foreach ($sales as $sale) :
                                         $total = $this->order_model->get_seller_total_price($sale->id);
+                                        $ct = $this->order_model->supplier_count($sale->id);
+                                        $price = $this->order_model->get_order_price($sale->id);
+                                        $i = 0;
+                                        foreach ($ct as $count) {
+                                            $seller_count[$i] = $ct[0]->seller_id;
+                                            ++$i;
+                                        }
+                                        $op = $this->order_model->order_price($sale->id); 
                                         if (!empty($sale)) : ?>
                                             <tr>
                                                 <td>#<?php echo $sale->order_number; ?></td>
-                                                
-                                                <td><?php echo price_formatted($total, $sale->price_currency); ?>/-</td>
+                                                <?php if ($op[0]->price_total<$this->general_settings->min_ship_cart_total) :?>
+                                                <td><?php echo price_formatted($total+(10000/$i), $sale->price_currency); ?>/-</td>
+                                                <?php else:?>
+                                                    <td><?php echo price_formatted($total+(10000/$i), $sale->price_currency); ?>/-</td>
+                                                    <?php endif;?>
                                                 
 
                                                 <!-- <td>

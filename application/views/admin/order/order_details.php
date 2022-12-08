@@ -655,6 +655,9 @@
             </div><!-- /.box-body -->
         </div>
     </div>
+    <?php $os=$this->order_model->order_price_subtotal($order->id);
+    //var_dump($os);
+                //die(); ?>
     <div class="col-sm-12">
         <div class="box-payment-total">
 
@@ -663,7 +666,8 @@
                     <strong> <?php echo trans("subtotal"); ?></strong>
                 </div>
                 <div class="col-sm-6">
-                    <strong class="font-right"><?php echo price_formatted($order->price_subtotal, $order->price_currency); ?></strong>
+                    <strong class="font-right"><?php echo price_formatted($os[0]->subtotal, $order->price_currency); ?></strong>
+                
                 </div>
             </div>
             <?php //if (!empty($order->price_gst)) : 
@@ -685,7 +689,7 @@
                         <strong> <?php echo trans("shipping"); ?></strong>
                     </div>
                     <div class="col-sm-6">
-                        <?php if ($order->price_total < 100000) : ?>
+                        <?php if ($os[0]->subtotal < 100000) : ?>
                             <strong class="font-right"><?php echo price_formatted(10000, $order->price_currency); ?></strong>
                         <?php else : ?>
                             <strong class="font-right"><?php echo price_formatted(0, $order->price_currency); ?></strong>

@@ -5742,4 +5742,16 @@ WHERE awb_code IN (
         $query = $this->db->query($sql);
         return $query->row()->count;
     }
+
+    public function order_price($order_id){
+        $sql = "SELECT * from orders where id=$order_id";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
+    public function order_price_subtotal($order_id){
+        $sql = "SELECT sum(product_total_price) as subtotal from order_products where order_id=$order_id";
+        $query=$this->db->query($sql);
+        return $query->result();
+    }
 }
