@@ -31,9 +31,9 @@
                 <del class="discount-original-price" style="left:6px;">
                     <?php echo price_formatted($product->price, $product->currency); ?>
                 </del>
-                <?php if ($product->discount_rate > 10) : ?>
+                <?php //if ($product->discount_rate > 10) : ?>
                     <span class="discount_rate">-<?= $product->discount_rate; ?>%</span>
-                <?php endif; ?>
+                <?php //endif; ?>
             <?php endif; ?>
 <?php endif;
     endif;
