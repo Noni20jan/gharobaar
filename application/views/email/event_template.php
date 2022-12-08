@@ -16,7 +16,7 @@
 
         .footer-image {
             /* background-image: url('https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Images1/Frame.jpg'); */
-            background-color: #8dd6f5;
+            background-color: #BD966A;
             width: 100%;
             height: 100%;
         }
@@ -394,11 +394,13 @@
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
                         <tr>
                             <td style="text-align: center; background:#FFFFFF;">
-                                <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/1.jpg">
-                                <a href="https://gharobaar.com/strawberry-orange-jam-10880"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/2.jpg"></a>
-                                <a href="https://gharobaar.com/namakpara-8415"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/3.jpg"></a>
-                                <a href="https://gharobaar.com/stuffed-green-chilli-pickle-400gms-9464"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/4.jpg"></a>
-                                <a href="https://gharobaar.com/oosh-dried-whole-cranberry-1851"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/5.jpg"></a>
+                                <a href="https://gharobaar.com/kashmiri-chilli-hot-chocolate-7144"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOT+DRINK+EMAILER/1.png"></a>
+                                <a href="https://gharobaar.com/masala-black-tea-13137"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOT+DRINK+EMAILER/2.png"></a>
+                                <a href="https://gharobaar.com/gur-chai-masala-a-bliss-for-tea-lovers-10890"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOT+DRINK+EMAILER/3.png"></a>
+                                <a href="https://gharobaar.com/shuddh-natural-kashmiri-kahwa-green-tea-100-gm-50-cups-green-tea-cardamom-cinnamon-cloves-kashmiri-saffron-rose-petals-star-anise-almonds-immunity-booster-detox-improves-digestion-low-caffeine-no-sugar-11774"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOT+DRINK+EMAILER/4.png"></a>
+                                <a href="https://gharobaar.com/kumaon-hot-choclate-tin-7140"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOT+DRINK+EMAILER/5.png"></a>
+                                <a href="https://gharobaar.com/himalyan-turmeric-latte-7145"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOT+DRINK+EMAILER/6.png"></a>
+                                <a href="https://gharobaar.com/the-beanster-compnay-original-coffee-7181"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/HOT+DRINK+EMAILER/7.png"></a>
                                 <div class="footer-image">
                                     <table border="0" cellpadding="0" cellspacing="0">
                                         <tr>
