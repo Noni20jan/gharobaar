@@ -7866,7 +7866,7 @@
             });
         }
     </script>
-   
+   <script>
         function getdate(dt, days) {
             var date = new Date(dt);
             var day = parseInt(days);
