@@ -1212,4 +1212,10 @@ class Product_admin_model extends CI_Model
         }
         return false;
     }
+    public function get_product_for_quick_view($id)
+    {
+        $sql = "SELECT products.*, users.username AS user_username,users.brand_name AS brand_name,users.supplier_speciality AS user_supplier_speciality,users.id AS user_id, users.shop_name AS shop_name, users.role AS user_role, users.slug AS user_slug FROM products left join users on products.user_id=users.id Where products.id=$id";
+        $query = $this->db->query($sql);
+        return $query->row();
+    }
 }

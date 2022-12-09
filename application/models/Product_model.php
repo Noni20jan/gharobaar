@@ -4205,4 +4205,9 @@ order by id desc LIMIT 1";
 
         return  $query->result();
     }
+    public function get_products_by_id($product_id)
+{
+    $this->db->where('id',clean_number($product_id));
+    return $this->db->get('products')->result();
+}
 }

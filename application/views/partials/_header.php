@@ -660,6 +660,274 @@
     }
 </style>
 
+<style>
+    .expanded-view {
+        margin-left: 46%;
+        /* margin-right: 10%; */
+    }
+
+    #heart-icon-1 {
+        opacity: 1;
+        bottom: 203px;
+        left: -10px;
+    }
+
+    #heart-icon-1-2 {
+        opacity: 1;
+        bottom: 203px;
+        left: -10px;
+    }
+
+    @media (max-width:768px) {
+        .expanded-view {
+            margin-left: 25%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        #heart-icon-1 {
+            opacity: 1;
+            bottom: 203px;
+            left: 45px;
+        }
+    }
+
+    .expanded-view-no-live-preview {
+        margin-left: 43%;
+    }
+
+    @media (max-width:768px) {
+        .expanded-view-no-live-preview {
+            margin-left: 27%;
+        }
+    }
+
+    @media (min-width:568px) {
+        .expanded-view-no-live-preview {
+            margin-left: 19%;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .expanded-view-no-live-preview {
+            margin-left: 30%;
+        }
+    }
+
+
+    @media (max-width:667px) {
+        .expanded-view-no-live-preview {
+            margin-left: 24%;
+        }
+    }
+
+    @media (min-width:1366px) {
+        .expanded-view-no-live-preview {
+            margin-left: 35%;
+        }
+    }
+
+    /* width */
+    .product-slider-content::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .product-slider-content {
+        scrollbar-color: #fff0 #fff0;
+    }
+
+    .plyr--video {
+        max-height: 355px;
+    }
+
+    .img-zoom-container {
+        position: relative;
+
+    }
+
+    .img-zoom-lens {
+        /* border: 1px solid #800000; */
+
+        position: absolute;
+        /* background-color: #800000; */
+        /*set the size of the lens:*/
+        padding: 10px;
+
+        z-index: 500;
+        zoom: 3%;
+        width: 115px;
+        height: 115px;
+    }
+
+    .img-zoom-result {
+        bottom: 25px;
+        border: 1px solid #d4d4d4;
+        /* position: absolute; */
+        position: fixed;
+        left: 55%;
+        /*set the size of the result div:*/
+        cursor: move;
+        /* z-index: 10; */
+        width: 400px;
+        height: 400px;
+        display: none;
+        z-index: 500;
+
+    }
+
+    .label {
+        padding-right: 0px;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    .check-button {
+        background: lightblue
+    }
+
+    .user-product-image {
+        width: 70px;
+        /* height: 50px; */
+        border-radius: 56%;
+        margin-top: -11px;
+    }
+
+    @media(max-width:700px) {
+        .number-spinner {
+            width: 100px;
+            height: 44px;
+            border: 1px solid #e4e4e4;
+            background: #fff;
+        }
+    }
+
+    .rating-review {
+        margin-left: 80%;
+        margin-top: -7%;
+        color: gray;
+    }
+
+    #buy_now {
+        margin-right: 1px;
+        width: 25%;
+        margin-left: 10px;
+    }
+
+    .check_for_pincode {
+        background-color: #DF911E;
+        color: #fff;
+        border-radius: 25px;
+        width: 16%;
+        border: none;
+    }
+
+    @media only screen and (max-width: 700px) {
+        .check_for_pincode {
+            background-color: #DF911E;
+            color: #fff;
+            border-radius: 25px;
+            width: 15%;
+            border: none;
+        }
+    }
+
+    @media(max-width:768px) {
+        #product-user-img {
+            margin-top: 6%;
+        }
+
+        .rating-review {
+            margin-left: 72%;
+            margin-top: -7%;
+            color: gray;
+        }
+
+        .spinner-width {
+            width: 84% !important;
+            left: 0 !important;
+        }
+    }
+
+    @media(max-width:1073px) {
+        #postal-code {
+            margin-top: 5% !important;
+            margin-left: 4% !important;
+        }
+    }
+
+    #postal-code {
+        margin-top: 3%;
+        margin-left: 4%;
+    }
+
+    #check-button {
+        margin-left: 2%;
+        background-color: #007C05 !important;
+        color: #fff;
+        border-radius: 20px !important;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    #transit {
+        position: relative;
+    }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+
+    .fa+.sr-only {
+        padding: 0.25em;
+        margin: 0;
+        color: #000;
+        background: #eee;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        font: 11px sans-serif;
+        z-index: 2;
+    }
+
+    #transit:focus .fa+.sr-only,
+    #transit:hover .fa+.sr-only {
+        clip: auto;
+        width: auto;
+        height: auto;
+        bottom: 100%;
+        left: 100%;
+    }
+
+    .for-height {
+        height: calc(1.5em + 0.75rem + 2px);
+    }
+
+    .number-spinner {
+        background-color: #ffffff;
+    }
+
+    .spinner-width {
+        width: 100%;
+    }
+
+    .product-details-review {
+        margin-left: 0 !important;
+    }
+
+    @media(max-width:768px) {
+        .product-details-review {
+            margin-left: 15px !important;
+        }
+
+    }
+</style>
+
 <head>
     <meta charset="utf-8">
     <link rel="preload" href="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" as="script">
@@ -2727,6 +2995,7 @@
             </div>
         </div>
 
+
         <script>
             const toggleP = document.querySelector('#togglePassword_login');
             const passw = document.querySelector('#password_login');
@@ -2976,6 +3245,21 @@
                 </div>
                 <div class="modal-footer" style="justify-content: center;">
                     <button type="button" class="btn btn-md btn-default" data-dismiss="modal" style="background-color: #007C05; color:white;"><?php echo trans("close"); ?></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="quick_view_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="border-style: none;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body quick_view_content">
+
                 </div>
 
             </div>
@@ -7466,5 +7750,148 @@
 
                 }
             });
+        }
+    </script>
+    <script>
+        $('#productVideoModal').on('hidden.bs.modal', function(e) {
+            $(this).find('video')[0].pause();
+        });
+        $('#productAudioModal').on('hidden.bs.modal', function(e) {
+            Amplitude.pause();
+        });
+    </script>
+
+    <script>
+        $("#heart-icon-1-2").click(function() {
+            $(this).find('i').toggleClass('icon-heart-o')
+            $('#loginModal').modal('show');
+            // alert("ok");
+        })
+    </script>
+
+    <script type="text/javascript">
+        function quantity(qty) {
+            var stock = document.getElementById('product_variation_stock').value;
+            if (qty == parseInt(stock)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        $("#pin_text").change(function() {
+            document.getElementById("check_pincode_text").innerHTML = "";
+        });
+
+        function valid() {
+            var pin = document.getElementById("pin_text");
+            var pin_code = document.getElementById("pin_text").value;
+            var length1 = pin_code.length;
+            if (length1 < 6) {
+                document.getElementById("check_pincode_text").style.color = "red";
+                document.getElementById("check_pincode_text").innerHTML = "Pin code should be 6 digits !";
+                // console.log("pin_code");
+                pin.focus();
+                return false;
+            }
+        }
+    </script>
+
+    <script>
+    
+
+        function ConvertSectoDay(n) {
+            var day = parseInt(n / (24 * 3600));
+            n = n % (24 * 3600);
+            var hour = parseInt(n / 3600);
+            n %= 3600;
+            var minutes = n / 60;
+            n %= 60;
+            var seconds = n;
+            return day + " " + "days " + hour + " " + "hours ";
+        }
+
+        function initAutocomplete() {
+            // Create the search box and link it to the UI element.
+            const input = document.getElementById("pac-input");
+            const searchBox = new google.maps.places.SearchBox(input);
+
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener("places_changed", () => {
+                const places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+                places.forEach((place) => {
+                    if (!place.geometry) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+                    console.log('{latitude:' + place.geometry.location.lat() + ',longitude:' + place.geometry.location.lng() + '}');
+                });
+            });
+        }
+        // });
+    </script>
+
+    <script>
+        function buynow(pro_id) {
+            $("#form_validate").validate();
+            $("#form_validate_service").validate();
+            $("#form_validate_search").validate();
+            $("#form_validate_search_mobile").validate();
+            $("#form_validate_newsletter").validate();
+            $("#form_add_cart").validate();
+            $("#form_validate_checkout").validate();
+            $("#form_add_cart").submit(function() {
+                $("#form_add_cart .custom-control-variation input").each(function() {
+                    if ($(this).hasClass("error")) {
+                        var a = $(this).attr("id");
+                        $("#form_add_cart .custom-control-variation label").each(function() {
+                            if ($(this).attr("for") == a) {
+                                $(this).addClass("is-invalid")
+                            }
+                        })
+                    } else {
+                        var a = $(this).attr("id");
+                        $("#form_add_cart .custom-control-variation label").each(function() {
+                            if ($(this).attr("for") == a) {
+                                $(this).removeClass("is-invalid")
+                            }
+                        })
+                    }
+                })
+            });
+        }
+    </script>
+   
+        function getdate(dt, days) {
+            var date = new Date(dt);
+            var day = parseInt(days);
+
+            date.setDate(date.getDate() + day);
+
+            var month = new Array();
+            month[0] = "January";
+            month[1] = "February";
+            month[2] = "March";
+            month[3] = "April";
+            month[4] = "May";
+            month[5] = "June";
+            month[6] = "July";
+            month[7] = "August";
+            month[8] = "September";
+            month[9] = "October";
+            month[10] = "November";
+            month[11] = "December";
+
+            var dd = date.getDate();
+            var mm = month[date.getMonth()];
+            var y = date.getFullYear();
+
+            var someFormattedDate = mm + ' ' + dd + ',' + y;
+            return someFormattedDate;
         }
     </script>

@@ -375,6 +375,44 @@ class File_model extends Core_Model
         return $rows;
     }
 
+
+    public function get_product_images_for_modal($product_id)
+    {
+        
+        $key = "product_images_" . $product_id;
+        $rows = get_cached_data($key);
+        if (empty($rows)) {
+            $this->db->where('product_id', $product_id);
+            $this->db->order_by('images.is_main', 'DESC');
+            $this->db->limit(1);
+            $query = $this->db->get('images');
+            $rows = $query->result();
+            set_cache_data($key, $rows);
+        }
+        return $rows;
+    }
+
+    public function get_product_images_for_modal_slider($product_id)
+    {
+        
+        $key = "product_images_" . $product_id;
+        $rows = get_cached_data($key);
+        if (empty($rows)) {
+            $this->db->where('product_id', $product_id);
+            $this->db->order_by('images.is_main', 'DESC');
+            // $this->db->limit(1);
+            $query = $this->db->get('images');
+            $rows = $query->result();
+            set_cache_data($key, $rows);
+        }
+        return $rows;
+    }
+
+
+
+
+
+
     //get story images
     public function get_story_images($user_id)
     {

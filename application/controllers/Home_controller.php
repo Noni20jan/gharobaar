@@ -3439,4 +3439,21 @@ class Home_controller extends Home_Core_Controller
         }
         echo json_encode($data);
     }
+    public function get_quick_view()
+    {
+        $product_id = $this->input->post('product_id', true);
+ 
+        $data['product_image'] = $this->file_model->get_product_images_for_modal_slider($product_id);
+        $data['product_images'] = $this->file_model->get_product_images_for_modal($product_id);
+
+        $data['product_details'] = $this->product_model->get_product_details($product_id, $this->selected_lang->id, true);
+        $data['product'] = $this->product_admin_model->get_product_for_quick_view($product_id);
+    
+        $data['users'] = $this->auth_model->get_user_details( $data['product']->user_id);
+
+        $filter_view =  $this->load->view('product\details\quickview', $data, TRUE);
+
+        echo $filter_view;
+    }
+
 }
