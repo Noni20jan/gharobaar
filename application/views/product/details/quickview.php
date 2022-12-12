@@ -249,7 +249,6 @@
                     </div>
 
 
-                    <!-- <?php echo form_open(get_product_form_data($product, $user)->add_to_cart_url, ['id' => 'form_add_cart']); ?> -->
                     <form id="form_add_cart" class="product_detail1" method="post">
                         <input type="hidden" name="product_id" id="product_id" value="<?php echo $product->id; ?>">
 
@@ -420,7 +419,6 @@
                             <h3 class="product_description">Description</h3>
                             <pre style="margin-top: 3px; white-space:pre-line; font-weight:500; text-align:justify; font-size: 107%; font-family:'poppins',sans-serif;" class="more"><?php echo $product_details->description; ?></pre>
                         </div>
-                        <?php echo form_close(); ?>
 
                 </div>
             </div>
