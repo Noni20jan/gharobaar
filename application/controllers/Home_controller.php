@@ -3537,6 +3537,6 @@ class Home_controller extends Home_Core_Controller
         $data['og_modified_time'] = $data['product']->created_at;
 
         $filter_view =  $this->load->view('product\details\quickview', $data, TRUE);
-        echo $filter_view;
+        echo json_encode($filter_view);
     }
 }

@@ -20,15 +20,36 @@
     } ?>
     <?php if ($image_count <= 1 && (!empty($video) || !empty($audio))) :
         if (!empty($video)) : ?>
-            <div class="product-video-preview">
-                <video id="player" playsinline controls>
-                    <source src="<?php echo get_product_video_url($video); ?>" type="video/mp4">
-                </video>
+            <div class="col-12">
+                <div class="product-details-container <?php echo ((!empty($video) || !empty($audio)) && item_count($product_images) < 2) ? "product-details-container-digital" : ""; ?>">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-7">
+                            <div id="product_slider_container">
+                                <?php if (!empty($video)) : ?>
+                                    <div class="product-video-preview">
+                                        <video id="player" playsinline controls style="width: 100%;">
+                                            <source src="<?php echo get_product_video_url($video); ?>" type="video/mp4">
+                                        </video>
+                                    </div>
+                                <?php endif;
+                                if (!empty($audio)) :
+                                    $this->load->view('product/details/_audio_player');
+                                endif; ?>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-5">
+                            <div id="response_product_details" class="product-content-details">
+                                <?php $this->load->view("product/details/_product_details"); ?>
+                                <h3 class="product_description">Description</h3>
+                                <pre style="margin-top: 3px; white-space:pre-line; font-weight:500; text-align:justify; font-size: 107%; font-family:'poppins',sans-serif;" class="more"><?php echo $product_details->description; ?></pre>
+                            </div>
+                           
+                        </div>
+                  
+                    </div>
+                </div>
             </div>
-        <?php endif;
-        if (!empty($audio)) :
-            $this->load->view('product/details/_audio_player');
-        endif; ?>
+        <?php endif; ?>
     <?php else : ?>
         <div class="product-slider-container">
             <?php if (item_count($product_image) > 1) : ?>
@@ -382,7 +403,7 @@
 
                         <div class="row">
                             <?php $buttton = get_product_form_data($product, $users)->button;
-                            $buttton2 = get_product_form_data($product, $users)->button2;
+                            $buttton2 = get_product_form_data($product, $user)->button2;
                             if (!empty($buttton)) : ?>
 
                                 <div class="col-6"><?php echo $buttton; ?> </div>
@@ -450,18 +471,7 @@
         </div>
     <?php endif; ?>
 
-    <?php if ($image_count > 1 && !empty($audio)) : ?>
-        <div class="modal fade" id="productAudioModal" role="dialog">
-            <div class="modal-dialog modal-dialog-centered modal-product-video" role="document">
-                <div class="modal-content">
-                    <div class="row-custom" style="width: auto !important;">
-                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
-                        <?php $this->load->view('product/details/_audio_player'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
+
 
 
 
