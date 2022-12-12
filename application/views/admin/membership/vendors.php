@@ -72,6 +72,9 @@
                                                     <a href="javascript:void(0)" onclick="open_close_user_shop(<?php echo $user->id; ?>,'<?php echo trans("confirm_close_user_shop"); ?>');"><i class="fa fa-times option-icon"></i><?php echo trans('close_user_shop'); ?></a>
                                                 </li>
                                                 <li>
+                                                    <a href="javascript:void(0)" onclick="change_user_role(<?php echo $user->id; ?>,'<?php echo trans("confirm_change_user_role"); ?>');"><i class="fa fa-repeat option-icon"></i><?php echo trans('change_role'); ?></a>
+                                                </li>
+                                                <li>
                                                     <?php if ($user->email_status != 1) : ?>
                                                         <a href="javascript:void(0)" onclick="confirm_user_email(<?php echo $user->id; ?>);"><i class="fa fa-check option-icon"></i><?php echo trans('confirm_user_email'); ?></a>
                                                     <?php endif; ?>

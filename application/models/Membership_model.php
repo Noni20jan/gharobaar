@@ -91,9 +91,9 @@ class Membership_model extends CI_Model
         $this->db->where('id', clean_number($id));
         return $this->db->get('membership_transactions')->row();
     }
-    public function add_bank_details($data,$user_id)
+    public function add_bank_details($data, $user_id)
     {
-        $this->db->where('id',$user_id);
+        $this->db->where('id', $user_id);
         $this->db->update('users', $data);
         return true;
     }
@@ -669,6 +669,35 @@ class Membership_model extends CI_Model
             }
             $this->db->where('id', $id);
             return $this->db->update('users', $data);
+        }
+        return false;
+    }
+
+    //Change User role from vendor to member
+
+    public function change_user_role($id)
+    {
+        $id = clean_number($id);
+        $user = get_user($id);
+        if (!empty($user)) {
+            $userdata = array();
+            if ($user->role == 'vendor') {
+                $userdata['role'] = 'member';
+            }
+            if ($user->is_shop_open == 1) {
+                $userdata['is_shop_open'] = 0;
+            }
+            $this->db->where('id', $id);
+            $this->db->join('products', 'products.user_id = users.id', 'left');
+            $this->db->update('users', $userdata);
+
+            $productdata = array();
+            if ($user->is_deleted == 0) {
+                $productdata['is_deleted'] = 1;
+            }
+            $this->db->where('user_id', $id);
+            $this->db->update('products', $productdata);
+            return ($this->db->affected_rows() > 0) ? true : false;
         }
         return false;
     }

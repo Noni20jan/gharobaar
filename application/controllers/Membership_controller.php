@@ -689,6 +689,24 @@ class Membership_controller extends Admin_Core_Controller
         }
     }
 
+
+    /**
+     * Change User role from vendor to member
+     */
+
+    public function change_user_role()
+    {
+        $id = $this->input->post('id', true);
+        if ($this->membership_model->change_user_role($id)) {
+            $data = true;
+            $this->session->set_flashdata('success', ('User Role changed to Buyer Succesfully'));
+        } else {
+            $data = false;
+            $this->session->set_flashdata('error', trans("msg_error"));
+        }
+        echo json_encode($data);
+    }
+
     /**
      * Delete User
      */

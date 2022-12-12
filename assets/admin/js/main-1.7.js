@@ -419,6 +419,23 @@ function open_close_user_shop(id, message) {
     }
 };
 
+// Change User role from vendor to member
+
+function change_user_role(id) {
+    var data = {
+        'id': id,
+    };
+    data[csfr_token_name] = $.cookie(csfr_cookie_name);
+    $.ajax({
+        type: "POST",
+        url: base_url + "membership_controller/change_user_role",
+        data: data,
+        success: function (response) {
+            location.reload();
+        }
+    });
+};
+
 //approve product
 function approve_product(id) {
     var data = {
