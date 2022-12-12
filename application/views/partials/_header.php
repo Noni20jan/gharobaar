@@ -1185,6 +1185,23 @@
             }
         }
 
+        /* .auth-box1 { */
+            /* background-color: white; */
+            /* padding: 30px; */
+            /* width: 1000px; */
+            /* width: 459px; */
+            /* max-width: 100%; */
+            /* border-radius: 20px; */
+            /* margin: 0 auto; */
+            /* margin-top: 30px; */
+            /* border: 1px solid #f5f5f5;
+            box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+            -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+            -o-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+            -ms-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1) */
+        /* } */
+
         .animationbar {
 
             position: relative;
@@ -6620,6 +6637,11 @@
             }, t || (e.jQuery = e.$ = w), w
         });
     </script>
+
+<script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
+        <script>
+            var sf = new Snowflakes();
+        </script>
 
     <!-- chat systems  -->
     <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
