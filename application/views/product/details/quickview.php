@@ -362,7 +362,8 @@
                 </div>
             </div> -->
                         <?php if ($product->add_meet == "Made to order") :
-                            if ($parent_categories_tree[0]->id == 2) :
+                        $cat = $this->category_model->get_parent_categories_tree($product->category_id);
+                            if ($cat[0]->id == 2) :
                                 $this->load->view('product/details/_expected_date_time', ['product' => $product]);
                             else : ?>
                                 <div class="row" style="width:100%;">
@@ -383,7 +384,7 @@
 
                         <div class="row">
                             <?php $buttton = get_product_form_data($product, $users)->button;
-                            $buttton2 = get_product_form_data($product, $user)->button2;
+                            $buttton2 = get_product_form_data($product, $users)->button2;
                             if (!empty($buttton)) : ?>
 
                                 <div class="col-6"><?php echo $buttton; ?> </div>
