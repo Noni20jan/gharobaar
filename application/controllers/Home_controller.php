@@ -1645,12 +1645,12 @@ class Home_controller extends Home_Core_Controller
         if (!empty($promoted_products)) {
             foreach ($promoted_products as $product) {
                 if ($product->is_shop_open == "1") :
-                $category = $this->category_model->get_parent_categories_tree($product->category_id); 
-                if (!empty($category[0]->id!=2)) : 
-                $vars = array('product' => $product, 'promoted_badge' => false);
-                $html_content .= '<div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">' . $this->load->view("product/_product_item", $vars, true) . '</div>';
+                    $category = $this->category_model->get_parent_categories_tree($product->category_id);
+                    if (!empty($category[0]->id != 2)) :
+                        $vars = array('product' => $product, 'promoted_badge' => false);
+                        $html_content .= '<div class="col-6 col-sm-4 col-md-3 col-mds-5 col-product">' . $this->load->view("product/_product_item", $vars, true) . '</div>';
+                    endif;
                 endif;
-            endif;
             }
             $data_json['result'] = 1;
             $data_json['html_content'] = $html_content;
@@ -3442,18 +3442,101 @@ class Home_controller extends Home_Core_Controller
     public function get_quick_view()
     {
         $product_id = $this->input->post('product_id', true);
- 
         $data['product_image'] = $this->file_model->get_product_images_for_modal_slider($product_id);
         $data['product_images'] = $this->file_model->get_product_images_for_modal($product_id);
 
         $data['product_details'] = $this->product_model->get_product_details($product_id, $this->selected_lang->id, true);
         $data['product'] = $this->product_admin_model->get_product_for_quick_view($product_id);
-    
-        $data['users'] = $this->auth_model->get_user_details( $data['product']->user_id);
+        $data["parent_categories_tree"] = $this->category_model->get_parent_categories_tree($data["product"]->category_id);
+
+        $data['users'] = $this->auth_model->get_user_details($data['product']->user_id);
+
+       
+        $data["similar_products"] = $this->product_model->get_product_category($data["product"]->id);
+        $data['diff_prod'] = $this->product_model->get_different_product($data["product"]->id);
+        // var_dump($data["product"]);
+        $data["latest_products"] = get_latest_products($this->general_settings->index_latest_products_count);
+        //$data['diff_prod'] = $this->product_model->get_different_product($data["product"]->id);
+
+        if ($data['product']->status == 0 || $data['product']->visibility == 0) {
+            if (!$this->auth_check) {
+                redirect(lang_base_url());
+            }
+            if ($data['product']->user_id != $this->auth_user->id && $this->auth_user->role != "admin") {
+                redirect(lang_base_url());
+            }
+        }
+        $data["similar_products"] = $this->product_model->get_product_category($data["product"]->id);
+        $data['diff_prod'] = $this->product_model->get_different_product($data["product"]->id);
+        $data["latest_products"] = get_latest_products($this->general_settings->index_latest_products_count);
+
+
+        $data['product_details'] = $this->product_model->get_product_details($data["product"]->id, $this->selected_lang->id, true);
+        $data["parent_categories_tree"] = $this->category_model->get_parent_categories_tree($data["product"]->category_id);
+        //images
+        // $data["product_images"] = $this->file_model->get_product_images($data["product"]->id);
+        //related products
+        $key = "related_products_" . $data["product"]->id;
+        $data["related_products"] = get_cached_data($key);
+        if (empty($data["related_products"])) {
+            $data["related_products"] = $this->product_model->get_related_products($data["product"]->id, $data["product"]->category_id, $data["parent_categories_tree"]);
+            set_cache_data($key, $data["related_products"]);
+        }
+
+        $data["user"] = $this->auth_model->get_user($data["product"]->user_id);
+
+        //user products
+        $key = 'more_products_by_user_' . $data["user"]->id . 'cache';
+        $data['user_products'] = get_cached_data($key);
+        if (empty($data['user_products'])) {
+            $data["user_products"] = $this->product_model->get_user_products($data["user"]->id, $data["product"]->id);
+            set_cache_data($key, $data['user_products']);
+        }
+
+
+        $data['reviews'] = $this->review_model->get_reviews($data["product"]->id);
+        $data['review_images'] = $this->review_model->get_review_images($data["product"]->id);
+        $data['reviews_supplier'] = $this->review_model->get_seller_reviews($data["product"]->user_id);
+        $data['review_count'] = item_count($data['reviews']);
+        $data['review_supplier_count'] = item_count($data['reviews_supplier']);
+        $data['comment_count'] = $this->comment_model->get_product_comment_count($data["product"]->id);
+        $data['comments'] = $this->comment_model->get_comments($data["product"]->id, $this->comment_limit);
+        $data['comment_limit'] = $this->comment_limit;
+        $data["custom_fields"] = $this->field_model->get_custom_fields_by_category($data["product"]->category_id);
+        $data["half_width_product_variations"] = $this->variation_model->get_half_width_product_variations($data["product"]->id);
+        $data["full_width_product_variations"] = $this->variation_model->get_full_width_product_variations($data["product"]->id);
+        $data["index_settings"] = get_index_settings();
+        $data["video"] = $this->file_model->get_product_video($data["product"]->id);
+        $data["audio"] = $this->file_model->get_product_audio($data["product"]->id);
+
+
+
+
+
+        $data["digital_sale"] = null;
+        if ($data["product"]->product_type == 'digital' && $this->auth_check) {
+            $data["digital_sale"] = get_digital_sale_by_buyer_id($this->auth_user->id, $data["product"]->id);
+        }
+        //og tags
+        $data['show_og_tags'] = true;
+        $data['og_title'] = !empty($data['product_details']->seo_title) ? $data['product_details']->seo_title : $data['product_details']->title;
+        $data['og_description'] = $data['product_details']->seo_description;
+        $data['og_type'] = "article";
+        $data['og_url'] = generate_product_url($data['product']);
+        $data['og_image'] = get_product_image($data['product']->id, 'image_default');
+        $data['og_width'] = "750";
+        $data['og_height'] = "500";
+        if (!empty($data['user'])) {
+            $data['og_creator'] = $data['user']->username;
+            $data['og_author'] = $data['user']->username;
+        } else {
+            $data['og_creator'] = "";
+            $data['og_author'] = "";
+        }
+        $data['og_published_time'] = $data['product']->created_at;
+        $data['og_modified_time'] = $data['product']->created_at;
 
         $filter_view =  $this->load->view('product\details\quickview', $data, TRUE);
-
         echo $filter_view;
     }
-
 }

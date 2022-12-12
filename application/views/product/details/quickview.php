@@ -10,7 +10,6 @@
         color: #007C05;
         margin-top: 0%;
     }
- 
 </style>
 <html>
 
@@ -362,10 +361,9 @@
                 </div>
             </div> -->
                         <?php if ($product->add_meet == "Made to order") :
-                        $cat = $this->category_model->get_parent_categories_tree($product->category_id);
-                            if ($cat[0]->id == 2) :
-                                $this->load->view('product/details/_expected_date_time', ['product' => $product]);
-                            else : ?>
+                            if ($parent_categories_tree[0]->id == 2) :
+                                $this->load->view('product/details/_expected_date_time', ['product' => $product]); ?>
+                            <?php else : ?>
                                 <div class="row" style="width:100%;">
                                     <div class="col-md-12" id="postal-code">
                                         <span><b>Lead Time <a id="transit" href="javascript:void(0);"><i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -928,14 +926,14 @@ endif; ?>
         });
     })
     $(document).on('click', '.product_detail1 button', function() {
-            $('.product_detail1 button').removeClass('clicked');
-            $(this).addClass('clicked');
-        });
-        
-        $("#wishlist_btn").click(function() {
-            $('#loginModal').modal('show');
-            // alert("ok");
-        })
+        $('.product_detail1 button').removeClass('clicked');
+        $(this).addClass('clicked');
+    });
+
+    $("#wishlist_btn").click(function() {
+        $('#loginModal').modal('show');
+        // alert("ok");
+    })
 </script>
 <?php if (item_count($product_images) > 10) : ?>
     <style>
