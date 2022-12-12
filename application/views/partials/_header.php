@@ -1597,8 +1597,11 @@
                     </marquee>
                 </div>
             </article>
-        </div>
+        </div>  
     <?php endif; ?>
+    <div style="position:relative; bottom:5px">
+        <img src="<?php echo base_url(); ?>assets/img/christmas-1.png"style="max-width:100%" >
+    </div>
     <header id="header">
         <?php //$this->load->view("partials/_top_bar"); 
         ?>

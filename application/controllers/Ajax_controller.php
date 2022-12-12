@@ -681,7 +681,7 @@ class Ajax_controller extends Home_Core_Controller
                                     'subject' => trans("you_have_new_order"),
                                     'order' => $order,
                                     'order_products' => $seller_order_products,
-                                    'remark' => "You have rerceived an order for " . $order_product->product_title . "  vide Order #" . $order_id . " . You are expected to dispatch the order soon.",
+                                    'remark' => "You have rerceived an order for " . $order_product->product_title . "  vide Order #" . $order_id . " .You are expected to dispatch the order before" . dispatch_time($order_product->lead_time, "date"),
                                     'to' => $seller->email,
                                     'seller_name' => $seller_name,
                                     'template_path' => "email/email_new_order_seller",
