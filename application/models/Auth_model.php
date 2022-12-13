@@ -23,6 +23,8 @@ class Auth_model extends CI_Model
     //login
     public function login()
     {
+        //    $this->session->sess_destroy();
+        $this->cart_model->clear_cart();
         $this->load->library('bcrypt');
 
         $data = $this->input_values();
