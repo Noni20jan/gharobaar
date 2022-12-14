@@ -13316,7 +13316,7 @@ img {
 }
 
 .nav-mobile-header-container .mobile-search {
-  display: table-cell;
+  display: none;
   vertical-align: middle;
   text-align: right;
   width: 50px;
@@ -20399,7 +20399,7 @@ form select.error {
 @media (max-width: 992px) {
   .top-search-bar {
     width: 100% !important;
-    display: none;
+    display: block;
   }
 
   .top-search-bar .input-search {
@@ -20430,7 +20430,7 @@ form select.error {
     display: block;
   }
 
-  }
+}
   .webOrderView {
     display: none;
   }
@@ -20448,7 +20448,7 @@ form select.error {
       display: block;
       position: absolute !important;
     }
-
+  
   .section {
     margin-bottom: 20px;
   }
