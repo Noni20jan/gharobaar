@@ -154,12 +154,12 @@
                                 <div class="row">
                                     <div class="col-12 col-md-6 m-b-sm-15">
                                         <label><?php echo trans("email"); ?>*</label>
-                                        <input type="email" name="shipping_email" id="pop_email" class="form-control form-input" required>
+                                        <input type="email" name="shipping_email" id="pop_email" class="form-control form-inpu" value="<?php echo $this->auth_user->email; ?>" required>
                                         <span class="Validation_error" id="email_valid" style="color: #d43f3a;"></span>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <label><?php echo trans("phone_number"); ?>*</label>
-                                        <input type="text" name="shipping_phone_number" id="pop_number" onkeyup="return(event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control form-input" minlength="10" maxlength="10" required>
+                                        <input type="text" name="shipping_phone_number" id="pop_number" onkeyup="return(event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control form-input" minlength="10" maxlength="10" value="<?php echo $this->auth_user->phone_number; ?>" required>
                                         <span class="Validation_error" id="number_valid" style="color: #d43f3a;"></span>
                                     </div>
                                 </div>
