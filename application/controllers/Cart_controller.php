@@ -2291,7 +2291,7 @@ class Cart_controller extends Home_Core_Controller
 
                 $product = $this->product_model->get_product_by_id($product_id1);
 
-                if ($product->user_id == $this->auth_user->id) {
+                // if ($product->user_id == $this->auth_user->id) {
                     $review = $this->review_model->get_review($product_id1, $this->auth_user->id);
                     //  var_dump($review);die();
                     if (!empty($review)) {
@@ -2303,7 +2303,7 @@ class Cart_controller extends Home_Core_Controller
                             $reviews = TRUE;
                         } else {
                             $reviews = false;
-                        }
+                        }   
                     } else {
                         $this->load->model('upload_model');
                         $last_id = $this->review_model->add_review1($rating2[$i], $product_id1, $review_text2[$i], 'file_'[$i]);
@@ -2314,7 +2314,7 @@ class Cart_controller extends Home_Core_Controller
                             $reviews = false;
                         }
                     }
-                }
+                // }
                 $i++;
             }
             echo json_encode($reviews);
