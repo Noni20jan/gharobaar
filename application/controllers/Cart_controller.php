@@ -2295,13 +2295,19 @@ class Cart_controller extends Home_Core_Controller
                     $review = $this->review_model->get_review($product_id1, $this->auth_user->id);
                     //  var_dump($review);die();
                     if (!empty($review)) {
-                        $this->review_model->update_review1($review->id, $rating2[$i], $product_id1, $review_text2[$i]);
+                        $update_review=$this->review_model->update_review1($review->id, $rating2[$i], $product_id1, $review_text2[$i]);
                         $images = $this->review_model->check_review_images($product_id1, $this->auth_user->id);
+                        $update_review=true;
+                        $upload_image=false;
                         if (empty($images)) {
                             $this->load->model('upload_model');
-                            $this->upload_model->upload_review_image('file_' . $product_id1, $review->id, $product_id1);
-                            $reviews = TRUE;
-                        } else {
+                            $upload_image=$this->upload_model->upload_review_image('file_' . $product_id1, $review->id, $product_id1);
+                            $upload_image=true;
+                        } 
+                    if( $update_review || $upload_image ){
+                        $reviews = TRUE;
+                    }
+                        else {
                             $reviews = false;
                         }   
                     } else {
