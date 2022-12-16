@@ -436,6 +436,33 @@ function change_user_role(id) {
     });
 };
 
+// Change user role warning when vendor has orders in processing 
+function change_user_role_warning(url, id) {
+    swal({
+        text: "This Vendor has some orders in processing state. Kindly try again after completion of all orders",
+        icon: "warning",
+        buttons: true,
+        buttons: [sweetalert_cancel, sweetalert_ok],
+        dangerMode: true,
+    }).then(function (willDelete) {
+        if (willDelete) {
+            var data = {
+                'id': id,
+            };
+            data[csfr_token_name] = $.cookie(csfr_cookie_name);
+            $.ajax({
+                type: "POST",
+                url: base_url + url,
+                data: data,
+                success: function (response) {
+                    // location.reload();
+                    console.log()
+                }
+            });
+        }
+    });
+};
+
 //approve product
 function approve_product(id) {
     var data = {

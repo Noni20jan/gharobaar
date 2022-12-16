@@ -699,10 +699,10 @@ class Membership_controller extends Admin_Core_Controller
         $id = $this->input->post('id', true);
         if ($this->membership_model->change_user_role($id)) {
             $data = true;
-            $this->session->set_flashdata('success', ('User Role changed to Buyer Succesfully'));
+            $this->session->set_flashdata('success', ('Supplier Role changed to Buyer Succesfully'));
         } else {
             $data = false;
-            $this->session->set_flashdata('error', trans("msg_error"));
+            $this->session->set_flashdata('success', ('Supplier Role changed to Buyer Succesfully, But this vendor did not have any Products '));
         }
         echo json_encode($data);
     }

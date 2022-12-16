@@ -175,7 +175,7 @@ class Order_model extends CI_Model
 
         // $this->add_seller_wise_details(1, $cart_total);
         // die();
-        
+
 
         if (!empty($cart_total)) {
             $data = array(
@@ -279,7 +279,7 @@ class Order_model extends CI_Model
         $shipping_detail = json_decode($this->order_model->get_shipping_cost($cart_total));
         $total_amount = $cart_total->total_price;
 
-        
+
 
         $seller_array = array();
         $amount_array = array();
@@ -1307,6 +1307,17 @@ class Order_model extends CI_Model
         $query = $this->db->get('order_products');
         return $query->num_rows();
     }
+
+    //get processing orders count
+    public function get_processing_order_products_count($user_id)
+    {
+        $this->db->select('order_status');
+        $this->db->where('seller_id', $user_id);
+        $this->db->where('order_status', 'processing');
+        $query = $this->db->get('order_products');
+        return $query->result();
+    }
+
 
     //get paginated completed orders
     public function get_paginated_completed_orders($user_id, $per_page, $offset)
@@ -2872,7 +2883,7 @@ class Order_model extends CI_Model
         $Supp_ship_data = json_decode($this->get_seller_wise_data_bifurcation($cart_total));
         $cart_items = $this->cart_model->get_sess_cart_items();
         $cart_total = $this->cart_model->get_sess_cart_total();
-            if ($Supp_ship_data) {
+        if ($Supp_ship_data) {
             foreach ($Supp_ship_data as $sup) {
                 $seller_address = get_user($sup->SupplierId);
                 $title = "";
@@ -3173,16 +3184,16 @@ class Order_model extends CI_Model
     {
         $id = clean_number($id);
         $this->db->where('id', $id);
-        
+
         return $this->db->get('orders')->result();
     }
 
     public function supplier_count($order_number)
     {
-        
+
         $order_number = clean_number($order_number);
         $this->db->where('order_id', $order_number);
-        
+
         return $this->db->get('order_products')->result();
     }
 
@@ -3594,7 +3605,7 @@ class Order_model extends CI_Model
                         $coupon_source_id = $cad->source_id;
                         break;
                     endforeach;
-                    
+
                     if ($coupon_source_type == 'Product') {
                         if ($coupon_source_id == $cart_item->product_item) {
                             $discountamount = $cart_total->applied_coupon_discount;
@@ -5743,15 +5754,17 @@ WHERE awb_code IN (
         return $query->row()->count;
     }
 
-    public function order_price($order_id){
+    public function order_price($order_id)
+    {
         $sql = "SELECT * from orders where id=$order_id";
         $query = $this->db->query($sql);
         return $query->result();
     }
 
-    public function order_price_subtotal($order_id){
+    public function order_price_subtotal($order_id)
+    {
         $sql = "SELECT sum(product_total_price) as subtotal from order_products where order_id=$order_id";
-        $query=$this->db->query($sql);
+        $query = $this->db->query($sql);
         return $query->result();
     }
 }

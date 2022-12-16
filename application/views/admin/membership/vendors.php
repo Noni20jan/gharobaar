@@ -33,7 +33,9 @@
                         </thead>
                         <tbody>
                             <?php foreach ($users as $user) :
-                                $membership_plan = $this->membership_model->get_user_plan_by_user_id($user->id); ?>
+                                $membership_plan = $this->membership_model->get_user_plan_by_user_id($user->id);
+                                $status = $this->order_model->get_processing_order_products_count($user->id);
+                            ?>
                                 <tr>
                                     <td><?php echo html_escape($user->id); ?></td>
                                     <td>
@@ -72,7 +74,15 @@
                                                     <a href="javascript:void(0)" onclick="open_close_user_shop(<?php echo $user->id; ?>,'<?php echo trans("confirm_close_user_shop"); ?>');"><i class="fa fa-times option-icon"></i><?php echo trans('close_user_shop'); ?></a>
                                                 </li>
                                                 <li>
-                                                    <a href="javascript:void(0)" onclick="change_user_role(<?php echo $user->id; ?>,'<?php echo trans("confirm_change_user_role"); ?>');"><i class="fa fa-repeat option-icon"></i><?php echo trans('change_role'); ?></a>
+                                                    <?php if ($status != null) : ?>
+                                                        <?php if (count($status) > 0) : ?>
+                                                            <a href="javascript:void(0)" onclick="change_user_role_warning(<?php echo $user->id; ?>,'<?php echo trans("confirm_change_user_role"); ?>');"><i class="fa fa-repeat option-icon"></i><?php echo trans('change_role'); ?></a>
+                                                        <?php else : ?>
+                                                            <a href="javascript:void(0)" onclick="change_user_role(<?php echo $user->id; ?>,'<?php echo trans("confirm_change_user_role"); ?>');"><i class="fa fa-repeat option-icon"></i><?php echo trans('change_role'); ?></a>
+                                                        <?php endif; ?>
+                                                    <?php else : ?>
+                                                        <a href="javascript:void(0)" onclick="change_user_role(<?php echo $user->id; ?>,'<?php echo trans("confirm_change_user_role"); ?>');"><i class="fa fa-repeat option-icon"></i><?php echo trans('change_role'); ?></a>
+                                                    <?php endif ?>
                                                 </li>
                                                 <li>
                                                     <?php if ($user->email_status != 1) : ?>

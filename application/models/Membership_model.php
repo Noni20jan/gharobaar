@@ -673,7 +673,7 @@ class Membership_model extends CI_Model
         return false;
     }
 
-    //Change User role from vendor to member
+    //Change User role from vendor to member if vendor has products
 
     public function change_user_role($id)
     {
@@ -687,6 +687,13 @@ class Membership_model extends CI_Model
             if ($user->is_shop_open == 1) {
                 $userdata['is_shop_open'] = 0;
             }
+            if ($user->is_active_shop_request == 1) {
+                $userdata['is_active_shop_request'] = 0;
+            }
+            if ($user->via_sell_now == 1) {
+                $userdata['via_sell_now'] = 0;
+            }
+
             $this->db->where('id', $id);
             $this->db->join('products', 'products.user_id = users.id', 'left');
             $this->db->update('users', $userdata);
@@ -695,11 +702,14 @@ class Membership_model extends CI_Model
             if ($user->is_deleted == 0) {
                 $productdata['is_deleted'] = 1;
             }
+            if ($user->visibility == 1) {
+                $productdata['visibility'] = 0;
+            }
             $this->db->where('user_id', $id);
             $this->db->update('products', $productdata);
             return ($this->db->affected_rows() > 0) ? true : false;
         }
-        return false;
+        // return false;
     }
 
     public function save_ship_type($data)
