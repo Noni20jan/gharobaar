@@ -474,7 +474,7 @@ foreach ($sellers as $seller) {
 <link rel="stylesheet" href="<?= base_url(); ?>assets/css/custom.css">
 <div id="wrapper">
     <div class="container">
-        <div class="row categories-for-mobile" id="only-for-mobile">
+        <div class="row categories-for-mobile pt-5" id="only-for-mobile">
             <?php $this->load->view("partials/categories_for_mobile"); ?>
         </div>
         <div class="row">

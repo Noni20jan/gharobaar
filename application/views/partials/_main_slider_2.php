@@ -58,7 +58,7 @@
                                 <a href="<?php echo html_escape($item->link); ?>">
                                     <div class="container">
                                         <div class="row row-slider-caption align-items-center">
-                                            <div class="col-12">
+                                            <div class="col-12 pt-5">
                                                 <div class="caption">
                                                     <?php if (!empty($item->title)) : ?>
                                                         <h2 class="title" data-animation="<?php echo $item->animation_title; ?>" data-delay="0.1s" style="color: <?php echo $item->text_color; ?>"><?php echo html_escape($item->title); ?></h2>

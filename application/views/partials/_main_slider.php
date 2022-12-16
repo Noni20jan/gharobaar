@@ -60,7 +60,7 @@
                             <a href="<?php echo html_escape($item->link); ?>">
                                 <div class="container">
                                     <div class="row row-slider-caption align-items-center">
-                                        <div class="col-12">
+                                        <div class="col-12 pt-5">
                                             <div class="caption">
                                                 <?php if (!empty($item->title)) : ?>
                                                     <?php if ($item->title == "#Gharobaar") : ?>
