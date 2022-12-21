@@ -246,7 +246,7 @@
         float: right;
         left: 4px;
     }
-
+    
     @media(max-width:700px) {
         .check_pincode {
             position: relative;
@@ -925,6 +925,9 @@
             margin-left: 15px !important;
         }
 
+    }
+    .kjxaQJ{
+        bottom: 47px !important;
     }
 </style>
 
