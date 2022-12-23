@@ -754,11 +754,11 @@
                                     <?php if ($cart_has_physical_product == true && $this->form_settings->shipping == 1) : ?>
                                         <p>
                                             <?php if ($this->general_settings->flat_ship_enable == 1) : ?>
-                                                <?php if($cart_total->total < 100000) :?>
-                                                <?php echo trans("shipping"); ?><span class="float-right"><?php echo (price_formatted(10000, $cart_total->currency)); ?></span>
+                                                <?php if ($cart_total->total < 100000) : ?>
+                                                    <?php echo trans("shipping"); ?><span class="float-right"><?php echo (price_formatted(10000, $cart_total->currency)); ?></span>
                                                 <?php else : ?>
                                                     <?php echo trans("shipping"); ?><span class="float-right"><?php echo (price_formatted(0, $cart_total->currency)); ?></span>
-                                                    <?php endif; ?>
+                                                <?php endif; ?>
                                             <?php else : ?>
                                                 <?php echo trans("shipping"); ?><span class="float-right"><?php echo trans("yet_to_be") ?></span>
                                             <?php endif; ?>
@@ -772,7 +772,7 @@
                                                 <?php if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) :
                                                     $coupon_applied = $this->session->userdata('mds_shopping_cart_coupon'); ?>
                                                     <?php if ($cart_total->applied_coupon_discount > 0) : ?>
-                                                        <?php echo "- " . price_formatted_without_round($cart_total->applied_coupon_discount, $this->payment_settings->default_currency) . "/-"; ?>
+                                                        <?php echo "- " . price_formatted($cart_total->applied_coupon_discount, $this->payment_settings->default_currency) . "/-"; ?>
                                                     <?php elseif (!empty($cart_total->applied_coupon_source_type)) :
                                                         switch ($cart_total->applied_coupon_source_type):
                                                             case "FREESHIP":
@@ -790,26 +790,30 @@
                                         </strong>
                                     </p>
                                     <p class="line-seperator"></p>
-                                    
+
                                     <p>
                                         <!-- <?php var_dump($_SESSION["mds_shopping_cart_total"]->subtotal);  ?> -->
 
 
                                         <?php if ($this->general_settings->flat_ship_enable == 1) : ?>
-                                            
-                                                <?php $cart_total->total_price=$cart_total->total_price;?>
+
+                                            <?php $cart_total->total_price = $cart_total->total_price; ?>
                                             <!-- <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong> -->
                                             <!-- <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo (price_formatted(($cart_total->total_price + (($this->general_settings->flat_ship_amount))), $cart_total->currency)); ?>/-</span></strong?> -->
-                                             <?php //else:?>
-                                                <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong> 
-                                            
+                                            <?php //else:
+                                            ?>
+                                            <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong>
+
                                         <?php else : ?>
-                                            <?php //if($cart_total->total_price<100000):?>
+                                            <?php //if($cart_total->total_price<100000):
+                                            ?>
                                             <!-- <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong> -->
                                             <!-- <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong> -->
-                                            <?php //else:?>
-                                                <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong> 
-                                                <?php //endif;?>
+                                            <?php //else:
+                                            ?>
+                                            <strong><?php echo trans("total"); ?><span class="float-right" id="total_final"><?php echo price_formatted($cart_total->total_price, $cart_total->currency); ?>/-</span></strong>
+                                            <?php //endif;
+                                            ?>
                                         <?php endif; ?>
 
                                         <?php $cart_seller_total = get_cart_seller_total();
