@@ -772,7 +772,7 @@
                                                 <?php if (!empty($this->session->userdata('mds_shopping_cart_coupon'))) :
                                                     $coupon_applied = $this->session->userdata('mds_shopping_cart_coupon'); ?>
                                                     <?php if ($cart_total->applied_coupon_discount > 0) : ?>
-                                                        <?php echo "- " . price_formatted($cart_total->applied_coupon_discount, $this->payment_settings->default_currency) . "/-"; ?>
+                                                        <?php echo "- " . price_formatted_without_round($cart_total->applied_coupon_discount, $this->payment_settings->default_currency) . "/-"; ?>
                                                     <?php elseif (!empty($cart_total->applied_coupon_source_type)) :
                                                         switch ($cart_total->applied_coupon_source_type):
                                                             case "FREESHIP":

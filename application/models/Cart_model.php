@@ -757,9 +757,9 @@ class Cart_model extends CI_Model
                         elseif (strtoupper($coupon_details->type) == "PERCENTAGE") :
                             $coupon_discount = $cart_total->total * ($coupon_details->discount_percentage / 100);
                             if ($coupon_discount / 100 > $coupon_details->allowed_max_discount) {
-                                $cart_total->applied_coupon_discount = $coupon_details->allowed_max_discount * 100;
+                                $cart_total->applied_coupon_discount = round($coupon_details->allowed_max_discount * 100);
                             } else {
-                                $cart_total->applied_coupon_discount = $cart_total->total * ($coupon_details->discount_percentage / 100);
+                                $cart_total->applied_coupon_discount = round($cart_total->total * ($coupon_details->discount_percentage / 100));
                             }
                         endif;
                         break;
@@ -770,9 +770,9 @@ class Cart_model extends CI_Model
                         elseif (strtoupper($coupon_details->type) == "PERCENTAGE") :
                             $coupon_discount = $cart_total->total * ($coupon_details->discount_percentage / 100);
                             if ($coupon_discount / 100 > $coupon_details->allowed_max_discount) {
-                                $cart_total->applied_coupon_discount = $coupon_details->allowed_max_discount * 100;
+                                $cart_total->applied_coupon_discount = round($coupon_details->allowed_max_discount * 100);
                             } else {
-                                $cart_total->applied_coupon_discount = $cart_total->total * ($coupon_details->discount_percentage / 100);
+                                $cart_total->applied_coupon_discount = round($cart_total->total * ($coupon_details->discount_percentage / 100));
                             }
                         endif;
                         break;
@@ -787,9 +787,9 @@ class Cart_model extends CI_Model
                                     if ($item->product_id == $prod_id) :
                                         $coupon_discount = $item->total_price * ($coupon_details->discount_percentage / 100);
                                         if ($coupon_discount / 100 > $coupon_details->allowed_max_discount) {
-                                            $cart_total->applied_coupon_discount += $coupon_details->allowed_max_discount * 100;
+                                            $cart_total->applied_coupon_discount += round($coupon_details->allowed_max_discount * 100);
                                         } else {
-                                            $cart_total->applied_coupon_discount += $coupon_discount;
+                                            $cart_total->applied_coupon_discount += round($coupon_discount);
                                         }
                                         break;
                                     endif;
@@ -814,14 +814,11 @@ class Cart_model extends CI_Model
                     $cart_total->applied_coupon_discount = $cart_total->total_price;
                 }
                 $cart_total->total_price = $cart_total->total_price - $cart_total->applied_coupon_discount;
-                
                 if ($cart_total->total_price < 0) {
                     $cart_total->total_price = 0;
                 }
             }
             $this->session->set_userdata('mds_shopping_cart_total', $cart_total);
-           
-            
             if ($this->auth_check) {
                 $user_id = $this->auth_user->id;
                 $this->save_cart_total_db($user_id, $cart_total);
@@ -1795,7 +1792,7 @@ class Cart_model extends CI_Model
         $cart_total = new stdClass();
         if (!empty($this->session->userdata('mds_shopping_cart_total'))) {
             $cart_total = $this->session->userdata('mds_shopping_cart_total');
-        } 
+        }
         return $cart_total;
     }
 }
