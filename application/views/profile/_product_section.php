@@ -323,7 +323,7 @@
   }
   .cart-top .item-options {
   display: block;
-  bottom: 27px;
+  bottom: 31px;
   position: relative;
   right: 10px;
   width: 40px;
