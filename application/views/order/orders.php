@@ -144,6 +144,10 @@
 																		cancelled
 																	<?php elseif ($items == "rejected") : ?>
 																		rejected
+																			<?php elseif ($items == "RTO_Delivered") : ?>
+																				RTO Delivered
+																				<?php elseif ($items == "RTO_Initiated") : ?>
+																					RTO Initiated
 																	<?php else : ?>
 																		under process
 																	<?php endif; ?>

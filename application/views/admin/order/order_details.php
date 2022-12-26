@@ -800,8 +800,9 @@
                             <label class="control-label"><?php echo trans('status'); ?></label>
                             <select name="order_status" class="form-control">
                                 <?php if ($item->product_type == 'physical') : ?>
-                                    <!-- <option value="awaiting_payment" <?php echo ($item->order_status == 'awaiting_payment') ? 'selected' : ''; ?>><?php echo trans("awaiting_payment"); ?></option>
-                                    <option value="payment_received" <?php echo ($item->order_status == 'payment_received') ? 'selected' : ''; ?>><?php echo trans("payment_received"); ?></option> -->
+                                    <option value="awaiting pickup" <?php echo ($item->order_status == 'awaiting_pickup') ? 'selected' : ''; ?>><?php echo trans("awaiting_pickup"); ?></option>
+                                    <option value="RTO Delivered" <?php echo ($item->order_status == 'RTO_Delivered') ? 'selected' : ''; ?>><?php echo trans ("RTO_Delivered"); ?></option>
+                                    <option value="RTO Initiated" <?php echo ($item->order_status == 'RTO_Initiated') ? 'selected' : ''; ?>><?php echo trans ("RTO_Initiated"); ?></option>
                                     <option value="processing" <?php echo ($item->order_status == 'processing') ? 'selected' : ''; ?>><?php echo trans("order_processing"); ?></option>
                                     <option value="shipped" <?php echo ($item->order_status == 'shipped') ? 'selected' : ''; ?>><?php echo trans("shipped"); ?></option>
                                 <?php endif; ?>

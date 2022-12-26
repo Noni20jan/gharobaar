@@ -66,128 +66,162 @@
         transform: scale(1.5);
     }
 </style>
-<div class="container">
-    <div class="reviews-container">
-        <div class="row" id="reviews-for-web">
+
+<body>
+
+    <form id="review_form" method="POST">
+        <input type="hidden" name="product_id" id="review_product_id" value="<?php echo $product->id ?>">
+        <div class="row">
             <div class="col-12">
-                <div class="review-total">
-                    <label class="label-review"><?php echo trans("reviews"); ?>&nbsp;(<?php echo $review_count; ?>)</label>
-                    <?php if ($this->auth_check && $product->listing_type == "ordinary_listing" && $product->user_id != $this->auth_user->id) : ?>
-                        <button type="button" class="btn btn-default btn-custom btn-add-review float-right" data-toggle="modal" data-target="#rateProductModal" data-product-id="<?php echo $product->id; ?>"><?php echo trans("add_review") ?></button>
-                    <?php endif; ?>
-                    <?php if (!empty($reviews)) :
-                        $this->load->view('partials/_review_stars', ['review' => $product->rating]);
-                    endif; ?>
+                <div class="col-md-6 d-inline">
+                    <label for="review"> <b> Provide Your Reviews </b> </label>
                 </div>
-                <?php if (empty($reviews)) : ?>
-                    <p class="no-comments-found"><?php echo trans("no_reviews_found"); ?></p>
-                <?php else : ?>
-                    <div class="row list-unstyled list-reviews flexed-reviews">
-                        <?php foreach ($reviews as $review) : ?>
-                            <?php if ($product->id == $review->product_id) : ?>
-                                <div class="col-6 media">
-                                    <img src="<?php echo get_user_avatar_by_id($review->user_id); ?>" alt="<?php echo get_shop_name_by_user_id($review->user_id); ?>">
-                                    <div class="media-body">
-                                        <div class="row-custom">
-                                            <?php $this->load->view('partials/_review_stars', ['review' => $review->rating]); ?>
-                                        </div>
-                                        <div class="row-custom">
+                <div class="col-md-6 ">
+                    <textarea type="text" id="review" maxlength=""></textarea>
 
-                                            <h5 class="username"><?php echo get_first_last_name_by_user_id($review->user_id); ?></h5>
-
-                                        </div>
-                                        <div class="row-custom">
-                                            <div class="review">
-                                                <p class="addReadMore showlesscontent"><?php echo html_escape($review->review); ?></p>
-                                            </div>
-                                        </div>
-                                        <div class="row-custom">
-
-                                            <?php foreach ($review_images as $image) : ?>
-                                                <?php if ($review->id == $image->id) : ?>
-                                                    <img id="review_image1" class="review_image small" src="<?php echo base_url() . $image->image_url; ?> " style="border-radius:10%;width:100px;height:100px" />
-                                                <?php endif ?>
-                                            <?php endforeach; ?>
-
-                                        </div>
-                                        <div class="row-custom">
-                                            <span class="date"><?php echo time_ago($review->created_at); ?></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
+                    <button type="button" class="btn btn-default btn-custom " onclick="submit_review()">Submit</button>
+                </div>
             </div>
         </div>
-        <div class="row" id="reviews-for-mobile-view">
-            <div class="col-12">
-                <div class="review-total">
-                    <label class="label-review"><?php echo trans("reviews"); ?>&nbsp;(<?php echo $review_count; ?>)</label>
-                    <?php if ($this->auth_check && $product->listing_type == "ordinary_listing" && $product->user_id != $this->auth_user->id) : ?>
-                        <button type="button" class="btn btn-default btn-custom btn-add-review float-right" data-toggle="modal" data-target="#rateProductModal" data-product-id="<?php echo $product->id; ?>"><?php echo trans("add_review") ?></button>
-                    <?php endif; ?>
-                    <?php if (!empty($reviews)) :
-                        $this->load->view('partials/_review_stars', ['review' => $product->rating]);
-                    endif; ?>
-                </div>
-                <?php if (empty($reviews)) : ?>
-                    <p class="no-comments-found"><?php echo trans("no_reviews_found"); ?></p>
-                <?php else : ?>
-                    <ul class="list-unstyled list-reviews flexed-reviews">
-                        <?php foreach ($reviews as $review) : ?>
-                            <?php if ($product->id == $review->product_id) : ?>
-                                <li class="media">
-                                    <a href="<?php echo generate_profile_url($review->user_slug); ?>">
+
+    </form>
+    <br>
+    <br>
+    <div class="container">
+        <div class="reviews-container">
+            <div class="row" id="reviews-for-web">
+                <div class="col-12">
+                    <div class="review-total">
+                        <label class="label-review"><?php echo trans("reviews"); ?>&nbsp;(<?php echo $review_count; ?>)</label>
+                        <?php if ($this->auth_check && $product->listing_type == "ordinary_listing" && $product->user_id != $this->auth_user->id) : ?>
+                            <button type="button" class="btn btn-default btn-custom btn-add-review float-right" data-toggle="modal" data-target="#rateProductModal" data-product-id="<?php echo $product->id; ?>"><?php echo trans("add_review") ?></button>
+                        <?php endif; ?>
+                        <?php if (!empty($reviews)) :
+                            $this->load->view('partials/_review_stars', ['review' => $product->rating]);
+                        endif; ?>
+                    </div>
+                    <?php if (empty($reviews)) : ?>
+                        <p class="no-comments-found"><?php echo trans("no_reviews_found"); ?></p>
+                    <?php else : ?>
+                        <div class="row list-unstyled list-reviews flexed-reviews">
+                            <?php foreach ($reviews as $review) : ?>
+                                <?php if ($product->id == $review->product_id) : ?>
+                                    <div class="col-6 media">
                                         <img src="<?php echo get_user_avatar_by_id($review->user_id); ?>" alt="<?php echo get_shop_name_by_user_id($review->user_id); ?>">
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="row-custom">
-                                            <?php $this->load->view('partials/_review_stars', ['review' => $review->rating]); ?>
-                                        </div>
-                                        <div class="row-custom">
-                                            <a href="<?php echo generate_profile_url($review->user_slug); ?>">
-                                                <h5 class="username"><?php echo get_shop_name_by_user_id($review->user_id); ?></h5>
-                                            </a>
-                                        </div>
-                                        <div class="row-custom">
-                                            <div class="review">
-                                                <p class="addReadMore showlesscontent"><?php echo html_escape($review->review); ?></p>
+                                        <div class="media-body">
+                                            <div class="row-custom">
+                                                <?php $this->load->view('partials/_review_stars', ['review' => $review->rating]); ?>
+                                            </div>
+                                            <div class="row-custom">
+
+                                                <h5 class="username"><?php echo get_first_last_name_by_user_id($review->user_id); ?></h5>
+
+                                            </div>
+                                            <div class="row-custom">
+                                                <div class="review">
+                                                    <p class="addReadMore showlesscontent"><?php echo html_escape($review->review); ?></p>
+                                                </div>
+                                            </div>
+                                            <div class="row-custom">
+
+                                                <?php foreach ($review_images as $image) : ?>
+                                                    <?php if ($review->id == $image->id) : ?>
+                                                        <img id="review_image1" class="review_image small" src="<?php echo base_url() . $image->image_url; ?> " style="border-radius:10%;width:100px;height:100px" />
+                                                    <?php endif ?>
+                                                <?php endforeach; ?>
+
+                                            </div>
+                                            <div class="row-custom">
+                                                <span class="date"><?php echo time_ago($review->created_at); ?></span>
                                             </div>
                                         </div>
-                                        <div class="row-custom">
-                                            <?php foreach ($review_images as $image) : ?>
-                                                <?php if ($review->id == $image->id) : ?>
-                                                    <img id="review_image1" class="review_image small" src="<?php echo base_url() . $image->image_url; ?> " style="border-radius:10%;width:100px;height:100px" />
-                                                <?php endif ?>
-                                            <?php endforeach; ?>
-                                        </div>
-                                        <div class="row-custom">
-                                            <span class="date"><?php echo time_ago($review->created_at); ?></span>
-                                        </div>
                                     </div>
-                                </li>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="row" id="reviews-for-mobile-view">
+                <div class="col-12">
+                    <div class="review-total">
+                        <label class="label-review"><?php echo trans("reviews"); ?>&nbsp;(<?php echo $review_count; ?>)</label>
+                        <?php if ($this->auth_check && $product->listing_type == "ordinary_listing" && $product->user_id != $this->auth_user->id) : ?>
+                            <button type="button" class="btn btn-default btn-custom btn-add-review float-right" data-toggle="modal" data-target="#rateProductModal" data-product-id="<?php echo $product->id; ?>"><?php echo trans("add_review") ?></button>
+                        <?php endif; ?>
+                        <?php if (!empty($reviews)) :
+                            $this->load->view('partials/_review_stars', ['review' => $product->rating]);
+                        endif; ?>
+                    </div>
+                    <?php if (empty($reviews)) : ?>
+                        <p class="no-comments-found"><?php echo trans("no_reviews_found"); ?></p>
+                    <?php else : ?>
+                        <ul class="list-unstyled list-reviews flexed-reviews">
+                            <?php foreach ($reviews as $review) : ?>
+                                <?php if ($product->id == $review->product_id) : ?>
+                                    <li class="media">
+                                        <a href="<?php echo generate_profile_url($review->user_slug); ?>">
+                                            <img src="<?php echo get_user_avatar_by_id($review->user_id); ?>" alt="<?php echo get_shop_name_by_user_id($review->user_id); ?>">
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="row-custom">
+                                                <?php $this->load->view('partials/_review_stars', ['review' => $review->rating]); ?>
+                                            </div>
+                                            <div class="row-custom">
+                                                <a href="<?php echo generate_profile_url($review->user_slug); ?>">
+                                                    <h5 class="username"><?php echo get_shop_name_by_user_id($review->user_id); ?></h5>
+                                                </a>
+                                            </div>
+                                            <div class="row-custom">
+                                                <div class="review">
+                                                    <p class="addReadMore showlesscontent"><?php echo html_escape($review->review); ?></p>
+                                                </div>
+                                            </div>
+                                            <div class="row-custom">
+                                                <?php foreach ($review_images as $image) : ?>
+                                                    <?php if ($review->id == $image->id) : ?>
+                                                        <img id="review_image1" class="review_image small" src="<?php echo base_url() . $image->image_url; ?> " style="border-radius:10%;width:100px;height:100px" />
+                                                    <?php endif ?>
+                                                <?php endforeach; ?>
+                                            </div>
+                                            <div class="row-custom">
+                                                <span class="date"><?php echo time_ago($review->created_at); ?></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script>
-    $(document).ready(function() {
-        $('.review_image').hover(function() {
-            $(this).addClass('transition');
-            // other code     
-        }, function() {
-            $(this).removeClass('transition');
+    <div class="modal" id="feedback_msg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-custom">
+                <div class="modal-body" style="padding:2px; margin-right:1px; border-radius:5px; ">
+                    <button type="button" class="close" data-dismiss="modal" style="font-size:25px; color:#000000;font-weight: bolder; text-shadow:0 1px 0 #000000 !important;">
+                        <span aria-hidden="true">
+                            <i class="icon-close"></i></span>
+                    </button>
+                    <img src="<?php echo base_url(); ?>assets/img/NewFeedback.png" style="width: 100%;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('.review_image').hover(function() {
+                $(this).addClass('transition');
+                // other code     
+            }, function() {
+                $(this).removeClass('transition');
+            });
         });
-    });
-</script>
+    </script>
 
-<!-- <script>
+    <!-- <script>
     var str = "your long string with many words.";
     var wordCount = str.match(/(\w+)/g).length;
     console.log(wordCount);
@@ -250,73 +284,172 @@
 </script> -->
 
 
-<!-- see more script -->
+    <!-- see more script -->
+    <script>
+        function AddReadMore() {
+            //This limit you can set after how much characters you want to show Read More.
+            var carLmt = 30;
+            // Text to show when text is collapsed
+            var readMoreTxt = " ... Read More";
+            // Text to show when text is expanded
+            var readLessTxt = " Read Less";
+
+
+            //Traverse all selectors with this class and manupulate HTML part to show Read More
+            $(".addReadMore").each(function() {
+                if ($(this).find(".firstSec").length)
+                    return;
+
+                var allstr = $(this).text();
+                if (allstr.length > carLmt) {
+                    var firstSet = allstr.substring(0, carLmt);
+                    var secdHalf = allstr.substring(carLmt, allstr.length);
+                    var strtoadd = firstSet + "<span class='SecSec'>" + secdHalf + "</span><span class='readMore'  title='Click to Show More'>" + readMoreTxt + "</span><span class='readLess' title='Click to Show Less'>" + readLessTxt + "</span>";
+                    $(this).html(strtoadd);
+                }
+
+            });
+            //Read More and Read Less Click Event binding
+            $(document).on("click", ".readMore,.readLess", function() {
+                $(this).closest(".addReadMore").toggleClass("showlesscontent showmorecontent");
+            });
+        }
+        $(function() {
+            //Calling function after Page Load
+            AddReadMore();
+        });
+
+
+        // $(function() {
+
+        //     var maxL = 40;
+        //     var i = 0;
+        //     $('.content').each(function() {
+
+        //         var text = $(this).text();
+        //         if (text.length > maxL) {
+        //             var begin = text.substr(0, maxL),
+        //                 end = text.substr(maxL);
+
+        //             $(this).html(begin)
+        //                 .append($('<a class="readmore"/>').html(' ...more'))
+        //                 .append($('<div class="more-review" />').html(end));
+        //         }
+        //     });
+
+        //     $(document).on('click', '.readmore', function() {
+        //         // i++;
+        //         $(this).html('');
+        //         // if (i % 2 != 0) {
+        //         //     $(this).html(' ...less');
+        //         // } else {
+        //         //     $(this).html(' ...more');
+        //         // }
+        //         // $(this).next('.readmore').html('');
+        //         // $(this).next('.readmore').fadeOut("400");
+        //         $(this).next('.more-review').slideToggle(400);
+
+        //     })
+        // })
+        
+    </script>
+    <!-- end for see more -->
+    <?php $this->load->view('partials/_modal_rate_product'); ?>
+
+</body>
+
 <script>
-    function AddReadMore() {
-        //This limit you can set after how much characters you want to show Read More.
-        var carLmt = 30;
-        // Text to show when text is collapsed
-        var readMoreTxt = " ... Read More";
-        // Text to show when text is expanded
-        var readLessTxt = " Read Less";
+    $("#submit_btn").click(function(event) {
+            // alert('jhgdujgdh');
+            event.preventDefault();
+            var auth = '<?php $this->auth_user->id ?>'
+            console.log(auth)
+            if ($auth != null) {
+                var review = $('#review').val();
+                var product_id = $('#review_product_id').val();
 
 
-        //Traverse all selectors with this class and manupulate HTML part to show Read More
-        $(".addReadMore").each(function() {
-            if ($(this).find(".firstSec").length)
-                return;
+                var data = {
+                    "review": review,
+                    "review_product_id": product_id,
+                    "rating": ""
+                };
+                $.ajax({
+                    type: "POST",
+                    url: 'home_controller/add_review_post',
+                    data: data,
+                    success: function(response) {
+                        console.log(response)
+                        var i = JSON.parse(response);
 
-            var allstr = $(this).text();
-            if (allstr.length > carLmt) {
-                var firstSet = allstr.substring(0, carLmt);
-                var secdHalf = allstr.substring(carLmt, allstr.length);
-                var strtoadd = firstSet + "<span class='SecSec'>" + secdHalf + "</span><span class='readMore'  title='Click to Show More'>" + readMoreTxt + "</span><span class='readLess' title='Click to Show Less'>" + readLessTxt + "</span>";
-                $(this).html(strtoadd);
+                        if (i == true) {
+                            //console.log(i);
+                            reset_data.reset();
+                            // $('#rateProductModal').modal('hide');
+                            $('#feedback_msg').modal('show');
+
+                            // setTimeout(function() {
+                            // $('#feedback_msg').modal('hide');
+                            // }, 6000);
+                        } else {
+                            reset_data.reset();
+                            // 
+                            window.location.reload();
+                        }
+                    }
+                })
+                // alert("manoj")
+            } else {
+                $('#loginModal').modal('show');
             }
 
-        });
-        //Read More and Read Less Click Event binding
-        $(document).on("click", ".readMore,.readLess", function() {
-            $(this).closest(".addReadMore").toggleClass("showlesscontent showmorecontent");
-        });
-    }
-    $(function() {
-        //Calling function after Page Load
-        AddReadMore();
-    });
-
-
-    // $(function() {
-
-    //     var maxL = 40;
-    //     var i = 0;
-    //     $('.content').each(function() {
-
-    //         var text = $(this).text();
-    //         if (text.length > maxL) {
-    //             var begin = text.substr(0, maxL),
-    //                 end = text.substr(maxL);
-
-    //             $(this).html(begin)
-    //                 .append($('<a class="readmore"/>').html(' ...more'))
-    //                 .append($('<div class="more-review" />').html(end));
-    //         }
-    //     });
-
-    //     $(document).on('click', '.readmore', function() {
-    //         // i++;
-    //         $(this).html('');
-    //         // if (i % 2 != 0) {
-    //         //     $(this).html(' ...less');
-    //         // } else {
-    //         //     $(this).html(' ...more');
-    //         // }
-    //         // $(this).next('.readmore').html('');
-    //         // $(this).next('.readmore').fadeOut("400");
-    //         $(this).next('.more-review').slideToggle(400);
-
-    //     })
-    // })
+        })
 </script>
-<!-- end for see more -->
-<?php $this->load->view('partials/_modal_rate_product'); ?>
+
+<script>
+    function submit_review() {
+        // event.preventDefault();
+            
+            var auth = '<?php echo $this->auth_user->id ?>';
+            console.log(auth);
+            if (auth != '') {
+                var review = $('#review').val();
+                var product_id = $('#review_product_id').val();
+
+
+                var data = {
+                    "review": review,
+                    "product_id": product_id,
+                    "rating": ""
+                };
+                $.ajax({
+                    type: "POST",
+                    url: 'home_controller/add_review_post',
+                    data: data,
+                    success: function(response) {
+                        console.log(response)
+                        var i = JSON.parse(response);
+
+                        if (i == true) {
+                            //console.log(i);
+                            reset_data.reset();
+                            // $('#rateProductModal').modal('hide');
+                            $('#feedback_msg').modal('show');
+
+                            // setTimeout(function() {
+                            // $('#feedback_msg').modal('hide');
+                            // }, 6000);
+                        } else {
+                            reset_data.reset();
+                            // 
+                            // window.location.reload();
+                        }
+                    }
+                })
+                // alert("manoj")
+            } else {
+                alert("Login first");
+                // $('#loginModal').modal('show');
+            }
+    }
+</script>
