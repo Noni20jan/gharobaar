@@ -6,24 +6,24 @@ if (!empty($seller_wise_data)) :
     $seller_shipping_cod = ($seller_wise_data->total_shipping_cost + $seller_wise_data->total_cod_cost) / 100;
 
 endif;
-$ct=$this->order_model->supplier_count($seller_wise_data->order_id);
-$price=$this->order_model->get_order_price($seller_wise_data->order_id);
-$ctotal=$this->cart_model->cart_total();
+$ct = $this->order_model->supplier_count($seller_wise_data->order_id);
+$price = $this->order_model->get_order_price($seller_wise_data->order_id);
+$ctotal = $this->cart_model->cart_total();
 
-$seller_count=array();
-$j=0;
-$i=0;
+$seller_count = array();
+$j = 0;
+$i = 0;
 
-foreach($ct as $count){
-    $seller_count[$i]=$ct[0]->seller_id;
+foreach ($ct as $count) {
+    $seller_count[$i] = $ct[0]->seller_id;
     ++$i;
 }
 // for($j=0;$j<=$i;$j++){
 //     $amt[$j]=$ct[0]->price_after_discount;
 // }
 
-if($price[0]->price_total<100000):
-    $seller_wise_data->prod_amount_after_disc=$seller_wise_data->prod_amount_after_disc+(10000/$i);
+if ($price[0]->price_total < 100000) :
+    $seller_wise_data->prod_amount_after_disc = $seller_wise_data->prod_amount_after_disc + (10000 / $i);
 endif;
 // var_dump($i);
 // var_dump($price[0]->price_total);
@@ -760,9 +760,11 @@ endif;
                                                             </p>
                                                             <?php if (!empty($shiprocket_order_details->awb_code)) : ?>
                                                                 <p class="m-b-5">
-                                                                    <?php //if ($this->general_settings->cancel_shipment == 1) { ?>
-                                                                        <button type="button" class="btn btn-md btn-block btn-danger" onclick="shiprocket_cancel_order('<?php echo $shiprocket_order_details->shipment_order_id; ?>','Are you sure you want to cancel the shipment?')"> Cancel Shipment </button>
-                                                                    <?php //} ?>
+                                                                    <?php //if ($this->general_settings->cancel_shipment == 1) { 
+                                                                    ?>
+                                                                    <button type="button" class="btn btn-md btn-block btn-danger" onclick="shiprocket_cancel_order('<?php echo $shiprocket_order_details->shipment_order_id; ?>','Are you sure you want to cancel the shipment?')"> Cancel Shipment </button>
+                                                                    <?php //} 
+                                                                    ?>
                                                                 </p>
                                                             <?php endif; ?>
                                                         <?php endif; ?>
@@ -906,14 +908,14 @@ endif;
                             <strong><?php echo price_formatted($sale_discount * 100, $order->price_currency); ?>/-</strong>
                         </div>
                     </div>
-                    <?php if ($price[0]->price_total<100000) : ?>
+                    <?php if ($price[0]->price_total < 100000) : ?>
                         <div class="row">
                             <div class="col-sm-6 col-xs-6 col-left">
                                 <?php echo trans("shipping"); ?>
                             </div>
 
                             <div class="col-sm-6 col-xs-6 col-right">
-                                <strong><?php echo price_formatted(10000/$i, $order->price_currency); ?>/-</strong>
+                                <strong><?php echo price_formatted(10000 / $i, $order->price_currency); ?>/-</strong>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -953,8 +955,8 @@ endif;
                         </div>
                         <div class="col-sm-6 col-xs-6 col-right">
                             <?php if (!is_null($seller_wise_data)) : ?>
-                                <?php if ($price[0]->price_total<100000) : ?>
-                                    <strong><?php echo price_formatted($sale_total + (10000/$i), $order->price_currency); ?>/-</strong>
+                                <?php if ($price[0]->price_total < 100000) : ?>
+                                    <strong><?php echo price_formatted($sale_total + (10000 / $i), $order->price_currency); ?>/-</strong>
                                 <?php else : ?>
                                     <strong><?php echo price_formatted($sale_total, $order->price_currency); ?>/-</strong>
                                 <?php endif; ?>
@@ -1477,6 +1479,7 @@ endforeach; ?>
                 "email": "<?php echo $this->auth_user->email ?>",
                 "phone": <?php echo $this->auth_user->phone_number ?>,
                 "name": "<?php echo $this->auth_user->shop_name ?>",
+                "gst_number": "<?php echo $this->auth_user->gst_number ?>",
                 "address": "##00-".concat(products_array[0].product_address),
                 "address_2": products_array[0].landmark.concat(", ", products_array[0].product_area),
                 "city": products_array[0].product_city,
