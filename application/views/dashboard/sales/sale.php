@@ -1489,6 +1489,7 @@ endforeach; ?>
                 "pickup_location": uniqid
             }
         };
+        console.log(required_data);
         var data = {
             "order": required_data,
             sys_lang_id: sys_lang_id
