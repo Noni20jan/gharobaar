@@ -419,24 +419,9 @@ function open_close_user_shop(id, message) {
     }
 };
 
-// Change User role from vendor to member
-
-function change_user_role(id) {
-    var data = {
-        'id': id,
-    };
-    data[csfr_token_name] = $.cookie(csfr_cookie_name);
-    $.ajax({
-        type: "POST",
-        url: base_url + "membership_controller/change_user_role",
-        data: data,
-        success: function (response) {
-            location.reload();
-        }
-    });
-};
 
 // Change user role warning when vendor has orders in processing 
+
 function change_user_role_warning(url, id) {
     swal({
         text: "This Vendor has some orders in processing state. Kindly try again after completion of all orders",
@@ -455,8 +440,35 @@ function change_user_role_warning(url, id) {
                 url: base_url + url,
                 data: data,
                 success: function (response) {
-                    // location.reload();
-                    console.log()
+                    console.log(response)
+                }
+            });
+        }
+    });
+};
+
+// Change user role warning for changing Vendor to Member
+
+function change_user_role_success(id) {
+    swal({
+        text: "Are you sure you want to change user role?",
+        icon: "warning",
+        buttons: true,
+        buttons: [sweetalert_cancel, sweetalert_ok],
+        dangerMode: true,
+    }).then(function (willDelete) {
+        if (willDelete) {
+            var data = {
+                'id': id,
+            };
+            data[csfr_token_name] = $.cookie(csfr_cookie_name);
+            $.ajax({
+                type: "POST",
+                url: base_url + "membership_controller/change_user_role",
+                data: data,
+                success: function (response) {
+                    location.reload();
+                    console.log(response)
                 }
             });
         }

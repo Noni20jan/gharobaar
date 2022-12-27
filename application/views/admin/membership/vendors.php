@@ -78,10 +78,10 @@
                                                         <?php if (count($status) > 0) : ?>
                                                             <a href="javascript:void(0)" onclick="change_user_role_warning(<?php echo $user->id; ?>,'<?php echo trans("confirm_change_user_role"); ?>');"><i class="fa fa-repeat option-icon"></i><?php echo trans('change_role'); ?></a>
                                                         <?php else : ?>
-                                                            <a href="javascript:void(0)" onclick="change_user_role(<?php echo $user->id; ?>,'<?php echo trans("confirm_change_user_role"); ?>');"><i class="fa fa-repeat option-icon"></i><?php echo trans('change_role'); ?></a>
+                                                            <a href="javascript:void(0)" onclick="change_user_role_success(<?php echo $user->id; ?>,'<?php echo trans("confirm_change_user_role"); ?>');"><i class="fa fa-repeat option-icon"></i><?php echo trans('change_role'); ?></a>
                                                         <?php endif; ?>
                                                     <?php else : ?>
-                                                        <a href="javascript:void(0)" onclick="change_user_role(<?php echo $user->id; ?>,'<?php echo trans("confirm_change_user_role"); ?>');"><i class="fa fa-repeat option-icon"></i><?php echo trans('change_role'); ?></a>
+                                                        <a href="javascript:void(0)" onclick="change_user_role_success(<?php echo $user->id; ?>,'<?php echo trans("confirm_change_user_role"); ?>');"><i class="fa fa-repeat option-icon"></i><?php echo trans('change_role'); ?></a>
                                                     <?php endif ?>
                                                 </li>
                                                 <li>
