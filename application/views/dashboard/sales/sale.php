@@ -1489,6 +1489,7 @@ endforeach; ?>
                 "pickup_location": uniqid
             }
         };
+        console.log('<?php echo ($seller_wise_data) ?>', '<?php echo ($seller_wise_data->prod_amount_after_disc) ?>', '<?php echo ($total_quantity_price) ?>');
         console.log(required_data);
         var data = {
             "order": required_data,
