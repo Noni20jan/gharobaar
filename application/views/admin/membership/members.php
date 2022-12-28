@@ -114,6 +114,15 @@
 <script>
     function disable_cod_user(id) {
         // alert("Working");
+        swal({
+        text: "Are you sure you want to disable COD orders for this user?",
+        icon: "warning",
+        buttons: true,
+        buttons: ["No", "Yes"],
+        dangerMode: true,
+}).then(function (willDelete){
+        if (willDelete) {
+
         var data = {
             'id': id,
         };
@@ -128,9 +137,19 @@
             }
         });
     }
+});
+    };
 
     function enable_cod_user(id) {
         // alert("Working");
+        swal({
+        text: "Are you sure you want to Enable COD orders for this user?",
+        icon: "warning",
+        buttons: true,
+        buttons: ["No", "Yes"],
+        dangerMode: true,
+}).then(function (willDelete){
+        if (willDelete) {
         var data = {
             'id': id,
         };
@@ -146,4 +165,6 @@
         });
 
     }
+});
+    };
 </script>
