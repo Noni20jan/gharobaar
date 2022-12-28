@@ -613,7 +613,7 @@ class Membership_controller extends Admin_Core_Controller
         $id = $this->input->post('id', true);
         if ($this->auth_model->disable_cod_user($id)) {
             $data = true;
-            $this->session->set_flashdata('success', ('User Disabled For COD Orders Succesfully'));
+            $this->session->set_flashdata('success', ('User Disabled For COD Orders Successfully'));
         } else {
             $data = false;
             $this->session->set_flashdata('error', trans("msg_error"));
@@ -626,7 +626,7 @@ class Membership_controller extends Admin_Core_Controller
         $id = $this->input->post('id', true);
         if ($this->auth_model->enable_cod_user($id)) {
             $data = true;
-            $this->session->set_flashdata('success', ('User Enabled For COD Orders Succesfully'));
+            $this->session->set_flashdata('success', ('User Enabled For COD Orders Successfully'));
         } else {
             $data = false;
             $this->session->set_flashdata('error', trans("msg_error"));
