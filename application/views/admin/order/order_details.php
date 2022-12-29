@@ -436,7 +436,7 @@
                                         <th><?php echo trans('shipping_cost'); ?></th>
                                         <th><?php echo trans('total'); ?></th>
                                         <th><?php echo trans('status'); ?></th>
-                                        <!-- <th><?php //echo "AWB No."; ?></th> -->
+                                        <th><?php echo "AWB No."; ?></th>
                                         <th><?php echo trans('updated'); ?></th>
                                         <th class="max-width-120"><?php echo trans('options'); ?></th>
                                     </tr>
@@ -517,10 +517,11 @@
                                                     <?php endif; ?>
                                                 </div>
                                             </td>
-                                            <!-- <td><?php //$awb_code = $this->order_model->get_awb_code($item->order_id, $item->product_id); ?>
-                                                <?php //echo $awb_code[0]->awb_code;
-                                                ?>
-                                            </td> -->
+                                            <td><?php $awb_code = $this->order_model->get_awb_code($item->order_id, $item->product_id); 
+                                            if(!empty($awb_code)):?>
+                                                <?php echo $awb_code[0]->awb_code;
+                                               endif; ?>
+                                            </td>
                                             <td>
                                                 <?php if ($item->product_type == 'physical') :
                                                     echo time_ago($item->updated_at);
