@@ -16,7 +16,7 @@
 
         .footer-image {
             /* background-image: url('https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Images1/Frame.jpg'); */
-            background-color: #FFFFFF;
+            background-color: #000000;
             width: 100%;
             height: 100%;
         }
@@ -27,7 +27,7 @@
             max-width: 100%;
         }
 
-        body {
+        body {  
             background-color: #F9F9F9;
             font-family: sans-serif;
             -webkit-font-smoothing: antialiased;
@@ -393,15 +393,15 @@
                 <div class="content">
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
                         <tr>
-                            <td style="text-align: center; background:#FFFFFF;">
-                                <a href="https://www.gharobaar.com/products?search=nutaste"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/1.png"></a>
-                                <a href="https://www.gharobaar.com/products?search=ecosattva"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/2.png"></a>
+                            <td style="text-align: center; background:black;">
+                                <a href="https://www.gharobaar.com/"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/new+year+mailer.png"></a>
+                                <!-- <a href="https://www.gharobaar.com/products?search=ecosattva"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/2.png"></a>
                                 <a href="https://www.gharobaar.com/products?search=lejina"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/3.png"></a>
                                 <a href="https://www.gharobaar.com/products?search=mmasala"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/4.png"></a>
                                 <a href="https://www.gharobaar.com/products?search=supernatural"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/5.png"></a>
                                 <a href="https://www.gharobaar.com/products?search=shushu"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/6.png"></a>
                                 <a href="https://www.gharobaar.com/products?search=mommade%20pickles"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/7.png"></a>
-                                <a href="https://www.gharobaar.com/grocery?discount=More_than_50,0-25"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/8.png"></a>
+                                <a href="https://www.gharobaar.com/grocery?discount=More_than_50,0-25"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/8.png"></a> -->
                                 <div class="footer-image">
                                     <table border="0" cellpadding="0" cellspacing="0">
                                         <tr>
@@ -428,7 +428,7 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic12.png" width="30%">
+                                    <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/png_20221230_145220_0000_1.png" width="30%">
                                     <br>
                                     <br>
                                 </div>
