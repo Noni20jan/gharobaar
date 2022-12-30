@@ -409,8 +409,8 @@
                                                 <table border="0" cellpadding="0" cellspacing="0" class="body4">
                                                     <tr>
 
-                                                        <td class="visit-us-at" style="vertical-align: middle;text-align: right;">
-                                                            <img src="https://gharobaar.com/assets/img/valentine_img/VISIT%20US%20AT.png">
+                                                        <td class="visit-us-at" style="vertical-align: middle;text-align: right; color:white; ">
+                                                            <p style="font-size: 22px;">VISIT US AT</p>
                                                         </td>
                                                         <td style="text-align: left;width: 56%;">
 
