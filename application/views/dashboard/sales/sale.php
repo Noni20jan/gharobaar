@@ -1476,7 +1476,7 @@ endforeach; ?>
             "weight": document.getElementById("total_weight").value / 1000,
             "pickup_location": uniqid,
             "vendor_details": {
-                "vendor_name": ("<?php echo $this->auth_user->first_name ?>").concat("<?php echo $this->auth_user->last_name ?>"),
+                // "vendor_name": ("<?php// echo $this->auth_user->first_name ?>").concat("<?php //echo $this->auth_user->last_name ?>"),
                 "email": "<?php echo $this->auth_user->email ?>",
                 "phone": <?php echo $this->auth_user->phone_number ?>,
                 "name": "<?php echo $this->auth_user->shop_name ?>",
