@@ -4032,19 +4032,20 @@ class Order_model extends CI_Model
         $product_id = clean_number($product_id);
         $this->db->where('order_id', $order_id);
         $this->db->where('product_id', $product_id);
+        $this->db->where('is_active',1);
         $query = $this->db->get('shiprocket_order_details');
         return $query->result();
     }
 
-    public function get_awb_code_by_order($order_number)
-    {
-        $order_number = clean_number($order_number);
-        $this->db->where('order_number', $order_number);
-        //$this->db->get('orders');
-        //$this->db->select('shiprocket_order_details.*');
-        $this->db->join('orders', 'shiprocket_order_details.order_id = orders.id');
-        return $this->db->get('shiprocket_order_details')->result();
-    }
+    // public function get_awb_code_by_order($order_number)
+    // {
+    //     $order_number = clean_number($order_number);
+    //     $this->db->where('order_number', $order_number);
+    //     //$this->db->get('orders');
+    //     //$this->db->select('shiprocket_order_details.*');
+    //     $this->db->join('orders', 'shiprocket_order_details.order_id = orders.id');
+    //     return $this->db->get('shiprocket_order_details')->result();
+    // }
 
     public function get_order_details_by_id($order_id)
     {
