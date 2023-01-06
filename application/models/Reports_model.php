@@ -1019,11 +1019,13 @@ SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order_Month',
  AND  cpd.created_at >= STR_TO_DATE('$start_date', '%Y-%m-%d %k:%i:%s') 
  AND  cpd.created_at <= STR_TO_DATE('$end_date', '%Y-%m-%d %k:%i:%s')
  and c.is_active = 1
- and (CONCAT(u.first_name, ' ', u.last_name) is NOT NULL and
-      CONCAT(u.first_name, ' ', u.last_name) != '' '')
+--  and (CONCAT(u.first_name, ' ', u.last_name) is NOT NULL and
+--       CONCAT(u.first_name, ' ', u.last_name) != '' '')
       ORDER by cpd.created_at DESC";
         $query = $this->db->query($sql);
         return $query->result();
+        // var_dump($this->db->last_query());
+        
     }
     public function fetch_sale_data()
     {
@@ -1447,11 +1449,13 @@ SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order_Month',
           AND YEAR(cpd.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
      AND MONTH(cpd.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
          and c.is_active = 1
-        and (CONCAT(u.first_name, ' ', u.last_name) is NOT NULL and
-      CONCAT(u.first_name, ' ', u.last_name) != '' '')
+    --     and (CONCAT(u.first_name, ' ', u.last_name) is NOT NULL and
+    --   CONCAT(u.first_name, ' ', u.last_name) != '' '')
       ORDER by cpd.created_at DESC";
         $query = $this->db->query($sql);
         return $query->result();
+        //  var_dump($this->db->last_query());
+        // die();
     }
     public function fetch_tcs_report()
     {

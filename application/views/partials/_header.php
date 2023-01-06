@@ -246,7 +246,7 @@
         float: right;
         left: 4px;
     }
-    
+
     @media(max-width:700px) {
         .check_pincode {
             position: relative;
@@ -926,7 +926,8 @@
         }
 
     }
-    .kjxaQJ{
+
+    .kjxaQJ {
         bottom: 47px !important;
     }
 </style>
@@ -1189,15 +1190,15 @@
         }
 
         /* .auth-box1 { */
-            /* background-color: white; */
-            /* padding: 30px; */
-            /* width: 1000px; */
-            /* width: 459px; */
-            /* max-width: 100%; */
-            /* border-radius: 20px; */
-            /* margin: 0 auto; */
-            /* margin-top: 30px; */
-            /* border: 1px solid #f5f5f5;
+        /* background-color: white; */
+        /* padding: 30px; */
+        /* width: 1000px; */
+        /* width: 459px; */
+        /* max-width: 100%; */
+        /* border-radius: 20px; */
+        /* margin: 0 auto; */
+        /* margin-top: 30px; */
+        /* border: 1px solid #f5f5f5;
             box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
             -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
             -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
@@ -1600,20 +1601,20 @@
                     </marquee>
                 </div>
             </article>
-        </div>  
+        </div>
     <?php endif; ?>
     <div style="position:relative; bottom:5px">
-        <img src="<?php echo base_url(); ?>assets/img/christmas-1.png"style="max-width:100%" >
+        <img src="<?php echo base_url(); ?>assets/img/christmas-1.png" style="max-width:100%">
     </div>
     <div id="announcement-mobile-bar">
-                <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
+        <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
 
-                    <div class="animation-mobile-bar">
-                        <marquee behaviour="scroll" direction="left">
-                            <p class="display-mobile"><strong><?php echo trans("free_ship_message"); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo trans("shipping_charge_massage"); ?></strong></p>
-                        </marquee>
-                </article>
-            </div>
+            <div class="animation-mobile-bar">
+                <marquee behaviour="scroll" direction="left">
+                    <p class="display-mobile"><strong><?php echo trans("free_ship_message"); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo trans("shipping_charge_massage"); ?></strong></p>
+                </marquee>
+        </article>
+    </div>
 
     <header id="header">
         <?php //$this->load->view("partials/_top_bar"); 
@@ -2683,7 +2684,7 @@
             </div>
         </div>
         <?php if ($this->general_settings->enable_freeship_message == 1) : ?>
-           
+
             </div>
         <?php endif; ?>
     </header>
@@ -2751,7 +2752,7 @@
                             <!-- include message block -->
                             <div id="result-login" class="font-size-13"></div>
                             <div class="form-group">
-                                <input type="text" name="email" id="guest_email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
+                                <input type="email" name="email" id="guest_email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
                                 <span id="email_span_error" style="color:red;"></span>
                             </div>
 
@@ -2781,7 +2782,7 @@
                                 <a href="#" class="hideguestmodal btn btn-block" data-toggle="modal" data-target="#loginModal">Login</a>
                             </div>
                             <div class="form-group hide_after_response" id="continue_guest_hide" style="text-align:center;">
-                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("continue_as_guest"); ?></button>
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui" onclick="validateEmail()"><?php echo trans("continue_as_guest"); ?></button>
                             </div>
                             <!-- <div class="form-group show_after_response hideMe" style="text-align:center;">
                                 <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("confirm_otp"); ?></button>
@@ -5951,7 +5952,8 @@
             var bt = /\r/g;
             w.fn.extend({
                 val: function(e) {
-                    var t, n, r, i = this[0]; {
+                    var t, n, r, i = this[0];
+                    {
                         if (arguments.length) return r = g(e), this.each(function(n) {
                             var i;
                             1 === this.nodeType && (null == (i = r ? e.call(this, n, w(this).val()) : e) ? i = "" : "number" == typeof i ? i += "" : Array.isArray(i) && (i = w.map(i, function(e) {
@@ -6645,10 +6647,10 @@
         });
     </script>
 
-<script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
-        <script>
-            var sf = new Snowflakes();
-        </script>
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
+    <script>
+        var sf = new Snowflakes();
+    </script>
 
     <!-- chat systems  -->
     <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
@@ -7827,8 +7829,6 @@
     </script>
 
     <script>
-    
-
         function ConvertSectoDay(n) {
             var day = parseInt(n / (24 * 3600));
             n = n % (24 * 3600);
@@ -7895,7 +7895,7 @@
             });
         }
     </script>
-   <script>
+    <script>
         function getdate(dt, days) {
             var date = new Date(dt);
             var day = parseInt(days);
@@ -7922,5 +7922,28 @@
 
             var someFormattedDate = mm + ' ' + dd + ',' + y;
             return someFormattedDate;
+        }
+    </script>
+    <script>
+        function validateEmail() {
+            // $("#newsletter").hide();
+
+            var email;
+            email = document.getElementById("guest_email").value;
+
+            var reg = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            console.log(reg.test(guest_email.value));
+
+            if (reg.test(guest_email.value) == false) {
+                document.getElementById("email_span_error").style.color = "red";
+                document.getElementById("email_span_error").innerHTML = "Please enter valid email address";
+                // alert('Invalid Email Address ->' + email);
+                return false;
+            } else if (reg.test(guest_email.value) == true) {
+
+                document.getElementById("email_span_error").innerHTML = "";
+
+            }
+            return true;
         }
     </script>
