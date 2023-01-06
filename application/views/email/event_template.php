@@ -16,7 +16,7 @@
 
         .footer-image {
             /* background-image: url('https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Images1/Frame.jpg'); */
-            background-color: #000000;
+            background-color: #ffffff;
             width: 100%;
             height: 100%;
         }
@@ -27,7 +27,7 @@
             max-width: 100%;
         }
 
-        body {  
+        body {
             background-color: #F9F9F9;
             font-family: sans-serif;
             -webkit-font-smoothing: antialiased;
@@ -393,14 +393,14 @@
                 <div class="content">
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
                         <tr>
-                            <td style="text-align: center; background:black;">
-                                <a href="https://www.gharobaar.com/"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/new+year+mailer.png"></a>
-                                <!-- <a href="https://www.gharobaar.com/products?search=ecosattva"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/2.png"></a>
-                                <a href="https://www.gharobaar.com/products?search=lejina"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/3.png"></a>
-                                <a href="https://www.gharobaar.com/products?search=mmasala"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/4.png"></a>
-                                <a href="https://www.gharobaar.com/products?search=supernatural"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/5.png"></a>
-                                <a href="https://www.gharobaar.com/products?search=shushu"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/6.png"></a>
-                                <a href="https://www.gharobaar.com/products?search=mommade%20pickles"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/7.png"></a>
+                            <td style="text-align: center; background:#FFFFFF;">
+                                <a href="https://www.gharobaar.com/products?search=shushu" style="background:#FFFFFF;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/shushu+babies/images/SHUSHU_02.png"></a>
+                                <a href="https://gharobaar.com/shushu-babies-super-strawberry-face-and-body-wash-for-kids-with-strawberry-and-manjistha-200ml-13281" style="background:#FFFFFF;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/shushu+babies/images/SHUSHU_03.png"></a>
+                                <a href="https://gharobaar.com/shushu-babies-natural-ubtan-powder-for-skin-100gms-13285" style="background:#FFFFFF;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/shushu+babies/images/SHUSHU_04.png"></a>
+                                <a href="https://gharobaar.com/fragrance-free-shampoo-and-body-wash-for-babies-60ml-13301" style="background:#FFFFFF;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/shushu+babies/images/SHUSHU_05.png"></a>
+                                <a href="https://gharobaar.com/shushu-babies-calming-lavender-face-and-body-lotion-for-babies-200ml-13288" style="background:#FFFFFF;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/shushu+babies/images/SHUSHU_06.png"></a>
+                                <a href="https://gharobaar.com/shushu-babies-wild-raspberry-face-and-body-lotion-for-kids-with-raspberry-shea-butter-and-cocoa-butter-200ml-13283" style="background:#FFFFFF;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/shushu+babies/images/SHUSHU_09.png"></a>
+                                <!-- <a href="https://www.gharobaar.com/products?search=mommade%20pickles"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/7.png"></a>
                                 <a href="https://www.gharobaar.com/grocery?discount=More_than_50,0-25"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/8.png"></a> -->
                                 <div class="footer-image">
                                     <table border="0" cellpadding="0" cellspacing="0">
@@ -409,8 +409,8 @@
                                                 <table border="0" cellpadding="0" cellspacing="0" class="body4">
                                                     <tr>
 
-                                                        <td class="visit-us-at" style="vertical-align: middle;text-align: right; color:white; ">
-                                                            <p style="font-size: 22px;">VISIT US AT</p>
+                                                        <td class="visit-us-at" style="vertical-align: middle;text-align: right;">
+                                                            <img src="https://gharobaar.com/assets/img/valentine_img/VISIT%20US%20AT.png">
                                                         </td>
                                                         <td style="text-align: left;width: 56%;">
 
@@ -428,7 +428,7 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/newsletter_Dec/png_20221230_145220_0000_1.png" width="30%">
+                                    <img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/Email_Iamages/pic12.png" width="30%">
                                     <br>
                                     <br>
                                 </div>
