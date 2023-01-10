@@ -679,7 +679,7 @@ class Admin_controller extends Admin_Core_Controller
     public function send_email_members()
     {
         $data['title'] = trans("send_email_members");
-
+        
         $this->load->view('admin/includes/_header', $data);
         $this->load->view('admin/newsletter/send_email_members', $data);
         $this->load->view('admin/includes/_footer');

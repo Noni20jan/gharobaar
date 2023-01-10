@@ -24,6 +24,8 @@
                     <label for="all">All</label><br>
                     <input type="radio" class="selectBox" id="select_email" name="emailall" onclick="indviduals();" required value="individual" />
                     <label for="individual">Select Email ID</label><br>
+
+                  
                 </div>
                 <div class="form-group" id="indvidual_selection">
                     <select name="emailto[]" id="user_selection" class="selectpicker" data-live-search=" true" multiple>

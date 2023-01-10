@@ -16705,7 +16705,7 @@ img {
     float: left;
     margin-right: 10px;
     margin-bottom: 10px;
-    background-color: ##DF911E
+    background-color: #DF911E
 }
 
 .filter-reset-tag .right {
@@ -27269,15 +27269,15 @@ a.plyr__control::before {
     border-radius: 30px;
     text-align: center;
     margin-bottom: 10%;
-    <<<<<<< Updated upstream margin-left: 5%;
+    margin-left: 5%;
     height: 147px;
     width: 166px;
     border-width: medium;
-    =======margin-left: 5%;
+    margin-left: 5%;
     height: 150%;
     width: 40%;
     border-width: thick;
-    >>>>>>>Stashed changes
+    
 }
 
 

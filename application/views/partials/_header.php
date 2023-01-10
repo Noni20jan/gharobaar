@@ -1603,9 +1603,9 @@
             </article>
         </div>
     <?php endif; ?>
-    <!-- <div style="position:relative; bottom:5px">
-        <img src="<?php echo base_url(); ?>assets/img/christmas-1.png"style="max-width:100%" >
-    </div> -->
+    <div style="position:relative; bottom:5px">
+        <img src="<?php echo base_url(); ?>assets/img/republicday.png"style="max-width:100%" >
+    </div>
     <div id="announcement-mobile-bar">
         <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
 

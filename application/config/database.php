@@ -88,7 +88,7 @@ $db['default'] = array(
     // 'database' => 'local_gharobaar',
 
     'hostname' => '1.23.242.234',
-    'database' => 'test_gharobaar',
+    'database' => 'local_gharobar',
     'username' => 'root',
     'password' => 'AWFDWD#$%^3452$EFGGsdsa',
     'dbdriver' => 'mysqli',
