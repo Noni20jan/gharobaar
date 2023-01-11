@@ -658,6 +658,9 @@
     .dropdown-content {
         scrollbar-color: #fff0 #fff0;
     }
+    .kjxaQJ{
+        bottom: 47px !important;
+    }
 </style>
 
 <style>
@@ -926,10 +929,7 @@
         }
 
     }
-
-    .kjxaQJ {
-        bottom: 47px !important;
-    }
+    
 </style>
 
 <head>
