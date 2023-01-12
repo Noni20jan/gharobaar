@@ -71,6 +71,8 @@ foreach ($cart_items as $item) {
         <?php if ($check_exhibition && $this->general_settings->enable_exhibition) : ?>
         <?php elseif (!(($check_cashond) == "true" && ($check_made_to_order) == false)) : ?>
             <span class="cod_text"> <?php echo trans('cod_not_available'); ?></span>
+            <?php elseif ($this->auth_user->disable_cod == 1):?>
+            <span class="cod_text"><?php echo trans('disable_cod_msg'); ?></span>            
         <?php endif; ?>
     </div>
     <?php echo form_open('payment-method-post', ['id' => 'form_validate', 'class' => 'validate_terms']); ?>
@@ -251,8 +253,8 @@ foreach ($cart_items as $item) {
                         </li>
                     <?php $check_option = false;
                     endif; ?>
-                    <?php if ($this->auth_check == 1 && $this->payment_settings->cash_on_delivery_enabled && empty($cart_has_digital_product)  && $mds_payment_type == "sale" && $this->auth_user->disable_cod == 0) : ?>
-                        <li>
+                    <?php if ($this->auth_check == 1 && $this->payment_settings->cash_on_delivery_enabled && empty($cart_has_digital_product)  && $mds_payment_type == "sale" && $this->auth_user->disable_cod == 0):?>
+                    <li>
                             <div class="option-payment">
                                 <div class="custom-control custom-radio">
                                     <?php if ($check_exhibition && $this->general_settings->enable_exhibition) : ?>
