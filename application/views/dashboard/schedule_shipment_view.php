@@ -67,27 +67,28 @@
 
                     <div class="form-group">
 
-                        <label class="control-label">Total Length(cm)</label>
-                        <input type="text" class="form-control" id="total_length" required name="total_length" value="<?php echo $total_length; ?>" />
+                        <label class="control-label">Total Length(cm)*</label>
+                        <input type="text" class="form-control" id="total_length" required name="total_length" value="<?php // echo $total_length; ?>" onkeyup="remove()"/>
+                        <span id = "length_error" style ="color:red">*Please enter length !</span>
 
                     </div>
                     <div class="form-group">
 
-                        <label class="control-label">Total Height(cm)</label>
-                        <input type="text" class="form-control" id="total_height" required name="total_height" value="<?php echo $total_height; ?>" />
-
+                        <label class="control-label">Total Height(cm)*</label>
+                        <input type="text" class="form-control" id="total_height" required name="total_height" value="<?php //echo $total_height; ?>" onkeyup="remove()"/>
+                        <span id = "height_error" style ="color:red">*Please enter height !</span>
                     </div>
                     <div class="form-group">
 
-                        <label class="control-label">Total Width(cm)</label>
-                        <input type="text" class="form-control" id="total_width" required name="total_width" value="<?php echo $total_width; ?>" />
-
+                        <label class="control-label">Total Width(cm)*</label>
+                        <input type="text" class="form-control" id="total_width" required name="total_width" value="<?php //echo $total_width; ?>" onkeyup="remove()"/>
+                        <span id = "width_error" style ="color:red">*Please enter width !</span>
                     </div>
                     <div class="form-group">
 
-                        <label class="control-label">Total Weight(grams)</label>
-                        <input type="text" class="form-control" id="total_weight" required name="total_weight" value="<?php echo $total_weight; ?>" />
-
+                        <label class="control-label">Total Weight(grams)*</label>
+                        <input type="text" class="form-control" id="total_weight" required name="total_weight" value="<?php //echo $total_weight; ?>" onkeyup="remove()"/>
+                        <span id = "weight_error" style ="color:red">*Please enter weight !</span>
                     </div>
                 </div>
 
@@ -96,7 +97,7 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><?php echo trans("close"); ?></button>
 
-            <button type="button" onclick="check_weight_change(<?php echo htmlspecialchars(json_encode($products), ENT_QUOTES); ?>,<?php echo htmlspecialchars(json_encode($order_items), ENT_QUOTES); ?>);" class="btn btn-md btn-primary">Update</button>
+            <button type="button" id="update_button" onclick="check_weight_change(<?php echo htmlspecialchars(json_encode($products), ENT_QUOTES); ?>,<?php echo htmlspecialchars(json_encode($order_items), ENT_QUOTES); ?>);" class="btn btn-md btn-primary" >Update</button>
         </div>
     <?php elseif ($order_items[0]->product_delivery_partner == "NOW-BIKES") : ?>
         <div class="modal-header">
@@ -157,7 +158,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-md btn-default" data-dismiss="modal"><?php echo trans("close"); ?></button>
-            <button type="submit" class="btn btn-md btn-primary"><?php echo trans("submit"); ?></button>
+            <button type="submit" class="btn btn-md btn-primary" ><?php echo trans("submit"); ?></button>
         </div>
         <?php echo form_close(); ?>
     <?php endif; ?>

@@ -1352,7 +1352,6 @@ endforeach; ?>
         var height = document.getElementById("total_height").value;
         var weight = document.getElementById("total_weight").value;
         var weightsss = (weight / total_weight) * 100;
-        // console.log(weightsss);
         var actual_weight = (length * breadth * height) / 5;
         var nearest_weight = round(total_weight);
         var exceed_value = nearest_weight - actual_weight;
@@ -1568,6 +1567,30 @@ endforeach; ?>
         $('#cover-spin').hide();
     })
 
+// Rohit 12/01/23 -: Validations for volumetric weight updation
+    function remove() {
+        document.getElementById("update_button").disabled = false;
+        document.getElementById("length_error").style.display= "block";
+        document.getElementById("height_error").style.display= "block";
+        document.getElementById("width_error").style.display= "block";
+        document.getElementById("weight_error").style.display= "block";
+        if ($('#total_length').val() != "") {
+            document.getElementById("length_error").style.display= "none"; 
+        }
+        if ($('#total_height').val() != "") {
+            document.getElementById("height_error").style.display= "none"; 
+        }
+        if ($('#total_width').val() != "") {
+            document.getElementById("width_error").style.display= "none"; 
+        }
+        if ($('#total_weight').val() != "") {
+            document.getElementById("weight_error").style.display= "none"; 
+        }
+        if($("#total_length").val() == "" || $("#total_height").val() == "" || $("#total_width").val() == "" || $("#total_weight").val() == "") {
+            $('#update_button').prop('disabled', true);
+        }
+    }
+
     function Schedule_Multiple_shipment() {
         var product_ids = [];
         $("input[name='checkbox-table']").each(function() {
@@ -1601,6 +1624,11 @@ endforeach; ?>
 
                 if (obj.result == 1) {
                     document.getElementById("response_shipment_modal").innerHTML = obj.html_content;
+                    document.getElementById("update_button").disabled = true;
+                    document.getElementById("length_error").style.display= "none";
+                    document.getElementById("height_error").style.display= "none";
+                    document.getElementById("width_error").style.display= "none";
+                    document.getElementById("weight_error").style.display= "none";
                 }
                 setTimeout(
                     function() {
