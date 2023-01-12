@@ -385,21 +385,21 @@
     </style>
 </head>
 
-<body class="">
+<body style="color:#FFFFFF;">
 
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
         <tr>
-            <td class="container">
-                <div class="content">
+            <td class="container" style="background:#FFFFFF;">
+                <div class="content" style="background:#FFFFFF;">
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
                         <tr>
                             <td style="text-align: center; background:#FFFFFF;">
-                                <a href="https://www.gharobaar.com/products?search=shushu" style="background:#FFFFFF;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/shushu+babies/images/SHUSHU_02.png"></a>
-                                <a href="https://gharobaar.com/shushu-babies-super-strawberry-face-and-body-wash-for-kids-with-strawberry-and-manjistha-200ml-13281" style="background:#FFFFFF;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/shushu+babies/images/SHUSHU_03.png"></a>
-                                <a href="https://gharobaar.com/shushu-babies-natural-ubtan-powder-for-skin-100gms-13285" style="background:#FFFFFF;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/shushu+babies/images/SHUSHU_04.png"></a>
-                                <a href="https://gharobaar.com/fragrance-free-shampoo-and-body-wash-for-babies-60ml-13301" style="background:#FFFFFF;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/shushu+babies/images/SHUSHU_05.png"></a>
-                                <a href="https://gharobaar.com/shushu-babies-calming-lavender-face-and-body-lotion-for-babies-200ml-13288" style="background:#FFFFFF;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/shushu+babies/images/SHUSHU_06.png"></a>
-                                <a href="https://gharobaar.com/shushu-babies-wild-raspberry-face-and-body-lotion-for-kids-with-raspberry-shea-butter-and-cocoa-butter-200ml-13283" style="background:#FFFFFF;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/shushu+babies/images/SHUSHU_09.png"></a>
+                                <a href="https://gharobaar.com/products?search=Lejina%20&%20Supriya%27s%20Designs" ><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/LSD+Emailer/lsd_01.png" style="background:#FFFFFF; padding:0; margin:0;border:0;"></a>
+                                <a href="https://gharobaar.com/white-blue-peacock-saree-6074" ><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/LSD+Emailer/lsd_02.png"style="background:#FFFFFF; padding:0; margin:0;border:0;"></a>
+                                <a href="https://gharobaar.com/black-satin-angel-wing-kaftan-10975" style="background:#FFFFFF; padding:0px; margin:0px;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/LSD+Emailer/lsd_03.png"style="background:#FFFFFF; padding:0; margin:0;border:0;"></a>
+                                <a href="https://gharobaar.com/peach-mandala-saree-4599" style="background:#FFFFFF; padding:0px; margin:0px;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/LSD+Emailer/lsd_04.png"style="background:#FFFFFF; padding:0; margin:0;border:0;"></a>
+                                <a href="https://gharobaar.com/rainbow-color-satin-silk-dupattagold-embroidery-8939" style="background:#FFFFFF; padding:0px; margin:0px;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/LSD+Emailer/lsd_05.png"style="background:#FFFFFF; padding:0; margin:0;border:0;"></a>
+                                <a href="https://gharobaar.com/rawsilk-yellow-embroidery-work-saree-9317" style="background:#FFFFFF; padding:0px; margin:0px;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/LSD+Emailer/lsd_06.png"style="background:#FFFFFF; padding:0; margin:0;border:0;"></a>
                                 <!-- <a href="https://www.gharobaar.com/products?search=mommade%20pickles"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/7.png"></a>
                                 <a href="https://www.gharobaar.com/grocery?discount=More_than_50,0-25"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/EMAILERS_16_12_2022/8.png"></a> -->
                                 <div class="footer-image">
