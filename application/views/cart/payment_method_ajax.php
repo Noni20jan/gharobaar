@@ -72,7 +72,7 @@ foreach ($cart_items as $item) {
         <?php elseif (!(($check_cashond) == "true" && ($check_made_to_order) == false)) : ?>
             <span class="cod_text"> <?php echo trans('cod_not_available'); ?></span>
             <?php elseif ($this->auth_user->disable_cod == 1):?>
-            <span class="cod_text"><?php echo trans('disable_cod_msg'); ?></span>            
+            <span style="color:red;font-weight: 500;font-size: 16px;"><?php echo trans('disable_cod_msg'); ?></span>            
         <?php endif; ?>
     </div>
     <?php echo form_open('payment-method-post', ['id' => 'form_validate', 'class' => 'validate_terms']); ?>
