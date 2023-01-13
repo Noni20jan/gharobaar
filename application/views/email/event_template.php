@@ -382,6 +382,9 @@
                 width: 20% !important;
             }
         }
+        #test{
+            font-size:0;
+        }
     </style>
 </head>
 
@@ -393,7 +396,7 @@
                 <div class="content" style="background:#FFFFFF;">
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
                         <tr>
-                            <td style="text-align: center; background:#FFFFFF;">
+                            <td id="test" style="text-align: center; background:#FFFFFF;">
                                 <a href="https://gharobaar.com/products?search=Lejina%20&%20Supriya%27s%20Designs" ><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/LSD+Emailer/lsd_01.png" style="background:#FFFFFF; padding:0; margin:0;border:0;"></a>
                                 <a href="https://gharobaar.com/white-blue-peacock-saree-6074" ><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/LSD+Emailer/lsd_02.png"style="background:#FFFFFF; padding:0; margin:0;border:0;"></a>
                                 <a href="https://gharobaar.com/black-satin-angel-wing-kaftan-10975" style="background:#FFFFFF; padding:0px; margin:0px;"><img src="https://live-gharobaar.s3.ap-south-1.amazonaws.com/uploads/LSD+Emailer/lsd_03.png"style="background:#FFFFFF; padding:0; margin:0;border:0;"></a>
