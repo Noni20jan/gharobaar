@@ -1446,9 +1446,9 @@ SELECT DATE_FORMAT(sdr.order_date, '%M %Y') as 'Order_Month',
         INNER JOIN cart_product_details as cpd
          ON c.id = cpd.cart_id
          WHERE cpd.is_active = 1
-          AND YEAR(cpd.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
-     AND MONTH(cpd.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
-         and c.is_active = 1
+    --       AND YEAR(cpd.created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+    --  AND MONTH(cpd.created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+         And c.is_active = 1
     --     and (CONCAT(u.first_name, ' ', u.last_name) is NOT NULL and
     --   CONCAT(u.first_name, ' ', u.last_name) != '' '')
       ORDER by cpd.created_at DESC";
