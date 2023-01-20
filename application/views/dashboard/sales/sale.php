@@ -738,52 +738,53 @@ endif;
                                                         <img src='<?php echo base_url(); ?>assets/reload.gif' width='32px' height='32px'>
                                                     </div>
                                                     <!-- Image loader -->
-                                                    <div class='response'></div>
+                                                    <!-- <div class='response'></div>
 
-                                            <?php if ($item->product_delivery_partner == "SHIPROCKET") : ?>
+                                            <?php // if ($item->product_delivery_partner == "SHIPROCKET") : ?>
                                                 <?php $shiprocket_order_details = get_shiprocket_order_details($order->id, $item->product_id); ?>
 
-                                                <?php if (!empty($shiprocket_order_details) && $shiprocket_order_details->is_active == 1) : ?>
-                                                    <?php if (!empty($shiprocket_order_details->awb_code)) : ?>
+                                                <?php // if (!empty($shiprocket_order_details) && $shiprocket_order_details->is_active == 1) : ?>
+                                                    <?php// if (!empty($shiprocket_order_details->awb_code)) : ?>
                                                         <p class="m-b-5">
-                                                            <button type="button" style="width:100%; border-radius:20px; color:white" class="btn btn-md btn-block btn-warning"><a style="color:white" href="<?php echo $shiprocket_order_details->manifest_url ?>">Download Manifest</a></button>
+                                                            <button type="button" style="width:100%; border-radius:20px; color:white" class="btn btn-md btn-block btn-warning"><a style="color:white" href="<?php // echo $shiprocket_order_details->manifest_url ?>">Download Manifest</a></button>
                                                         </p>
                                                         <p class="m-b-5">
-                                                            <button type="button" style="width:100%; border-radius:20px; color:white" class="btn btn-md btn-block btn-dark"><a style="color:white" href="<?php echo $shiprocket_order_details->label_url ?>">Download Label</a></button>
+                                                            <button type="button" style="width:100%; border-radius:20px; color:white" class="btn btn-md btn-block btn-dark"><a style="color:white" href="<?php // echo $shiprocket_order_details->label_url ?>">Download Label</a></button>
                                                         </p>
-                                                    <?php endif; ?>
+                                                    <?php // endif; ?>
 
                                                     <p class="m-b-5">
-                                                        <button type="button" style="width:100%;" class="btn btn-md btn-block btn-primary" data-toggle="modal"><a style="color:white" href="<?php echo base_url(); ?>dashboard/track_status/<?php echo $shiprocket_order_details->awb_code ?>"> Track Status </a></button>
+                                                        <button type="button" style="width:100%;" class="btn btn-md btn-block btn-primary" data-toggle="modal"><a style="color:white" href="<?php // echo base_url(); ?>dashboard/track_status/<?php // echo $shiprocket_order_details->awb_code ?>"> Track Status </a></button>
                                                     </p>
-                                                    <?php if (!empty($shiprocket_order_details->awb_code)) : ?>
+                                                    <?php // if (!empty($shiprocket_order_details->awb_code)) : ?>
                                                         <p class="m-b-5">
                                                             <?php //if ($this->general_settings->cancel_shipment == 1) { 
                                                             ?>
-                                                            <button type="button" class="btn btn-md btn-block btn-danger" onclick="shiprocket_cancel_order('<?php echo $shiprocket_order_details->shipment_order_id; ?>','Are you sure you want to cancel the shipment?')"> Cancel Shipment </button>
+                                                            <button type="button" class="btn btn-md btn-block btn-danger" onclick="shiprocket_cancel_order('<?php // echo $shiprocket_order_details->shipment_order_id; ?>','Are you sure you want to cancel the shipment?')"> Cancel Shipment </button>
                                                             <?php //} 
                                                             ?>
                                                         </p>
-                                                    <?php endif; ?>
-                                                                                            <?php endif; ?>
+                                                    <?php // endif; ?>
+                                                                                            
+                                                <?php // endif; ?>
 
 
 
-                                                <?php elseif ($item->product_delivery_partner == "NOW-BIKES") : ?>
+                                                <?php // elseif ($item->product_delivery_partner == "NOW-BIKES") : ?>
 
-                                                <?php $now_bike_data = get_nowBike_order_details($order->order_number, $item->id); ?>
+                                                <?php // $now_bike_data = get_nowBike_order_details($order->order_number, $item->id); ?>
 
-                                                <?php if (!empty($now_bike_data)) : ?>
+                                                <?php // if (!empty($now_bike_data)) : ?>
                                                 <p class="m-b-5">
-                                                    <button type="button" class="btn btn-md btn-block btn-primary" onclick="nowBike_get_order_details('<?php echo $now_bike_data->now_bike_id; ?>',$(this))"> Check Status </button>
+                                                    <button type="button" class="btn btn-md btn-block btn-primary" onclick="nowBike_get_order_details('<?php // echo $now_bike_data->now_bike_id; ?>',$(this))"> Check Status </button>
                                                 </p>
                                                 <p class="m-b-5">
-                                                    <button type="button" class="btn btn-md btn-block btn-danger" onclick="nowBike_cancle_order('<?php echo $now_bike_data->now_bike_id; ?>','Are you sure you want to cancel the shipment?')"> Cancel Now-Bike Shipment </button>
+                                                    <button type="button" class="btn btn-md btn-block btn-danger" onclick="nowBike_cancle_order('<?php // echo $now_bike_data->now_bike_id; ?>','Are you sure you want to cancel the shipment?')"> Cancel Now-Bike Shipment </button>
                                                 </p>
-                                                <?php endif; ?>
+                                                <?php // endif; ?>
 
-                                                <?php endif; ?>
-                                                   
+                                                <?php // endif; ?> //copy here
+                                                    -->
                                                     <p class="m-b-5">
 
 
@@ -872,9 +873,59 @@ endif;
                                         </tr>
                                     <?php endif; ?>
 
-                            <?php endif;
+                                <?php endif;
                                 $product_index++;
                             endforeach; ?>
+                            <td>
+                                
+                                                    <!-- Image loader -->
+                                                    <div class='response'></div>
+
+                                            <?php if ($item->product_delivery_partner == "SHIPROCKET") : ?>
+                                                <?php $shiprocket_order_details = get_shiprocket_order_details($order->id, $item->product_id); ?>
+
+                                                <?php if (!empty($shiprocket_order_details) && $shiprocket_order_details->is_active == 1) : ?>
+                                                    <?php if (!empty($shiprocket_order_details->awb_code)) : ?>
+                                                        <p class="m-b-5">
+                                                            <button type="button" style="width:100%; border-radius:20px; color:white" class="btn btn-md btn-block btn-warning"><a style="color:white" href="<?php echo $shiprocket_order_details->manifest_url ?>">Download Manifest</a></button>
+                                                        </p>
+                                                        <p class="m-b-5">
+                                                            <button type="button" style="width:100%; border-radius:20px; color:white" class="btn btn-md btn-block btn-dark"><a style="color:white" href="<?php echo $shiprocket_order_details->label_url ?>">Download Label</a></button>
+                                                        </p>
+                                                    <?php endif; ?>
+
+                                                    <p class="m-b-5">
+                                                        <button type="button" style="width:100%;" class="btn btn-md btn-block btn-primary" data-toggle="modal"><a style="color:white" href="<?php echo base_url(); ?>dashboard/track_status/<?php echo $shiprocket_order_details->awb_code ?>"> Track Status </a></button>
+                                                    </p>
+                                                    <?php if (!empty($shiprocket_order_details->awb_code)) : ?>
+                                                        <p class="m-b-5">
+                                                            <?php //if ($this->general_settings->cancel_shipment == 1) { 
+                                                            ?>
+                                                            <button type="button" class="btn btn-md btn-block btn-danger" onclick="shiprocket_cancel_order('<?php echo $shiprocket_order_details->shipment_order_id; ?>','Are you sure you want to cancel the shipment?')"> Cancel Shipment </button>
+                                                            <?php //} 
+                                                            ?>
+                                                        </p>
+                                                    <?php endif; ?>
+                                                                                            
+                                                <?php endif; ?>
+
+
+
+                                                <?php elseif ($item->product_delivery_partner == "NOW-BIKES") : ?>
+
+                                                <?php $now_bike_data = get_nowBike_order_details($order->order_number, $item->id); ?>
+
+                                                <?php if (!empty($now_bike_data)) : ?>
+                                                <p class="m-b-5">
+                                                    <button type="button" class="btn btn-md btn-block btn-primary" onclick="nowBike_get_order_details('<?php echo $now_bike_data->now_bike_id; ?>',$(this))"> Check Status </button>
+                                                </p>
+                                                <p class="m-b-5">
+                                                    <button type="button" class="btn btn-md btn-block btn-danger" onclick="nowBike_cancle_order('<?php echo $now_bike_data->now_bike_id; ?>','Are you sure you want to cancel the shipment?')"> Cancel Now-Bike Shipment </button>
+                                                </p>
+                                                <?php endif; ?>
+
+                                                <?php endif; ?>
+                        </td>
                         </tbody>
                     </table>
                 </div>
