@@ -433,36 +433,34 @@ endif;
 
                             <?php if (!empty($shiprocket_order_details) && $shiprocket_order_details->is_active == 1) : ?>
                                 <?php if (!empty($shiprocket_order_details->awb_code)) : ?>
+                                    <th>
                                     <p class="m-b-5">
-                                        <button type="button" style="width: 250px; border-radius: 12px;" border-radius:20px; color:white" class="btn btn-md btn-block btn-warning"><a style="color:white" href="<?php echo $shiprocket_order_details->manifest_url ?>">Download Manifest</a></button>
+                                        <button type="button" style="width: 220px; border-radius: 12px; color:white" class="btn btn-md btn-block btn-warning"><a style="color:white" href="<?php echo $shiprocket_order_details->manifest_url ?>">Download Manifest</a></button>
                                     </p>
                                 </th>
-                                    <th >
+                                    <th>
                                         <p class="m-b-5">
-                                        <button type="button" style="width: 250px; border-radius: 12px;" border-radius:20px; color:white" class="btn btn-md btn-block btn-dark"><a style="color:white" href="<?php echo $shiprocket_order_details->label_url ?>">Download Label</a></button>
+                                        <button type="button" style="width: 220px; border-radius: 12px; color:white" class="btn btn-md btn-block btn-dark"><a style="color:white" href="<?php echo $shiprocket_order_details->label_url ?>">Download Label</a></button>
                                 </p>
                                 <?php endif; ?>
                                 </th>
                                 <th>
                                 <p class="m-b-5">
-                                    <button type="button" style="width: 250px; border-radius: 12px;" class="btn btn-md btn-block btn-primary" data-toggle="modal"><a style="color:white" href="<?php echo base_url(); ?>dashboard/track_status/<?php echo $shiprocket_order_details->awb_code ?>"> Track Status </a></button>
+                                    <button type="button" style="width: 220px; border-radius: 12px; color:white" class="btn btn-md btn-block btn-primary" data-toggle="modal"><a style="color:white" href="<?php echo base_url(); ?>dashboard/track_status/<?php echo $shiprocket_order_details->awb_code ?>"> Track Status </a></button>
                                 </p>
                                 </th>
                                 <th>
                                 <?php if (!empty($shiprocket_order_details->awb_code)) : ?>
                                     <p class="m-b-5">
-                                        <?php //if ($this->general_settings->cancel_shipment == 1) { 
+                                        <?php // if ($this->general_settings->cancel_shipment == 1) { 
                                         ?>
-                                        <button type="button" class="btn btn-md btn-block btn-danger" style="width: 250px; border-radius: 12px;" onclick="shiprocket_cancel_order('<?php echo $shiprocket_order_details->shipment_order_id; ?>','Are you sure you want to cancel the shipment?')"> Cancel Shipment </button>
-                                        <?php //} 
+                                        <button type="button" class="btn btn-md btn-block btn-danger" style="width: 220px; border-radius: 12px; color:white" onclick="shiprocket_cancel_order('<?php echo $shiprocket_order_details->shipment_order_id; ?>','Are you sure you want to cancel the shipment?')"> Cancel Shipment </button>
+                                        <?php // } 
                                         ?>
                                     </p>
-                                <?php endif; ?>
-                                                                        
+                                <?php endif; ?>                                                                        
                             <?php endif; ?>
                                 </th>
-
-
                             <th>
                             <?php elseif ($item->product_delivery_partner == "NOW-BIKES") : ?>
 
@@ -490,7 +488,7 @@ endif;
                         <thead>
                             <tr>
                                 <!-- <th width="20"><input type="checkbox" class="checkbox-table" id="checkAll"></th> -->
-                                <!-- <th></th> -->
+                                <th></th>
                                 <th scope="col"><?php echo trans("product"); ?></th>
                                 <th scope="col"><?php echo trans("status"); ?></th>
                                 <th scope="col"><?php echo trans("reject_reason"); ?></th>
