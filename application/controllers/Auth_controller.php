@@ -587,20 +587,18 @@ class Auth_controller extends Home_Core_Controller
             redirect(lang_base_url());
         }
 
-        if ($this->recaptcha_status == true) {
-            if (!$this->recaptcha_verify_request()) {
-                $this->session->set_flashdata('form_data', $this->auth_model->input_values());
-                $this->session->set_flashdata('error', trans("msg_recaptcha"));
-                redirect($this->agent->referrer());
-                exit();
-            }
-        }
+        // if ($this->recaptcha_status == true) {
+        //     if (!$this->recaptcha_verify_request()) {
+        //         $this->session->set_flashdata('form_data', $this->auth_model->input_values());
+        //         $this->session->set_flashdata('error', trans("msg_recaptcha"));
+        //         redirect($this->agent->referrer());
+        //         exit();
+        //     }
+        // }
 
         //validate inputs
         // $this->form_validation->set_rules('username', trans("username"), 'required|xss_clean|min_length[4]|max_length[100]');
         $this->form_validation->set_rules('email', trans("email_address"), 'required|xss_clean|max_length[200]');
-        $this->form_validation->set_rules('password', trans("password"), 'required|xss_clean|min_length[4]|max_length[50]');
-        $this->form_validation->set_rules('confirm_password', trans("password_confirm"), 'required|xss_clean|matches[password]');
 
         if ($this->form_validation->run() === false) {
             $this->session->set_flashdata('errors', validation_errors());

@@ -2242,7 +2242,7 @@
                                             ?>
                                         <?php else : ?>
                                             <li>
-                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal" id="header-login">Sign in</a>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" id="header-login">Sign in</a>
                                             </li>
 
                                         <?php endif; ?>
@@ -2694,6 +2694,50 @@
     <?php $this->load->view("partials/_nav_mobile"); ?>
     <input type="hidden" class="search_type_input" name="search_type" value="product">
     <?php if (!$this->auth_check) : ?>
+        <!-- login with OTP model start -->
+        <div class="modal fade" id="OtploginModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
+                <div class="modal-content">
+                    <div class="auth-box" style="width: 370px;">
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close" ></i></button>
+                        <h4 class="title"><?php echo trans("login"); ?></h4>
+                        <!-- form start -->
+                        <form id="form_login_otp">
+                            <div class="social-login-cnt">
+                                <?php $this->load->view("partials/_social_login", ["or_text" => trans("login_with_email")]); ?>
+                            </div>
+                            <!-- include message block -->
+                            <div id="result-login" class="font-size-13"></div>
+                            <div class="OtpSendMsg">
+                                <span id="OtpSendMsg"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="registeredNumber" class="form-control auth-form-input" placeholder="<?php echo trans("register_mobile"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
+                                <span id="login_otp_check" style="color: red;"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="loginOtp" id="loginOtp" class="form-control auth-form-input" placeholder="Enter Otp" required maxlength="6">
+                                <span id="login_otp_span" style="color: red;"></span>
+                            </div>
+
+                            <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" id="resend_login_otp" class="link" style="text-decoration: underline; color:blue !important">Resend OTP</a></p>
+                            <div class="form-group" style="text-align:center;">
+                                <button type="button" id="sendLoginOtp" class="btn btn-md btn-custom btn-block-new-ui">Send OTP</button>
+                            </div>
+                            <div class="form-group" style="text-align:center;">
+                                <button type="button" id="verify_login_otp" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login"); ?></button>
+                            </div>
+                            <p class="p-social-media m-0 m-t-15">&nbsp; <a href="javascript:void(0)" class="link" data-toggle="modal" data-target="#loginModal" style="text-decoration: underline; color:blue !important">Login Using Password</a></p></br>
+                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link" style="text-decoration: underline; color:blue !important">Register</a></p>
+                        </form>
+                        <!-- form end -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- login using OTP model end  -->
         <!-- Login Modal -->
         <div class="modal fade" id="loginModal" role="dialog">
             <div class="modal-dialog modal-dialog-centered login-modal" role="document">
@@ -2728,7 +2772,7 @@
                                 <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login_with_pwd"); ?></button>
                             </div>
 
-                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>
+                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link" style="text-decoration: underline; color:blue !important">Register</a></p>
                         </form>
                         <!-- form end -->
 
@@ -2740,111 +2784,63 @@
         </div>
 
 
-        <!-- Guest Login Modal -->
-        <div class="modal fade" id="guestLoginModal" role="dialog">
+        <!-- <div class="modal fade" id="guestLoginModal" role="dialog">
             <div class="modal-dialog modal-dialog-centered login-modal" role="document">
                 <div class="modal-content">
                     <div class="auth-box">
                         <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
-                        <h4 class="title"><?php echo trans("guest_login"); ?></h4>
+                        <h4 class="title"><?php // echo trans("guest_login"); ?></h4> -->
                         <!-- form start -->
-                        <form id="form_guest_login">
+                        <!-- <form id="form_guest_login"> -->
                             <!-- include message block -->
-                            <div id="result-login" class="font-size-13"></div>
+                            <!-- <div id="result-login" class="font-size-13"></div>
                             <div class="form-group">
-                                <input type="email" name="email" id="guest_email" class="form-control auth-form-input" placeholder="<?php echo trans("email_address"); ?>" required>
+                                <input type="email" name="email" id="guest_email" class="form-control auth-form-input" placeholder="<?php // echo trans("email_address"); ?>" required>
                                 <span id="email_span_error" style="color:red;"></span>
-                            </div>
+                            </div> -->
 
                             <!-- <div class="form-group">
                                 <input type="text" name="phone_number" id="guest_phone_number" class="form-control auth-form-input" placeholder="Mobile Number" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
                             </div> -->
-                            <div id="email_phn_exist_msg" style="color: red;">
+                            <!-- <div id="email_phn_exist_msg" style="color: red;">
 
                             </div>
 
-                            <p class="p-social-media m-0 m-t-5 hide_after_response"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php echo trans("register"); ?></a></p>
+                            <p class="p-social-media m-0 m-t-5 hide_after_response"><?php // echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php //echo trans("register"); ?></a></p>
                             <p class="p-social-media m-0 m-t-5 hide_account "> Already have an account?</p>
                             <div class="form-group" style="text-align:center;">
-                                <button type="button" class="btn btn-md btn-custom hideguestmodal" id="hide_login_button" data-toggle="modal" data-target="#loginModal" style="width: 100%;"><?php echo trans("login"); ?></button>
+                                <button type="button" class="btn btn-md btn-custom hideguestmodal" id="hide_login_button" data-toggle="modal" data-target="#loginModal" style="width: 100%;"><?php // echo trans("login"); ?></button>
                             </div>
-                            </br>
+                            </br> -->
                             <!-- <div class="form-group show_after_response hideMe">
                                 <hr>
                                 <input type="text" name="guest_otp" id="guest_otp" class="form-control auth-form-input" placeholder="Enter OTP" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="6" maxlength="6">
 
-                                <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" onclick="guest_resend_otp($('#guest_phone_number'),$('#guest_email'))"><?php echo trans("resend_otp"); ?></a></p>
+                                <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" onclick="guest_resend_otp($('#guest_phone_number'),$('#guest_email'))"><?php // echo trans("resend_otp"); ?></a></p>
 
                             
                             </div> -->
 
-                            <div id="email_phn_exist_msg_login">
+                            <!-- <div id="email_phn_exist_msg_login">
                                 <a href="#" class="hideguestmodal btn btn-block" data-toggle="modal" data-target="#loginModal">Login</a>
                             </div>
                             <div class="form-group hide_after_response" id="continue_guest_hide" style="text-align:center;">
-                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui" onclick="validateEmail()"><?php echo trans("continue_as_guest"); ?></button>
-                            </div>
-                            <!-- <div class="form-group show_after_response hideMe" style="text-align:center;">
-                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("confirm_otp"); ?></button>
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui" onclick="validateEmail()"><?php // echo trans("continue_as_guest"); ?></button>
                             </div> -->
-                        </form>
+                            <!-- <div class="form-group show_after_response hideMe" style="text-align:center;">
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php // echo trans("confirm_otp"); ?></button>
+                            </div> -->
+                        <!-- </form> -->
                         <!-- form end -->
 
-                        <div class="login_to_avail" style="color:#aaaaa;"> <?php echo trans("login_to_avail"); ?></div>
+                        <!-- <div class="login_to_avail" style="color:#aaaaa;"> <?php // echo trans("login_to_avail"); ?></div>
                     </div>
 
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <!-- login with OTP model start -->
-        <div class="modal fade" id="OtploginModal" role="dialog">
-            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
-                <div class="modal-content">
-                    <div class="auth-box" style="width: 370px;">
-                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close" onclick="reloadPage()"></i></button>
-                        <h4 class="title"><?php echo trans("login"); ?></h4>
-                        <!-- form start -->
-                        <form id="form_login_otp">
-                            <div class="social-login-cnt">
-                                <?php $this->load->view("partials/_social_login", ["or_text" => trans("login_with_email")]); ?>
-                            </div>
-                            <!-- include message block -->
-                            <div id="result-login" class="font-size-13"></div>
-                            <div class="OtpSendMsg">
-                                <span id="OtpSendMsg"></span>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="registeredNumber" class="form-control auth-form-input" placeholder="<?php echo trans("register_mobile"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
-                                <span id="login_otp_check" style="color: red;"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <input type="text" name="loginOtp" id="loginOtp" class="form-control auth-form-input" placeholder="Enter Otp" required maxlength="6">
-                                <span id="login_otp_span" style="color: red;"></span>
-                            </div>
-
-                            <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" id="resend_login_otp" class="link" style="text-decoration: underline; color:blue !important">Resend OTP</a></p>
-
-                            <div class="form-group" style="text-align:center;">
-                                <button type="button" id="sendLoginOtp" class="btn btn-md btn-custom btn-block-new-ui">Send OTP</button>
-                            </div>
-                            <div class="form-group" style="text-align:center;">
-                                <button type="button" id="verify_login_otp" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login"); ?></button>
-                            </div>
-                        </form>
-                        <!-- form end -->
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- login using OTP model end  -->
-
-
-
-
-
+        
         <div class="modal fade" id="registerModal" role="dialog">
             <div class="modal-dialog modal-dialog-centered login-modal modal-dialog" role="document" style="justify-content: center;">
                 <div class="modal-content">
@@ -2888,23 +2884,23 @@
 
                                     </div> -->
                                     <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="text" name="first_name" style="text-transform: capitalize;" class="form-control auth-form-input" placeholder="<?php echo trans("first_name"); ?>" value="<?php echo old("first_name"); ?>" maxlength="255" required>
+                                        <input type="text" name="first_name" style="text-transform: capitalize;" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo old("first_name"); ?>" maxlength="255" required>
                                     </div>
 
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="row">
+                            <!-- <div class="form-group">
+                                <div class="row"> -->
                                     <!-- <div class="col-12 col-sm-4 m-b-15">
 
                                         <label class="control-label">Last Name<span class="Validation_error"> *</span></label>
 
                                     </div> -->
-                                    <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="text" name="last_name" style="text-transform: capitalize;" class="form-control auth-form-input" placeholder="<?php echo trans("last_name"); ?>" value="<?php echo old("last_name"); ?>" maxlength="255" required>
+                                    <!-- <div class="col-12 col-sm-12 m-b-15">
+                                        <input type="text" name="last_name" style="text-transform: capitalize;" class="form-control auth-form-input" placeholder="<?php // echo trans("last_name"); ?>" value="<?php // echo old("last_name"); ?>" maxlength="255" required>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <div class="row">
                                     <!-- <div class="col-12 col-sm-4 m-b-15">
@@ -2935,12 +2931,13 @@
 
                             <div class="form-group">
                                 <div class="row">
+                                <strong id="set_password" style="margin: auto;">SET Password (Optional)</strong>
                                     <!-- <div class="col-12 col-sm-4 m-b-15">
 
                                         <label class="control-label">Gender<span class="Validation_error"> *</span></label>
 
                                     </div> -->
-                                    <div class="col-12 col-sm-12 m-b-15">
+                                    <!-- <div class="col-12 col-sm-12 m-b-15">
                                         <select name="gender" class="form-control auth-form-input" placeholder="Gender" required>
                                             <option value="" selected disabled>Gender</option>
                                             <option value="Male">Male</option>
@@ -2949,7 +2946,9 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
+                        </div>
+                        </div>
                             <div class="form-group">
                                 <div class="row">
                                     <!-- <div class="col-12 col-sm-4 m-b-15">
@@ -2958,7 +2957,7 @@
 
                                     </div> -->
                                     <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="password" name="password" id="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" value="<?php echo old("password"); ?>" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,25}$" minlength="8" maxlength="25">
+                                        <input type="password" name="password" id="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" value="<?php echo old("password"); ?>"  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,25}$" minlength="8" maxlength="25">
                                         <span class="far fa-eye field-icon" id="togglePassword"></span>
                                         <label id="Passwordvalidate" style="color:red;"></label>
                                         <div id="message">
@@ -2981,7 +2980,7 @@
 
                                     </div> -->
                                     <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="password" name="confirm_password" id="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" required>
+                                        <input type="password" name="confirm_password" id="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" >
                                         <span class="far fa-eye field-icon" id="togglePassword1"></span>
 
                                         <label id="CheckPasswordMatch" style="color:red;"></label>
@@ -3006,11 +3005,171 @@
                                     <?php generate_recaptcha(); ?>
                                 </div>
                             <?php endif; ?>
+                            <?php if ($this->general_settings->enable_otp_login) : ?>
+                                <div style="text-align:center;  margin-bottom:5px">
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class=" register_color registertologin" style="text-decoration: underline; color:blue !important">Login using OTP</a>
+                                </div>
+                            <?php endif; ?>
                             <div class="form-group">
                                 <button type="submit" id="btnsubmit_register" class="btn btn-md btn-custom btn-block-new-ui" disabled><?php echo trans("register"); ?></button>
                             </div>
                             <p class="p-social-media m-0 m-t-15"><?php echo trans("have_account"); ?>&nbsp;<a href="javascript:void(0)" class="register_color registertologin" data-toggle="modal" data-target="#loginModal"><?php echo trans("login"); ?></a></p>
 
+                            <?php echo form_close(); ?>
+                            <!-- form end -->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Guest Login Modal -->
+        <div class="modal fade" id="guestLoginModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered login-modal modal-dialog" role="document" style="justify-content: center;">
+                <div class="modal-content">
+
+                    <div class="register-box">
+                        <button type="button" class="close above-all" data-dismiss="modal"><i class="icon-close"></i></button>
+                        <h4 class="title"><?php echo trans("register"); ?></h4>
+                        <!-- form start -->
+                        <?php
+                        if ($recaptcha_status) {
+                            echo form_open('register-post', [
+                                'id' => 'form_validate', 'class' => 'validate_terms',
+                                'onsubmit' => "var serializedData = $(this).serializeArray();var recaptcha = ''; $.each(serializedData, function (i, field) { if (field.name == 'g-recaptcha-response') {recaptcha = field.value;}});if (recaptcha.length < 5) { $('.g-recaptcha>div').addClass('is-invalid');return false;} else { $('.g-recaptcha>div').removeClass('is-invalid');}"
+                            ]);
+                        } else {
+                            // echo form_open('register-post', ['id' => 'form_validate', 'class' => 'validate_terms']);
+                        ?>
+                            <form name="register-form" id="form_validate" class="validate_terms" method="post" accept-charset="utf-8" novalidate="novalidate">
+                            <?php }
+                            ?>
+                            <div class="social-login-cnt">
+                                <?php $this->load->view("partials/_social_login", ['or_text' => 'Or Register with email']); ?>
+                            </div>
+                            <!-- include message block -->
+                            <div id="result-register-popup">
+                                <?php //$this->load->view('partials/_messages'); 
+                                ?>
+                            </div>
+                            <div class="spinner display-none spinner-activation-register">
+                                <div class="bounce1"></div>
+                                <div class="bounce2"></div>
+                                <div class="bounce3"></div>
+                            </div>
+                            <input type="hidden" id="via_sell_now" name="via_sell_now" style="text-transform: capitalize;" class="form-control auth-form-input" value="0">
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+
+                                        <label class="control-label">First Name<span class="Validation_error"> *</span></label>
+
+                                    </div> -->
+                                    <div class="col-12 col-sm-12 m-b-15">
+                                        <input type="text" name="first_name" style="text-transform: capitalize;" class="form-control auth-form-input" placeholder="<?php echo trans("full_name"); ?>" value="<?php echo old("first_name"); ?>" maxlength="255" required>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+
+                                        <label class="control-label">Email<span class="Validation_error"> *</span></label>
+
+                                    </div> -->
+                                    <div class="col-12 col-sm-12 m-b-15">
+                                        <input type="email" name="email" id="email_new" class="form-control auth-form-input" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old("email"); ?>" required>
+                                        <span id="email_span_error" style="color:red;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+
+                                        <label class="control-label">Phone <br> Number<span class="Validation_error"> *</span></label>
+
+                                    </div> -->
+                                    <div class="col-12 col-sm-12 m-b-15">
+                                        <input type="text" name="phone_number" id="phone_number" class="form-control auth-form-input" placeholder="Mobile Number" onpaste="return false" value="<?php echo old("phone_number"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" name="itemConsumption" minlength="10" maxlength="10" required>
+                                        <strong id="verify_otp" class="btn btn-md btn-custom btn-block-new-ui">Verify Mobile</strong>
+                                        <br><span id="verify_mobile_span" style="color:red;">*You cannot register without Mobile Verification!</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                <strong id="set_password" style="margin: auto;">SET Password (Optional)</strong>
+                        </div>
+                    </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+
+                                        <label class="control-label">Password<span class="Validation_error"> *</span></label>
+
+                                    </div> -->
+                                    <div class="col-12 col-sm-12 m-b-15">
+                                        <input type="password" name="password" id="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" value="<?php echo old("password"); ?>" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,25}$" minlength="8" maxlength="25">
+                                        <span class="far fa-eye field-icon" id="togglePassword"></span>
+                                        <label id="Passwordvalidate" style="color:red;"></label>
+                                        <div id="message">
+                                            <p>Password must contain the following:
+                                            <p>
+                                            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                                            <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                                            <p id="number" class="invalid">A <b>number</b></p>
+                                            <p id="special_character" class="invalid">A <b>Special Character</b></p>
+                                            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+
+                                        <label class="control-label">Confirm Password<span class="Validation_error"> *</span></label>
+
+                                    </div> -->
+                                    <div class="col-12 col-sm-12 m-b-15">
+                                        <input type="password" name="confirm_password" id="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" >
+                                        <span class="far fa-eye field-icon" id="togglePassword1"></span>
+
+                                        <label id="CheckPasswordMatch" style="color:red;"></label>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group m-t-5 m-b-20">
+                                <div class="custom-control custom-checkbox custom-control-validate-input">
+                                    <input type="checkbox" class="custom-control-input" name="terms" id="checkbox_terms" ;>
+                                    <label for="checkbox_terms" class="custom-control-label"><?php echo trans("terms_conditions_exp"); ?>&nbsp;
+                                        <?php $page_terms = get_page_by_default_name("terms_conditions", $this->selected_lang->id); ?>
+                                    </label>
+                                    <small id="small-text-header" style="display:none;color:red;">(<?php echo trans("terms_condition_msg"); ?>)</small>
+                                    <?php if (!empty($page_terms)) : ?>
+                                        <strong data-toggle="modal" data-target="#termsConditionRegister"><u style="color: blue;cursor:pointer;">(<?= html_escape($page_terms->title); ?>)</u></strong>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <?php if ($recaptcha_status) : ?>
+                                <div class="recaptcha-cnt">
+                                    <?php generate_recaptcha(); ?>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($this->general_settings->enable_otp_login) : ?>
+                                <div style="text-align:center;  margin-bottom:5px">
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class=" register_color registertologin" style="text-decoration: underline; color:blue !important">Login using OTP</a>
+                                </div>
+                            <?php endif; ?>
+                            <div class="form-group">
+                                <button type="submit" id="btnsubmit_register" class="btn btn-md btn-custom btn-block-new-ui" disabled><?php echo trans("register"); ?></button>
+                            </div>
+                            <p class="p-social-media m-0 m-t-15"><?php echo trans("have_account"); ?>&nbsp;<a href="javascript:void(0)" class="register_color registertologin" data-toggle="modal" data-target="#loginModal"><?php echo trans("login"); ?></a></p>
                             <?php echo form_close(); ?>
                             <!-- form end -->
 
@@ -6911,10 +7070,12 @@
             console.log(email_address);
             if (phn_num == '') {
                 document.getElementById("verify_mobile_span").innerHTML = "*Please enter mobile number !";
-            } else if (email_address == "") {
+            } 
+            else if (email_address == "") {
                 document.getElementById("email_span_error").innerHTML = "";
                 document.getElementById("email_span_error").innerHTML = "Please enter email address";
-            } else if (IsEmail(email_address) == false) {
+            } 
+            else if (IsEmail(email_address) == false) {
                 document.getElementById("email_span_error").innerHTML = "";
                 document.getElementById("email_span_error").innerHTML = "Please enter a valid email address";
                 //invalid emailid
@@ -7767,7 +7928,7 @@
                             window.location.href =
                                 base_url + "cart"
                         <?php else : ?>
-                            $('#guestLoginModal').modal('show');
+                            $('#registerModal').modal('show');
                         <?php endif; ?>
                     } else {
                         ($(".cart_a").append(),
