@@ -343,6 +343,13 @@ endif;
                 <?php $shipping_time = $product->shipping_time; ?>
 
                 <?php if (substr_count($shipping_time, "_") > 2 && $product->add_meet == "Made to stock") : ?>
+                    <?php $shipped_time = (get_product($item_order->product_id)->lead_days); ?>
+                    <?php $created_order = $order->created_at ?>
+                    <?php $lead_time = $this->product_model->get_lead_time_of_products($product->id) ?>
+                    <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
+                    <?php $shipped_date = (date("dS M Y", $order_create)); ?>
+                    <?php $shipp_date = date('Y-m-d H:i:s', $order_create); ?>
+                    <?php $calc_date = date('Y-m-d', strtotime($created_order. '+' . $lead_time[0]->lead_time . ' days')); ?>
                     <?php $ship_time = intval($product->shipping_time[2]); ?>
                     <?php $created_at = strtotime($order->created_at); ?>
 
@@ -353,15 +360,19 @@ endif;
 
                     <?php if ($orders_count >= 1) : ?>
 
-                        <?php if ($shipping_date >= $current_date) : ?>
+                        <?php if ($current_date <= $calc_date) : ?>
 
-                            <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $ship_date; ?></b></p>
+                            <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $calc_date; ?></b></p>
 
                         <?php else : ?>
                             <?php foreach ($order_count as $cnt) : ?>
                             <?php endforeach; ?>
 
-                            <?php $penalty_amt = 10 * intval($cnt->count); ?>
+                            <?php $seller = $this->auth_model->get_seller($item->seller_id); ?>
+                            <?php $vendor = $this->auth_model->get_seller($item->order_id); ?>
+                            <?php $count = get_count_penalty($seller->id, $order->id); ?>
+                            
+                            <?php $penalty_amt = 10 * intVal($count[0]->count) ?>
 
                             <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo $penalty_amt; ?> for this order shall be charged as per the terms of the agreement.
 
@@ -372,19 +383,26 @@ endif;
                         <?php endif; ?>
                     <?php endif; ?>
                 <?php elseif (substr_count($shipping_time, "_") == 2 && $product->add_meet == "Made to stock") : ?>
-                    <?php $shipped_time = intval($product->shipping_time); ?>
+                    <?php $shipped_time =  (get_product($item_order->product_id)->lead_days);?>
                     <?php $created_at = strtotime($order->created_at); ?>
+                    <?php $created_order = $order->created_at ?>
+                    <?php $lead_time = $this->product_model->get_lead_time_of_products($product->id) ?> 
                     <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
                     <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                     <?php $shipp_date = date('Y-m-d H:i:s', $order_create); ?>
+                    <?php $calc_date = date('Y-m-d', strtotime($created_order. '+' . $lead_time[0]->lead_time . ' days')); ?>
                     <?php if ($orders_count >= 1) : ?>
-                        <?php if ($shipp_date >= $current_date) : ?>
-                            <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
+                        <?php if ($current_date  <= $calc_date) : ?>
+                            <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $calc_date; ?></b></p>
 
                         <?php else : ?>
                             <?php foreach ($order_count as $cnt) : ?>
                             <?php endforeach; ?>
-                            <?php $penalty = 10 * intval($cnt->count); ?>
+                            <?php $seller = $this->auth_model->get_seller($item->seller_id); ?>
+                            <?php $vendor = $this->auth_model->get_seller($item->order_id); ?>
+                            <?php $count = get_count_penalty($seller->id, $order->id); ?>
+                            
+                            <?php $penalty = 10 * intVal($count[0]->count) ?>
                             <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo  $penalty; ?> for this order shall be charged as per the terms of the agreement.
 
                                 **<br />
@@ -394,18 +412,24 @@ endif;
                         <?php endif; ?>
                     <?php endif; ?>
                 <?php elseif ((get_product($item_order->product_id)->add_meet) == "Made to order") : ?>
+                    <?php $created_order = $order->created_at ?>
+                    <?php $lead_time = $this->product_model->get_lead_time_of_products($product->id) ?>
                     <?php $shipped_time = (get_product($item_order->product_id)->lead_days); ?>
                     <?php $created_at = strtotime($order->created_at); ?>
 
                     <?php $order_create = strtotime("$shipped_time day", $created_at); ?>
                     <?php $shipped_date = (date("dS M Y", $order_create)); ?>
                     <?php $shipp_date = date('Y-m-d H:i:s', $order_create); ?>
-                    <?php if ($shipp_date >= $current_date) : ?>
-                        <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $shipped_date; ?></b></p>
+                    <?php $calc_date = date('Y-m-d', strtotime($created_order. '+' . $lead_time[0]->lead_time . ' days')); ?>
+                    <?php if ($current_date <= $calc_date) : ?>
+                        <p class="dispatch_alert"><b>Kindly Schedule the shipment by <?php echo $calc_date; ?></b></p>
                     <?php else : ?>
                         <?php foreach ($order_count as $cnt) : ?>
                         <?php endforeach; ?>
-                        <?php $penalty = 10 * intval($cnt->count); ?>
+                        <?php $seller = $this->auth_model->get_seller($item->seller_id); ?>
+                            <?php $vendor = $this->auth_model->get_seller($item->order_id); ?>
+                            <?php $count = get_count_penalty($seller->id, $order->id); ?>
+                            <?php $penalty = 10 * intVal($count[0]->count) ?>
                         <p class="dispatch_late">SLA Breached – You were unable to schedule the shipment by its due date. Penalty of Rs.<?php echo  $penalty; ?> for this order shall be charged as per the terms of the agreement.
 
                             **<br />

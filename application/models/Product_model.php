@@ -3462,6 +3462,13 @@ order by id desc LIMIT 1";
         }
     }
 
+    // get lead time of product
+    public function get_lead_time_of_products($id)
+    {
+        $query = $this->db->query("SELECT lead_time FROM products where id='$id'");
+        return $query->result();
+    }
+
     // get transit time for the home cooks
     public function get_transit_time_for_made_to_order($product_id, $user_id, $lead_days, $lead_time, $type)
     {

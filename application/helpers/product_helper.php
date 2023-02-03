@@ -1281,3 +1281,11 @@ function secondsToTime($seconds)
     $dtT = new \DateTime("@$seconds");
     return $dtF->diff($dtT)->format('%a');
 }
+
+//  get penalty count
+
+function get_count_penalty($seller, $order) {
+    $sql = &get_instance();
+    $query = $sql->db->query("select count(*) as count from order_products where order_id = '$order' and seller_id='$seller'");
+    return $query->result();
+}
