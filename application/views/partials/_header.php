@@ -2931,7 +2931,8 @@
 
                             <div class="form-group">
                                 <div class="row">
-                                <strong id="set_password" style="margin: auto;">SET Password (Optional)</strong>
+                                <div class="col-12 col-sm-12 m-b-15">  
+                                <button id="set_password" class="btn btn-md btn-custom btn-block-new-ui" onclick="toggleFunction();">SET Password (Optional)</button>
                                     <!-- <div class="col-12 col-sm-4 m-b-15">
 
                                         <label class="control-label">Gender<span class="Validation_error"> *</span></label>
@@ -2949,13 +2950,10 @@
                             </div> -->
                         </div>
                         </div>
+                        </div>
+                        <div id="show_password">
                             <div class="form-group">
                                 <div class="row">
-                                    <!-- <div class="col-12 col-sm-4 m-b-15">
-
-                                        <label class="control-label">Password<span class="Validation_error"> *</span></label>
-
-                                    </div> -->
                                     <div class="col-12 col-sm-12 m-b-15">
                                         <input type="password" name="password" id="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" value="<?php echo old("password"); ?>"  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,25}$" minlength="8" maxlength="25">
                                         <span class="far fa-eye field-icon" id="togglePassword"></span>
@@ -2972,15 +2970,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="show_confirmpwd">
                                 <div class="row">
-                                    <!-- <div class="col-12 col-sm-4 m-b-15">
-
-                                        <label class="control-label">Confirm Password<span class="Validation_error"> *</span></label>
-
-                                    </div> -->
                                     <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="password" name="confirm_password" id="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" >
+                                        <input type="password" name="confirm_password" id="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>">
                                         <span class="far fa-eye field-icon" id="togglePassword1"></span>
 
                                         <label id="CheckPasswordMatch" style="color:red;"></label>
@@ -2988,6 +2981,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                             <div class="form-group m-t-5 m-b-20">
                                 <div class="custom-control custom-checkbox custom-control-validate-input">
                                     <input type="checkbox" class="custom-control-input" name="terms" id="checkbox_terms" ;>
@@ -3102,7 +3096,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="row">
-                                <strong id="set_password" style="margin: auto;">SET Password (Optional)</strong>
+                                <button id="set_password" class="btn btn-md btn-custom btn-block-new-ui" onclick="toggleFunction();">SET Password (Optional)</button>
                         </div>
                     </div>
                             <div class="form-group">
@@ -6896,6 +6890,18 @@
         }
     </script>
 
+<script>
+var x = document.getElementById("show_password").style.display = "none";
+function toggleFunction() {
+  var x = document.getElementById("show_password");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+    </script>
+
     <script>
         $(document).on("click", ".open-via-sellnow", function() {
             var eventId = $(this).data('id');
@@ -6922,7 +6928,7 @@
             console.log("click")
             $('#registerModal').modal('hide');
             setTimeout(function() {
-                $('#loginModal').modal('show');
+                $('#logintoOtp').modal('show');
             }, 500);
         });
         $(document).on('hidden.bs.modal', function(event) {
