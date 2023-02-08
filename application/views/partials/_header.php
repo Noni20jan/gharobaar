@@ -3,6 +3,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->selected_lang->short_form ?>">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" as="style">
 <link rel="preload" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/jquery.dm-uploader.min.css" as="style">
 <link rel="preload" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/styles.css" as="style">
@@ -38,6 +39,28 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/default.min.css?v=1234qwer" />
 <?php endif; ?>
 <style>
+    .dot {
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        background: url(https://image.ibb.co/kyUHab/rose.png);
+        background-size: 100% 100%;
+    }
+
+    #rose_petals {
+        width: 100%;
+        height: 100%;
+        position: inherit;
+        z-index: 10011;
+    }
+
+    #logo {
+        left: 50%;
+        top: 50%;
+        position: absolute;
+        border-radius: 10px;
+    }
+
     #message {
         display: none;
         background: #f1f1f1;
@@ -658,7 +681,8 @@
     .dropdown-content {
         scrollbar-color: #fff0 #fff0;
     }
-    .kjxaQJ{
+
+    .kjxaQJ {
         bottom: 47px !important;
     }
 </style>
@@ -929,7 +953,6 @@
         }
 
     }
-    
 </style>
 
 <head>
@@ -1604,7 +1627,7 @@
         </div>
     <?php endif; ?>
     <div style="position:relative; bottom:5px">
-        <img src="<?php echo base_url(); ?>assets/img/valentine.jpg"style="max-width:100%" >
+        <img src="<?php echo base_url(); ?>assets/img/valentine.jpg" style="max-width:100%">
     </div>
     <div id="announcement-mobile-bar">
         <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
@@ -1619,6 +1642,9 @@
     <header id="header">
         <?php //$this->load->view("partials/_top_bar"); 
         ?>
+        <div id="rose_petals">
+
+        </div>
         <div class="main-menu" id="myHeader">
             <div class="container-fluid">
                 <div class="row">
@@ -2699,7 +2725,7 @@
             <div class="modal-dialog modal-dialog-centered login-modal" role="document">
                 <div class="modal-content">
                     <div class="auth-box" style="width: 370px;">
-                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close" ></i></button>
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
                         <h4 class="title"><?php echo trans("login"); ?></h4>
                         <!-- form start -->
                         <form id="form_login_otp">
@@ -2789,58 +2815,67 @@
                 <div class="modal-content">
                     <div class="auth-box">
                         <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
-                        <h4 class="title"><?php // echo trans("guest_login"); ?></h4> -->
-                        <!-- form start -->
-                        <!-- <form id="form_guest_login"> -->
-                            <!-- include message block -->
-                            <!-- <div id="result-login" class="font-size-13"></div>
+                        <h4 class="title"><?php // echo trans("guest_login"); 
+                                            ?></h4> -->
+        <!-- form start -->
+        <!-- <form id="form_guest_login"> -->
+        <!-- include message block -->
+        <!-- <div id="result-login" class="font-size-13"></div>
                             <div class="form-group">
-                                <input type="email" name="email" id="guest_email" class="form-control auth-form-input" placeholder="<?php // echo trans("email_address"); ?>" required>
+                                <input type="email" name="email" id="guest_email" class="form-control auth-form-input" placeholder="<?php // echo trans("email_address"); 
+                                                                                                                                    ?>" required>
                                 <span id="email_span_error" style="color:red;"></span>
                             </div> -->
 
-                            <!-- <div class="form-group">
+        <!-- <div class="form-group">
                                 <input type="text" name="phone_number" id="guest_phone_number" class="form-control auth-form-input" placeholder="Mobile Number" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
                             </div> -->
-                            <!-- <div id="email_phn_exist_msg" style="color: red;">
+        <!-- <div id="email_phn_exist_msg" style="color: red;">
 
                             </div>
 
-                            <p class="p-social-media m-0 m-t-5 hide_after_response"><?php // echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php //echo trans("register"); ?></a></p>
+                            <p class="p-social-media m-0 m-t-5 hide_after_response"><?php // echo trans("dont_have_account"); 
+                                                                                    ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link"><?php //echo trans("register"); 
+                                                                                                                                                                                                    ?></a></p>
                             <p class="p-social-media m-0 m-t-5 hide_account "> Already have an account?</p>
                             <div class="form-group" style="text-align:center;">
-                                <button type="button" class="btn btn-md btn-custom hideguestmodal" id="hide_login_button" data-toggle="modal" data-target="#loginModal" style="width: 100%;"><?php // echo trans("login"); ?></button>
+                                <button type="button" class="btn btn-md btn-custom hideguestmodal" id="hide_login_button" data-toggle="modal" data-target="#loginModal" style="width: 100%;"><?php // echo trans("login"); 
+                                                                                                                                                                                                ?></button>
                             </div>
                             </br> -->
-                            <!-- <div class="form-group show_after_response hideMe">
+        <!-- <div class="form-group show_after_response hideMe">
                                 <hr>
                                 <input type="text" name="guest_otp" id="guest_otp" class="form-control auth-form-input" placeholder="Enter OTP" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="6" maxlength="6">
 
-                                <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" onclick="guest_resend_otp($('#guest_phone_number'),$('#guest_email'))"><?php // echo trans("resend_otp"); ?></a></p>
+                                <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" onclick="guest_resend_otp($('#guest_phone_number'),$('#guest_email'))"><?php // echo trans("resend_otp"); 
+                                                                                                                                                                        ?></a></p>
 
                             
                             </div> -->
 
-                            <!-- <div id="email_phn_exist_msg_login">
+        <!-- <div id="email_phn_exist_msg_login">
                                 <a href="#" class="hideguestmodal btn btn-block" data-toggle="modal" data-target="#loginModal">Login</a>
                             </div>
                             <div class="form-group hide_after_response" id="continue_guest_hide" style="text-align:center;">
-                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui" onclick="validateEmail()"><?php // echo trans("continue_as_guest"); ?></button>
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui" onclick="validateEmail()"><?php // echo trans("continue_as_guest"); 
+                                                                                                                                ?></button>
                             </div> -->
-                            <!-- <div class="form-group show_after_response hideMe" style="text-align:center;">
-                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php // echo trans("confirm_otp"); ?></button>
+        <!-- <div class="form-group show_after_response hideMe" style="text-align:center;">
+                                <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php // echo trans("confirm_otp"); 
+                                                                                                        ?></button>
                             </div> -->
-                        <!-- </form> -->
-                        <!-- form end -->
+        <!-- </form> -->
+        <!-- form end -->
 
-                        <!-- <div class="login_to_avail" style="color:#aaaaa;"> <?php // echo trans("login_to_avail"); ?></div>
+        <!-- <div class="login_to_avail" style="color:#aaaaa;"> <?php // echo trans("login_to_avail"); 
+                                                                ?></div>
                     </div>
 
                 </div>
             </div>
         </div> -->
 
-        
+
         <div class="modal fade" id="registerModal" role="dialog">
             <div class="modal-dialog modal-dialog-centered login-modal modal-dialog" role="document" style="justify-content: center;">
                 <div class="modal-content">
@@ -2891,13 +2926,15 @@
                             </div>
                             <!-- <div class="form-group">
                                 <div class="row"> -->
-                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+                            <!-- <div class="col-12 col-sm-4 m-b-15">
 
                                         <label class="control-label">Last Name<span class="Validation_error"> *</span></label>
 
                                     </div> -->
-                                    <!-- <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="text" name="last_name" style="text-transform: capitalize;" class="form-control auth-form-input" placeholder="<?php // echo trans("last_name"); ?>" value="<?php // echo old("last_name"); ?>" maxlength="255" required>
+                            <!-- <div class="col-12 col-sm-12 m-b-15">
+                                        <input type="text" name="last_name" style="text-transform: capitalize;" class="form-control auth-form-input" placeholder="<?php // echo trans("last_name"); 
+                                                                                                                                                                    ?>" value="<?php // echo old("last_name"); 
+                                                                                                                                                                                ?>" maxlength="255" required>
                                     </div>
                                 </div>
                             </div> -->
@@ -2931,14 +2968,14 @@
 
                             <div class="form-group">
                                 <div class="row">
-                                <div class="col-12 col-sm-12 m-b-15">  
-                                <button id="set_password" class="btn btn-md btn-custom btn-block-new-ui" onclick="toggleFunction();">SET Password (Optional)</button>
-                                    <!-- <div class="col-12 col-sm-4 m-b-15">
+                                    <div class="col-12 col-sm-12 m-b-15">
+                                        <button id="set_password" class="btn btn-md btn-custom btn-block-new-ui" onclick="toggleFunction();">SET Password (Optional)</button>
+                                        <!-- <div class="col-12 col-sm-4 m-b-15">
 
                                         <label class="control-label">Gender<span class="Validation_error"> *</span></label>
 
                                     </div> -->
-                                    <!-- <div class="col-12 col-sm-12 m-b-15">
+                                        <!-- <div class="col-12 col-sm-12 m-b-15">
                                         <select name="gender" class="form-control auth-form-input" placeholder="Gender" required>
                                             <option value="" selected disabled>Gender</option>
                                             <option value="Male">Male</option>
@@ -2948,40 +2985,40 @@
                                     </div>
                                 </div>
                             </div> -->
-                        </div>
-                        </div>
-                        </div>
-                        <div id="show_password">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="password" name="password" id="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" value="<?php echo old("password"); ?>"  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,25}$" minlength="8" maxlength="25">
-                                        <span class="far fa-eye field-icon" id="togglePassword"></span>
-                                        <label id="Passwordvalidate" style="color:red;"></label>
-                                        <div id="message">
-                                            <p>Password must contain the following:
-                                            <p>
-                                            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-                                            <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-                                            <p id="number" class="invalid">A <b>number</b></p>
-                                            <p id="special_character" class="invalid">A <b>Special Character</b></p>
-                                            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="show_password">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 m-b-15">
+                                            <input type="password" name="password" id="password" class="form-control auth-form-input" placeholder="<?php echo trans("password"); ?>" value="<?php echo old("password"); ?>" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,25}$" minlength="8" maxlength="25">
+                                            <span class="far fa-eye field-icon" id="togglePassword"></span>
+                                            <label id="Passwordvalidate" style="color:red;"></label>
+                                            <div id="message">
+                                                <p>Password must contain the following:
+                                                <p>
+                                                <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                                                <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                                                <p id="number" class="invalid">A <b>number</b></p>
+                                                <p id="special_character" class="invalid">A <b>Special Character</b></p>
+                                                <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="show_confirmpwd">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 m-b-15">
+                                            <input type="password" name="confirm_password" id="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>">
+                                            <span class="far fa-eye field-icon" id="togglePassword1"></span>
+
+                                            <label id="CheckPasswordMatch" style="color:red;"></label>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group" id="show_confirmpwd">
-                                <div class="row">
-                                    <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="password" name="confirm_password" id="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>">
-                                        <span class="far fa-eye field-icon" id="togglePassword1"></span>
-
-                                        <label id="CheckPasswordMatch" style="color:red;"></label>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                             <div class="form-group m-t-5 m-b-20">
                                 <div class="custom-control custom-checkbox custom-control-validate-input">
                                     <input type="checkbox" class="custom-control-input" name="terms" id="checkbox_terms" ;>
@@ -3096,9 +3133,9 @@
                             </div>
                             <div class="form-group">
                                 <div class="row">
-                                <button id="set_password" class="btn btn-md btn-custom btn-block-new-ui" onclick="toggleFunction();">SET Password (Optional)</button>
-                        </div>
-                    </div>
+                                    <button id="set_password" class="btn btn-md btn-custom btn-block-new-ui" onclick="toggleFunction();">SET Password (Optional)</button>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="row">
                                     <!-- <div class="col-12 col-sm-4 m-b-15">
@@ -3130,7 +3167,7 @@
 
                                     </div> -->
                                     <div class="col-12 col-sm-12 m-b-15">
-                                        <input type="password" name="confirm_password" id="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>" >
+                                        <input type="password" name="confirm_password" id="confirm_password" class="form-control auth-form-input" placeholder="<?php echo trans("password_confirm"); ?>">
                                         <span class="far fa-eye field-icon" id="togglePassword1"></span>
 
                                         <label id="CheckPasswordMatch" style="color:red;"></label>
@@ -6105,8 +6142,7 @@
             var bt = /\r/g;
             w.fn.extend({
                 val: function(e) {
-                    var t, n, r, i = this[0];
-                    {
+                    var t, n, r, i = this[0]; {
                         if (arguments.length) return r = g(e), this.each(function(n) {
                             var i;
                             1 === this.nodeType && (null == (i = r ? e.call(this, n, w(this).val()) : e) ? i = "" : "number" == typeof i ? i += "" : Array.isArray(i) && (i = w.map(i, function(e) {
@@ -6800,10 +6836,64 @@
         });
     </script>
 
-<!-- <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
+    <!-- <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
         <script>
             var sf = new Snowflakes();
         </script> -->
+
+    <script>
+        TweenLite.set("#rose_petals", {
+            perspective: 600
+        })
+        // TweenLite.set("img",{xPercent:"-50%",yPercent:"-50%"})
+
+        var total = 30;
+        var warp = document.getElementById("rose_petals"),
+            w = window.innerWidth,
+            h = window.innerHeight;
+
+        for (i = 0; i < total; i++) {
+            var Div = document.createElement('div');
+            TweenLite.set(Div, {
+                attr: {
+                    class: 'dot'
+                },
+                x: R(0, w),
+                y: R(-200, -150),
+                z: R(-200, 200)
+            });
+            warp.appendChild(Div);
+            animm(Div);
+        }
+
+        function animm(elm) {
+            TweenMax.to(elm, R(6, 15), {
+                y: h + 100,
+                ease: Linear.easeNone,
+                repeat: -1,
+                delay: -15
+            });
+            TweenMax.to(elm, R(4, 8), {
+                x: '+=100',
+                rotationZ: R(0, 180),
+                repeat: -1,
+                yoyo: true,
+                ease: Sine.easeInOut
+            });
+            TweenMax.to(elm, R(2, 8), {
+                rotationX: R(0, 360),
+                rotationY: R(0, 360),
+                repeat: -1,
+                yoyo: true,
+                ease: Sine.easeInOut,
+                delay: -5
+            });
+        };
+
+        function R(min, max) {
+            return min + Math.random() * (max - min)
+        };
+    </script>
 
     <!-- chat systems  -->
     <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
@@ -6890,16 +6980,17 @@
         }
     </script>
 
-<script>
-var x = document.getElementById("show_password").style.display = "none";
-function toggleFunction() {
-  var x = document.getElementById("show_password");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
+    <script>
+        var x = document.getElementById("show_password").style.display = "none";
+
+        function toggleFunction() {
+            var x = document.getElementById("show_password");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
     </script>
 
     <script>
@@ -7076,12 +7167,10 @@ function toggleFunction() {
             console.log(email_address);
             if (phn_num == '') {
                 document.getElementById("verify_mobile_span").innerHTML = "*Please enter mobile number !";
-            } 
-            else if (email_address == "") {
+            } else if (email_address == "") {
                 document.getElementById("email_span_error").innerHTML = "";
                 document.getElementById("email_span_error").innerHTML = "Please enter email address";
-            } 
-            else if (IsEmail(email_address) == false) {
+            } else if (IsEmail(email_address) == false) {
                 document.getElementById("email_span_error").innerHTML = "";
                 document.getElementById("email_span_error").innerHTML = "Please enter a valid email address";
                 //invalid emailid
