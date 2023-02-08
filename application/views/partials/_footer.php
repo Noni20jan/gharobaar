@@ -611,7 +611,7 @@
                             </a>
                         <?php endif; ?>
                     <?php else : ?>
-                        <a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal">
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal">
                             <img src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_profile.png">
                             <p class="aap_bar_text">Profile</p>
                         </a>

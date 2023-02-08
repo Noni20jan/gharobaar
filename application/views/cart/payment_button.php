@@ -97,13 +97,14 @@ endif;
 
 
                         <?php elseif ($this->general_settings->guest_checkout == 1) : ?>
-                            <a href="#" class="btn btn-block" data-toggle="modal" data-target="#loginModal"> <strong><?php echo "Login to Continue"; ?> </strong></a>
-<div class="text-center m-b-15"><strong>OR</strong></div>
-<a href="#" class="btn btn-block" data-toggle="modal" data-target="#guestLoginModal"> <strong><?php echo "Continue Checkout as Guest"; ?> </strong></a>
-<?php endif; ?>
-<?php endif; ?>
-<?php endif; ?>
-<?php endif; ?>
-<?php endif; ?>
-<?php endif; ?>
+                            <a href="#" class="btn btn-block" data-toggle="modal" data-target="#OtploginModal"> <strong><?php echo "Login to Continue"; ?> </strong></a>
+                            <!-- <div class="text-center m-b-15"><strong>OR</strong></div>
+<a href="#" class="btn btn-block" data-toggle="modal" data-target="#guestLoginModal"> <strong><?php // echo "Continue Checkout as Guest"; 
+                                                                                                ?> </strong></a> -->
+                        <?php endif; ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php endif; ?>
 </p>
