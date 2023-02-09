@@ -2754,8 +2754,8 @@
                             <div class="form-group" style="text-align:center;">
                                 <button type="button" id="verify_login_otp" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login"); ?></button>
                             </div>
-                            <p class="p-social-media m-0 m-t-15">&nbsp; <a href="javascript:void(0)" class="link" data-toggle="modal" data-target="#loginModal" style="text-decoration: underline; color:blue !important">Login Using Password</a></p></br>
-                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link" style="text-decoration: underline; color:blue !important">Register</a></p>
+                            <p class="p-social-media m-0 m-t-15">&nbsp; <a href="javascript:void(0)" class="registertologin" data-toggle="modal" data-target="#loginModal" style="text-decoration: underline; color:blue !important">Login Using Password</a></p></br>
+                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="logintoregister" style="text-decoration: underline; color:blue !important">Register</a></p>
                         </form>
                         <!-- form end -->
                     </div>
@@ -2764,6 +2764,7 @@
             </div>
         </div>
         <!-- login using OTP model end  -->
+
         <!-- Login Modal -->
         <div class="modal fade" id="loginModal" role="dialog">
             <div class="modal-dialog modal-dialog-centered login-modal" role="document">
@@ -2798,7 +2799,7 @@
                                 <button type="submit" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login_with_pwd"); ?></button>
                             </div>
 
-                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="link" style="text-decoration: underline; color:blue !important">Register</a></p>
+                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="logintoregister" style="text-decoration: underline; color:blue !important">Register</a></p>
                         </form>
                         <!-- form end -->
 
@@ -2808,7 +2809,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- <div class="modal fade" id="guestLoginModal" role="dialog">
             <div class="modal-dialog modal-dialog-centered login-modal" role="document">
@@ -3038,7 +3038,7 @@
                             <?php endif; ?>
                             <?php if ($this->general_settings->enable_otp_login) : ?>
                                 <div style="text-align:center;  margin-bottom:5px">
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class=" register_color registertologin" style="text-decoration: underline; color:blue !important">Login using OTP</a>
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class="logintoOtp" style="text-decoration: underline; color:blue !important">Login using OTP</a>
                                 </div>
                             <?php endif; ?>
                             <div class="form-group">
@@ -3194,7 +3194,7 @@
                             <?php endif; ?>
                             <?php if ($this->general_settings->enable_otp_login) : ?>
                                 <div style="text-align:center;  margin-bottom:5px">
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class=" register_color registertologin" style="text-decoration: underline; color:blue !important">Login using OTP</a>
+                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#OtploginModal" class="logintoOtp" style="text-decoration: underline; color:blue !important">Login using OTP</a>
                                 </div>
                             <?php endif; ?>
                             <div class="form-group">
@@ -7011,6 +7011,7 @@
         $(document).on("click", ".logintoregister", function() {
             console.log("click")
             $('#loginModal').modal('hide');
+            $('#OtploginModal').modal('hide');
             setTimeout(function() {
                 $('#registerModal').modal('show');
             }, 500);
@@ -7018,8 +7019,9 @@
         $(document).on("click", ".registertologin", function() {
             console.log("click")
             $('#registerModal').modal('hide');
+            $('#OtploginModal').modal('hide');
             setTimeout(function() {
-                $('#logintoOtp').modal('show');
+                $('#loginModal').modal('show');
             }, 500);
         });
         $(document).on('hidden.bs.modal', function(event) {
@@ -7030,6 +7032,7 @@
         $(document).on("click", ".logintoOtp", function() {
             console.log("click")
             $('#loginModal').modal('hide');
+            $('#registerModal').modal('hide');
             setTimeout(function() {
                 $('#OtploginModal').modal('show');
             }, 500);
