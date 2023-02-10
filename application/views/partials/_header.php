@@ -50,7 +50,7 @@
     #rose_petals {
         width: 100%;
         height: 100%;
-        position: inherit;
+        position: relative;
         z-index: 10011;
     }
 
