@@ -51,6 +51,7 @@ $route['razorpay-payment-post']['POST'] = 'cart_controller/razorpay_payment_post
 $route['stripe-payment-post']['POST'] = 'cart_controller/stripe_payment_post';
 $route['iyzico-payment-post'] = 'cart_controller/iyzico_payment_post';
 $route['cashfree-return'] = 'cart_controller/cashfree_payment_post';
+$route['cashfree_return'] = 'cart_controller/new_cashfree_return';
 //earnings
 $route['withdraw-money-post']['POST'] = 'dashboard_controller/withdraw_money_post';
 $route['set-paypal-payout-account-post']['POST'] = 'dashboard_controller/set_paypal_payout_account_post';

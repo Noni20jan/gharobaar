@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <script src="<?= base_url(); ?>assets/js/main-1.7.js"></script>
+<script src="https://sdk.cashfree.com/js/ui/2.0.0/cashfree.sandbox.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/progress-tracker.css">
 <style>
     .order_summary {
@@ -2071,6 +2072,8 @@
         var bank_select = $('#bank_select').val();
         var wallet_select = $('#wallet_select').val();
 
+
+
         var t = {
             // pay_method: pay_method,
             sys_lang_id: 1,
@@ -2085,15 +2088,32 @@
             type: "POST",
             url: base_url + "cart_controller/payment_cashfree",
             data: t,
-            success: function(e) {
-                res = JSON.parse(e);
-                window.location.href = base_url + "cashfree_form";
+            success: function(f) {
+                res = JSON.parse(f);
+                t[csfr_token_name] = $.cookie(csfr_cookie_name);
+                $.ajax({
+                    type: "POST",
+                    url: base_url + "cart_controller/cashfree_form",
+                    data: t,
+                    success: function(e) {
+                        // resp = JSON.parse(e);
+                        // window.location.href = base_url + "cashfree_form";
+                        console.log(e);
+                        var paymentSessionId = e;
+                        const cf = new Cashfree(paymentSessionId);
+                        cf.redirect();
+                        
 
-                // alert($response.pay_view);
+                        // alert($response.pay_view);
+                    },
+                    // window.location.href = base_url + "cashfree_form";
+
+
+                    // alert($response.pay_view);
+
+                });
             },
         });
-
-
     }
 </script>
 <script>

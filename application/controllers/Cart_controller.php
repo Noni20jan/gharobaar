@@ -1909,7 +1909,218 @@ class Cart_controller extends Home_Core_Controller
             $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentModes=" . $data["paymentModes"];
         }
         $data["signature"] = $this->cashfree_gen_signature($data);
-        $this->load->view('cart/cashfree_form', $data);
+
+        $app_id = $this->general_settings->cashfree_app_id;
+        $secret_key = $this->general_settings->cashfree_secret_key;
+        if ($this->general_settings->enable_easysplit == 1) :
+            if (auth_check()) :
+                $data1 = array(
+                    "order_Id" => $sessiondata['orderId'],
+                    "order_Amount" => $sessiondata['orderAmount'],
+                    "order_currency" => "INR",
+                    "customer_details" => array(
+                        "customer_name" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
+                        "customer_email" => $this->auth_user->email,
+                        "customer_phone" => $this->auth_user->phone_number,
+                        "customer_id" => $this->auth_user->id
+                    ),
+                    "order_meta" => array(
+                        "return_url" => base_url() . "cashfree_return?order_id={order_id}",
+                        "notify_url" => base_url() . "cashfree_return",
+                        "payment_methods" => $sessiondata['paymentModes'],
+                    )
+                );
+            else :
+                $data1 = array(
+                    "order_Id" => $sessiondata['orderId'],
+                    "order_Amount" => $sessiondata['orderAmount'],
+                    "order_currency" => "INR",
+                    "customer_details" => array(
+                        "customer_name" => $sessiondata['customerName'],
+                        "customer_email" => $sessiondata['customerEmail'],
+                        "customer_phone" =>  $sessiondata['customerPhone'],
+                        "customer_id" => ""
+                    ),
+                    "order_meta" => array(
+                        "return_url" => base_url() . "cashfree_return?order_id={order_id}",
+                        "notify_url" => base_url() . "cashfree_return",
+                        "payment_methods" => $sessiondata['paymentModes'],
+                    )
+                );
+            endif;
+        elseif ($this->general_settings->enable_easysplit == 0) :
+            if (auth_check()) :
+                $data1 = array(
+                    "order_Id" => $sessiondata['orderId'],
+                    "order_Amount" => $sessiondata['orderAmount'],
+                    "order_currency" => "INR",
+                    "customer_details" => array(
+                        "customer_name" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
+                        "customer_email" => $this->auth_user->email,
+                        "customer_phone" => $this->auth_user->phone_number,
+                        "customer_id" => $this->auth_user->id
+                    ),
+                    "order_meta" => array(
+                        "return_url" => base_url() . "cashfree_return?order_id={order_id}",
+                        "notify_url" => base_url() . "cashfree_return",
+                        "payment_methods" => $sessiondata['paymentModes'],
+                    )
+                );
+            else :
+                $data1 = array(
+                    "order_Id" => $sessiondata['orderId'],
+                    "order_Amount" => $sessiondata['orderAmount'],
+                    "order_currency" => "INR",
+                    "customer_details" => array(
+                        "customer_name" => $sessiondata['customerName'],
+                        "customer_email" => $sessiondata['customerEmail'],
+                        "customer_phone" =>  $sessiondata['customerPhone'],
+                        "customer_id" => ""
+                    ),
+                    "order_meta" => array(
+                        "return_url" => base_url() . "cashfree_return?order_id={order_id}",
+                        "notify_url" => base_url() . "cashfree_return",
+                        "payment_methods" => $sessiondata['paymentModes'],
+                    )
+                );
+            endif;
+        endif;
+
+        $req_data = json_encode($data1);
+        // var_dump($data1['order_meta']);
+        // die();
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://sandbox.cashfree.com/pg/orders",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $req_data,
+            CURLOPT_HTTPHEADER => [
+                "Content-Type: application/json",
+                "x-api-version: 2022-09-01",
+                "x-client-id: $app_id",
+                "x-client-secret: $secret_key"
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+        $result = json_decode($response, true);
+
+        if ($err) {
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(array("error" => 1));
+            echo "cURL Error #:" . $err;
+            // die();
+        } else {
+
+            header('Content-Type: application/json; charset=utf-8');
+            $output = array("payment_session_id" => $result);
+            echo json_encode($result['payment_session_id']);
+        }
+    }
+
+    public function new_cashfree_return()
+    {
+
+        $sessiondata = $this->session->userdata("cashfree_form");
+        $orderId = $sessiondata['orderId'];
+        $app_id = $this->general_settings->cashfree_app_id;
+        $secret_key = $this->general_settings->cashfree_secret_key;
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://sandbox.cashfree.com/pg/orders/$orderId",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                "x-client-id: $app_id",
+                "x-client-secret: $secret_key",
+                'x-api-version: 2022-09-01'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        $result = json_decode($response);
+
+        curl_close($curl);
+
+
+        $curl1 = curl_init();
+        curl_setopt_array($curl1, array(
+            CURLOPT_URL => "https://sandbox.cashfree.com/pg/orders/$orderId/payments",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                "x-client-id: $app_id",
+                "x-client-secret: $secret_key",
+                'x-api-version: 2022-09-01'
+            ),
+        ));
+
+        $response1 = curl_exec($curl1);
+        $err1 = curl_error($curl1);
+        $result1 = json_decode($response1);
+
+        curl_close($curl1);
+
+
+        $orderAmt = $result1[0]->order_amount;
+        $paymentAmt = $result1[0]->payment_amount;
+        if ($orderAmt != $paymentAmt) {
+            $match = "no";
+        } else {
+            $match = "yes";
+        }
+        $this->auth_model->shiprocket_auth_api();
+        $data_transaction = array(
+            'payment_method' => "Cashfree",
+            'payment_id' => $result1[0]->cf_payment_id,
+            'cashfree_order_id' => $result->cf_order_id,
+            'payment_mode' => $result1[0]->payment_group,
+            'payment_status' => $result->order_status,
+            'txMsg' => $result1[0]->payment_message,
+            'txStatus' => $result1[0]->payment_status,
+            'txTime' => $result1[0]->payment_completion_time,
+            'currency' => $result1[0]->payment_currency,
+            'payment_amount' => $result1[0]->payment_amount,
+            'paymentOption' => $result1[0]->payment_group,
+            'paymentCode' => "",
+            'paymentModes' => $result1[0]->payment_group,
+            'match_status' => $match,
+            'order_amount' => $orderAmt
+        );
+
+        $payment = $this->execute_payment($data_transaction, 'sale', lang_base_url());
+        if ($payment->result == 1) {
+
+            $this->session->set_flashdata('success', $payment->message);
+            header("Location: $payment->redirect_url");
+            exit();
+        } else {
+            $this->session->set_flashdata('error', $payment->message);
+            header("Location: $payment->redirect_url");
+            exit();
+        }
     }
 
     public function cashfree_gen_signature($data)
@@ -1986,13 +2197,13 @@ class Cart_controller extends Home_Core_Controller
                 $this->cart_model->set_sess_cart_payment_method_from_db($user_cart);
             }
         endif;
-        $order_amount =  (int)$this->input->post('orderAmount', true);
-        $cart_amount = (int)$user_details->cart_total;
-        if ($order_amount != $cart_amount) {
-            $match = "no";
-        } else {
-            $match = "yes";
-        }
+        // $order_amount =  (int)$this->input->post('orderAmount', true);
+        // $cart_amount = (int)$user_details->cart_total;
+        // if ($order_amount != $cart_amount) {
+        //     $match = "no";
+        // } else {
+        //     $match = "yes";
+        // }
         $data_transaction = array(
             'payment_method' => "Cashfree",
             'payment_id' => $this->input->post('referenceId', true),
@@ -2010,39 +2221,39 @@ class Cart_controller extends Home_Core_Controller
             'paymentOption' => $paymentOption,
             'paymentCode' => $paymentCode,
             'paymentModes' => $paymentModes,
-            'match_status' => $match,
-            'order_amount' => $order_amount
+            // 'match_status' => $match,
+            // 'order_amount' => $order_amount
         );
         // var_dump($data_transaction['payment_amount']);
         // var_dump($user_data['cart_total']);
         // die();
         // if ($user_details->cart_total == $data_transaction['payment_amount']) {
 
-        if (!$this->cashfree_signature_verfication($data_transaction)) {
-            // echo "payment success";
-            $this->session->set_flashdata('error', 'Invalid signature passed!');
-            echo json_encode([
-                'result' => 0
-            ]);
-        } else {
-            // echo "payment success";
-            // $mds_payment_type = $this->input->post('mds_payment_type', true);
-            //add order
-            $response = $this->execute_payment($data_transaction, 'sale', lang_base_url());
-            if ($response->result == 1) {
+        // if (!$this->cashfree_signature_verfication($data_transaction)) {
+        //     // echo "payment success";
+        //     $this->session->set_flashdata('error', 'Invalid signature passed!');
+        //     echo json_encode([
+        //         'result' => 0
+        //     ]);
+        // } else {
+        // echo "payment success";
+        // $mds_payment_type = $this->input->post('mds_payment_type', true);
+        //add order
+        $response = $this->execute_payment($data_transaction, 'sale', lang_base_url());
+        if ($response->result == 1) {
 
-                $this->session->set_flashdata('success', $response->message);
-                header("Location: $response->redirect_url");
-                exit();
-            } else {
-                $this->session->set_flashdata('error', $response->message);
-                header("Location: $response->redirect_url");
-                exit();
-                // echo json_encode([
-                //     'result' => 0
-                // ]);
-            }
+            $this->session->set_flashdata('success', $response->message);
+            header("Location: $response->redirect_url");
+            exit();
+        } else {
+            $this->session->set_flashdata('error', $response->message);
+            header("Location: $response->redirect_url");
+            exit();
+            // echo json_encode([
+            //     'result' => 0
+            // ]);
         }
+        // }
         // } 
         // else {
         //     var_dump("7645758697");
@@ -2292,34 +2503,33 @@ class Cart_controller extends Home_Core_Controller
                 $product = $this->product_model->get_product_by_id($product_id1);
 
                 // if ($product->user_id == $this->auth_user->id) {
-                    $review = $this->review_model->get_review($product_id1, $this->auth_user->id);
-                    //  var_dump($review);die();
-                    if (!empty($review)) {
-                        $update_review=$this->review_model->update_review1($review->id, $rating2[$i], $product_id1, $review_text2[$i]);
-                        $images = $this->review_model->check_review_images($product_id1, $this->auth_user->id);
-                        $update_review=true;
-                        $upload_image=false;
-                        if (empty($images)) {
-                            $this->load->model('upload_model');
-                            $upload_image=$this->upload_model->upload_review_image('file_' . $product_id1, $review->id, $product_id1);
-                            $upload_image=true;
-                        } 
-                    if( $update_review || $upload_image ){
-                        $reviews = TRUE;
-                    }
-                        else {
-                            $reviews = false;
-                        }   
-                    } else {
+                $review = $this->review_model->get_review($product_id1, $this->auth_user->id);
+                //  var_dump($review);die();
+                if (!empty($review)) {
+                    $update_review = $this->review_model->update_review1($review->id, $rating2[$i], $product_id1, $review_text2[$i]);
+                    $images = $this->review_model->check_review_images($product_id1, $this->auth_user->id);
+                    $update_review = true;
+                    $upload_image = false;
+                    if (empty($images)) {
                         $this->load->model('upload_model');
-                        $last_id = $this->review_model->add_review1($rating2[$i], $product_id1, $review_text2[$i], 'file_'[$i]);
-                        $img_path = $this->upload_model->upload_review_image('file_' . $product_id1, $last_id, $product_id1);
-                        if (!empty($last_id) || !empty($img_path)) {
-                            $reviews = TRUE;
-                        } else {
-                            $reviews = false;
-                        }
+                        $upload_image = $this->upload_model->upload_review_image('file_' . $product_id1, $review->id, $product_id1);
+                        $upload_image = true;
                     }
+                    if ($update_review || $upload_image) {
+                        $reviews = TRUE;
+                    } else {
+                        $reviews = false;
+                    }
+                } else {
+                    $this->load->model('upload_model');
+                    $last_id = $this->review_model->add_review1($rating2[$i], $product_id1, $review_text2[$i], 'file_'[$i]);
+                    $img_path = $this->upload_model->upload_review_image('file_' . $product_id1, $last_id, $product_id1);
+                    if (!empty($last_id) || !empty($img_path)) {
+                        $reviews = TRUE;
+                    } else {
+                        $reviews = false;
+                    }
+                }
                 // }
                 $i++;
             }
