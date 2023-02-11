@@ -1450,14 +1450,14 @@ class Cart_model extends CI_Model
     public function unset_cart_items_from_db_after_purcahse()
     {
         $cart = $this->cart_model->get_sess_cart_items();
-        if (!empty($cart)) {
-            foreach ($cart as $item) {
-                if ($this->auth_check) {
-                    $this->remove_from_cart_product_db($item->cart_item_id);
-                }
-            }
+        // if (!empty($cart)) {
+        //     foreach ($cart as $item) {
+        //         if ($this->auth_check) {
+        //             $this->remove_from_cart_product_db($item->cart_item_id);
+        //         }
+        //     }
             $this->remove_from_cart_db($this->auth_user->id);
-        }
+        // }
     }
 
     //get cart total session

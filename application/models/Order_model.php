@@ -126,8 +126,8 @@ class Order_model extends CI_Model
                 $this->load->model('bidding_model');
                 $this->bidding_model->set_bidding_quotes_as_completed_after_purchase();
 
-                //clear cart from db
-                // $this->cart_model->unset_cart_items_from_db_after_purcahse();
+                // clear cart from db
+                $this->cart_model->unset_cart_items_from_db_after_purcahse();
 
                 //clear cart
                 $this->cart_model->clear_cart();
