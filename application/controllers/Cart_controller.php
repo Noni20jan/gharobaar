@@ -2024,7 +2024,10 @@ class Cart_controller extends Home_Core_Controller
 
             header('Content-Type: application/json; charset=utf-8');
             $output = array("payment_session_id" => $result);
-            echo json_encode($result['payment_session_id']);
+            $val = explode(",", $response);
+            $p_id = explode(":", $val[18]);
+            $payment_session_id = (trim($p_id[1], '"'));
+            echo json_encode($payment_session_id);
         }
     }
 
