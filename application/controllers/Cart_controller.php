@@ -1754,72 +1754,96 @@ class Cart_controller extends Home_Core_Controller
         $settelment_json_base64 = base64_encode($settelment_json);
         $this->session->set_userdata('settelment_json_base64', $settelment_json_base64);
         $easysplit = $_SESSION['settelment_json_base64'];
-        // $data['payment_mode'] = $this->input->post("payment_mode", true);
+        $data['payment_mode'] = $this->input->post("payment_mode", true);
         // easy-split end
-        if ($this->general_settings->enable_easysplit == 1) {
+        if ($this->general_settings->enable_easysplit == 1) :
             if (auth_check()) :
                 $data = array(
-                    "appId" => $this->general_settings->cashfree_app_id,
-                    "orderId" => $this->input->post("orderid", true),
-                    "orderAmount" => $this->input->post("orderamount", true),
-                    // "paymentSplits" => $this->input->post("paymentsplits", true),
-                    "paymentSplits" => $easysplit,
-                    "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
-                    "customerPhone" => $this->auth_user->phone_number,
-                    "customerEmail" => $this->auth_user->email,
-                    "returnUrl" => $returnUrl
-                );
-            else :
-                $data = array(
-                    "appId" => $this->general_settings->cashfree_app_id,
-                    "orderId" => $this->input->post("orderid", true),
-                    "orderAmount" => $this->input->post("orderamount", true),
-                    // "paymentSplits" => $this->input->post("paymentsplits", true),
-                    "paymentSplits" => $easysplit,
-                    "customerName" => $shipping_address->shipping_first_name . " " . $shipping_address->shipping_last_name,
-                    "customerPhone" => $shipping_address->shipping_phone_number,
-                    "customerEmail" => $shipping_address->shipping_email,
-                    "returnUrl" => $returnUrl
-                );
-            endif;
-        } elseif ($this->general_settings->enable_easysplit == 0) {
-            if (auth_check()) :
-                $data = array(
-                    "appId" => $this->general_settings->cashfree_app_id,
-                    "orderId" => $this->input->post("orderid", true),
-                    "orderAmount" => $this->input->post("orderamount", true),
-                    "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
-                    "customerPhone" => $this->auth_user->phone_number,
-                    "customerEmail" => $this->auth_user->email,
-                    "returnUrl" => $returnUrl
-                );
-            else :
-                $data = array(
-                    "appId" => $this->general_settings->cashfree_app_id,
-                    "orderId" => $this->input->post("orderid", true),
-                    "orderAmount" => $this->input->post("orderamount", true),
-                    "customerName" => $shipping_address->shipping_first_name . " " . $shipping_address->shipping_last_name,
-                    "customerPhone" => $shipping_address->shipping_phone_number,
-                    "customerEmail" => $shipping_address->shipping_email,
-                    "returnUrl" => $returnUrl
-                );
-            endif;
-        }
-        $data['paymentModes'] = $this->input->post("payment_mode", true);
-        if (($this->input->post("payment_mode", true)) == "nb") {
-            $data["paymentOption"] = $this->input->post("payment_mode", true);
-            $data["paymentCode"] = $this->input->post("bank_select", true);
-            $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentOption=" . $data["paymentOption"] . "&paymentCode=" . $data["paymentCode"];
-        } elseif (($this->input->post("payment_mode", true)) == "wallet") {
-            $data["paymentOption"] = $this->input->post("payment_mode", true);
-            $data["paymentCode"] = $this->input->post("wallet_select", true);
-            $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentOption=" . $data["paymentOption"] . "&paymentCode=" . $data["paymentCode"];
-        } elseif (($this->input->post("payment_mode", true)) == "cc" || ($this->input->post("payment_mode", true)) == "dc" || ($this->input->post("payment_mode", true)) == "upi") {
-            $data["paymentModes"] = $this->input->post("payment_mode", true);
-            $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentModes=" . $data["paymentModes"];
-        }
+                        "order_Id" => $this->input->post("orderid", true),
+                        "order_Amount" => $this->input->post("orderamount", true),
+                        "order_currency" => "INR",
+                        "customer_details" => array(
+                            "customer_name" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
+                            "customer_email" => $this->auth_user->email,
+                            "customer_phone" => $this->auth_user->phone_number,
+                            "customer_id" => $this->auth_user->id
+                        ),
+                        "order_meta" => array(
+                            "return_url" => base_url() . "cashfree_return?order_id={order_id}",
+                            "notify_url" => base_url() . "cashfree_return",
+                    )
 
-        $data["signature"] = $this->cashfree_gen_signature($data);
+                );
+
+            else :
+                    $data = array(
+                        "order_Id" => $this->input->post("orderid", true),
+                        "order_Amount" => $this->input->post("orderamount", true),
+                        "order_currency" => "INR",
+                        "customer_details" => array(
+                            "customer_name" => $shipping_address->shipping_first_name . " " . $shipping_address->shipping_last_name,
+                            "customer_email" => $shipping_address->shipping_email,
+                            "customer_phone" =>  $shipping_address->shipping_phone_number,
+                            "customer_id" => ""
+                        ),
+                        "order_meta" => array(
+                            "return_url" => base_url() . "cashfree_return?order_id={order_id}",
+                            "notify_url" => base_url() . "cashfree_return",
+                        )
+                        );
+            endif;
+        elseif ($this->general_settings->enable_easysplit == 0) :
+            if (auth_check()) :
+                $data = array(
+                    "order_Id" => $this->input->post("orderid", true),
+                    "order_Amount" => $this->input->post("orderamount", true),
+                    "order_currency" => "INR",
+                    "customer_details" => array(
+                        "customer_name" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
+                        "customer_email" => $this->auth_user->email,
+                        "customer_phone" => $this->auth_user->phone_number,
+                        "customer_id" => $this->auth_user->id
+                    ),
+                    "order_meta" => array(
+                        "return_url" => base_url() . "cashfree_return?order_id={order_id}",
+                        "notify_url" => base_url() . "cashfree_return",
+                )
+
+            );
+            else :
+                $data = array(
+                    "order_Id" => $this->input->post("orderid", true),
+                    "order_Amount" => $this->input->post("orderamount", true),
+                    "order_currency" => "INR",
+                    "customer_details" => array(
+                        "customer_name" => $shipping_address->shipping_first_name . " " . $shipping_address->shipping_last_name,
+                        "customer_email" => $shipping_address->shipping_email,
+                        "customer_phone" =>  $shipping_address->shipping_phone_number,
+                        "customer_id" => ""
+                    ),
+                    "order_meta" => array(
+                        "return_url" => base_url() . "cashfree_return?order_id={order_id}",
+                        "notify_url" => base_url() . "cashfree_return",
+                    )
+                    );
+            endif;
+        endif;
+        // }
+        $data['paymentModes'] = $this->input->post("payment_mode", true);
+        // if (($this->input->post("payment_mode", true)) == "nb") {
+        //     $data["paymentOption"] = $this->input->post("payment_mode", true);
+        //     $data["paymentCode"] = $this->input->post("bank_select", true);
+        //     $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentOption=" . $data["paymentOption"] . "&paymentCode=" . $data["paymentCode"];
+        // } elseif (($this->input->post("payment_mode", true)) == "wallet") {
+        //     $data["paymentOption"] = $this->input->post("payment_mode", true);
+        //     $data["paymentCode"] = $this->input->post("wallet_select", true);
+        //     $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentOption=" . $data["paymentOption"] . "&paymentCode=" . $data["paymentCode"];
+        // } elseif (($this->input->post("payment_mode", true)) == "cc" || ($this->input->post("payment_mode", true)) == "dc" || ($this->input->post("payment_mode", true)) == "upi") {
+        //     $data["paymentModes"] = $this->input->post("payment_mode", true);
+        //     $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentModes=" . $data["paymentModes"];
+        // }
+
+        // $data["signature"] = $this->cashfree_gen_signature($data);
         if ($this->general_settings->enable_easysplit == 1) {
             $save_payment = $seller_settlement;
             foreach ($save_payment as $sp) {
@@ -1834,7 +1858,7 @@ class Cart_controller extends Home_Core_Controller
             }
         }
 
-        $this->auth_model->update_user_login_session_data($data['orderAmount']);
+        $this->auth_model->update_user_login_session_data($data['order_Amount']);
         $this->session->set_userdata('cashfree_form', $data);
 
         echo json_encode($data);
@@ -1843,80 +1867,80 @@ class Cart_controller extends Home_Core_Controller
     {
 
         $sessiondata = $this->session->userdata("cashfree_form");
-        if ($this->general_settings->enable_easysplit == 1) {
-            if (auth_check()) :
-                $data = array(
-                    "appId" => $this->general_settings->cashfree_app_id,
-                    "orderId" => $sessiondata->orderId,
-                    "orderAmount" =>  $sessiondata['orderAmount'],
-                    // "paymentSplits" => $this->input->post("paymentsplits", true),
-                    "paymentSplits" => $sessiondata['paymentSplits'],
-                    "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
-                    "customerPhone" => $this->auth_user->phone_number,
-                    "customerEmail" => $this->auth_user->email,
-                    "returnUrl" =>  $sessiondata['returnUrl']
-                );
-            else :
-                $data = array(
-                    "appId" => $this->general_settings->cashfree_app_id,
-                    "orderId" => $sessiondata['orderId'],
-                    "orderAmount" => $sessiondata['orderAmount'],
-                    // "paymentSplits" => $this->input->post("paymentsplits", true),
-                    "paymentSplits" => $sessiondata['paymentSplits'],
-                    "customerName" => $sessiondata['customerName'],
-                    "customerPhone" => $sessiondata['customerPhone'],
-                    "customerEmail" => $sessiondata['customerEmail'],
-                    "returnUrl" =>  $sessiondata['returnUrl']
-                );
-            endif;
-        } elseif ($this->general_settings->enable_easysplit == 0) {
-            if (auth_check()) :
-                $data = array(
-                    "appId" => $this->general_settings->cashfree_app_id,
-                    "orderId" => $sessiondata['orderId'],
-                    "orderAmount" =>  $sessiondata['orderAmount'],
-                    // "paymentSplits" => $this->input->post("paymentsplits", true),
-                    // "paymentSplits" => $sessiondata['paymentSplits'],
-                    "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
-                    "customerPhone" => $this->auth_user->phone_number,
-                    "customerEmail" => $this->auth_user->email,
-                    "returnUrl" =>  $sessiondata['returnUrl']
-                );
-            else :
-                $data = array(
-                    "appId" => $this->general_settings->cashfree_app_id,
-                    "orderId" => $sessiondata['orderId'],
-                    "orderAmount" => $sessiondata['orderAmount'],
-                    // "paymentSplits" => $this->input->post("paymentsplits", true),
-                    // "paymentSplits" => $sessiondata['paymentSplits'],
-                    "customerName" => $sessiondata['customerName'],
-                    "customerPhone" => $sessiondata['customerPhone'],
-                    "customerEmail" => $sessiondata['customerEmail'],
-                    "returnUrl" =>  $sessiondata['returnUrl']
-                );
-            endif;
-        }
-        if ($sessiondata['paymentModes'] == "nb") {
-            $data["paymentOption"] = $sessiondata['paymentOption'];
-            $data["paymentCode"] = $sessiondata['paymentCode'];
-            $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentOption=" . $data["paymentOption"] . "&paymentCode=" . $data["paymentCode"];
-        } elseif ($sessiondata['paymentModes'] == "wallet") {
-            $data["paymentOption"] = $sessiondata['paymentModes'];
-            $data["paymentCode"] = $sessiondata['paymentCode'];
-            $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentOption=" . $data["paymentOption"] . "&paymentCode=" . $data["paymentCode"];
-        } elseif ($sessiondata['paymentModes'] == "cc" || $sessiondata['paymentModes'] == "dc" || $sessiondata['paymentModes'] == "upi") {
-            $data["paymentModes"] = $sessiondata['paymentModes'];
-            $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentModes=" . $data["paymentModes"];
-        }
-        $data["signature"] = $this->cashfree_gen_signature($data);
+        // if ($this->general_settings->enable_easysplit == 1) {
+        //     if (auth_check()) :
+        //         $data = array(
+        //             "appId" => $this->general_settings->cashfree_app_id,
+        //             "orderId" => $sessiondata->orderId,
+        //             "orderAmount" =>  $sessiondata['orderAmount'],
+        //             // "paymentSplits" => $this->input->post("paymentsplits", true),
+        //             "paymentSplits" => $sessiondata['paymentSplits'],
+        //             "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
+        //             "customerPhone" => $this->auth_user->phone_number,
+        //             "customerEmail" => $this->auth_user->email,
+        //             "returnUrl" =>  $sessiondata['returnUrl']
+        //         );
+            // else :
+            //     $data = array(
+            //         "appId" => $this->general_settings->cashfree_app_id,
+            //         "orderId" => $sessiondata['orderId'],
+            //         "orderAmount" => $sessiondata['orderAmount'],
+            //         // "paymentSplits" => $this->input->post("paymentsplits", true),
+            //         "paymentSplits" => $sessiondata['paymentSplits'],
+            //         "customerName" => $sessiondata['customerName'],
+            //         "customerPhone" => $sessiondata['customerPhone'],
+            //         "customerEmail" => $sessiondata['customerEmail'],
+            //         "returnUrl" =>  $sessiondata['returnUrl']
+            //     );
+            // endif;
+        // } elseif ($this->general_settings->enable_easysplit == 0) {
+        //     if (auth_check()) :
+        //         $data = array(
+        //             "appId" => $this->general_settings->cashfree_app_id,
+        //             "orderId" => $sessiondata['orderId'],
+        //             "orderAmount" =>  $sessiondata['orderAmount'],
+        //             // "paymentSplits" => $this->input->post("paymentsplits", true),
+        //             // "paymentSplits" => $sessiondata['paymentSplits'],
+        //             "customerName" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
+        //             "customerPhone" => $this->auth_user->phone_number,
+        //             "customerEmail" => $this->auth_user->email,
+        //             "returnUrl" =>  $sessiondata['returnUrl']
+        //         );
+        //     else :
+            //     $data = array(
+            //         "appId" => $this->general_settings->cashfree_app_id,
+            //         "orderId" => $sessiondata['orderId'],
+            //         "orderAmount" => $sessiondata['orderAmount'],
+            //         // "paymentSplits" => $this->input->post("paymentsplits", true),
+            //         // "paymentSplits" => $sessiondata['paymentSplits'],
+            //         "customerName" => $sessiondata['customerName'],
+            //         "customerPhone" => $sessiondata['customerPhone'],
+            //         "customerEmail" => $sessiondata['customerEmail'],
+            //         "returnUrl" =>  $sessiondata['returnUrl']
+            //     );
+            // endif;
+        // }
+        // if ($sessiondata['paymentModes'] == "nb") {
+        //     $data["paymentOption"] = $sessiondata['paymentOption'];
+        //     $data["paymentCode"] = $sessiondata['paymentCode'];
+        //     $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentOption=" . $data["paymentOption"] . "&paymentCode=" . $data["paymentCode"];
+        // } elseif ($sessiondata['paymentModes'] == "wallet") {
+        //     $data["paymentOption"] = $sessiondata['paymentModes'];
+        //     $data["paymentCode"] = $sessiondata['paymentCode'];
+        //     $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentOption=" . $data["paymentOption"] . "&paymentCode=" . $data["paymentCode"];
+        // } elseif ($sessiondata['paymentModes'] == "cc" || $sessiondata['paymentModes'] == "dc" || $sessiondata['paymentModes'] == "upi") {
+        //     $data["paymentModes"] = $sessiondata['paymentModes'];
+        //     $data["returnUrl"] = base_url() . "cashfree-return?session_id=" . $_SESSION["modesy_sess_unique_id"] . "&paymentModes=" . $data["paymentModes"];
+        // }
+        // $data["signature"] = $this->cashfree_gen_signature($data);
 
         $app_id = $this->general_settings->cashfree_app_id;
         $secret_key = $this->general_settings->cashfree_secret_key;
         if ($this->general_settings->enable_easysplit == 1) :
             if (auth_check()) :
                 $data1 = array(
-                    "order_Id" => $sessiondata['orderId'],
-                    "order_Amount" => $sessiondata['orderAmount'],
+                    "order_Id" => $sessiondata['order_Id'],
+                    "order_Amount" => $sessiondata['order_Amount'],
                     "order_currency" => "INR",
                     "customer_details" => array(
                         "customer_name" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
@@ -1932,13 +1956,13 @@ class Cart_controller extends Home_Core_Controller
                 );
             else :
                 $data1 = array(
-                    "order_Id" => $sessiondata['orderId'],
-                    "order_Amount" => $sessiondata['orderAmount'],
+                    "order_Id" => $sessiondata['order_Id'],
+                    "order_Amount" => $sessiondata['order_Amount'],
                     "order_currency" => "INR",
                     "customer_details" => array(
-                        "customer_name" => $sessiondata['customerName'],
-                        "customer_email" => $sessiondata['customerEmail'],
-                        "customer_phone" =>  $sessiondata['customerPhone'],
+                        "customer_name" => $sessiondata['customer_Name'],
+                        "customer_email" => $sessiondata['customer_Email'],
+                        "customer_phone" =>  $sessiondata['customer_Phone'],
                         "customer_id" => ""
                     ),
                     "order_meta" => array(
@@ -1951,8 +1975,8 @@ class Cart_controller extends Home_Core_Controller
         elseif ($this->general_settings->enable_easysplit == 0) :
             if (auth_check()) :
                 $data1 = array(
-                    "order_Id" => $sessiondata['orderId'],
-                    "order_Amount" => $sessiondata['orderAmount'],
+                    "order_Id" => $sessiondata['order_Id'],
+                    "order_Amount" => $sessiondata['order_Amount'],
                     "order_currency" => "INR",
                     "customer_details" => array(
                         "customer_name" => $this->auth_user->first_name . " " . $this->auth_user->last_name,
@@ -1968,13 +1992,13 @@ class Cart_controller extends Home_Core_Controller
                 );
             else :
                 $data1 = array(
-                    "order_Id" => $sessiondata['orderId'],
-                    "order_Amount" => $sessiondata['orderAmount'],
+                    "order_Id" => $sessiondata['order_Id'],
+                    "order_Amount" => $sessiondata['order_Amount'],
                     "order_currency" => "INR",
                     "customer_details" => array(
-                        "customer_name" => $sessiondata['customerName'],
-                        "customer_email" => $sessiondata['customerEmail'],
-                        "customer_phone" =>  $sessiondata['customerPhone'],
+                        "customer_name" => $sessiondata['customer_Name'],
+                        "customer_email" => $sessiondata['customer_Email'],
+                        "customer_phone" =>  $sessiondata['customer_Phone'],
                         "customer_id" => ""
                     ),
                     "order_meta" => array(
@@ -2035,7 +2059,7 @@ class Cart_controller extends Home_Core_Controller
     {
 
         $sessiondata = $this->session->userdata("cashfree_form");
-        $orderId = $sessiondata['orderId'];
+        $orderId = $sessiondata['order_Id'];
         $app_id = $this->general_settings->cashfree_app_id;
         $secret_key = $this->general_settings->cashfree_secret_key;
         $curl = curl_init();
