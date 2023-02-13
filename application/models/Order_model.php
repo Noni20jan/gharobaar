@@ -825,7 +825,7 @@ class Order_model extends CI_Model
                         'product_title' => $cart_item->product_title,
                         'product_slug' => $product->slug,
                         'hsn_code' => $product->hsn_code,
-                        'product_unit_price' => round($cart_item->listing_price / 100) * 100, //product MRP
+                        'product_unit_price' => ($cart_item->listing_price / 100) * 100, //product MRP
                         'price_excluded_gst' => ($cart_item->unit_price * $cart_item->quantity) - $cart_item->product_gst,
                         'product_quantity' => $cart_item->quantity,
                         'product_currency' => $cart_item->currency,
@@ -1199,6 +1199,16 @@ class Order_model extends CI_Model
         return $query->num_rows();
     }
 
+    //get orders product count
+    public function get_order_product_count($order_id)
+    {
+        $order_id = clean_number($order_id);
+        $this->db->where('order_id', $order_id);
+        $this->db->where('order_status!=', 'completed');
+        $query = $this->db->get('order_products');
+        return $query->num_rows();
+    }
+
 
     public function send_order_text($phn_num, $label_content, $order_no)
     {
@@ -1529,6 +1539,24 @@ class Order_model extends CI_Model
     public function get_qunatity_of_order($order_product_id)
     {
         $sql = "SELECT sum(product_quantity) as quantity FROM order_products where order_id=$order_product_id";
+        $query = $this->db->query($sql);
+        return $query->result();
+        // return $this->db->last_query();
+    }
+
+    // get order products total amount
+    public function get_total_of_order_products($order_id)
+    {
+        $sql = "SELECT sum(product_total_price) as total_price FROM order_products where order_id=$order_id";
+        $query = $this->db->query($sql);
+        return $query->result();
+        // return $this->db->last_query();
+    }
+
+    //get orders total round amount
+    public function get_total_amount_of_order($order_id)
+    {
+        $sql = "SELECT round((price_total)/100)*100 as total_price FROM local_gharobar.orders where id=$order_id";
         $query = $this->db->query($sql);
         return $query->result();
         // return $this->db->last_query();
@@ -4032,7 +4060,7 @@ class Order_model extends CI_Model
         $product_id = clean_number($product_id);
         $this->db->where('order_id', $order_id);
         $this->db->where('product_id', $product_id);
-        $this->db->where('is_active',1);
+        $this->db->where('is_active', 1);
         $query = $this->db->get('shiprocket_order_details');
         return $query->result();
     }

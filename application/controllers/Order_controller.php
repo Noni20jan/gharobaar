@@ -465,7 +465,9 @@ class Order_controller extends Home_Core_Controller
             $payment_method = $order_detail[0]->payment_method;
             if ($payment_method == 'Cashfree') {
                 //refund api call for cashfree
-                $this->refund_api_data($order_product_ids);
+                foreach ($order_product_ids as $order_product_id) {
+                    $this->refund_api_data($order_product_id);
+                }
                 if ($this->general_settings->enable_easysplit == 0) {
                     $this->order_model->recal_prepaid_seller_payable($order_id);
                 }
@@ -668,34 +670,49 @@ class Order_controller extends Home_Core_Controller
         $order_product = $this->order_model->get_order_product($order_product_id);
         $order_id = $order_product->order_id;
         $product_id = $order_product->product_id;
+        $order_products =  $this->order_model->get_order_product_detail($order_id);
         $product_quantity = $order_product->product_quantity;
         $product_unit_price = $order_product->product_unit_price;
         $product_discount_rate = $order_product->product_discount_rate;
         $product_gst_rate = $order_product->product_gst_rate;
         $product_name = $order_product->product_title;
         $total_price_with_quantity = $order_product->product_total_price;
+        $shipping_charge = $this->general_settings->shipping_value;
         // $price_after_discount = calculate_product_price($product_unit_price, $product_discount_rate, $product_gst_rate);
         $product_seller_id = $order_product->seller_id;
-
-
+        $total_product = $this->order_model->get_order_product_count($order_id);
         $order_transaction_detail = $this->order_model->get_transaction_detail($order_id);
         $payment_refrence_id = $order_transaction_detail[0]->payment_id;
         // $refund_amount1 = ($price_after_discount * $product_quantity) / 100;
         // $refund_amount = number_format(floor($refund_amount1 * 100) / 100, 2);
-        $refund_amount = $total_price_with_quantity / 100;
         $order_detail = $this->order_model->get_order_detail_by_id($order_id);
+        $order_total_amount = $this->order_model->get_total_amount_of_order($order_id);
+        $products_total = $this->order_model->get_total_of_order_products($order_id);
+        $total_amount_products = floatval($products_total[0]->total_price);
+        $total_amount_order = floatval($order_total_amount[0]->total_price);
+        $refundable_amount = (($order_product->product_unit_price) - ($order_product->product_discount_amount * 100));
+
+        if ($total_product == 1 && $total_amount_products <= 100000) {
+            $refund_amount = (($refundable_amount + (10000 / $total_product)) / 100);
+        } elseif ($total_product == 1 && $total_amount_products > 100000) {
+            $refund_amount = ($refundable_amount / 100);
+        } else {
+            if ($total_product > 1 && (($total_amount_order - $total_amount_products) == 10000)) {
+                $refund_amount = round(($refundable_amount + ($shipping_charge / $total_product)) / 100);
+            }
+            if ($total_product > 1 && (($total_amount_order - $total_amount_products) == 0)) {
+                $refund_amount = (($refundable_amount) / 100);
+            }
+        }
 
         // shipping charges seller & product wise
         $shipping_amount_without_round = ($order_product->product_shipping_cost) / 100;
         $shipping_amount = round($shipping_amount_without_round);
-
-
         // shipping amount according to complete order
         // $shipping_amount = ($order_detail[0]->price_shipping) / 100;
 
         //shipping charge check
         $include_shipping = true;
-        $order_products =  $this->order_model->get_order_product_detail($order_id);
         foreach ($order_products as $products) {
             if ((int)$products->id != (int)$order_product_id) {
                 if (($products->order_status == "completed" || $products->order_status == "processing" || $products->order_status == "waiting" || $products->order_status == "awaiting_shipment" || $products->order_status == "awaiting_pickup") && ($products->seller_id == $product_seller_id)) {
@@ -704,27 +721,21 @@ class Order_controller extends Home_Core_Controller
                 }
             }
         }
-
         // var_dump($include_shipping);
 
         if ($include_shipping) {
             // $shipping_amount = ($order_detail[0]->price_shipping) / 100;
             $refund_amount = $refund_amount + $shipping_amount;
         }
-
         // $shipping_amount = ($order_detail[0]->price_shipping) / 100;
-        // var_dump($refund_amount);
-        // die();
-        $order_total_amount = $order_detail[0]->price_total;
         $data = array(
             "order_id" => $order_id,
             "refund_amount" => $refund_amount,
             "payment_refrence_id" => $payment_refrence_id,
             "order_product_table_id" => $order_product_id,
             "order_product_id" => $product_id,
-            "order_total_amount" => $order_total_amount
+            "order_total_amount" => $total_amount_order
         );
-
         $this->refund_api($refund_amount, $payment_refrence_id, $product_name, $data);
     }
 
