@@ -698,10 +698,10 @@ class Order_controller extends Home_Core_Controller
             $refund_amount = ($refundable_amount / 100);
         } else {
             if ($total_product > 1 && (($total_amount_order - $total_amount_products) == 10000)) {
-                $refund_amount = round(($refundable_amount + ($shipping_charge / $total_product)) / 100);
+                $refund_amount = round(($refundable_amount + ($shipping_charge / $total_product)) * $product_quantity / 100);
             }
             if ($total_product > 1 && (($total_amount_order - $total_amount_products) == 0)) {
-                $refund_amount = (($refundable_amount) / 100);
+                $refund_amount = (($refundable_amount) * $product_quantity / 100);
             }
         }
 
