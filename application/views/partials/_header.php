@@ -3,7 +3,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->selected_lang->short_form ?>">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script> -->
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" as="style">
 <link rel="preload" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/jquery.dm-uploader.min.css" as="style">
 <link rel="preload" href="<?php echo base_url(); ?>assets/vendor/file-uploader/css/styles.css" as="style">
@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colors/default.min.css?v=1234qwer" />
 <?php endif; ?>
 <style>
-    .dot {
+    /* .dot {
         width: 15px;
         height: 15px;
         position: absolute;
@@ -59,7 +59,7 @@
         top: 50%;
         position: absolute;
         border-radius: 10px;
-    }
+    } */
 
     #message {
         display: none;
@@ -1626,9 +1626,9 @@
             </article>
         </div>
     <?php endif; ?>
-    <div style="position:relative; bottom:5px">
-        <img src="<?php echo base_url(); ?>assets/img/valentine.jpg" style="max-width:100%">
-    </div>
+    <!-- <div style="position:relative; bottom:5px">
+        <img src="<?php //echo base_url(); ?>assets/img/valentine.jpg" style="max-width:100%">
+    </div> -->
     <div id="announcement-mobile-bar">
         <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
 
@@ -1642,9 +1642,9 @@
     <header id="header">
         <?php //$this->load->view("partials/_top_bar"); 
         ?>
-        <div id="rose_petals">
+        <!-- <div id="rose_petals">
 
-        </div>
+        </div> -->
         <div class="main-menu" id="myHeader">
             <div class="container-fluid">
                 <div class="row">
@@ -6841,7 +6841,7 @@
             var sf = new Snowflakes();
         </script> -->
 
-    <script>
+    <!-- <script>
         TweenLite.set("#rose_petals", {
             perspective: 600
         })
@@ -6893,7 +6893,7 @@
         function R(min, max) {
             return min + Math.random() * (max - min)
         };
-    </script>
+    </script> -->
 
     <!-- chat systems  -->
     <script src="<?php echo base_url(); ?>assets/js/bootstrap-notify.js"></script>
