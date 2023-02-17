@@ -132,18 +132,54 @@ class Cart_model extends CI_Model
         }
     }
 
+    // Add and Update product item after login 
+
     public function add_session_to_cart_in_db($user_id)
     {
         $this->session_cart_items = $this->get_sess_cart_items();
         $cart = $this->session_cart_items;
+
         if (!empty($cart)) {
             if ($this->check_for_cart_by_user_id($user_id)) {
                 $cart_id = $this->get_cart_id_db($user_id);
             } else {
                 $cart_id = $this->add_cart_db($user_id);
             }
+            $this->cart_details = $this->get_cart_details_by_id($cart_id);
+            $cart_products = $this->cart_details;
+            $cart_data = [];
+            for ($i = 0; $i < count($cart_products); $i++) {
+                $cart_data1 = $cart_products[$i]->product_id;
+                array_push($cart_data, $cart_data1);
+            }
             foreach ($cart as $cart_item) {
-                $this->add_cart_product_details($cart_id, $cart_item, $user_id);
+                if (in_array($cart_item->product_id, $cart_data)) {
+                    $database_products = $this->get_product_quantity_by_id($cart_item->product_id, $cart_id);
+                    $product = $this->product_model->get_active_product($cart_item->product_id);
+                    $object = $this->get_product_price_and_stock($product, $cart_item->product_title, $cart_item->options_array);
+                    $session_quantity = $cart_item->quantity;
+                    $quantity = $database_products[0]->quantity;
+                    $database_cart_item_id = ($database_products[0]->cart_item_id);
+                    $database_id = $database_products[0]->id;
+                    $total_product = intval($session_quantity) + intval($quantity);
+                    $updated_discount = round((intval($object->price) * intval($object->discount_rate)) / 10000) * intval($total_product);
+                    $updated_amount = intval($object->price_calculated) * intval($total_product);
+                    $cart_id1 = $this->get_cart_id_db($user_id);
+                    if (!empty($cart_id1)) {
+                        $sql = "UPDATE cart_product_details 
+                        SET 
+                            quantity = '$total_product',
+                            discount_amount = '$updated_discount',
+                            total_price = '$updated_amount'
+                        WHERE
+                            id = '$database_id'
+                            AND cart_item_id = '$database_cart_item_id'
+                            AND cart_id = '$cart_id1'";
+                        $query = $this->db->query($sql);
+                    }
+                } else {
+                    $this->add_cart_product_details($cart_id, $cart_item, $user_id);
+                }
             }
         }
     }
@@ -189,12 +225,29 @@ class Cart_model extends CI_Model
         return $row;
     }
 
+     // Get cart details from database of logging in user 
+
     public function get_cart_details_by_id($user_cart_id)
     {
         $this->db->where('cart_id', $user_cart_id);
         $this->db->where('is_active', '1');
         $query = $this->db->get('cart_product_details');
         return $query->result();
+        // var_dump($this->db->last_query());
+        // die();
+    }
+
+    // Get cart product details from database of logging in user 
+
+    public function get_product_quantity_by_id($product_id, $user_cart_id)
+    {
+        $this->db->where('product_id', $product_id);
+        $this->db->where('cart_id', $user_cart_id);
+        $this->db->where('is_active', '1');
+        $query = $this->db->get('cart_product_details');
+        return $query->result();
+        // var_dump($this->db->last_query());
+        // die();
     }
 
     public function get_cart_shipping_details_by_id($user_cart_id)
@@ -1450,14 +1503,14 @@ class Cart_model extends CI_Model
     public function unset_cart_items_from_db_after_purcahse()
     {
         $cart = $this->cart_model->get_sess_cart_items();
-        // if (!empty($cart)) {
-        //     foreach ($cart as $item) {
-        //         if ($this->auth_check) {
-        //             $this->remove_from_cart_product_db($item->cart_item_id);
-        //         }
-        //     }
+        if (!empty($cart)) {
+            foreach ($cart as $item) {
+                if ($this->auth_check) {
+                    $this->remove_from_cart_product_db($item->cart_item_id);
+                }
+            }
             $this->remove_from_cart_db($this->auth_user->id);
-        // }
+        }
     }
 
     //get cart total session
