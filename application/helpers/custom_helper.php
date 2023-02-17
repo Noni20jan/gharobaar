@@ -2756,6 +2756,7 @@ if (!function_exists('remove_special_characters')) {
         $str = str_replace('}', '', $str);
         $str = str_replace('|', '', $str);
         $str = str_replace('~', '', $str);
+        $str = str_replace('&', 'AND', $str);
         if ($is_slug == true) {
             $str = str_replace(" ", '-', $str);
             $str = str_replace("'", '', $str);
