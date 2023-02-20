@@ -2720,51 +2720,6 @@
     <?php $this->load->view("partials/_nav_mobile"); ?>
     <input type="hidden" class="search_type_input" name="search_type" value="product">
     <?php if (!$this->auth_check) : ?>
-        <!-- login with OTP model start -->
-        <div class="modal fade" id="OtploginModal" role="dialog">
-            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
-                <div class="modal-content">
-                    <div class="auth-box" style="width: 370px;">
-                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
-                        <h4 class="title"><?php echo trans("login"); ?></h4>
-                        <!-- form start -->
-                        <form id="form_login_otp">
-                            <div class="social-login-cnt">
-                                <?php $this->load->view("partials/_social_login", ["or_text" => trans("login_with_email")]); ?>
-                            </div>
-                            <!-- include message block -->
-                            <div id="result-login" class="font-size-13"></div>
-                            <div class="OtpSendMsg">
-                                <span id="OtpSendMsg"></span>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="registeredNumber" class="form-control auth-form-input" placeholder="<?php echo trans("register_mobile"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
-                                <span id="login_otp_check" style="color: red;"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <input type="text" name="loginOtp" id="loginOtp" class="form-control auth-form-input" placeholder="Enter Otp" required maxlength="6">
-                                <span id="login_otp_span" style="color: red;"></span>
-                            </div>
-
-                            <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" id="resend_login_otp" class="link" style="text-decoration: underline; color:blue !important">Resend OTP</a></p>
-                            <div class="form-group" style="text-align:center;">
-                                <button type="button" id="sendLoginOtp" class="btn btn-md btn-custom btn-block-new-ui">Send OTP</button>
-                            </div>
-                            <div class="form-group" style="text-align:center;">
-                                <button type="button" id="verify_login_otp" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login"); ?></button>
-                            </div>
-                            <p class="p-social-media m-0 m-t-15">&nbsp; <a href="javascript:void(0)" class="registertologin" data-toggle="modal" data-target="#loginModal" style="text-decoration: underline; color:blue !important">Login Using Password</a></p></br>
-                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="logintoregister" style="text-decoration: underline; color:blue !important">Register</a></p>
-                        </form>
-                        <!-- form end -->
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- login using OTP model end  -->
-
         <!-- Login Modal -->
         <div class="modal fade" id="loginModal" role="dialog">
             <div class="modal-dialog modal-dialog-centered login-modal" role="document">
@@ -2809,6 +2764,50 @@
                 </div>
             </div>
         </div>
+        <!-- login with OTP model start -->
+        <div class="modal fade" id="OtploginModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered login-modal" role="document">
+                <div class="modal-content">
+                    <div class="auth-box" style="width: 370px;">
+                        <button type="button" class="close" data-dismiss="modal"><i class="icon-close"></i></button>
+                        <h4 class="title"><?php echo trans("login"); ?></h4>
+                        <!-- form start -->
+                        <form id="form_login_otp">
+                            <div class="social-login-cnt">
+                                <?php $this->load->view("partials/_social_login", ["or_text" => trans("login_with_email")]); ?>
+                            </div>
+                            <!-- include message block -->
+                            <div id="result-login" class="font-size-13"></div>
+                            <div class="OtpSendMsg">
+                                <span id="OtpSendMsg"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="registeredNumber" class="form-control auth-form-input" placeholder="<?php echo trans("register_mobile"); ?>" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" minlength="10" maxlength="10" required>
+                                <span id="login_otp_check" style="color: red;"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="loginOtp" id="loginOtp" class="form-control auth-form-input" placeholder="Enter Otp" required maxlength="6">
+                                <span id="login_otp_span" style="color: red;"></span>
+                            </div>
+
+                            <p class="p-social-media m-0 m-t-5"><a href="javascript:void(0)" id="resend_login_otp" class="link" style="text-decoration: underline; color:blue !important">Resend OTP</a></p>
+                            <div class="form-group" style="text-align:center;">
+                                <button type="button" id="sendLoginOtp" class="btn btn-md btn-custom btn-block-new-ui">Send OTP</button>
+                            </div>
+                            <div class="form-group" style="text-align:center;">
+                                <button type="button" id="verify_login_otp" class="btn btn-md btn-custom btn-block-new-ui"><?php echo trans("login"); ?></button>
+                            </div>
+                            <p class="p-social-media m-0 m-t-15">&nbsp; <a href="javascript:void(0)" class="registertologin" data-toggle="modal" data-target="#loginModal" style="text-decoration: underline; color:blue !important">Login Using Password</a></p></br>
+                            <p class="p-social-media m-0 m-t-5"><?php echo trans("dont_have_account"); ?>&nbsp; <a href="javascript:void(0)" data-toggle="modal" data-id="0" data-target="#registerModal" class="logintoregister" style="text-decoration: underline; color:blue !important">Register</a></p>
+                        </form>
+                        <!-- form end -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- login using OTP model end  -->
 
         <!-- <div class="modal fade" id="guestLoginModal" role="dialog">
             <div class="modal-dialog modal-dialog-centered login-modal" role="document">
