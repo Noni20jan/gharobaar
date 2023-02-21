@@ -851,16 +851,20 @@
     } */
     .notification-count-mobile {
         background: #007c05;
-        position: absolute;
-        top: 2px;
+        position: fixed;
+        top: 48px;
         color: white;
         width: 18px;
         height: 18px;
         border-radius: 50%;
         font-size: 11px !important;
-        right: 43px;
+        right: 31px;
         font-weight: 600;
     }
+    .nav-mobile-header-container .mobile-cart .notification {
+            bottom: 18px;
+            left: 13px;
+        }
 </style>
 
 <head>
