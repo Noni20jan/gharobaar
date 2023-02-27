@@ -234,14 +234,14 @@
                         By&nbsp;<a href="<?php echo generate_profile_url_by_id($product->user_id); ?>"><?php echo character_limiter(ucfirst(get_brand_name_product($product)), 30, '..'); ?></a><br>
                     </div>
                 </div>
-                <div class="product-details-review">
-                    <?php if ($this->general_settings->reviews == 1) {
-                        $this->load->view('partials/_review_stars', ['review' => $product->rating]);
-                        $count_star = $this->review_model->get_review_count($product->id); ?>
-                        <span><b> (<?php echo $count_star; ?>)</b> </span>
-                    <?php  } ?>
+                <!-- <div class="product-details-review">
+                    <?php // if ($this->general_settings->reviews == 1) {
+                        // $this->load->view('partials/_review_stars', ['review' => $product->rating]);
+                        // $count_star = $this->review_model->get_review_count($product->id); ?>
+                        <span><b> (<?php // echo $count_star; ?>)</b> </span>
+                    <?php // } ?>
                 </div>
-                <span><i class="icon-eye"></i><?php echo html_escape($product->pageviews); ?></span>
+                <span><i class="icon-eye"></i><?php // echo html_escape($product->pageviews); ?></span> -->
             </div>
         </div>
         <div class="row-custom price">

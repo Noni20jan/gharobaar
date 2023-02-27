@@ -50,17 +50,17 @@ $productss = get_user_barter_products($this->auth_user->id);
             <div class="product-details-user">
                 <?php echo trans("by"); ?>&nbsp;<a href="<?php echo generate_profile_url($product->user_slug); ?>"><?php echo character_limiter(get_shop_name_product($product), 30, '..'); ?></a>
             </div>
-            <?php if ($this->general_settings->product_comments == 1) : ?>
-                <span><i class="icon-comment"></i><?php echo html_escape($comment_count); ?></span>
-            <?php endif; ?>
-            <?php if ($this->general_settings->reviews == 1) : ?>
+            <!-- <?php // if ($this->general_settings->product_comments == 1) : ?>
+                <span><i class="icon-comment"></i><?php // echo html_escape($comment_count); ?></span>
+            <?php // endif; ?>
+            <?php // if ($this->general_settings->reviews == 1) : ?>
                 <div class="product-details-review">
-                    <?php $this->load->view('partials/_review_stars', ['review' => $product->rating]); ?>
-                    <span>(<?php echo $review_count; ?>)</span>
+                    <?php // $this->load->view('partials/_review_stars', ['review' => $product->rating]); ?>
+                    <span>(<?php // echo $review_count; ?>)</span>
                 </div>
-            <?php endif; ?>
-            <span><i class="icon-heart"></i><?php echo get_product_wishlist_count($product->id); ?></span>
-            <span><i class="icon-eye"></i><?php echo html_escape($product->pageviews); ?></span>
+            <?php // endif; ?>
+            <span><i class="icon-heart"></i><?php // echo get_product_wishlist_count($product->id); ?></span>
+            <span><i class="icon-eye"></i><?php // echo html_escape($product->pageviews); ?></span> -->
         </div>
         <div class="row-custom price">
             <div id="product_details_price_container" class="d-inline-block">

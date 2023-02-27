@@ -793,39 +793,39 @@
                                             <p class="dispatch-COD-return"><?php echo $product->cod_accepted ?>o</p>
                                         </div>
                                     <?php endif; ?>
-                                    <?php if ($product->available_for_return_or_exchange == 'return') : ?>
+                                    <!-- <?php // if ($product->available_for_return_or_exchange == 'return') : ?>
                                         <div class="col-4 add_to_cart_buy_now return-aviable-width">
                                             <div class="text-center">
-                                                <img src="<?php echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
+                                                <img src="<?php // echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
                                             </div>
                                             <p class="dispatch-COD-return">Return/Exchange</p>
                                             <p class="dispatch-COD-return">Returnable</p>
                                         </div>
-                                    <?php elseif ($product->available_for_return_or_exchange == 'exchange') : ?>
+                                    <?php // elseif ($product->available_for_return_or_exchange == 'exchange') : ?>
                                         <div class="col-4 add_to_cart_buy_now return-aviable-width">
                                             <div class="text-center">
-                                                <img src="<?php echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
+                                                <img src="<?php // echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
                                             </div>
                                             <p class="dispatch-COD-return">Return/Exchange</p>
                                             <p class="dispatch-COD-return">Exchangeable</p>
                                         </div>
-                                    <?php elseif ($product->available_for_return_or_exchange == 'both') : ?>
+                                    <?php // elseif ($product->available_for_return_or_exchange == 'both') : ?>
                                         <div class="col-4 add_to_cart_buy_now return-aviable-width">
                                             <div class="text-center">
-                                                <img src="<?php echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
+                                                <img src="<?php // echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
                                             </div>
                                             <p class="dispatch-COD-return">Return/Exchange</p>
                                             <p class="dispatch-COD-return">Yes</p>
                                         </div>
-                                    <?php else : ?>
+                                    <?php // else : ?>
                                         <div class="col-4 add_to_cart_buy_now return-aviable-width">
                                             <div class="text-center">
-                                                <img src="<?php echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
+                                                <img src="<?php // echo base_url(); ?>assets/img/product_image/return.png" alt="" class="return-for-mobile-view" />
                                             </div>
                                             <p class="dispatch-COD-return">Return/Exchange</p>
                                             <p class="dispatch-COD-return">No</p>
                                         </div>
-                                    <?php endif; ?>
+                                    <?php // endif; ?> -->
                                 </div>
                             </div>
                         </div>
