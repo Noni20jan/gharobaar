@@ -1635,15 +1635,15 @@
         <img src="<?php //echo base_url(); 
                     ?>assets/img/valentine.jpg" style="max-width:100%">
     </div> -->
-    <div id="announcement-mobile-bar">
+    <!-- <div id="announcement-mobile-bar">
         <article class="sliding_content" aria-labelledby="promo_bar_label" data-section-id="announcement-bar" data-block-count="1" data-speed="4000" data-autoplay="4000" data-slider="false" data-section-type="announcement" data-language="false" data-currency="false">
 
             <div class="animation-mobile-bar">
                 <marquee behaviour="scroll" direction="left">
-                    <p class="display-mobile"><strong><?php echo trans("free_ship_message"); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo trans("shipping_charge_massage"); ?></strong></p>
+                    <p class="display-mobile"><strong><?php // echo trans("free_ship_message"); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // echo trans("shipping_charge_massage"); ?></strong></p>
                 </marquee>
         </article>
-    </div>
+    </div> -->
 
     <header id="header">
         <?php //$this->load->view("partials/_top_bar"); 
