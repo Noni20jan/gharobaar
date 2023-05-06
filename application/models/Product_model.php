@@ -669,6 +669,7 @@ class Product_model extends Core_Model
         if ($this->general_settings->vendor_verification_system == 1) {
             $this->db->where('users.role !=', 'member');
         }
+        
         //default location
         if (!empty($this->default_location->country_id)) {
             $this->db->where('products.country_id', $this->default_location->country_id);
@@ -682,18 +683,18 @@ class Product_model extends Core_Model
         if (!empty($_SESSION["modesy_sess_user_location"])) {
             $pincode = $_SESSION["modesy_sess_user_location"];
             $seller = $this->get_seller_by_pincode_dist($pincode);
-            $this->db->group_start();
-            if (count($seller["HOMECOOK"]) > 0) :
-                $this->db->where_in('products.user_id', $seller["HOMECOOK"]);
-                $this->db->where_in('products.category_id', $this->get_all_cateory_by_type("HOMECOOK"));
-            endif;
-            if (count($seller["NON-HOMECOOK"]) > 0) :
-                $this->db->or_group_start();
-                $this->db->where_in('products.user_id', $seller["NON-HOMECOOK"]);
-                $this->db->where_in('products.category_id', $this->get_all_cateory_by_type("NON-HOMECOOK"));
-                $this->db->group_end();
-            endif;
-            $this->db->group_end();
+            // $this->db->group_start();
+            // if (count($seller["HOMECOOK"]) > 0) :
+            //     $this->db->where_in('products.user_id', $seller["HOMECOOK"]);
+            //     $this->db->where_in('products.category_id', $this->get_all_cateory_by_type("HOMECOOK"));
+            // endif;
+            // if (count($seller["NON-HOMECOOK"]) > 0) :
+            //     $this->db->or_group_start();
+            //     $this->db->where_in('products.user_id', $seller["NON-HOMECOOK"]);
+            //     $this->db->where_in('products.category_id', $this->get_all_cateory_by_type("NON-HOMECOOK"));
+            //     $this->db->group_end();
+            // endif;
+            // $this->db->group_end();
 
             $product_list = $this->product_not_deliver_as_per_delivey_area($pincode);
             if (count($product_list) > 0) :
