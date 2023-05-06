@@ -27,18 +27,26 @@ class Common_controller extends Core_Controller
      */
     public function admin_login_post()
     {
+        // var_dump("sjdbsfsd");
+        // die();
         //validate inputs
         $this->form_validation->set_rules('email', trans("form_email"), 'required|xss_clean|max_length[200]');
         $this->form_validation->set_rules('password', trans("form_password"), 'required|xss_clean|max_length[30]');
-
+        // var_dump("sjdbsfsd");
+        // die();
         if ($this->form_validation->run() == false) {
+            // var_dump("sjdbsfsd");
+            // die();
             $this->session->set_flashdata('errors', validation_errors());
             $this->session->set_flashdata('form_data', $this->auth_model->input_values());
             redirect($this->agent->referrer());
         } else {
             if ($this->auth_model->login()) {
+              
                 redirect(admin_url());
             } else {
+                // var_dump("sjdbsfsd");
+                // die();
                 //error
                 $this->session->set_flashdata('form_data', $this->auth_model->input_values());
                 $this->session->set_flashdata('error', trans("login_error"));

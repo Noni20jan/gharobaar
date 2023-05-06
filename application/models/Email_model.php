@@ -685,43 +685,33 @@ class Email_model extends CI_Model
     }
     public function send_email($data)
     {
-        $this->notification($data);
+        // $this->notification($data);
         require dirname(__FILE__) . "/../../sendgrid-php/sendgrid-php.php";
         $email = new \SendGrid\Mail\Mail();
-        $email->setFrom($this->general_settings->mail_username, "Gharobaar");
+        $email->setFrom($this->general_settings->mail_username, "Trazenwood");
         $email->setSubject($data['subject']);
         $email->addTo($data['to']);
         $ip = $this->input->ip_address();
-        $request_body = json_decode('{
-            "ips": [
-                {
-                    "ip": "192.168.1.1"
-                },
-                {
-                    "ip": "192.*.*.*"
-                },
-                {
-                    "ip": "223.190.85.71"
-                }
-            ]
-        }');
+       
         $subject = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
         // var_dump($subject);
         $email->addContent("text/html", $subject);
 
-        $sendgrid1 = new \SendGrid("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", ["impersonateSubuser" => "rahul.teni"]);
+        // $sendgrid1 = new \SendGrid("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");
 
-        $sendgrid = new \SendGrid("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");
+        $sendgrid = new \SendGrid("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");
 
         try {
-            $response1 = $sendgrid1->client->access_settings()->whitelist()->post($request_body);
-            $response1->statusCode();
-            $response1->headers();
-            $response1->body();
+            // $response1 = $sendgrid1->client->access_settings()->whitelist()->post($request_body);
+            // $response1->statusCode();
+            // $response1->headers();
+            // $response1->body();
             $response = $sendgrid->send($email);
             $response->statusCode();
             $response->headers();
             $response->body();
+            var_dump($response);
+            die();
         } catch (Exception $e) {
             echo 'Caught exception: ' . $e->getMessage() . "\n";
         }
@@ -761,6 +751,8 @@ class Email_model extends CI_Model
     //     } elseif ($this->general_settings->mail_library == "php") {
     //         $mail = new PHPMailer(true);
     //         try {
+    //             // var_dump( $this->general_settings->mail_username);
+    //             // die();
     //             //Server settings
     //             $mail->isSMTP();
     //             $mail->Host = $this->general_settings->mail_host;
@@ -768,6 +760,7 @@ class Email_model extends CI_Model
     //             $mail->Username = $this->general_settings->mail_username;
     //             $mail->Password = $this->general_settings->mail_password;
     //             $mail->SMTPSecure = 'tls';
+    //             $mail->SMTPDebug = 3;
     //             $mail->CharSet = 'UTF-8';
     //             $mail->Port = $this->general_settings->mail_port;
     //             //Recipients

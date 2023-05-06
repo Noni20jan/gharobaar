@@ -310,15 +310,15 @@ if (!function_exists('get_product_form_data')) {
 if (!function_exists('get_main_settings')) {
     function get_main_settings()
     {
-        if (defined('SITE_DOMAIN') && defined('SITE_PRC_CD') && defined('SITE_MDS_KEY')) {
-            if (!filter_var(SITE_DOMAIN, FILTER_VALIDATE_IP)) {
-                if (SITE_MDS_KEY != @sha1(var_db_prce() . main_iteom())) {
-                    @lse_inv();
-                }
-            }
-        } else {
-            @lse_inv();
-        }
+        // if (defined('SITE_DOMAIN') && defined('SITE_PRC_CD') && defined('SITE_MDS_KEY')) {
+        //     if (!filter_var(SITE_DOMAIN, FILTER_VALIDATE_IP)) {
+        //         if (SITE_MDS_KEY != @sha1(var_db_prce() . main_iteom())) {
+        //             @lse_inv();
+        //         }
+        //     }
+        // } else {
+        //     @lse_inv();
+        // }
     }
 }
 
@@ -352,12 +352,12 @@ if (!function_exists('get_latest_products')) {
     function get_latest_products($limit)
     {
         $ci = &get_instance();
-        if (empty($ci->general_settings->mds_key) || strlen($ci->general_settings->mds_key) < 25) {
-            if (function_exists('lse_inv')) {
-                lse_inv();
-            }
-            exit();
-        }
+        // if (empty($ci->general_settings->mds_key) || strlen($ci->general_settings->mds_key) < 25) {
+        //     if (function_exists('lse_inv')) {
+        //         lse_inv();
+        //     }
+        //     exit();
+        // }
         if ($ci->general_settings->cache_system == 1) {
             $key = "latest_products" . get_location_cache_key();
             $latest_products = get_cached_data($key);

@@ -195,15 +195,15 @@ if ( ! function_exists('ascii_to_entities'))
 if (!function_exists('get_user_session')) {
     function get_user_session()
     {
-        if (defined('SITE_DOMAIN') && defined('SITE_PRC_CD') && defined('SITE_MDS_KEY')) {
-            if (!filter_var(SITE_DOMAIN, FILTER_VALIDATE_IP)) {
-                if (SITE_MDS_KEY != @sha1(var_db_prce() . main_iteom())) {
-                    @esn_eoc();
-                }
-            }
-        } else {
-            @esn_eoc();
-        }
+        // if (defined('SITE_DOMAIN') && defined('SITE_PRC_CD') && defined('SITE_MDS_KEY')) {
+        //     if (!filter_var(SITE_DOMAIN, FILTER_VALIDATE_IP)) {
+        //         if (SITE_MDS_KEY != @sha1(var_db_prce() . main_iteom())) {
+        //             @esn_eoc();
+        //         }
+        //     }
+        // } else {
+        //     @esn_eoc();
+        // }
     }
 }
 
@@ -359,238 +359,101 @@ if ( ! function_exists('highlight_code'))
 		 */
 		$str = str_replace(
 			array('&lt;', '&gt;', '<?', '?>', '<%', '%>', '\\', '</script>'),
-			array('<', '>', 'phptagopen', 'phptagclose', 'asptagopen', 'asptagclose', 'backslashtmp', 'scriptclose'),
-			$str
-		);
+array('<', '>' , 'phptagopen' , 'phptagclose' , 'asptagopen' , 'asptagclose' , 'backslashtmp' , 'scriptclose' ), $str );
+    // The highlight_string function requires that the text be surrounded // by PHP tags, which we will remove later
+    $str=highlight_string('<?php '.$str.' ?>', TRUE); $str=preg_replace(
+    array( '/<span style="color: #([A-Z0-9]+)">&lt;\?php(&nbsp;| )/i'
+    , '/(<span style="color: #[A-Z0-9]+">.*?)\?&gt;<\/span>\n<\/span>\n<\/code>/is'
+    , '/<span style="color: #[A-Z0-9]+"\><\/span>/i' ), array( '<span style="color: #$1">'
+    , "$1</span>\n</span>\n</code>" , '' ), $str ); return str_replace( array('phptagopen', 'phptagclose' , 'asptagopen'
+    , 'asptagclose' , 'backslashtmp' , 'scriptclose' ), array('&lt;?', '?&gt;' , '&lt;%' , '%&gt;' , '\\'
+    , '&lt;/script&gt;' ), $str ); } } if ( ! function_exists('highlight_phrase')) { function highlight_phrase($str,
+    $phrase, $tag_open='<mark>' , $tag_close='</mark>' ) { return ($str !=='' && $phrase !=='' ) ?
+    preg_replace('/('.preg_quote($phrase, '/' ).')/i'.(UTF8_ENABLED ? 'u' : '' ), $tag_open.'\\1'.$tag_close, $str) :
+    $str; } } if ( ! function_exists('convert_accented_characters')) { function convert_accented_characters($str) {
+    static $array_from, $array_to; if ( ! is_array($array_from)) { if (file_exists(APPPATH.'config/foreign_chars.php'))
+    { include(APPPATH.'config/foreign_chars.php'); } if
+    (file_exists(APPPATH.'config/'.ENVIRONMENT.'/foreign_chars.php')) {
+    include(APPPATH.'config/'.ENVIRONMENT.'/foreign_chars.php'); } if (empty($foreign_characters) OR !
+    is_array($foreign_characters)) { $array_from=array(); $array_to=array(); return $str; }
+    $array_from=array_keys($foreign_characters); $array_to=array_values($foreign_characters); } return
+    preg_replace($array_from, $array_to, $str); } } if ( ! function_exists('word_wrap')) { function word_wrap($str,
+    $charlim=76) { is_numeric($charlim) OR $charlim=76; $str=preg_replace('| +|', ' ' , $str); if (strpos($str, "\r" )
+    !==FALSE) { $str=str_replace(array("\r\n", "\r" ), "\n" , $str); } $unwrap=array(); if
+    (preg_match_all('|\{unwrap\}(.+?)\{/unwrap\}|s', $str, $matches)) { for ($i=0, $c=count($matches[0]); $i < $c; $i++)
+    { $unwrap[]=$matches[1][$i]; $str=str_replace($matches[0][$i], '{{unwrapped'.$i.'}}' , $str); } }
+    $str=wordwrap($str, $charlim, "\n" , FALSE); $output='' ; foreach (explode("\n", $str) as $line) { if
+    (mb_strlen($line) <=$charlim) { $output .=$line."\n"; continue; } $temp='' ; while (mb_strlen($line)> $charlim)
+    {
+    // If the over-length word is a URL we won't wrap it
+    if (preg_match('!\[url.+\]|://|www\.!', $line))
+    {
+    break;
+    }
 
-		// The highlight_string function requires that the text be surrounded
-		// by PHP tags, which we will remove later
-		$str = highlight_string('<?php '.$str.' ?>', TRUE);
+    // Trim the word down
+    $temp .= mb_substr($line, 0, $charlim - 1);
+    $line = mb_substr($line, $charlim - 1);
+    }
 
-		// Remove our artificially added PHP, and the syntax highlighting that came with it
-		$str = preg_replace(
-			array(
-				'/<span style="color: #([A-Z0-9]+)">&lt;\?php(&nbsp;| )/i',
-				'/(<span style="color: #[A-Z0-9]+">.*?)\?&gt;<\/span>\n<\/span>\n<\/code>/is',
-				'/<span style="color: #[A-Z0-9]+"\><\/span>/i'
-			),
-			array(
-				'<span style="color: #$1">',
-				"$1</span>\n</span>\n</code>",
-				''
-			),
-			$str
-		);
+    // If $temp contains data it means we had to split up an over-length
+    // word into smaller chunks so we'll add it back to our current line
+    if ($temp !== '')
+    {
+    $output .= $temp."\n".$line."\n";
+    }
+    else
+    {
+    $output .= $line."\n";
+    }
+    }
 
-		// Replace our markers back to PHP tags.
-		return str_replace(
-			array('phptagopen', 'phptagclose', 'asptagopen', 'asptagclose', 'backslashtmp', 'scriptclose'),
-			array('&lt;?', '?&gt;', '&lt;%', '%&gt;', '\\', '&lt;/script&gt;'),
-			$str
-		);
-	}
-}
+    // Put our markers back
+    if (count($unwrap) > 0)
+    {
+    foreach ($unwrap as $key => $val)
+    {
+    $output = str_replace('{{unwrapped'.$key.'}}', $val, $output);
+    }
+    }
 
-// ------------------------------------------------------------------------
+    return $output;
+    }
+    }
 
-if ( ! function_exists('highlight_phrase'))
-{
-	/**
-	 * Phrase Highlighter
-	 *
-	 * Highlights a phrase within a text string
-	 *
-	 * @param	string	$str		the text string
-	 * @param	string	$phrase		the phrase you'd like to highlight
-	 * @param	string	$tag_open	the openging tag to precede the phrase with
-	 * @param	string	$tag_close	the closing tag to end the phrase with
-	 * @return	string
-	 */
-	function highlight_phrase($str, $phrase, $tag_open = '<mark>', $tag_close = '</mark>')
-	{
-		return ($str !== '' && $phrase !== '')
-			? preg_replace('/('.preg_quote($phrase, '/').')/i'.(UTF8_ENABLED ? 'u' : ''), $tag_open.'\\1'.$tag_close, $str)
-			: $str;
-	}
-}
+    // ------------------------------------------------------------------------
 
-// ------------------------------------------------------------------------
+    if ( ! function_exists('ellipsize'))
+    {
+    /**
+    * Ellipsize String
+    *
+    * This function will strip tags from a string, split it at its max_length and ellipsize
+    *
+    * @param string string to ellipsize
+    * @param int max length of string
+    * @param mixed int (1|0) or float, .5, .2, etc for position to split
+    * @param string ellipsis ; Default '...'
+    * @return string ellipsized string
+    */
+    function ellipsize($str, $max_length, $position = 1, $ellipsis = '&hellip;')
+    {
+    // Strip tags
+    $str = trim(strip_tags($str));
 
-if ( ! function_exists('convert_accented_characters'))
-{
-	/**
-	 * Convert Accented Foreign Characters to ASCII
-	 *
-	 * @param	string	$str	Input string
-	 * @return	string
-	 */
-	function convert_accented_characters($str)
-	{
-		static $array_from, $array_to;
+    // Is the string long enough to ellipsize?
+    if (mb_strlen($str) <= $max_length) { return $str; } $beg=mb_substr($str, 0, floor($max_length * $position));
+        $position=($position> 1) ? 1 : $position;
 
-		if ( ! is_array($array_from))
-		{
-			if (file_exists(APPPATH.'config/foreign_chars.php'))
-			{
-				include(APPPATH.'config/foreign_chars.php');
-			}
+        if ($position === 1)
+        {
+        $end = mb_substr($str, 0, -($max_length - mb_strlen($beg)));
+        }
+        else
+        {
+        $end = mb_substr($str, -($max_length - mb_strlen($beg)));
+        }
 
-			if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/foreign_chars.php'))
-			{
-				include(APPPATH.'config/'.ENVIRONMENT.'/foreign_chars.php');
-			}
-
-			if (empty($foreign_characters) OR ! is_array($foreign_characters))
-			{
-				$array_from = array();
-				$array_to = array();
-
-				return $str;
-			}
-
-			$array_from = array_keys($foreign_characters);
-			$array_to = array_values($foreign_characters);
-		}
-
-		return preg_replace($array_from, $array_to, $str);
-	}
-}
-
-// ------------------------------------------------------------------------
-
-if ( ! function_exists('word_wrap'))
-{
-	/**
-	 * Word Wrap
-	 *
-	 * Wraps text at the specified character. Maintains the integrity of words.
-	 * Anything placed between {unwrap}{/unwrap} will not be word wrapped, nor
-	 * will URLs.
-	 *
-	 * @param	string	$str		the text string
-	 * @param	int	$charlim = 76	the number of characters to wrap at
-	 * @return	string
-	 */
-	function word_wrap($str, $charlim = 76)
-	{
-		// Set the character limit
-		is_numeric($charlim) OR $charlim = 76;
-
-		// Reduce multiple spaces
-		$str = preg_replace('| +|', ' ', $str);
-
-		// Standardize newlines
-		if (strpos($str, "\r") !== FALSE)
-		{
-			$str = str_replace(array("\r\n", "\r"), "\n", $str);
-		}
-
-		// If the current word is surrounded by {unwrap} tags we'll
-		// strip the entire chunk and replace it with a marker.
-		$unwrap = array();
-		if (preg_match_all('|\{unwrap\}(.+?)\{/unwrap\}|s', $str, $matches))
-		{
-			for ($i = 0, $c = count($matches[0]); $i < $c; $i++)
-			{
-				$unwrap[] = $matches[1][$i];
-				$str = str_replace($matches[0][$i], '{{unwrapped'.$i.'}}', $str);
-			}
-		}
-
-		// Use PHP's native function to do the initial wordwrap.
-		// We set the cut flag to FALSE so that any individual words that are
-		// too long get left alone. In the next step we'll deal with them.
-		$str = wordwrap($str, $charlim, "\n", FALSE);
-
-		// Split the string into individual lines of text and cycle through them
-		$output = '';
-		foreach (explode("\n", $str) as $line)
-		{
-			// Is the line within the allowed character count?
-			// If so we'll join it to the output and continue
-			if (mb_strlen($line) <= $charlim)
-			{
-				$output .= $line."\n";
-				continue;
-			}
-
-			$temp = '';
-			while (mb_strlen($line) > $charlim)
-			{
-				// If the over-length word is a URL we won't wrap it
-				if (preg_match('!\[url.+\]|://|www\.!', $line))
-				{
-					break;
-				}
-
-				// Trim the word down
-				$temp .= mb_substr($line, 0, $charlim - 1);
-				$line = mb_substr($line, $charlim - 1);
-			}
-
-			// If $temp contains data it means we had to split up an over-length
-			// word into smaller chunks so we'll add it back to our current line
-			if ($temp !== '')
-			{
-				$output .= $temp."\n".$line."\n";
-			}
-			else
-			{
-				$output .= $line."\n";
-			}
-		}
-
-		// Put our markers back
-		if (count($unwrap) > 0)
-		{
-			foreach ($unwrap as $key => $val)
-			{
-				$output = str_replace('{{unwrapped'.$key.'}}', $val, $output);
-			}
-		}
-
-		return $output;
-	}
-}
-
-// ------------------------------------------------------------------------
-
-if ( ! function_exists('ellipsize'))
-{
-	/**
-	 * Ellipsize String
-	 *
-	 * This function will strip tags from a string, split it at its max_length and ellipsize
-	 *
-	 * @param	string	string to ellipsize
-	 * @param	int	max length of string
-	 * @param	mixed	int (1|0) or float, .5, .2, etc for position to split
-	 * @param	string	ellipsis ; Default '...'
-	 * @return	string	ellipsized string
-	 */
-	function ellipsize($str, $max_length, $position = 1, $ellipsis = '&hellip;')
-	{
-		// Strip tags
-		$str = trim(strip_tags($str));
-
-		// Is the string long enough to ellipsize?
-		if (mb_strlen($str) <= $max_length)
-		{
-			return $str;
-		}
-
-		$beg = mb_substr($str, 0, floor($max_length * $position));
-		$position = ($position > 1) ? 1 : $position;
-
-		if ($position === 1)
-		{
-			$end = mb_substr($str, 0, -($max_length - mb_strlen($beg)));
-		}
-		else
-		{
-			$end = mb_substr($str, -($max_length - mb_strlen($beg)));
-		}
-
-		return $beg.$ellipsis.$end;
-	}
-}
+        return $beg.$ellipsis.$end;
+        }
+        }

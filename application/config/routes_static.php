@@ -179,7 +179,7 @@ $route["run-internal-cron"]['POST']  = "ajax_controller/run_internal_cron";
 
 //variation
 
-$route[$key . getr('dashboard', $rts) . '/' . getr('get_variation_option_count', $rts)]['POST'] = 'dashboard_controller/get_variation_option_count';
+$route[ getr('dashboard', $rts) . '/' . getr('get_variation_option_count', $rts)]['POST'] = 'dashboard_controller/get_variation_option_count';
 
 // shipment routes
 $route['get-product-detail-shipment']['POST'] = 'order_controller/get_wrapper';

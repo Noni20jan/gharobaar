@@ -496,6 +496,8 @@ class Settings_model extends CI_Model
     //get general settings
     public function get_general_settings()
     {
+        // var_dump("sbdsdsd");
+        // die();
         $this->db->where('id', 1);
         $query = $this->db->get('general_settings');
         return $query->row();
@@ -547,6 +549,14 @@ class Settings_model extends CI_Model
         $query = $this->db->query($sql, array(clean_number($this->settings->site_font)));
         return $query->row();
     }
+
+      //get selected fonts
+      public function get_language($string)
+      {
+          $sql = "SELECT * FROM language_translations WHERE label = ?";
+          $query = $this->db->query($sql, $string);
+          return $query->row();
+      }
 
     //get fonts
     public function get_fonts()

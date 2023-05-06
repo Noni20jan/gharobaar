@@ -707,6 +707,7 @@ class Profile_model extends CI_Model
         return $query->result();
     }
     //check for delivery possible or not
+    
     public function product_deliverale_or_not($origin, $destination)
     {
         $origin = urlencode($origin);

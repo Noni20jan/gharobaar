@@ -635,7 +635,7 @@ $route[getr('admin', $rts) . '/font-settings'] = 'settings_controller/font_setti
 $route[getr('admin', $rts) . '/update-font/(:num)'] = 'settings_controller/update_font/$1';
 $route[getr('admin', $rts) . '/route-settings'] = 'settings_controller/route_settings';
 //order window
-$route[$key . getr('order-window-update', $rts)]['GET'] = 'order_controller/order_window_update';
+$route[ getr('order-window-update', $rts)]['GET'] = 'order_controller/order_window_update';
 
 $route['(:any)/(:any)']['GET'] = 'home_controller/subcategory/$1/$2';
 $route['(:any)']['GET'] = 'home_controller/any/$1';

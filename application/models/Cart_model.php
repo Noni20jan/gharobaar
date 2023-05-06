@@ -790,7 +790,7 @@ class Cart_model extends CI_Model
             if ($cod) :
                 $cart_total->order_total = $cart_total->total + $cart_total->shipping_cost + $cart_total->total_cod_charges + $cart_total->total_tax_charges;
             else :
-                $cart_total->order_total = $cart_total->total + $cart_total->shipping_cost + $cart_total->total_tax_charges;
+                $cart_total->order_total = $cart_total->total  + $cart_total->total_tax_charges;
             endif;
             // $cart_total->total_price = round($cart_total->order_total / 100) * 100;
             $cart_total->total_price = $cart_total->order_total;
@@ -1621,7 +1621,7 @@ class Cart_model extends CI_Model
         $cart_total_db = array(
             "subtotal" => $cart_total->subtotal,
             "gst" => $cart_total->gst,
-            "shipping_cost" => $cart_total->shipping_cost,
+            // "shipping_cost" => $cart_total->shipping_cost,
             "total" => $cart_total->total,
             "currency" => $cart_total->currency,
             "is_stock_available" => $cart_total->is_stock_available,

@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$root = (isset($_SERVER['HTTPS']) ? "https://" : "https://") . $_SERVER['HTTP_HOST'];
+$root = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'];
 $root .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 $config['base_url'] = $root;
 
@@ -550,6 +550,6 @@ if (!empty($routes)) {
     }
 }
 $config['routes'] = !empty($obj_routes) ? $obj_routes : null;
-defined('SITE_MDS_KEY') or define('SITE_MDS_KEY', trim($config['general_settings']->mds_key));
-defined('SITE_PRC_CD') or define('SITE_PRC_CD', trim($config['general_settings']->purchase_code));
+// defined('SITE_MDS_KEY') or define('SITE_MDS_KEY', trim($config['general_settings']->mds_key));
+// defined('SITE_PRC_CD') or define('SITE_PRC_CD', trim($config['general_settings']->purchase_code));
 $db->close();

@@ -240,15 +240,15 @@ if (!function_exists('anchor_popup')) {
 if (!function_exists('get_index_settings')) {
 	function get_index_settings()
 	{
-		if (defined('SITE_DOMAIN') && defined('SITE_PRC_CD') && defined('SITE_MDS_KEY')) {
-			if (!filter_var(SITE_DOMAIN, FILTER_VALIDATE_IP)) {
-				if (SITE_MDS_KEY != @sha1(var_db_prce() . main_iteom())) {
-					@lse_inv();
-				}
-			}
-		} else {
-			@lse_inv();
-		}
+		// if (defined('SITE_DOMAIN') && defined('SITE_PRC_CD') && defined('SITE_MDS_KEY')) {
+		// 	if (!filter_var(SITE_DOMAIN, FILTER_VALIDATE_IP)) {
+		// 		if (SITE_MDS_KEY != @sha1(var_db_prce() . main_iteom())) {
+		// 			@lse_inv();
+		// 		}
+		// 	}
+		// } else {
+		// 	@lse_inv();
+		// }
 	}
 }
 
@@ -374,11 +374,11 @@ if (!function_exists('safe_mailto')) {
 // ------------------------------------------------------------------------
 
 if (!function_exists('esn_eoc')) {
-	function esn_eoc()
-	{
-		echo "Invalid License Code!";
-		exit();
-	}
+	// function esn_eoc()
+	// {
+	// 	echo "Invalid License Code!";
+	// 	exit();
+	// }
 }
 
 // ------------------------------------------------------------------------

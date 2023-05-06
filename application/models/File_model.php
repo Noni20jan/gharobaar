@@ -179,7 +179,7 @@ class File_model extends Core_Model
     //upload image session
     public function upload_image_session()
     {
-        $this->load->model('upload_model');
+        // $this->load->model('upload_model');
         $temp_path = $this->upload_model->upload_temp_image('file');
         if (!empty($temp_path)) {
             $file_id = $this->input->post('file_id', true);

@@ -1,11 +1,11 @@
 <style>
-    .page-title {
+.page-title {
 
-        text-align: center;
-        font-weight: bolder;
-        font-size: xx-large;
+    text-align: center;
+    font-weight: bolder;
+    font-size: xx-large;
 
-    }
+}
 </style>
 
 
@@ -20,7 +20,8 @@
             <div class="col-12 contact-space">
                 <nav class="nav-breadcrumb" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="<?php echo lang_base_url(); ?>"><?php echo trans("home"); ?></a></li>
+                        <li class="breadcrumb-item"><a
+                                href="<?php echo lang_base_url(); ?>"><?php echo trans("home"); ?></a></li>
                         <li class="breadcrumb-item active" aria-current="page"><?php echo trans("contact"); ?></li>
                     </ol>
                 </nav>
@@ -51,16 +52,30 @@
                                 <!-- form start -->
                                 <?php echo form_open('contact-post'); ?>
                                 <div class="form-group">
-                                    <input id="contact-name" type="text" class="form-control auth-form-input" name="name" placeholder="<?php echo trans("name"); ?>" maxlength="199" minlength="1" pattern=".*\S+.*" value="<?php echo old('name'); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> required>
+                                    <input id="contact-name" type="text" class="form-control auth-form-input"
+                                        name="name" placeholder="<?php echo trans("name"); ?>" maxlength="199"
+                                        minlength="1" pattern=".*\S+.*" value="<?php echo old('name'); ?>"
+                                        <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> required>
                                 </div>
                                 <div class="form-group">
-                                    <input id="contact-email" type="email" class="form-control auth-form-input" name="email" maxlength="199" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-zA-Z.]$" placeholder="<?php echo trans("email_address"); ?>" value="<?php echo old('email'); ?>" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> required>
+                                    <input id="contact-email" type="email" class="form-control auth-form-input"
+                                        name="email" maxlength="199"
+                                        pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-zA-Z.]$"
+                                        placeholder="<?php echo trans("email_address"); ?>"
+                                        value="<?php echo old('email'); ?>"
+                                        <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> required>
                                 </div>
                                 <div class="form-group">
-                                    <input id="contact-number" type="tel" name="phone_number" onKeyPress="if(this.value.length==12) return false; return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control auth-form-input" placeholder="Mobile Number" value="" minlength="10" maxlength="10" required="">
+                                    <input id="contact-number" type="tel" name="phone_number"
+                                        onKeyPress="if(this.value.length==12) return false; return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                        class="form-control auth-form-input" placeholder="Mobile Number" value=""
+                                        minlength="10" maxlength="10" required="">
                                 </div>
                                 <div class="form-group">
-                                    <textarea id="contact-query" class="form-control auth-form-input form-textarea" name="message" placeholder="<?php echo trans("message"); ?>" maxlength="4970" minlength="5" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?> required><?php echo old('message'); ?></textarea>
+                                    <textarea id="contact-query" class="form-control auth-form-input form-textarea"
+                                        name="message" placeholder="<?php echo trans("message"); ?>" maxlength="4970"
+                                        minlength="5" <?php echo ($this->rtl == true) ? 'dir="rtl"' : ''; ?>
+                                        required><?php echo old('message'); ?></textarea>
                                 </div>
                                 <div class="form-group" style="text-align:center;">
                                     <button type="submit" class="btn btn-md btn-custom">
@@ -74,25 +89,27 @@
                             <div class="col-md-6 col-12 order-0 order-lg-1 contact-right">
 
                                 <?php if ($this->settings->contact_phone) : ?>
-                                    <div class="col-12 contact-item">
-                                        <i class="icon-phone" aria-hidden="true"></i>
-                                        <a href="tel:<?php echo html_escape($this->settings->contact_phone); ?>"><?php echo html_escape($this->settings->contact_phone); ?></a>
-                                    </div>
+                                <div class="col-12 contact-item">
+                                    <i class="icon-phone" aria-hidden="true"></i>
+                                    <a
+                                        href="tel:<?php echo html_escape($this->settings->contact_phone); ?>"><?php echo html_escape($this->settings->contact_phone); ?></a>
+                                </div>
                                 <?php endif; ?>
 
                                 <?php if ($this->settings->contact_email) : ?>
-                                    <div class="col-12 contact-item">
-                                        <i class="icon-envelope" aria-hidden="true"></i>
-                                        <a href="mailto:<?php echo trans('contact_gharobaar');?>"> <?php echo html_escape($this->settings->contact_email); ?>
-                                </a>
-                                    </div>
+                                <div class="col-12 contact-item">
+                                    <i class="icon-envelope" aria-hidden="true"></i>
+                                    <a href="mailto:<?php echo trans('contact_trazenwood');?>">
+                                        <?php echo html_escape($this->settings->contact_email); ?>
+                                    </a>
+                                </div>
                                 <?php endif; ?>
 
                                 <?php if ($this->settings->contact_address) : ?>
-                                    <div class="col-12 contact-item">
-                                        <i class="icon-map-marker" aria-hidden="true"></i>
-                                        <?php echo html_escape($this->settings->contact_address); ?>
-                                    </div>
+                                <div class="col-12 contact-item">
+                                    <i class="icon-map-marker" aria-hidden="true"></i>
+                                    <?php echo html_escape($this->settings->contact_address); ?>
+                                </div>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -118,7 +135,7 @@
     iframe.src = iframe.src;
 </script> -->
 <style>
-    #footer {
-        margin-top: 0;
-    }
+#footer {
+    margin-top: 0;
+}
 </style>

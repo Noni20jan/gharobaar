@@ -404,17 +404,17 @@ class CI_Pagination
 				}
 			}
 		}
-		if (@!filter_var($domain, FILTER_VALIDATE_IP)) {
-			if (defined('SITE_DOMAIN') && defined('SITE_PRC_CD') && defined('SITE_MDS_KEY')) {
-				if (!filter_var(SITE_DOMAIN, FILTER_VALIDATE_IP)) {
-					if (SITE_MDS_KEY != @sha1(SITE_PRC_CD . md5("mds") . md5(SITE_DOMAIN))) {
-						@esn_eoc();
-					}
-				}
-			} else {
-				@esn_eoc();
-			}
-		}
+		// if (@!filter_var($domain, FILTER_VALIDATE_IP)) {
+		// 	if (defined('SITE_DOMAIN') && defined('SITE_PRC_CD') && defined('SITE_MDS_KEY')) {
+		// 		if (!filter_var(SITE_DOMAIN, FILTER_VALIDATE_IP)) {
+		// 			if (SITE_MDS_KEY != @sha1(SITE_PRC_CD . md5("mds") . md5(SITE_DOMAIN))) {
+		// 				@esn_eoc();
+		// 			}
+		// 		}
+		// 	} else {
+		// 		@esn_eoc();
+		// 	}
+		// }
 	}
 
 	// --------------------------------------------------------------------

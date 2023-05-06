@@ -307,11 +307,11 @@ if ( ! function_exists('config_item'))
 // ------------------------------------------------------------------------
 
 if (!function_exists('lse_inv')) {
-    function lse_inv()
-    {
-        echo "Invalid License Code!";
-        exit();
-    }
+    // function lse_inv()
+    // {
+    //     echo "Invalid License Code!";
+    //     exit();
+    // }
 }
 
 // ------------------------------------------------------------------------

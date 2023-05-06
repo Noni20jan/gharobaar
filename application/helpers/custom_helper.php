@@ -521,11 +521,15 @@ if (!function_exists('is_bidding_system_active')) {
 if (!function_exists('trans')) {
     function trans($string)
     {
+        // $ci = &get_instance();
+        // $ci->load->model('settings_model');
+        // $a=$ci->settings_model->get_language($string);
+        // return $a->translation;   
         $ci = &get_instance();
         if (!empty($ci->language_translations[$string])) {
             return $ci->language_translations[$string];
         }
-        return "";
+        // return "";
     }
 }
 
@@ -555,7 +559,7 @@ if (!function_exists('item_count')) {
 if (!function_exists('admin_url')) {
     function admin_url()
     {
-        return base_url() . get_route('admin', true);
+        return base_url() . 'admin/';
     }
 }
 
@@ -563,7 +567,7 @@ if (!function_exists('admin_url')) {
 if (!function_exists('dashboard_url')) {
     function dashboard_url()
     {
-        return lang_base_url() . get_route('dashboard', true);
+        return lang_base_url() . 'dashboard/';
     }
 }
 

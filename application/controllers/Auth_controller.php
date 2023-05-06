@@ -477,6 +477,7 @@ class Auth_controller extends Home_Core_Controller
     public function admin_login_post()
     {
         //validate inputs
+       
         $this->form_validation->set_rules('email', trans("form_email"), 'required|xss_clean|max_length[200]');
         $this->form_validation->set_rules('password', trans("form_password"), 'required|xss_clean|max_length[30]');
 

@@ -167,16 +167,16 @@ class Home_controller extends Home_Core_Controller
         $label_content = $this->input->post("label_content", true);
         $order_no = $this->input->post("order_no", true);
         $email = $this->input->post("email_address", true);
-        // Authorisation details.
-        $username = "chirag.raut@austere.co.in";
-        $hash = "495947f08983f416aa4556991fb67b2f2642e45e";
+        // // Authorisation details.
+        // $username = "chirag.raut@austere.co.in";
+        // $hash = "495947f08983f416aa4556991fb67b2f2642e45e";
 
-        // Config variables. Consult http://api.textlocal.in/docs for more info.
-        $test = "0";
+        // // Config variables. Consult http://api.textlocal.in/docs for more info.
+        // $test = "0";
 
-        // Data for text message. This is the text message data.
-        $sender = "GHRBAR"; // This is who the message appears to be from.
-        $numbers = "$phn_num"; // A single number or a comma-seperated list of numbers
+        // // Data for text message. This is the text message data.
+        // $sender = "GHRBAR"; // This is who the message appears to be from.
+        // $numbers = "$phn_num"; // A single number or a comma-seperated list of numbers
         $otp = rand(100000, 999999);
 
         $_SESSION['LAST_ACTIVITY'] = time();
@@ -206,17 +206,17 @@ class Home_controller extends Home_Core_Controller
         }
 
         $message = strtr($msg_content, $varMap);
-        $this->notification($message, $numbers);
+        // $this->notification($message, $numbers);
 
-        $apikey = "8hnKwcSmxnU-wlltbtQanStuagBcFtJoZBcHG6sQfB";
-        $data = array('apikey' => $apikey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+        // $apikey = "8hnKwcSmxnU-wlltbtQanStuagBcFtJoZBcHG6sQfB";
+        // $data = array('apikey' => $apikey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
 
-        $ch = curl_init('https://api.textlocal.in/send/?');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch); // This is the result from the API
-        curl_close($ch);
+        // $ch = curl_init('https://api.textlocal.in/send/?');
+        // curl_setopt($ch, CURLOPT_POST, true);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // $result = curl_exec($ch); // This is the result from the API
+        // curl_close($ch);
 
         $this->send_email_otp("email_otp", $email, $message, $otp, "3 mins");
 
@@ -266,7 +266,7 @@ class Home_controller extends Home_Core_Controller
             $varMap[sprintf($pattern, $key)] = $val;
         }
 
-        $message = strtr($msg_content, $varMap);
+        $message = "Verification OTP :". $otp;
 
         $this->load->model("email_model");
 
@@ -309,35 +309,39 @@ class Home_controller extends Home_Core_Controller
      */
     public function index()
     {
-
+// var_dump("asdxsada");
         get_method();
         $data['title'] = $this->settings->homepage_title;
         $data['description'] = $this->settings->site_description;
         $data['keywords'] = $this->settings->keywords;
         //products
         $data["user_data"] = $this->profile_model->get_vendor_data();
-        //$data["promoted_products"] = $this->product_model->get_promoted_products_banner();
+        $data["promoted_products"] = $this->product_model->get_promoted_products_banner();
         $data["latest_products"] = get_latest_products($this->general_settings->index_latest_products_count);
-        //$data["most_ordered_products"] = $this->product_model->get_most_ordered_products($this->general_settings->index_latest_products_count);
+
+        // var_dump($data['latest_products']);
+        // die();
+        $data["most_ordered_products"] = $this->product_model->get_most_ordered_products($this->general_settings->index_latest_products_count);
         $data["most_ordered_products"] = $this->product_model->get_most_ordered_products_from_mv();
+
         if ($this->auth_check) {
-            // $data["top_picks"] = $this->product_model->get_top_picks_products($this->general_settings->index_latest_products_count, $this->auth_user->id);
-            // $data["top_picks"] = $this->product_model->get_most_ordered_products($this->general_settings->index_latest_products_count);
-            $data["top_picks"] = $data["most_ordered_products"];
+            $data["top_picks"] = $this->product_model->get_top_picks_products($this->general_settings->index_latest_products_count, $this->auth_user->id);
+            $data["top_picks"] = $this->product_model->get_most_ordered_products($this->general_settings->index_latest_products_count);
+            // $data["top_picks"] = $data["most_ordered_products"];
             //$data["top_picks"] = $this->product_model->get_most_ordered_products_from_mv();
         }
-        if (!empty($this->auth_user->id)) {
-            if ($this->auth_user->gender == 'Male') {
-                $data["top_picks_products"] = $this->product_model->get_category_products('MALE');
-            } else {
-                $data["top_picks_products"] = $this->product_model->get_category_products("FEMALE");
-            }
-        } else {
+        // if (!empty($this->auth_user->id)) {
+        //     if ($this->auth_user->gender == 'Male') {
+        //         $data["top_picks_products"] = $this->product_model->get_category_products('MALE');
+        //     } else {
+        //         $data["top_picks_products"] = $this->product_model->get_category_products("FEMALE");
+        //     }
+        // } else {
             $data["top_picks_products"] = $this->product_model->get_products_by_pageview();
-        }
+        // }
         // var_dump($data["category_products"]);
-        //$data["promoted_products"] = $this->product_model->get_promoted_products($this->promoted_products_limit, 0);
-        //$data["promoted_products"] = $this->product_model->get_promoted_products_limited($this->promoted_products_limit, 0);
+        $data["promoted_products"] = $this->product_model->get_promoted_products($this->promoted_products_limit, 0);
+        $data["promoted_products"] = $this->product_model->get_promoted_products_limited($this->promoted_products_limit, 0);
         $data["promoted_products"] = $this->product_model->get_promoted_products_from_mv();
         $data["promoted_products_count"] = 10;
         $data["slider_items"] = $this->slider_model->get_slider_items();
@@ -373,6 +377,7 @@ class Home_controller extends Home_Core_Controller
             $data["blog_slider_posts"] = $this->blog_model->get_latest_posts(8);
             set_cache_data($key, $data["blog_slider_posts"]);
         }
+      
         $this->load->view('partials/_header', $data);
         $this->load->view('index', $data);
         $this->load->view('partials/_footer');
