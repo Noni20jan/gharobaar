@@ -3631,9 +3631,9 @@ order by id desc LIMIT 1";
     public function get_seller_by_pincode_dist($pincode)
     {
 
-        $query = $this->db->query("select * from products where user_id in (select pk_id from seller_address where id in (SELECT distinct seller_id FROM distanceMatrix where response like '%110044%' and cast(distanceNumber As DECIMAL) <= 25000));");
+        $query = $this->db->query("select * from products where user_id in (select pk_id from seller_address where id in (SELECT distinct seller_id FROM distancematrix where response like '%110044%' and cast(distanceNumber As DECIMAL) <= 25000));");
 
-        $query = $this->db->query("select pk_id from seller_address where id in (SELECT distinct seller_id FROM distanceMatrix where response like '%110044%' and cast(distanceNumber As DECIMAL) <= 25000)");
+        $query = $this->db->query("select pk_id from seller_address where id in (SELECT distinct seller_id FROM distancematrix where response like '%110044%' and cast(distanceNumber As DECIMAL) <= 25000)");
 
 
 
