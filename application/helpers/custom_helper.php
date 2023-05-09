@@ -577,12 +577,12 @@ if (!function_exists('get_route')) {
     {
         $ci = &get_instance();
         $route = $key;
-        if (!empty($ci->routes->$key)) {
-            $route = $ci->routes->$key;
+        // if (!empty($ci->routes->$key)) {
+        //     $route = $ci->routes->$key;
             if ($slash == true) {
                 $route .= '/';
             }
-        }
+        // }
         return $route;
     }
 }
