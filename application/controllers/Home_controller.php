@@ -2893,7 +2893,7 @@ class Home_controller extends Home_Core_Controller
     {
         get_method();
         $page = $this->page_model->get_page_by_default_name('privacy', $this->selected_lang->id);
-        $data['title'] = $page->title;
+        $data['title'] = 'Privacy Policies';
         $data['description'] = $page->description . " - " . $this->app_name;
         $data['keywords'] = $page->keywords . " - " . $this->app_name;
         $data['page'] = $page;

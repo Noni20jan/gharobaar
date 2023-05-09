@@ -420,7 +420,7 @@
                                                 href="<?php echo lang_base_url() . 'privacy'; ?>"><?php echo trans("privacy") ?></a>
                                         </li>
                                         <li><a
-                                                href="<?php echo lang_base_url() . 'terms-conditions'; ?>"><?php echo trans("terms_conditions") ?></a>
+                                                href="<?php echo lang_base_url() . 'terms_conditions'; ?>"><?php echo trans("terms_conditions") ?></a>
                                         </li>
                                         <li><a
                                                 href="<?php echo lang_base_url() . 'shipping_policy' ?>"><?php echo trans("shipping_policy") ?></a>
