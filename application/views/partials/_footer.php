@@ -358,7 +358,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-sm-3 footer-widget">
+                        <div class="col-12 col-sm-2 footer-widget">
                             <div class="row-custom">
                                 <div class="footer-logo">
                                     <a href="<?php echo lang_base_url(); ?>"><img

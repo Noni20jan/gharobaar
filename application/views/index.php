@@ -738,69 +738,96 @@ if (user_type == "guest") {
         <?php if ($this->general_settings->index_promoted_products == 1 && $this->general_settings->promoted_products == 1 && !empty($promoted_products)) : ?>
         <?php endif; ?>
         <?php endif; ?>
-        <section class="testimonial-background">
-            <header class="testimonial-header">
-                <h3 class="who-are-we-style">Who Are We?</h3>
-            </header>
+        <section class="fw-main-row   my_counter">
+            <div class="fw-container-fluid">
+                <div class="fw-row">
+                    <div class="fw-col-xs-12" style="background: cadetblue;">
+                        <div class=" itCounterBoxMainWrapper it-dark-counter2">
+                            <div class="container">
+                                <div class="it-counter-procces">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6 col-sm-6">
+                                            <div class="itCounterBoxWrapper it-count2-box counter-text text-center">
+                                                <div class="it-counterBoxIcon">
+                                                    <img src="https://praveshdoors.com/wp-content/uploads/2020/01/index2_count_icon1-1.png"
+                                                        class="img-fluid" alt="counter image">
+                                                </div>
+                                                <div class="it-counterBoxText">
+                                                    <h1><span class="count-no" data-to="03"
+                                                            data-speed="3000">64</span><span>k+ & counting</span></h1>
+                                                    <p>Happy Customers</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-6">
+                                            <div class="itCounterBoxWrapper it-count2-box counter-text text-center">
+                                                <div class="it-counterBoxIcon">
+                                                    <img src="https://praveshdoors.com/wp-content/uploads/2020/01/index2_count_icon2-1.png"
+                                                        class="img-fluid" alt="counter image">
+                                                </div>
+                                                <div class="it-counterBoxText">
+                                                    <h1><span class="count-no" data-to="200"
+                                                            data-speed="3000">140</span><span>+</span></h1>
+                                                    <p>Projects Completed</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-6">
+                                            <div class="itCounterBoxWrapper it-count2-box counter-text text-center">
+                                                <div class="it-counterBoxIcon">
+                                                    <img src="https://praveshdoors.com/wp-content/uploads/2020/01/index2_count_icon3-1.png"
+                                                        class="img-fluid" alt="counter image">
+                                                </div>
+                                                <div class="it-counterBoxText">
+                                                    <h1><span class="count-no" data-to="20"
+                                                            data-speed="3000">10</span><span>+</span></h1>
+                                                    <p>Years of Experience</p>
+                                                </div>
+                                            </div>
+                                        </div>
 
-            <div class="slick-carousel-testimonial">
-                <!-- Inside the containing div, add one div for each slide -->
-                <div class="carousel-cell">
-                    <!-- You can put an image or text inside each slide div -->
-                    <h5 class="sub-heading-text"><?php echo trans("first_heading"); ?></h5>
-                    <p class="testimonial-content"><?php echo trans("first_heading_content"); ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="carousel-cell">
-                    <h5 class="sub-heading-text"><?php echo trans("second_heading"); ?></h5>
-                    <p class="testimonial-content"><?php echo trans("second_heading_content"); ?></p>
-                </div>
-                <div class="carousel-cell">
-                    <h5 class="sub-heading-text"><?php echo trans("third_heading"); ?></h5>
-                    <p class="testimonial-content"><?php echo trans("third_heading_content"); ?></p>
-                </div>
+
             </div>
         </section>
+        <!--<section class="testimonial-background">-->
+        <!--    <header class="testimonial-header">-->
+        <!--        <h3 class="who-are-we-style">Who Are We?</h3>-->
+        <!--    </header>-->
+
+        <!--    <div class="slick-carousel-testimonial">-->
+        <!-- Inside the containing div, add one div for each slide -->
+        <!--        <div class="carousel-cell">-->
+        <!-- You can put an image or text inside each slide div -->
+        <!--            <h5 class="sub-heading-text"><?php echo trans("first_heading"); ?></h5>-->
+        <!--            <p class="testimonial-content"><?php echo trans("first_heading_content"); ?></p>-->
+        <!--        </div>-->
+        <!--        <div class="carousel-cell">-->
+        <!--            <h5 class="sub-heading-text"><?php echo trans("second_heading"); ?></h5>-->
+        <!--            <p class="testimonial-content"><?php echo trans("second_heading_content"); ?></p>-->
+        <!--        </div>-->
+        <!--        <div class="carousel-cell">-->
+        <!--            <h5 class="sub-heading-text"><?php echo trans("third_heading"); ?></h5>-->
+        <!--            <p class="testimonial-content"><?php echo trans("third_heading_content"); ?></p>-->
+        <!--        </div>-->
+        <!--    </div>-->
+        <!--</section>-->
         <!-- code start for seller specific banners -->
         <?php $this->load->view("product/_index_banners", ['banner_location' => 'special_offers']);
         ?>
         <!-- code end for seller specific banners -->
 
-        <div class="row">
-            <h3 style=" padding-left: 16px;" class="find-your-seller">Find Your Seller</h3>
-        </div>
-        <div class="row shop-by" style="padding-left: 15px;">
 
-            <?php $shop_by_seller = get_lookup_values_by_type("SHOP_BY_SELLER"); ?>
-            <?php foreach ($shop_by_seller as $shop_seller) : ?>
-            <div class="col-sm-2 for-space-between-imgs">
-                <a href="<?= generate_url("members_speciality") . '?type=' . $shop_seller->meaning; ?>">
-
-                    <?php $img_url = get_lookup_image_url($shop_seller->lookup_code); ?>
-                    <div class="pickgradient">
-                        <img class="top-sellers-new-ui" src="<?php echo base_url() . $img_url; ?>" alt="Avatar">
-                    </div>
-                </a>
-                <p style=" text-align: center;position: relative;bottom: 25px;color: white;">
-                    <strong class="seller-category-name"><?php
-                                                                if ($shop_seller->meaning == "Phoenix (Rising from the ashes)") :
-                                                                    echo "Phoenix Sellers";
-                                                                else :
-                                                                    echo $shop_seller->meaning;
-                                                                endif; ?></strong>
-                </p>
-            </div>
-            <?php endforeach; ?>
-        </div>
 
     </div>
 </div>
 
 
-<div class="section-slider">
-    <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
-        $this->load->view("partials/_main_slider_2", ["second_slider_items" => $second_slider_items]);
-    endif; ?>
-</div>
 
 <div class="index-wrapper" id="wrapper">
     <div class="container">
@@ -815,7 +842,7 @@ if (user_type == "guest") {
             <h3 class="find-your-seller" id="top_picks">Top Picks</h3>
             <div class="row row-product shop-by" id="top-picks-container-2">
                 <!--print products-->
-                <?php if (($this->auth_check) && (count($top_picks) >= 5)) : ?>
+                <?php  if(count($top_picks) >= 5) : ?>
                 <?php foreach ($top_picks as $product) : ?>
                 <?php if ($product->is_shop_open == "1") :
                         ?>
@@ -863,14 +890,7 @@ if (user_type == "guest") {
 </div>
 
 
-<div class="col-12 sides-gap-equal">
-    <h3 class="find-your-seller" style="margin-top: 20px;padding: 0px 15px;">Shop By Concern</h3>
-</div>
-<div class="section-slider">
-    <?php if (!empty($slider_items) && $this->general_settings->slider_status == 1) :
-        $this->load->view("partials/_main_slider_concern_new", ["second_slider_items" => $concern_slider_items]);
-    endif; ?>
-</div>
+
 
 
 

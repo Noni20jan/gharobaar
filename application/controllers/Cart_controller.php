@@ -1,8 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
+    //  require_once __DIR__ . "third_party/razorpay1/razorpay-php/Razorpay.php";
+    //     use Razorpay\Api\Api;
 class Cart_controller extends Home_Core_Controller
 {
+    
     /*
      * Payment Types
      *
@@ -933,15 +935,16 @@ class Cart_controller extends Home_Core_Controller
             'payment_status' => 'succeeded',
         );
 
-        if (empty($this->razorpay->verify_payment_signature($data_transaction))) {
+        if (($this->razorpay->verify_payment_signature($data_transaction))) {
             $this->session->set_flashdata('error', 'Invalid signature passed!');
             echo json_encode([
-                'result' => 0
+                'result' => 0,
+                'message'=>'invalid signature'
             ]);
         } else {
             $mds_payment_type = $this->input->post('mds_payment_type', true);
             //add order
-            $response = $this->execute_payment($data_transaction, $mds_payment_type, lang_base_url());
+            $response = $this->execute_payment($data_transaction, 'sale', lang_base_url());
             if ($response->result == 1) {
                 $this->session->set_flashdata('success', $response->message);
                 echo json_encode([
@@ -951,7 +954,8 @@ class Cart_controller extends Home_Core_Controller
             } else {
                 $this->session->set_flashdata('error', $response->message);
                 echo json_encode([
-                    'result' => 0
+                    'result' => 0,
+                    'message'=>'something went wrong'
                 ]);
             }
         }
@@ -1220,7 +1224,7 @@ class Cart_controller extends Home_Core_Controller
         $response->message = "";
         $response->redirect_url = "";
 
-        if ($data_transaction["txStatus"] == "SUCCESS") {
+        if ($data_transaction["payment_status"] == "succeeded") {
             $data_transaction["payment_status"] = "payment_received";
             if ($payment_type == 'sale') {
                 //add order
@@ -1261,9 +1265,9 @@ class Cart_controller extends Home_Core_Controller
                         //  $response->redirect_url = $base_url . get_route("order_details", true) . $order->order_number;
                         //  $response->redirect_url = $base_url . get_route("thankyou", true) ."/". $order->order_number;
                         $this->session->set_userdata('thankyou_order_id', $order->order_number);
-                        if ($this->general_settings->send_whatsapp == 1) {
-                            $this->notification_model->whatsapp($require_data);
-                        }
+                        // if ($this->general_settings->send_whatsapp == 1) {
+                        //     $this->notification_model->whatsapp($require_data);
+                        // }
                         $response->redirect_url = $base_url . get_route("order-completed", true);
 
 
@@ -1647,7 +1651,7 @@ class Cart_controller extends Home_Core_Controller
                     $gateway_charge = 0.95;
                 }
             }
-            $object->gateway_charge = $gateway_charge;
+            $object->gateway_charge = 0.95;
 
             foreach ($shipping_detail as $ship_detail) {
                 if ($psd->seller_id == $ship_detail->SupplierId) {
@@ -1860,6 +1864,29 @@ class Cart_controller extends Home_Core_Controller
 
         $this->auth_model->update_user_login_session_data($data['order_Amount']);
         $this->session->set_userdata('cashfree_form', $data);
+$ch = curl_init();
+// var_dump($data['order_Amount']);
+$amount=$data['order_Amount']*100;
+curl_setopt($ch, CURLOPT_URL, 'https://api.razorpay.com/v1/orders');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, "{\n  \"amount\": ".$amount.",\n  \"currency\": \"INR\",\n  \"receipt\": \"receipt#1\",\n  \"notes\": {\n    \"key1\": \"value3\",\n    \"key2\": \"value2\"\n  }\n}");
+curl_setopt($ch, CURLOPT_USERPWD, 'rzp_test_BzzE4hRtuSYbOO' . ':' . 'gD9aeKVzTsPRX2BLnvaTOj2c');
+
+$headers = array();
+$headers[] = 'Content-Type: application/json';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+$result = curl_exec($ch);
+$result = json_decode($result, true);
+// var_dump($result->id);
+// die();
+$data['order_id']=$result['id'];
+$data['amount']=$amount;
+if (curl_errno($ch)) {
+    echo 'Error:' . curl_error($ch);
+}
+curl_close($ch);
 
         echo json_encode($data);
     }
@@ -2009,31 +2036,21 @@ class Cart_controller extends Home_Core_Controller
                 );
             endif;
         endif;
+   
+    //       use Razorpay\Api\Api;
+    // use Razorpay\Api\Errors\SignatureVerificationError;
+// $api = new Api('rzp_test_aKr1owA2JjmS3z', 'bjGIhFl4DxfQNWrz4skxahI0');
 
+// $$api->order->create(array('receipt' => '123', 'amount' => 100, 'currency' => 'INR', 'notes'=> array('key1'=> 'value3','key2'=> 'value2')));
         $req_data = json_encode($data1);
         // var_dump($data1['order_meta']);
         // die();
 
-        $curl = curl_init();
+     
 
-        curl_setopt_array($curl, [
-            CURLOPT_URL => "https://sandbox.cashfree.com/pg/orders",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => $req_data,
-            CURLOPT_HTTPHEADER => [
-                "Content-Type: application/json",
-                "x-api-version: 2022-09-01",
-                "x-client-id: $app_id",
-                "x-client-secret: $secret_key"
-            ],
-        ]);
 
         $response = curl_exec($curl);
+    //  
         $err = curl_error($curl);
 
         curl_close($curl);
@@ -2049,122 +2066,124 @@ class Cart_controller extends Home_Core_Controller
             header('Content-Type: application/json; charset=utf-8');
             $output = array("payment_session_id" => $result);
             $val = explode(",", $response);
+            var_dump($response);
+     die();
             $p_id = explode(":", $val[18]);
             $payment_session_id = (trim($p_id[1], '"'));
             echo json_encode($payment_session_id);
         }
     }
 
-    public function new_cashfree_return()
-    {
+    // public function new_cashfree_return()
+    // {
 
-        $sessiondata = $this->session->userdata("cashfree_form");
-        $orderId = $sessiondata['order_Id'];
-        $app_id = $this->general_settings->cashfree_app_id;
-        $secret_key = $this->general_settings->cashfree_secret_key;
-        $curl = curl_init();
+    //     $sessiondata = $this->session->userdata("cashfree_form");
+    //     $orderId = $sessiondata['order_Id'];
+    //     $app_id = $this->general_settings->cashfree_app_id;
+    //     $secret_key = $this->general_settings->cashfree_secret_key;
+    //     $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://sandbox.cashfree.com/pg/orders/$orderId",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                "x-client-id: $app_id",
-                "x-client-secret: $secret_key",
-                'x-api-version: 2022-09-01'
-            ),
-        ));
+    //     curl_setopt_array($curl, array(
+    //         CURLOPT_URL => "https://sandbox.cashfree.com/pg/orders/$orderId",
+    //         CURLOPT_RETURNTRANSFER => true,
+    //         CURLOPT_ENCODING => '',
+    //         CURLOPT_MAXREDIRS => 10,
+    //         CURLOPT_TIMEOUT => 0,
+    //         CURLOPT_FOLLOWLOCATION => true,
+    //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    //         CURLOPT_CUSTOMREQUEST => 'GET',
+    //         CURLOPT_HTTPHEADER => array(
+    //             "x-client-id: $app_id",
+    //             "x-client-secret: $secret_key",
+    //             'x-api-version: 2022-09-01'
+    //         ),
+    //     ));
 
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-        $result = json_decode($response);
+    //     $response = curl_exec($curl);
+    //     $err = curl_error($curl);
+    //     $result = json_decode($response);
 
-        curl_close($curl);
-
-
-        $curl1 = curl_init();
-        curl_setopt_array($curl1, array(
-            CURLOPT_URL => "https://sandbox.cashfree.com/pg/orders/$orderId/payments",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                "x-client-id: $app_id",
-                "x-client-secret: $secret_key",
-                'x-api-version: 2022-09-01'
-            ),
-        ));
-
-        $response1 = curl_exec($curl1);
-        $err1 = curl_error($curl1);
-        $result1 = json_decode($response1);
-
-        curl_close($curl1);
+    //     curl_close($curl);
 
 
-        $orderAmt = $result1[0]->order_amount;
-        $paymentAmt = $result1[0]->payment_amount;
-        if ($orderAmt != $paymentAmt) {
-            $match = "no";
-        } else {
-            $match = "yes";
-        }
-        $this->auth_model->shiprocket_auth_api();
-        $data_transaction = array(
-            'payment_method' => "Cashfree",
-            'payment_id' => $result1[0]->cf_payment_id,
-            'cashfree_order_id' => $result->cf_order_id,
-            'payment_mode' => $result1[0]->payment_group,
-            'payment_status' => $result->order_status,
-            'txMsg' => $result1[0]->payment_message,
-            'txStatus' => $result1[0]->payment_status,
-            'txTime' => $result1[0]->payment_completion_time,
-            'currency' => $result1[0]->payment_currency,
-            'payment_amount' => $result1[0]->payment_amount,
-            'paymentOption' => $result1[0]->payment_group,
-            'paymentCode' => "",
-            'paymentModes' => $result1[0]->payment_group,
-            'match_status' => $match,
-            'order_amount' => $orderAmt
-        );
+    //     $curl1 = curl_init();
+    //     curl_setopt_array($curl1, array(
+    //         CURLOPT_URL => "https://sandbox.cashfree.com/pg/orders/$orderId/payments",
+    //         CURLOPT_RETURNTRANSFER => true,
+    //         CURLOPT_ENCODING => '',
+    //         CURLOPT_MAXREDIRS => 10,
+    //         CURLOPT_TIMEOUT => 0,
+    //         CURLOPT_FOLLOWLOCATION => true,
+    //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    //         CURLOPT_CUSTOMREQUEST => 'GET',
+    //         CURLOPT_HTTPHEADER => array(
+    //             "x-client-id: $app_id",
+    //             "x-client-secret: $secret_key",
+    //             'x-api-version: 2022-09-01'
+    //         ),
+    //     ));
 
-        $payment = $this->execute_payment($data_transaction, 'sale', lang_base_url());
-        if ($payment->result == 1) {
+    //     $response1 = curl_exec($curl1);
+    //     $err1 = curl_error($curl1);
+    //     $result1 = json_decode($response1);
 
-            $this->session->set_flashdata('success', $payment->message);
-            header("Location: $payment->redirect_url");
-            exit();
-        } else {
-            $this->session->set_flashdata('error', $payment->message);
-            header("Location: $payment->redirect_url");
-            exit();
-        }
-    }
+    //     curl_close($curl1);
 
-    public function cashfree_gen_signature($data)
-    {
-        // $secretKey = "9029ca61228bcee18a534e7c5ebb400b9e7fee1d";
-        $secretKey = $this->general_settings->cashfree_secret_key;
-        $postData = $data;
-        // get secret key from your config
-        ksort($postData);
-        $signatureData = "";
-        foreach ($postData as $key => $value) {
-            $signatureData .= $key . $value;
-        }
-        $signature = hash_hmac('sha256', $signatureData, $secretKey, true);
-        $signature = base64_encode($signature);
-        return $signature;
-    }
+
+    //     $orderAmt = $result1[0]->order_amount;
+    //     $paymentAmt = $result1[0]->payment_amount;
+    //     if ($orderAmt != $paymentAmt) {
+    //         $match = "no";
+    //     } else {
+    //         $match = "yes";
+    //     }
+    //     $this->auth_model->shiprocket_auth_api();
+    //     $data_transaction = array(
+    //         'payment_method' => "Cashfree",
+    //         'payment_id' => $result1[0]->cf_payment_id,
+    //         'cashfree_order_id' => $result->cf_order_id,
+    //         'payment_mode' => $result1[0]->payment_group,
+    //         'payment_status' => $result->order_status,
+    //         'txMsg' => $result1[0]->payment_message,
+    //         'txStatus' => $result1[0]->payment_status,
+    //         'txTime' => $result1[0]->payment_completion_time,
+    //         'currency' => $result1[0]->payment_currency,
+    //         'payment_amount' => $result1[0]->payment_amount,
+    //         'paymentOption' => $result1[0]->payment_group,
+    //         'paymentCode' => "",
+    //         'paymentModes' => $result1[0]->payment_group,
+    //         'match_status' => $match,
+    //         'order_amount' => $orderAmt
+    //     );
+
+    //     $payment = $this->execute_payment($data_transaction, 'sale', lang_base_url());
+    //     if ($payment->result == 1) {
+
+    //         $this->session->set_flashdata('success', $payment->message);
+    //         header("Location: $payment->redirect_url");
+    //         exit();
+    //     } else {
+    //         $this->session->set_flashdata('error', $payment->message);
+    //         header("Location: $payment->redirect_url");
+    //         exit();
+    //     }
+    // }
+
+    // public function cashfree_gen_signature($data)
+    // {
+    //     // $secretKey = "9029ca61228bcee18a534e7c5ebb400b9e7fee1d";
+    //     $secretKey = $this->general_settings->cashfree_secret_key;
+    //     $postData = $data;
+    //     // get secret key from your config
+    //     ksort($postData);
+    //     $signatureData = "";
+    //     foreach ($postData as $key => $value) {
+    //         $signatureData .= $key . $value;
+    //     }
+    //     $signature = hash_hmac('sha256', $signatureData, $secretKey, true);
+    //     $signature = base64_encode($signature);
+    //     return $signature;
+    // }
 
 
     public function cashfree_payment_post()

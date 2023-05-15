@@ -30,12 +30,12 @@ class Order_model extends CI_Model
         //     $total = $cart_total->total_price;
         // }
         $total_price1 = $cart_total->total_price / 100;
-        if ((float)$data_transaction['payment_amount'] == $total_price1 && $data_transaction['match_status'] == "yes") {
+        // if ((float)$data_transaction['payment_amount'] == $total_price1 && $data_transaction['match_status'] == "yes") {
             $order_product_status = "processing";
-        } else {
-            $order_product_status = "pending";
-        }
-        $cashfree_order_id = $data_transaction["cashfree_order_id"];
+        // } else {
+        //     $order_product_status = "pending";
+        // }
+        $cashfree_order_id = $data_transaction["razorpay_order_id"];
 
         if (!empty($cart_total)) {
             $data = array(
@@ -46,7 +46,7 @@ class Order_model extends CI_Model
                 'price_gst' => $cart_total->gst,
                 // 'discount' => $cart_total->discount,
                 // 'price_shipping' => $this->input->post('price_shipping', true),
-                'price_shipping' => $cart_total->shipping_cost,
+                // 'price_shipping' => $cart_total->shipping_cost,
                 'price_total' => $cart_total->total_price,
                 'price_currency' => $cart_total->currency,
 
@@ -60,7 +60,7 @@ class Order_model extends CI_Model
 
 
                 'status' => 0,
-                'payment_method' => $data_transaction["payment_method"],
+                'payment_method' => 'Online',
                 'payment_status' => "payment_received",
                 'updated_at' => date('Y-m-d H:i:s'),
                 'created_at' => date('Y-m-d H:i:s')
@@ -137,10 +137,10 @@ class Order_model extends CI_Model
                 } else {
                     $this->update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id, 0);
                 }
-                if ((float)$data_transaction['payment_amount'] != $total_price1 || $data_transaction['match_status'] == "no") {
-                    $this->load->model("email_model");
-                    $this->email_model->wrong_order($data_transaction, $data, $order_id);
-                }
+                // if ((float)$data_transaction['payment_amount'] != $total_price1 || $data_transaction['match_status'] == "no") {
+                //     $this->load->model("email_model");
+                //     $this->email_model->wrong_order($data_transaction, $data, $order_id);
+                // }
                 return $order_id;
             }
             return false;
@@ -1055,7 +1055,7 @@ class Order_model extends CI_Model
     {
         $order_id = clean_number($order_id);
         $data = array(
-            'payment_method' => $data_transaction["payment_method"],
+            'payment_method' => 'Online',
             'payment_id' => $data_transaction["payment_id"],
             'order_id' => $order_id,
             'user_id' => 0,
@@ -1065,15 +1065,15 @@ class Order_model extends CI_Model
             'payment_status' => $data_transaction["payment_status"],
             'ip_address' => 0,
             'created_at' => date('Y-m-d H:i:s'),
-            'txStatus' => $data_transaction["txStatus"],
-            'paymentMode' => $data_transaction["payment_mode"],
-            'txMsg' => $data_transaction["txMsg"],
-            'txTime' => $data_transaction["txTime"],
+            'txStatus' => $data_transaction["payment_status"],
+            'paymentMode' => 'Online',
+            // 'txMsg' => $data_transaction["txMsg"],
+            // 'txTime' => $data_transaction["txTime"],
             'signature' => "",
-            'cashfree_order_id' => $data_transaction["cashfree_order_id"],
-            'paymentOption' => $data_transaction["paymentOption"],
-            'paymentCode' => $data_transaction["paymentCode"],
-            'paymentModes' => $data_transaction["paymentModes"]
+            'cashfree_order_id' => $data_transaction["razorpay_order_id"],
+            // 'paymentOption' => $data_transaction["paymentOption"],
+            // 'paymentCode' => $data_transaction["paymentCode"],
+            // 'paymentModes' => $data_transaction["paymentModes"]
         );
         if ($this->auth_check) {
             $data["user_id"] = $this->auth_user->id;
@@ -1089,9 +1089,9 @@ class Order_model extends CI_Model
             //add invoice
             $this->add_invoice($order_id);
             if ($this->general_settings->enable_easysplit == 1) {
-                $this->update_net_seller_payable($data_transaction["cashfree_order_id"]);
+                $this->update_net_seller_payable($data_transaction["razorpay_order_id"]);
             } else if ($this->general_settings->enable_easysplit == 0) {
-                $this->update_cashfree_payout_complete($data_transaction["cashfree_order_id"]);
+                $this->update_cashfree_payout_complete($data_transaction["razorpay_order_id"]);
             }
         }
     }
@@ -1128,12 +1128,12 @@ class Order_model extends CI_Model
             'payment_status' => $data_transaction["payment_status"],
             'ip_address' => 0,
             'created_at' => date('Y-m-d H:i:s'),
-            'txStatus' => $data_transaction["txStatus"],
-            'paymentMode' => $data_transaction["payment_mode"],
-            'txMsg' => $data_transaction["txMsg"],
-            'txTime' => $data_transaction["txTime"],
-            'signature' => $data_transaction["cashfree_signature"],
-            'cashfree_order_id' => $data_transaction["cashfree_order_id"]
+            'txStatus' => $data_transaction["payment_status"],
+            'paymentMode' => "Online",
+            // 'txMsg' => $data_transaction["txMsg"],
+            // 'txTime' => $data_transaction["txTime"],
+            'signature' => $data_transaction["razorpay_signature"],
+            'cashfree_order_id' => $data_transaction["razorpay_order_id"]
         );
         if ($this->auth_check) {
             $data["user_id"] = $this->auth_user->id;
