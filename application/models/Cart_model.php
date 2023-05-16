@@ -1020,8 +1020,8 @@ class Cart_model extends CI_Model
                     endif;
 
                     if (!empty($cart_item->delivery_distance)) :
-                        $dist_value = $cart_item->delivery_distance->value;
-                        $product_area = $cart_item->product_delivery_area;
+                        // $dist_value = $cart_item->delivery_distance->value;
+                        // $product_area = $cart_item->product_delivery_area;
 
                         //checking for home cooks
                         if (!empty($cart_item->parent_category_id) && ($cart_item->parent_category_id == 2)) :
@@ -1032,24 +1032,24 @@ class Cart_model extends CI_Model
                                 $item->product_delivery_in_NCR = 0;
                             }
                             $now_bike_distance = intval($this->general_settings->now_bike_distance);
-                            if ($dist_value > $now_bike_distance) {
-                                $item->product_deliverable = 0;
-                            } else {
+                            // if ($dist_value > $now_bike_distance) {
+                            //     $item->product_deliverable = 0;
+                            // } else {
                                 $item->product_deliverable = 1;
-                            }
+                            // }
                             $item->delivery_partner = "NOW-BIKES";
                         endif;
 
                         //checking for the seller area selected
-                        $distance_array = ["5 km", "10 km", "20 km", "30 km", "40 km", "50 km"];
+                        // $distance_array = ["5 km", "10 km", "20 km", "30 km", "40 km", "50 km"];
 
-                        if (in_array($product_area, $distance_array)) {
-                            $product_area_arr = explode(" ", $product_area);
-                            $product_area_val = $product_area_arr[0] * 1000;
-                            if ($product_area_val < $dist_value) {
-                                $item->product_deliverable = 0;
-                            }
-                        }
+                        // if (in_array($product_area, $distance_array)) {
+                        //     $product_area_arr = explode(" ", $product_area);
+                        //     $product_area_val = $product_area_arr[0] * 1000;
+                        //     if ($product_area_val < $dist_value) {
+                                $item->product_deliverable = 1;
+                            // }
+                        // }
 
                     endif;
 

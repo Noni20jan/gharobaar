@@ -188,7 +188,7 @@ if (!empty($variation)) { ?>
                     </a>
                 </div> -->
             <?php else : ?>
-                <div class="cart-top">
+                <!-- <div class="cart-top">
                     <?php $disabled = "";
                     if (empty($variation)) { ?>
                         <?php if (check_product_stock($product)) {
@@ -206,7 +206,7 @@ if (!empty($variation)) { ?>
                         <?php } ?>
                     <?php } ?>
 
-                </div>
+                </div> -->
             <?php endif; ?>
 
 
@@ -282,10 +282,10 @@ if (!empty($variation)) { ?>
 
                 <span class="badge badge-dark badge-promoted" style="display:none"></span>
             <?php endif; ?>
-            <div class="quick-view">
+            <!-- <div class="quick-view">
                 <a href="javascript:void(0)" class="item-options zoom " onclick="showquickview(<?php echo $product->id; ?>)" data-toggle="tooltip" title="<?php echo trans("quickview"); ?>">
                     <i class="fa fa-eye" aria-hidden="true"></i></a>
-            </div>
+            </div> -->
             <div class="product-item-options">
                 <?php if ($this->auth_check) : ?>
                     <?php if ($this->auth_user->user_type != "guest") : ?>

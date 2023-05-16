@@ -132,11 +132,11 @@ class Order_model extends CI_Model
                 //clear cart
                 $this->cart_model->clear_cart();
                 //update order id in casfree prepaid payouts
-                if ($data_transaction['match_status'] == "yes") {
+                // if ($data_transaction['match_status'] == "yes") {
                     $this->update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id, 1);
-                } else {
-                    $this->update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id, 0);
-                }
+                // } else {
+                //     $this->update_orderid_cashfree_prepaid_payouts($cashfree_order_id, $order_id, 0);
+                // }
                 // if ((float)$data_transaction['payment_amount'] != $total_price1 || $data_transaction['match_status'] == "no") {
                 //     $this->load->model("email_model");
                 //     $this->email_model->wrong_order($data_transaction, $data, $order_id);
@@ -786,7 +786,7 @@ class Order_model extends CI_Model
             );
 
             $data_state = $this->get_state_code($data["shipping_state"]);
-            $data["state_code"] = $data_state->gst_state_code;
+            $data["state_code"] = '';
 
             // $country = get_country($shipping_address->shipping_country_id);
             // if (!empty($country)) {
@@ -839,7 +839,7 @@ class Order_model extends CI_Model
                         'product_total_price' => $cart_item->unit_price * $cart_item->quantity,
                         'variation_option_ids' => $variation_option_ids,
                         'product_weight' => $cart_item->weight, //product weight
-                        'product_delivery_distance' => $cart_item->delivery_distance->value, //distance
+                        'product_delivery_distance' => 5000, //distance
                         'product_delivery_partner' => $cart_item->delivery_partner, //delivery partner
                         // 'commission_rate' => $this->general_settings->commission_rate,
                         'commission_rate' => calculate_commission_rate_seller($product->user_id, $product->id),
@@ -2986,9 +2986,9 @@ class Order_model extends CI_Model
                     "params" => $passed_data,
                     "param_url" => "dashboard/sale" . "/" . $order_number->order_number
                 );
-                if ($this->general_settings->send_whatsapp == 1) {
-                    $this->notification_model->whatsapp($required_data);
-                }
+                // if ($this->general_settings->send_whatsapp == 1) {
+                //     $this->notification_model->whatsapp($required_data);
+                // }
                 $data["total_shipping_cost"] = $data["sup_shipping_cost"] + $data['Sup_Shipping_gst'];
                 $data["total_cod_cost"] = $data["Sup_cod_cost"] + $data['Sup_cod_gst'];
                 $data['grand_total_amount'] = $data["Sup_total_prd"] + $data["total_shipping_cost"] + $data["total_cod_cost"];

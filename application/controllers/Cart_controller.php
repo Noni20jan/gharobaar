@@ -1238,8 +1238,8 @@ class Cart_controller extends Home_Core_Controller
                     $cart_total = $this->cart_model->get_sess_cart_total();
 
                     $total_price1 = $cart_total->total_price / 100;
-                    if ((float)$data_transaction['payment_amount'] == $total_price1 && $data_transaction['match_status'] == "yes") {
-                        if ((float)$data_transaction['payment_amount'] == $cart_total->total && $data_transaction['match_status'] == "yes") {
+                    // if ((float)$data_transaction['payment_amount'] == $total_price1 && $data_transaction['match_status'] == "yes") {
+                       
                             if ($this->general_settings->send_email_buyer_purchase == 1) {
                                 $email_data = array(
                                     'email_type' => 'new_order',
@@ -1247,7 +1247,7 @@ class Cart_controller extends Home_Core_Controller
                                 );
                                 $this->session->set_userdata('mds_send_email_data', json_encode($email_data));
                             }
-                        }
+                      
                         //set response and redirect URLs
                         $response->result = 1;
 
@@ -1277,12 +1277,7 @@ class Cart_controller extends Home_Core_Controller
                         } else {
                             $response->message = trans("msg_order_completed");
                         }
-                    } else {
-                        //could not added to the database
-                        $response->message = trans("msg_payment_database_error");
-                        $response->result = 0;
-                        $response->redirect_url = $base_url . get_route("cart", true) . get_route("shipping");
-                    }
+                   
                 } elseif ($payment_type == 'membership') {
                     $plan_id = $this->session->userdata('modesy_selected_membership_plan_id');
                     $plan = null;

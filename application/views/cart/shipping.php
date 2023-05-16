@@ -2348,9 +2348,9 @@ function Payment() {
                             .order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
                         "handler": function(response) {
                             console.log(response);
-                            alert(response.razorpay_payment_id);
-                            alert(response.razorpay_order_id);
-                            alert(response.razorpay_signature)
+                            // alert(response.razorpay_payment_id);
+                            // alert(response.razorpay_order_id);
+                            // alert(response.razorpay_signature)
                             var t = {
                                 // pay_method: pay_method,
                                 sys_lang_id: 1,
@@ -2366,7 +2366,11 @@ function Payment() {
                                 url: base_url + "razorpay-payment-post",
                                 data: t,
                                 success: function(f) {
-                                    console.log(f);
+                                    res= JSON.parse(f);
+                                    // console.log(JSON.parse(f));
+                                    if(f.result==1){
+                                    window.location.href = res.redirect_url;
+                                    }
                                 },
                             })
                         },
@@ -2385,13 +2389,14 @@ function Payment() {
                         var rzp1 = new Razorpay(options);
                         rzp1.on('payment.failed', function(
                             response) {
-                            alert(response.error.code);
-                            alert(response.error.description);
-                            alert(response.error.source);
-                            alert(response.error.step);
-                            alert(response.error.reason);
-                            alert(response.error.metadata.order_id);
-                            alert(response.error.metadata.payment_id);
+                            // alert(response.error.code);
+                            // alert(response.error.description);
+                            // alert(response.error.source);
+                            // alert(response.error.step);
+                            // alert(response.error.reason);
+                            // alert(response.error.metadata.order_id);
+                            // alert(response.error.metadata.payment_id);
+                                      window.location.href = base_url + "cart/payment";
                         });
                         rzp1.open();
                         e.preventDefault();
