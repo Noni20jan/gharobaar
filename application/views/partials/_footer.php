@@ -13,6 +13,8 @@
 <script src="<?php echo base_url(); ?>assets/js/speech-input.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/script-1.7.min.js?v=1234qwer"></script>
 <script src="<?php echo base_url(); ?>assets/admin/js/dashboard-1.7.js"></script>
+<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+
 
 <style>
 /* #footer-follow-us {
@@ -337,6 +339,7 @@
 </style>
 
 <footer id="footer">
+    <div class="elfsight-app-013b4113-aab4-4c8a-8701-699c9b022c8c"></div>
     <div class="container">
         <div class="row">
             <!-- <svg viewBox="0 0 100 25" class="svg-fotter">
@@ -601,12 +604,12 @@
                             <p class="aap_bar_text">Home</p>
                         </a>
                     </li>
-                    <li>
-                        <a href="<?php echo generate_url("category"); ?>"><img
-                                src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_categories.png">
-                            <p class="aap_bar_text">Categories</p>
-                        </a>
-                    </li>
+                    <!--<li>-->
+                    <!--    <a href="<?php echo generate_url("category"); ?>"><img-->
+                    <!--            src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_categories.png">-->
+                    <!--        <p class="aap_bar_text">Categories</p>-->
+                    <!--    </a>-->
+                    <!--</li>-->
                     <li>
                         <a href="<?php echo generate_url("cart"); ?>"><img
                                 src="<?php echo base_url(); ?>assets/img/app-bar-imgs/app_bar_cart.png">

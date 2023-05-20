@@ -55,65 +55,59 @@
 </style>
 <div id="wrapper" class="index-wrapper">
     <div class="container">
-        <div class="shipping_policy">
-            <h4 style="font-weight:700;">Shipping Policy</h1>
-        </div>
-        <div class="shipping-content">
-            <p>
-                We currently deliver across India, and have tied up with a reliable logistics partner that ensures reliable delivery of non-perishable items across cities.
-            </p>
-            <p>
-                For perishable goods, we have another logistics partner that will pick your products from the seller and hand deliver it to you (This service is currently available only within Delhi-NCR). We try our very best to ensure that there are no delays in shipments, but sometimes it's beyond our control.
-            </p>
-            <h4><u>Shipping Time</u></h3>
+    <style>
+  [data-custom-class='body'], [data-custom-class='body'] * {
+          background: transparent !important;
+        }
+[data-custom-class='title'], [data-custom-class='title'] * {
+          font-family: Arial !important;
+font-size: 26px !important;
+color: #000000 !important;
+        }
+[data-custom-class='subtitle'], [data-custom-class='subtitle'] * {
+          font-family: Arial !important;
+color: #595959 !important;
+font-size: 14px !important;
+        }
+[data-custom-class='heading_1'], [data-custom-class='heading_1'] * {
+          font-family: Arial !important;
+font-size: 19px !important;
+color: #000000 !important;
+        }
+[data-custom-class='heading_2'], [data-custom-class='heading_2'] * {
+          font-family: Arial !important;
+font-size: 17px !important;
+color: #000000 !important;
+        }
+[data-custom-class='body_text'], [data-custom-class='body_text'] * {
+          color: #595959 !important;
+font-size: 14px !important;
+font-family: Arial !important;
+        }
+[data-custom-class='link'], [data-custom-class='link'] * {
+          color: #3030F1 !important;
+font-size: 14px !important;
+font-family: Arial !important;
+word-break: break-word !important;
+        }
+</style>
 
-
-                <ul style="list-style-type:disc">
-                    <li>Since we are working with homepreneurs, a number of products are made to order, and the dispatch time/lead time for every product is different. The same is visible on every product page.</li>
-                    <li>Once the product is ready for dispatch, a notification is sent to our delivery partner by the seller, and the same is then picked for delivery.</li>
-                    <li>For delivery of non-perishable items, shipping is done on all days (Monday to Saturday) except Sundays and public holidays.</li>
-                    <li>For delivery of perishable items, shipping and delivery is done all days of the week on the same day.</li>
-                </ul>
-
-                <h4><u>Shipping Charges</u></h4>
-
-                <p><u>For non-perishable items delivered Pan-India</u></p>
-
-                <p>
-                    Shipping charges would depend on the order value from one single seller, and whether or not the seller offers free shipping on the products.
-                </p>
-                <p>
-                    For all products that are not offered for free shipping by the sellers, the shipping charges would be as follows:
-                </p>
-
-                <ul style="list-style-type:disc">
-                    <li>For order value less than Rs. 500 (from one seller), shipping charges would be calculated on actuals depending on the delivery distance and the weight/volumetric weight of the products.</li>
-                    <li>For order value between Rs. 500 and 2000 (from one seller), a flat shipping fee of Rs. 100* would be levied on prepaid orders. A convenience fee of Rs. 50* would be applied on all COD (Cash on Delivery) orders.</li>
-                    <li>For order value more than Rs. 2000 (from one seller), shipping would be free for prepaid orders. A convenience fee of Rs. 50* would be applied on all COD (Cash on Delivery) orders.</li>
-                </ul>
-
-                <p><u>For perishable items delivery in Delhi-NCR</u></p>
-                <ul style="list-style-type:disc">
-                    <li>
-                        Shipping charges would be calculated at the time of checkout depending on the distance and the number of items.
-                    </li>
-                </ul>
-
-                <h4><u>Shipment Delays</u></h4>
-
-                <p>
-                    In case your shipment is delayed, please send us an email on <a class="for-contact" href="mailto:<?php echo trans('contact_gharobaar'); ?>"><?php echo trans('contact_gharobaar'); ?></a> with your order number.
-                </p>
-                <p>
-                    In the unfortunate scenario that your shipment has been misplaced or lost enroute, we can either resend the order to you (if the same products are still in stock), or issue a credit note to you, or reimburse the amount completely to you.
-                </p>
-                <p>
-                    Kindly ensure that while taking delivery, the package is not tampered with. In case you feel anything is amiss, kindly mention it on the Proof of Delivery given to the courier company. This would help us in providing quick resolutions in case of any dispute.
-                </p>
-
-
-
-                <p>*Plus applicable taxes</p>
-        </div>
+      <div data-custom-class="body">
+      <div><div><div><strong><span style="font-size: 26px;"><span data-custom-class="title">SHIPPING & DELIVERY POLICY</span></span></strong></div><div><br></div><div><span style="color: rgb(127, 127, 127);"><strong><span style="font-size: 15px;"><span data-custom-class="subtitle">Last updated <bdt class="question">May 17, 2023</bdt></span></span></strong></span></div><div><br></div><div><br></div><div><br></div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="block-component"></bdt>This Shipping & Delivery Policy is part of our <bdt class="question">Terms and Conditions</bdt> ("Terms") and should be therefore read alongside our main Terms.</span></span></span></div><div style="line-height: 1.5;"><br></div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text">Please carefully review our Shipping & Delivery Policy when purchasing our products. This policy will apply to any order you place with us.</span></span></span></div><div style="line-height: 1.5;"><br></div><div style="line-height: 1.5;"><span data-custom-class="heading_1"><strong><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="heading_1"><strong>WHAT ARE MY SHIPPING & DELIVERY OPTIONS?</strong></span></span></span></strong></span><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="block-component"><bdt class="block-component"></bdt></span></bdt></span></span></span></span></span></span></div><div style="line-height: 1.5;"><br></div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text">We offer various shipping options. In some cases a third-party supplier may be managing our inventory and will be responsible for shipping your products.<span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"><span data-custom-class="body_text"></span></bdt></span></span></span></span></span></span></span><span data-custom-class="body_text"><bdt class="block-component"></bdt></span></span></span><bdt class="block-component"></bdt></bdt></span></span></span></div><div style="line-height: 1.5;"><br></div><div style="line-height: 1.5;"><strong><span data-custom-class="heading_2"><bdt class="block-component"></bdt>Shipping Fees</span></strong></div><div style="line-height: 1.5;"><br></div><div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text">We <bdt class="block-component"></bdt>offer <bdt class="block-component"></bdt> shipping at the following rates:</span><span data-custom-class="body_text"><bdt class="block-component"><bdt class="block-component"><bdt class="block-component"><bdt class="block-component"></bdt></span></span></span></span></span></span></span></span></span></div><div style="line-height: 1.5;"><br></div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text">All times and dates given for delivery of the products are given in good faith but are estimates only.<bdt class="block-component"></bdt><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"><bdt class="statement-end-if-in-editor"></bdt></bdt></span></span></span></span><span data-custom-class="body_text"><bdt class="block-component"><bdt class="block-component"></bdt></span></span></span></span></span></span></div><div style="line-height: 1.5;"><br></div><div><div><div><div><div><div><div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="heading_1"><strong>DO YOU DELIVER INTERNATIONALLY?</strong></span><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"><bdt class="statement-end-if-in-editor"><bdt class="statement-end-if-in-editor"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="block-component"></bdt></span></span></span></bdt></bdt></bdt></span><span data-custom-class="body_text"><bdt class="block-component"></bdt></span></span></span></div><div style="line-height: 1.5;"><br></div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text">We offer worldwide shipping.<bdt class="block-component"></bdt> Free shipping is not valid on international orders.<bdt class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></div><div style="line-height: 1.5;"><br></div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="block-component"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span><bdt class="block-component"></bdt></span></span></span></span></span></span></span></span></span><bdt class="block-component"><span data-custom-class="body_text"></bdt></span></span></span></span></span></span></bdt></span></span></span></span></span></span></bdt></bdt></span></span></span><bdt class="block-component"></bdt></bdt></span></span></span></div><div style="line-height: 1.4;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text">Please note, we may be subject to various rules and restrictions in relation to some international deliveries and you may be subject to additional taxes and duties over which we have no control. If such cases apply, you are responsible for complying with the laws applicable to the country where you live and will be responsible for any such additional costs or taxes.</span></span></span></span></span></span></span></span></span></span></span></span><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"><bdt class="statement-end-if-in-editor"><bdt class="statement-end-if-in-editor"></bdt></bdt></bdt></span></span></span><bdt class="else-block"><bdt class="block-component"><bdt class="block-component"></bdt><bdt class="block-component"></bdt></span></span></span></div><div style="line-height: 1.5;"><br></div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="heading_1"><strong>WHAT HAPPENS IF MY ORDER IS DELAYED?</strong></span></span></span></div><div style="line-height: 1.5;"><br></div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="block-component"></bdt></span></span></span><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text">If delivery is delayed for any reason we will let you know as soon as possible and will advise you of a revised estimated date for delivery.</span></span></span></span><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"></bdt></span><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"></bdt></span><span data-custom-class="heading_1"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"><bdt class="statement-end-if-in-editor"><bdt class="statement-end-if-in-editor"><bdt class="block-component"><bdt class="block-component"></bdt></bdt></bdt></bdt></bdt></span></span></span></span></span></span></div><div style="line-height: 1.5;"><br></div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="heading_1"><strong>QUESTIONS ABOUT RETURNS?</strong></span></span></span></div><div style="line-height: 1.5;"><br></div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text">If you have questions about returns, please review our Return Policy.<span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></div><div style="line-height: 1.5;"><br></div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="heading_1"><strong>HOW CAN YOU CONTACT US ABOUT THIS POLICY?</strong></span></span></span></div><div style="line-height: 1.5;"><br></div><div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text">If you have any further questions or comments, you may contact us by:</span><span data-custom-class="heading_1"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="heading_1"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="block-component"></bdt></span></span></span></span></span></span></span></span></span></div><ul><li style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text">Phone: <bdt class="question">8544854164</bdt></span></span></span></li></ul><div><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="block-component"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"><bdt class="statement-end-if-in-editor"><bdt class="statement-end-if-in-editor"></bdt></bdt></bdt></span></span></span></bdt></span></span></span></span></span></span></span></span></span></bdt></span></span></span></span><span data-custom-class="heading_1"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="heading_1"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="block-component"></bdt></bdt></bdt></span></span></span></bdt></span></span></span></span></span></span></span></span></span></bdt></span></span></span></span><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"><bdt class="block-component"></bdt></bdt></span></span></span></div><ul><li><span style="font-size: 15px; color: rgb(89, 89, 89);"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span data-custom-class="body_text">Email: <bdt class="question">trazenwood@gmail.com</bdt></span></span></span></li></ul><div><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="block-component"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"><bdt class="statement-end-if-in-editor"><bdt class="statement-end-if-in-editor"></bdt></bdt></bdt></span></span></span></bdt></span></span></span></span></span></span></span></span></span></bdt></span></span></span></span><span data-custom-class="body_text"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"><bdt class="statement-end-if-in-editor"><bdt class="block-component"></bdt></span></span></span></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div><style>
+      ul {
+        list-style-type: square;
+      }
+      ul > li > ul {
+        list-style-type: circle;
+      }
+      ul > li > ul > li > ul {
+        list-style-type: square;
+      }
+      ol li {
+        font-family: Arial ;
+      }
+    </style>
+      </div>
+     
     </div>
 </div>

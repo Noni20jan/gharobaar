@@ -77,7 +77,7 @@ endif; ?>
         <div class="row">
           <div class="col-md-12 text-center">
             <p class="lead">
-              <a class="btn btn-lg btn-custom btn-place-order" href='<?php echo (generate_url("order_details") . "/" . $order_number) ?>'><?php echo trans("thankyou_track_order") ?></a>
+              <a style="color: white !important;" class="btn btn-lg btn-custom btn-place-order" href='<?php echo (generate_url("order_details") . "/" . $order_number) ?>'><?php echo trans("thankyou_track_order") ?></a>
             </p>
           </div>
         </div>

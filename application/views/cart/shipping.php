@@ -2368,7 +2368,7 @@ function Payment() {
                                 success: function(f) {
                                     res= JSON.parse(f);
                                     // console.log(JSON.parse(f));
-                                    if(f.result==1){
+                                    if(res.result==1){
                                     window.location.href = res.redirect_url;
                                     }
                                 },

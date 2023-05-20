@@ -746,7 +746,7 @@ if (user_type == "guest") {
                             <div class="container">
                                 <div class="it-counter-procces">
                                     <div class="row">
-                                        <div class="col-lg-4 col-md-6 col-sm-6">
+                                        <div class="col-lg-4 col-md-6 col-sm-6" style="margin-top: 2%;">
                                             <div class="itCounterBoxWrapper it-count2-box counter-text text-center">
                                                 <div class="it-counterBoxIcon">
                                                     <img src="https://praveshdoors.com/wp-content/uploads/2020/01/index2_count_icon1-1.png"
@@ -759,7 +759,7 @@ if (user_type == "guest") {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-6 col-sm-6">
+                                        <div class="col-lg-4 col-md-6 col-sm-6"  style="margin-top: 2%;">
                                             <div class="itCounterBoxWrapper it-count2-box counter-text text-center">
                                                 <div class="it-counterBoxIcon">
                                                     <img src="https://praveshdoors.com/wp-content/uploads/2020/01/index2_count_icon2-1.png"
@@ -772,7 +772,7 @@ if (user_type == "guest") {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-6 col-sm-6">
+                                        <div class="col-lg-4 col-md-6 col-sm-6"  style="margin-top: 2%;">
                                             <div class="itCounterBoxWrapper it-count2-box counter-text text-center">
                                                 <div class="it-counterBoxIcon">
                                                     <img src="https://praveshdoors.com/wp-content/uploads/2020/01/index2_count_icon3-1.png"

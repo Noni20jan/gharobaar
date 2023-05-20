@@ -2623,9 +2623,9 @@ class Home_controller extends Home_Core_Controller
     {
         get_method();
         $page = $this->page_model->get_page_by_default_name('shipping_policy', $this->selected_lang->id);
-        $data['title'] = $page->title;
-        $data['description'] = $page->description . " - " . $this->app_name;
-        $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        $data['title'] = "Shipping Policy";
+        $data['description'] = "";
+        $data['keywords'] = "";
         $data['page'] = $page;
         $data["index_settings"] = get_index_settings();
         $this->load->view('partials/_header', $data);
@@ -2911,9 +2911,9 @@ class Home_controller extends Home_Core_Controller
     {
         get_method();
         $page = $this->page_model->get_page_by_default_name('return_and_exchange', $this->selected_lang->id);
-        $data['title'] = $page->title;
-        $data['description'] = $page->description . " - " . $this->app_name;
-        $data['keywords'] = $page->keywords . " - " . $this->app_name;
+        $data['title'] = "Return Policy";
+        $data['description'] = "";
+        $data['keywords'] ="";
         $data['page'] = $page;
         $data["index_settings"] = get_index_settings();
         $this->load->view('partials/_header', $data);
