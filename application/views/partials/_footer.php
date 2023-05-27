@@ -126,7 +126,7 @@
     min-height: 40px;
     width: 100%;
     min-width: 40px;
-    background-color: #007C05;
+    background-color: #624d46;
     /* background-color: #c582b5; */
     color: #fff;
     white-space: nowrap;
@@ -144,7 +144,7 @@
         min-height: 40px;
 
         min-width: 40px;
-        background-color: #007C05;
+        background-color: #624d46;
         /* background-color: #c582b5; */
         color: #fff;
         white-space: nowrap;

@@ -1721,21 +1721,21 @@ $path_url = $this->input->get('url', true);
                                     <ul class="nav align-items-center"
                                         style="flex-wrap:nowrap; justify-content:space-evenly; float:none !important;">
                                         <?php if (!empty($_SESSION["modesy_sess_user_location"])): ?>
-                                        <li class="icon-bg" style="background-color:red;">
+                                        <!-- <li class="icon-bg" style="background-color:red;">
                                             <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal"
                                                 class="nav-link btn-modal-location">
 
                                                 <i class="icon-map-marker"></i></a>
 
-                                        </li>
+                                        </li> -->
                                         <?php else: ?>
-                                        <li class="icon-bg">
+                                        <!-- <li class="icon-bg">
                                             <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal"
                                                 class="nav-link btn-modal-location">
 
                                                 <i class="icon-map-marker"></i></a>
 
-                                        </li>
+                                        </li> -->
                                         <?php endif;?>
 
                                         <?php if ($this->is_sale_active): ?>
@@ -1968,22 +1968,22 @@ if ($cart_product_count > 0): ?>
                             <div class="menu-icon">
                                 <a href="javascript:void(0)" class="btn-open-mobile-nav"><i class="icon-menu"></i></a>
                             </div>
-                            <div class="mobile-map">
-                                <?php if (!empty($_SESSION["modesy_sess_user_location"])): ?>
+                            <!-- <div class="mobile-map">
+                                <?php //if (!empty($_SESSION["modesy_sess_user_location"])): ?>
 
                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal"
                                     style="color:red;">
                                     <span class="pincode_text"> Showing results for products deliverable at pincode
-                                        <?php echo $_SESSION["modesy_sess_user_location"]; ?>
+                                        <?php //echo $_SESSION["modesy_sess_user_location"]; ?>
                                     </span>
-                                    <?php else: ?>
+                                    <?php //else: ?>
                                     <a href="javascript:void(0)" data-toggle="modal" data-target="#locateModal">
 
 
-                                        <?php endif;?>
+                                        <?php //endif;?>
                                         <i class="icon-map-marker"></i></a>
 
-                            </div>
+                            </div> -->
 
                             <div class="mobile-logo">
                                 <a href="<?php echo lang_base_url(); ?>"><img
