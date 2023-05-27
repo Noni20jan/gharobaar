@@ -11411,7 +11411,7 @@ a.text-secondary:hover {
 }
 
 .text-success {
-  color: #28a745 !important;
+  color: #624D46 !important;
 }
 
 a.text-success:focus,
@@ -15874,7 +15874,7 @@ img {
   float: left;
   width: auto;
   height: auto;
-  color: #28a745;
+  color: #624D46;
   font-size: 13px;
   line-height: 13px;
   font-weight: 400;

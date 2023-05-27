@@ -5,7 +5,7 @@
         color: #fff;
         padding-left: 8px;
         padding-right: 4px;
-        background-color: #6c7f5d;
+        background-color: #624d46;
     }
 
     @media(max-width:700px) {
@@ -14,7 +14,7 @@
             color: #fff;
             padding-left: 0px;
             padding-right: 0px;
-            background-color: #6c7f5d;
+            background-color: #624d46;
         }
     }
 </style>

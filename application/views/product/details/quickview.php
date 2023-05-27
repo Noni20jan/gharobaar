@@ -7,7 +7,7 @@
 
     .discount-rate {
         float: right;
-        color: #007C05;
+        color: #624D46;
         margin-top: 0%;
     }
 </style>

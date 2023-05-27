@@ -374,7 +374,9 @@
     left: 14%;
     color: white;
 }
-
+.count-no{
+    color: white;
+}
 .chicken-mobile {
     border-radius: 30px;
 }
@@ -741,7 +743,7 @@ if (user_type == "guest") {
         <section class="fw-main-row   my_counter">
             <div class="fw-container-fluid">
                 <div class="fw-row">
-                    <div class="fw-col-xs-12" style="background: cadetblue;">
+                    <div class="fw-col-xs-12" style="background: #624d46;">
                         <div class=" itCounterBoxMainWrapper it-dark-counter2">
                             <div class="container">
                                 <div class="it-counter-procces">
@@ -754,8 +756,8 @@ if (user_type == "guest") {
                                                 </div>
                                                 <div class="it-counterBoxText">
                                                     <h1><span class="count-no" data-to="03"
-                                                            data-speed="3000">64</span><span>k+ & counting</span></h1>
-                                                    <p>Happy Customers</p>
+                                                            data-speed="3000">64</span><span style="color: white;">k+ & counting</span></h1>
+                                                    <p style="color: white;">Happy Customers</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -767,8 +769,8 @@ if (user_type == "guest") {
                                                 </div>
                                                 <div class="it-counterBoxText">
                                                     <h1><span class="count-no" data-to="200"
-                                                            data-speed="3000">140</span><span>+</span></h1>
-                                                    <p>Projects Completed</p>
+                                                            data-speed="3000">140</span><span style="color: white;">+</span></h1>
+                                                    <p style="color: white;">Projects Completed</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -780,8 +782,8 @@ if (user_type == "guest") {
                                                 </div>
                                                 <div class="it-counterBoxText">
                                                     <h1><span class="count-no" data-to="20"
-                                                            data-speed="3000">10</span><span>+</span></h1>
-                                                    <p>Years of Experience</p>
+                                                            data-speed="3000">10</span><span style="color: white;">+</span></h1>
+                                                    <p style="color: white;">Years of Experience</p>
                                                 </div>
                                             </div>
                                         </div>

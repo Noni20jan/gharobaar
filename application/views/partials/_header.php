@@ -891,7 +891,7 @@
 
 #check-button {
     margin-left: 2%;
-    background-color: #007C05 !important;
+    background-color: #624D46 !important;
     color: #fff;
     border-radius: 20px !important;
     font-size: 12px;
@@ -1170,7 +1170,7 @@ endif;?>
     }
 
     .icon-bg {
-        background-color: #111;
+        background-color: #624d46;
         border-radius: 50%;
         color: white;
         font-size: 15px;

@@ -4739,7 +4739,7 @@
     }
 
     .icon-bg {
-        background-color: #111;
+        background-color: #624d46;
         border-radius: 50%;
         color: white;
         font-size: 15px;

@@ -2552,7 +2552,7 @@ class Home_controller extends Home_Core_Controller
             $this->error_404();
         } else {
             $data['title'] = $page->title;
-            $data['description'] = $page->description . " - " . $this->app_name;
+            $data['description'] ="Terms and condition of Trazenwood";
             $data['keywords'] = $page->keywords . " - " . $this->app_name;
             $data['page'] = $page;
 
@@ -2894,7 +2894,7 @@ class Home_controller extends Home_Core_Controller
         get_method();
         $page = $this->page_model->get_page_by_default_name('privacy', $this->selected_lang->id);
         $data['title'] = 'Privacy Policies';
-        $data['description'] = $page->description . " - " . $this->app_name;
+        $data['description'] = "Privacy policy of Trazenwood";
         $data['keywords'] = $page->keywords . " - " . $this->app_name;
         $data['page'] = $page;
         $data["index_settings"] = get_index_settings();
