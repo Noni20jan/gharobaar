@@ -970,7 +970,6 @@
     <meta name="author" content="Codingest" />
     <link rel="shortcut icon" type="image/png" href="<?php echo get_favicon($this->general_settings); ?>" />
 
-    <!-- this scrip is provided by sakshi -->
     <!-- <script>
         (function(h, e, a, t, m, p) {
             m = e.createElement(a);

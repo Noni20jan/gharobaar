@@ -328,16 +328,16 @@
         <tr>
             <td class="container">
                 <div class="content">
-                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
+                    <!-- <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body1">
                         <tr>
                             <td style="text-align: center;">
                                 <div style="height: 70px;width:100%;text-align: center;margin-bottom: 10px;">
                                     <a href="<?php echo base_url(); ?>">
-                                        <!-- <img src="<?php echo get_logo_email($this->general_settings); ?>" alt="" style="max-width: 180px;max-height: 70px;"> -->
+                                     
                                         <img src="http://1.23.242.234:8015/gharobaar/assets/img/logo.png" alt="" style="max-width: 180px;max-height: 70px;">
 
                                     </a>
                                 </div>
                             </td>
                         </tr>
-                    </table>
+                    </table> -->

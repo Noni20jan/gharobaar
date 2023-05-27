@@ -654,280 +654,281 @@ class Email_model extends CI_Model
         );
         $this->db->insert("notify_user", $notification);
     }
-    public function send_email_members($data, $bcc)
-    {
-        require dirname(__FILE__) . "/../../sendgrid-php/sendgrid-php.php";
-
-        $email = new \SendGrid\Mail\Mail();
-        $email->setFrom($this->general_settings->mail_username, "Gharobaar");
-        $email->setSubject($data['subject']);
-        $email->addTo($this->general_settings->mail_username);
-        foreach ($bcc as $bcc) {
-            $email->AddBCC($bcc);
-        }
-        $subject = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
-
-        $email->addContent("text/html", $subject);
-        // var_dump($email);
-        // die();
-
-        $sendgrid = new \SendGrid("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");
-        //$sendgrid = new \SendGrid("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");
-
-        try {
-            $response = $sendgrid->send($email);
-            $response->statusCode();
-            $response->headers();
-            $response->body();
-        } catch (Exception $e) {
-            echo 'Caught exception: ' . $e->getMessage() . "\n";
-        }
-    }
-    public function send_email($data)
-    {
-        // $this->notification($data);
-        require dirname(__FILE__) . "/../../sendgrid-php/sendgrid-php.php";
-        $email = new \SendGrid\Mail\Mail();
-        $email->setFrom($this->general_settings->mail_username, "Trazenwood");
-        $email->setSubject($data['subject']);
-        $email->addTo($data['to']);
-        $ip = $this->input->ip_address();
-       
-        $subject = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
-        // var_dump($subject);
-        $email->addContent("text/html", $subject);
-
-        // $sendgrid1 = new \SendGrid("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");
-
-        $sendgrid = new \SendGrid("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");
-
-        try {
-            // $response1 = $sendgrid1->client->access_settings()->whitelist()->post($request_body);
-            // $response1->statusCode();
-            // $response1->headers();
-            // $response1->body();
-            $response = $sendgrid->send($email);
-            $response->statusCode();
-            $response->headers();
-            $response->body();
-            var_dump($response);
-            die();
-        } catch (Exception $e) {
-            echo 'Caught exception: ' . $e->getMessage() . "\n";
-        }
-    }
-    //send email
-    // public function send_email($data)
-    // {
-    //     if ($this->general_settings->mail_library == "swift") {
-    //         try {
-    //             // Create the Transport
-    //             $transport = (new Swift_SmtpTransport($this->general_settings->mail_host, $this->general_settings->mail_port, 'tls'))
-    //                 ->setUsername($this->general_settings->mail_username)
-    //                 ->setPassword($this->general_settings->mail_password);
-
-    //             // Create the Mailer using your created Transport
-    //             $mailer = new Swift_Mailer($transport);
-
-    //             // Create a message
-    //             $message = (new Swift_Message($this->general_settings->mail_title))
-    //                 ->setFrom(array($this->general_settings->mail_username => $this->general_settings->mail_title))
-    //                 ->setTo([$data['to'] => ''])
-    //                 ->setSubject($data['subject'])
-    //                 ->setBody($this->load->view($data['template_path'], $data, TRUE), 'text/html');
-
-    //             //Send the message
-    //             $result = $mailer->send($message);
-    //             if ($result) {
-    //                 return true;
-    //             }
-    //         } catch (\Swift_TransportException $Ste) {
-    //             $this->session->set_flashdata('error', $Ste->getMessage());
-    //             return false;
-    //         } catch (\Swift_RfcComplianceException $Ste) {
-    //             $this->session->set_flashdata('error', $Ste->getMessage());
-    //             return false;
-    //         }
-    //     } elseif ($this->general_settings->mail_library == "php") {
-    //         $mail = new PHPMailer(true);
-    //         try {
-    //             // var_dump( $this->general_settings->mail_username);
-    //             // die();
-    //             //Server settings
-    //             $mail->isSMTP();
-    //             $mail->Host = $this->general_settings->mail_host;
-    //             $mail->SMTPAuth = true;
-    //             $mail->Username = $this->general_settings->mail_username;
-    //             $mail->Password = $this->general_settings->mail_password;
-    //             $mail->SMTPSecure = 'tls';
-    //             $mail->SMTPDebug = 3;
-    //             $mail->CharSet = 'UTF-8';
-    //             $mail->Port = $this->general_settings->mail_port;
-    //             //Recipients
-    //             $mail->setFrom($this->general_settings->mail_username, $this->general_settings->mail_title);
-    //             $mail->addAddress($data['to']);
-    //             //Content
-    //             $mail->isHTML(true);
-    //             $mail->Subject = $data['subject'];
-    //             $mail->Body = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
-    //             $mail->send();
-    //             return true;
-    //         } catch (Exception $e) {
-    //             $this->session->set_flashdata('error', $mail->ErrorInfo);
-    //             return false;
-    //         }
-    //     } else {
-    //         $this->load->library('email');
-
-    //         $settings = $this->settings_model->get_general_settings();
-    //         $from = $settings->mail_username;
-    //         if (strpos($from, '@') == false) {
-    //             $from = "noreply@" . $_SERVER["HTTP_HOST"];
-    //         }
-
-    //         $config = array(
-    //             'protocol' => 'mail',
-    //             'smtp_host' => $settings->mail_host,
-    //             'smtp_port' => $settings->mail_port,
-    //             'smtp_user' => $settings->mail_username,
-    //             'smtp_pass' => $settings->mail_password,
-    //             'smtp_timeout' => 30,
-    //             'mailtype' => 'html',
-    //             'charset' => 'utf-8',
-    //             'wordwrap' => TRUE
-    //         );
-    //         if ($settings->mail_protocol == "sendmail") {
-    //             $config['protocol'] = 'sendmail';
-    //         }
-    //         if ($settings->mail_protocol == "smtp") {
-    //             $config['protocol'] = 'smtp';
-    //         }
-
-    //         //initialize
-    //         $this->email->initialize($config);
-
-    //         //send email
-    //         $message = $this->load->view($data['template_path'], $data, TRUE);
-    //         $this->email->from($from, $settings->mail_title);
-    //         $this->email->to($data['to']);
-    //         $this->email->subject($data['subject']);
-    //         $this->email->message($message);
-
-    //         $this->email->set_newline("\r\n");
-
-    //         if ($this->email->send()) {
-    //             return true;
-    //         } else {
-    //             $this->session->set_flashdata('error', $this->email->print_debugger(array('headers')));
-    //             return false;
-    //         }
-    //     }
-    // }
-
     // public function send_email_members($data, $bcc)
     // {
-    //     if ($this->general_settings->mail_library == "swift") {
-    //         try {
-    //             // Create the Transport
-    //             $transport = (new Swift_SmtpTransport($this->general_settings->mail_host, $this->general_settings->mail_port, 'tls'))
-    //                 ->setUsername($this->general_settings->mail_username)
-    //                 ->setPassword($this->general_settings->mail_password);
+    //     require dirname(__FILE__) . "/../../sendgrid-php/sendgrid-php.php";
 
-    //             // Create the Mailer using your created Transport
-    //             $mailer = new Swift_Mailer($transport);
+    //     $email = new \SendGrid\Mail\Mail();
+    //     $email->setFrom($this->general_settings->mail_username, "Gharobaar");
+    //     $email->setSubject($data['subject']);
+    //     $email->addTo($this->general_settings->mail_username);
+    //     foreach ($bcc as $bcc) {
+    //         $email->AddBCC($bcc);
+    //     }
+    //     $subject = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
 
-    //             // Create a message
-    //             $message = (new Swift_Message($this->general_settings->mail_title))
-    //                 ->setFrom(array($this->general_settings->mail_username => $this->general_settings->mail_title))
-    //                 ->setTo([$data['to'] => ''])
-    //                 ->setSubject($data['subject'])
-    //                 ->setBody($this->load->view($data['template_path'], $data, TRUE), 'text/html');
+    //     $email->addContent("text/html", $subject);
+    //     // var_dump($email);
+    //     // die();
 
-    //             //Send the message
-    //             $result = $mailer->send($message);
-    //             if ($result) {
-    //                 return true;
-    //             }
-    //         } catch (\Swift_TransportException $Ste) {
-    //             $this->session->set_flashdata('error', $Ste->getMessage());
-    //             return false;
-    //         } catch (\Swift_RfcComplianceException $Ste) {
-    //             $this->session->set_flashdata('error', $Ste->getMessage());
-    //             return false;
-    //         }
-    //     } elseif ($this->general_settings->mail_library == "php") {
-    //         $mail = new PHPMailer(true);
-    //         try {
-    //             //Server settings
-    //             $mail->isSMTP();
-    //             $mail->Host = $this->general_settings->mail_host;
-    //             $mail->SMTPAuth = true;
-    //             $mail->Username = $this->general_settings->mail_username;
-    //             $mail->Password = $this->general_settings->mail_password;
-    //             $mail->SMTPSecure = 'tls';
-    //             $mail->CharSet = 'UTF-8';
-    //             $mail->Port = $this->general_settings->mail_port;
-    //             //Recipients
-    //             $mail->setFrom($this->general_settings->mail_username, $this->general_settings->mail_title);
-    //             $mail->addAddress($data['to']);
-    //             foreach ($bcc as $bcc) {
-    //                 $mail->AddBCC($bcc);
-    //             }
-    //             //Content
-    //             $mail->isHTML(true);
-    //             $mail->Subject = $data['subject'];
-    //             $mail->Body = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
-    //             $mail->send();
-    //             return true;
-    //         } catch (Exception $e) {
-    //             $this->session->set_flashdata('error', $mail->ErrorInfo);
-    //             return false;
-    //         }
-    //     } else {
-    //         $this->load->library('email');
+    //     $sendgrid = new \SendGrid("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");
+    //     //$sendgrid = new \SendGrid("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");
 
-    //         $settings = $this->settings_model->get_general_settings();
-    //         $from = $settings->mail_username;
-    //         if (strpos($from, '@') == false) {
-    //             $from = "noreply@" . $_SERVER["HTTP_HOST"];
-    //         }
-
-    //         $config = array(
-    //             'protocol' => 'mail',
-    //             'smtp_host' => $settings->mail_host,
-    //             'smtp_port' => $settings->mail_port,
-    //             'smtp_user' => $settings->mail_username,
-    //             'smtp_pass' => $settings->mail_password,
-    //             'smtp_timeout' => 30,
-    //             'mailtype' => 'html',
-    //             'charset' => 'utf-8',
-    //             'wordwrap' => TRUE
-    //         );
-    //         if ($settings->mail_protocol == "sendmail") {
-    //             $config['protocol'] = 'sendmail';
-    //         }
-    //         if ($settings->mail_protocol == "smtp") {
-    //             $config['protocol'] = 'smtp';
-    //         }
-
-    //         //initialize
-    //         $this->email->initialize($config);
-
-    //         //send email
-    //         $message = $this->load->view($data['template_path'], $data, TRUE);
-    //         $this->email->from($from, $settings->mail_title);
-    //         $this->email->to($data['to']);
-    //         $this->email->subject($data['subject']);
-    //         $this->email->message($message);
-
-    //         $this->email->set_newline("\r\n");
-
-    //         if ($this->email->send()) {
-    //             return true;
-    //         } else {
-    //             $this->session->set_flashdata('error', $this->email->print_debugger(array('headers')));
-    //             return false;
-    //         }
+    //     try {
+    //         $response = $sendgrid->send($email);
+    //         $response->statusCode();
+    //         $response->headers();
+    //         $response->body();
+    //     } catch (Exception $e) {
+    //         echo 'Caught exception: ' . $e->getMessage() . "\n";
     //     }
     // }
+    // public function send_email($data)
+    // {
+    //     // $this->notification($data);
+    //     require dirname(__FILE__) . "/../../sendgrid-php/sendgrid-php.php";
+    //     $email = new \SendGrid\Mail\Mail();
+    //     $email->setFrom($this->general_settings->mail_username, "Trazenwood");
+    //     $email->setSubject($data['subject']);
+    //     $email->addTo($data['to']);
+    //     $ip = $this->input->ip_address();
+       
+    //     $subject = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
+    //     // var_dump($subject);
+    //     $email->addContent("text/html", $subject);
+
+    //     // $sendgrid1 = new \SendGrid("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");
+
+    //     $sendgrid = new \SendGrid("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");
+
+    //     try {
+    //         // $response1 = $sendgrid1->client->access_settings()->whitelist()->post($request_body);
+    //         // $response1->statusCode();
+    //         // $response1->headers();
+    //         // $response1->body();
+    //         $response = $sendgrid->send($email);
+    //         $response->statusCode();
+    //         $response->headers();
+    //         $response->body();
+    //         var_dump($response);
+    //         die();
+    //     } catch (Exception $e) {
+    //         echo 'Caught exception: ' . $e->getMessage() . "\n";
+    //     }
+    // }
+    //send email
+    public function send_email($data)
+    {
+        if ($this->general_settings->mail_library == "swift") {
+            try {
+                // Create the Transport
+                $transport = (new Swift_SmtpTransport($this->general_settings->mail_host, $this->general_settings->mail_port, 'tls'))
+                    ->setUsername($this->general_settings->mail_username)
+                    ->setPassword($this->general_settings->mail_password);
+
+                // Create the Mailer using your created Transport
+                $mailer = new Swift_Mailer($transport);
+
+                // Create a message
+                $message = (new Swift_Message($this->general_settings->mail_title))
+                    ->setFrom(array($this->general_settings->mail_username => $this->general_settings->mail_title))
+                    ->setTo([$data['to'] => ''])
+                    ->setSubject($data['subject'])
+                    ->setBody($this->load->view($data['template_path'], $data, TRUE), 'text/html');
+
+                //Send the message
+                $result = $mailer->send($message);
+                if ($result) {
+                    return true;
+                }
+            } catch (\Swift_TransportException $Ste) {
+                $this->session->set_flashdata('error', $Ste->getMessage());
+                return false;
+            } catch (\Swift_RfcComplianceException $Ste) {
+                $this->session->set_flashdata('error', $Ste->getMessage());
+                return false;
+            }
+        } elseif ($this->general_settings->mail_library == "php") {
+            $mail = new PHPMailer(true);
+            try {
+                // var_dump( $this->general_settings->mail_username);
+                // die();
+                //Server settings
+                $mail->isSMTP();
+                $mail->Host = $this->general_settings->mail_host;
+                $mail->SMTPAuth = true;
+                $mail->Username = $this->general_settings->mail_username;
+                $mail->Password = $this->general_settings->mail_password;
+                $mail->SMTPSecure = 'tls';
+                $mail->SMTPDebug = 3;
+                $mail->CharSet = 'UTF-8';
+                $mail->Port = $this->general_settings->mail_port;
+                //Recipients
+                $mail->setFrom($this->general_settings->mail_username, $this->general_settings->mail_title);
+                $mail->addAddress($data['to']);
+                //Content
+                $mail->isHTML(true);
+                $mail->Subject = $data['subject'];
+                $mail->Body = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
+                var_dump($mail->send());
+                die();
+                return true;
+            } catch (Exception $e) {
+                $this->session->set_flashdata('error', $mail->ErrorInfo);
+                return false;
+            }
+        } else {
+            $this->load->library('email');
+
+            $settings = $this->settings_model->get_general_settings();
+            $from = $settings->mail_username;
+            if (strpos($from, '@') == false) {
+                $from = "noreply@" . $_SERVER["HTTP_HOST"];
+            }
+
+            $config = array(
+                'protocol' => 'mail',
+                'smtp_host' => $settings->mail_host,
+                'smtp_port' => $settings->mail_port,
+                'smtp_user' => $settings->mail_username,
+                'smtp_pass' => $settings->mail_password,
+                'smtp_timeout' => 30,
+                'mailtype' => 'html',
+                'charset' => 'utf-8',
+                'wordwrap' => TRUE
+            );
+            if ($settings->mail_protocol == "sendmail") {
+                $config['protocol'] = 'sendmail';
+            }
+            if ($settings->mail_protocol == "smtp") {
+                $config['protocol'] = 'smtp';
+            }
+
+            //initialize
+            $this->email->initialize($config);
+
+            //send email
+            $message = $this->load->view($data['template_path'], $data, TRUE);
+            $this->email->from($from, $settings->mail_title);
+            $this->email->to($data['to']);
+            $this->email->subject($data['subject']);
+            $this->email->message($message);
+
+            $this->email->set_newline("\r\n");
+
+            if ($this->email->send()) {
+                return true;
+            } else {
+                $this->session->set_flashdata('error', $this->email->print_debugger(array('headers')));
+                return false;
+            }
+        }
+    }
+
+    public function send_email_members($data, $bcc)
+    {
+        if ($this->general_settings->mail_library == "swift") {
+            try {
+                // Create the Transport
+                $transport = (new Swift_SmtpTransport($this->general_settings->mail_host, $this->general_settings->mail_port, 'tls'))
+                    ->setUsername($this->general_settings->mail_username)
+                    ->setPassword($this->general_settings->mail_password);
+
+                // Create the Mailer using your created Transport
+                $mailer = new Swift_Mailer($transport);
+
+                // Create a message
+                $message = (new Swift_Message($this->general_settings->mail_title))
+                    ->setFrom(array($this->general_settings->mail_username => $this->general_settings->mail_title))
+                    ->setTo([$data['to'] => ''])
+                    ->setSubject($data['subject'])
+                    ->setBody($this->load->view($data['template_path'], $data, TRUE), 'text/html');
+
+                //Send the message
+                $result = $mailer->send($message);
+                if ($result) {
+                    return true;
+                }
+            } catch (\Swift_TransportException $Ste) {
+                $this->session->set_flashdata('error', $Ste->getMessage());
+                return false;
+            } catch (\Swift_RfcComplianceException $Ste) {
+                $this->session->set_flashdata('error', $Ste->getMessage());
+                return false;
+            }
+        } elseif ($this->general_settings->mail_library == "php") {
+            $mail = new PHPMailer(true);
+            try {
+                //Server settings
+                $mail->isSMTP();
+                $mail->Host = $this->general_settings->mail_host;
+                $mail->SMTPAuth = true;
+                $mail->Username = $this->general_settings->mail_username;
+                $mail->Password = $this->general_settings->mail_password;
+                $mail->SMTPSecure = 'tls';
+                $mail->CharSet = 'UTF-8';
+                $mail->Port = $this->general_settings->mail_port;
+                //Recipients
+                $mail->setFrom($this->general_settings->mail_username, $this->general_settings->mail_title);
+                $mail->addAddress($data['to']);
+                foreach ($bcc as $bcc) {
+                    $mail->AddBCC($bcc);
+                }
+                //Content
+                $mail->isHTML(true);
+                $mail->Subject = $data['subject'];
+                $mail->Body = $this->load->view($data['template_path'], $data, TRUE, 'text/html');
+                $mail->send();
+                return true;
+            } catch (Exception $e) {
+                $this->session->set_flashdata('error', $mail->ErrorInfo);
+                return false;
+            }
+        } else {
+            $this->load->library('email');
+
+            $settings = $this->settings_model->get_general_settings();
+            $from = $settings->mail_username;
+            if (strpos($from, '@') == false) {
+                $from = "noreply@" . $_SERVER["HTTP_HOST"];
+            }
+
+            $config = array(
+                'protocol' => 'mail',
+                'smtp_host' => $settings->mail_host,
+                'smtp_port' => $settings->mail_port,
+                'smtp_user' => $settings->mail_username,
+                'smtp_pass' => $settings->mail_password,
+                'smtp_timeout' => 30,
+                'mailtype' => 'html',
+                'charset' => 'utf-8',
+                'wordwrap' => TRUE
+            );
+            if ($settings->mail_protocol == "sendmail") {
+                $config['protocol'] = 'sendmail';
+            }
+            if ($settings->mail_protocol == "smtp") {
+                $config['protocol'] = 'smtp';
+            }
+
+            //initialize
+            $this->email->initialize($config);
+
+            //send email
+            $message = $this->load->view($data['template_path'], $data, TRUE);
+            $this->email->from($from, $settings->mail_title);
+            $this->email->to($data['to']);
+            $this->email->subject($data['subject']);
+            $this->email->message($message);
+
+            $this->email->set_newline("\r\n");
+
+            if ($this->email->send()) {
+                return true;
+            } else {
+                $this->session->set_flashdata('error', $this->email->print_debugger(array('headers')));
+                return false;
+            }
+        }
+    }
 }
