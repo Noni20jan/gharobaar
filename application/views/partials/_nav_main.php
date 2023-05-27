@@ -60,9 +60,9 @@ if ($this->general_settings->selected_navigation == 1) : ?>
                                                             <div class="row">
                                                                 <div class="col-12">
                                                                     <?php if ($subcategory->actionable_status == 1) : ?>
-                                                                       <?php echo category_name($subcategory); ?>
+                                                                        <a id="nav_main_category_<?= $subcategory->id; ?>" href="<?php echo generate_category_url($subcategory); ?>" class="second-category nav-main-category" data-id="<?= $subcategory->id; ?>" data-parent-id="<?= $subcategory->parent_id; ?>" data-has-sb="<?= !empty($subcategory->has_subcategory) ? '1' : '0'; ?>"><?php echo category_name($subcategory); ?></a>
                                                                     <?php else : ?>
-                                                                       <?php echo category_name($subcategory); ?>
+                                                                        <a id="nav_main_category_<?= $subcategory->id; ?>" href="javascript:void();" class="second-category nav-main-category <?php echo ($subcategory->actionable_status != 1) ? 'faded-subcategory' : ''; ?>" data-id="<?= $subcategory->id; ?>" data-parent-id="<?= $subcategory->parent_id; ?>" data-has-sb="<?= !empty($subcategory->has_subcategory) ? '1' : '0'; ?>"><?php echo category_name($subcategory); ?></a>
                                                                     <?php endif; ?>
                                                                     <?php
                                                                     if ($subcategory->actionable_status == 1) :
@@ -188,7 +188,7 @@ if ($this->general_settings->selected_navigation == 1) : ?>
                                                 <?php $count = 0;
                                                 foreach ($subcategories as $subcategory) : ?>
                                                     <div class="large-menu-item <?php echo ($count == 0) ? 'large-menu-item-first active' : ''; ?>" data-subcategory-id="<?php echo $subcategory->id; ?>">
-                                                        <?php echo category_name($subcategory); ?>&nbsp;<i class="icon-arrow-right"></i>
+                                                        <a id="nav_main_category_<?= $subcategory->id; ?>"  class="second-category nav-main-category" data-id="<?= $subcategory->id; ?>" data-parent-id="<?= $subcategory->parent_id; ?>" data-has-sb="<?= !empty($subcategory->has_subcategory) ? '1' : '0'; ?>"><?php echo category_name($subcategory); ?>&nbsp;<i class="icon-arrow-right"></i></a>
                                                     </div>
                                                 <?php $count++;
                                                 endforeach; ?>
