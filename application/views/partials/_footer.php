@@ -260,7 +260,8 @@
     #support-mobile-view {
         display: none;
     }
-
+    .Bubble__BubbleComponent{margin-bottom: 100% !important;}
+    .scrollup {bottom:180px !important;}
     #shop-hidden {
         display: none;
     }
@@ -339,7 +340,7 @@
 </style>
 
 <footer id="footer">
-    <div class="elfsight-app-013b4113-aab4-4c8a-8701-699c9b022c8c"></div>
+    <div class="elfsight-app-013b4113-aab4-4c8a-8701-699c9b022c8c mobile-whatsapp-logo"></div>
     <div class="container">
         <div class="row">
             <!-- <svg viewBox="0 0 100 25" class="svg-fotter">
